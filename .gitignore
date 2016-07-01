@@ -1,0 +1,17 @@
+*~
+.DS_Store
+
+# Static build artifacts
+node_modules/
+bower_components/
+npm-debug.log
+
+# static project stuff we'll use eventually
+build
+dist
+node_modules
+bower_components
+.awspublish-*
+
+# Test output
+test-results.xml
