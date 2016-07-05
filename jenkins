@@ -1,0 +1,101 @@
+#!/usr/bin/env python
+import collections
+import logging
+import re
+import subprocess
+import sys
+
+LOGGER = logging.getLogger('jenkins')
+
+REGION                       = 'us-west-2'
+PROD_BUCKET                  = 'app.authentise.com'
+DEV_BUCKET                   = 'app.dev-auth.com'
+CLOUDFRONT_DISTRIBUTION_DEV  = 'E33MM2UF349MAD'
+CLOUDFRONT_DISTRIBUTION_PROD = 'E3AUN0KS7ZVJCJ'
+
+CommitInfo = collections.namedtuple('CommitInfo', ['tag', 'commits', 'sha', 'branch'])
+
+def execute(args, log_output=True, **kwargs):
+    if kwargs.get('shell'):
+        LOGGER.debug("Executing %s", args)
+    else:
+        LOGGER.debug("Executing %s", ' '.join(args))
+    proc = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, **kwargs)
+    stdout, stderr = proc.communicate()
+    LOGGER.debug("stdout: %s", stdout)
+    LOGGER.debug("stderr: %s", stdout)
+    if proc.returncode != 0:
+        raise Exception("Command {} exited with return code {}".format(args, proc.returncode))
+    if log_output:
+        LOGGER.debug("stdout: %s", stdout)
+        LOGGER.debug("stderr: %s", stderr)
+    return stdout.decode('utf-8') if stdout else stderr.decode('utf-8') if stderr else ''
+
+def get_branch(sha):
+    reflog = execute(['git', 'reflog', 'show', '--all'], log_output=False)
+    for line in reflog.split('\n'):
+        if sha in line:
+            match = re.match('(?P<sha>[a-z0-9]+) [a-z/]+/(?P<branch>[^@]+)@', line)
+            if match:
+                return match.group('branch')
+            raise Exception("{} did not match our expected reflog pattern looking for {}".format(line, sha))
+    raise Exception("Unable to find branch for {}".format(sha))
+
+def publish(commit_info):
+    if 'hotfix' in commit_info.branch and commit_info.commits == 0:
+        LOGGER.info("Publishing hotfix for %s from %s", commit_info.tag, commit_info.branch)
+        artifact = 'hotfix-{}-{}'.format(commit_info.tag, commit_info.sha);
+        execute(['gulp', 'publish', '--env', 'production', '--region', REGION, '--bucket', PROD_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_PROD, '--colors', 'false'])
+    elif commit_info.commits == 0:
+        LOGGER.info("Publishing production version %s", commit_info.tag)
+        artifact = 'prod-{}-{}'.format(commit_info.tag, commit_info.sha);
+        execute(['gulp', 'publish', '--env', 'production', '--region', REGION, '--bucket', PROD_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_PROD, '--colors', 'false'])
+    elif commit_info.branch == 'master':
+        LOGGER.info("Publishing dev version %s-%s-g%s", commit_info.tag, commit_info.commits, commit_info.sha)
+        artifact = 'dev-{}-{}-{}'.format(commit_info.tag, commit_info.commits, commit_info.sha);
+        execute(['gulp', 'publish', '--env', 'development', '--region', REGION, '--bucket', DEV_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_DEV, '--colors', 'false'])
+    else:
+        LOGGER.info("Building %s-%s-g%s", commit_info.tag, commit_info.commits, commit_info.sha)
+        artifact = None
+        execute(['gulp', 'build', '--colors', 'false'])
+    return artifact
+
+def get_commit_information(description):
+    match = re.match(r'(?P<tag>[\.\d]+)$', description)
+    if match:
+        return CommitInfo(tag=match.group('tag'), commits=0, sha=None, branch='master')
+
+    match = re.match(r'(?P<tag>[\.\d]+)\-(?P<commits>\d+)\-g(?P<sha>[a-z0-9]+)', description)
+    if match:
+        sha = match.group('sha')
+        branch = get_branch(sha)
+        return CommitInfo(
+            tag     = match.group('tag'),
+            commits = int(match.group('commits')),
+            sha     = match.group('sha'),
+            branch  = branch)
+    raise Exception("Could not extract commit info from {}".format(description))
+
+def main():
+    logging.basicConfig()
+    logging.getLogger().setLevel(logging.DEBUG)
+
+    LOGGER.info("NPM installing...")
+    execute(['npm', 'install'])
+    LOGGER.info("Running tests in PhantomJS")
+    try:
+        execute('BROWSER=PhantomJS2 gulp test', shell=True)
+    except Exception as e:
+        LOGGER.error("Test run failed: %s", e)
+        sys.exit(1)
+    description = execute(['git', 'describe'])
+    commit_info = get_commit_information(description)
+    artifact = publish(commit_info)
+    # This artifact is just to give jenkins a hook so that it can store something as an artifact and display it in the build report
+    if artifact:
+        filename = 'build/scylla-{}'.format(artifact)
+        with open(filename, 'w') as f:
+            f.write('Nobody here but us chickens')
+
+if __name__ == '__main__':
+	main()
