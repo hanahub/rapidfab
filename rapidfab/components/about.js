@@ -1,9 +1,13 @@
 import React, { Component }     from "react";
+import Version                  from "rapidfab/version";
 
 export default class About extends Component {
   render() {
     return (
-        <div> Aboot </div>
+      <dl>
+        <dt>Version:</dt>
+        <dd>{Version}</dd>
+      </dl>
     );
   }
 }
