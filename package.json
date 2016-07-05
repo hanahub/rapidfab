@@ -7,12 +7,13 @@
     "start": "webpack-dev-server -d",
     "watch": "webpack-dev-server -d --watch",
     "test": "./node_modules/karma/bin/karma start --single-run",
-    "tdd": "./node_modules/karma/bin/karma start",
-    "jenkins": "./node_modules/karma/bin/karma start --single-run --reporters junit,dots"
+    "test:watch": "./node_modules/karma/bin/karma start",
+    "test:junit": "./node_modules/karma/bin/karma start --single-run --reporters junit,dots",
+    "build": "rm -rf dist && NODE_ENV=production webpack -p --config webpack.production.config.js"
   },
   "author": "Authentise, Inc.",
-  "license": "ISC",
   "devDependencies": {
+    "assets-webpack-plugin": "^3.4.0",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
@@ -21,6 +22,7 @@
     "babel-preset-react": "^6.11.1",
     "css-loader": "^0.23.1",
     "expect": "^1.20.2",
+    "html-webpack-plugin": "^2.22.0",
     "karma": "^1.1.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-junit-reporter": "^1.1.0",

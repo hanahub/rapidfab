@@ -1,5 +1,6 @@
-const path        = require('path');
-const webpack     = require('webpack');
+const path            = require('path');
+const webpack         = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: "source-map",
@@ -9,18 +10,22 @@ module.exports = {
     inline: true,
     port: 3001,
   },
-  entry: [
-    'webpack-dev-server/client?http://localhost:3001/',
-    'webpack/hot/only-dev-server',
-    './rapidfab/app'
-  ],
+  entry: {
+    app: [
+      'webpack-dev-server/client?http://localhost:3001/',
+      'webpack/hot/only-dev-server',
+      './rapidfab/app'
+    ]
+  },
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'app.bundle.js',
-    publicPath: '/static/'
+    filename: '[name].bundle.js'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      title: "Rapidfab",
+      template: "index.html"
+    }),
   ],
   module: {
     loaders: [{
