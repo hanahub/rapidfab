@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server -d",
-    "watch": "webpack-dev-server -d --watch",
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d",
+    "watch": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d --watch",
     "test": "./node_modules/karma/bin/karma start --single-run",
     "test:watch": "./node_modules/karma/bin/karma start",
     "test:junit": "./node_modules/karma/bin/karma start --single-run --reporters junit,dots",
-    "build": "NODE_ENV=production BUILD_VERSION=$(git describe) webpack -p --config webpack.production.config.js"
+    "build:clean": "rm -rf ./dist",
+    "build": "npm run build:clean && NODE_ENV=production BUILD_VERSION=$(git describe) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
+    "publish": "./node_modules/gulp/bin/gulp.js publish"
   },
   "author": "Authentise, Inc.",
   "devDependencies": {
