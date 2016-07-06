@@ -10,10 +10,10 @@ from shutil import make_archive
 LOGGER = logging.getLogger('jenkins')
 
 REGION                       = 'us-west-2'
-PROD_BUCKET                  = 'app.authentise.com'
-DEV_BUCKET                   = 'app.dev-auth.com'
-CLOUDFRONT_DISTRIBUTION_DEV  = 'E33MM2UF349MAD'
-CLOUDFRONT_DISTRIBUTION_PROD = 'E3AUN0KS7ZVJCJ'
+PROD_BUCKET                  = 'rapidfab.authentise.com'
+DEV_BUCKET                   = 'rapidfab.dev-auth.com'
+CLOUDFRONT_DISTRIBUTION_DEV  = 'E204AX3Y5WR2B4'
+CLOUDFRONT_DISTRIBUTION_PROD = 'EOPZ6L10IQ06S'
 
 CommitInfo = collections.namedtuple('CommitInfo', ['tag', 'commits', 'sha', 'branch'])
 
@@ -44,23 +44,12 @@ def get_branch(sha):
     raise Exception("Unable to find branch for {}".format(sha))
 
 def publish(commit_info):
-    if 'hotfix' in commit_info.branch and commit_info.commits == 0:
-        LOGGER.info("Publishing hotfix for %s from %s", commit_info.tag, commit_info.branch)
-        artifact = 'hotfix-{}-{}'.format(commit_info.tag, commit_info.sha);
-        execute(['gulp', 'publish', '--env', 'production', '--region', REGION, '--bucket', PROD_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_PROD, '--colors', 'false'])
-    elif commit_info.commits == 0:
-        LOGGER.info("Publishing production version %s", commit_info.tag)
-        artifact = 'prod-{}-{}'.format(commit_info.tag, commit_info.sha);
-        execute(['gulp', 'publish', '--env', 'production', '--region', REGION, '--bucket', PROD_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_PROD, '--colors', 'false'])
+    if commit_info.commits == 0:
+        LOGGER.info("Publishing prod for %s from %s", commit_info.tag, commit_info.branch)
+        execute(['gulp', 'publish', '--region', REGION, '--bucket', PROD_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_PROD])
     elif commit_info.branch == 'master':
         LOGGER.info("Publishing dev version %s-%s-g%s", commit_info.tag, commit_info.commits, commit_info.sha)
-        artifact = 'dev-{}-{}-{}'.format(commit_info.tag, commit_info.commits, commit_info.sha);
-        execute(['gulp', 'publish', '--env', 'development', '--region', REGION, '--bucket', DEV_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_DEV, '--colors', 'false'])
-    else:
-        LOGGER.info("Building %s-%s-g%s", commit_info.tag, commit_info.commits, commit_info.sha)
-        artifact = None
-        execute(['gulp', 'build', '--colors', 'false'])
-    return artifact
+        execute(['gulp', 'publish', '--region', REGION, '--bucket', DEV_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_DEV])
 
 def get_commit_information(description):
     match = re.match(r'(?P<tag>[\.\d]+)$', description)
@@ -107,9 +96,7 @@ def main():
         LOGGER.exception("Build failed: %s", e)
         sys.exit(1)
 
-    # TODO: Publish Rapidfab
-    # artifact = publish(commit_info)
-
+    publish(commit_info)
     write_artifact(commit_info)
 
 if __name__ == '__main__':

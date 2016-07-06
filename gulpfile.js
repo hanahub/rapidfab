@@ -6,11 +6,10 @@ const awspublish       = require('gulp-awspublish');
 const cloudfront       = require('gulp-cloudfront');
 
 const knownOptions = {
-  string: 'env',
   string: 'region',
   string: 'bucket',
   string: 'cloudfront',
-  default: { bucket: null, cloudfront: null, env: null, region: null }
+  default: { bucket: null, cloudfront: null, region: null }
 };
 const options = minimist(process.argv.slice(2), knownOptions);
 
