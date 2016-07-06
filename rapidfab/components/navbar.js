@@ -1,24 +1,18 @@
-import React                  from 'react';
-import classnames             from 'classnames';
+import React, { Component }     from "react";
+import * as BS                  from 'react-bootstrap';
 
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Input, Button } from 'react-bootstrap';
-
-var MyNavbar = React.createClass({
-  render: function() {
+export default class NavBar extends Component {
+  render() {
     return (
-      <Navbar fixedTop>
-        <Navbar.Header>
-          <Navbar.Brand>
+      <BS.Navbar fixedTop>
+        <BS.Navbar.Header>
+          <BS.Navbar.Brand>
             <a href="#/">
               <p>Rapid Fab</p>
             </a>
-          </Navbar.Brand>
-        </Navbar.Header>
-      </Navbar>
+          </BS.Navbar.Brand>
+        </BS.Navbar.Header>
+      </BS.Navbar>
     );
   }
-});
-
-module.exports = {
-  Navbar              : MyNavbar,
 }
