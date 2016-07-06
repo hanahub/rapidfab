@@ -13,6 +13,9 @@ fs.writeFileSync(
 );
 
 module.exports = Object.assign(webpackConfig, {
+  entry: {
+    app: './rapidfab/app'
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].[hash].bundle.js',
