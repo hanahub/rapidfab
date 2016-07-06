@@ -82,6 +82,7 @@ def main():
     LOGGER.info("NPM installing...")
     execute(['npm', 'install'])
     execute(['npm', 'prune'])
+    execute(['npm', 'run', 'build:clean'])
 
     LOGGER.info("Running tests in PhantomJS")
     try:
