@@ -5,6 +5,8 @@ import re
 import subprocess
 import sys
 
+from shutil import make_archive
+
 LOGGER = logging.getLogger('jenkins')
 
 REGION                       = 'us-west-2'
@@ -76,26 +78,39 @@ def get_commit_information(description):
             branch  = branch)
     raise Exception("Could not extract commit info from {}".format(description))
 
+def write_artifact(commit_info):
+    filename = "rapidfab-{}.{}.{}".format(commit_info.tag, commit_info.commits, commit_info.sha)
+    LOGGER.info("Writing artifact to {}...".format(filename))
+    make_archive(filename, 'zip', root_dir='dist', base_dir=None)
+
 def main():
     logging.basicConfig()
     logging.getLogger().setLevel(logging.DEBUG)
 
+    description = execute(['git', 'describe'])
+    commit_info = get_commit_information(description)
+
     LOGGER.info("NPM installing...")
     execute(['npm', 'install'])
+
     LOGGER.info("Running tests in PhantomJS")
     try:
-        execute('BROWSER=PhantomJS2 gulp test', shell=True)
+        execute('BROWSER=PhantomJS2 npm run test:junit', shell=True)
     except Exception as e:
         LOGGER.error("Test run failed: %s", e)
         sys.exit(1)
-    description = execute(['git', 'describe'])
-    commit_info = get_commit_information(description)
-    artifact = publish(commit_info)
-    # This artifact is just to give jenkins a hook so that it can store something as an artifact and display it in the build report
-    if artifact:
-        filename = 'build/scylla-{}'.format(artifact)
-        with open(filename, 'w') as f:
-            f.write('Nobody here but us chickens')
+
+    LOGGER.info("Building {}...".format(description))
+    try:
+        execute("npm run build", shell=True)
+    except Exception as e:
+        LOGGER.exception("Build failed: %s", e)
+        sys.exit(1)
+
+    # TODO: Publish Rapidfab
+    # artifact = publish(commit_info)
+
+    write_artifact(commit_info)
 
 if __name__ == '__main__':
 	main()

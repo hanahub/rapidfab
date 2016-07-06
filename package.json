@@ -9,7 +9,7 @@
     "test": "./node_modules/karma/bin/karma start --single-run",
     "test:watch": "./node_modules/karma/bin/karma start",
     "test:junit": "./node_modules/karma/bin/karma start --single-run --reporters junit,dots",
-    "build": "rm -rf dist && NODE_ENV=production webpack -p --config webpack.production.config.js"
+    "build": "NODE_ENV=production BUILD_VERSION=$(git describe) webpack -p --config webpack.production.config.js"
   },
   "author": "Authentise, Inc.",
   "devDependencies": {
@@ -32,7 +32,7 @@
     "karma-junit-reporter": "^1.1.0",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.0.4",
-    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-phantomjs2-launcher": "^0.5.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
     "lodash": "^4.13.1",

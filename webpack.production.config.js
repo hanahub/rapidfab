@@ -3,11 +3,13 @@ const HtmlWebpackPlugin     = require('html-webpack-plugin');
 const webpackConfig         = require('./webpack.config');
 const fs                    = require('fs');
 
-const version = process.env.VERSION || 'development';
+const version = process.env.BUILD_VERSION || 'development';
+
+console.log(version);
 
 fs.writeFileSync(
   path.join(__dirname, "rapidfab", "version.js"),
-  `module.exports = ${JSON.stringify(process.env.VERSION)};`
+  `module.exports = ${JSON.stringify(version)};`
 );
 
 module.exports = Object.assign(webpackConfig, {
