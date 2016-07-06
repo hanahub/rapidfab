@@ -9,7 +9,7 @@ import Routes                           from 'rapidfab/routes';
 
 import { IntlProvider }                 from 'react-intl';
 import i18n                             from 'rapidfab/i18n';
-import { Navbar }                       from 'rapidfab/shared/navbar';
+import { Navbar }                       from 'rapidfab/components/navbar';
 
 export default class App extends Component {
   constructor(props) {
