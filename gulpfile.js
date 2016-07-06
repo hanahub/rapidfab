@@ -18,15 +18,15 @@ gulp.task('publish', function() {
   if(!options.region) throw new Error('A target region is required to publish.');
   if(!options.bucket) throw new Error('A target bucket is required to publish.');
 
-  let aws = {
+  var aws = {
     region: options.region,
     params: {
       Bucket: options.bucket
     }
   };
-  let publisher = awspublish.create(aws);
-  let headers = { 'Cache-Control': 'max-age=3600, no-transform, public' };
-  let cloudfrontConfig = {
+  var publisher = awspublish.create(aws);
+  var headers = { 'Cache-Control': 'max-age=3600, no-transform, public' };
+  var cloudfrontConfig = {
     bucket            : aws.bucket,
     region            : aws.region,
     distributionId    : options.cloudfront,
