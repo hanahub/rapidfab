@@ -36,7 +36,7 @@ module.exports = {
     },
     {
       test: /\.scss$/,
-      loaders: ["style", "css", "sass"],
+      loaders: ["style", "css?sourceMap", "sass?sourceMap"],
       exclude: /(node_modules|bower_components)/,
       include: path.join(__dirname, 'rapidfab')
     }]
