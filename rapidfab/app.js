@@ -1,4 +1,4 @@
-import 'rapidfab/app.scss';
+import 'rapidfab/styles/main.less';
 
 import * as URL                         from 'rapidfab/actions/url';
 
