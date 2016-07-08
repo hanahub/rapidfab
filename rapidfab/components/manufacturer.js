@@ -61,6 +61,11 @@ export default class Manufacturers extends Component {
                   <td>02</td>
                   <td>CA</td>
                 </tr>
+                <tr>
+                  <td>Manufacturer</td>
+                  <td>02</td>
+                  <td>CA</td>
+                </tr>
               </tbody>
             </BS.Table>
           </BS.Col>
