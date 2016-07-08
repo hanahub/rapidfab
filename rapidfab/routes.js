@@ -2,13 +2,15 @@ import _     from 'lodash';
 import React from 'react';
 import PathToRegexp from 'path-to-regexp';
 
-import Index from 'rapidfab/components/index'
-import About from 'rapidfab/components/about'
+import Index         from 'rapidfab/components/index'
+import About         from 'rapidfab/components/about'
+import Manufacturers from 'rapidfab/components/manufacturer'
 
 var Router = React.createClass({
   routes: {
     "/"             : Index,
     "/about"        : About,
+    "/manufacturers" : Manufacturers,
   },
   render: function() {
     var toRender = null;

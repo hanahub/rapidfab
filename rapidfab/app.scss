@@ -2,3 +2,17 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.router {
+  transform: translate(0, 60px);
+}
+
+.separator {
+  border-right: 1px solid #e5e5e5;
+  height: 450px;
+  overflow: scroll;
+}
+
+.breadcrumbs {
+  margin: 15px;
+}
