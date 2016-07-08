@@ -28,18 +28,27 @@ module.exports = {
     }),
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel?presets[]=es2015&plugins[]=transform-runtime'],
-      exclude: /(node_modules|bower_components)/,
-      include: path.join(__dirname, 'rapidfab')
-    },
-    {
-      test: /\.scss$/,
-      loaders: ["style", "css?sourceMap", "sass?sourceMap"],
-      exclude: /(node_modules|bower_components)/,
-      include: path.join(__dirname, 'rapidfab')
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['react-hot', 'babel?presets[]=es2015&plugins[]=transform-runtime'],
+        exclude: /(node_modules|bower_components)/,
+        include: path.join(__dirname, 'rapidfab')
+      },
+      {
+        test: /\.less$/,
+        loaders: ["style", "css?sourceMap", "less?sourceMap"],
+        exclude: /(node_modules|bower_components)/,
+        include: path.join(__dirname, 'rapidfab')
+      },
+      { test: /\.(png|jpg)$/,                   loader: "url-loader?prefix=images/&limit=5000" },
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=application/font-woff" },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&minetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,     loader: "url?limit=10000&minetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,     loader: "file" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,     loader: "url?limit=10000&minetype=image/svg+xml" },
+      { test: /\.otf$/,                         loader: "file-loader?prefix=font/" },
+    ]
   },
   resolve: {
     alias: {
@@ -47,6 +56,6 @@ module.exports = {
       images: __dirname + '/images',
       tests:  __dirname + '/tests'
     },
-    extensions: ['', '.js', '.scss', '.png', '.jpg']
+    extensions: ['', '.js', '.less', '.png', '.jpg']
   }
 };
