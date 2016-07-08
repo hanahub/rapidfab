@@ -61,6 +61,11 @@ export default class Manufacturers extends Component {
                   <td>02</td>
                   <td>CA</td>
                 </tr>
+                <tr>
+                  <td>Manufacturer</td>
+                  <td>02</td>
+                  <td>CA</td>
+                </tr>
               </tbody>
             </BS.Table>
           </BS.Col>
@@ -107,10 +112,10 @@ export default class Manufacturers extends Component {
             />
             <BS.Row>
               <BS.Col xs={6}>
-                <BS.Button bsStyle="primary" bsSize="medium" block>Delete</BS.Button>
+                <BS.Button bsStyle="danger" bsSize="medium" block>Delete</BS.Button>
               </BS.Col>
               <BS.Col xs={6}>
-                <BS.Button bsStyle="primary" bsSize="medium" block>Save</BS.Button>
+                <BS.Button bsStyle="success" bsSize="medium" block>Save</BS.Button>
               </BS.Col>
             </BS.Row>
           </BS.Col>
