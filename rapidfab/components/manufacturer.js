@@ -17,7 +17,7 @@ export default class Manufacturers extends Component {
         </BS.Row>
         <BS.Row>
           <BS.Col xs={6} className="separator">
-            <BS.Table striped bordered hover className='manufacturer-list'>
+            <BS.Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Manufacturer</th>
@@ -64,7 +64,7 @@ export default class Manufacturers extends Component {
               </tbody>
             </BS.Table>
           </BS.Col>
-          <BS.Col xs={6} xsOffset={0} className="create--manufacturer-input">
+          <BS.Col xs={6} xsOffset={0}>
             <BS.Row>
               <BS.Col xs={6} xsOffset={6}>
                 <BS.Button bsStyle="primary" bsSize="small" block>Add new manufacturer</BS.Button>
