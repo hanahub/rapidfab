@@ -4,12 +4,14 @@ import PathToRegexp from 'path-to-regexp';
 
 import Index         from 'rapidfab/components/index'
 import About         from 'rapidfab/components/about'
+import Materials     from 'rapidfab/components/material'
 import Manufacturers from 'rapidfab/components/manufacturer'
 
 var Router = React.createClass({
   routes: {
-    "/"             : Index,
-    "/about"        : About,
+    "/"              : Index,
+    "/about"         : About,
+    "/materials"     : Materials,
     "/manufacturers" : Manufacturers,
   },
   render: function() {
