@@ -63,6 +63,7 @@ class User extends Component {
           onClose={this.handleClose}
           onSave={this.handleSave}
           onDelete={this.handleDelete}
+          title={this.state.editingData ? "Edit User" : "New User"}
         >
           <Form />
         </FormModal>

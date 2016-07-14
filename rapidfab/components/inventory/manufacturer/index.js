@@ -63,6 +63,7 @@ class Manufacturer extends Component {
           onClose={this.handleClose}
           onSave={this.handleSave}
           onDelete={this.handleDelete}
+          title={this.state.editingData ? "Edit Manufacturer" : "New Manufacturer"}
         >
           <Form />
         </FormModal>
