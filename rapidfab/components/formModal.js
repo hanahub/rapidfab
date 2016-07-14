@@ -60,7 +60,6 @@ class FormModal extends Component {
   }
 }
 
-
 FormModal.propTypes = {
   data: React.PropTypes.object,
   onSave: React.PropTypes.func.isRequired,

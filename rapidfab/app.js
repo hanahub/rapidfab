@@ -7,6 +7,7 @@ import React, { Component }             from "react";
 import ReactDOM                         from 'react-dom';
 
 import Routes                           from 'rapidfab/routes';
+import Router                           from 'rapidfab/components/router';
 
 import { IntlProvider }                 from 'react-intl';
 import i18n                             from 'rapidfab/i18n';
@@ -27,13 +28,20 @@ export default class App extends Component {
         messages: i18n[this.props.locale].messages
       }
     };
+
+    this.handleNavigate = this.handleNavigate.bind(this);
   }
 
-  componentWillMount() {
-    window.onhashchange = event => {
-      if(!event) return;
-      URL.change(event.oldURL, event.newURL || window.location.hash);
-    }
+  handleNavigate(e, currentHash, nextHash) {
+    console.log("HASH_CHANGE", nextHash);
+    this.setState({
+      url: {
+        location: {
+          hash: nextHash
+        }
+      }
+    });
+    URL.change(currentHash, nextHash);
   }
 
   render() {
@@ -44,7 +52,12 @@ export default class App extends Component {
       >
         <div>
           <Navbar />
-          <Routes {...this.state}/>
+          <Router
+            {...this.state}
+            routes={Routes}
+            onNavigate={this.handleNavigate}
+            hash={this.state.url.location.hash}
+          />
         </div>
       </IntlProvider>
     );
@@ -53,5 +66,5 @@ export default class App extends Component {
 
 ReactDOM.render(
   <App locale={navigator.language} hash={window.location.hash}/>,
-    document.getElementById("app")
+  document.getElementById("app")
 );
