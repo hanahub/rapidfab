@@ -7,7 +7,7 @@ import Form                     from './form';
 import FormModal                from 'rapidfab/components/formModal';
 
 
-class Manufacturer extends Component {
+class User extends Component {
   constructor(props) {
     super(props);
 
@@ -82,7 +82,7 @@ class Manufacturer extends Component {
         <BS.Row>
           <BS.Col xs={12}>
             <Grid
-              data={_.values(FakeData.manufacturers)}
+              data={_.values(FakeData.users)}
               onAdd={this.handleAdd}
               onEdit={this.handleEdit}
             />
@@ -94,4 +94,4 @@ class Manufacturer extends Component {
   }
 }
 
-export default Manufacturer
+export default User

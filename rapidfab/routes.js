@@ -2,13 +2,13 @@ import _                      from 'lodash';
 import React                  from 'react';
 import PathToRegexp           from 'path-to-regexp';
 
-import Index         from 'rapidfab/components/index';
-import About         from 'rapidfab/components/about';
-import Materials     from 'rapidfab/components/material';
-import Locations     from 'rapidfab/components/location'
+import Index                  from 'rapidfab/components/index';
+import About                  from 'rapidfab/components/about';
+import Materials              from 'rapidfab/components/material';
+import Locations              from 'rapidfab/components/location'
 
-import InventoryManufacturers from 'rapidfab/components/inventory/manufacturer';
-
+import InventoryManufacturer  from 'rapidfab/components/inventory/manufacturer';
+import InventoryUser          from 'rapidfab/components/inventory/user'
 
 var Router = React.createClass({
   routes: {
@@ -17,6 +17,7 @@ var Router = React.createClass({
     "/inventory/material"      : Materials,
     "/inventory/location"      : Locations,
     "/inventory/manufacturers" : InventoryManufacturers,
+    "/inventory/user"          : InventoryUser
   },
   render: function() {
     var toRender = null;

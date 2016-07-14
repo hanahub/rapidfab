@@ -1,6 +1,7 @@
-import _ from 'lodash';
 import ManufacturesData from './manufacturers';
+import UsersData from './users';
 
 export default {
-  manufacturers: ManufacturesData
+  manufacturers: ManufacturesData,
+  users: UsersData
 }
