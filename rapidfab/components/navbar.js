@@ -27,7 +27,7 @@ class NavBar extends Component {
           </BS.NavDropdown>
           <BS.NavDropdown eventKey={2} title="Work" id="uxNavWork">
             <BS.MenuItem eventKey={2.1} href="#/work/queue">
-              <Fa name='flask'/> Queues
+              <Fa name='list'/> Queues
             </BS.MenuItem>
             <BS.MenuItem divider />
             <BS.MenuItem eventKey={2.2} href="#/work/shipping">

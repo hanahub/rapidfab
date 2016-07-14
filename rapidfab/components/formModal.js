@@ -20,13 +20,13 @@ class FormModal extends Component {
   }
 
   render() {
-    const { data, showModal, onClose } = this.props;
+    const { data, showModal, onClose, title } = this.props;
     return (
       <BS.Form onSubmit={this.handleSubmit}>
         <BS.Modal show={showModal} backdrop="static" onHide={onClose}>
           <BS.ModalHeader closeButton>
             <BS.Modal.Title>
-              {data ? "Edit Manufacturer" : "Add Manufacturer"}
+              {title}
             </BS.Modal.Title>
           </BS.ModalHeader>
           <BS.Modal.Body>
@@ -64,7 +64,8 @@ FormModal.propTypes = {
   data: React.PropTypes.object,
   onSave: React.PropTypes.func.isRequired,
   onDelete: React.PropTypes.func.isRequired,
-  onClose: React.PropTypes.func.isRequired
+  onClose: React.PropTypes.func.isRequired,
+  title: React.PropTypes.node.isRequired
 }
 
 export default FormModal
