@@ -33,7 +33,6 @@ export default class App extends Component {
   }
 
   handleNavigate(e, currentHash, nextHash) {
-    console.log("HASH_CHANGE", nextHash);
     this.setState({
       url: {
         location: {

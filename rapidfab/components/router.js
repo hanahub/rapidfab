@@ -21,7 +21,6 @@ class Router extends Component {
     if(hash && hash.startsWith("#")) {
       hash = hash.substr(1);
     }
-    console.log(hash);
     let toRender = null;
 
     for(let path in routes) {
