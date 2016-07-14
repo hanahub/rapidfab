@@ -62,6 +62,7 @@ class Material extends Component {
           onClose={this.handleClose}
           onSave={this.handleSave}
           onDelete={this.handleDelete}
+          title={this.state.editingData ? "Edit Material" : "New Material"}
         >
           <Form />
         </FormModal>
