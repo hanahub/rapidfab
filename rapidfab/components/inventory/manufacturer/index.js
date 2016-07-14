@@ -5,6 +5,7 @@ import FakeData                 from 'rapidfab/fakeData';
 import Grid                     from './grid';
 import Form                     from './form';
 import FormModal                from 'rapidfab/components/formModal';
+import Fa                       from 'react-fontawesome';
 
 
 class Manufacturer extends Component {
@@ -70,10 +71,10 @@ class Manufacturer extends Component {
           <BS.Col xs={12}>
             <BS.Breadcrumb>
               <BS.Breadcrumb.Item href="#/inventory">
-                Inventory
+                <Fa name='list'/> Inventory
               </BS.Breadcrumb.Item>
-              <BS.Breadcrumb.Item href="#/inventory/manufacturers">
-                Manufacturers
+              <BS.Breadcrumb.Item href="#/inventory/manufacturer">
+                <Fa name='industry'/> Manufacturers
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
