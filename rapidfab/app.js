@@ -1,3 +1,4 @@
+import 'font-awesome-webpack';
 import 'rapidfab/styles/main.less';
 
 import * as URL                         from 'rapidfab/actions/url';
