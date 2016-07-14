@@ -41,6 +41,7 @@ const Form = ({  }) => (
           <BS.ControlLabel>Package Size:</BS.ControlLabel>
           <BS.FormControl type="text" />
           <BS.DropdownButton
+            componentClass={BS.InputGroup.Button}
             id="input-dropdown-addon"
             title="unit_id"
           >
