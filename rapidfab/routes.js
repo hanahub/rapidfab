@@ -1,20 +1,22 @@
-import _     from 'lodash';
-import React from 'react';
-import PathToRegexp from 'path-to-regexp';
+import _                      from 'lodash';
+import React                  from 'react';
+import PathToRegexp           from 'path-to-regexp';
 
-import Index         from 'rapidfab/components/index'
-import About         from 'rapidfab/components/about'
-import Materials     from 'rapidfab/components/material'
+import Index         from 'rapidfab/components/index';
+import About         from 'rapidfab/components/about';
+import Materials     from 'rapidfab/components/material';
 import Locations     from 'rapidfab/components/location'
-import Manufacturers from 'rapidfab/components/manufacturer'
+
+import InventoryManufacturers from 'rapidfab/components/inventory/manufacturer';
+
 
 var Router = React.createClass({
   routes: {
-    "/"              : Index,
-    "/about"         : About,
-    "/materials"     : Materials,
-    "/locations"     : Locations,
-    "/manufacturers" : Manufacturers,
+    "/"                        : Index,
+    "/about"                   : About,
+    "/inventory/material"      : Materials,
+    "/inventory/location"      : Locations,
+    "/inventory/manufacturers" : InventoryManufacturers,
   },
   render: function() {
     var toRender = null;
