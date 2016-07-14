@@ -1,4 +1,4 @@
-import React, { PropTyes }  from 'react';
+import React, { PropTypes } from 'react';
 import Griddle              from 'griddle-react';
 
 const Grid = ({data, columnMeta, columns}) => (
@@ -15,9 +15,9 @@ const Grid = ({data, columnMeta, columns}) => (
 )
 
 Grid.propTypes = {
-  data: React.PropTypes.arrayOf(React.PropTypes.object),
-  columnMeta: React.PropTypes.arrayOf(React.PropTypes.object),
-  columns: React.PropTypes.arrayOf(React.PropTypes.string)
+  data: PropTypes.arrayOf(PropTypes.object),
+  columnMeta: PropTypes.arrayOf(PropTypes.object),
+  columns: PropTypes.arrayOf(PropTypes.string)
 }
 
 Grid.defaultProps = {

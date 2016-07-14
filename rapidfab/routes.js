@@ -1,71 +1,19 @@
-import _                      from 'lodash';
-import React                  from 'react';
-import PathToRegexp           from 'path-to-regexp';
-
 import Index                  from 'rapidfab/components/index';
 import About                  from 'rapidfab/components/about';
-import Materials              from 'rapidfab/components/material';
-import Locations              from 'rapidfab/components/location'
 
+import InventoryLocation      from 'rapidfab/components/location'
 import InventoryManufacturer  from 'rapidfab/components/inventory/manufacturer';
+import InventoryMaterial      from 'rapidfab/components/material';
 import InventoryUser          from 'rapidfab/components/inventory/user'
 
-var Router = React.createClass({
-  routes: {
-    "/"                        : Index,
-    "/about"                   : About,
-    "/inventory/material"      : Materials,
-    "/inventory/location"      : Locations,
-    "/inventory/manufacturers" : InventoryManufacturers,
-    "/inventory/user"          : InventoryUser
-  },
-  render: function() {
-    var toRender = null;
-    for(var path in this.routes) {
-      var element = this.routes[path];
-      var keys = [];
-      var pattern = PathToRegexp(path, keys);
-      var match = pattern.exec(this.props.hash);
-      if(match) {
-        if(!!toRender) {
-          console.warn("Matched more than one route. First route was", toRender.path, " this match is ", path);
-        }
-        var route = {};
-        for(var i = 0; i < keys.length; i++) {
-          let key = keys[i];
-          route[key.name] = match[i+1];
-        }
-        var props = _.assign({}, this.props, {route: route});
-        toRender = {
-          element : React.createElement(element, props),
-          path    : path
-        }
-      }
-    }
-    if(!toRender) {
-      return (
-        <div className="router">
-          <p>You seem to have reached a link that doesn't go anywhere. Maybe you want <a href="#/">to go back to the beginning?</a></p>
-        </div>
-      );
-    } else {
-      return (
-        <div className="router">
-          {toRender.element}
-        </div>
-      );
-    }
-  }
-});
+const Routes = {
+  "/"                        : Index,
+  "/about"                   : About,
 
-var Routes = React.createClass({
-  render: function() {
-    var hash = this.props.url.location.hash.substr(1);
+  "/inventory/material"      : InventoryMaterial,
+  "/inventory/location"      : InventoryLocation,
+  "/inventory/manufacturer"  : InventoryManufacturer,
+  "/inventory/user"          : InventoryUser
+}
 
-    return (
-      <Router hash={hash} {...this.props}/>
-    );
-  }
-});
-
-module.exports = Routes
+export default Routes
