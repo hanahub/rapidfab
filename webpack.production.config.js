@@ -13,6 +13,7 @@ fs.writeFileSync(
 );
 
 module.exports = Object.assign(webpackConfig, {
+  devtool: "source-map",
   entry: {
     app: './rapidfab/app'
   },

@@ -3,7 +3,7 @@ const webpack         = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: "source-map",
+  devtool: "dev",
   devServer: {
     hot: true,
     progress: true,
