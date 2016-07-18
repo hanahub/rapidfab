@@ -1,7 +1,11 @@
-import ManufacturesData from './manufacturers';
-import UsersData from './users';
+import ManufacturesData   from './manufacturers';
+import MaterialsData      from './materials';
+import MaterialResources  from './material_resources';
+import UsersData          from './users';
 
 export default {
-  manufacturers: ManufacturesData,
-  users: UsersData
+  manufacturers      : ManufacturesData,
+  materials          : MaterialsData,
+  material_resources : MaterialResources,
+  users              : UsersData,
 }
