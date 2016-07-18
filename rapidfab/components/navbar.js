@@ -105,10 +105,10 @@ class Navbar extends Component {
           </BS.NavDropdown>
           <BS.NavDropdown eventKey={2} title={<Flag type={flag}/>} id="uxNavLocale">
             <BS.MenuItem eventKey={2.1} onClick={() => onChangeLocale(locale, "en-US")}>
-              <Fa name='check' style={{visibility: flag === "us" ? null : "hidden"}}/> <Flag type='us'/> <FormattedMessage id="language.english" defaultMessage='English'/>
+              <Fa name='check' style={{visibility: flag === "us" ? null : "hidden"}}/> <Flag type='us'/> English
             </BS.MenuItem>
             <BS.MenuItem eventKey={2.2} onClick={() => onChangeLocale(locale, "ja")}>
-              <Fa name='check' style={{visibility: flag === "jp" ? null : "hidden"}}/> <Flag type='jp'/> <FormattedMessage id="language.japanese" defaultMessage='Japanese'/>
+              <Fa name='check' style={{visibility: flag === "jp" ? null : "hidden"}}/> <Flag type='jp'/> 日本語
             </BS.MenuItem>
           </BS.NavDropdown>
         </BS.Nav>
