@@ -7,7 +7,7 @@ class Router extends Component {
   componentWillMount() {
     window.onhashchange = event => {
       if(!event) return;
-      this.props.onNavigate(event, this.props.hash, window.location.hash);
+      this.props.onNavigate(this.props.hash, window.location.hash);
     }
   }
 

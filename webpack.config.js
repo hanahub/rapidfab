@@ -3,7 +3,7 @@ const webpack         = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: "source-map",
+  devtool: "dev",
   devServer: {
     hot: true,
     progress: true,
@@ -41,7 +41,8 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         include: path.join(__dirname, 'rapidfab')
       },
-      { test: /\.(png|jpg)$/,                   loader: "url-loader?prefix=images/&limit=5000" },
+      { test: /\.png$/,                         loader: "url-loader?mimetype=image/png" },
+      { test: /\.jpg$/,                         loader: "url-loader?mimetype=image/jpg" },
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&minetype=application/font-woff" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,     loader: "url?limit=10000&minetype=application/octet-stream" },
@@ -53,7 +54,7 @@ module.exports = {
   resolve: {
     alias: {
       rapidfab: __dirname + '/rapidfab',
-      images: __dirname + '/images',
+      images: __dirname + '/rapidfab/images',
       tests:  __dirname + '/tests'
     },
     extensions: ['', '.js', '.less', '.png', '.jpg']

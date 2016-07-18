@@ -1,9 +1,11 @@
 import React, { Component }     from "react";
 
-export default class Index extends Component {
+class Home extends Component {
   render() {
     return (
-      <div> Index </div>
+      <div> Home </div>
     );
   }
 }
+
+export default Home

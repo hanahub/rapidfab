@@ -6,8 +6,9 @@ import enUSMessages         from 'rapidfab/i18n/en-US.js';
 import jaMessages           from 'rapidfab/i18n/ja.js';
 
 addLocaleData(enLocaleData);
+addLocaleData(jaLocaleData);
 
-module.exports = {
+export default {
   "en-US": {
     localeData: enLocaleData,
     messages: enUSMessages

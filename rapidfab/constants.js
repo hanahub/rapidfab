@@ -1,12 +1,15 @@
-var make_constants = function(constants) {
+function make_constants(constants) {
   let result = {};
-  for(var i = 0; i < constants.length; i++) {
+  for(let i = 0; i < constants.length; i++) {
     let constant = constants[i];
     result[constant] = constant;
   }
   return result;
 }
 
-export const ActionType = make_constants([
-    'URL_CHANGE',
-])
+const Constants = [
+  'HASH_CHANGE',
+  'LOCALE_CHANGE'
+]
+
+export default make_constants(Constants)

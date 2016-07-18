@@ -1,4 +1,4 @@
-import Index                      from 'rapidfab/components/index';
+import Home                       from 'rapidfab/components/home';
 import About                      from 'rapidfab/components/about';
 
 import InventoryLocation          from 'rapidfab/components/location'
@@ -8,8 +8,9 @@ import InventoryMaterialResource  from 'rapidfab/components/inventory/material_r
 import InventoryUser              from 'rapidfab/components/inventory/user'
 
 const Routes = {
-  "/"                             : Index,
+  "/"                             : Home,
   "/about"                        : About,
+
   "/inventory/material"           : InventoryMaterial,
   "/inventory/material-resource"  : InventoryMaterialResource,
   "/inventory/location"           : InventoryLocation,
