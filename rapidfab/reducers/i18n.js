@@ -11,8 +11,8 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case Constants.LOCALE_CHANGE:
       return _.assign({}, state, {
-        locale: action.data.locale,
-        messages: i18n[action.data.locale].messages
+        locale: action.data.newLocale,
+        messages: i18n[action.data.newLocale].messages
       });
     default:
       return state

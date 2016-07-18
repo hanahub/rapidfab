@@ -12,14 +12,24 @@ import Navbar                           from 'rapidfab/components/navbar'
 
 class App extends Component {
   render() {
-    const { routes, onNavigate, url, i18n } = this.props;
+    const {
+      routes,
+      onNavigate,
+      onChangeLocale,
+      url,
+      i18n
+    } = this.props;
+
     return (
       <IntlProvider
         locale={i18n.locale}
         messages={i18n.messages}
       >
         <div>
-          <Navbar />
+          <Navbar
+            onChangeLocale={onChangeLocale}
+            locale={i18n.locale}
+          />
           <Router
             routes={routes}
             onNavigate={onNavigate}
@@ -34,7 +44,14 @@ class App extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onNavigate: (currentHash, newHash) => {
-      dispatch(Actions.Url.change(currentHash, newHash))
+      if(currentHash !== newHash) {
+        dispatch(Actions.Url.change(currentHash, newHash))
+      }
+    },
+    onChangeLocale: (currentLocale, newLocale) => {
+      if(currentLocale !== newLocale) {
+        dispatch(Actions.I18n.change(currentLocale, newLocale))
+      }
     }
   }
 }

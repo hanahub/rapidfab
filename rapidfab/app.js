@@ -1,7 +1,6 @@
 import 'font-awesome-webpack';
 import 'rapidfab/styles/main.less';
-
-import * as URL                         from 'rapidfab/actions/url';
+import 'rapidfab/styles/flags.less';
 
 import React                            from "react";
 import ReactDOM                         from 'react-dom';
