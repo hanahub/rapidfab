@@ -37,7 +37,9 @@ class Router extends Component {
           let key = keys[i];
           route[key.name] = match[i+1];
         }
-        let props = _.assign({}, this.props, {route: route});
+        let props = {
+          route
+        };
         toRender = {
           element : React.createElement(element, props),
           path    : path
