@@ -5,6 +5,7 @@ import MaterialResources  from './material_resources';
 import PostProcessing     from './post_processing';
 import ThirdPartyProvider from './third_party_provider';
 import UsersData          from './users';
+import OrdersData         from './orders';
 
 export default {
   locations            : Location,
@@ -14,4 +15,5 @@ export default {
   post_processing      : PostProcessing,
   third_party_provider : ThirdPartyProvider,
   users                : UsersData,
+  orders               : OrdersData
 }
