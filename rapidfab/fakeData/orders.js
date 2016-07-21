@@ -13,11 +13,11 @@ const records = _.map(ids, id => {
     uuid,
     snapshot: '//placekitten.com/600/600',
     material: Faker.commerce.color(),
-    estimatedShippingDate: Faker.date.future().toString(),
+    estimatedShippingDate: Faker.date.future(),
     estimatedMaterialUsed: Faker.random.number(),
     estimatedSupportUsed: Faker.random.number(),
     estimatedPrintTime: Faker.random.number(),
-    useOriginalModel: Faker.random.boolean().toString()
+    useOriginalModel: Faker.random.boolean()
   };
 });
 

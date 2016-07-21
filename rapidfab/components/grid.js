@@ -1,8 +1,14 @@
 import React, { PropTypes }                 from 'react';
 import Fa                                   from 'react-fontawesome';
-import { Image }                         from 'react-bootstrap';
+import { Image }                            from 'react-bootstrap';
 import Griddle                              from 'griddle-react';
-import { FormattedNumber, FormattedDate }   from 'react-intl';
+import {
+  FormattedDate,
+  FormattedNumber,
+  FormattedMessage,
+  FormattedVolume,
+  FormattedDuration
+} from 'rapidfab/i18n';
 
 
 export const DateColumn = ({ data }) => (
@@ -32,9 +38,7 @@ export const NumberColumn = ({ data }) => (
 )
 
 export const VolumeColumn = ({ data }) => (
-  <span>
-    <FormattedNumber value={data}/> cm<sup>3</sup>
-  </span>
+  <FormattedVolume value={data}/>
 )
 
 const Grid = ({data, columnMeta, rowMeta, columns}) => (

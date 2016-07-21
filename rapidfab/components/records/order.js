@@ -1,7 +1,13 @@
-import React, { PropTypes }     from "react";
-import * as BS                  from 'react-bootstrap';
-import Fa                       from 'react-fontawesome';
-import { FormattedMessage }     from 'react-intl';
+import React, { PropTypes }                                   from "react";
+import * as BS                                                from 'react-bootstrap';
+import Fa                                                     from 'react-fontawesome';
+import {
+  FormattedDate,
+  FormattedNumber,
+  FormattedMessage,
+  FormattedVolume,
+  FormattedDuration
+} from 'rapidfab/i18n';
 
 
 const SaveButtonTitle = ({ uri, uuid, record }) => (
@@ -40,7 +46,7 @@ const Order = ({ uri, uuid, record }) => (
           <BS.Button bsSize="small" bsStyle="info">
             <Fa name='cloud-upload'/> <FormattedMessage id="button.upload" defaultMessage='Upload Model'/>
           </BS.Button>
-          <BS.SplitButton bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+          <BS.SplitButton id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
             <BS.MenuItem eventKey={1}>
               <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
             </BS.MenuItem>
@@ -67,12 +73,12 @@ const Order = ({ uri, uuid, record }) => (
               </BS.FormControl.Static>
             </BS.Col>
           </BS.FormGroup>
-          <BS.FormGroup controlId="uxMaterialColor">
+          <BS.FormGroup controlId="uxMaterial">
             <BS.Col xs={3}>
-              <BS.ControlLabel><FormattedMessage id="field.materialColor" defaultMessage='Material / Color'/>:</BS.ControlLabel>
+              <BS.ControlLabel><FormattedMessage id="field.material" defaultMessage='Material'/>:</BS.ControlLabel>
             </BS.Col>
             <BS.Col xs={9}>
-              <BS.FormControl name="materialColor" componentClass="text"/>
+              <BS.FormControl name="material" componentClass="text"/>
             </BS.Col>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxJob">
@@ -96,25 +102,37 @@ const Order = ({ uri, uuid, record }) => (
 
     <BS.Row>
       <BS.Col xs={4}>
-        <BS.Panel header={<FormattedMessage id="plan.order.estimatedStatistics" defaultMessage='Estimated Statistics'/>} bsStyle="success">
+        <BS.Panel bsStyle="info">
           <BS.ListGroup fill>
-            <BS.ListGroupItem header={<FormattedMessage id="field.shippingDate" defaultMessage='Shipping Date'/>}>
-              {record.estimatedShippingDate || (<em>N/A</em>)}
+            <BS.ListGroupItem header={<FormattedMessage id="field.estimatedShippingDate" defaultMessage='Estimated Shipping Date'/>}>
+              {record.estimatedShippingDate ?
+                <FormattedDate value={record.estimatedShippingDate}/> :
+                (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+              }
             </BS.ListGroupItem>
-            <BS.ListGroupItem header={<FormattedMessage id="field.materialUsed" defaultMessage='Material Used'/>}>
-              {record.estimatedMaterialUsed || (<em>N/A</em>)}
+            <BS.ListGroupItem header={<FormattedMessage id="field.estimatedMaterialUsed" defaultMessage='Estimated Material Used'/>}>
+              {record.estimatedMaterialUsed ?
+                <FormattedVolume value={record.estimatedMaterialUsed}/> :
+                (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+              }
             </BS.ListGroupItem>
-            <BS.ListGroupItem header={<FormattedMessage id="field.supportUsed" defaultMessage='Support Used'/>}>
-              {record.estimatedSupportUsed || (<em>N/A</em>)}
+            <BS.ListGroupItem header={<FormattedMessage id="field.estimatedSupportUsed" defaultMessage='Estimated Support Used'/>}>
+              {record.estimatedSupportUsed ?
+                <FormattedVolume value={record.estimatedSupportUsed}/> :
+                (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+              }
             </BS.ListGroupItem>
-            <BS.ListGroupItem header={<FormattedMessage id="field.printTime" defaultMessage='Print Time'/>}>
-              {record.estimatedPrintTime || (<em>N/A</em>)}
+            <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
+              {record.estimatedPrintTime ?
+                <FormattedDuration value={record.estimatedPrintTime}/> :
+                (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+              }
             </BS.ListGroupItem>
           </BS.ListGroup>
         </BS.Panel>
       </BS.Col>
       <BS.Col xs={8}>
-        <BS.Panel header="Models" bsStyle="primary">
+        <BS.Panel header={<FormattedMessage id="models" defaultMessage='Models'/>} bsStyle="primary">
           <BS.ListGroup fill>
             <BS.ListGroupItem>
               <BS.Media>
@@ -136,7 +154,7 @@ const Order = ({ uri, uuid, record }) => (
                     </BS.Col>
                     <BS.Col xs={2}>
                       <BS.Button href="#" bsSize="small" bsStyle="info" className="pull-right">
-                        <Fa name='cloud-download'/> <FormattedMessage id="buttons.download" defaultMessage='Download'/>
+                        <Fa name='cloud-download'/> <FormattedMessage id="button.download" defaultMessage='Download'/>
                       </BS.Button>
                     </BS.Col>
                   </BS.Row>
@@ -163,7 +181,7 @@ const Order = ({ uri, uuid, record }) => (
                     </BS.Col>
                     <BS.Col xs={2}>
                       <BS.Button href="#" bsSize="small" bsStyle="info" className="pull-right">
-                        <Fa name='cloud-download'/> <FormattedMessage id="buttons.download" defaultMessage='Download'/>
+                        <Fa name='cloud-download'/> <FormattedMessage id="button.download" defaultMessage='Download'/>
                       </BS.Button>
                     </BS.Col>
                   </BS.Row>
