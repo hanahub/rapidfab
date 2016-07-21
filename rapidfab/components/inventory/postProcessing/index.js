@@ -74,7 +74,7 @@ class PostProcessing extends Component {
                 Inventory
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/inventory/post-processing">
-                Add new print/post processing resource
+                Post Processing
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
