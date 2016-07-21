@@ -5,14 +5,13 @@ import InventoryLocation            from 'rapidfab/components/inventory/location
 import InventoryManufacturer        from 'rapidfab/components/inventory/manufacturer'
 import InventoryMaterial            from 'rapidfab/components/inventory/material'
 import InventoryMaterialResource    from 'rapidfab/components/inventory/material_resource'
-import InventoryPostProcessing      from 'rapidfab/components/inventory/post_processing'
+import InventoryPostProcessing      from 'rapidfab/components/inventory/postProcessing'
 import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/third_party_provider'
 import InventoryUser                from 'rapidfab/components/inventory/user'
 
 import PlanOrders                   from 'rapidfab/containers/plan/orders'
 
 import Order                        from 'rapidfab/containers/records/order'
->>>>>>> Add orders and order routes
 
 const Routes = {
   "/"                               : Home,
