@@ -44,7 +44,7 @@ class Navbar extends Component {
         </BS.Navbar.Header>
         <BS.Nav>
           <BS.NavDropdown eventKey={1} title={planTitle} id="uxNavPlan">
-            <BS.MenuItem eventKey={1.1} href="#/plan/order">
+            <BS.MenuItem eventKey={1.1} href="#/plan/orders">
               <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
