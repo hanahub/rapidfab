@@ -1,5 +1,6 @@
 import React, { PropTypes }     from "react";
 import EditorGrid               from 'rapidfab/components/editorGrid';
+import { FormattedMessage }     from 'react-intl';
 
 
 const Grid = ({ data, onAdd, onEdit }) => (
@@ -16,19 +17,19 @@ const Grid = ({ data, onAdd, onEdit }) => (
     ]}
     columnMeta={[{
       columnName: "resource",
-      displayName: "Resource"
+      displayName: <FormattedMessage id="field.resource" defaultMessage="resource"/>
     }, {
       columnName: "material",
-      displayName: "Material"
+      displayName: <FormattedMessage id="field.material" defaultMessage="Material"/>
     }, {
       columnName: "color",
-      displayName: "Color"
+      displayName: <FormattedMessage id="field.color" defaultMessage="Color"/>
     }, {
       columnName: "status",
-      displayName: "Status"
+      displayName: <FormattedMessage id="field.status" defaultMessage="Status"/>
     }, {
       columnName: "balance",
-      displayName: "Balance"
+      displayName: <FormattedMessage id="field.balance" defaultMessage="Balance"/>
     }]}
   />
 )

@@ -1,5 +1,6 @@
 import React, { PropTypes }     from "react";
 import EditorGrid               from 'rapidfab/components/editorGrid';
+import { FormattedMessage }     from 'react-intl';
 
 
 const ManufacturersGrid = ({ data, onAdd, onEdit }) => (
@@ -15,16 +16,16 @@ const ManufacturersGrid = ({ data, onAdd, onEdit }) => (
     ]}
     columnMeta={[{
       columnName: "name",
-      displayName: "Name"
+      displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>,
     }, {
       columnName: "email",
-      displayName: "Email"
+      displayName: <FormattedMessage id="field.email" defaultMessage='Email'/>
     }, {
       columnName: "location",
-      displayName: "Location"
+      displayName: <FormattedMessage id="field.location" defaultMessage='Location'/>
     }, {
       columnName: "locationAccess",
-      displayName: "Location Access"
+      displayName: <FormattedMessage id="field.locationAccess" defaultMessage='Location Access'/>
     }]}
   />
 )
