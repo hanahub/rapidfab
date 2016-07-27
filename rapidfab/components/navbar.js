@@ -78,7 +78,7 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={3.3} href="#/inventory/post-processing">
               <Fa name='server'/> <FormattedMessage id="inventory.postProcessing" defaultMessage='Printer &amp; Post processing'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/manufacturer">
+            <BS.MenuItem eventKey={3.3} href="#/inventory/manufacturers">
               <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.3} href="#/inventory/third-party-provider">
