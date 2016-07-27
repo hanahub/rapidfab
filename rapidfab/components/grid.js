@@ -1,7 +1,8 @@
-import React, { PropTypes }                 from 'react';
-import Fa                                   from 'react-fontawesome';
-import { Image }                            from 'react-bootstrap';
-import Griddle                              from 'griddle-react';
+import _                        from "lodash"
+import React, { PropTypes }     from 'react';
+import Fa                       from 'react-fontawesome';
+import { Image }                from 'react-bootstrap';
+import Griddle                  from 'griddle-react';
 import {
   FormattedDate,
   FormattedNumber,
@@ -10,6 +11,13 @@ import {
   FormattedDuration
 } from 'rapidfab/i18n';
 
+export const IdColumn = resource => (
+  ({ data, rowData }) => (
+    <a href={`#/records/${resource}/${encodeURIComponent(rowData.uuid)}`}>
+      {data}
+    </a>
+  )
+)
 
 export const DateColumn = ({ data }) => (
   <FormattedDate value={data}/>
@@ -48,7 +56,7 @@ const Grid = ({data, columnMeta, rowMeta, columns}) => (
     sortAscendingComponent={<Fa name="sort-asc" className="pull-right"/>}
     sortDescendingComponent={<Fa name="sort-desc" className="pull-right"/>}
     showPager={false}
-    results={data}
+    results={_.values(data)}
     columnMetadata={columnMeta}
     rowMetadata={rowMeta}
     columns={columns}
