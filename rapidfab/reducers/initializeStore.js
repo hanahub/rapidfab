@@ -1,8 +1,9 @@
 import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
+import thunkMiddleware                  from 'redux-thunk'
+import createLogger                     from 'redux-logger'
+import apiMiddleware                    from 'rapidfab/middleware/api'
 
-import Reducer from 'rapidfab/reducers'
+import Reducer                          from 'rapidfab/reducers'
 
 
 const loggerMiddleware = createLogger()
@@ -13,7 +14,8 @@ export default function initializeStore(initialState) {
     initialState,
     applyMiddleware(
       thunkMiddleware,
-      loggerMiddleware
+      loggerMiddleware,
+      apiMiddleware
     )
   )
 }
