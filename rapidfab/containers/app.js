@@ -1,13 +1,38 @@
 import React, { Component, PropTypes }  from "react"
 import Actions                          from "rapidfab/actions"
+import Config                           from 'rapidfab/config'
 import { connect }                      from 'react-redux'
 
+import Navbar                           from 'rapidfab/components/navbar'
 import Routes                           from 'rapidfab/routes'
 import Router                           from 'rapidfab/components/router'
 
 import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
-import Navbar                           from 'rapidfab/components/navbar'
+
+const SessionProvider= ({ children, currentUser, fetching, errors }) => {
+  if(fetching) {
+    return (<div>loading...</div>)
+  }
+
+  if (errors) {
+    return (
+      <div>
+        {errors}
+      </div>
+    )
+  }
+  console.log(currentUser)
+  if (!currentUser) {
+    window.location = `${Config.HOST.SCYLLA}#/login`
+  }
+
+  return (
+    <div>
+      {children}
+    </div>
+  )
+}
 
 
 class App extends Component {
@@ -28,7 +53,7 @@ class App extends Component {
         locale={i18n.locale}
         messages={i18n.messages}
       >
-        <div>
+        <SessionProvider {...session}>
           <Navbar
             onChangeLocale={onChangeLocale}
             locale={i18n.locale}
@@ -38,11 +63,12 @@ class App extends Component {
             onNavigate={onNavigate}
             hash={url.hash}
           />
-        </div>
+        </SessionProvider>
       </IntlProvider>
     );
   }
 }
+
 
 function mapDispatchToProps(dispatch) {
   return {
