@@ -4,6 +4,9 @@ export const RESOURCES = {
   hoth: [
     'model'
   ],
+  pao: [
+    'sessions'
+  ],
   wyatt: [
     'manufacturer',
     'material'
