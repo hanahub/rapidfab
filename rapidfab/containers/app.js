@@ -11,15 +11,18 @@ import Navbar                           from 'rapidfab/components/navbar'
 
 
 class App extends Component {
+  componentWillMount() {
+    this.props.onInitialize()
+  }
   render() {
     const {
+      session,
       routes,
       onNavigate,
       onChangeLocale,
       url,
       i18n
     } = this.props;
-
     return (
       <IntlProvider
         locale={i18n.locale}
@@ -52,6 +55,9 @@ function mapDispatchToProps(dispatch) {
       if(currentLocale !== newLocale) {
         dispatch(Actions.I18n.change(currentLocale, newLocale))
       }
+    },
+    onInitialize: () => {
+      dispatch(Actions.Api.pao.sessions.get(''))
     }
   }
 }
@@ -59,11 +65,18 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const routes = Routes;
   const {
+    sessions,
     url,
     i18n
   } = state;
-
+  const currentUsers = _.omit(sessions, ['uxFetching', 'uxErrors'])
+  const session = {
+    currentUser : _.find(currentUsers, user => !!user.uri),
+    fetching    : sessions.uxFetching,
+    errors      : sessions.uxErrors
+  }
   return {
+    session,
     url,
     i18n,
     routes
