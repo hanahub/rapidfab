@@ -51,7 +51,7 @@ function makePut(hostRoot, resource) {
 
 function makeGet(hostRoot, resource) {
   return (uuid, config) => {
-    return fetch(`${hostRoot}/${resource}/${uuid}/`, _.assign({
+    return fetch(`${hostRoot}/${resource}/${uuid}`, _.assign({
       credentials : 'include'
     }, FETCH_CONFIG, config))
   }
