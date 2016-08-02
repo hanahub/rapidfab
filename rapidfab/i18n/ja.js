@@ -29,6 +29,7 @@ export default {
   "button.delete"                 : "Delete",
   "button.download"               : "Download",
   "button.save"                   : "Save",
+  "button.reset"                  : "Reset",
 
   "record.order"                  : "Order",
   "record.order.add"              : "Add Order",
@@ -46,6 +47,7 @@ export default {
   "field.estimatedMaterialUsed"   : "Estimated Material Used",
   "field.estimatedSupportUsed"    : "Estimated Support Used",
   "field.estimatedPrintTime"      : "Estimated Print Time",
+  "field.et"                      : "ET",
   "field.fullfilledByThirdParty"  : "Fullfilled By Third Party",
   "field.id"                      : "Id",
   "field.job"                     : "Job",
@@ -60,6 +62,7 @@ export default {
   "field.packageSize"             : "Package Size",
   "field.phone"                   : "Phone",
   "field.preview"                 : "Preview",
+  "field.order"                   : "Order",
   'field.resource'                : 'Resource',
   "field.retailPrice"             : "Retail Price",
   "field.size"                    : "Size",
@@ -67,4 +70,5 @@ export default {
   "field.supportPhone"            : "Support Phone",
   "field.type"                    : "Type",
   "field.useOriginalModel"        : "Use Original Model",
+  "field.volume"                  : "Volume",
 }
