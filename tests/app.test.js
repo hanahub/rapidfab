@@ -8,9 +8,9 @@ describe('config', function(){
     });
   });
 
-  describe('#PAO_HOST', function(){
+  describe('#HOST', function(){
     it('has a pao host config', function(){
-      expect(config.PAO_HOST).toBeA('string');
+      expect(config.HOST.PAO).toBeA('string');
     });
   });
 });
