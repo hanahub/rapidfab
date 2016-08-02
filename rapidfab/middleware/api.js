@@ -46,14 +46,15 @@ function apiMiddleware({ dispatch, getState }) {
       type: failureType
     }))
 
-    const handleResponse = response => response.json().then(json => {
+    const handleResponse = response => response.text().then(text => {
+      let json = JSON.parse(text || null)
       if(response.status >= 400) {
         dispatch(Object.assign({}, {
           uuid,
           filters,
           payload,
           json,
-          response,
+          headers: null,
           type: failureType
         }))
       } else {
@@ -62,7 +63,9 @@ function apiMiddleware({ dispatch, getState }) {
           filters,
           payload,
           json,
-          response,
+          headers: {
+            location: response.headers.get('Location')
+          },
           type: successType
         }))
       }
