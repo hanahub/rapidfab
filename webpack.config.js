@@ -1,7 +1,7 @@
-const path            = require('path');
-const webpack         = require('webpack');
+const path              = require('path');
+const webpack           = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const fs               = require("fs");
+const fs                = require("fs");
 
 module.exports = {
   devtool: "dev",
@@ -11,9 +11,9 @@ module.exports = {
     port: 443,
     host: "rapidfab.auth.dev",
     https: {
-      ca: fs.readFileSync("/usr/local/etc/nginx/ssl/nginx.crt"),
-      cert: fs.readFileSync("/usr/local/etc/nginx/ssl/nginx.crt"),
-      key: fs.readFileSync("/usr/local/etc/nginx/ssl/nginx.key"),
+      ca: fs.readFileSync("./nginx.crt"),
+      cert: fs.readFileSync("./nginx.crt"),
+      key: fs.readFileSync("./nginx.key"),
     }
   },
   entry: {
