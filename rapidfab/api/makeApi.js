@@ -20,11 +20,15 @@ export function filtersToQuery(filters) {
   return formatted.join('&');
 }
 
-function makePost(hostRoot, resource) {
+function makePut(hostRoot, resource) {
   return (uuid, payload, config) => {
+    delete payload['id']
+    delete payload['uri']
+    delete payload['uuid']
+
     return fetch(`${hostRoot}/${resource}/${uuid}/`, _.assign({}, FETCH_CONFIG, {
       credentials : 'include',
-      method: "post",
+      method: "put",
       body: JSON.stringify(payload)
     }, config))
   }
@@ -39,11 +43,15 @@ function makeDelete(hostRoot, resource) {
   }
 }
 
-function makePut(hostRoot, resource) {
+function makePost(hostRoot, resource) {
   return (payload, config) => {
+    delete payload['id']
+    delete payload['uri']
+    delete payload['uuid']
+
     return fetch(`${hostRoot}/${resource}/`, _.assign({}, FETCH_CONFIG, {
       credentials : 'include',
-      method: "put",
+      method: "post",
       body: JSON.stringify(payload)
     }, config))
   }

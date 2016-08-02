@@ -17,20 +17,19 @@ class ManufacturersContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //    onInitialize: () => dispatch(Actions.Api.wyatt.manufacturer.list()),
-    onInitialize: () => dispatch(Actions.Api.hoth.model.list()),
+    onInitialize: () => dispatch(Actions.Api.wyatt.manufacturer.list()),
   }
 }
 
 function mapStateToProps(state) {
   const {
-    model
+    manufacturer
   } = state;
 
   return {
-    records   : _.omit(model, ['uxFetching', 'uxErrors']),
-    fetching  : model.uxFetching,
-    errors    : model.uxErrors
+    records   : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
+    fetching  : manufacturer.uxFetching,
+    errors    : manufacturer.uxErrors
   }
 }
 
