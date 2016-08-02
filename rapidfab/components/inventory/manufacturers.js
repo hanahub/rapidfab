@@ -4,16 +4,24 @@ import Fa                     from 'react-fontawesome';
 import { FormattedMessage }   from 'react-intl';
 import Grid, { IdColumn }     from 'rapidfab/components/grid';
 
+export const ContactColumn = ({ data, rowData }) => (
+  <div>
+    <h5>{data.name}</h5>
+    <p>
+      {data.phone}
+    </p>
+  </div>
+)
+
 const ManufacturersGrid = ({ records }) => (
   <Grid
     data={records}
     columns={[
       "id",
       "name",
-      "commercialContact",
-      "commercialPhone",
-      "supportContact",
-      "supportPhone"
+      "address",
+      "contact",
+      "support",
     ]}
     columnMeta={[{
       displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
@@ -21,17 +29,16 @@ const ManufacturersGrid = ({ records }) => (
       customComponent: IdColumn("manufacturer"),
       locked: true
     }, {
-      columnName: "commercialContact",
-      displayName: <FormattedMessage id="field.commercialContact" defaultMessage='Commercial Contact'/>
+      columnName: "address",
+      displayName: <FormattedMessage id="field.address" defaultMessage='Address'/>
     }, {
-      columnName: "commercialPhone",
-      displayName: <FormattedMessage id="field.commercialPhone" defaultMessage='Commercial Phone'/>
+      columnName: "contact",
+      displayName: <FormattedMessage id="field.commercialContact" defaultMessage='Commercial Contact'/>,
+      customComponent: ContactColumn
     }, {
-      columnName: "supportContact",
-      displayName: <FormattedMessage id="field.supportContact" defaultMessage='Support Contact'/>
-    }, {
-      columnName: "supportPhone",
-      displayName: <FormattedMessage id="field.supportPhone" defaultMessage='Support Phone'/>
+      columnName: "support",
+      displayName: <FormattedMessage id="field.supportContact" defaultMessage='Support Contact'/>,
+      customComponent: ContactColumn
     }]}
   />
 )
@@ -44,7 +51,6 @@ const Loading = () => (
 
 const Manufacturers = ({ records, fetching, errors }) => (
   <BS.Grid>
-
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
