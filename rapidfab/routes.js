@@ -10,6 +10,7 @@ import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/thirdPar
 import InventoryUser                from 'rapidfab/components/inventory/user'
 
 import PlanOrders                   from 'rapidfab/containers/plan/orders'
+import PrintQueue                   from 'rapidfab/containers/plan/printQueue'
 
 import Order                        from 'rapidfab/containers/records/order'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
@@ -27,6 +28,7 @@ const Routes = {
   "/inventory/user"                 : InventoryUser,
 
   "/plan/orders"                    : PlanOrders,
+  "/plan/print-queue"               : PrintQueue,
 
   "/records/order"                  : Order,
   "/records/order/:uuid"            : Order,
