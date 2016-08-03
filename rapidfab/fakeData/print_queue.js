@@ -10,7 +10,7 @@ const records = _.map(ids, id => {
   return {
     uri: `https://rapidfab.authentise.com/order/${uuid}`,
     uuid,
-    orderSnapshot : '//placekitten.com/600/600',
+    orderSnapshot : '//placehold.it/600x600',
     order         : Faker.random.number(),
     material      : Faker.commerce.productMaterial(),
     color         : Faker.commerce.color(),
