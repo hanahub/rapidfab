@@ -1,7 +1,7 @@
 import React, { PropTypes }                   from "react";
 import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
-import { FormattedMessage }                   from 'react-intl';
+import { FormattedMessage, FormattedDate }                   from 'react-intl';
 import Grid, {
   ImageColumn,
   CapitalizeColumn,
@@ -110,13 +110,20 @@ const PrintQueue = ({ records }) => (
       </BS.Col>
       <BS.Col xs={6}>
         <BS.Row>
-          <BS.Col xs={4}>
-            <span> Order # 123 </span>
-            <img src="https://placekitten.com/125/75"/>
+          <BS.Col xs={5} xsOffset={1}>
+            <form className="form-inline date-range">
+              <BS.FormControl type="text" defaultValue={`${fromDate.getMonth()}/${fromDate.getDate()}/${fromDate.getFullYear()}`} />
+              -
+              <BS.FormControl type="text" defaultValue={`${toDate.getMonth()}/${toDate.getDate()}/${toDate.getFullYear()}`} />
+            </form>
           </BS.Col>
-          <BS.Col xs={4}>
-            <span> Order # 123 </span>
-            <img src="https://placekitten.com/125/75"/>
+          <BS.Col xs={3}>
+            <BS.FormGroup controlId="uxPrinter">
+              <BS.FormControl componentClass="select" placeholder="select">
+                <option value="select">Printer</option>
+                <option value="other">...</option>
+              </BS.FormControl>
+            </BS.FormGroup>
           </BS.Col>
           <BS.Col xs={4}>
             <span> Order # 123 </span>
