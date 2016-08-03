@@ -4,25 +4,18 @@ import Config                           from 'rapidfab/config'
 import { connect }                      from 'react-redux'
 
 import Navbar                           from 'rapidfab/components/navbar'
+import Error                            from 'rapidfab/components/error'
 import Routes                           from 'rapidfab/routes'
 import Router                           from 'rapidfab/components/router'
 
 import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
 
-const SessionProvider= ({ children, currentUser, fetching, errors }) => {
+const SessionProvider = ({ children, currentUser, fetching, errors }) => {
   if(fetching) {
     return (<div>loading...</div>)
   }
 
-  if (errors) {
-    return (
-      <div>
-        {errors}
-      </div>
-    )
-  }
-  console.log(currentUser)
   if (!currentUser) {
     window.location = `${Config.HOST.SCYLLA}#/login`
   }
@@ -58,6 +51,7 @@ class App extends Component {
             onChangeLocale={onChangeLocale}
             locale={i18n.locale}
           />
+          <Error errors={session.errors}/>
           <Router
             routes={routes}
             onNavigate={onNavigate}
