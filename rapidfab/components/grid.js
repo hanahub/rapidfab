@@ -51,7 +51,7 @@ export const VolumeColumn = ({ data }) => (
 
 const Grid = ({data, columnMeta, rowMeta, columns}) => (
   <Griddle
-    tableClassName="table table-bordered"
+    tableClassName="table table-bordered table-hover"
     useGriddleStyles={false}
     sortAscendingComponent={<Fa name="sort-asc" className="pull-right"/>}
     sortDescendingComponent={<Fa name="sort-desc" className="pull-right"/>}
@@ -60,11 +60,15 @@ const Grid = ({data, columnMeta, rowMeta, columns}) => (
     columnMetadata={columnMeta}
     rowMetadata={rowMeta}
     columns={columns}
+    resultsPerPage={9999}
   />
 )
 
 Grid.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.object),
+    PropTypes.object
+  ]),
   columnMeta: PropTypes.arrayOf(PropTypes.object),
   columns: PropTypes.arrayOf(PropTypes.string)
 }

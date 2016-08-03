@@ -1,8 +1,22 @@
-import React, { Component, PropTypes }    from "react";
+import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
-import _                                  from "lodash";
+import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
 import ManufacturerComponent              from 'rapidfab/components/records/manufacturer'
+import { reduxForm }                      from 'redux-form'
+
+const fields = [
+  'id',
+  'uri',
+  'uuid',
+  'name',
+  'contact.name',
+  'contact.phone',
+  'support.name',
+  'support.phone',
+  'address',
+  'notes'
+]
 
 class ManufacturerContainer extends Component {
   componentWillMount() {
@@ -16,29 +30,41 @@ class ManufacturerContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => dispatch(Actions.Api.hoth.model.get(uuid)),
-    onSubmit: (uuid, payload) => {
+    onInitialize: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.hoth.model.put(payload))
-      } else {
-        dispatch(Actions.Api.hoth.model.post(payload))
+        dispatch(Actions.Api.wyatt.manufacturer.get(uuid))
       }
     },
-    onDelete: uuid => dispatch(Actions.Api.hoth.model.delete(uuid))
+    onSubmit: payload => {
+      if(payload.uuid) {
+        dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload))
+        window.location.hash = "#/inventory/manufacturers"
+      } else {
+        dispatch(Actions.Api.wyatt.manufacturer.post(payload))
+        window.location.hash = "#/inventory/manufacturers"
+      }
+    },
+    onDelete: uuid => {
+      if(uuid) {
+        dispatch(Actions.Api.wyatt.manufacturer.delete(uuid))
+        window.location.hash = "#/inventory/manufacturers"
+      }
+    }
   }
 }
 
 function mapStateToProps(state, props) {
   const {
-    model
+    manufacturer
   } = state;
 
   return {
     uuid            : props.route.uuid,
-    initialValues   : model[props.route.uuid],
-    fetching        : model.uxFetching,
-    errors          : model.uxErrors,
+    initialValues   : manufacturer[props.route.uuid],
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManufacturerContainer)
+export default reduxForm({
+  form: 'record.manufacturer',
+  fields
+}, mapStateToProps, mapDispatchToProps)(ManufacturerContainer)
