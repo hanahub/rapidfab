@@ -32,6 +32,12 @@ module.exports = {
       title: "Rapidfab",
       template: "index.html"
     }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        "NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+        "BUILD_VERSION": JSON.stringify(process.env.BUILD_VERSION || 'development')
+      }
+    }),
   ],
   module: {
     loaders: [
