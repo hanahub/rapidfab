@@ -7,6 +7,7 @@ switch(process.env.NODE_ENV) {
         WYATT           : 'https://erp.authentise.com',
         EVENT           : 'https://events.authentise.com/',
         HOTH            : 'https://models.authentise.com/',
+        SCYLLA          : 'https://app.authentise.com',
       },
     };
     break;
@@ -18,6 +19,7 @@ switch(process.env.NODE_ENV) {
         WYATT           : 'https://erp.dev-auth.com',
         EVENT           : 'https://events.dev-auth.com/',
         HOTH            : 'https://models.dev-auth.com/',
+        SCYLLA          : 'https://app.dev-auth.com',
       },
     };
     break;
@@ -29,6 +31,7 @@ switch(process.env.NODE_ENV) {
         WYATT           : 'https://erp.dev-auth.com',
         EVENT           : 'https://events.dev-auth.com/',
         HOTH            : 'https://models.dev-auth.com/',
+        SCYLLA          : 'https://app.dev-auth.com',
       },
     };
 }
