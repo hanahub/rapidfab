@@ -7,12 +7,7 @@ const Error = ({ errors }) => {
     <BS.Row>
       <BS.Col xs={8} xsOffset={2}>
         <BS.Alert bsStyle="danger" className='error-alert'>
-          <BS.Row>
-            <BS.Col xs={8} xsOffset={2} className="error-text">
-              <h4>Oh Darn! You got an error!</h4>
-              <p>{error}</p>
-            </BS.Col>
-          </BS.Row>
+          <p>{error}</p>
         </BS.Alert>
       </BS.Col>
     </BS.Row>
