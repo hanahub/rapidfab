@@ -50,6 +50,7 @@ class App extends Component {
           <Navbar
             onChangeLocale={onChangeLocale}
             locale={i18n.locale}
+            currentUser={session.currentUser}
           />
           <Error errors={session.errors}/>
           <Router

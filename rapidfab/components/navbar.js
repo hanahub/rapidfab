@@ -1,6 +1,5 @@
 import React, { Component }     from "react";
 import * as BS                  from 'react-bootstrap';
-import Faker                    from 'faker';
 import Fa                       from 'react-fontawesome';
 import Flag                     from 'rapidfab/components/flag';
 import { FormattedMessage }     from 'react-intl';
@@ -12,7 +11,7 @@ const LanguageFlagMap = {
 
 class Navbar extends Component {
   render() {
-    const { locale, onChangeLocale } = this.props;
+    const { locale, onChangeLocale, currentUser } = this.props;
     const flag = LanguageFlagMap[locale];
     const planTitle = (
       <span>
@@ -31,7 +30,7 @@ class Navbar extends Component {
     );
     const myProfileTitle = (
       <span>
-        <Fa name='user'/> {Faker.name.findName()}
+        <Fa name='user'/> {currentUser.name}
       </span>
     );
 
