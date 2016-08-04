@@ -24,9 +24,7 @@ const SessionProvider = ({ children, currentUser, fetching, errors}) => {
     )
   }
 
-  return (
-    <div>loading...</div>
-  )
+  return <div/>
 }
 
 class App extends Component {
