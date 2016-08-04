@@ -1,1 +1,1 @@
-export default "development";
+export default process.env.BUILD_VERSION
