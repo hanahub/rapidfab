@@ -43,6 +43,29 @@ def get_branch(sha):
             raise Exception("{} did not match our expected reflog pattern looking for {}".format(line, sha))
     raise Exception("Unable to find branch for {}".format(sha))
 
+def test():
+    LOGGER.info("Running tests in PhantomJS")
+    try:
+        execute('BROWSER=PhantomJS2 npm run test:junit', shell=True)
+    except Exception as e:
+        LOGGER.error("Test run failed: %s", e)
+        sys.exit(1)
+
+def build(commit_info):
+    try:
+        if commit_info.commits == 0:
+            LOGGER.info("Building prod for %s from %s", commit_info.tag, commit_info.branch)
+            execute('NODE_ENV=production npm run build', shell=True)
+        elif commit_info.branch == 'master':
+            LOGGER.info("Building development for %s from %s", commit_info.tag, commit_info.branch)
+            execute('NODE_ENV=development npm run build', shell=True)
+        else:
+            LOGGER.info("Building branch for %s from %s", commit_info.tag, commit_info.branch)
+            execute('npm run build', shell=True)
+    except Exception as e:
+        LOGGER.exception("Build failed: %s", e)
+        sys.exit(1)
+
 def publish(commit_info):
     if commit_info.commits == 0:
         LOGGER.info("Publishing prod for %s from %s", commit_info.tag, commit_info.branch)
@@ -84,20 +107,8 @@ def main():
     execute(['npm', 'prune'])
     execute(['npm', 'run', 'build:clean'])
 
-    LOGGER.info("Running tests in PhantomJS")
-    try:
-        execute('BROWSER=PhantomJS2 npm run test:junit', shell=True)
-    except Exception as e:
-        LOGGER.error("Test run failed: %s", e)
-        sys.exit(1)
-
-    LOGGER.info("Building {}...".format(description))
-    try:
-        execute("npm run build", shell=True)
-    except Exception as e:
-        LOGGER.exception("Build failed: %s", e)
-        sys.exit(1)
-
+    test()
+    build(commit_info)
     publish(commit_info)
     write_artifact(commit_info)
 
