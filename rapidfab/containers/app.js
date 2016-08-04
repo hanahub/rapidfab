@@ -11,22 +11,23 @@ import Router                           from 'rapidfab/components/router'
 import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
 
-const SessionProvider = ({ children, currentUser, fetching, errors }) => {
-  if(fetching) {
-    return (<div>loading...</div>)
-  }
-
-  if (!currentUser) {
+const SessionProvider = ({ children, currentUser, fetching, errors}) => {
+  if(!currentUser && errors) {
     window.location = `${Config.HOST.SCYLLA}#/login`
   }
 
+  if(currentUser) {
+    return (
+      <div>
+        {children}
+      </div>
+    )
+  }
+
   return (
-    <div>
-      {children}
-    </div>
+    <div>loading...</div>
   )
 }
-
 
 class App extends Component {
   componentWillMount() {
@@ -52,7 +53,6 @@ class App extends Component {
             locale={i18n.locale}
             currentUser={session.currentUser}
           />
-          <Error errors={session.errors}/>
           <Router
             routes={routes}
             onNavigate={onNavigate}
