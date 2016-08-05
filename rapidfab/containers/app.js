@@ -11,9 +11,10 @@ import Router                           from 'rapidfab/components/router'
 import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
 
-const SessionProvider = ({ children, currentUser, fetching, errors}) => {
+const SessionProvider = ({children, currentUser, fetching, errors}) => {
   if(!currentUser && errors) {
-    window.location = `${Config.HOST.SCYLLA}#/login`
+    let next = window.location.hash.substr(1);
+    window.location = `${Config.HOST.SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`
   }
 
   if(currentUser) {
