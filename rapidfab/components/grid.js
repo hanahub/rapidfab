@@ -1,22 +1,33 @@
 import _                        from "lodash"
-import React, { PropTypes }     from 'react';
-import Fa                       from 'react-fontawesome';
-import { Image }                from 'react-bootstrap';
-import Griddle                  from 'griddle-react';
+import React, { PropTypes }     from 'react'
+import Fa                       from 'react-fontawesome'
+import { Image }                from 'react-bootstrap'
+import Griddle                  from 'griddle-react'
+import { extractUuid }          from 'rapidfab/reducers/makeApiReducers'
 import {
   FormattedDate,
   FormattedNumber,
   FormattedMessage,
   FormattedVolume,
   FormattedDuration
-} from 'rapidfab/i18n';
+} from 'rapidfab/i18n'
 
-export const IdColumn = resource => (
-  ({ data, rowData }) => (
-    <a href={`#/records/${resource}/${encodeURIComponent(rowData.uuid)}`}>
-      {data}
-    </a>
-  )
+
+export const IdColumn = (resource, field, records) => (
+  ({ rowData }) => {
+    let record = rowData
+    if(field) {
+      let uri = rowData[field]
+      let uuid = extractUuid(uri)
+      record = records[uuid]
+      if(!record) return <Fa name="spinner" spin/>
+    }
+    return (
+      <a href={`#/records/${resource}/${record.uuid}`}>
+        {record.id}
+      </a>
+    )
+  }
 )
 
 export const DateColumn = ({ data }) => (
@@ -47,6 +58,10 @@ export const NumberColumn = ({ data }) => (
 
 export const VolumeColumn = ({ data }) => (
   <FormattedVolume value={data}/>
+)
+
+export const ColorColumn = ({ data }) => (
+  <div style={{ margin: "0 auto", width: 24, height: 24, backgroundColor: data }}/>
 )
 
 const Grid = ({data, columnMeta, rowMeta, columns}) => (
