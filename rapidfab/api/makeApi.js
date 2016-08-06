@@ -59,7 +59,9 @@ function makePost(hostRoot, resource) {
 
 function makeGet(hostRoot, resource) {
   return (uuid, config) => {
-    return fetch(`${hostRoot}/${resource}/${uuid}`, _.assign({
+    let url = `${hostRoot}/${resource}/`
+    if(uuid) url += `${uuid}/`
+    return fetch(url, _.assign({
       credentials : 'include'
     }, FETCH_CONFIG, config))
   }
