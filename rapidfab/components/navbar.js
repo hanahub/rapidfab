@@ -67,8 +67,8 @@ class Navbar extends Component {
             </BS.MenuItem>
           </BS.NavDropdown>
           <BS.NavDropdown eventKey={3} title={inventoryTitle} id="uxNavInventory">
-            <BS.MenuItem eventKey={3.1} href="#/inventory/material">
-              <Fa name='object-ungroup' /> <FormattedMessage id="inventory.material" defaultMessage='Material'/>
+            <BS.MenuItem eventKey={3.1} href="#/inventory/materials">
+              <Fa name='object-group' /> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
             <BS.MenuItem eventKey={3.2} href="#/inventory/resource">
