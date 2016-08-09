@@ -10,7 +10,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete }) => (
+const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid>
       <BS.Row>
@@ -60,7 +60,11 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete }) => (
           </BS.FormGroup>
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel><FormattedMessage id="field.manufacturer" defaultMessage='Manufacturer'/>:</BS.ControlLabel>
-            <BS.FormControl type="text" required {...fields.manufacturer}/>
+            <BS.FormControl componentClass="select" required {...fields.manufacturer}>
+              {_.map(manufacturers, manufacturer => (
+                <option key={manufacturer.uri} value={manufacturer.uri}>{`${manufacturer.id} - ${manufacturer.name}`}</option>
+              ))}
+            </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxColor">
             <BS.ControlLabel>Color:</BS.ControlLabel>

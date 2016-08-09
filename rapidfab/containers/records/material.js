@@ -33,6 +33,7 @@ class MaterialContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
+      dispatch(Actions.Api.wyatt.manufacturer.list())
       if(uuid) {
         dispatch(Actions.Api.wyatt.material.get(uuid))
       }
@@ -57,12 +58,14 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   const {
-    material
+    material,
+    manufacturer
   } = state;
 
   return {
     uuid            : props.route.uuid,
     initialValues   : material[props.route.uuid],
+    manufacturers   : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
   }
 }
 
