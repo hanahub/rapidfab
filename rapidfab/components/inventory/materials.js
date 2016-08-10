@@ -64,7 +64,7 @@ const Materials = ({ materials, manufacturers, fetching, errors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/material">
-            <Fa name='industry'/> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
+            <Fa name='object-group'/> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>

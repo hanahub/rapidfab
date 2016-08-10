@@ -15,6 +15,7 @@ import PrintQueue                   from 'rapidfab/containers/plan/printQueue'
 import Order                        from 'rapidfab/containers/records/order'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
 import Material                     from 'rapidfab/containers/records/material'
+import Stock                        from 'rapidfab/containers/records/stock'
 
 const Routes = {
   "/"                               : Home,
@@ -37,6 +38,8 @@ const Routes = {
   "/records/manufacturer/:uuid"     : Manufacturer,
   "/records/material"               : Material,
   "/records/material/:uuid"         : Material,
+  "/records/stock"                  : Stock,
+  "/records/stock/:uuid"            : Stock,
 }
 
 export default Routes
