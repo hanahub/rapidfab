@@ -5,7 +5,8 @@ export const RESOURCES = {
     'model'
   ],
   pao: [
-    'sessions'
+    'sessions',
+    'users'
   ],
   wyatt: [
     'location',
