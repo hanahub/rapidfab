@@ -23,7 +23,7 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
               <Fa name='object-group'/> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='object-ungroup'/> {fields.id.value || <FormattedMessage id="record.newMaterial" defaultMessage='New Material'/>}
+              <Fa name='object-ungroup'/> {fields.id.value || <FormattedMessage id="record.material.new" defaultMessage='New Material'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
