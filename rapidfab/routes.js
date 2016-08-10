@@ -1,7 +1,7 @@
 import Home                         from 'rapidfab/components/home'
 import About                        from 'rapidfab/components/about'
 
-import InventoryLocation            from 'rapidfab/components/inventory/location'
+import InventoryLocations           from 'rapidfab/containers/inventory/locations'
 import InventoryManufacturers       from 'rapidfab/containers/inventory/manufacturers'
 import InventoryMaterials           from 'rapidfab/containers/inventory/materials'
 import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
@@ -23,7 +23,8 @@ const Routes = {
 
   "/inventory/materials"            : InventoryMaterials,
   "/inventory/stocks"               : InventoryStocks,
-  "/inventory/location"             : InventoryLocation,
+  "/inventory/resource"             : InventoryMaterialResource,
+  "/inventory/locations"            : InventoryLocations,
   "/inventory/manufacturers"        : InventoryManufacturers,
   "/inventory/post-processing"      : InventoryPostProcessing,
   "/inventory/third-party-provider" : InventoryThirdPartyProvider,
