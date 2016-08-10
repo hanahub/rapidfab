@@ -70,10 +70,10 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={3.1} href="#/inventory/materials">
               <Fa name='object-group' /> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={3.2} href="#/inventory/resource">
-              <Fa name='tags' /> <FormattedMessage id="inventory.materialResources" defaultMessage='Material Resources'/>
+            <BS.MenuItem eventKey={3.2} href="#/inventory/stocks">
+              <Fa name='tags' /> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
             </BS.MenuItem>
+            <BS.MenuItem divider />
             <BS.MenuItem eventKey={3.3} href="#/inventory/post-processing">
               <Fa name='server'/> <FormattedMessage id="inventory.postProcessing" defaultMessage='Printer &amp; Post processing'/>
             </BS.MenuItem>
