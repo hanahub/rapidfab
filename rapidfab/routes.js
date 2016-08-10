@@ -4,7 +4,7 @@ import About                        from 'rapidfab/components/about'
 import InventoryLocation            from 'rapidfab/components/inventory/location'
 import InventoryManufacturers       from 'rapidfab/containers/inventory/manufacturers'
 import InventoryMaterials           from 'rapidfab/containers/inventory/materials'
-import InventoryMaterialResource    from 'rapidfab/components/inventory/materialResource'
+import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
 import InventoryPostProcessing      from 'rapidfab/components/inventory/postProcessing'
 import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/thirdPartyProvider'
 import InventoryUser                from 'rapidfab/components/inventory/user'
@@ -21,7 +21,7 @@ const Routes = {
   "/about"                          : About,
 
   "/inventory/materials"            : InventoryMaterials,
-  "/inventory/resource"             : InventoryMaterialResource,
+  "/inventory/stocks"               : InventoryStocks,
   "/inventory/location"             : InventoryLocation,
   "/inventory/manufacturers"        : InventoryManufacturers,
   "/inventory/post-processing"      : InventoryPostProcessing,
@@ -36,7 +36,7 @@ const Routes = {
   "/records/manufacturer"           : Manufacturer,
   "/records/manufacturer/:uuid"     : Manufacturer,
   "/records/material"               : Material,
-  "/records/material/:uuid"         : Material
+  "/records/material/:uuid"         : Material,
 }
 
 export default Routes

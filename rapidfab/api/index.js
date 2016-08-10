@@ -8,8 +8,10 @@ export const RESOURCES = {
     'sessions'
   ],
   wyatt: [
+    'location',
     'manufacturer',
-    'material'
+    'material',
+    'stock',
   ]
 }
 

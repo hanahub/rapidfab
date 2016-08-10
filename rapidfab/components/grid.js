@@ -57,7 +57,7 @@ export const NumberColumn = ({ data }) => (
 )
 
 export const VolumeColumn = ({ data }) => (
-  <FormattedVolume value={data}/>
+  <FormattedVolume value={data} />
 )
 
 export const ColorColumn = ({ data }) => (
