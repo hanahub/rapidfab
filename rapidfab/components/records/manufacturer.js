@@ -23,7 +23,7 @@ const ManufacturerForm = ({ fields, handleSubmit, load, submitting, onDelete }) 
               <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='industry'/> {fields.id.value || <FormattedMessage id="record.newManufacturer" defaultMessage='New Manufacturer'/>}
+              <Fa name='industry'/> {fields.id.value || <FormattedMessage id="record.manufacturer.new" defaultMessage='New Manufacturer'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>

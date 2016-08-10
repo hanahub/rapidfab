@@ -1,5 +1,6 @@
 export default {
   "rapidfab"                      : "Rapid Fab",
+
   "plan"                          : "計画",
   "plan.orders"                   : "注文",
   "plan.printQueue"               : "プリントキュー",
@@ -11,7 +12,7 @@ export default {
   "work.thirdParty"               : "第三者",
 
   "inventory"                     : "在庫",
-  "inventory.material"            : "物質",
+  "inventory.materials"           : "物質",
   "inventory.materialResources"   : "物質資源",
   "inventory.postProcessing"      : "プリンター＆ポストプロセッシング",
   "inventory.manufacturers"       : "業者",
@@ -22,8 +23,8 @@ export default {
   "myProfile"                     : "マイプロフィール",
   "logout"                        : "ログアウト",
 
-  "notAvailable"                  : "N/A",
   "models"                        : "Models",
+  "notAvailable"                  : "N/A",
 
   "button.upload"                 : "Upload",
   "button.delete"                 : "Delete",
@@ -33,6 +34,13 @@ export default {
 
   "record.order"                  : "Order",
   "record.order.add"              : "Add Order",
+  "record.order.new"              : "New Order",
+  "record.manufacturer"           : "Manufacturer",
+  "record.manufacturer.add"       : "Add Manufacturer",
+  "record.manufacturer.new"       : "New Manufacturer",
+  "record.material"               : "物質",
+  "record.material.add"           : "Add Material",
+  "record.material.new"           : "New Material",
 
   "field.accessToAllLocations"    : "Access to All Locations",
   "field.address"                 : "Address",
@@ -55,8 +63,8 @@ export default {
   "field.locationAccess"          : "Location Access",
   "field.manufacturer"            : "Manufacturer",
   "field.material"                : "Material",
-  "field.materialtype"            : "Material Type",
-  "field.minutesProcessing"       : "Minutes Processing",
+  "field.materialType"            : "Material Type",
+  "field.processingTime"          : "Processing Time",
   "field.name"                    : "Name",
   "field.notes"                   : "notes",
   "field.packageSize"             : "Package Size",
@@ -66,8 +74,10 @@ export default {
   'field.resource'                : 'Resource',
   "field.retailPrice"             : "Retail Price",
   "field.size"                    : "Size",
+  "field.status"                  : "Status",
   "field.supportContact"          : "Support Contact",
   "field.supportPhone"            : "Support Phone",
+  "field.thirdParty"              : "Third Party",
   "field.type"                    : "Type",
   "field.useOriginalModel"        : "Use Original Model",
   "field.volume"                  : "Volume",
