@@ -13,7 +13,7 @@ export default {
 
   "inventory"                     : "Inventory",
   "inventory.materials"           : "Materials",
-  "inventory.materialResources"   : "Material Resources",
+  "inventory.stocks"              : "Stocks",
   "inventory.postProcessing"      : "Printer & Post Processing",
   "inventory.manufacturers"       : "Manufacturers",
   "inventory.thirdPartyProviders" : "Third Party Providers",
@@ -42,6 +42,9 @@ export default {
   "record.material"               : "Material",
   "record.material.add"           : "Add Material",
   "record.material.new"           : "New Material",
+  "record.stock"                  : "Stock",
+  "record.stock.add"              : "Add Stock",
+  "record.stock.new"              : "New Stock",
 
   "field.accessToAllLocations"    : "Access to All Locations",
   "field.address"                 : "Address",
@@ -71,6 +74,7 @@ export default {
   "field.packageSize"             : "Package Size",
   "field.phone"                   : "Phone",
   "field.preview"                 : "Preview",
+  "field.quantity"                : "Quantity",
   "field.order"                   : "Order",
   'field.resource'                : 'Resource',
   "field.retailPrice"             : "Retail Price",
@@ -80,6 +84,7 @@ export default {
   "field.supportPhone"            : "Support Phone",
   "field.thirdParty"              : "Third Party",
   "field.type"                    : "Type",
+  "field.units"                   : "Units",
   "field.useOriginalModel"        : "Use Original Model",
   "field.volume"                  : "Volume",
 }
