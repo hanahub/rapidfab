@@ -24,7 +24,6 @@ const Routes = {
 
   "/inventory/materials"            : InventoryMaterials,
   "/inventory/stocks"               : InventoryStocks,
-  "/inventory/resource"             : InventoryMaterialResource,
   "/inventory/locations"            : InventoryLocations,
   "/inventory/manufacturers"        : InventoryManufacturers,
   "/inventory/post-processing"      : InventoryPostProcessing,
