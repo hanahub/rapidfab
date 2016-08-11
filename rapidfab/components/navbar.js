@@ -84,7 +84,7 @@ class Navbar extends Component {
               <Fa name='building'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
-            <BS.MenuItem eventKey={3.3} href="#/inventory/location">
+            <BS.MenuItem eventKey={3.3} href="#/inventory/locations">
               <Fa name='map-marker'/> <FormattedMessage id="inventory.manageLocations" defaultMessage='Manage Locations'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.3} href="#/inventory/user">
