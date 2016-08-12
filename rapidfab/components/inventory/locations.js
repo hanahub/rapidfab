@@ -62,7 +62,7 @@ const Locations = ({ locations, users, fetching, errors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/location">
-            <Fa name='industry'/> <FormattedMessage id="inventory.locations" defaultMessage='poop'/>
+            <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>

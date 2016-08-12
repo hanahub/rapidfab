@@ -35,12 +35,11 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
-      payload.bureau = Config['BUREAU']
-      debugger;
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.location.put(payload.uuid, payload))
         window.location.hash = "#/inventory/locations"
       } else {
+        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.location.post(payload))
         window.location.hash = "#/inventory/locations"
       }
