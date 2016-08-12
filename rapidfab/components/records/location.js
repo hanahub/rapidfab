@@ -20,10 +20,10 @@ const LocationForm = ({ fields, handleSubmit, load, submitting, onDelete, users 
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/location">
-              <Fa name='industry'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
+              <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='industry'/> {fields.id.value || <FormattedMessage id="record.newLocation" defaultMessage='New Location'/>}
+              <Fa name='map-marker'/> {fields.id.value || <FormattedMessage id="record.newLocation" defaultMessage='New Location'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
@@ -65,7 +65,7 @@ const LocationForm = ({ fields, handleSubmit, load, submitting, onDelete, users 
           <BS.FormGroup controlId="uxContact">
             <BS.ControlLabel><FormattedMessage id="field.contact" defaultMessage='Contact'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" placeholder="contact" required {...fields.contact}>
-              <option key="placeholder" value="" selected disabled>Select a Contact</option>
+              <option key="placeholder" value="" disabled>Select a Contact</option>
               {_.map(users, user => (
                 <option key={user.uri} value={user.uri}>{user.username}</option>
               ))}
