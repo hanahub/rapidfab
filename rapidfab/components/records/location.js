@@ -19,7 +19,7 @@ const LocationForm = ({ fields, handleSubmit, load, submitting, onDelete, users 
             <BS.Breadcrumb.Item href="#/inventory">
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/location">
+            <BS.Breadcrumb.Item href="#/inventory/locations">
               <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
