@@ -3,6 +3,8 @@ import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
 import Grid, {
+  IdColumn,
+  NumberColumn,
   ImageColumn,
   CapitalizeColumn,
   DateColumn,
@@ -11,13 +13,7 @@ import Grid, {
 } from 'rapidfab/components/grid';
 
 
-const IdColumn = ({ data, rowData }) => (
-  <a href={`#/records/order/${encodeURIComponent(rowData.uuid)}`}>
-    {data}
-  </a>
-)
-
-const Orders = ({ records }) => (
+const Orders = ({ orders, materials }) => (
   <BS.Grid>
 
     <BS.Row>
@@ -46,49 +42,33 @@ const Orders = ({ records }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <Grid
-          data={records}
+          data={orders}
           columns={[
             "id",
-            "snapshot",
-            "material",
-            "estimatedShippingDate",
-            "estimatedMaterialUsed",
-            "estimatedSupportUsed",
-            "useOriginalModel"
+            "name",
+            "quantity",
+            "created"
           ]}
           columnMeta={[{
             displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
             columnName: "id",
-            customComponent: IdColumn,
+            customComponent: IdColumn("order"),
             locked: true
           }, {
             customComponent: ImageColumn,
             columnName: "snapshot",
             displayName: <FormattedMessage id="field.preview" defaultMessage='Preview'/>
           }, {
-            customComponent: CapitalizeColumn,
-            columnName: "material",
-            displayName: <FormattedMessage id="field.material" defaultMessage='Material'/>
+            columnName: "name",
+            displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
+          }, {
+            customComponent: NumberColumn,
+            columnName: "quantity",
+            displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
           }, {
             customComponent: DateColumn,
-            columnName: "estimatedShippingDate",
-            displayName: <FormattedMessage id="field.estimatedShippingDate" defaultMessage='Estimated Shipping Date'/>
-          }, {
-            customComponent: VolumeColumn,
-            columnName: "estimatedMaterialUsed",
-            displayName: <FormattedMessage id="field.estimatedMaterialUsed" defaultMessage='Estimated Material Used'/>
-          }, {
-            customComponent: VolumeColumn,
-            columnName: "estimatedSupportUsed",
-            displayName: <FormattedMessage id="field.estimatedSupportUsed" defaultMessage='Estimated Support Used'/>
-          }, {
-            customComponent: VolumeColumn,
-            columnName: "estimatedPrintTime",
-            displayName: <FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>
-          }, {
-            customComponent: BooleanColumn,
-            columnName: "useOriginalModel",
-            displayName: <FormattedMessage id="field.useOriginalModel" defaultMessage='Use Original Model'/>
+            columnName: "created",
+            displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
           }]}
         />
       </BS.Col>
