@@ -1,38 +1,81 @@
-import React, { PropTypes }     from "react";
-import _                                from "lodash";
-import Actions                          from "rapidfab/actions"
-import { connect }                      from 'react-redux'
-import Order                            from 'rapidfab/components/records/order'
-import FakeData                         from 'rapidfab/fakeData';
-import * as BS                          from 'react-bootstrap';
+import React, { Component, PropTypes }    from "react"
+import { connect }                        from 'react-redux'
+import _                                  from "lodash"
+import Actions                            from "rapidfab/actions"
+import OrderComponent                     from 'rapidfab/components/records/order'
+import { reduxForm }                      from 'redux-form'
+import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
+import Config                             from 'rapidfab/config'
 
+const fields = [
+  'id',
+  'uri',
+  'uuid',
+  'name',
+  'bereau',
+  'model',
+  'materials.base',
+  'materials.support',
+  'estimates.print_time',
+  'estimates.shipping_date',
+  'estimates.cost.amount',
+  'estimates.cost.currency',
+  'estimates.materials.base',
+  'estimates.materials.support',
+  'shipping.address',
+  'quantity',
+  'created'
+]
 
-const OrderContainer = props => (
-  <Order {...props}/>
-)
+class OrderContainer extends Component {
+  componentWillMount() {
+    this.props.onInitialize(this.props.uuid)
+  }
+
+  render() {
+    return <OrderComponent {...this.props}/>
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSave: (uri, record) => {
-      // TODO: Finish Save
-      throw NotImplemented
+    onInitialize: uuid => {
+      dispatch(Actions.Api.wyatt.material.list())
+      dispatch(Actions.Api.hoth.model.list())
+      if(uuid) dispatch(Actions.Api.wyatt.order.get(uuid))
     },
-    onDelete: (uri, record) => {
-      // TODO: Finish Delete
-      throw NotImplemented
+    onSubmit: payload => {
+      if(payload.uuid) {
+        dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload))
+      } else {
+        payload.bureau = Config.BUREAU
+        dispatch(Actions.Api.wyatt.order.post(payload))
+      }
+    },
+    onDelete: uuid => {
+      if(uuid) {
+        dispatch(Actions.Api.wyatt.order.delete(uuid))
+      }
     }
   }
 }
 
 function mapStateToProps(state, props) {
   const {
-    orders
+    order,
+    material,
+    model
   } = state;
 
   return {
-    uuid: props.route.uuid,
-    record: orders[props.route.uuid]
+    uuid            : props.route.uuid,
+    initialValues   : order[props.route.uuid],
+    materials       : _.omit(material, ['uxFetching', 'uxErrors']),
+    models          : _.omit(model, ['uxFetching', 'uxErrors'])
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrderContainer)
+export default reduxForm({
+  form: 'record.order',
+  fields
+}, mapStateToProps, mapDispatchToProps)(OrderContainer)
