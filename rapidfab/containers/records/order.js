@@ -47,14 +47,17 @@ function mapDispatchToProps(dispatch) {
     onSubmit: payload => {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload))
+        window.location.hash = "#/plan/orders"
       } else {
         payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.order.post(payload))
+        window.location.hash = "#/plan/orders"
       }
     },
     onDelete: uuid => {
       if(uuid) {
         dispatch(Actions.Api.wyatt.order.delete(uuid))
+        window.location.hash = "#/plan/orders"
       }
     }
   }
