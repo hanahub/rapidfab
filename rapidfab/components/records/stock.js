@@ -74,7 +74,7 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
               <option value="exhausted"><FormattedMessage id="field.status.exhausted" defaultMessage='Exhausted'/></option>
             </BS.FormControl>
           </BS.FormGroup>
-          <BS.FormGroup controlId="uxRetailPrice">
+          <BS.FormGroup controlId="uxQuantity">
             <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.quantity}/>
           </BS.FormGroup>
