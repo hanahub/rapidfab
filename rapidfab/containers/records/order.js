@@ -46,19 +46,20 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload))
-        window.location.hash = "#/plan/orders"
+        dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload, {
+          callSuccess: () => window.location.hash = "#/plan/orders"
+        }))
       } else {
         payload.bureau = Config.BUREAU
-        dispatch(Actions.Api.wyatt.order.post(payload))
-        window.location.hash = "#/plan/orders"
+        dispatch(Actions.Api.wyatt.order.post(payload, {
+          callSuccess: () => window.location.hash = "#/plan/orders"
+        }))
       }
     },
     onDelete: uuid => {
-      if(uuid) {
-        dispatch(Actions.Api.wyatt.order.delete(uuid))
-        window.location.hash = "#/plan/orders"
-      }
+      dispatch(Actions.Api.wyatt.order.delete(uuid, {
+        callSuccess: () => window.location.hash = "#/plan/orders"
+      }))
     }
   }
 }
@@ -74,7 +75,9 @@ function mapStateToProps(state, props) {
     uuid            : props.route.uuid,
     initialValues   : order[props.route.uuid],
     materials       : _.omit(material, ['uxFetching', 'uxErrors']),
-    models          : _.omit(model, ['uxFetching', 'uxErrors'])
+    models          : _.omit(model, ['uxFetching', 'uxErrors']),
+    submitting      : order.uxFetching || material.uxFetching || model.uxFetching,
+    apiErrors       : _.concat(order.uxErrors, material.uxErrors, model.uxErrors)
   }
 }
 

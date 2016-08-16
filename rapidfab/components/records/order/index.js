@@ -5,6 +5,7 @@ import { FormattedMessage }   from 'rapidfab/i18n'
 import OrderForm              from './form'
 import OrderEstimates         from './estimates'
 import OrderModels            from './models'
+import Error                  from 'rapidfab/components/error'
 
 
 const SaveButtonTitle = ({ uri, uuid, record }) => (
@@ -13,7 +14,7 @@ const SaveButtonTitle = ({ uri, uuid, record }) => (
   </span>
 )
 
-const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models }) => (
+const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, apiErrors }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid>
 
@@ -45,7 +46,7 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
               <Fa name='cloud-upload'/> <FormattedMessage id="button.upload" defaultMessage='Upload Model'/>
             </BS.Button>
             <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-              <BS.MenuItem eventKey={1} onClick={onDelete}>
+              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)}>
                 <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
               </BS.MenuItem>
             </BS.SplitButton>
@@ -54,6 +55,12 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
       </BS.Row>
 
       <hr/>
+
+      <BS.Row>
+        <BS.Col xs={12}>
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
 
       <BS.Row>
         <BS.Col xs={4}>
