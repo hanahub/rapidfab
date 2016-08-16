@@ -4,7 +4,6 @@ import Config                           from 'rapidfab/config'
 import { connect }                      from 'react-redux'
 
 import Navbar                           from 'rapidfab/components/navbar'
-import Error                            from 'rapidfab/components/error'
 import Routes                           from 'rapidfab/routes'
 import Router                           from 'rapidfab/components/router'
 
@@ -12,7 +11,7 @@ import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
 
 const SessionProvider = ({children, currentUser, fetching, errors}) => {
-  if(!currentUser && errors) {
+  if(!currentUser && errors.length) {
     let next = window.location.hash.substr(1);
     window.location = `${Config.HOST.SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`
   }

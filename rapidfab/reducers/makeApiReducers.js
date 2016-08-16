@@ -35,7 +35,7 @@ function makeGet(host, resource) {
     [`${typePrefix}_GET_REQUEST`](state, action) {
       return Object.assign({}, state, {
         uxFetching  : true,
-        uxErrors    : null
+        uxErrors    : []
       })
     },
     [`${typePrefix}_GET_SUCCESS`](state, action) {
@@ -43,13 +43,19 @@ function makeGet(host, resource) {
       return Object.assign({}, state, {
         [record.uuid]   : record,
         uxFetching      : false,
-        uxErrors        : null
+        uxErrors        : []
       })
     },
     [`${typePrefix}_GET_FAILURE`](state, action) {
+      let uxErrors = []
+      if(action.error) {
+        uxErrors = [{ code: "API Error", title: action.error.message}]
+      } else {
+        uxErrors = action.json.errors
+      }
       return Object.assign({}, state, {
         uxFetching  : false,
-        uxErrors    : action.error || action.json.errors
+        uxErrors
       })
     }
   }
@@ -61,20 +67,26 @@ function makeList(host, resource) {
     [`${typePrefix}_LIST_REQUEST`](state, action) {
       return Object.assign({}, state, {
         uxFetching  : true,
-        uxErrors    : null
+        uxErrors    : []
       })
     },
     [`${typePrefix}_LIST_SUCCESS`](state, action) {
       let records = _.map(action.json.resources, hydrateRecord);
       return Object.assign({}, state, {
         uxFetching  : false,
-        uxErrors    : null
+        uxErrors    : []
       }, _.keyBy(records, "uuid"))
     },
     [`${typePrefix}_LIST_FAILURE`](state, action) {
+      let uxErrors = []
+      if(action.error) {
+        uxErrors = [{ code: "API Error", title: action.error.message}]
+      } else {
+        uxErrors = action.json.errors
+      }
       return Object.assign({}, state, {
         uxFetching  : false,
-        uxErrors    : action.error || action.json.errors
+        uxErrors
       })
     }
   }
@@ -86,7 +98,7 @@ function makePut(host, resource) {
     [`${typePrefix}_PUT_REQUEST`](state, action) {
       return Object.assign({}, state, {
         uxFetching  : true,
-        uxErrors    : null
+        uxErrors    : []
       })
     },
     [`${typePrefix}_PUT_SUCCESS`](state, action) {
@@ -94,13 +106,19 @@ function makePut(host, resource) {
       return Object.assign({}, state, {
         [record.uuid]   : record,
         uxFetching      : false,
-        uxErrors        : null
+        uxErrors        : []
       })
     },
     [`${typePrefix}_PUT_FAILURE`](state, action) {
+      let uxErrors = []
+      if(action.error) {
+        uxErrors = [{ code: "API Error", title: action.error.message}]
+      } else {
+        uxErrors = action.json.errors
+      }
       return Object.assign({}, state, {
         uxFetching  : false,
-        uxErrors    : action.error || action.json.errors
+        uxErrors
       })
     }
   }
@@ -112,7 +130,7 @@ function makePost(host, resource) {
     [`${typePrefix}_POST_REQUEST`](state, action) {
       return Object.assign({}, state, {
         uxFetching  : true,
-        uxErrors    : null
+        uxErrors    : []
       })
     },
     [`${typePrefix}_POST_SUCCESS`](state, action) {
@@ -122,13 +140,19 @@ function makePost(host, resource) {
       return Object.assign({}, state, {
         [record.uuid]   : record,
         uxFetching      : false,
-        uxErrors        : null
+        uxErrors        : []
       })
     },
     [`${typePrefix}_POST_FAILURE`](state, action) {
+      let uxErrors = []
+      if(action.error) {
+        uxErrors = [{ code: "API Error", title: action.error.message}]
+      } else {
+        uxErrors = action.json.errors
+      }
       return Object.assign({}, state, {
         uxFetching  : false,
-        uxErrors    : action.error || action.json.errors
+        uxErrors
       })
     }
   }
@@ -140,21 +164,27 @@ function makeDelete(host, resource) {
     [`${typePrefix}_DELETE_REQUEST`](state, action) {
       return Object.assign({}, state, {
         uxFetching  : true,
-        uxErrors    : null
+        uxErrors    : []
       })
     },
     [`${typePrefix}_DELETE_SUCCESS`](state, action) {
       let newState = Object.assign({}, state, {
         uxFetching      : false,
-        uxErrors        : null
+        uxErrors        : []
       })
       delete newState[action.uuid]
       return newState
     },
     [`${typePrefix}_DELETE_FAILURE`](state, action) {
+      let uxErrors = []
+      if(action.error) {
+        uxErrors = [{ code: "API Error", title: action.error.message}]
+      } else {
+        uxErrors = action.json.errors
+      }
       return Object.assign({}, state, {
         uxFetching  : false,
-        uxErrors    : action.error || action.json.errors
+        uxErrors
       })
     }
   }
@@ -163,7 +193,7 @@ function makeDelete(host, resource) {
 export function makeApiReducers(resources) {
   let initialState = {
     uxFetching  : false,
-    uxErrors    : null
+    uxErrors    : []
   }
   return _.reduce(resources, (result, resources, host) => {
     for(let resource of resources) {

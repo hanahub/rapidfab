@@ -6,7 +6,8 @@ function apiMiddleware({ dispatch, getState }) {
       shouldCallApi = () => true,
       uuid,
       filters,
-      payload
+      payload,
+      callSuccess = () => null
     } = action
 
     if (!types) {
@@ -58,7 +59,7 @@ function apiMiddleware({ dispatch, getState }) {
           type: failureType
         }))
       } else {
-        dispatch(Object.assign({}, {
+        let args = Object.assign({}, {
           uuid,
           filters,
           payload,
@@ -67,7 +68,9 @@ function apiMiddleware({ dispatch, getState }) {
             location: response.headers.get('Location')
           },
           type: successType
-        }))
+        })
+        dispatch(args)
+        if(typeof callSuccess === "function") callSuccess(args)
       }
     })
 
