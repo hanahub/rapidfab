@@ -10,6 +10,7 @@ export const RESOURCES = {
   ],
   wyatt: [
     'location',
+    'post-processor-type',
     'manufacturer',
     'material',
     'stock',
