@@ -16,7 +16,6 @@ import Order                        from 'rapidfab/containers/records/order'
 import Location                     from 'rapidfab/containers/records/location'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
 import Material                     from 'rapidfab/containers/records/material'
-import PostProcessor                from 'rapidfab/containers/records/postProcessor'
 import PostProcessorType            from 'rapidfab/containers/records/postProcessorType'
 import Stock                        from 'rapidfab/containers/records/stock'
 
