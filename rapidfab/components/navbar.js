@@ -74,8 +74,8 @@ class Navbar extends Component {
               <Fa name='tags' /> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
-            <BS.MenuItem eventKey={3.3} href="#/inventory/post-processing">
-              <Fa name='server'/> <FormattedMessage id="inventory.postProcessing" defaultMessage='Printer &amp; Post processing'/>
+            <BS.MenuItem eventKey={3.3} href="#/inventory/post-processor-types">
+              <Fa name='server'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Printer &amp; Post processor types'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.3} href="#/inventory/manufacturers">
               <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
