@@ -6,8 +6,7 @@ function apiMiddleware({ dispatch, getState }) {
       shouldCallApi = () => true,
       uuid,
       filters,
-      payload,
-      callSuccess = () => null
+      payload
     } = action
 
     if (!types) {
@@ -49,29 +48,21 @@ function apiMiddleware({ dispatch, getState }) {
 
     const handleResponse = response => response.text().then(text => {
       let json = JSON.parse(text || null)
+      let args = Object.assign({}, {
+        uuid,
+        filters,
+        payload,
+        json,
+        headers: {
+          location: response.headers.get('Location')
+        },
+        type: response.status >= 400 ? failureType : successType
+      })
+      dispatch(args)
       if(response.status >= 400) {
-        dispatch(Object.assign({}, {
-          uuid,
-          filters,
-          payload,
-          json,
-          headers: null,
-          type: failureType
-        }))
-      } else {
-        let args = Object.assign({}, {
-          uuid,
-          filters,
-          payload,
-          json,
-          headers: {
-            location: response.headers.get('Location')
-          },
-          type: successType
-        })
-        dispatch(args)
-        if(typeof callSuccess === "function") callSuccess(args)
+        throw new Error(`Error calling API on ${failureType} response status ${response.status}`, args)
       }
+      return args
     })
 
     return callApi().then(handleResponse, handleError)
