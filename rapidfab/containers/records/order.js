@@ -45,22 +45,21 @@ function mapDispatchToProps(dispatch) {
       if(uuid) dispatch(Actions.Api.wyatt.order.get(uuid))
     },
     onSubmit: payload => {
+      delete payload.estimates
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload, {
-          callSuccess: () => window.location.hash = "#/plan/orders"
-        }))
+        dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload)).then(
+          () => window.location.hash = "#/plan/orders"
+        )
       } else {
         payload.bureau = Config.BUREAU
-        dispatch(Actions.Api.wyatt.order.post(payload, {
-          callSuccess: () => window.location.hash = "#/plan/orders"
-        }))
+        dispatch(Actions.Api.wyatt.order.post(payload)).then(
+          () => window.location.hash = "#/plan/orders"
+        )
       }
     },
-    onDelete: uuid => {
-      dispatch(Actions.Api.wyatt.order.delete(uuid, {
-        callSuccess: () => window.location.hash = "#/plan/orders"
-      }))
-    }
+    onDelete: uuid => dispatch(Actions.Api.wyatt.order.delete(uuid)).then(
+      () => window.location.hash = "#/plan/orders"
+    )
   }
 }
 
