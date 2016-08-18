@@ -50,11 +50,11 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={1.2} href="#/plan/print-queue">
               <Fa name='list'/> <FormattedMessage id="plan.printQueue" defaultMessage='Print Queue'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={1.3} href="#/plan/post-processing">
+            <BS.MenuItem eventKey={1.3} href="#/plan/post-processing" style={{ display: "none" }}>
               <Fa name='flask'/> <FormattedMessage id="plan.postProcessing" defaultMessage='Post Processing'/>
             </BS.MenuItem>
           </BS.NavDropdown>
-          <BS.NavDropdown eventKey={2} title={workTitle} id="uxNavWork">
+          <BS.NavDropdown eventKey={2} title={workTitle} id="uxNavWork" style={{ display: "none" }}>
             <BS.MenuItem eventKey={2.1} href="#/work/queue">
               <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
             </BS.MenuItem>
@@ -80,7 +80,7 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={3.3} href="#/inventory/manufacturers">
               <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/third-party-provider">
+            <BS.MenuItem eventKey={3.3} href="#/inventory/third-party-provider" style={{ display: "none" }}>
               <Fa name='building'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
@@ -94,11 +94,11 @@ class Navbar extends Component {
         </BS.Nav>
         <BS.Nav pullRight>
           <BS.NavDropdown eventKey={1} title={myProfileTitle} id="uxNavProfile">
-            <BS.MenuItem eventKey={1.1} href="#/profile">
+            <BS.MenuItem eventKey={1.1} href="#/profile" disabled>
               <Fa name='user'/> <FormattedMessage id="myProfile" defaultMessage='My Profile'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={1.2} href="#/logout">
+            <BS.MenuItem divider style={{ display: "none" }}/>
+            <BS.MenuItem eventKey={1.2} href="#/logout" style={{ display: "none" }}>
               <Fa name='sign-out'/> <FormattedMessage id="logout" defaultMessage='Logout'/>
             </BS.MenuItem>
           </BS.NavDropdown>
