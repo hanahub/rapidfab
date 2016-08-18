@@ -16,7 +16,7 @@ const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers, materials }
     columnMeta={[{
       displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
       columnName: "id",
-      customComponent: IdColumn("postProcessorType"),
+      customComponent: IdColumn("post-processor-type"),
       locked: true
     }, {
       columnName: "name",
