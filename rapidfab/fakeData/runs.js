@@ -8,7 +8,7 @@ const ids = _.range(count);
 const records = _.map(ids, id => {
   let uuid = Uuid.v4();
   return {
-    uri: `https://rapidfab.authentise.com/order/${uuid}`,
+    uri: `https://rapidfab.authentise.com/run/${uuid}`,
     uuid,
     orderSnapshot : '//placehold.it/600x600',
     order         : Faker.random.number(),

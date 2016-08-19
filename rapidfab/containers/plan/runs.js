@@ -20,7 +20,7 @@ function mapStateToProps(state) {
   } = state;
 
   return {
-    records: FakeData.print_queue
+    records: FakeData.runs
   }
 }
 
