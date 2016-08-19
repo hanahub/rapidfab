@@ -10,8 +10,8 @@ import InventoryPostProcessorTypes  from 'rapidfab/containers/inventory/postProc
 import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/thirdPartyProvider'
 import InventoryUsers               from 'rapidfab/containers/inventory/users'
 
-import PlanOrders                   from 'rapidfab/containers/plan/orders'
-import PrintQueue                   from 'rapidfab/containers/plan/printQueue'
+import Orders                       from 'rapidfab/containers/plan/orders'
+import Runs                         from 'rapidfab/containers/plan/runs'
 
 import Order                        from 'rapidfab/containers/records/order'
 import Location                     from 'rapidfab/containers/records/location'
@@ -35,8 +35,8 @@ const Routes = {
   "/inventory/third-party-provider"      : InventoryThirdPartyProvider,
   "/inventory/users"                     : InventoryUsers,
 
-  "/plan/orders"                         : PlanOrders,
-  "/plan/print-queue"                    : PrintQueue,
+  "/plan/orders"                         : Orders,
+  "/plan/runs"                           : Runs,
 
   "/records/order"                       : Order,
   "/records/order/:uuid"                 : Order,
