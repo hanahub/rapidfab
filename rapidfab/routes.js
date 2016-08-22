@@ -12,6 +12,7 @@ import InventoryUsers               from 'rapidfab/containers/inventory/users'
 
 import Orders                       from 'rapidfab/containers/plan/orders'
 import Runs                         from 'rapidfab/containers/plan/runs'
+import PrintQueues                  from 'rapidfab/containers/plan/printQueues'
 
 import Order                        from 'rapidfab/containers/records/order'
 import Location                     from 'rapidfab/containers/records/location'
@@ -37,6 +38,7 @@ const Routes = {
 
   "/plan/orders"                         : Orders,
   "/plan/runs"                           : Runs,
+  "/plan/print-queues"                   : PrintQueues,
 
   "/records/order"                       : Order,
   "/records/order/:uuid"                 : Order,
