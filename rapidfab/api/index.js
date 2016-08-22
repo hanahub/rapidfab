@@ -5,6 +5,7 @@ export const RESOURCES = {
     'model'
   ],
   pao: [
+    'memberships',
     'sessions',
     'users'
   ],
