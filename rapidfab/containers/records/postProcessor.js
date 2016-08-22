@@ -35,19 +35,18 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt['post-processor'].put(payload.uuid, payload))
-        window.location.hash = "#/inventory/post-processors"
+        dispatch(Actions.Api.wyatt['post-processor'].put(payload)).then(
+          () => window.location.hash = "#/inventory/post-processors"
+        )
       } else {
-        dispatch(Actions.Api.wyatt['post-processor'].post(payload))
-        window.location.hash = "#/inventory/post-processors"
+        dispatch(Actions.Api.wyatt['post-processor'].post(payload)).then(
+          () => window.location.hash = "#/inventory/post-processors"
+        )
       }
     },
-    onDelete: uuid => {
-      if(uuid) {
-        dispatch(Actions.Api.wyatt['post-processor'].delete(uuid))
-        window.location.hash = "#/inventory/post-processors"
-      }
-    }
+    onDelete: uuid => dispatch(Actions.Api.wyatt['post-processor'].delete(uuid)).then(
+      () => window.location.hash = "#/inventory/post-processors"
+    )
   }
 }
 
