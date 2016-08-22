@@ -45,9 +45,9 @@ function makeDelete(hostRoot, resource) {
 
 function makePost(hostRoot, resource) {
   return (payload, config) => {
-    delete payload['id']
-    delete payload['uri']
-    delete payload['uuid']
+    if(payload.id) delete payload.id
+    if(payload.uri) delete payload.uri
+    if(payload.uuid) delete payload.uuid
 
     return fetch(`${hostRoot}/${resource}/`, _.assign({}, FETCH_CONFIG, {
       credentials : 'include',
