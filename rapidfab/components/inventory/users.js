@@ -4,9 +4,9 @@ import Fa                     from 'react-fontawesome';
 import { FormattedMessage }   from 'react-intl';
 import Grid, { IdColumn }     from 'rapidfab/components/grid';
 
-const UsersGrid = ({ users, locations }) => (
+const UsersGrid = ({ records }) => (
   <Grid
-    data={users}
+    data={records}
     columns={[
       "id",
       "username",
@@ -14,11 +14,11 @@ const UsersGrid = ({ users, locations }) => (
     columnMeta={[{
       displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
       columnName: "id",
-      customComponent: IdColumn("users"),
+      customComponent: IdColumn("user"),
       locked: true
     }, {
       columnName: "username",
-      displayName: <FormattedMessage id="field.username" defaultMessage='Username'/>,
+      displayName: <FormattedMessage id="field.username" defaultMessage='Username'/>
     }]}
   />
 )
@@ -29,7 +29,7 @@ const Loading = () => (
   </div>
 )
 
-const Users = ({ users, locations, fetching, errors }) => (
+const Users = ({ records, fetching, errors }) => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
@@ -47,7 +47,7 @@ const Users = ({ users, locations, fetching, errors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/user" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.users.add" defaultMessage='Add Users'/>
+          <Fa name='plus'/> <FormattedMessage id="record.user.add" defaultMessage='Add User'/>
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -56,7 +56,7 @@ const Users = ({ users, locations, fetching, errors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading/> : <UsersGrid users={users} locations={locations}/>}
+        {fetching ? <Loading/> : <UsersGrid records={records}/>}
       </BS.Col>
     </BS.Row>
 
