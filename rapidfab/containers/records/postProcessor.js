@@ -16,13 +16,9 @@ const fields = [
 
 class PostProcessorContainer extends Component {
   componentWillMount() {
-    console.log('will mount')
     this.props.onInitialize(this.props.uuid)
   }
 
-  componentWillUnmount() {
-    console.log('will UNmount')
-  }
   render() {
     return <PostProcessorComponent {...this.props}/>
   }
@@ -33,7 +29,6 @@ function mapDispatchToProps(dispatch) {
     onInitialize: uuid => {
       dispatch(Actions.Api.wyatt.location.list())
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
-      console.log('Initializing')
       if(uuid) {
         dispatch(Actions.Api.wyatt['post-processor'].get(uuid))
       }
