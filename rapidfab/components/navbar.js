@@ -75,7 +75,10 @@ class Navbar extends Component {
             </BS.MenuItem>
             <BS.MenuItem divider />
             <BS.MenuItem eventKey={3.3} href="#/inventory/post-processor-types">
-              <Fa name='server'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Printer &amp; Post processor types'/>
+              <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Printer &amp; Post processor types'/>
+            </BS.MenuItem>
+            <BS.MenuItem eventKey={3.3} href="#/inventory/post-processors">
+              <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Printer &amp; Post processors'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.3} href="#/inventory/manufacturers">
               <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
