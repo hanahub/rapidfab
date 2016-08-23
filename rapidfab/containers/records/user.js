@@ -66,6 +66,8 @@ function mapStateToProps(state, props) {
   return {
     uuid            : props.route.uuid,
     initialValues   : users[props.route.uuid],
+    submitting      : users.uxFetching,
+    apiErrors       : _.concat(users.uxErrors)
   }
 }
 
