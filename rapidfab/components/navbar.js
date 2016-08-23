@@ -90,7 +90,7 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={3.3} href="#/inventory/locations">
               <Fa name='map-marker'/> <FormattedMessage id="inventory.manageLocations" defaultMessage='Manage Locations'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/user">
+            <BS.MenuItem eventKey={3.3} href="#/inventory/users">
               <Fa name='users'/> <FormattedMessage id="inventory.manageUsers" defaultMessage='Manage Users'/>
             </BS.MenuItem>
           </BS.NavDropdown>
