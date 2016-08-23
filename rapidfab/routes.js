@@ -8,7 +8,7 @@ import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
 import InventoryPostProcessors      from 'rapidfab/containers/inventory/postProcessors'
 import InventoryPostProcessorTypes  from 'rapidfab/containers/inventory/postProcessorTypes'
 import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/thirdPartyProvider'
-import InventoryUser                from 'rapidfab/components/inventory/user'
+import InventoryUsers               from 'rapidfab/containers/inventory/users'
 
 import PlanOrders                   from 'rapidfab/containers/plan/orders'
 import PrintQueue                   from 'rapidfab/containers/plan/printQueue'
@@ -20,6 +20,7 @@ import Material                     from 'rapidfab/containers/records/material'
 import PostProcessor                from 'rapidfab/containers/records/postProcessor'
 import PostProcessorType            from 'rapidfab/containers/records/postProcessorType'
 import Stock                        from 'rapidfab/containers/records/stock'
+import User                         from 'rapidfab/containers/records/user'
 
 const Routes = {
   "/"                                    : Home,
@@ -32,7 +33,7 @@ const Routes = {
   "/inventory/post-processors"           : InventoryPostProcessors,
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
   "/inventory/third-party-provider"      : InventoryThirdPartyProvider,
-  "/inventory/user"                      : InventoryUser,
+  "/inventory/users"                     : InventoryUsers,
 
   "/plan/orders"                         : PlanOrders,
   "/plan/print-queue"                    : PrintQueue,
@@ -51,6 +52,8 @@ const Routes = {
   "/records/post-processor-type/:uuid"   : PostProcessorType,
   "/records/stock"                       : Stock,
   "/records/stock/:uuid"                 : Stock,
+  "/records/user"                        : User,
+  "/records/user/:uuid"                  : User,
 }
 
 export default Routes
