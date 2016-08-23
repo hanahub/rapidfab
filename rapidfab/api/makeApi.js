@@ -22,9 +22,9 @@ export function filtersToQuery(filters) {
 
 function makePut(hostRoot, resource) {
   return (uuid, payload, config) => {
-    delete payload['id']
-    delete payload['uri']
-    delete payload['uuid']
+    if(payload.id) delete payload.id
+    if(payload.uri) delete payload.uri
+    if(payload.uuid) delete payload.uuid
 
     return fetch(`${hostRoot}/${resource}/${uuid}/`, _.assign({}, FETCH_CONFIG, {
       credentials : 'include',
