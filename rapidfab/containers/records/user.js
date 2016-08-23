@@ -41,17 +41,18 @@ function mapDispatchToProps(dispatch) {
           args => dispatch(Actions.Api.pao.memberships.post({
             user  : args.headers.location,
             group : Config.GROUP
-          }))
-        )
+          }).then( () => window.location.hash = "#/inventory/users"
+        )))
       }
-      window.location.hash = "#/inventory/users"
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.pao.memberships.get({'user': uuid, 'group' : Config.GROUP}).then(
-          args => dispatch(Actions.Api.pao.memberships.delete(args.uri)
+        dispatch(Actions.Api.pao.memberships.get(
+          {'user': uuid, 'group' : Config.GROUP}).then(
+          args => dispatch(Actions.Api.pao.memberships.delete(args.uri).then(
+            () => window.location.hash = "#/inventory/users"
+          )
         )))
-        window.location.hash = "#/inventory/users"
       }
     }
   }
