@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.pao.users.put(payload.uuid, payload))
       } else {
-        payload['login'] = false
+        payload.login = false
         dispatch(Actions.Api.pao.users.post(payload)).then(
           args => dispatch(Actions.Api.pao.memberships.post({
             user  : args.headers.location,
@@ -67,7 +67,7 @@ function mapStateToProps(state, props) {
     uuid            : props.route.uuid,
     initialValues   : users[props.route.uuid],
     submitting      : users.uxFetching,
-    apiErrors       : _.concat(users.uxErrors)
+    apiErrors       : users.uxErrors
   }
 }
 
