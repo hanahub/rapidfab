@@ -37,22 +37,19 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.pao.users.put(payload.uuid, payload))
       } else {
         payload.login = false
-        dispatch(Actions.Api.pao.users.post(payload)).then(
-          args => dispatch(Actions.Api.pao.memberships.post({
+        dispatch(Actions.Api.pao.users.post(payload)).then(args => {
+          dispatch(Actions.Api.pao.memberships.post({
             user  : args.headers.location,
             group : Config.GROUP
-          }).then( () => window.location.hash = "#/inventory/users"
-        )))
+          })).then(() => window.location.hash = "#/inventory/users")
+        })
       }
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.pao.memberships.get(
-          {'user': uuid, 'group' : Config.GROUP}).then(
-          args => dispatch(Actions.Api.pao.memberships.delete(args.uri).then(
-            () => window.location.hash = "#/inventory/users"
-          )
-        )))
+        dispatch(Actions.Api.pao.memberships.get({'user': uuid, 'group' : Config.GROUP}))
+          .then(args => dispatch(Actions.Api.pao.memberships.delete(args.uri)))
+          .then(() => window.location.hash = "#/inventory/users")
       }
     }
   }
