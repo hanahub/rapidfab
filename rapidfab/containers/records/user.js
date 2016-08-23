@@ -33,10 +33,10 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
-      payload['login'] = false
       if(payload.uuid) {
         dispatch(Actions.Api.pao.users.put(payload.uuid, payload))
       } else {
+        payload['login'] = false
         dispatch(Actions.Api.pao.users.post(payload)).then(
           args => dispatch(Actions.Api.pao.memberships.post({
             user  : args.headers.location,
