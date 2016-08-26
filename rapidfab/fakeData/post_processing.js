@@ -13,4 +13,3 @@ const records = _.map(ids, id => ({
 }));
 
 export default _.keyBy(records, 'uri');
-
