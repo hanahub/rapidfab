@@ -23,15 +23,15 @@ const PrinterItem = ({ printer, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={2}>
-        {`${printer.printer_type.build_volume.x}x${printer.printer_type.build_volume.y}`}
+        {`${printer.printer_type.build_volume.x}mm x ${printer.printer_type.build_volume.y}mm`}
       </BS.Col>
       <BS.Col xs={2}>
         <span style={{ textTransform: "capitalize" }}>
-          unknown
+          {printer.status}
         </span>
       </BS.Col>
       <BS.Col xs={2}>
-        Unknown
+        <FormattedDate value={printer.leadTime}/>
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>

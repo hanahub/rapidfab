@@ -3,7 +3,7 @@ import Faker     from 'faker'
 import Uuid      from 'node-uuid'
 import Material  from './material'
 
-const count = _.random(100)
+const count = _.random(5, 100)
 const ids = _.range(count)
 
 const records = _.map(ids, id => {
@@ -16,9 +16,9 @@ const records = _.map(ids, id => {
     description: Faker.lorem.sentence(),
     type: Faker.hacker.noun(),
     build_volume: {
-      x: Faker.random.number(),
-      y: Faker.random.number(),
-      x: Faker.random.number()
+      x: _.random(100, 400),
+      y: _.random(100, 400),
+      z: _.random(100, 400)
     },
     materials: _.sampleSize(Material, _.random(4))
   };

@@ -9,6 +9,8 @@ import Grid, {
 } from 'rapidfab/components/grid';
 import PrintersList                           from './printersList'
 import PrintsList                             from './printsList'
+import ActivePrints                           from './activePrints'
+import BedLayout                              from './bedLayout'
 
 
 class PrintQueues extends Component {
@@ -51,6 +53,8 @@ class PrintQueues extends Component {
       orders
     } = this.props
 
+    const activePrints = _.sampleSize(prints, 5)
+
     const {
       selectedPrinter,
       selectedPrint
@@ -91,12 +95,10 @@ class PrintQueues extends Component {
             </BS.Row>
             <BS.Row>
               <BS.Col xs={8}>
-                <BS.Panel header="Bed Layout" style={{ height: 330 }}>
-                </BS.Panel>
+                <BedLayout prints={activePrints}/>
               </BS.Col>
               <BS.Col xs={4}>
-                <BS.Panel header="Prints" style={{ height: 330 }}>
-                </BS.Panel>
+                <ActivePrints prints={activePrints}/>
               </BS.Col>
             </BS.Row>
           </BS.Col>
