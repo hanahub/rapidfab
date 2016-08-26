@@ -2,7 +2,7 @@ import _                    from 'lodash';
 import Constants            from 'rapidfab/constants';
 import FakeData             from 'rapidfab/fakeData';
 
-const initialState = FakeData.orders;
+const initialState = FakeData;
 
 function reducer(state = initialState, action) {
   switch (action.type) {
