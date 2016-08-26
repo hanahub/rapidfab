@@ -35,7 +35,7 @@ class Navbar extends Component {
     );
 
     return (
-      <BS.Navbar fixedTop inverse>
+      <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
             <a href="#/"><FormattedMessage id="rapidfab" defaultMessage='Rapid Fab'/></a>
