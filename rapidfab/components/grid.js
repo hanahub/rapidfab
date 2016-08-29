@@ -64,7 +64,7 @@ export const ColorColumn = ({ data }) => (
   <div style={{ margin: "0 auto", width: 24, height: 24, backgroundColor: data }}/>
 )
 
-const Grid = ({data, columnMeta, rowMeta, columns}) => (
+const Grid = ({data, columnMeta, rowMeta, columns, useFixedHeader, bodyHeight, showTableHeading}) => (
   <Griddle
     tableClassName="table table-bordered table-hover"
     useGriddleStyles={false}
@@ -76,6 +76,9 @@ const Grid = ({data, columnMeta, rowMeta, columns}) => (
     rowMetadata={rowMeta}
     columns={columns}
     resultsPerPage={9999}
+    useFixedHeader={!!useFixedHeader}
+    bodyHeight={bodyHeight}
+    showTableHeading={!!showTableHeading}
   />
 )
 

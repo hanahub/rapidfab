@@ -2,12 +2,12 @@ import _                                from "lodash";
 import React, { Component, PropTypes }  from "react"
 import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
-import PrintQueueComponent              from 'rapidfab/components/plan/printQueue'
+import RunsComponent                    from 'rapidfab/components/plan/runs'
 import FakeData                         from 'rapidfab/fakeData';
 
 
-const PrintQueueContainer = props => (
-  <PrintQueueComponent {...props}/>
+const RunsContainer = props => (
+  <RunsComponent {...props}/>
 )
 
 function mapDispatchToProps(dispatch) {
@@ -20,8 +20,8 @@ function mapStateToProps(state) {
   } = state;
 
   return {
-    records: FakeData.print_queue
+    records: FakeData.runs
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrintQueueContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RunsContainer)

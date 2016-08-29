@@ -28,7 +28,7 @@ class EditColumn extends Component {
     }
 }
 
-export default class PrintQueue extends Component {
+export default class Runs extends Component {
   constructor(props) {
     super(props);
     this.state = {orderList : []};
@@ -46,7 +46,6 @@ export default class PrintQueue extends Component {
   handleOrderList() {
     return _.map(this.state.orderList, orderUuid => (
       <BS.Col key={orderUuid} xs={4}>
-        {console.log(orderUuid)}
         <span> Order: {this.props.records[orderUuid].order}</span>
         <img src="https://placehold.it/125x75"/>
       </BS.Col>
@@ -72,8 +71,8 @@ export default class PrintQueue extends Component {
               <BS.Breadcrumb.Item href="#/plan">
                 <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
               </BS.Breadcrumb.Item>
-              <BS.Breadcrumb.Item href="#/plan/print-queue">
-                <Fa name='files-o'/> <FormattedMessage id="plan.printQueue" defaultMessage='Print Queue'/>
+              <BS.Breadcrumb.Item href="#/plan/runs">
+                <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
@@ -175,4 +174,4 @@ export default class PrintQueue extends Component {
   }
 }
 
-export default PrintQueue
+export default Runs

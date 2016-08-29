@@ -35,7 +35,7 @@ class Navbar extends Component {
     );
 
     return (
-      <BS.Navbar fixedTop inverse>
+      <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
             <a href="#/"><FormattedMessage id="rapidfab" defaultMessage='Rapid Fab'/></a>
@@ -46,11 +46,14 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={1.1} href="#/plan/orders">
               <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={1.2} href="#/plan/print-queue">
-              <Fa name='list'/> <FormattedMessage id="plan.printQueue" defaultMessage='Print Queue'/>
+            <BS.MenuItem eventKey={1.2} href="#/plan/runs">
+              <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={1.3} href="#/plan/post-processing" style={{ display: "none" }}>
+            <BS.MenuItem divider />
+            <BS.MenuItem eventKey={1.3} href="#/plan/print-queues">
+              <Fa name='code-fork'/> <FormattedMessage id="plan.printQueues" defaultMessage='Print Queues'/>
+            </BS.MenuItem>
+            <BS.MenuItem eventKey={1.4} href="#/plan/post-processing" style={{ display: "none" }}>
               <Fa name='flask'/> <FormattedMessage id="plan.postProcessing" defaultMessage='Post Processing'/>
             </BS.MenuItem>
           </BS.NavDropdown>
