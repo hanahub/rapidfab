@@ -2,6 +2,7 @@ import React, { PropTypes }                   from "react"
 import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
 import { FormattedMessage, FormattedDate }    from 'react-intl';
+import Fa                                     from 'react-fontawesome';
 
 const layoutStyle = {
   height: 255,
@@ -41,6 +42,21 @@ const staticProps = [{
   left: 270,
 }]
 
+const Header = ({  }) => (
+  <BS.Row>
+    <BS.Col xs={6}>
+      Bed Layout
+    </BS.Col>
+    <BS.Col xs={6}>
+      <BS.ButtonToolbar className="pull-right">
+        <BS.Button bsSize="small" bsStyle="info">
+          <Fa name='refresh'/>
+        </BS.Button>
+      </BS.ButtonToolbar>
+    </BS.Col>
+  </BS.Row>
+)
+
 const Item = ({ print, index }) => {
   const {
     order
@@ -49,14 +65,14 @@ const Item = ({ print, index }) => {
     model
   } = order
   const style = _.assign({}, itemDefaultStyle, staticProps[index])
-  const src = `//placekitten.com/${style.width}/${style.height}`
+  const src = `//placehold.it/${style.width}/${style.height}`
   return (
     <BS.Image src={src} style={style} />
   )
 }
 
 const BedLayout = ({ prints, selected, onSelect }) => (
-  <BS.Panel header="Bed Layout">
+  <BS.Panel header={<Header/>}>
     <div style={layoutStyle}>
       {_.map(_.values(prints), (print, index) => <Item print={print} index={index} />)}
     </div>

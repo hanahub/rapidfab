@@ -2,12 +2,28 @@ import React, { PropTypes }                   from "react"
 import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
 import { FormattedMessage, FormattedDate }    from 'react-intl';
+import Fa                                     from 'react-fontawesome';
 
 const listBodyStyle = {
   height: 500,
   verflowY: "scroll",
   overflowX: "hidden"
 }
+
+const Header = ({  }) => (
+  <BS.Row>
+    <BS.Col xs={6}>
+      Pending Order Prints
+    </BS.Col>
+    <BS.Col xs={6}>
+      <BS.ButtonToolbar className="pull-right">
+        <BS.Button bsSize="small" bsStyle="primary">
+          <Fa name='arrow-right'/>
+        </BS.Button>
+      </BS.ButtonToolbar>
+    </BS.Col>
+  </BS.Row>
+)
 
 const PrintItem = ({ print, selected, onSelect }) => (
   <BS.ListGroupItem>
@@ -37,7 +53,7 @@ const PrintItem = ({ print, selected, onSelect }) => (
 )
 
 const PrintsList = ({ prints, selected, onSelect }) => (
-  <BS.Panel header="Pending Order Prints">
+  <BS.Panel header={<Header/>}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>

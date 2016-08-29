@@ -2,6 +2,7 @@ import React, { PropTypes }                   from "react"
 import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
 import { FormattedMessage, FormattedDate }    from 'react-intl';
+import Fa                                     from 'react-fontawesome';
 
 const listBodyStyle = {
   height: 243,
@@ -9,7 +10,29 @@ const listBodyStyle = {
   overflowX: "hidden"
 }
 
-const Item = ({ print, selected, onSelect }) => (
+function printBedFill(printer, model) {
+  const modelArea = model.size.x * model.size.y
+  const bedArea = printer.printer_type.build_volume.x * printer.printer_type.build_volume.y
+  const percentage = Math.round(modelArea / bedArea * 100, -1)
+  return `${percentage}%`
+}
+
+const Header = ({  }) => (
+  <BS.Row>
+    <BS.Col xs={6}>
+      Active Prints
+    </BS.Col>
+    <BS.Col xs={6}>
+      <BS.ButtonToolbar className="pull-right">
+        <BS.Button bsSize="small" bsStyle="danger">
+          <Fa name='times'/>
+        </BS.Button>
+      </BS.ButtonToolbar>
+    </BS.Col>
+  </BS.Row>
+)
+
+const Item = ({ print, printer, selected, onSelect }) => (
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -21,19 +44,17 @@ const Item = ({ print, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        <a href={`#/records/material/${print.order.materials.base.uuid}`}>
-          {print.order.materials.base.name}
-        </a>
+        {`${print.order.model.size.x}x${print.order.model.size.y}`}
       </BS.Col>
       <BS.Col xs={3}>
-        <FormattedDate value={print.order.created}/>
+        {printBedFill(printer, print.order.model)}
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>
 )
 
-const PrintsList = ({ prints, selected, onSelect }) => (
-  <BS.Panel header="Active Prints">
+const PrintsList = ({ prints, printer, selected, onSelect }) => (
+  <BS.Panel header={<Header/>}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
@@ -58,6 +79,7 @@ const PrintsList = ({ prints, selected, onSelect }) => (
             selected={selected}
             print={print}
             onSelect={onSelect}
+            printer={printer}
           />
         ))}
       </div>

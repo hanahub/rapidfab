@@ -98,7 +98,10 @@ class PrintQueues extends Component {
                 <BedLayout prints={activePrints}/>
               </BS.Col>
               <BS.Col xs={4}>
-                <ActivePrints prints={activePrints}/>
+                <ActivePrints
+                  printer={selectedPrinter}
+                  prints={activePrints}
+                />
               </BS.Col>
             </BS.Row>
           </BS.Col>

@@ -46,7 +46,6 @@ export default class Runs extends Component {
   handleOrderList() {
     return _.map(this.state.orderList, orderUuid => (
       <BS.Col key={orderUuid} xs={4}>
-        {console.log(orderUuid)}
         <span> Order: {this.props.records[orderUuid].order}</span>
         <img src="https://placehold.it/125x75"/>
       </BS.Col>
