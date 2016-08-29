@@ -4,7 +4,7 @@ import Uuid     from 'node-uuid'
 
 import Material from './material'
 
-const count = _.random(10)
+const count = _.random(2, 10)
 const ids = _.range(count)
 
 const records = _.map(ids, id => {

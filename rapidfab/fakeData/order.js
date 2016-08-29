@@ -5,7 +5,7 @@ import Uuid     from 'node-uuid'
 import Model    from './model'
 import Material from './material'
 
-const count = _.random(100)
+const count = _.random(10, 100)
 const ids = _.range(count)
 
 const records = _.map(ids, id => {

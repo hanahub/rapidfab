@@ -5,7 +5,7 @@ import Uuid         from 'node-uuid'
 import Location     from './location'
 import PrinterType  from './printer_type'
 
-const count = _.random(100)
+const count = _.random(5, 50)
 const ids = _.range(count)
 const printerStatus = [
   "Maintenance",

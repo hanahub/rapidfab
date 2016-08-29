@@ -2,7 +2,7 @@ import _      from 'lodash';
 import Faker  from 'faker';
 import Uuid   from 'node-uuid';
 
-const count = _.random(100);
+const count = _.random(10, 100);
 const ids = _.range(count);
 
 const records = _.map(ids, id => {
@@ -18,7 +18,7 @@ const records = _.map(ids, id => {
     uuid,
     name: Faker.hacker.noun(),
     snapshot: `https://rapidfab.authentise.com/snapshot/${Uuid.v4()}/`,
-    snapshot_content: `//placekitten.com/${size.x}/${size.y}`,
+    snapshot_content: `//placehold.it/${size.x}/${size.y}`,
     size
   };
 });

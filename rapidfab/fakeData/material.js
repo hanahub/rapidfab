@@ -4,7 +4,7 @@ import Uuid         from 'node-uuid'
 
 import Manufacturer from './manufacturer'
 
-const count = _.random(100)
+const count = _.random(2, 20)
 const ids = _.range(count)
 
 const records = _.map(ids, id => {

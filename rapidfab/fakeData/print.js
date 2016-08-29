@@ -3,7 +3,7 @@ import Faker    from 'faker'
 import Uuid     from 'node-uuid'
 import Order    from './order'
 
-const count = _.random(100)
+const count = _.random(10, 100)
 const ids = _.range(count)
 const PrintStatus = [
   'created',

@@ -2,7 +2,7 @@ import _        from 'lodash'
 import Faker    from 'faker'
 import Uuid     from 'node-uuid'
 
-const count = _.random(100)
+const count = _.random(10, 20)
 const ids = _.range(count)
 
 const records = _.map(ids, id => {

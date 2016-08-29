@@ -6,7 +6,7 @@ import Printer from './printer'
 import Print   from './print'
 import Order   from './order'
 
-const count = _.random(20)
+const count = _.random(5, 20)
 const ids = _.range(count)
 const runStatus = [
   "calculating",
