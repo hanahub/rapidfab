@@ -2,7 +2,8 @@ import Location           from './location'
 import Manufacturer       from './manufacturer'
 import Material           from './material'
 import MaterialResource   from './material_resource'
-import PostProcessing     from './post_processing'
+import PostProcessor      from './post_processor'
+import PostProcessorType  from './post_processor_type'
 import Run                from './run'
 import ThirdPartyProvider from './third_party_provider'
 import Users              from './users'
@@ -17,7 +18,8 @@ export default {
   manufacturer         : Manufacturer,
   material             : Material,
   material_resource    : MaterialResource,
-  post_processing      : PostProcessing,
+  post_processor       : PostProcessor,
+  post_processor_type  : PostProcessorType,
   run                  : Run,
   third_party_provider : ThirdPartyProvider,
   users                : Users,
