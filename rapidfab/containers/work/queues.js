@@ -29,6 +29,7 @@ function mapStateToProps(state) {
   } = fakeData
 
   return {
+    printers: printer,
     runs: run
   }
 }
