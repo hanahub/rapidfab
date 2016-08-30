@@ -47,7 +47,7 @@ function getResourceType(resource) {
   } else if (resource.layout) {
     return "run"
   }
-  throw new Error("Could not determin resource type")
+  throw new Error("Could not determine resource type")
 }
 
 function getTimelineColCount(resources) {
