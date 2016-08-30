@@ -57,15 +57,15 @@ class Navbar extends Component {
               <Fa name='flask'/> <FormattedMessage id="plan.postProcessing" defaultMessage='Post Processing'/>
             </BS.MenuItem>
           </BS.NavDropdown>
-          <BS.NavDropdown eventKey={2} title={workTitle} id="uxNavWork" style={{ display: "none" }}>
-            <BS.MenuItem eventKey={2.1} href="#/work/queue">
+          <BS.NavDropdown eventKey={2} title={workTitle} id="uxNavWork">
+            <BS.MenuItem eventKey={2.1} href="#/work/queues">
               <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={2.2} href="#/work/shipping">
+            <BS.MenuItem divider style={{ display: "none" }} />
+            <BS.MenuItem eventKey={2.2} href="#/work/shipping" style={{ display: "none" }}>
               <Fa name='truck'/> <FormattedMessage id="work.shipping" defaultMessage='Shipping'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={2.3} href="#/work/third-party">
+            <BS.MenuItem eventKey={2.3} href="#/work/third-party" style={{ display: "none" }}>
               <Fa name='sign-language'/> <FormattedMessage id="work.thirdParty" defaultMessage='Third Party'/>
             </BS.MenuItem>
           </BS.NavDropdown>

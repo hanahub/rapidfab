@@ -2,11 +2,10 @@ import _      from 'lodash'
 import Faker  from 'faker'
 import Uuid   from 'node-uuid'
 
-import Printer from './printer'
 import Print   from './print'
 import Order   from './order'
 
-const count = _.random(5, 20)
+const count = _.random(10, 50)
 const ids = _.range(count)
 const runStatus = [
   "calculating",
@@ -28,8 +27,8 @@ const records = _.map(ids, id => {
     layout        : `https://rapidfab.authentise.com/layout/${Uuid.v4()}/`,
     estimates     : {
       time        : {
-        print             : Faker.random.number(),
-        post_processing   : Faker.random.number()
+        print             : _.random(3600, 4 * 3600),
+        post_processing   : _.random(3600, 2 * 3600),
       },
       materials   : {
         base      : Faker.random.number(),
@@ -38,8 +37,8 @@ const records = _.map(ids, id => {
     },
     actuals       : {
       time        : {
-        print             : Faker.random.number(),
-        post_processing   : Faker.random.number()
+        print             : _.random(3600, 4 * 3600),
+        post_processing   : _.random(3600, 2 * 3600),
       },
       materials   : {
         base      : Faker.random.number(),
