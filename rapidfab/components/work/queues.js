@@ -50,6 +50,17 @@ function getResourceType(resource) {
   throw new Error("Could not determin resource type")
 }
 
+function getTimelineColCount(resources) {
+  const resourceTimes = _.map(resources, resource => {
+    return _.sumBy(resource.queue, run => {
+      const { print, post_processing } = run.estimates.time
+      return (print > post_processing ? print : post_processing) + 3600
+    })
+  })
+  const max = _.max(resourceTimes)
+  return Math.round(max / 1800, 0)
+}
+
 const ResourceLink = ({ resource }) => {
   let resourceType = getResourceType(resource)
   return (
@@ -78,7 +89,7 @@ const ItemHeader = ({ index }) => {
   )
 }
 
-const Item = ({ resource }) => {
+const Item = ({ resource, colCount }) => {
   const { queue } = resource
   const resourceType = getResourceType(resource)
   let queueRuns = _.reduce(queue, (result, value) => {
@@ -122,9 +133,9 @@ const Item = ({ resource }) => {
     ))
     return result
   }, [])
-  if(queueRuns.length < 48) {
+  if(queueRuns.length < colCount) {
     queueRuns.push((
-      <td style={cellStyle} colSpan={48 - queueRuns.length}>
+      <td style={cellStyle} colSpan={colCount - queueRuns.length}>
       </td>
     ))
   }
@@ -135,63 +146,67 @@ const Item = ({ resource }) => {
   )
 }
 
-const Queues = ({ resources }) => (
-  <BS.Grid fluid>
+const Queues = ({ resources }) => {
+  const colCount = getTimelineColCount(resources)
+  console.log(colCount)
+  return (
+    <BS.Grid fluid>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item href="#/work">
-            <Fa name='wrench'/> <FormattedMessage id="work" defaultMessage='Work'/>
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/work/queues">
-            <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+      <BS.Row>
+        <BS.Col xs={12}>
+          <BS.Breadcrumb>
+            <BS.Breadcrumb.Item href="#/work">
+              <Fa name='wrench'/> <FormattedMessage id="work" defaultMessage='Work'/>
+            </BS.Breadcrumb.Item>
+            <BS.Breadcrumb.Item href="#/work/queues">
+              <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
+            </BS.Breadcrumb.Item>
+          </BS.Breadcrumb>
+        </BS.Col>
+      </BS.Row>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <div style={containerStyle}>
-          <div>
-            <BS.Table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th>
-                    <em style={{ visibility: "hidden" }}>Resources</em>
-                    <p>Resources</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {_.map(resources, resource => (
+      <BS.Row>
+        <BS.Col xs={12}>
+          <div style={containerStyle}>
+            <div>
+              <BS.Table style={tableStyle}>
+                <thead>
                   <tr>
-                    <td style={cellStyle}>
-                      <ResourceLink resource={resource} />
-                    </td>
+                    <th>
+                      <em style={{ visibility: "hidden" }}>Resources</em>
+                      <p>Resources</p>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </BS.Table>
+                </thead>
+                <tbody>
+                  {_.map(resources, resource => (
+                    <tr>
+                      <td style={cellStyle}>
+                        <ResourceLink resource={resource} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </BS.Table>
+            </div>
+            <div style={rightStyle}>
+              <BS.Table style={tableStyle}>
+                <thead>
+                  <tr>
+                    {_.map(_.range(colCount), index => (<ItemHeader index={index} />))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {_.map(resources, resource => (<Item resource={resource} colCount={colCount}/>))}
+                </tbody>
+              </BS.Table>
+            </div>
           </div>
-          <div style={rightStyle}>
-            <BS.Table style={tableStyle}>
-              <thead>
-                <tr>
-                  {_.map(_.range(48), index => (<ItemHeader index={index} />))}
-                </tr>
-              </thead>
-              <tbody>
-                {_.map(resources, resource => (<Item resource={resource}/>))}
-              </tbody>
-            </BS.Table>
-          </div>
-        </div>
-      </BS.Col>
-    </BS.Row>
+        </BS.Col>
+      </BS.Row>
 
-  </BS.Grid>
-);
+    </BS.Grid>
+  )
+}
 
 export default Queues
