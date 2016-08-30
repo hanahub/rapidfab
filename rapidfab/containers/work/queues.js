@@ -24,10 +24,12 @@ function mapStateToProps(state) {
     print,
     printer,
     model,
-    order
+    order,
+    run
   } = fakeData
 
   return {
+    runs: run
   }
 }
 
