@@ -22,6 +22,7 @@ const records = _.map(ids, id => {
   return {
     uuid,
     uri           : `https://rapidfab.authentise.com/run/${uuid}/`,
+    id            : uuid.substr(uuid.length - 6),
     status        : _.sample(runStatus),
     prints        : _.sample(Print, _.random(4)),
     layout        : `https://rapidfab.authentise.com/layout/${Uuid.v4()}/`,

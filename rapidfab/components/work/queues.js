@@ -39,6 +39,37 @@ const tableStyle = {
   float: "left",
 }
 
+function getResourceType(resource) {
+  if(resource.printer_type) {
+    return "printer"
+  } else if (resource.post_processor_type) {
+    return "post-processor"
+  } else if (resource.layout) {
+    return "run"
+  }
+  throw new Error("Could not determin resource type")
+}
+
+function getTimelineColCount(resources) {
+  const resourceTimes = _.map(resources, resource => {
+    return _.sumBy(resource.queue, run => {
+      const { print, post_processing } = run.estimates.time
+      return (print > post_processing ? print : post_processing) + 3600
+    })
+  })
+  const max = _.max(resourceTimes)
+  return Math.round(max / 1800, 0)
+}
+
+const ResourceLink = ({ resource }) => {
+  let resourceType = getResourceType(resource)
+  return (
+    <a href={`#/records/${resourceType}/${resource.uuid}`}>
+      <Fa name={resourceType === "printer" ? "print" : "qrcode"}/> {resource.name ? resource.name : resource.id}
+    </a>
+  )
+}
+
 const ItemHeader = ({ index }) => {
   const date = new Date()
   const time = `${index}:00`
@@ -58,57 +89,53 @@ const ItemHeader = ({ index }) => {
   )
 }
 
-const alertStyle = {
-  padding: 0,
-  margin: 0,
-  lineHeight: "20px"
-}
-
-const Item = ({ printer }) => {
-  const { queue } = printer
+const Item = ({ resource, colCount }) => {
+  const { queue } = resource
+  const resourceType = getResourceType(resource)
   let queueRuns = _.reduce(queue, (result, value) => {
-    const colSpan = Math.round(value.estimates.time.print / 1800, 0)
+    const estimatedTime = resourceType === "printer" ? value.estimates.time.print : value.estimates.time.post_processing
+    const colSpan = Math.round(estimatedTime / 1800, 0)
     const warmingStyle = {
-      backgroundColor: Colors.Warning.color,
+      backgroundColor: resourceType === "printer" ? Colors.Warning.color : Colors.Info.color,
       color: "#333",
       textAlign: "center",
     }
     const printingStyle = {
-      backgroundColor: Colors.Primary.color,
+      backgroundColor: Colors.Default.color,
       color: "#333",
       textAlign: "center",
     }
     const coolingStyle = {
-      backgroundColor: Colors.Success.color,
+      backgroundColor: resourceType === "printer" ? Colors.Success.color : Colors.Primary.color,
       color: "#333",
       textAlign: "center",
     }
     result.push((
       <td style={cellStyle} colSpan={1}>
         <div style={warmingStyle}>
-          <strong>Warming</strong>
+          {resourceType === "printer" ? "Warming" : "Loading" }
         </div>
       </td>
     ))
     result.push((
       <td style={cellStyle} colSpan={colSpan}>
         <div style={printingStyle}>
-          <strong>Printing</strong>
+          {resourceType === "printer" ? "Printing" : "Post Processing" } <a href={`#/records/run/${value.uuid}`}>{value.id}</a>
         </div>
       </td>
     ))
     result.push((
       <td style={cellStyle} colSpan={1}>
         <div style={coolingStyle}>
-          <strong>Cooling</strong>
+          {resourceType === "printer" ? "Cooling" : "Unloading" }
         </div>
       </td>
     ))
     return result
   }, [])
-  if(queueRuns.length < 48) {
+  if(queueRuns.length < colCount) {
     queueRuns.push((
-      <td style={cellStyle} colSpan={48 - queueRuns.length}>
+      <td style={cellStyle} colSpan={colCount - queueRuns.length}>
       </td>
     ))
   }
@@ -119,65 +146,66 @@ const Item = ({ printer }) => {
   )
 }
 
-const Queues = ({ printers }) => (
-  <BS.Grid fluid>
+const Queues = ({ resources }) => {
+  const colCount = getTimelineColCount(resources)
+  return (
+    <BS.Grid fluid>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item href="#/work">
-            <Fa name='wrench'/> <FormattedMessage id="work" defaultMessage='Work'/>
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/work/queues">
-            <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+      <BS.Row>
+        <BS.Col xs={12}>
+          <BS.Breadcrumb>
+            <BS.Breadcrumb.Item href="#/work">
+              <Fa name='wrench'/> <FormattedMessage id="work" defaultMessage='Work'/>
+            </BS.Breadcrumb.Item>
+            <BS.Breadcrumb.Item href="#/work/queues">
+              <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
+            </BS.Breadcrumb.Item>
+          </BS.Breadcrumb>
+        </BS.Col>
+      </BS.Row>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <div style={containerStyle}>
-          <div>
-            <BS.Table style={tableStyle}>
-              <thead>
-                <tr>
-                  <th>
-                    <em style={{ visibility: "hidden" }}>Printers</em>
-                    <p>Printers</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {_.map(printers, printer => (
+      <BS.Row>
+        <BS.Col xs={12}>
+          <div style={containerStyle}>
+            <div>
+              <BS.Table style={tableStyle}>
+                <thead>
                   <tr>
-                    <td style={cellStyle}>
-                      <a href={`#/records/printer/${printer.uuid}`}>
-                        {printer.name}
-                      </a>
-                    </td>
+                    <th>
+                      <em style={{ visibility: "hidden" }}>Resources</em>
+                      <p>Resources</p>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </BS.Table>
+                </thead>
+                <tbody>
+                  {_.map(resources, resource => (
+                    <tr>
+                      <td style={cellStyle}>
+                        <ResourceLink resource={resource} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </BS.Table>
+            </div>
+            <div style={rightStyle}>
+              <BS.Table style={tableStyle}>
+                <thead>
+                  <tr>
+                    {_.map(_.range(colCount), index => (<ItemHeader index={index} />))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {_.map(resources, resource => (<Item resource={resource} colCount={colCount}/>))}
+                </tbody>
+              </BS.Table>
+            </div>
           </div>
-          <div style={rightStyle}>
-            <BS.Table style={tableStyle}>
-              <thead>
-                <tr>
-                  {_.map(_.range(48), index => (<ItemHeader index={index} />))}
-                </tr>
-              </thead>
-              <tbody>
-                {_.map(printers, printer => (<Item printer={printer}/>))}
-              </tbody>
-            </BS.Table>
-          </div>
-        </div>
-      </BS.Col>
-    </BS.Row>
+        </BS.Col>
+      </BS.Row>
 
-  </BS.Grid>
-);
+    </BS.Grid>
+  )
+}
 
 export default Queues
