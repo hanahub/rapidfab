@@ -43,7 +43,7 @@ function getResourceType(resource) {
   if(resource.printer_type) {
     return "printer"
   } else if (resource.post_processor_type) {
-    return "post-processor-type"
+    return "post-processor"
   } else if (resource.layout) {
     return "run"
   }
@@ -148,7 +148,6 @@ const Item = ({ resource, colCount }) => {
 
 const Queues = ({ resources }) => {
   const colCount = getTimelineColCount(resources)
-  console.log(colCount)
   return (
     <BS.Grid fluid>
 
