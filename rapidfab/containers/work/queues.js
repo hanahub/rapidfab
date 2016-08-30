@@ -21,16 +21,14 @@ function mapStateToProps(state) {
   } = state
 
   const {
-    print,
     printer,
-    model,
-    order,
-    run
+    post_processor
   } = fakeData
 
+  let resources = _.assign({}, printer, post_processor)
+
   return {
-    printers: printer,
-    runs: run
+    resources: _.orderBy(resources, 'name')
   }
 }
 
