@@ -173,5 +173,3 @@ export default class Runs extends Component {
     );
   }
 }
-
-export default Runs
