@@ -9,7 +9,8 @@ function make_constants(constants) {
 
 const Constants = [
   'HASH_CHANGE',
-  'LOCALE_CHANGE'
+  'LOCALE_CHANGE',
+  'EVENT_STREAM_MESSAGE'
 ]
 
 export default make_constants(Constants)

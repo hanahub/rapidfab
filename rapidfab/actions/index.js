@@ -1,13 +1,15 @@
-import Api, { RESOURCES } from 'rapidfab/api';
+import Api, { RESOURCES } from 'rapidfab/api'
 import { makeApiActions } from './makeApiActions'
 
-import * as Url from './url'
+import * as EventStream   from './eventStream'
 import * as I18n from './i18n'
+import * as Url from './url'
 
 const Actions = {
-  Url,
+  Api: makeApiActions(Api, RESOURCES),
+  EventStream,
   I18n,
-  Api: makeApiActions(Api, RESOURCES)
+  Url
 }
 
 export default Actions
