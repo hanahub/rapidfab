@@ -25,12 +25,7 @@ const Constants = [
   'RESOURCE_GET_FAILURE',
   'RESOURCE_DELETE_REQUEST',
   'RESOURCE_DELETE_SUCCESS',
-  'RESOURCE_DELETE_FAILURE',
-  'PUT',
-  'POST',
-  'DELETE',
-  'GET',
-  'LIST'
+  'RESOURCE_DELETE_FAILURE'
 ]
 
 export default make_constants(Constants)
