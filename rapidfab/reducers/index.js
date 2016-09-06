@@ -6,13 +6,14 @@ import {reducer as formReducer} from 'redux-form'
 import url                      from './url'
 import i18n                     from './i18n'
 import fakeData                 from './fakeData'
-import { makeApiReducers }      from './makeApiReducers'
+import resources                from './resources'
 
-const Reducer = combineReducers(_.assign({
+const Reducer = combineReducers({
   form: formReducer,
   url,
   i18n,
   fakeData,
-}, makeApiReducers(RESOURCES)))
+  resources,
+})
 
 export default Reducer
