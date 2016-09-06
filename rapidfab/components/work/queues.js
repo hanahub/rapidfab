@@ -154,7 +154,7 @@ const Queues = ({ resources }) => {
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item href="#/work">
+            <BS.Breadcrumb.Item>
               <Fa name='wrench'/> <FormattedMessage id="work" defaultMessage='Work'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/work/queues">

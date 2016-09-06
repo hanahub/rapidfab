@@ -16,7 +16,7 @@ const ManufacturerForm = ({ fields, handleSubmit, load, submitting, onDelete }) 
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item href="#/inventory">
+            <BS.Breadcrumb.Item>
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/manufacturer">

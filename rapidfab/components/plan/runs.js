@@ -68,7 +68,7 @@ export default class Runs extends Component {
         <BS.Row>
           <BS.Col xs={6}>
             <BS.Breadcrumb>
-              <BS.Breadcrumb.Item href="#/plan">
+              <BS.Breadcrumb.Item>
                 <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/plan/runs">
