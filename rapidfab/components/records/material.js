@@ -61,6 +61,7 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel><FormattedMessage id="field.manufacturer" defaultMessage='Manufacturer'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.manufacturer}>
+              <option key="placeholder" value="" selected disabled>Select a Manufacturer</option>
               {_.map(manufacturers, manufacturer => (
                 <option key={manufacturer.uri} value={manufacturer.uri}>{`${manufacturer.id} - ${manufacturer.name}`}</option>
               ))}
