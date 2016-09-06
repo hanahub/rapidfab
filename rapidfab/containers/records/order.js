@@ -63,6 +63,11 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+function getSnapshotFromOrder(order, models) {
+  const model_uuid = extractUuid(order.model)
+  return Object.keys(models).includes(model_uuid) ? models[model_uuid].snapshot_content : ''
+}
+
 function mapStateToProps(state, props) {
   const {
     order,
@@ -70,13 +75,17 @@ function mapStateToProps(state, props) {
     model
   } = state;
 
+  const models = _.omit(model, ['uxFetching', 'uxErrors'])
+  const snapshot = getSnapshotFromOrder(order[props.route.uuid], models)
+
   return {
     uuid            : props.route.uuid,
     initialValues   : order[props.route.uuid],
     materials       : _.omit(material, ['uxFetching', 'uxErrors']),
-    models          : _.omit(model, ['uxFetching', 'uxErrors']),
+    models,
     submitting      : order.uxFetching || material.uxFetching || model.uxFetching,
-    apiErrors       : _.concat(order.uxErrors, material.uxErrors, model.uxErrors)
+    apiErrors       : _.concat(order.uxErrors, material.uxErrors, model.uxErrors),
+    snapshot,
   }
 }
 

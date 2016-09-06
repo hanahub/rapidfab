@@ -14,7 +14,7 @@ const SaveButtonTitle = ({ uri, uuid, record }) => (
   </span>
 )
 
-const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, apiErrors }) => (
+const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, apiErrors, snapshot }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid>
 
@@ -64,7 +64,7 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
 
       <BS.Row>
         <BS.Col xs={4}>
-          <BS.Thumbnail src="//placekitten.com/600/600" responsive/>
+          <BS.Thumbnail src={snapshot} responsive/>
         </BS.Col>
         <BS.Col xs={8}>
           <OrderForm fields={fields} materials={materials} models={models}/>
