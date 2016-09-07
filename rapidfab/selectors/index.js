@@ -1,19 +1,47 @@
 import _                  from "lodash"
 import { createSelector } from 'reselect'
 
-const getStateResources           = state => state.resources
+export const getStateResources           = state => state.resources
+export const getRoute                    = (state, props) => props.route
 
-const getStateModels              = state => state.api.hoth.model
-const getStateMemberships         = state => state.api.pao.memberships
-const getStateSessions            = state => state.api.pao.sessions
-const getStateUsers               = state => state.api.pao.users
-const getStateLocations           = state => state.api.wyatt.location
-const getStatePostProcessorTypes  = state => state.api.wyatt['post-processor-type']
-const getStatePostProcessors      = state => state.api.wyatt['post-processor']
-const getStateManufacturers       = state => state.api.wyatt.manufacturer
-const getStateMaterials           = state => state.api.wyatt.material
-const getStateStocks              = state => state.api.wyatt.stock
-const getStateOrders              = state => state.api.wyatt.order
+export const getStateModels              = state => state.api.hoth.model
+export const getStateMemberships         = state => state.api.pao.memberships
+export const getStateSessions            = state => state.api.pao.sessions
+export const getStateUsers               = state => state.api.pao.users
+export const getStateLocations           = state => state.api.wyatt.location
+export const getStatePostProcessorTypes  = state => state.api.wyatt['post-processor-type']
+export const getStatePostProcessors      = state => state.api.wyatt['post-processor']
+export const getStateManufacturers       = state => state.api.wyatt.manufacturer
+export const getStateMaterials           = state => state.api.wyatt.material
+export const getStateStocks              = state => state.api.wyatt.stock
+export const getStateOrders              = state => state.api.wyatt.order
+
+export const getResourceErrors         = (state, path) => {
+  const methods = _.get(path)
+  if(!methods) {
+    throw new Error(`Could not find methods by path: ${path}`)
+  }
+  return _.concat(
+    methods.list.errors,
+    methods.get.errors,
+    methods.post.errors,
+    methods.put.errors,
+    methods.delete.errors
+  )
+}
+
+export const getResourceFetching         = (state, path) => {
+  const methods = _.get(path)
+  if(!methods) {
+    throw new Error(`Could not find methods by path: ${path}`)
+  }
+  return !!_.find(methods, method => method.fetching)
+}
+
+export const getRouteResource = createSelector(
+  [ getRoute, getStateResources ],
+  (route, resources) => resources[route.uuid]
+)
 
 export const getSession = createSelector(
   [ getStateSessions, getStateResources ],

@@ -4,6 +4,7 @@ import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
 import PostProcessorComponent             from 'rapidfab/components/records/postProcessor'
 import { reduxForm }                      from 'redux-form'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
@@ -48,19 +49,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const postProcessor = state['post-processor']
-  const postProcessorType = state['post-processor-type']
-  const {
-    location,
-  } = state;
-
   return {
-    uuid               : props.route.uuid,
-    initialValues      : postProcessor[props.route.uuid],
-    locations          : _.omit(location, ['uxFetching', 'uxErrors']),
-    postProcessorTypes : _.omit(postProcessorType, ['uxFetching', 'uxErrors']),
-    submitting         : postProcessor.uxFetching || postProcessorType.uxFetching || location.uxFetching,
-    apiErrors          : _.concat(postProcessor.uxErrors, postProcessorType.uxErrors, location.uxErrors)
+    uuid                : Selectors.getRoute(state, props).uuid,
+    initialValues       : Selectors.getRouteResource(state, props),
+    submitting          : Selectors.getResourceFetching(state, "wyatt.post-processor"),
+    apiErrors           : Selectors.getResourceErrors(state, "wyatt.post-processor"),
+    locations           : Selectors.getLocations(state),
+    postProcessorTypes  : Selectors.getPostProcessorTypes(state),
   }
 }
 

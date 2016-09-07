@@ -6,6 +6,7 @@ import OrderComponent                     from 'rapidfab/components/records/orde
 import { reduxForm }                      from 'redux-form'
 import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 import Config                             from 'rapidfab/config'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
