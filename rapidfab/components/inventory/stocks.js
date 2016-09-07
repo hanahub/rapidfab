@@ -12,7 +12,7 @@ import Grid, {
 } from 'rapidfab/components/grid';
 
 
-const StocksGrid = ({ stocks, materials, locations }) => (
+const StocksGrid = ({ stocks, materials, locations, apiErrors }) => (
   <Grid
     data={stocks}
     columns={[

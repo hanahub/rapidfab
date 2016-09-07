@@ -6,7 +6,7 @@ import { FormattedMessage }   from 'react-intl';
 import Grid, { IdColumn }     from 'rapidfab/components/grid';
 import Error                  from 'rapidfab/components/error'
 
-const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations }) => (
+const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations, apiErrors }) => (
   <Grid
     data={postProcessors}
     columns={[
