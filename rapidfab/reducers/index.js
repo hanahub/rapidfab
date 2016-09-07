@@ -6,6 +6,8 @@ import {reducer as formReducer} from 'redux-form'
 import url                      from './url'
 import i18n                     from './i18n'
 import fakeData                 from './fakeData'
+import ui                       from './ui'
+import api                      from './api'
 import resources                from './resources'
 
 const Reducer = combineReducers({
@@ -14,6 +16,8 @@ const Reducer = combineReducers({
   i18n,
   fakeData,
   resources,
+  api,
+  ui
 })
 
 export default Reducer
