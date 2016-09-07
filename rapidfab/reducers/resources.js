@@ -24,6 +24,11 @@ export function hydrateRecord(record) {
 function reducer(state = {}, action) {
   let record = null
   switch (action.type) {
+    case Constants.EVENT_STREAM_MESSAGE:
+      record = hydrateRecord(action.payload);
+      return _.assign({}, state, {
+        [record.uuid]: record
+      })
     case Constants.RESOURCE_GET_SUCCESS:
       record = hydrateRecord(action.json);
       return _.assign({}, state, {

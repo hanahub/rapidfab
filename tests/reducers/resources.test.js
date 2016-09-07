@@ -38,6 +38,54 @@ describe('resources', function(){
   })
   describe('#reducer', function(){
 
+    it('reduces EVENT_STREAM_MESSAGE new record', function(){
+      const action = {
+        type: "EVENT_STREAM_MESSAGE",
+        payload: {
+          uri,
+          name
+        }
+      }
+      let expected = {
+        [uuid]: {
+          id,
+          uuid,
+          uri,
+          name
+        }
+      }
+      const results = Reducer.default(undefined, action)
+      expect(results).toEqual(expected)
+    })
+
+    it('reduces EVENT_STREAM_MESSAGE update record', function(){
+      const action = {
+        type: "EVENT_STREAM_MESSAGE",
+        payload: {
+          uri,
+          name: "April Buchanon"
+        }
+      }
+      let expected = {
+        [uuid]: {
+          id,
+          uuid,
+          uri,
+          name: action.payload.name
+        }
+      }
+      let initialState = {
+        [uuid]: {
+          id,
+          uuid,
+          uri,
+          name
+        }
+      }
+      const results = Reducer.default(initialState, action)
+      expect(results).toEqual(expected)
+    })
+
     it('reduces RESOURCE_GET_SUCCESS', function(){
       const action = {
         type: "RESOURCE_GET_SUCCESS",
