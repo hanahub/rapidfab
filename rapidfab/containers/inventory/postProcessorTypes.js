@@ -33,7 +33,7 @@ function mapStateToProps(state) {
   } = state.ui.wyatt;
 
   return {
-    manufacturers      : Selectors.getManufactcurers(state),
+    manufacturers      : Selectors.getManufacturers(state),
     materials          : Selectors.getMaterials(state),
     postProcessorTypes : Selectors.getPostProcessorTypes(state),
     fetching           : manufacturer.list.fetching || postProcessorType.list.fetching || material.list.fetching,

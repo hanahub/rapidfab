@@ -17,7 +17,7 @@ export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
 
 export const getResourceErrors         = (state, path) => {
-  const methods = _.get(path)
+  const methods = _.get(state.ui, path)
   if(!methods) {
     throw new Error(`Could not find methods by path: ${path}`)
   }
@@ -31,7 +31,7 @@ export const getResourceErrors         = (state, path) => {
 }
 
 export const getResourceFetching         = (state, path) => {
-  const methods = _.get(path)
+  const methods = _.get(state.ui, path)
   if(!methods) {
     throw new Error(`Could not find methods by path: ${path}`)
   }

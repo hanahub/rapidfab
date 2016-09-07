@@ -38,7 +38,7 @@ function mapStateToProps(state) {
     locations     : Selectors.getLocations(state),
     stocks        : Selectors.getStocks(state),
     fetching      : material.list.fetching || location.list.fetching || stock.list.fetching,
-    apiErrors     : _.concat(material.list.errors, location.list.errors, stock.location.errors),
+    apiErrors        : _.concat(material.list.errors, location.list.errors, stock.list.errors),
   }
 }
 
