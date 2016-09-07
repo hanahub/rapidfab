@@ -36,7 +36,7 @@ function mapStateToProps(state) {
     materials          : _.omit(material,          ['uxFetching', 'uxErrors']),
     postProcessorTypes : _.omit(postProcessorType, ['uxFetching', 'uxErrors']),
     fetching           : manufacturer.uxFetching || material.uxFetching || postProcessorType.uxFetching,
-    errors : manufacturer.uxErrors || material.uxErrors || postProcessorType.uxErrors,
+    apiErrors : _.concat(postProcessorType.uxErrors, manufacturer.uxErrors, material.uxErrors)
   }
 }
 

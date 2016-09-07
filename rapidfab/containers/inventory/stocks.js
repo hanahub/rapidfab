@@ -37,7 +37,7 @@ function mapStateToProps(state) {
     locations     : _.omit(location, ['uxFetching', 'uxErrors']),
     stocks        : _.omit(stock, ['uxFetching', 'uxErrors']),
     fetching      : material.uxFetching || location.uxFetching || stock.uxFetching,
-    errors        : stock.uxErrors
+    apiErrors     : _.concat(stock.uxErrors, location.uxErrors, material.uxErrors)
   }
 }
 
