@@ -55,7 +55,6 @@ const OrderForm = ({ handleSubmit, fields, materials, models }) => (
       </BS.Col>
       <BS.Col xs={9}>
         <BS.FormControl componentClass="select" {...fields.materials.support}>
-          <option value="" disabled>Select a Support Material</option>
           <option value="">None</option>
           {_.map(materials, material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
         </BS.FormControl>
