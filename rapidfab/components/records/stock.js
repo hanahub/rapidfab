@@ -2,6 +2,7 @@ import React, { PropTypes }     from "react";
 import * as BS                  from 'react-bootstrap';
 import Fa                       from 'react-fontawesome';
 import { FormattedMessage }     from 'react-intl';
+import Error                    from 'rapidfab/components/error'
 
 
 const SaveButtonTitle = ({  }) => (
@@ -10,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations, materials }) => (
+const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid>
       <BS.Row>
@@ -47,6 +48,12 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
       </BS.Row>
 
       <hr/>
+
+      <BS.Row>
+        <BS.Col xs={12}>
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
 
       <BS.Row>
         <BS.Col xs={12}>
