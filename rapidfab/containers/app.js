@@ -9,6 +9,7 @@ import Router                           from 'rapidfab/components/router'
 
 import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
+import * as Selectors                   from 'rapidfab/selectors'
 
 const SessionProvider = ({children, currentUser, fetching, errors}) => {
   if(!currentUser && errors.length) {
@@ -84,23 +85,20 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const routes = Routes;
   const {
-    sessions,
     url,
-    i18n
+    i18n,
   } = state;
-  const currentUsers = _.omit(sessions, ['uxFetching', 'uxErrors'])
   const session = {
-    currentUser : _.find(currentUsers, user => !!user.uri),
-    fetching    : sessions.uxFetching,
-    errors      : sessions.uxErrors
+    currentUser : Selectors.getSession(state),
+    fetching    : state.ui.pao.sessions.get.fetching,
+    errors      : state.ui.pao.sessions.get.errors
   }
   return {
     session,
     url,
     i18n,
-    routes
+    routes: Routes
   }
 }
 
