@@ -59,6 +59,8 @@ function mapStateToProps(state, props) {
     initialValues      : postProcessor[props.route.uuid],
     locations          : _.omit(location, ['uxFetching', 'uxErrors']),
     postProcessorTypes : _.omit(postProcessorType, ['uxFetching', 'uxErrors']),
+    submitting         : postProcessor.uxFetching || postProcessorType.uxFetching || location.uxFetching,
+    apiErrors          : _.concat(postProcessor.uxErrors, postProcessorType.uxErrors, location.uxErrors)
   }
 }
 
