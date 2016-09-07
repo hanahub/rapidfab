@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import PostProcessorTypesComponent  from 'rapidfab/components/inventory/postProcessorTypes'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class PostProcessorTypesContainer extends Component {
@@ -25,18 +26,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const postProcessorType = state['post-processor-type']
+  const postProcessorType = state.ui.wyatt['post-processor-type']
   const {
     manufacturer,
     material,
-  } = state;
+  } = state.ui.wyatt;
 
   return {
-    manufacturers      : _.omit(manufacturer,     ['uxFetching', 'uxErrors']),
-    materials          : _.omit(material,          ['uxFetching', 'uxErrors']),
-    postProcessorTypes : _.omit(postProcessorType, ['uxFetching', 'uxErrors']),
-    fetching           : manufacturer.uxFetching || material.uxFetching || postProcessorType.uxFetching,
-    apiErrors : _.concat(postProcessorType.uxErrors, manufacturer.uxErrors, material.uxErrors)
+    manufacturers      : Selectors.getManufactcurers(state),
+    materials          : Selectors.getMaterials(state),
+    postProcessorTypes : Selectors.getPostProcessorTypes(state),
+    fetching           : manufacturer.list.fetching || postProcessorType.list.fetching || material.list.fetching,
+    apiErrors          : _.concat(manufacturer.list.errors, postProcessorType.list.errors, material.list.errors)
   }
 }
 

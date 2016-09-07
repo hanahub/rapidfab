@@ -26,14 +26,18 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const {
-    location
+    location,
   } = state.ui.wyatt
+
+  const {
+    users,
+  } = state.ui.pao
 
   return {
     locations : Selectors.getLocations(state),
     users     : Selectors.getUsers(state),
-    fetching  : location.list.fetching,
-    apiErrors : location.list.errors
+    fetching  : location.list.fetching || users.list.fetching,
+    errors    : _.concat(location.list.errors, users.list.errors)
   }
 }
 

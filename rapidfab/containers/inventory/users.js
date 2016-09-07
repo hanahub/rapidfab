@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import UsersComponent           from 'rapidfab/components/inventory/users'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class UsersContainer extends Component {
@@ -26,12 +27,12 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const {
     users,
-  } = state;
+  } = state.ui.pao
 
   return {
-    records   : _.omit(users, ['uxFetching', 'uxErrors']),
-    fetching  : users.uxFetching,
-    apiErrors : users.uxErrors
+    records   : Selectors.getUsers(state),
+    fetching  : users.list.fetching,
+    apiErrors : users.list.errors
   }
 }
 
