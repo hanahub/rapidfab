@@ -3,7 +3,7 @@ import Constants from 'rapidfab/constants'
 function makePost(api, host, resource) {
   return payload => ({
     api: {
-      api,
+      resource,
       host,
       method: "POST"
     },
@@ -20,7 +20,7 @@ function makePost(api, host, resource) {
 function makePut(api, host, resource) {
   return (uuid, payload) => ({
     api: {
-      api,
+      resource,
       host,
       method: "PUT"
     },
@@ -38,7 +38,7 @@ function makePut(api, host, resource) {
 function makeList(api, host, resource) {
   return filters => ({
     api: {
-      api,
+      resource,
       host,
       method: "LIST"
     },
@@ -55,7 +55,7 @@ function makeList(api, host, resource) {
 function makeGet(api, host, resource) {
   return uuid => ({
     api: {
-      api,
+      resource,
       host,
       method: "GET"
     },
@@ -73,7 +73,7 @@ function makeGet(api, host, resource) {
 function makeDelete(api, host, resource) {
   return uuid => ({
     api: {
-      api,
+      resource,
       host,
       method: "DELETE"
     },
