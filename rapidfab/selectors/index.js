@@ -3,9 +3,11 @@ import { createSelector } from 'reselect'
 
 const getStateResources   = state => state.resources
 
-const getStateSessions    = state => state.api.pao.sessions
-const getStateLocations   = state => state.api.wyatt.location
-const getStateUsers       = state => state.api.pao.users
+const getStateSessions        = state => state.api.pao.sessions
+const getStateLocations       = state => state.api.wyatt.location
+const getStateMaterials       = state => state.api.wyatt.material
+const getStateManufacturers   = state => state.api.wyatt.manufacturer
+const getStateUsers           = state => state.api.pao.users
 
 export const getSession = createSelector(
   [ getStateSessions, getStateResources ],
@@ -23,5 +25,15 @@ export const getLocations = createSelector(
 
 export const getUsers = createSelector(
   [ getStateUsers, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getMaterials = createSelector(
+  [ getStateMaterials, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getManufacturers = createSelector(
+  [ getStateManufacturers, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
