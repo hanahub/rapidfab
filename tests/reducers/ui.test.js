@@ -20,11 +20,11 @@ describe('ui', function(){
         type: "SOME_UNKNOWN_ACTION",
       }
       let initialMethodState = {
-        fetching: false,
-        errors: [],
-        uuid: null,
-        filters: null,
-        payload: null
+        fetching    : false,
+        payload     : null,
+        uuid        : null,
+        filters     : null,
+        errors      : []
       }
       let expected = _.reduce(Api.RESOURCES, function(result, resources, host) {
         result[host] = {}
@@ -53,16 +53,19 @@ describe('ui', function(){
             method: method
           },
           uuid: uuid,
-          payload: null,
-          filters: null
+          payload: record,
+          filters: record,
         }
+        let expected = _.assign({}, Reducer.initialState)
         let results = Reducer.default(undefined, action)
-        results = results.hoth.model[method.toLowerCase()]
-        expect(results.fetching).to.eql(true)
-        expect(results.errors).to.eql([])
-        expect(results.uuid).to.eql(uuid)
-        expect(results.payload).to.eql(null)
-        expect(results.filters).to.eql(null)
+        expected.hoth.model[method.toLowerCase()] = {
+          fetching: true,
+          payload: action.payload,
+          uuid: action.uuid,
+          filters: action.filters,
+          errors: [],
+        }
+        expect(results).to.eql(expected)
       })
     });
 
@@ -77,15 +80,25 @@ describe('ui', function(){
           },
           uuid: uuid,
           payload: record,
-          filters: null
+          filters: record,
         }
-        let results = Reducer.default(undefined, action)
-        results = results.hoth.model[method.toLowerCase()]
-        expect(results.fetching).to.eql(false)
-        expect(results.errors).to.eql([])
-        expect(results.uuid).to.eql(uuid)
-        expect(results.payload).to.eql(record)
-        expect(results.filters).to.eql(null)
+        let expected = _.assign({}, Reducer.initialState)
+        expected.hoth.model[method.toLowerCase()] = {
+          fetching: true,
+          payload: action.payload,
+          uuid: action.uuid,
+          filters: action.filters,
+          errors: [],
+        }
+        let results = Reducer.default(expected, action)
+        expected.hoth.model[method.toLowerCase()] = {
+          fetching: false,
+          payload: action.payload,
+          uuid: action.uuid,
+          filters: action.filters,
+          errors: [],
+        }
+        expect(results).to.eql(expected)
       })
     });
 
@@ -99,17 +112,27 @@ describe('ui', function(){
             method: method
           },
           uuid: uuid,
-          payload: null,
+          payload: record,
           filters: record,
-          errors: [ "some-error" ]
+          errors: [ "some-error" ],
         }
-        let results = Reducer.default(undefined, action)
-        results = results.hoth.model[method.toLowerCase()]
-        expect(results.fetching).to.eql(false)
-        expect(results.errors).to.eql(action.errors)
-        expect(results.uuid).to.eql(uuid)
-        expect(results.payload).to.eql(null)
-        expect(results.filters).to.eql(record)
+        let expected = _.assign({}, Reducer.initialState)
+        expected.hoth.model[method.toLowerCase()] = {
+          fetching: true,
+          payload: action.payload,
+          uuid: action.uuid,
+          filters: action.filters,
+          errors: [],
+        }
+        let results = Reducer.default(expected, action)
+        expected.hoth.model[method.toLowerCase()] = {
+          fetching: false,
+          payload: action.payload,
+          uuid: action.uuid,
+          filters: action.filters,
+          errors: action.errors,
+        }
+        expect(results).to.eql(expected)
       })
     });
   })

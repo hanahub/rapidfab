@@ -21,12 +21,6 @@ export const initialState = _.reduce(RESOURCES, (result, hostResources, host) =>
   return result;
 }, {})
 
-function reduceHost(state, action) {
-  return _.assign({}, state, {
-    [action.api.host]: reduceMethod(state[action.api.host], action)
-  })
-}
-
 function reduceResource(state, action) {
   return _.assign({}, state, {
     [action.api.resource]: reduceMethod(state[action.api.resource], action)
