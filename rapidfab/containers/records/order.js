@@ -29,7 +29,7 @@ const fields = [
 
 class OrderContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    this.props.onInitialize(this.props)
   }
 
   render() {
@@ -39,10 +39,13 @@ class OrderContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
+    onInitialize: props => {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
-      if(uuid) dispatch(Actions.Api.wyatt.order.get(uuid))
+      if(props.route.uuid) {
+        dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
+        dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
+      }
     },
     onSubmit: payload => {
       delete payload.estimates
@@ -63,20 +66,32 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+function getSnapshotFromOrder(order, models) {
+  const model_uuid = extractUuid(order.model)
+  return Object.keys(models).includes(model_uuid) ? models[model_uuid].snapshot_content : ''
+}
+
 function mapStateToProps(state, props) {
   const {
     order,
     material,
-    model
+    model,
+    print
   } = state;
+
+  const models = _.omit(model, ['uxFetching', 'uxErrors'])
+  const snapshot = getSnapshotFromOrder(order[props.route.uuid], models)
 
   return {
     uuid            : props.route.uuid,
     initialValues   : order[props.route.uuid],
     materials       : _.omit(material, ['uxFetching', 'uxErrors']),
-    models          : _.omit(model, ['uxFetching', 'uxErrors']),
+    models,
     submitting      : order.uxFetching || material.uxFetching || model.uxFetching,
-    apiErrors       : _.concat(order.uxErrors, material.uxErrors, model.uxErrors)
+    apiErrors       : _.concat(order.uxErrors, material.uxErrors, model.uxErrors),
+    snapshot,
+    order           : order[props.route.uuid],
+    prints          : _.omit(print, ['uxFetching', 'uxErrors'])
   }
 }
 

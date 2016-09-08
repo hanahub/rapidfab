@@ -2,6 +2,7 @@ import React, { PropTypes }     from "react";
 import * as BS                  from 'react-bootstrap';
 import Fa                       from 'react-fontawesome';
 import { FormattedMessage }     from 'react-intl';
+import Error                    from 'rapidfab/components/error'
 
 
 const SaveButtonTitle = ({  }) => (
@@ -10,13 +11,13 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers }) => (
+const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, apiErrors}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item href="#/inventory">
+            <BS.Breadcrumb.Item>
               <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/materials">
@@ -50,6 +51,12 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
 
       <BS.Row>
         <BS.Col xs={12}>
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
+
+      <BS.Row>
+        <BS.Col xs={12}>
           <BS.FormGroup controlId="uxName">
             <BS.ControlLabel><FormattedMessage id="field.name" defaultMessage='Name'/>:</BS.ControlLabel>
             <BS.FormControl type="text" required {...fields.name}/>
@@ -61,6 +68,7 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel><FormattedMessage id="field.manufacturer" defaultMessage='Manufacturer'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.manufacturer}>
+              <option key="placeholder" value="" selected disabled>Select a Manufacturer</option>
               {_.map(manufacturers, manufacturer => (
                 <option key={manufacturer.uri} value={manufacturer.uri}>{`${manufacturer.id} - ${manufacturer.name}`}</option>
               ))}

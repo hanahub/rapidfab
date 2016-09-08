@@ -4,7 +4,7 @@ import Fa                     from 'react-fontawesome'
 import { FormattedMessage }   from 'rapidfab/i18n'
 import OrderForm              from './form'
 import OrderEstimates         from './estimates'
-import OrderModels            from './models'
+import OrderPrints            from './prints'
 import Error                  from 'rapidfab/components/error'
 
 
@@ -14,14 +14,14 @@ const SaveButtonTitle = ({ uri, uuid, record }) => (
   </span>
 )
 
-const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, apiErrors }) => (
+const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, prints, apiErrors, snapshot }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid>
 
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item href="#/plan">
+            <BS.Breadcrumb.Item>
               <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/plan/orders">
@@ -64,7 +64,7 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
 
       <BS.Row>
         <BS.Col xs={4}>
-          <BS.Thumbnail src="//placekitten.com/600/600" responsive/>
+          <BS.Thumbnail src={snapshot} responsive/>
         </BS.Col>
         <BS.Col xs={8}>
           <OrderForm fields={fields} materials={materials} models={models}/>
@@ -76,7 +76,7 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
           <OrderEstimates estimates={fields.estimates}/>
         </BS.Col>
         <BS.Col xs={8}>
-          <OrderModels models={models}/>
+          <OrderPrints prints={prints}/>
         </BS.Col>
       </BS.Row>
 

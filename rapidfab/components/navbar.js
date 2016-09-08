@@ -35,7 +35,7 @@ class Navbar extends Component {
     );
 
     return (
-      <BS.Navbar fixedTop inverse>
+      <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
             <a href="#/"><FormattedMessage id="rapidfab" defaultMessage='Rapid Fab'/></a>
@@ -46,23 +46,26 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={1.1} href="#/plan/orders">
               <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={1.2} href="#/plan/print-queue">
-              <Fa name='list'/> <FormattedMessage id="plan.printQueue" defaultMessage='Print Queue'/>
+            <BS.MenuItem eventKey={1.2} href="#/plan/runs">
+              <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={1.3} href="#/plan/post-processing" style={{ display: "none" }}>
+            <BS.MenuItem divider />
+            <BS.MenuItem eventKey={1.3} href="#/plan/print-queues">
+              <Fa name='code-fork'/> <FormattedMessage id="plan.printQueues" defaultMessage='Print Queues'/>
+            </BS.MenuItem>
+            <BS.MenuItem eventKey={1.4} href="#/plan/post-processing" style={{ display: "none" }}>
               <Fa name='flask'/> <FormattedMessage id="plan.postProcessing" defaultMessage='Post Processing'/>
             </BS.MenuItem>
           </BS.NavDropdown>
-          <BS.NavDropdown eventKey={2} title={workTitle} id="uxNavWork" style={{ display: "none" }}>
-            <BS.MenuItem eventKey={2.1} href="#/work/queue">
+          <BS.NavDropdown eventKey={2} title={workTitle} id="uxNavWork">
+            <BS.MenuItem eventKey={2.1} href="#/work/queues">
               <Fa name='list'/> <FormattedMessage id="work.queues" defaultMessage='Queues'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={2.2} href="#/work/shipping">
+            <BS.MenuItem divider style={{ display: "none" }} />
+            <BS.MenuItem eventKey={2.2} href="#/work/shipping" style={{ display: "none" }}>
               <Fa name='truck'/> <FormattedMessage id="work.shipping" defaultMessage='Shipping'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={2.3} href="#/work/third-party">
+            <BS.MenuItem eventKey={2.3} href="#/work/third-party" style={{ display: "none" }}>
               <Fa name='sign-language'/> <FormattedMessage id="work.thirdParty" defaultMessage='Third Party'/>
             </BS.MenuItem>
           </BS.NavDropdown>

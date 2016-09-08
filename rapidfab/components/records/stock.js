@@ -2,6 +2,7 @@ import React, { PropTypes }     from "react";
 import * as BS                  from 'react-bootstrap';
 import Fa                       from 'react-fontawesome';
 import { FormattedMessage }     from 'react-intl';
+import Error                    from 'rapidfab/components/error'
 
 
 const SaveButtonTitle = ({  }) => (
@@ -10,13 +11,13 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations, materials }) => (
+const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item href="#/inventory">
+            <BS.Breadcrumb.Item>
               <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/stocks">
@@ -50,9 +51,16 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
 
       <BS.Row>
         <BS.Col xs={12}>
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
+
+      <BS.Row>
+        <BS.Col xs={12}>
           <BS.FormGroup controlId="uxMaterial">
             <BS.ControlLabel><FormattedMessage id="field.material" defaultMessage='Material'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.material}>
+              <option key="placeholder" value="" selected disabled>Select a Material</option>
               {_.map(materials, material => (
                 <option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>
               ))}
@@ -61,6 +69,7 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
           <BS.FormGroup controlId="uxLocation">
             <BS.ControlLabel><FormattedMessage id="field.location" defaultMessage='Location'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.location}>
+              <option key="placeholder" value="" selected disabled>Select a Location</option>
               {_.map(locations, location => (
                 <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
               ))}

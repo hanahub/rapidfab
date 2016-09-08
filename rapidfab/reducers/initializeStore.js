@@ -19,5 +19,3 @@ export default function initializeStore(initialState) {
     )
   )
 }
-
-export default initializeStore

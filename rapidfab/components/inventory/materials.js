@@ -2,6 +2,7 @@ import React, { PropTypes }   from "react";
 import * as BS                from 'react-bootstrap';
 import Fa                     from 'react-fontawesome';
 import { FormattedMessage }   from 'react-intl';
+import Error                  from 'rapidfab/components/error'
 import Grid, {
   IdColumn,
   BooleanColumn,
@@ -55,12 +56,12 @@ const Loading = () => (
   </div>
 )
 
-const Materials = ({ materials, manufacturers, fetching, errors }) => (
+const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
-          <BS.Breadcrumb.Item href="#/inventory">
+          <BS.Breadcrumb.Item>
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/material">
@@ -79,6 +80,12 @@ const Materials = ({ materials, manufacturers, fetching, errors }) => (
     </BS.Row>
 
     <hr/>
+
+    <BS.Row>
+      <BS.Col xs={12}>
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
 
     <BS.Row>
       <BS.Col xs={12}>

@@ -4,8 +4,9 @@ import Fa                     from 'react-fontawesome';
 import { extractUuid }        from 'rapidfab/reducers/makeApiReducers'
 import { FormattedMessage }   from 'react-intl';
 import Grid, { IdColumn }     from 'rapidfab/components/grid';
+import Error                  from 'rapidfab/components/error'
 
-const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations }) => (
+const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations, apiErrors }) => (
   <Grid
     data={postProcessors}
     columns={[
@@ -40,12 +41,12 @@ const Loading = () => (
   </div>
 )
 
-const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetching, errors }) => (
+const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetching, apiErrors }) => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
-          <BS.Breadcrumb.Item href="#/inventory">
+          <BS.Breadcrumb.Item>
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processor">
@@ -64,6 +65,12 @@ const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetchin
     </BS.Row>
 
     <hr/>
+
+    <BS.Row>
+      <BS.Col xs={12}>
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
 
     <BS.Row>
       <BS.Col xs={12}>

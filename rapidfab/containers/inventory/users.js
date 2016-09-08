@@ -31,7 +31,7 @@ function mapStateToProps(state) {
   return {
     records   : _.omit(users, ['uxFetching', 'uxErrors']),
     fetching  : users.uxFetching,
-    errors    : users.uxErrors
+    apiErrors : users.uxErrors
   }
 }
 

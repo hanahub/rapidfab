@@ -4,6 +4,7 @@ import Fa                     from 'react-fontawesome';
 import { extractUuid }        from 'rapidfab/reducers/makeApiReducers'
 import { FormattedMessage }   from 'react-intl';
 import Grid, { IdColumn }     from 'rapidfab/components/grid';
+import Error                  from 'rapidfab/components/error'
 
 const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers, materials }) => (
   <Grid
@@ -38,12 +39,12 @@ const Loading = () => (
   </div>
 )
 
-const PostProcessorTypes = ({ postProcessorTypes, fetching, errors, manufacturers, materials }) => (
+const PostProcessorTypes = ({ postProcessorTypes, fetching, apiErrors, manufacturers, materials }) => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
-          <BS.Breadcrumb.Item href="#/inventory">
+          <BS.Breadcrumb.Item>
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processer-types">
@@ -62,6 +63,12 @@ const PostProcessorTypes = ({ postProcessorTypes, fetching, errors, manufacturer
     </BS.Row>
 
     <hr/>
+
+    <BS.Row>
+      <BS.Col xs={12}>
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
 
     <BS.Row>
       <BS.Col xs={12}>

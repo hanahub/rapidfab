@@ -2,7 +2,7 @@ import React, { PropTypes }     from "react";
 import * as BS                  from 'react-bootstrap';
 import Fa                       from 'react-fontawesome';
 import { FormattedMessage }     from 'react-intl';
-
+import Error                    from 'rapidfab/components/error'
 
 const SaveButtonTitle = ({  }) => (
   <span>
@@ -10,13 +10,13 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, materials}) => (
+const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item href="#/inventory">
+            <BS.Breadcrumb.Item>
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/post-processor-type">
@@ -47,6 +47,12 @@ const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelet
       </BS.Row>
 
       <hr/>
+
+      <BS.Row>
+        <BS.Col xs={12}>
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
 
       <BS.Row>
         <BS.Col xs={12}>

@@ -32,9 +32,9 @@ function mapStateToProps(state) {
 
   return {
     locations : _.omit(location, ['uxFetching', 'uxErrors']),
-     users    : _.omit(users, ['uxFetching', 'uxErrors']),
-    fetching  : location.uxFetching,
-    errors    : location.uxErrors
+    users     : _.omit(users, ['uxFetching', 'uxErrors']),
+    fetching  : location.uxFetching || users.uxFetching,
+    apiErrors : _.concat(location.uxErrors, users.uxErrors)
   }
 }
 
