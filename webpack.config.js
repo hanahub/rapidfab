@@ -23,7 +23,7 @@ if (port === 443) {
 }
 
 module.exports = {
-  devtool: "dev",
+  devtool: "inline-source-map",
   devServer: devServer,
   entry: {
     app: [
@@ -54,7 +54,6 @@ module.exports = {
         test: /\.js$/,
         loaders: ['react-hot', 'babel?presets[]=es2015&plugins[]=transform-runtime'],
         exclude: /(node_modules|bower_components)/,
-        include: path.join(__dirname, 'rapidfab')
       },
       {
         test: /\.less$/,
