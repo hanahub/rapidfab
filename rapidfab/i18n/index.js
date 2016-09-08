@@ -35,6 +35,15 @@ FormattedDuration.propTypes = {
   value: PropTypes.number.isRequired
 }
 
+export const FormattedCost = ({ currency, value }) => (
+  <FormattedNumber style='currency' currency={currency} value={value}/>
+)
+
+FormattedCost.propTypes = {
+  value    : PropTypes.number.isRequired,
+  currency : PropTypes.string.isRequired
+}
+
 export default {
   "en-US": {
     localeData: enLocaleData,
