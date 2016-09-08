@@ -3,6 +3,7 @@ import * as BS                                                from 'react-bootst
 import Fa                                                     from 'react-fontawesome';
 import {
   FormattedDate,
+  FormattedDuration,
   FormattedMessage,
   FormattedVolume
 } from 'rapidfab/i18n';
@@ -13,7 +14,7 @@ const OrderEstimates = ({ estimates }) => (
     <BS.ListGroup fill>
       <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
         {estimates.print_time.value ?
-          <FormattedDate value={estimates.print_time.value}/> :
+          <FormattedDuration value={estimates.print_time.value}/> :
             (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
         }
       </BS.ListGroupItem>
