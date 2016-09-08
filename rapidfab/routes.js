@@ -14,6 +14,7 @@ import PlanOrders                   from 'rapidfab/containers/plan/orders'
 import PrintQueue                   from 'rapidfab/containers/plan/printQueue'
 
 import Order                        from 'rapidfab/containers/records/order'
+import NewOrder                     from 'rapidfab/containers/records/newOrder'
 import Location                     from 'rapidfab/containers/records/location'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
 import Material                     from 'rapidfab/containers/records/material'
@@ -40,6 +41,7 @@ const Routes = {
 
   "/records/order"                       : Order,
   "/records/order/:uuid"                 : Order,
+  "/records/order/new"                   : NewOrder,
   "/records/location"                    : Location,
   "/records/location/:uuid"              : Location,
   "/records/manufacturer"                : Manufacturer,
