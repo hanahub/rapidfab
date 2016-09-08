@@ -17,10 +17,20 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const {
-  } = state;
+    fakeData
+  } = state
+
+  const {
+    print,
+    printer,
+    model,
+    order
+  } = fakeData
 
   return {
-    records: FakeData.runs
+    prints: print,
+    printers: printer,
+    orders: order
   }
 }
 
