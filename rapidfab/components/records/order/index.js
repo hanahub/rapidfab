@@ -4,7 +4,7 @@ import Fa                     from 'react-fontawesome'
 import { FormattedMessage }   from 'rapidfab/i18n'
 import OrderForm              from './form'
 import OrderEstimates         from './estimates'
-import OrderModels            from './models'
+import OrderPrints            from './prints'
 import Error                  from 'rapidfab/components/error'
 
 
@@ -14,7 +14,7 @@ const SaveButtonTitle = ({ uri, uuid, record }) => (
   </span>
 )
 
-const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, apiErrors, snapshot }) => (
+const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, prints, apiErrors, snapshot }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid>
 
@@ -76,7 +76,7 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
           <OrderEstimates estimates={fields.estimates}/>
         </BS.Col>
         <BS.Col xs={8}>
-          <OrderModels models={models}/>
+          <OrderPrints prints={prints}/>
         </BS.Col>
       </BS.Row>
 
