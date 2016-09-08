@@ -33,8 +33,8 @@ function mapStateToProps(state) {
   return {
     materials     : _.omit(material, ['uxFetching', 'uxErrors']),
     manufacturers : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
-    fetching      : material.uxFetching,
-    errors        : material.uxErrors
+    fetching      : material.uxFetching || manufacturer.uxFetching,
+    apiErrors     : _.concat(material.uxErrors, manufacturer.uxErrors)
   }
 }
 

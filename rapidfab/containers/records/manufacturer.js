@@ -61,6 +61,8 @@ function mapStateToProps(state, props) {
   return {
     uuid            : props.route.uuid,
     initialValues   : manufacturer[props.route.uuid],
+    submitting      : manufacturer.uxFetching,
+    apiErrors       : manufacturer.uxErrors
   }
 }
 

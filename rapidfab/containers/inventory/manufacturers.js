@@ -29,7 +29,7 @@ function mapStateToProps(state) {
   return {
     records   : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
     fetching  : manufacturer.uxFetching,
-    errors    : manufacturer.uxErrors
+    apiErrors : manufacturer.uxErrors
   }
 }
 

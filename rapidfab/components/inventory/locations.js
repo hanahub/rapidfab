@@ -4,6 +4,7 @@ import Fa                     from 'react-fontawesome';
 import { extractUuid }        from 'rapidfab/reducers/makeApiReducers'
 import { FormattedMessage }   from 'react-intl';
 import Grid, { IdColumn }     from 'rapidfab/components/grid';
+import Error                  from 'rapidfab/components/error'
 
 export const ContactColumn = ({ data, rowData, metadata }) => {
     let uuid = extractUuid(data)
@@ -53,7 +54,7 @@ const Loading = () => (
   </div>
 )
 
-const Locations = ({ locations, users, fetching, errors }) => (
+const Locations = ({ locations, users, fetching, apiErrors }) => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
@@ -77,6 +78,12 @@ const Locations = ({ locations, users, fetching, errors }) => (
     </BS.Row>
 
     <hr/>
+
+    <BS.Row>
+      <BS.Col xs={12}>
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
 
     <BS.Row>
       <BS.Col xs={12}>

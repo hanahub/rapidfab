@@ -35,8 +35,8 @@ function mapStateToProps(state) {
     postProcessors     : _.omit(postProcessor,     ['uxFetching', 'uxErrors']),
     locations          : _.omit(location,          ['uxFetching', 'uxErrors']),
     postProcessorTypes : _.omit(postProcessorType, ['uxFetching', 'uxErrors']),
-    fetching           : location.uxFetching || postProcessorType.uxFetching || postProcessor.uxFetching,
-    errors             : location.uxErrors || postProcessorType.uxErrors || postProcessor.uxErrors
+    fetching           : postProcessor.uxFetching || location.uxFetching || postProcessorType.uxFetching,
+    apiErrors          : _.concat(postProcessor.uxErrors, location.uxErrors, postProcessorType.uxErrors)
   }
 }
 

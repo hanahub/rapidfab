@@ -63,6 +63,8 @@ function mapStateToProps(state, props) {
     initialValues   : stock[props.route.uuid],
     materials       : _.omit(material, ['uxFetching', 'uxErrors']),
     locations       : _.omit(location, ['uxFetching', 'uxErrors']),
+    submitting      : stock.uxFetching || material.uxFetching || location.uxFetching,
+    apiErrors       : _.concat(stock.uxErrors, material.uxErrors, location.uxErrors)
   }
 }
 
