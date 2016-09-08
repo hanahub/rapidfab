@@ -16,7 +16,8 @@ export const RESOURCES = {
     'manufacturer',
     'material',
     'stock',
-    'order'
+    'order',
+    'print',
   ]
 }
 
