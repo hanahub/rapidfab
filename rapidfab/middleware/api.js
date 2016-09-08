@@ -26,7 +26,7 @@ function apiMiddleware({ dispatch, getState }) {
     }
 
     if (!shouldCallApi(getState())) {
-      return
+      return next(action)
     }
 
     const [ requestType, successType, failureType ] = types
@@ -54,7 +54,8 @@ function apiMiddleware({ dispatch, getState }) {
         payload,
         json,
         headers: {
-          location: response.headers.get('Location')
+          location: response.headers.get('Location'),
+          uploadLocation: response.headers.get('X-Upload-Location')
         },
         type: response.status >= 400 ? failureType : successType
       })
