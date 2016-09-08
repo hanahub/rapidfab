@@ -73,7 +73,7 @@ function makeList(hostRoot, resource) {
     let fetchConfig = _.assign({
       credentials : 'include'
     }, FETCH_CONFIG, config)
-    return fetch(`${hostRoot}/${resource}/${query}`, fetchConfig)
+    return fetch(`${hostRoot}/${resource}/?${query}`, fetchConfig)
   }
 }
 
