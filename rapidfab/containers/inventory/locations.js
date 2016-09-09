@@ -6,7 +6,7 @@ import LocationsComponent       from 'rapidfab/components/inventory/locations'
 import * as Selectors           from 'rapidfab/selectors'
 
 class LocationsContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.onInitialize()
   }
 
