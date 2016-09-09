@@ -1,6 +1,7 @@
 function apiMiddleware({ dispatch, getState }) {
   return next => action => {
     const {
+      api,
       types,
       callApi,
       shouldCallApi = () => true,
@@ -32,27 +33,33 @@ function apiMiddleware({ dispatch, getState }) {
     const [ requestType, successType, failureType ] = types
 
     dispatch(Object.assign({}, {
+      api,
       uuid,
       filters,
       payload,
       type: requestType
     }))
 
-    const handleError = error => dispatch(Object.assign({}, {
-      uuid,
-      filters,
-      error,
-      payload,
-      type: failureType
-    }))
+    const handleError = error => {
+      dispatch(Object.assign({}, {
+        api,
+        uuid,
+        filters,
+        errors: [{ code: "api-error", title: error.message }],
+        payload,
+        type: failureType
+      }))
+    }
 
     const handleResponse = response => response.text().then(text => {
       let json = JSON.parse(text || null)
       let args = Object.assign({}, {
+        api,
         uuid,
         filters,
         payload,
         json,
+        errors: json.errors,
         headers: {
           location: response.headers.get('Location'),
           uploadLocation: response.headers.get('X-Upload-Location')

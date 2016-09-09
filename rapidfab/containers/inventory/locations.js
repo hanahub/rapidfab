@@ -3,7 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import LocationsComponent       from 'rapidfab/components/inventory/locations'
-
+import * as Selectors           from 'rapidfab/selectors'
 
 class LocationsContainer extends Component {
   componentWillMount() {
@@ -27,14 +27,17 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const {
     location,
-    users
-  } = state;
+  } = state.ui.wyatt
+
+  const {
+    users,
+  } = state.ui.pao
 
   return {
-    locations : _.omit(location, ['uxFetching', 'uxErrors']),
-    users     : _.omit(users, ['uxFetching', 'uxErrors']),
-    fetching  : location.uxFetching || users.uxFetching,
-    apiErrors : _.concat(location.uxErrors, users.uxErrors)
+    locations : Selectors.getLocations(state),
+    users     : Selectors.getUsers(state),
+    fetching  : location.list.fetching || users.list.fetching,
+    errors    : _.concat(location.list.errors, users.list.errors)
   }
 }
 

@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import MaterialsComponent       from 'rapidfab/components/inventory/materials'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class MaterialsContainer extends Component {
@@ -28,13 +29,13 @@ function mapStateToProps(state) {
   const {
     material,
     manufacturer
-  } = state;
+  } = state.ui.wyatt
 
   return {
-    materials     : _.omit(material, ['uxFetching', 'uxErrors']),
-    manufacturers : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
-    fetching      : material.uxFetching || manufacturer.uxFetching,
-    apiErrors     : _.concat(material.uxErrors, manufacturer.uxErrors)
+    materials     : Selectors.getMaterials(state),
+    manufacturers : Selectors.getManufacturers(state),
+    fetching      : material.list.fetching || manufacturer.list.fetching,
+    apiErrors     : _.concat(material.list.errors, manufacturer.list.errors)
   }
 }
 

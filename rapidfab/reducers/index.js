@@ -7,14 +7,19 @@ import uploadModel              from './uploadModel'
 import url                      from './url'
 import i18n                     from './i18n'
 import fakeData                 from './fakeData'
-import { makeApiReducers }      from './makeApiReducers'
+import ui                       from './ui'
+import api                      from './api'
+import resources                from './resources'
 
-const Reducer = combineReducers(_.assign({
+const Reducer = combineReducers({
   form: formReducer,
   url,
   i18n,
   uploadModel,
   fakeData,
-}, makeApiReducers(RESOURCES)))
+  resources,
+  api,
+  ui
+})
 
 export default Reducer

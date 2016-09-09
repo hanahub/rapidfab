@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import PostProcessorsComponent  from 'rapidfab/components/inventory/postProcessors'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class PostProcessorsContainer extends Component {
@@ -25,18 +26,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const postProcessor = state['post-processor']
-  const postProcessorType = state['post-processor-type']
+  const postProcessor = state.ui.wyatt['post-processor']
+  const postProcessorType = state.ui.wyatt['post-processor-type']
   const {
     location,
-  } = state;
+  } = state.ui.wyatt;
 
   return {
-    postProcessors     : _.omit(postProcessor,     ['uxFetching', 'uxErrors']),
-    locations          : _.omit(location,          ['uxFetching', 'uxErrors']),
-    postProcessorTypes : _.omit(postProcessorType, ['uxFetching', 'uxErrors']),
-    fetching           : postProcessor.uxFetching || location.uxFetching || postProcessorType.uxFetching,
-    apiErrors          : _.concat(postProcessor.uxErrors, location.uxErrors, postProcessorType.uxErrors)
+    postProcessors     : Selectors.getPostProcessors(state),
+    postProcessorTypes : Selectors.getPostProcessorTypes(state),
+    locations          : Selectors.getLocations(state),
+    fetching           : location.list.fetching || postProcessorType.list.fetching || postProcessor.list.fetching,
+    apiErrors          : _.concat(location.list.errors, postProcessorType.list.errors, postProcessor.list.errors)
   }
 }
 

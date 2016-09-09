@@ -5,6 +5,7 @@ import Actions                            from "rapidfab/actions"
 import LocationComponent                  from 'rapidfab/components/records/location'
 import Config                             from 'rapidfab/config'
 import { reduxForm }                      from 'redux-form'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
@@ -54,17 +55,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const {
-    location,
-    users
-  } = state;
-
   return {
-    uuid            : props.route.uuid,
-    initialValues   : location[props.route.uuid],
-    users           : _.omit(users, ['uxFetching', 'uxErrors']),
-    submitting      : location.uxFetching || users.uxFetching,
-    apiErrors       : _.concat(location.uxErrors, users.uxErrors)
+    uuid            : Selectors.getRoute(state, props).uuid,
+    initialValues   : Selectors.getRouteResource(state, props),
+    submitting      : Selectors.getResourceFetching(state, "wyatt.location"),
+    apiErrors       : Selectors.getResourceErrors(state, "wyatt.location"),
+    users           : Selectors.getUsers(state)
   }
 }
 

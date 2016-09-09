@@ -1,15 +1,16 @@
-const initialOptions = {
-  callSuccess: () => null
-}
+import Constants from 'rapidfab/constants'
 
 function makePost(api, host, resource) {
-  let typePrefix = `${host}_${resource}`.toUpperCase()
-  return (payload, options = initialOptions) => ({
-    callSuccess: options.callSuccess,
+  return payload => ({
+    api: {
+      resource,
+      host,
+      method: "POST"
+    },
     types: [
-      `${typePrefix}_POST_REQUEST`,
-      `${typePrefix}_POST_SUCCESS`,
-      `${typePrefix}_POST_FAILURE`
+      Constants.RESOURCE_POST_REQUEST,
+      Constants.RESOURCE_POST_SUCCESS,
+      Constants.RESOURCE_POST_FAILURE,
     ],
     callApi: () => api[host][resource].post(payload),
     payload
@@ -17,14 +18,17 @@ function makePost(api, host, resource) {
 }
 
 function makePut(api, host, resource) {
-  let typePrefix = `${host}_${resource}`.toUpperCase()
-  return (uuid, payload, options = initialOptions) => ({
+  return (uuid, payload) => ({
+    api: {
+      resource,
+      host,
+      method: "PUT"
+    },
     uuid,
-    callSuccess: options.callSuccess,
     types: [
-      `${typePrefix}_PUT_REQUEST`,
-      `${typePrefix}_PUT_SUCCESS`,
-      `${typePrefix}_PUT_FAILURE`
+      Constants.RESOURCE_PUT_REQUEST,
+      Constants.RESOURCE_PUT_SUCCESS,
+      Constants.RESOURCE_PUT_FAILURE,
     ],
     callApi: () => api[host][resource].put(uuid, payload),
     payload
@@ -32,44 +36,52 @@ function makePut(api, host, resource) {
 }
 
 function makeList(api, host, resource) {
-  let typePrefix = `${host}_${resource}`.toUpperCase()
-  return (filters, options = initialOptions) => ({
+  return filters => ({
+    api: {
+      resource,
+      host,
+      method: "LIST"
+    },
     filters,
-    callSuccess: options.callSuccess,
     types: [
-      `${typePrefix}_LIST_REQUEST`,
-      `${typePrefix}_LIST_SUCCESS`,
-      `${typePrefix}_LIST_FAILURE`
+      Constants.RESOURCE_LIST_REQUEST,
+      Constants.RESOURCE_LIST_SUCCESS,
+      Constants.RESOURCE_LIST_FAILURE,
     ],
-    shouldCallAPI: state => !state[host] || !state[host][resource],
     callApi: () => api[host][resource].list(filters),
   })
 }
 
 function makeGet(api, host, resource) {
-  let typePrefix = `${host}_${resource}`.toUpperCase()
-  return (uuid, options = initialOptions) => ({
+  return uuid => ({
+    api: {
+      resource,
+      host,
+      method: "GET"
+    },
     uuid,
-    callSuccess: options.callSuccess,
     types: [
-      `${typePrefix}_GET_REQUEST`,
-      `${typePrefix}_GET_SUCCESS`,
-      `${typePrefix}_GET_FAILURE`
+      Constants.RESOURCE_GET_REQUEST,
+      Constants.RESOURCE_GET_SUCCESS,
+      Constants.RESOURCE_GET_FAILURE,
     ],
-    shouldCallAPI: state => !state[host] || !state[host][resource] || !state[host][resource][uuid],
+    shouldCallAPI: state => !state.resources[uuid],
     callApi: () => api[host][resource].get(uuid)
   })
 }
 
 function makeDelete(api, host, resource) {
-  let typePrefix = `${host}_${resource}`.toUpperCase()
-  return (uuid, options = initialOptions) => ({
+  return uuid => ({
+    api: {
+      resource,
+      host,
+      method: "DELETE"
+    },
     uuid,
-    callSuccess: options.callSuccess,
     types: [
-      `${typePrefix}_DELETE_REQUEST`,
-      `${typePrefix}_DELETE_SUCCESS`,
-      `${typePrefix}_DELETE_FAILURE`
+      Constants.RESOURCE_DELETE_REQUEST,
+      Constants.RESOURCE_DELETE_SUCCESS,
+      Constants.RESOURCE_DELETE_FAILURE,
     ],
     callApi: () => api[host][resource].delete(uuid)
   })

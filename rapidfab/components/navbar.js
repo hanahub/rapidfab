@@ -49,10 +49,6 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={1.2} href="#/plan/runs">
               <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
             </BS.MenuItem>
-            <BS.MenuItem divider />
-            <BS.MenuItem eventKey={1.3} href="#/plan/print-queues">
-              <Fa name='code-fork'/> <FormattedMessage id="plan.printQueues" defaultMessage='Print Queues'/>
-            </BS.MenuItem>
             <BS.MenuItem eventKey={1.4} href="#/plan/post-processing" style={{ display: "none" }}>
               <Fa name='flask'/> <FormattedMessage id="plan.postProcessing" defaultMessage='Post Processing'/>
             </BS.MenuItem>
