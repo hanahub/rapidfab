@@ -4,6 +4,7 @@ import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
 import MaterialComponent                  from 'rapidfab/components/records/material'
 import { reduxForm }                      from 'redux-form'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
@@ -57,17 +58,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const {
-    material,
-    manufacturer
-  } = state;
-
   return {
-    uuid            : props.route.uuid,
-    initialValues   : material[props.route.uuid],
-    manufacturers   : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
-    submitting      : material.uxFetching || manufacturer.uxFetching,
-    apiErrors       : _.concat(material.uxErrors, manufacturer.uxErrors)
+    uuid            : Selectors.getRoute(state, props).uuid,
+    initialValues   : Selectors.getRouteResource(state, props),
+    submitting      : Selectors.getResourceFetching(state, "wyatt.material"),
+    apiErrors       : Selectors.getResourceErrors(state, "wyatt.material"),
+    manufacturers   : Selectors.getManufacturers(state)
   }
 }
 

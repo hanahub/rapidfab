@@ -4,6 +4,7 @@ import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
 import StockComponent                     from 'rapidfab/components/records/stock'
 import { reduxForm }                      from 'redux-form'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
@@ -52,19 +53,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const {
-    stock,
-    location,
-    material
-  } = state;
-
   return {
-    uuid            : props.route.uuid,
-    initialValues   : stock[props.route.uuid],
-    materials       : _.omit(material, ['uxFetching', 'uxErrors']),
-    locations       : _.omit(location, ['uxFetching', 'uxErrors']),
-    submitting      : stock.uxFetching || material.uxFetching || location.uxFetching,
-    apiErrors       : _.concat(stock.uxErrors, material.uxErrors, location.uxErrors)
+    uuid            : Selectors.getRoute(state, props).uuid,
+    initialValues   : Selectors.getRouteResource(state, props),
+    submitting      : Selectors.getResourceFetching(state, "wyatt.stock"),
+    apiErrors       : Selectors.getResourceErrors(state, "wyatt.stock"),
+    materials       : Selectors.getMaterials(state),
+    locations       : Selectors.getLocations(state)
   }
 }
 

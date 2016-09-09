@@ -5,6 +5,7 @@ import Config                             from "rapidfab/config"
 import Actions                            from "rapidfab/actions"
 import UserComponent                      from 'rapidfab/components/records/user'
 import { reduxForm }                      from 'redux-form'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
@@ -56,15 +57,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const {
-    users
-  } = state;
-
   return {
-    uuid            : props.route.uuid,
-    initialValues   : users[props.route.uuid],
-    submitting      : users.uxFetching,
-    apiErrors       : users.uxErrors
+    uuid            : Selectors.getRoute(state, props).uuid,
+    initialValues   : Selectors.getRouteResource(state, props),
+    submitting      : Selectors.getResourceFetching(state, "pao.users"),
+    apiErrors       : Selectors.getResourceErrors(state, "pao.users")
   }
 }
 

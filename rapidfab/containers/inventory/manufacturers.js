@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import ManufacturersComponent   from 'rapidfab/components/inventory/manufacturers'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class ManufacturersContainer extends Component {
@@ -24,12 +25,13 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const {
     manufacturer
-  } = state;
+  } = state.ui.wyatt
 
   return {
-    records   : _.omit(manufacturer, ['uxFetching', 'uxErrors']),
-    fetching  : manufacturer.uxFetching,
-    apiErrors : manufacturer.uxErrors
+    locations : Selectors.getLocations(state),
+    users     : Selectors.getUsers(state),
+    fetching  : manufacturer.list.fetching,
+    apiErrors : manufacturer.list.errors
   }
 }
 

@@ -21,9 +21,9 @@ module.exports = function(config) {
         debug: true
       }
     },
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'chai'],
     files: [
-      './node_modules/phantomjs-polyfill-object-assign/object-assign-polyfill.js',
+      'node_modules/babel-polyfill/dist/polyfill.js',
       'tests/*.test.js',
       'tests/**/*.test.js',
     ],
@@ -31,11 +31,14 @@ module.exports = function(config) {
       outputDir: __dirname + '/test_results/',
       outputFile: 'test-results.xml',
     },
+    mochaReporter: {
+      showDiff: true
+    },
     phantomjs2Launcher: {
       exitOnResourceError: true
     },
     preprocessors: {
-      'lib/**/*.jsx'        : ['webpack', 'sourcemap'],
+      'rapidfab/**/*.js'        : ['webpack', 'sourcemap'],
       'tests/**/*.test.js'  : ['webpack', 'sourcemap'],
     },
     reporters: ['mocha'],

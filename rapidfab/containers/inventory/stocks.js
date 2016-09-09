@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import StocksComponent          from 'rapidfab/components/inventory/stocks'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class StocksContainer extends Component {
@@ -30,14 +31,14 @@ function mapStateToProps(state) {
     material,
     location,
     stock
-  } = state;
+  } = state.ui.wyatt
 
   return {
-    materials     : _.omit(material, ['uxFetching', 'uxErrors']),
-    locations     : _.omit(location, ['uxFetching', 'uxErrors']),
-    stocks        : _.omit(stock, ['uxFetching', 'uxErrors']),
-    fetching      : material.uxFetching || location.uxFetching || stock.uxFetching,
-    apiErrors     : _.concat(stock.uxErrors, location.uxErrors, material.uxErrors)
+    materials     : Selectors.getMaterials(state),
+    locations     : Selectors.getLocations(state),
+    stocks        : Selectors.getStocks(state),
+    fetching      : material.list.fetching || location.list.fetching || stock.list.fetching,
+    apiErrors        : _.concat(material.list.errors, location.list.errors, stock.list.errors),
   }
 }
 

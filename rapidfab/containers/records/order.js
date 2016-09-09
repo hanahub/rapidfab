@@ -6,6 +6,7 @@ import OrderComponent                     from 'rapidfab/components/records/orde
 import { reduxForm }                      from 'redux-form'
 import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 import Config                             from 'rapidfab/config'
+import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
   'id',
@@ -67,6 +68,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function getSnapshotFromOrder(order, models) {
+  if(!order || models.length) return ''
   const model_uuid = extractUuid(order.model)
   return Object.keys(models).includes(model_uuid) ? models[model_uuid].snapshot_content : ''
 }
@@ -75,23 +77,26 @@ function mapStateToProps(state, props) {
   const {
     order,
     material,
-    model,
     print
-  } = state;
+  } = state.ui.wyatt
 
-  const models = _.omit(model, ['uxFetching', 'uxErrors'])
-  const snapshot = getSnapshotFromOrder(order[props.route.uuid], models)
+  const {
+    model,
+  } = state.ui.hoth
+
+  const models          = Selectors.getModels(state)
+  const orderResource   = Selectors.getRouteResource(state, props)
 
   return {
-    uuid            : props.route.uuid,
-    initialValues   : order[props.route.uuid],
-    materials       : _.omit(material, ['uxFetching', 'uxErrors']),
+    uuid            : Selectors.getRoute(state, props).uuid,
+    initialValues   : orderResource,
+    materials       : Selectors.getMaterials(state),
+    submitting      : Selectors.getResourceFetching(state, "pao.users") || material.list.fetching || model.list.fetching || print.list.fetching,
+    apiErrors       : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
+    snapshot        : getSnapshotFromOrder(orderResource, models),
+    prints          : Selectors.getPrints(state),
     models,
-    submitting      : order.uxFetching || material.uxFetching || model.uxFetching,
-    apiErrors       : _.concat(order.uxErrors, material.uxErrors, model.uxErrors),
-    snapshot,
-    order           : order[props.route.uuid],
-    prints          : _.omit(print, ['uxFetching', 'uxErrors'])
+    order
   }
 }
 

@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import 'font-awesome-webpack'
 import 'rapidfab/styles/main.less'
 import 'rapidfab/styles/flags.less'

@@ -3,6 +3,7 @@ import React, { Component }     from "react"
 import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import OrdersComponent          from 'rapidfab/components/plan/orders'
+import * as Selectors           from 'rapidfab/selectors'
 
 
 class OrdersContainer extends Component {
@@ -28,13 +29,13 @@ function mapStateToProps(state) {
   const {
     order,
     material
-  } = state;
+  } = state.ui.wyatt;
 
   return {
-    orders        : _.omit(order, ['uxFetching', 'uxErrors']),
-    materials     : _.omit(material, ['uxFetching', 'uxErrors']),
-    fetching      : material.uxFetching || order.uxFetching,
-    errors        : order.uxErrors
+    orders        : Selectors.getOrders(state),
+    materials     : Selectors.getMaterials(state),
+    fetching      : material.list.fetching || order.list.fetching,
+    errors        : _.concat(order.list.errors, material.list.errors)
   }
 }
 
