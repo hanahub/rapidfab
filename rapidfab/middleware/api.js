@@ -74,6 +74,11 @@ function apiMiddleware({ dispatch, getState }) {
         }
         throw error
       }
+      if(test && !json) {
+        const error = new Error(`Could not parse response`, text)
+        handleError(error)
+        throw error
+      }
       let args = Object.assign({}, {
         api,
         uuid,
