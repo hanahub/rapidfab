@@ -6,12 +6,21 @@ import RunsComponent                    from 'rapidfab/components/plan/runs'
 import * as Selectors                   from 'rapidfab/selectors'
 
 
-const RunsContainer = props => (
-  <RunsComponent {...props}/>
-)
+class RunsContainer extends Component {
+  componentDidMount() {
+    this.props.onInitialize()
+  }
+
+  render() {
+    return <RunsComponent {...this.props}/>
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
+    onInitialize: () => {
+      dispatch(Actions.Api.wyatt.run.list())
+    }
   }
 }
 
@@ -21,7 +30,9 @@ function mapStateToProps(state) {
   } = state.ui.wyatt
 
   return {
-    runs: Selectors.getRuns(state)
+    runs      : Selectors.getRuns(state),
+    fetching  : run.list.fetching,
+    apiErrors : run.list.errors
   }
 }
 
