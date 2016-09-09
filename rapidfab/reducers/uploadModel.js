@@ -16,9 +16,8 @@ function upload(state = {
       return Object.assign({}, state, {
         isFetching: false,
         uxErrors: [],
-        modelUri: action.modelUri,
       });
-    case Constants.UPLOAD_MODEL:
+    case Constants.UPLOAD_MODEL_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         uxErrors: [action.errors],

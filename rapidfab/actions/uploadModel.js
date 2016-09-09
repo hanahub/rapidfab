@@ -16,17 +16,16 @@ function uploadModel(uploadUrl) {
   }
 }
 
-function uploadModelSuccess(modelUri) {
+function uploadModelSuccess() {
   return {
     type: Constants.UPLOAD_MODEL_SUCCESS,
-    modelUri: modelUri,
   }
 }
 
-function uploadModelFailure(modelUri) {
+function uploadModelFailure(errors) {
   return {
     type: Constants.UPLOAD_MODEL_FAILURE,
-    errors: json,
+    errors: errors,
   }
 }
 
@@ -34,7 +33,7 @@ export function upload(uploadUrl, model) {
   return dispatch => {
     dispatch(uploadModel(uploadUrl))
     postForm(uploadUrl, {}, model, 'PUT', false, 'application/octet-stream', function (percent) {
-      dispatch(uploadProgress(percent))
+      dispatch(uploadProgress(percent)).then( args => uploadModelSuccess(), uploadModelFailure(args.errors))
     })
   }
 }
