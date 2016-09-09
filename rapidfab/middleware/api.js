@@ -74,7 +74,7 @@ function apiMiddleware({ dispatch, getState }) {
         }
         throw error
       }
-      if(test && !json) {
+      if(text && !json) {
         const error = new Error(`Could not parse response`, text)
         handleError(error)
         throw error
