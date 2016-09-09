@@ -39,6 +39,7 @@ const NewOrderForm = ({ fields, materials, model }) => (
       <BS.FormGroup controlId="uxBaseMaterials">
         <BS.ControlLabel><FormattedMessage id="field.baseMaterials" defaultMessage='Base Materials'/>:</BS.ControlLabel>
         <BS.FormControl componentClass="select" required {...fields.materials.base}>
+          <option key="placeholder" value="" selected disabled>Select a Base Material</option>
           {_.map(materials, material => (
             <option key={material.uri} value={material.uri}>{material.name}</option>
           ))}
@@ -47,6 +48,7 @@ const NewOrderForm = ({ fields, materials, model }) => (
       <BS.FormGroup controlId="uxSupportMaterials">
         <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
         <BS.FormControl componentClass="select" required {...fields.materials.support}>
+          <option key="placeholder" value="" selected disabled>Select a Support Material</option>
           {_.map(materials, material => (
             <option key={material.uri} value={material.uri}>{material.name}</option>
           ))}
