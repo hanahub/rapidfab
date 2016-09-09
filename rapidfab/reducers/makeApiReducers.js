@@ -136,7 +136,7 @@ function makePost(host, resource) {
     [`${typePrefix}_POST_SUCCESS`](state, action) {
       let record = hydrateRecord(Object.assign(action.payload, {
         uri: action.headers.location,
-        uploadUri: action.headers['X-Upload-Location'] || null,
+        uploadUri: action.headers['X-Upload-Location'],
       }));
       return Object.assign({}, state, {
         [record.uuid]   : record,
