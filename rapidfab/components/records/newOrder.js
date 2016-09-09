@@ -38,7 +38,7 @@ const NewOrderForm = ({ fields, materials, model }) => (
       </BS.FormGroup>
       <BS.FormGroup controlId="uxBaseMaterials">
         <BS.ControlLabel><FormattedMessage id="field.baseMaterials" defaultMessage='Base Materials'/>:</BS.ControlLabel>
-        <BS.FormControl componentClass="select" required {...fields.base_material}>
+        <BS.FormControl componentClass="select" required {...fields.materials.base}>
           {_.map(materials, material => (
             <option key={material.uri} value={material.uri}>{material.name}</option>
           ))}
@@ -46,7 +46,7 @@ const NewOrderForm = ({ fields, materials, model }) => (
       </BS.FormGroup>
       <BS.FormGroup controlId="uxSupportMaterials">
         <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
-        <BS.FormControl componentClass="select" required {...fields.support_material}>
+        <BS.FormControl componentClass="select" required {...fields.materials.support}>
           {_.map(materials, material => (
             <option key={material.uri} value={material.uri}>{material.name}</option>
           ))}
@@ -54,7 +54,7 @@ const NewOrderForm = ({ fields, materials, model }) => (
       </BS.FormGroup>
       <BS.FormGroup controlId="uxAddress">
         <BS.ControlLabel><FormattedMessage id="field.address" defaultMessage='Address'/>:</BS.ControlLabel>
-        <BS.FormControl type="text" required {...fields.address}/>
+        <BS.FormControl type="text" required {...fields.shipping.address}/>
       </BS.FormGroup>
       <BS.FormGroup controlId="uxQuantity">
         <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>

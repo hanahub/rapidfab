@@ -11,13 +11,14 @@ const fields = [
   'id',
   'uri',
   'uuid',
-  'name',
-  'base_material',
-  'support_material',
   'address',
-  'quantity',
   'created',
+  'materials.base',
+  'materials.support',
   'model',
+  'name',
+  'quantity',
+  'shipping.address',
 ]
 
 class NewOrderContainer extends Component {
@@ -39,11 +40,6 @@ function mapDispatchToProps(dispatch, props) {
       }
     },
     onSubmit: payload => {
-      payload.materials = { 'base' : payload.base_material, 'support' : payload.support_material }
-      delete payload.base_material
-      delete payload.support_material
-      payload.shipping = { 'address' : payload.address }
-      delete payload.address
       payload.bureau = Config.BUREAU
       let modelPayload = {"name" : payload.name}
       dispatch(Actions.Api.hoth.model.post(modelPayload))
