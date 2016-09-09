@@ -3,14 +3,12 @@ import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
 import Fa                                     from 'react-fontawesome'
 import { FormattedMessage, FormattedDate }    from 'react-intl'
-import Grid, {
-  IdColumn,
-  CapitalizeColumn,
-} from 'rapidfab/components/grid';
+
 import PrintersList                           from './printersList'
 import PrintsList                             from './printsList'
 import ActivePrints                           from './activePrints'
 import BedLayout                              from './bedLayout'
+import Error                                  from 'rapidfab/components/error'
 
 
 class Runs extends Component {
@@ -29,6 +27,7 @@ class Runs extends Component {
     this.handleActivatePrints = this.handleActivatePrints.bind(this);
     this.handleSelectActivePrint = this.handleSelectActivePrint.bind(this);
     this.handleDeactivatePrints = this.handleDeactivatePrints.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   componentWillReceiveProps(props) {
@@ -83,11 +82,27 @@ class Runs extends Component {
     })
   }
 
+  handleSave() {
+    const {
+      selectedPrinter,
+      activePrints
+    } = this.state
+
+    if(activePrints.length) {
+      this.props.onSave({
+        printer: selectedPrinter.uri,
+        printer_type: selectedPrinter.printer_type.uri,
+        prints: _.map(activePrints, 'uri')
+      })
+    }
+  }
+
   render() {
     const {
       printers,
       prints,
-      orders
+      orders,
+      apiErrors
     } = this.props
 
     const {
@@ -112,9 +127,32 @@ class Runs extends Component {
                 <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/plan/runs">
-                <Fa name='code-fork'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
+                <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
+          </BS.Col>
+        </BS.Row>
+
+        <BS.Row>
+          <BS.Col xs={6}>
+            <BS.Button href="#/plan/runs" bsSize="small">
+              <Fa name='arrow-left'/> <FormattedMessage id="plan.runs" defaultMessage='Rus'/>
+            </BS.Button>
+          </BS.Col>
+          <BS.Col xs={6}>
+            <BS.ButtonToolbar className="pull-right">
+              <BS.Button bsSize="small" onClick={this.handleSave} disabled={!activePrints.length} bsStyle="primary">
+                <Fa name='floppy-o'/> <FormattedMessage id="button.save" defaultMessage='Save'/>
+              </BS.Button>
+            </BS.ButtonToolbar>
+          </BS.Col>
+        </BS.Row>
+
+        <hr/>
+
+        <BS.Row>
+          <BS.Col xs={12}>
+            <Error errors={apiErrors}/>
           </BS.Col>
         </BS.Row>
 
@@ -151,11 +189,6 @@ class Runs extends Component {
                 />
               </BS.Col>
             </BS.Row>
-          </BS.Col>
-        </BS.Row>
-
-        <BS.Row>
-          <BS.Col xs={12}>
           </BS.Col>
         </BS.Row>
       </BS.Grid>
