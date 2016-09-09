@@ -4,17 +4,13 @@ import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
 import Grid, {
   IdColumn,
-  NumberColumn,
-  ImageColumn,
   CapitalizeColumn,
-  DateColumn,
-  BooleanColumn,
-  VolumeColumn
+  DateColumn
 } from 'rapidfab/components/grid';
 
 
-const Runs = ({ orders, materials }) => (
-  <BS.Grid>
+const Runs = ({ runs }) => (
+  <BS.Grid fluid>
 
     <BS.Row>
       <BS.Col xs={12}>
@@ -22,8 +18,8 @@ const Runs = ({ orders, materials }) => (
           <BS.Breadcrumb.Item>
             <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
           </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/plan/orders">
-            <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Runs'/>
+          <BS.Breadcrumb.Item href="#/plan/runs">
+            <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -31,8 +27,8 @@ const Runs = ({ orders, materials }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/order" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.order.add" defaultMessage='Add Run'/>
+        <BS.Button bsStyle="primary" bsSize="small" href="#/records/run" className="pull-right">
+          <Fa name='plus'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -42,11 +38,11 @@ const Runs = ({ orders, materials }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <Grid
-          data={orders}
+          data={runs}
           columns={[
             "id",
             "name",
-            "quantity",
+            "status",
             "created"
           ]}
           columnMeta={[{
@@ -55,16 +51,12 @@ const Runs = ({ orders, materials }) => (
             customComponent: IdColumn("order"),
             locked: true
           }, {
-            customComponent: ImageColumn,
-            columnName: "snapshot",
-            displayName: <FormattedMessage id="field.preview" defaultMessage='Preview'/>
-          }, {
             columnName: "name",
             displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
           }, {
-            customComponent: NumberColumn,
-            columnName: "quantity",
-            displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
+            columnName: "status",
+            displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
+            customComponent: CapitalizeColumn
           }, {
             customComponent: DateColumn,
             columnName: "created",

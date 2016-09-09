@@ -78,7 +78,7 @@ const Grid = ({data, columnMeta, rowMeta, columns, useFixedHeader, bodyHeight, s
     resultsPerPage={9999}
     useFixedHeader={!!useFixedHeader}
     bodyHeight={bodyHeight}
-    showTableHeading={!!showTableHeading}
+    showTableHeading={!showTableHeading}
   />
 )
 

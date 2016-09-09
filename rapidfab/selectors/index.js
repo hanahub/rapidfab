@@ -16,6 +16,7 @@ export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
 export const getStatePrints              = state => state.api.wyatt.print
+export const getStateRuns                = state => state.api.wyatt.run
 
 export const getResourceErrors         = (state, path) => {
   const methods = _.get(state.ui, path)
@@ -110,5 +111,10 @@ export const getOrders = createSelector(
 
 export const getPrints = createSelector(
   [ getStatePrints, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getRuns = createSelector(
+  [ getStateRuns, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )

@@ -3,7 +3,7 @@ import React, { Component, PropTypes }  from "react"
 import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
 import RunsComponent                    from 'rapidfab/components/plan/runs'
-import FakeData                         from 'rapidfab/fakeData';
+import * as Selectors                   from 'rapidfab/selectors'
 
 
 const RunsContainer = props => (
@@ -17,20 +17,11 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const {
-    fakeData
-  } = state
-
-  const {
-    print,
-    printer,
-    model,
-    order
-  } = fakeData
+    run
+  } = state.ui.wyatt
 
   return {
-    prints: print,
-    printers: printer,
-    orders: order
+    runs: Selectors.getRuns(state)
   }
 }
 
