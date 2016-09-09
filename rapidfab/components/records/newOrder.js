@@ -90,11 +90,9 @@ const NewOrder = ({ fields, handleSubmit, load, submitting, onDelete, materials,
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-                <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)} disabled={!fields.id.value}>
-                  <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
-                </BS.MenuItem>
-              </BS.SplitButton>
+              <BS.Button id="uxSave" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} disabled={uploadModel.percent > 0 ? true : false} pullRight>
+                Save
+              </BS.Button>
             </BS.ButtonToolbar>
           </BS.Col>
         </BS.Row>
