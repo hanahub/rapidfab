@@ -24,6 +24,8 @@ import PostProcessor                from 'rapidfab/containers/records/postProces
 import PostProcessorType            from 'rapidfab/containers/records/postProcessorType'
 import Stock                        from 'rapidfab/containers/records/stock'
 import User                         from 'rapidfab/containers/records/user'
+import RunEdit                      from 'rapidfab/containers/records/run/edit'
+import RunNew                       from 'rapidfab/containers/records/run/new'
 
 const Routes = {
   "/"                                    : Home,
@@ -40,7 +42,6 @@ const Routes = {
 
   "/plan/orders"                         : Orders,
   "/plan/runs"                           : Runs,
-  "/plan/print-queues"                   : PrintQueues,
 
   "/work/queues"                         : Queues,
 
@@ -60,6 +61,8 @@ const Routes = {
   "/records/stock/:uuid"                 : Stock,
   "/records/user"                        : User,
   "/records/user/:uuid"                  : User,
+  "/records/run"                         : RunNew,
+  "/records/run/:uuid"                   : RunEdit,
 }
 
 export default Routes
