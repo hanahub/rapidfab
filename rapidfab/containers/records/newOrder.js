@@ -64,10 +64,12 @@ function mapStateToProps(state, props) {
     model,
     uploadModel,
   } = state;
+
   if(uploadModel.percent == 100) {
     state.model = _.omit(state.model, ['uxFetching', 'uxErrors']),
-    window.location.hash = `/#/inventory/orders/edit/${_.keys(state.model)[0]}`
+    window.location.hash = `/inventory/orders/edit/${_.keys(state.model)[0]}`
   }
+
   return {
     uuid            : props.route.uuid,
     initialValues   : model[props.route.uuid],
