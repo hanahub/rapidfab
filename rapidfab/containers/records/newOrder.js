@@ -65,7 +65,7 @@ function mapStateToProps(state, props) {
     uploadModel,
   } = state;
 
-  if(uploadModel.percent == 100) {
+  if(uploadModel.percent >== 100) {
     state.model = _.omit(state.model, ['uxFetching', 'uxErrors']),
     window.location.hash = `/inventory/orders/edit/${_.keys(state.model)[0]}`
   }
