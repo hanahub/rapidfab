@@ -19,11 +19,16 @@ class Runs extends Component {
 
     this.state = {
       selectedPrinter: _.head(_.values(props.printers)),
-      selectedPrint: null
+      selectedPrints: [],
+      activePrintsSelected: [],
+      activePrints: [],
     }
 
     this.handleSelectPrinter = this.handleSelectPrinter.bind(this);
     this.handleSelectPrint = this.handleSelectPrint.bind(this);
+    this.handleActivatePrints = this.handleActivatePrints.bind(this);
+    this.handleSelectActivePrint = this.handleSelectActivePrint.bind(this);
+    this.handleDeactivatePrints = this.handleDeactivatePrints.bind(this);
   }
 
   componentWillReceiveProps(props) {
@@ -41,8 +46,40 @@ class Runs extends Component {
   }
 
   handleSelectPrint(print) {
+    if(_.find(this.state.selectedPrints, ['uri', print.uri])) {
+      this.setState({
+        selectedPrints: _.filter(this.state.selectedPrints, selectedPrint => selectedPrint.uri !== print.uri)
+      })
+    } else {
+      this.setState({
+        selectedPrints: _.unionBy(this.state.selectedPrints, [print], 'uri')
+      })
+    }
+  }
+
+  handleSelectActivePrint(print) {
+    if(_.find(this.state.activePrintsSelected, ['uri', print.uri])) {
+      this.setState({
+        activePrintsSelected: _.filter(this.state.activePrintsSelected, activePrintSelected => activePrintSelected.uri !== print.uri)
+      })
+    } else {
+      this.setState({
+        activePrintsSelected: _.unionBy(this.state.activePrintsSelected, [print], 'uri')
+      })
+    }
+  }
+
+  handleActivatePrints() {
     this.setState({
-      selectedPrint: print
+      activePrints: _.unionBy(this.state.activePrints, this.state.selectedPrints, 'uri'),
+      selectedPrints: []
+    })
+  }
+
+  handleDeactivatePrints() {
+    this.setState({
+      activePrints: _.differenceBy(this.state.activePrints, this.state.activePrintsSelected, 'uri'),
+      activePrintsSelected: []
     })
   }
 
@@ -53,12 +90,18 @@ class Runs extends Component {
       orders
     } = this.props
 
-    const activePrints = _.sampleSize(prints, 5)
-
     const {
       selectedPrinter,
-      selectedPrint
+      selectedPrints,
+      activePrints,
+      activePrintsSelected
     } = this.state
+
+    const inactivePrints = _.differenceBy(
+      _.values(prints),
+      activePrints,
+      'uri'
+    )
 
     return (
       <BS.Grid fluid>
@@ -78,9 +121,10 @@ class Runs extends Component {
         <BS.Row>
           <BS.Col xs={3}>
             <PrintsList
-              prints={prints}
-              selected={selectedPrint}
+              prints={inactivePrints}
+              selected={selectedPrints}
               onSelect={this.handleSelectPrint}
+              onActivate={this.handleActivatePrints}
             />
           </BS.Col>
           <BS.Col xs={9}>
@@ -95,12 +139,15 @@ class Runs extends Component {
             </BS.Row>
             <BS.Row>
               <BS.Col xs={8}>
-                <BedLayout prints={activePrints}/>
+                <BedLayout prints={[]} />
               </BS.Col>
               <BS.Col xs={4}>
                 <ActivePrints
                   printer={selectedPrinter}
                   prints={activePrints}
+                  selected={activePrintsSelected}
+                  onSelect={this.handleSelectActivePrint}
+                  onDeactivate={this.handleDeactivatePrints}
                 />
               </BS.Col>
             </BS.Row>
