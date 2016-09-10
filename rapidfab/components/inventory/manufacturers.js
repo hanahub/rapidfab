@@ -58,7 +58,7 @@ const Manufacturers = ({ records, fetching, apiErrors }) => (
           <BS.Breadcrumb.Item>
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/manufacturer">
+          <BS.Breadcrumb.Item href="#/inventory/manufacturers">
             <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>

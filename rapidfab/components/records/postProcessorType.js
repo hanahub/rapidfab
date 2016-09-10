@@ -19,7 +19,7 @@ const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelet
             <BS.Breadcrumb.Item>
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/post-processor-type">
+            <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
               <Fa name='industry'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post Processor Types'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
