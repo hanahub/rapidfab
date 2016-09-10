@@ -19,7 +19,7 @@ class RunsContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
-      dispatch(Actions.Api.wyatt.poop.list())
+      dispatch(Actions.Api.wyatt.run.list())
     }
   }
 }
