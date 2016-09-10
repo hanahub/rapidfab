@@ -85,7 +85,7 @@ function mapStateToProps(state) {
     printers,
     prints,
     fetching,
-    loading     : !orders.length || !printers.length,
+    loading     : (!orders.length || !printers.length) && fetching,
     errors
   }
 }
