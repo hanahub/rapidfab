@@ -17,14 +17,14 @@ function printBedFill(printer, model) {
   return `${percentage}%`
 }
 
-const Header = ({  }) => (
+const Header = ({ onDeactivate }) => (
   <BS.Row>
     <BS.Col xs={6}>
       Active Prints
     </BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
-        <BS.Button bsSize="small" bsStyle="danger">
+        <BS.Button bsSize="small" bsStyle="danger" onClick={onDeactivate}>
           <Fa name='times'/>
         </BS.Button>
       </BS.ButtonToolbar>
@@ -36,7 +36,11 @@ const Item = ({ print, printer, selected, onSelect }) => (
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
-        <input type="checkbox" />
+        <input
+          type="checkbox"
+          onChange={() => onSelect(print)}
+          checked={selected}
+        />
       </BS.Col>
       <BS.Col xs={3}>
         <a href={`#/records/order/${print.order.uuid}`}>
@@ -53,13 +57,12 @@ const Item = ({ print, printer, selected, onSelect }) => (
   </BS.ListGroupItem>
 )
 
-const PrintsList = ({ prints, printer, selected, onSelect }) => (
-  <BS.Panel header={<Header/>}>
+const PrintsList = ({ prints, printer, selected, onSelect, onDeactivate }) => (
+  <BS.Panel header={<Header onDeactivate={onDeactivate}/>}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
           <BS.Col xs={1}>
-            <input type="checkbox" />
           </BS.Col>
           <BS.Col xs={3}>
             Order
@@ -76,7 +79,7 @@ const PrintsList = ({ prints, printer, selected, onSelect }) => (
         {_.map(prints, print => (
           <Item
             key={print.uuid}
-            selected={selected}
+            selected={!!_.find(selected, ['uri', print.uri])}
             print={print}
             onSelect={onSelect}
             printer={printer}
