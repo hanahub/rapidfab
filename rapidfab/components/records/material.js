@@ -81,6 +81,7 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
           <BS.FormGroup controlId="uxType">
             <BS.ControlLabel><FormattedMessage id="field.materialType" defaultMessage='Material Type'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.type}>
+              <option key="placeholder" value="" selected disabled>Select a Material Type</option>
               <option value="base">Base</option>
               <option value="support">Support</option>
             </BS.FormControl>
@@ -88,6 +89,7 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
           <BS.FormGroup controlId="uxRetailPriceCurrency">
             <BS.ControlLabel>Retail Price Currency:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.retail_price.currency}>
+              <option key="placeholder" value="" selected disabled>Select a Currency</option>
               <option value="USD">USD</option>
             </BS.FormControl>
           </BS.FormGroup>
