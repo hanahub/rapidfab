@@ -21,10 +21,10 @@ const PostProcessorForm = ({ fields, handleSubmit, load, submitting, onDelete, l
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/post-processors">
-              <Fa name='industry'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Post Processors'/>
+              <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Post Processors'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='industry'/> {fields.id.value || <FormattedMessage id="record.newPostProcessor" defaultMessage='New Post Processor'/>}
+              <Fa name='object-ungroup'/> {fields.id.value || <FormattedMessage id="record.newPostProcessor" defaultMessage='New Post Processor'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>

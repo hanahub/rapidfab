@@ -20,10 +20,10 @@ const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelet
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
-              <Fa name='industry'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post Processor Types'/>
+              <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post Processor Types'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='industry'/> {fields.id.value || <FormattedMessage id="record.postProcessorType.new" defaultMessage='New Post Processor Type'/>}
+              <Fa name='object-group'/> {fields.id.value || <FormattedMessage id="record.postProcessorType.new" defaultMessage='New Post Processor Type'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
