@@ -40,6 +40,7 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
+      if(!payload.third_party_fulfillment){ payload.third_party_fulfillment = false}
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.material.put(payload.uuid, payload))
         window.location.hash = "#/inventory/materials"
