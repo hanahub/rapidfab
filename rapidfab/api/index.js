@@ -18,6 +18,8 @@ export const RESOURCES = {
     'stock',
     'order',
     'print',
+    'printer',
+    'run'
   ]
 }
 

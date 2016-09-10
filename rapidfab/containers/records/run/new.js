@@ -1,37 +1,66 @@
-import _                                from "lodash";
+import _                                from "lodash"
 import React, { Component, PropTypes }  from "react"
 import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
-import RunsComponent                    from 'rapidfab/components/records/run/new'
-import FakeData                         from 'rapidfab/fakeData';
+import RunComponent                     from 'rapidfab/components/records/run/new'
+import * as Selectors                   from 'rapidfab/selectors'
 
 
-const RunsContainer = props => (
-  <RunsComponent {...props}/>
-)
+class RunContainer extends Component {
+  componentWillMount() {
+    //    this.props.onInitialize(this.props.uuid)
+  }
+
+  render() {
+    return <RunComponent {...this.props}/>
+  }
+}
 
 function mapDispatchToProps(dispatch) {
   return {
+    onInitialize: uuid => {
+      dispatch(Actions.Api.wyatt.printer.list())
+      dispatch(Actions.Api.wyatt.print.list())
+      dispatch(Actions.Api.wyatt.order.list())
+      dispatch(Actions.Api.wyatt.material.list())
+    },
+    onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload))
   }
 }
 
 function mapStateToProps(state) {
   const {
-    fakeData
-  } = state
-
-  const {
+    order,
+    material,
     print,
     printer,
-    model,
-    order
-  } = fakeData
+    run
+  } = state.ui.wyatt
+
+  const fetching =
+    order.list.fetching ||
+    material.list.fetching ||
+    print.list.fetching ||
+    printer.list.fetching ||
+    run.post.fetching
+
+  const errors = _.concat(
+    order.list.errors,
+    material.list.errors,
+    order.list.errors,
+    print.list.errors,
+    printer.list.errors,
+    run.post.errors
+  )
 
   return {
-    prints: print,
-    printers: printer,
-    orders: order
+    orders        : Selectors.getOrders(state),
+    materials     : Selectors.getMaterials(state),
+    prints        : Selectors.getPrintsCreated(state),
+    printers      : Selectors.getPrinters(state),
+    fetching,
+    errors
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RunsContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RunContainer)

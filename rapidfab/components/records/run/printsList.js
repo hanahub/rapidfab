@@ -10,14 +10,14 @@ const listBodyStyle = {
   overflowX: "hidden"
 }
 
-const Header = ({  }) => (
+const Header = ({ onActivate }) => (
   <BS.Row>
     <BS.Col xs={6}>
       Pending Order Prints
     </BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
-        <BS.Button bsSize="small" bsStyle="primary">
+        <BS.Button bsSize="small" bsStyle="primary" onClick={onActivate}>
           <Fa name='arrow-right'/>
         </BS.Button>
       </BS.ButtonToolbar>
@@ -32,7 +32,7 @@ const PrintItem = ({ print, selected, onSelect }) => (
         <input
           type="checkbox"
           onChange={() => onSelect(print)}
-          checked={selected && selected.uri === print.uri}
+          checked={selected}
         />
       </BS.Col>
       <BS.Col xs={3}>
@@ -52,8 +52,8 @@ const PrintItem = ({ print, selected, onSelect }) => (
   </BS.ListGroupItem>
 )
 
-const PrintsList = ({ prints, selected, onSelect }) => (
-  <BS.Panel header={<Header/>}>
+const PrintsList = ({ prints, selected, onSelect, onActivate }) => (
+  <BS.Panel header={<Header onActivate={onActivate}/>}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
@@ -74,7 +74,7 @@ const PrintsList = ({ prints, selected, onSelect }) => (
         {_.map(prints, print => (
           <PrintItem
             key={print.uuid}
-            selected={selected}
+            selected={!!_.find(selected, ['uri', print.uri])}
             print={print}
             onSelect={onSelect}
           />
@@ -83,12 +83,6 @@ const PrintsList = ({ prints, selected, onSelect }) => (
     </BS.ListGroup>
   </BS.Panel>
 )
-
-PrintsList.propTypes = {
-  prints: PropTypes.object.isRequired,
-  selected: PropTypes.object,
-  onSelect: PropTypes.func,
-}
 
 PrintsList.defaultProps = {
   onSelect: () => true

@@ -3,14 +3,12 @@ import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
 import Fa                                     from 'react-fontawesome'
 import { FormattedMessage, FormattedDate }    from 'react-intl'
-import Grid, {
-  IdColumn,
-  CapitalizeColumn,
-} from 'rapidfab/components/grid';
+
 import PrintersList                           from './printersList'
 import PrintsList                             from './printsList'
 import ActivePrints                           from './activePrints'
 import BedLayout                              from './bedLayout'
+import Error                                  from 'rapidfab/components/error'
 
 
 class Runs extends Component {
@@ -19,11 +17,17 @@ class Runs extends Component {
 
     this.state = {
       selectedPrinter: _.head(_.values(props.printers)),
-      selectedPrint: null
+      selectedPrints: [],
+      activePrintsSelected: [],
+      activePrints: [],
     }
 
     this.handleSelectPrinter = this.handleSelectPrinter.bind(this);
     this.handleSelectPrint = this.handleSelectPrint.bind(this);
+    this.handleActivatePrints = this.handleActivatePrints.bind(this);
+    this.handleSelectActivePrint = this.handleSelectActivePrint.bind(this);
+    this.handleDeactivatePrints = this.handleDeactivatePrints.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   componentWillReceiveProps(props) {
@@ -41,24 +45,78 @@ class Runs extends Component {
   }
 
   handleSelectPrint(print) {
+    if(_.find(this.state.selectedPrints, ['uri', print.uri])) {
+      this.setState({
+        selectedPrints: _.filter(this.state.selectedPrints, selectedPrint => selectedPrint.uri !== print.uri)
+      })
+    } else {
+      this.setState({
+        selectedPrints: _.unionBy(this.state.selectedPrints, [print], 'uri')
+      })
+    }
+  }
+
+  handleSelectActivePrint(print) {
+    if(_.find(this.state.activePrintsSelected, ['uri', print.uri])) {
+      this.setState({
+        activePrintsSelected: _.filter(this.state.activePrintsSelected, activePrintSelected => activePrintSelected.uri !== print.uri)
+      })
+    } else {
+      this.setState({
+        activePrintsSelected: _.unionBy(this.state.activePrintsSelected, [print], 'uri')
+      })
+    }
+  }
+
+  handleActivatePrints() {
     this.setState({
-      selectedPrint: print
+      activePrints: _.unionBy(this.state.activePrints, this.state.selectedPrints, 'uri'),
+      selectedPrints: []
     })
+  }
+
+  handleDeactivatePrints() {
+    this.setState({
+      activePrints: _.differenceBy(this.state.activePrints, this.state.activePrintsSelected, 'uri'),
+      activePrintsSelected: []
+    })
+  }
+
+  handleSave() {
+    const {
+      selectedPrinter,
+      activePrints
+    } = this.state
+
+    if(activePrints.length) {
+      this.props.onSave({
+        printer: selectedPrinter.uri,
+        printer_type: selectedPrinter.printer_type.uri,
+        prints: _.map(activePrints, 'uri')
+      })
+    }
   }
 
   render() {
     const {
       printers,
       prints,
-      orders
+      orders,
+      apiErrors
     } = this.props
-
-    const activePrints = _.sampleSize(prints, 5)
 
     const {
       selectedPrinter,
-      selectedPrint
+      selectedPrints,
+      activePrints,
+      activePrintsSelected
     } = this.state
+
+    const inactivePrints = _.differenceBy(
+      _.values(prints),
+      activePrints,
+      'uri'
+    )
 
     return (
       <BS.Grid fluid>
@@ -69,18 +127,42 @@ class Runs extends Component {
                 <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/plan/runs">
-                <Fa name='code-fork'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
+                <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
         </BS.Row>
 
         <BS.Row>
+          <BS.Col xs={6}>
+            <BS.Button href="#/plan/runs" bsSize="small">
+              <Fa name='arrow-left'/> <FormattedMessage id="plan.runs" defaultMessage='Rus'/>
+            </BS.Button>
+          </BS.Col>
+          <BS.Col xs={6}>
+            <BS.ButtonToolbar className="pull-right">
+              <BS.Button bsSize="small" onClick={this.handleSave} disabled={!activePrints.length} bsStyle="primary">
+                <Fa name='floppy-o'/> <FormattedMessage id="button.save" defaultMessage='Save'/>
+              </BS.Button>
+            </BS.ButtonToolbar>
+          </BS.Col>
+        </BS.Row>
+
+        <hr/>
+
+        <BS.Row>
+          <BS.Col xs={12}>
+            <Error errors={apiErrors}/>
+          </BS.Col>
+        </BS.Row>
+
+        <BS.Row>
           <BS.Col xs={3}>
             <PrintsList
-              prints={prints}
-              selected={selectedPrint}
+              prints={inactivePrints}
+              selected={selectedPrints}
               onSelect={this.handleSelectPrint}
+              onActivate={this.handleActivatePrints}
             />
           </BS.Col>
           <BS.Col xs={9}>
@@ -95,20 +177,18 @@ class Runs extends Component {
             </BS.Row>
             <BS.Row>
               <BS.Col xs={8}>
-                <BedLayout prints={activePrints}/>
+                <BedLayout prints={[]} />
               </BS.Col>
               <BS.Col xs={4}>
                 <ActivePrints
                   printer={selectedPrinter}
                   prints={activePrints}
+                  selected={activePrintsSelected}
+                  onSelect={this.handleSelectActivePrint}
+                  onDeactivate={this.handleDeactivatePrints}
                 />
               </BS.Col>
             </BS.Row>
-          </BS.Col>
-        </BS.Row>
-
-        <BS.Row>
-          <BS.Col xs={12}>
           </BS.Col>
         </BS.Row>
       </BS.Grid>

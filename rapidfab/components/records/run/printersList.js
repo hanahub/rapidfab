@@ -10,7 +10,7 @@ const listBodyStyle = {
 }
 
 const PrinterItem = ({ printer, selected, onSelect }) => (
-  <BS.ListGroupItem bsStyle={selected && selected.uri == printer.uri ? "info" : null}>
+  <BS.ListGroupItem bsStyle={selected && selected.uri == printer.uri ? "info" : null} onClick={() => onSelect(printer)}>
     <BS.Row>
       <BS.Col xs={3}>
         <a href={`#/records/printer/${printer.uuid}`}>

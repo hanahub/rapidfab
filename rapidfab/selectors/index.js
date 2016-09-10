@@ -1,5 +1,6 @@
 import _                  from "lodash"
 import { createSelector } from 'reselect'
+import { extractUuid }    from 'rapidfab/reducers/makeApiReducers'
 
 export const getStateResources           = state => state.resources
 export const getRoute                    = (state, props) => props.route
@@ -16,6 +17,8 @@ export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
 export const getStatePrints              = state => state.api.wyatt.print
+export const getStatePrinters            = state => state.api.wyatt.printer
+export const getStateRuns                = state => state.api.wyatt.run
 
 export const getResourceErrors         = (state, path) => {
   const methods = _.get(state.ui, path)
@@ -108,7 +111,32 @@ export const getOrders = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
+export const getPrinters = createSelector(
+  [ getStatePrinters, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
 export const getPrints = createSelector(
+  [ getStatePrints, getStateResources, getStateOrders ],
+  (uuids, resources) => _.map(uuids, uuid => {
+    let print = resources[uuid]
+    let order = resources[extractUuid(print.order)]
+    order.materials.base = resources[extractUuid(order.materials.base)]
+    order.materials.support = resources[extractUuid(order.materials.support)]
+    print.order = order
+    return print
+  })
+)
+
+export const getPrintsCreated = createSelector(
   [ getStatePrints, getStateResources ],
+  (uuids, resources) => {
+    const prints = _.map(uuids, uuid => resources[uuid])
+    return _.filter(prints, ['status', 'created'])
+  }
+)
+
+export const getRuns = createSelector(
+  [ getStateRuns, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )

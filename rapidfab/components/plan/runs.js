@@ -2,19 +2,50 @@ import React, { PropTypes }                   from "react";
 import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
+import Error                                  from 'rapidfab/components/error'
 import Grid, {
   IdColumn,
-  NumberColumn,
-  ImageColumn,
   CapitalizeColumn,
-  DateColumn,
-  BooleanColumn,
-  VolumeColumn
+  DateColumn
 } from 'rapidfab/components/grid';
 
+const RunsGrid = ({ runs }) => (
+  <Grid
+    data={runs}
+    columns={[
+      "id",
+      "name",
+      "status",
+      "created"
+    ]}
+    columnMeta={[{
+      displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
+      columnName: "id",
+      customComponent: IdColumn("order"),
+      locked: true
+    }, {
+      columnName: "name",
+      displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
+    }, {
+      columnName: "status",
+      displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
+      customComponent: CapitalizeColumn
+    }, {
+      customComponent: DateColumn,
+      columnName: "created",
+      displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
+    }]}
+  />
+)
 
-const Runs = ({ orders, materials }) => (
-  <BS.Grid>
+const Loading = () => (
+  <div style={{ textAlign: "center" }}>
+    <Fa name="spinner" spin size='2x' />
+  </div>
+)
+
+const Runs = ({ runs, fetching, apiErrors }) => (
+  <BS.Grid fluid>
 
     <BS.Row>
       <BS.Col xs={12}>
@@ -22,8 +53,8 @@ const Runs = ({ orders, materials }) => (
           <BS.Breadcrumb.Item>
             <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
           </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/plan/orders">
-            <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Runs'/>
+          <BS.Breadcrumb.Item href="#/plan/runs">
+            <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -31,8 +62,8 @@ const Runs = ({ orders, materials }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/order" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.order.add" defaultMessage='Add Run'/>
+        <BS.Button bsStyle="primary" bsSize="small" href="#/records/run" className="pull-right">
+          <Fa name='plus'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -41,36 +72,13 @@ const Runs = ({ orders, materials }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <Grid
-          data={orders}
-          columns={[
-            "id",
-            "name",
-            "quantity",
-            "created"
-          ]}
-          columnMeta={[{
-            displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
-            columnName: "id",
-            customComponent: IdColumn("order"),
-            locked: true
-          }, {
-            customComponent: ImageColumn,
-            columnName: "snapshot",
-            displayName: <FormattedMessage id="field.preview" defaultMessage='Preview'/>
-          }, {
-            columnName: "name",
-            displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
-          }, {
-            customComponent: NumberColumn,
-            columnName: "quantity",
-            displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
-          }, {
-            customComponent: DateColumn,
-            columnName: "created",
-            displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
-          }]}
-        />
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
+
+    <BS.Row>
+      <BS.Col xs={12}>
+        {fetching ? <Loading/> : <RunsGrid runs={runs}/>}
       </BS.Col>
     </BS.Row>
 
