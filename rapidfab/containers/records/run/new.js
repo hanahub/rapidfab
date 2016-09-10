@@ -38,7 +38,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
     },
-    onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload))
+    onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(
+      () => window.location.hash = "#/plan/runs"
+    )
   }
 }
 
