@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt['post-processor'].put(payload))
+        dispatch(Actions.Api.wyatt['post-processor'].put(payload.uuid, payload))
       } else {
         dispatch(Actions.Api.wyatt['post-processor'].post(payload))
       }
