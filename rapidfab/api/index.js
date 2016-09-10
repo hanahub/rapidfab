@@ -19,6 +19,7 @@ export const RESOURCES = {
     'order',
     'print',
     'printer',
+    'printer-type',
     'run'
   ]
 }

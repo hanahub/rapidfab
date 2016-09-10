@@ -16,7 +16,7 @@ class Runs extends Component {
     super(props);
 
     this.state = {
-      selectedPrinter: _.head(_.values(props.printers)),
+      selectedPrinter: _.head(props.printers),
       selectedPrints: [],
       activePrintsSelected: [],
       activePrints: [],
@@ -100,9 +100,10 @@ class Runs extends Component {
   render() {
     const {
       printers,
-      prints,
       orders,
-      apiErrors
+      apiErrors,
+      fetching,
+      prints
     } = this.props
 
     const {
@@ -112,11 +113,7 @@ class Runs extends Component {
       activePrintsSelected
     } = this.state
 
-    const inactivePrints = _.differenceBy(
-      _.values(prints),
-      activePrints,
-      'uri'
-    )
+    const inactivePrints = _.differenceBy(prints, activePrints, 'uri')
 
     return (
       <BS.Grid fluid>
@@ -156,41 +153,59 @@ class Runs extends Component {
           </BS.Col>
         </BS.Row>
 
-        <BS.Row>
-          <BS.Col xs={3}>
-            <PrintsList
-              prints={inactivePrints}
-              selected={selectedPrints}
-              onSelect={this.handleSelectPrint}
-              onActivate={this.handleActivatePrints}
-            />
-          </BS.Col>
-          <BS.Col xs={9}>
-            <BS.Row>
-              <BS.Col xs={12}>
-                <PrintersList
-                  printers={printers}
-                  selected={selectedPrinter}
-                  onSelect={this.handleSelectPrinter}
-                />
-              </BS.Col>
-            </BS.Row>
-            <BS.Row>
-              <BS.Col xs={8}>
-                <BedLayout prints={[]} />
-              </BS.Col>
-              <BS.Col xs={4}>
-                <ActivePrints
-                  printer={selectedPrinter}
-                  prints={activePrints}
-                  selected={activePrintsSelected}
-                  onSelect={this.handleSelectActivePrint}
-                  onDeactivate={this.handleDeactivatePrints}
-                />
-              </BS.Col>
-            </BS.Row>
-          </BS.Col>
-        </BS.Row>
+        {(() => {
+          if(fetching) {
+            return (
+              <BS.Row>
+                <BS.Col xs={12}>
+                  <div style={{ textAlign: "center" }}>
+                    <Fa name="spinner" spin size='2x' />
+                  </div>
+                </BS.Col>
+              </BS.Row>
+            )
+          } else {
+            return (
+              <BS.Row>
+                <BS.Col xs={3}>
+                  <PrintsList
+                    prints={inactivePrints}
+                    selected={selectedPrints}
+                    onSelect={this.handleSelectPrint}
+                    onActivate={this.handleActivatePrints}
+                    orders={orders}
+                  />
+                </BS.Col>
+                <BS.Col xs={9}>
+                  <BS.Row>
+                    <BS.Col xs={12}>
+                      <PrintersList
+                        printers={printers}
+                        selected={selectedPrinter}
+                        onSelect={this.handleSelectPrinter}
+                      />
+                    </BS.Col>
+                  </BS.Row>
+                  <BS.Row>
+                    <BS.Col xs={8}>
+                      <BedLayout prints={[]} />
+                    </BS.Col>
+                    <BS.Col xs={4}>
+                      <ActivePrints
+                        printer={selectedPrinter}
+                        prints={activePrints}
+                        selected={activePrintsSelected}
+                        onSelect={this.handleSelectActivePrint}
+                        onDeactivate={this.handleDeactivatePrints}
+                      />
+                    </BS.Col>
+                  </BS.Row>
+                </BS.Col>
+              </BS.Row>
+            )
+          }
+        })()}
+
       </BS.Grid>
     )
   }
