@@ -4,6 +4,7 @@ import { extractUuid }    from 'rapidfab/reducers/makeApiReducers'
 
 export const getStateResources           = state => state.resources
 export const getRoute                    = (state, props) => props.route
+export const getPredicate                = (state, predicate) => predicate
 
 export const getStateModels              = state => state.api.hoth.model
 export const getStateMemberships         = state => state.api.pao.memberships
@@ -18,9 +19,27 @@ export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
 export const getStatePrints              = state => state.api.wyatt.print
 export const getStatePrinters            = state => state.api.wyatt.printer
+export const getStatePrinterTypes        = state => state.api.wyatt['printer-type']
 export const getStateRuns                = state => state.api.wyatt.run
 
-export const getResourceErrors         = (state, path) => {
+export const getResourceByUuid = createSelector(
+  [ (state, uuid) => { uuid }, getStateResources ],
+  (predicate, resources) => _.find(resources, predicate)
+)
+
+export const getResource = createSelector(
+  [ getPredicate, getStateResources ],
+  (predicate, resources) => _.find(resources, predicate)
+)
+
+export const getResourcesByFilter = createSelector(
+  [ getPredicate, getStateResources ],
+  (filters, resources) => _.uniqBy(_.reduce(filters, (result, filter) => {
+    return _.concat(result, _.filter(resources, filter))
+  }, []), 'uri')
+)
+
+export const getResourceErrors = (state, path) => {
   const methods = _.get(state.ui, path)
   if(!methods) {
     throw new Error(`Could not find methods by path: ${path}`)
@@ -34,7 +53,7 @@ export const getResourceErrors         = (state, path) => {
   )
 }
 
-export const getResourceFetching         = (state, path) => {
+export const getResourceFetching = (state, path) => {
   const methods = _.get(state.ui, path)
   if(!methods) {
     throw new Error(`Could not find methods by path: ${path}`)
@@ -116,16 +135,14 @@ export const getPrinters = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
+export const getPrinterTypes = createSelector(
+  [ getStatePrinterTypes, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
 export const getPrints = createSelector(
   [ getStatePrints, getStateResources, getStateOrders ],
-  (uuids, resources) => _.map(uuids, uuid => {
-    let print = resources[uuid]
-    let order = resources[extractUuid(print.order)]
-    order.materials.base = resources[extractUuid(order.materials.base)]
-    order.materials.support = resources[extractUuid(order.materials.support)]
-    print.order = order
-    return print
-  })
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
 export const getPrintsCreated = createSelector(
@@ -139,4 +156,43 @@ export const getPrintsCreated = createSelector(
 export const getRuns = createSelector(
   [ getStateRuns, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getPrintersForRunNew = createSelector(
+  [ getPrinters, getPrinterTypes ],
+  (printers, printerTypes) => {
+    if(printers.length && printerTypes.length) {
+      return _.map(printers, printer => _.assign({}, printer, {
+        printer_type: _.find(printerTypes, ['uri', printer.printer_type])
+      }))
+    }
+    return []
+  }
+)
+
+export const getOrdersForRunNew = createSelector(
+  [ getOrders, getMaterials, getPrintsCreated, getModels ],
+  (orders, materials, prints, models) => {
+    if(orders.length && materials.length && prints.length && models.length) {
+      return _.reduce(orders, (result, order) => {
+        const baseMaterial    = _.find(materials, ['uri', order.materials.base])
+        const supportMaterial = _.find(materials, ['uri', order.materials.support])
+        const model           = _.find(models, ['uri', order.model])
+        const orderPrints     = _.filter(prints, ['order', order.uri])
+        if(baseMaterial && model && orderPrints.length) {
+          let newOrder = _.assign({}, order, {
+            materials: {
+              base    : baseMaterial,
+              support : supportMaterial
+            },
+            model
+          })
+          newOrder.prints = _.map(orderPrints, print => _.assign({}, print, { order: newOrder }))
+          result.push(newOrder)
+        }
+        return result
+      }, [])
+    }
+    return []
+  }
 )
