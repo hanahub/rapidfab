@@ -73,24 +73,28 @@ class Navbar extends Component {
               <Fa name='tags' /> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
-            <BS.MenuItem eventKey={3.3} href="#/inventory/post-processor-types">
-              <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Printer &amp; Post processor types'/>
+            <BS.MenuItem eventKey={3.3} href="#/inventory/printers">
+              <Fa name='print'/> <FormattedMessage id="inventory.printers" defaultMessage='Printers'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/post-processors">
-              <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Printer &amp; Post processors'/>
+            <BS.MenuItem eventKey={3.4} href="#/inventory/post-processors">
+              <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Post processors'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/manufacturers">
-              <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
+            <BS.MenuItem divider />
+            <BS.MenuItem eventKey={3.5} href="#/inventory/post-processor-types">
+              <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post processor types'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/third-party-provider" style={{ display: "none" }}>
+            <BS.MenuItem eventKey={3.6} href="#/inventory/third-party-provider" style={{ display: "none" }}>
               <Fa name='building'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
-            <BS.MenuItem eventKey={3.3} href="#/inventory/locations">
-              <Fa name='map-marker'/> <FormattedMessage id="inventory.manageLocations" defaultMessage='Manage Locations'/>
+            <BS.MenuItem eventKey={3.7} href="#/inventory/manufacturers">
+              <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/users">
-              <Fa name='users'/> <FormattedMessage id="inventory.manageUsers" defaultMessage='Manage Users'/>
+            <BS.MenuItem eventKey={3.8} href="#/inventory/locations">
+              <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
+            </BS.MenuItem>
+            <BS.MenuItem eventKey={3.9} href="#/inventory/users">
+              <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
             </BS.MenuItem>
           </BS.NavDropdown>
         </BS.Nav>
