@@ -133,7 +133,7 @@ class Runs extends Component {
         <BS.Row>
           <BS.Col xs={6}>
             <BS.Button href="#/plan/runs" bsSize="small">
-              <Fa name='arrow-left'/> <FormattedMessage id="plan.runs" defaultMessage='Rus'/>
+              <Fa name='arrow-left'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
             </BS.Button>
           </BS.Col>
           <BS.Col xs={6}>
