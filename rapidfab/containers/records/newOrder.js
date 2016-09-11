@@ -1,11 +1,14 @@
 import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
-import _                                  from "lodash"
-import Actions                            from "rapidfab/actions"
-import { extractUuid }                    from "rapidfab/reducers/makeApiReducers"
-import NewOrderComponent                  from 'rapidfab/components/records/newOrder'
 import { reduxForm }                      from 'redux-form'
+import _                                  from "lodash"
+
+import Actions                            from "rapidfab/actions"
 import Config                             from 'rapidfab/config'
+import { extractUuid }                    from "rapidfab/reducers/makeApiReducers"
+import * as Selectors                     from 'rapidfab/selectors'
+
+import NewOrderComponent                  from 'rapidfab/components/records/newOrder'
 
 const fields = [
   'id',
@@ -49,33 +52,39 @@ function mapDispatchToProps(dispatch, props) {
         dispatch(Actions.Api.wyatt.order.post(payload))
       })
     },
-    onDelete: uuid => {
-      if(uuid) {
-        dispatch(Actions.Api.wyatt.order.delete(uuid))
-        window.location.hash = "#/inventory/orders"
-      }
-    }
   }
 }
 
 function mapStateToProps(state, props) {
+  const uploadModel = state.uploadModel
   const {
     material,
     model,
-    uploadModel,
-  } = state;
+    order,
+  } = state.ui.wyatt;
 
-  if(uploadModel.percent >== 100) {
-    state.model = _.omit(state.model, ['uxFetching', 'uxErrors']),
-    window.location.hash = `/inventory/orders/edit/${_.keys(state.model)[0]}`
+  if(uploadModel.percent >= 100) {
+    uploadModel.percent = 0
+    window.location.hash = '#/plan/orders'
   }
 
+  const fetching =
+    material.list.fetching ||
+    uploadModel.fetching ||
+    order.post.fetching
+
+  const errors = _.concat(
+    material.list.errors ||
+    uploadModel.errors ||
+    order.post.errors
+  )
+
   return {
-    uuid            : props.route.uuid,
-    initialValues   : model[props.route.uuid],
-    materials       : _.omit(material, ['uxFetching', 'uxErrors']),
-    uploadModel     : _.omit(uploadModel, ['uxFetching', 'uxErrors']),
-    model           : _.omit(model, ['uxFetching', 'uxErrors']),
+    materials     : Selectors.getMaterials(state),
+    uploadModel   : Selectors.getUploadModel(state),
+    model         : Selectors.getModels(state),
+    fetching,
+    errors
   }
 }
 
