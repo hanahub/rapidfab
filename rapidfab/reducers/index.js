@@ -3,6 +3,7 @@ import { combineReducers }      from 'redux'
 import { RESOURCES }            from 'rapidfab/api'
 import {reducer as formReducer} from 'redux-form'
 
+import uploadModel              from './uploadModel'
 import url                      from './url'
 import i18n                     from './i18n'
 import fakeData                 from './fakeData'
@@ -14,6 +15,7 @@ const Reducer = combineReducers({
   form: formReducer,
   url,
   i18n,
+  uploadModel,
   fakeData,
   resources,
   api,

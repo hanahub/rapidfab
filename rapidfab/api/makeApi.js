@@ -95,4 +95,53 @@ function makeApi(hostResources) {
   }, {});
 }
 
+
+export const postForm = function(url, payload, files, method, withCredentials, contentType, progressCallback) {
+  method = method || "POST";
+
+  var promise = new Promise(function(resolve, reject) {
+    var data = new FormData();
+    for(var key in payload) {
+      if(payload.hasOwnProperty(key)) {
+        data.append(key, payload[key]);
+      }
+    }
+    for(var key in files) {
+      if(files.hasOwnProperty(key)) {
+        data.append(key, files[key], files[key].name);
+      }
+    }
+    var http = new XMLHttpRequest();
+    if (http.hasOwnProperty('withCredentials')) {
+      http.withCredentials = !!withCredentials;
+    }
+
+    var handleProgress = function(e) {
+      var percent = Math.floor(e.loaded/e.total*1000)/10;
+      progressCallback(percent);
+    }
+
+    http.addEventListener('progress', handleProgress, false);
+    if(http.upload) {
+      http.upload.onprogress = handleProgress;
+    }
+
+    http.onload = function() {
+      resolve(http.responseText);
+    }
+
+    http.addEventListener("error", reject, false);
+    http.addEventListener("abort", reject, false);
+
+    http.open(method, url, true);
+    if(contentType) {
+      http.setRequestHeader("Content-Type", contentType);
+      http.send(files);
+    } else {
+      http.send(data);
+    }
+  });
+  return promise;
+}
+
 export default makeApi
