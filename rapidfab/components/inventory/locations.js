@@ -7,12 +7,12 @@ import Grid, { IdColumn }     from 'rapidfab/components/grid';
 import Error                  from 'rapidfab/components/error'
 
 export const ContactColumn = ({ data, rowData, metadata }) => {
-    let uuid = extractUuid(data)
-    let record = metadata.records[uuid]
-    if(!record) return <Fa name="spinner" spin/>
-    return (
-      <span>{record.username}</span>
-    )
+  const recordsByUri = _.keyBy(metadata.records, 'uri')
+  let record = recordsByUri[rowData.contact]
+  if(!record) return <Fa name="spinner" spin/>
+  return (
+    <span>{record.username}</span>
+  )
 }
 
 const LocationsGrid = ({ locations, users }) => (

@@ -39,7 +39,7 @@ const Users = ({ records, fetching, apiErrors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/users">
-            <Fa name='industry'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
+            <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
