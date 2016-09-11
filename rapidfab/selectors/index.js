@@ -139,6 +139,7 @@ export const getPrinters = createSelector(
 export const getUploadModel = createSelector(
   [ getStateUploadModel ],
   uploadModel => uploadModel
+)
 
 export const getPrinterTypes = createSelector(
   [ getStatePrinterTypes, getStateResources ],
