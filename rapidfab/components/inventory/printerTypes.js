@@ -50,7 +50,7 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
           <BS.Breadcrumb.Item>
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/printer-type">
+          <BS.Breadcrumb.Item href="#/inventory/printer-types">
             <Fa name='print'/> <FormattedMessage id="inventory.printerTypes" defaultMessage='Printer Types'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>

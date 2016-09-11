@@ -20,8 +20,8 @@ const PrinterTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, pri
             <BS.Breadcrumb.Item>
               <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/printer-type">
-              <Fa name='print'/> <FormattedMessage id="inventory.printerType" defaultMessage='Printer Types'/>
+            <BS.Breadcrumb.Item href="#/inventory/printer-types">
+              <Fa name='print'/> <FormattedMessage id="inventory.printerTypes" defaultMessage='Printer Types'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
               <Fa name='print'/> {fields.id.value || <FormattedMessage id="record.printerType.new" defaultMessage='New Printer Type'/>}
