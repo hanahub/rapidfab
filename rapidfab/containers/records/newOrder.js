@@ -25,7 +25,7 @@ const fields = [
 ]
 
 class NewOrderContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.onInitialize(this.props.uuid)
   }
 
@@ -38,9 +38,7 @@ function mapDispatchToProps(dispatch, props) {
   return {
     onInitialize: uuid => {
       dispatch(Actions.Api.wyatt.material.list())
-      if(uuid) {
-        dispatch(Actions.Api.hoth.model.get(uuid))
-      }
+      dispatch(Actions.Api.wyatt.model.list())
     },
     onSubmit: payload => {
       payload.bureau = Config.BUREAU
