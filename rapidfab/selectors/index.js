@@ -168,9 +168,16 @@ export const getPrintersForRunNew = createSelector(
   [ getPrinters, getPrinterTypes ],
   (printers, printerTypes) => {
     if(printers.length && printerTypes.length) {
-      return _.map(printers, printer => _.assign({}, printer, {
-        printer_type: _.find(printerTypes, ['uri', printer.printer_type])
-      }))
+      return _.reduce(printers, (result, printer) => {
+        const printerType = _.find(printerTypes, ['uri', printer.printer_type])
+        if(printerType) {
+          let hydratedRecord = _.assign({}, printer, {
+            printer_type: printerType
+          })
+          result.push(hydratedRecord)
+        }
+        return result
+      }, [])
     }
     return []
   }
@@ -186,15 +193,15 @@ export const getOrdersForRunNew = createSelector(
         const model           = _.find(models, ['uri', order.model])
         const orderPrints     = _.filter(prints, ['order', order.uri])
         if(baseMaterial && model && orderPrints.length) {
-          let newOrder = _.assign({}, order, {
+          let hydratedRecord = _.assign({}, order, {
             materials: {
               base    : baseMaterial,
               support : supportMaterial
             },
             model
           })
-          newOrder.prints = _.map(orderPrints, print => _.assign({}, print, { order: newOrder }))
-          result.push(newOrder)
+          hydratedRecord.prints = _.map(orderPrints, print => _.assign({}, print, { order: hydratedRecord }))
+          result.push(hydratedRecord)
         }
         return result
       }, [])

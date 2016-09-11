@@ -20,7 +20,7 @@ const RunsGrid = ({ runs }) => (
     columnMeta={[{
       displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
       columnName: "id",
-      customComponent: IdColumn("order"),
+      customComponent: IdColumn("run"),
       locked: true
     }, {
       columnName: "status",
