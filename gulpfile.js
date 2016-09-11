@@ -30,7 +30,7 @@ gulp.task('publish', function() {
     bucket            : aws.bucket,
     region            : aws.region,
     distributionId    : options.cloudfront,
-    patternIndex      : /^\/index\.[a-f0-9]{20}\.html(\.gz)*$/gi
+    patternIndex      : new RegExp('index.' + process.env.BUILD_VERSION + '.html', 'gi')
   };
 
   return gulp.src(['dist/**'])
