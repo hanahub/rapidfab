@@ -11,7 +11,7 @@ module.exports = Object.assign(webpackConfig, {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].[hash].bundle.js',
+    filename: '[name].' + process.env.BUILD_VERSION + '.bundle.js',
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
@@ -19,7 +19,7 @@ module.exports = Object.assign(webpackConfig, {
       title: "Rapidfab",
       cache: true,
       template: "index.html",
-      filename: "index.[hash].html"
+      filename: 'index.' + process.env.BUILD_VERSION + '.html'
     }),
     new webpack.DefinePlugin({
       "process.env": {
