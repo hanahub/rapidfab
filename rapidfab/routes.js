@@ -9,6 +9,7 @@ import InventoryPostProcessors      from 'rapidfab/containers/inventory/postProc
 import InventoryPostProcessorTypes  from 'rapidfab/containers/inventory/postProcessorTypes'
 import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/thirdPartyProvider'
 import InventoryUsers               from 'rapidfab/containers/inventory/users'
+import InventoryPrinters            from 'rapidfab/containers/inventory/printers'
 
 import Orders                       from 'rapidfab/containers/plan/orders'
 import Runs                         from 'rapidfab/containers/plan/runs'
@@ -20,6 +21,7 @@ import Order                        from 'rapidfab/containers/records/order'
 import Location                     from 'rapidfab/containers/records/location'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
 import Material                     from 'rapidfab/containers/records/material'
+import Printer                      from 'rapidfab/containers/records/printer'
 import PostProcessor                from 'rapidfab/containers/records/postProcessor'
 import PostProcessorType            from 'rapidfab/containers/records/postProcessorType'
 import Stock                        from 'rapidfab/containers/records/stock'
@@ -39,6 +41,7 @@ const Routes = {
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
   "/inventory/third-party-provider"      : InventoryThirdPartyProvider,
   "/inventory/users"                     : InventoryUsers,
+  "/inventory/printers"                  : InventoryPrinters,
 
   "/plan/orders"                         : Orders,
   "/plan/runs"                           : Runs,
@@ -53,6 +56,8 @@ const Routes = {
   "/records/manufacturer/:uuid"          : Manufacturer,
   "/records/material"                    : Material,
   "/records/material/:uuid"              : Material,
+  "/records/printer"                     : Printer,
+  "/records/printer/:uuid"               : Printer,
   "/records/post-processor"              : PostProcessor,
   "/records/post-processor/:uuid"        : PostProcessor,
   "/records/post-processor-type"         : PostProcessorType,
