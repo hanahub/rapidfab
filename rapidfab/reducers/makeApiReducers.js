@@ -5,7 +5,7 @@ export function extractUuid(uri) {
   let keys = [];
   let pattern = PathToRegexp(`:protocol//:domain/:resource/:uuid/`, keys);
   let match = pattern.exec(uri);
-  if(!match.length) {
+  if(!match || !match.length || match.length !== 5) {
     throw new Error(`Could not extract uuid from uri: ${uri}`)
   }
   return match[match.length - 1]

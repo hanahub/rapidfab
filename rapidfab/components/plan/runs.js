@@ -14,7 +14,6 @@ const RunsGrid = ({ runs }) => (
     data={runs}
     columns={[
       "id",
-      "name",
       "status",
       "created"
     ]}
@@ -23,9 +22,6 @@ const RunsGrid = ({ runs }) => (
       columnName: "id",
       customComponent: IdColumn("order"),
       locked: true
-    }, {
-      columnName: "name",
-      displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
     }, {
       columnName: "status",
       displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
