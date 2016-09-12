@@ -31,7 +31,7 @@ const Loading = () => (
 )
 
 const Users = ({ records, fetching, apiErrors }) => (
-  <BS.Grid>
+  <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
