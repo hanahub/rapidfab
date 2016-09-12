@@ -68,9 +68,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function getSnapshotFromOrder(order, models) {
-  if(!order || models.length) return ''
-  const model_uuid = extractUuid(order.model)
-  return Object.keys(models).includes(model_uuid) ? models[model_uuid].snapshot_content : ''
+  if(!order || models.length === 0) return ''
+  const model = models.filter(model => model.uri === order.model)
+  return !!model ? model[0].snapshot_content : ''
 }
 
 function mapStateToProps(state, props) {
@@ -86,6 +86,7 @@ function mapStateToProps(state, props) {
 
   const models          = Selectors.getModels(state)
   const orderResource   = Selectors.getRouteResource(state, props)
+  const snapshot        = getSnapshotFromOrder(orderResource, models)
 
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
@@ -93,10 +94,10 @@ function mapStateToProps(state, props) {
     materials       : Selectors.getMaterials(state),
     submitting      : Selectors.getResourceFetching(state, "pao.users") || material.list.fetching || model.list.fetching || print.list.fetching,
     apiErrors       : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
-    snapshot        : getSnapshotFromOrder(orderResource, models),
     prints          : Selectors.getPrints(state),
     models,
-    order
+    order,
+    snapshot,
   }
 }
 

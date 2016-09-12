@@ -64,7 +64,10 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
 
       <BS.Row>
         <BS.Col xs={4}>
-          <BS.Thumbnail src={snapshot} responsive/>
+          {snapshot ?
+            <BS.Thumbnail src={snapshot} responsive/> :
+              <Fa name="spinner" spin/>
+          }
         </BS.Col>
         <BS.Col xs={8}>
           <OrderForm fields={fields} materials={materials} models={models}/>
