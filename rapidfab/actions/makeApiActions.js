@@ -48,6 +48,7 @@ function makeList(api, host, resource) {
       Constants.RESOURCE_LIST_SUCCESS,
       Constants.RESOURCE_LIST_FAILURE,
     ],
+    shouldCallAPI: state => !state.ui[host][resource][method.toLowerCase()].count,
     callApi: () => api[host][resource].list(filters),
   })
 }

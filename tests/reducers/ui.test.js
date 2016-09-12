@@ -24,7 +24,8 @@ describe('ui', function(){
         payload     : null,
         uuid        : null,
         filters     : null,
-        errors      : []
+        errors      : [],
+        count       : 0
       }
       let expected = _.reduce(Api.RESOURCES, function(result, resources, host) {
         result[host] = {}
@@ -64,6 +65,7 @@ describe('ui', function(){
           uuid: action.uuid,
           filters: action.filters,
           errors: [],
+          count: 1
         }
         expect(results).to.eql(expected)
       })
@@ -89,6 +91,7 @@ describe('ui', function(){
           uuid: action.uuid,
           filters: action.filters,
           errors: [],
+          count: 0
         }
         let results = Reducer.default(expected, action)
         expected.hoth.model[method.toLowerCase()] = {
@@ -97,6 +100,7 @@ describe('ui', function(){
           uuid: action.uuid,
           filters: action.filters,
           errors: [],
+          count: 1
         }
         expect(results).to.eql(expected)
       })
@@ -123,6 +127,7 @@ describe('ui', function(){
           uuid: action.uuid,
           filters: action.filters,
           errors: [],
+          count: 0
         }
         let results = Reducer.default(expected, action)
         expected.hoth.model[method.toLowerCase()] = {
@@ -131,6 +136,7 @@ describe('ui', function(){
           uuid: action.uuid,
           filters: action.filters,
           errors: action.errors,
+          count: 1
         }
         expect(results).to.eql(expected)
       })

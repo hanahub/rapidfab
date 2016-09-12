@@ -8,7 +8,8 @@ const initialMethodState = {
   payload     : null,
   uuid        : null,
   filters     : null,
-  errors      : []
+  count       : 0,
+  errors      : [],
 }
 
 export const initialState = _.reduce(RESOURCES, (result, hostResources, host) => {
@@ -58,7 +59,8 @@ function reduceMethod(state, action) {
           payload,
           uuid,
           filters,
-          errors
+          errors,
+          count       : state.count + 1,
       }
     case Constants.RESOURCE_POST_SUCCESS:
     case Constants.RESOURCE_PUT_SUCCESS:
@@ -75,7 +77,8 @@ function reduceMethod(state, action) {
           payload,
           uuid,
           filters,
-          errors
+          errors,
+          count       : state.count + 1,
       }
     default:
       return state
