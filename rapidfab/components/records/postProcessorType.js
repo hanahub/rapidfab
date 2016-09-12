@@ -62,7 +62,7 @@ const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelet
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDescription">
             <BS.ControlLabel><FormattedMessage id="field.description" defaultMessage='Description'/>:</BS.ControlLabel>
-            <BS.FormControl name="description" type="text" required {...fields.description}/>
+            <BS.FormControl name="description" type="text" {...fields.description}/>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxMaterials">
             <BS.ControlLabel><FormattedMessage id="field.materials" defaultMessage='Materials'/>:</BS.ControlLabel>
