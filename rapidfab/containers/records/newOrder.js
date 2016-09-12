@@ -15,7 +15,6 @@ const fields = [
   'uri',
   'uuid',
   'address',
-  'created',
   'materials.base',
   'materials.support',
   'model',
