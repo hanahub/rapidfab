@@ -7,7 +7,6 @@ import InventoryMaterials           from 'rapidfab/containers/inventory/material
 import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
 import InventoryPostProcessors      from 'rapidfab/containers/inventory/postProcessors'
 import InventoryPostProcessorTypes  from 'rapidfab/containers/inventory/postProcessorTypes'
-import InventoryThirdPartyProvider  from 'rapidfab/components/inventory/thirdPartyProvider'
 import InventoryUsers               from 'rapidfab/containers/inventory/users'
 import InventoryPrinters            from 'rapidfab/containers/inventory/printers'
 import InventoryPrinterTypes        from 'rapidfab/containers/inventory/printerTypes'
@@ -41,7 +40,6 @@ const Routes = {
   "/inventory/manufacturers"             : InventoryManufacturers,
   "/inventory/post-processors"           : InventoryPostProcessors,
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
-  "/inventory/third-party-provider"      : InventoryThirdPartyProvider,
   "/inventory/users"                     : InventoryUsers,
   "/inventory/printers"                  : InventoryPrinters,
   "/inventory/printer-types"             : InventoryPrinterTypes,
