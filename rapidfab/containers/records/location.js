@@ -30,7 +30,9 @@ class LocationContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
-      dispatch(Actions.Api.pao.users.list())
+      dispatch(Actions.Api.pao.users.list({
+        group: Config.group
+      }))
       if(uuid) {
         dispatch(Actions.Api.wyatt.location.get(uuid))
       }

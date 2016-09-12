@@ -4,6 +4,7 @@ import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import LocationsComponent       from 'rapidfab/components/inventory/locations'
 import * as Selectors           from 'rapidfab/selectors'
+import Config                   from 'rapidfab/config'
 
 class LocationsContainer extends Component {
   componentDidMount() {
@@ -18,7 +19,9 @@ class LocationsContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
-      dispatch(Actions.Api.pao.users.list())
+      dispatch(Actions.Api.pao.users.list({
+        group: Config.group
+      }))
       dispatch(Actions.Api.wyatt.location.list())
     }
   }

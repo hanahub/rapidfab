@@ -4,6 +4,7 @@ import Actions                  from 'rapidfab/actions'
 import { connect }              from 'react-redux'
 import UsersComponent           from 'rapidfab/components/inventory/users'
 import * as Selectors           from 'rapidfab/selectors'
+import Config                   from 'rapidfab/config'
 
 
 class UsersContainer extends Component {
@@ -19,7 +20,9 @@ class UsersContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
-      dispatch(Actions.Api.pao.users.list())
+      dispatch(Actions.Api.pao.users.list({
+        group: Config.group
+      }))
     }
   }
 }
