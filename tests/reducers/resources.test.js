@@ -157,6 +157,13 @@ describe('resources', function(){
     })
 
     it('reduces RESOURCE_LIST_SUCCESS', function(){
+      const uuid1 = Uuid.v4()
+      const record1 = {
+        uuid  : uuid1,
+        id    : uuid.substr(uuid1.length - 6),
+        uri   : `https://rapidfab.auth.dev/user/${uuid1}`,
+        name
+      }
       const action = {
         type: "RESOURCE_LIST_SUCCESS",
         json: {
@@ -166,9 +173,13 @@ describe('resources', function(){
           }]
         }
       }
-      const results = Reducer.default({}, action)
+      const initialState = {
+        [uuid1]: record1
+      }
+      const results = Reducer.default(initialState, action)
       const expected = {
-        [uuid]: {
+        [uuid1] : record1,
+        [uuid]  : {
           id,
           uuid,
           uri,
