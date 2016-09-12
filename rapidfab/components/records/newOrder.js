@@ -83,8 +83,8 @@ const NewOrder = ({ fields, handleSubmit, load, submitting, onDelete, materials,
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.Button id="uxSave" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} disabled={uploadModel.percent > 0 ? true : false} pullRight>
-                Save
+              <BS.Button id="uxSave" type="submit" bsStyle="success" bsSize="small" disabled={uploadModel.percent > 0 ? true : false} pullRight>
+                <SaveButtonTitle />
               </BS.Button>
             </BS.ButtonToolbar>
           </BS.Col>
