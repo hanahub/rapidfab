@@ -19,7 +19,7 @@ const SaveButtonTitle = () => (
 
 const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
-    <BS.Grid>
+    <BS.Grid fluid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>

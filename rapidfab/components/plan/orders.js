@@ -20,7 +20,7 @@ const Loading = () => (
 )
 
 const Orders = ({ orders, materials, fetching, apiErrors }) => (
-  <BS.Grid>
+  <BS.Grid fluid>
 
     <BS.Row>
       <BS.Col xs={12}>

@@ -13,7 +13,7 @@ const SaveButtonTitle = ({  }) => (
 
 const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
-    <BS.Grid>
+    <BS.Grid fluid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>

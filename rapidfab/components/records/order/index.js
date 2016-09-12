@@ -16,7 +16,7 @@ const SaveButtonTitle = ({ uri, uuid, record }) => (
 
 const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, prints, apiErrors, snapshot }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
-    <BS.Grid>
+    <BS.Grid fluid>
 
       <BS.Row>
         <BS.Col xs={12}>

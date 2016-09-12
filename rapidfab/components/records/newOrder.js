@@ -74,7 +74,7 @@ const NewOrder = ({ fields, handleSubmit, load, submitting, onDelete, materials,
   <div>
     <BreadCrumbs fields={fields} />
     <form onSubmit={handleSubmit}>
-      <BS.Grid>
+      <BS.Grid fluid>
         <BS.Row>
           <BS.Col xs={6}>
             <BS.Button href="#/inventory/orders" bsSize="small">
