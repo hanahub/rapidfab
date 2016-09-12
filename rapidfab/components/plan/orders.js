@@ -31,7 +31,7 @@ const Orders = ({ orders, materials }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/order" className="pull-right">
+        <BS.Button bsStyle="primary" bsSize="small" href="#/records/order/new" className="pull-right">
           <Fa name='plus'/> <FormattedMessage id="record.order.add" defaultMessage='Add Order'/>
         </BS.Button>
       </BS.Col>
