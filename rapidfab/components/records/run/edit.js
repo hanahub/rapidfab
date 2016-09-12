@@ -137,7 +137,7 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
             <BS.Col xs={9}>
               <BS.FormControl componentClass="select" required {...fields.status}>
                 <option value="" disabled>Select a Status</option>
-                {statuses.map(status => (<option key={status} value={status}>{status}</option>))}
+                {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
               </BS.FormControl>
             </BS.Col>
           </BS.FormGroup>
