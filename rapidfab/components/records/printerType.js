@@ -63,7 +63,7 @@ const PrinterTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, pri
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDescription">
             <BS.ControlLabel><FormattedMessage id="field.description" defaultMessage='Description'/>:</BS.ControlLabel>
-            <BS.FormControl componentClass="textarea" required {...fields.description}/>
+            <BS.FormControl componentClass="textarea" {...fields.description}/>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxBuildVolumeX">
             <BS.ControlLabel><FormattedMessage id="field.buildVolumeX" defaultMessage='Build Volume X'/>:</BS.ControlLabel>
