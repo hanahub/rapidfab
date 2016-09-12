@@ -35,7 +35,7 @@ function mapStateToProps(state) {
     orders        : Selectors.getOrders(state),
     materials     : Selectors.getMaterials(state),
     fetching      : material.list.fetching || order.list.fetching,
-    errors        : _.concat(order.list.errors, material.list.errors)
+    apiErrors     : _.concat(order.list.errors, material.list.errors)
   }
 }
 
