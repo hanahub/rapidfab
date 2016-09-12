@@ -28,10 +28,11 @@ function mapStateToProps(state) {
   } = state.ui.wyatt
 
   return {
-    locations : Selectors.getLocations(state),
-    users     : Selectors.getUsers(state),
-    fetching  : manufacturer.list.fetching,
-    apiErrors : manufacturer.list.errors
+    locations     : Selectors.getLocations(state),
+    manufacturers : Selectors.getManufacturers(state),
+    users         : Selectors.getUsers(state),
+    fetching      : manufacturer.list.fetching,
+    apiErrors     : manufacturer.list.errors
   }
 }
 

@@ -50,7 +50,7 @@ const Loading = () => (
   </div>
 )
 
-const Manufacturers = ({ records, fetching, apiErrors }) => (
+const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
@@ -83,7 +83,7 @@ const Manufacturers = ({ records, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading/> : <ManufacturersGrid records={records}/>}
+        {fetching ? <Loading/> : <ManufacturersGrid records={manufacturers}/>}
       </BS.Col>
     </BS.Row>
 
