@@ -2,6 +2,7 @@ import React, { PropTypes }                   from "react";
 import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
+import Error                                  from 'rapidfab/components/error'
 import Grid, {
   IdColumn,
   NumberColumn,
@@ -12,8 +13,13 @@ import Grid, {
   VolumeColumn
 } from 'rapidfab/components/grid';
 
+const Loading = () => (
+  <div style={{ textAlign: "center" }}>
+    <Fa name="spinner" spin size='2x' />
+  </div>
+)
 
-const Orders = ({ orders, materials }) => (
+const Orders = ({ orders, materials, fetching, apiErrors }) => (
   <BS.Grid>
 
     <BS.Row>
@@ -41,36 +47,45 @@ const Orders = ({ orders, materials }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <Grid
-          data={orders}
-          columns={[
-            "id",
-            "name",
-            "quantity",
-            "created"
-          ]}
-          columnMeta={[{
-            displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
-            columnName: "id",
-            customComponent: IdColumn("order"),
-            locked: true
-          }, {
-            customComponent: ImageColumn,
-            columnName: "snapshot",
-            displayName: <FormattedMessage id="field.preview" defaultMessage='Preview'/>
-          }, {
-            columnName: "name",
-            displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
-          }, {
-            customComponent: NumberColumn,
-            columnName: "quantity",
-            displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
-          }, {
-            customComponent: DateColumn,
-            columnName: "created",
-            displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
-          }]}
-        />
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
+
+
+    <BS.Row>
+      <BS.Col xs={12}>
+        {fetching ? <Loading /> :
+          <Grid
+            data={orders}
+            columns={[
+              "id",
+              "name",
+              "quantity",
+              "created"
+            ]}
+            columnMeta={[{
+              displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
+              columnName: "id",
+              customComponent: IdColumn("order"),
+              locked: true
+            }, {
+              customComponent: ImageColumn,
+              columnName: "snapshot",
+              displayName: <FormattedMessage id="field.preview" defaultMessage='Preview'/>
+            }, {
+              columnName: "name",
+              displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
+            }, {
+              customComponent: NumberColumn,
+              columnName: "quantity",
+              displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
+            }, {
+              customComponent: DateColumn,
+              columnName: "created",
+              displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
+            }]}
+          />
+        }
       </BS.Col>
     </BS.Row>
 
