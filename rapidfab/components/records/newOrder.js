@@ -62,15 +62,6 @@ const NewOrderForm = ({ fields, materials, model }) => (
         <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
         <BS.FormControl type="number" required {...fields.quantity}/>
       </BS.FormGroup>
-      <BS.FormGroup controlId="uxCreated">
-        <BS.ControlLabel><FormattedMessage id="field.created" defaultMessage='Created'/>:</BS.ControlLabel>
-        <BS.FormControl.Static>
-          {fields.created.value ?
-            <FormattedDate value={fields.created.value}/> :
-              (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
-          }
-        </BS.FormControl.Static>
-      </BS.FormGroup>
       <BS.FormGroup controlId="uxModel">
         <BS.ControlLabel><FormattedMessage id="field.model" defaultMessage='Model'/>:</BS.ControlLabel>
         <BS.FormControl type="file" {...fields.model} value={null} required />
