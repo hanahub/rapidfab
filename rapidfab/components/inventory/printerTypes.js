@@ -59,7 +59,7 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/printe-type" className="pull-right">
+        <BS.Button bsStyle="primary" bsSize="small" href="#/records/printer-type" className="pull-right">
           <Fa name='plus'/> <FormattedMessage id="record.printerType.add" defaultMessage='Add Printer Type'/>
         </BS.Button>
       </BS.Col>

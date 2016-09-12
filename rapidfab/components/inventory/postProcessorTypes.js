@@ -40,7 +40,7 @@ const Loading = () => (
 )
 
 const PostProcessorTypes = ({ postProcessorTypes, fetching, apiErrors, manufacturers, materials }) => (
-  <BS.Grid>
+  <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>

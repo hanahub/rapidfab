@@ -14,7 +14,6 @@ import InventoryPrinterTypes        from 'rapidfab/containers/inventory/printerT
 
 import Orders                       from 'rapidfab/containers/plan/orders'
 import Runs                         from 'rapidfab/containers/plan/runs'
-import PrintQueues                  from 'rapidfab/containers/plan/printQueues'
 
 import Queues                       from 'rapidfab/containers/work/queues'
 

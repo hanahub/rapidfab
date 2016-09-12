@@ -51,7 +51,7 @@ const Loading = () => (
 )
 
 const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
-  <BS.Grid>
+  <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
