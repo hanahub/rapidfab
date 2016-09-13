@@ -31,12 +31,20 @@ class RunContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
-      dispatch(Actions.Api.wyatt.printer.list())
       dispatch(Actions.Api.wyatt['printer-type'].list())
-      dispatch(Actions.Api.wyatt.print.list())
-      dispatch(Actions.Api.wyatt.order.list())
+      dispatch(Actions.Api.wyatt.printer.list())
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
+      dispatch(Actions.Api.wyatt.order.list()).then(args => {
+        for(let orders of _.chunk(args.json.resources, 5)) {
+          dispatch(Actions.Api.wyatt.print.list({
+            order: _.map(orders, 'uri')
+          }))
+          // TODO: Chunk action calls for model list once it supports
+          // filters.  Its faster to just run it once since it doesnt
+          // support filters
+        }
+      })
     },
     onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(
       () => window.location.hash = "#/plan/runs"
