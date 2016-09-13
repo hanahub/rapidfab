@@ -44,8 +44,8 @@ function mapDispatchToProps(dispatch, props) {
       let modelPayload = {"name" : payload.name}
       dispatch(Actions.Api.hoth.model.post(modelPayload))
       .then( args => {
-        payload.model = args.headers.location;
         dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
+        payload.model = args.headers.location;
         dispatch(Actions.Api.wyatt.order.post(payload))
       })
     },
