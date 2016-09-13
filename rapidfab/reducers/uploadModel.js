@@ -12,16 +12,6 @@ function upload(state = {
         isFetching: true,
         uxErrors: [],
       });
-    case Constants.UPLOAD_MODEL_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        uxErrors: [],
-      });
-    case Constants.UPLOAD_MODEL_FAILURE:
-      return Object.assign({}, state, {
-        isFetching: false,
-        uxErrors: [action.errors],
-      });
     case Constants.UPLOAD_PROGRESS:
       return Object.assign({}, state, {
         isFetching: false,
