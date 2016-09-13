@@ -20,7 +20,8 @@ export const RESOURCES = {
     'print',
     'printer',
     'printer-type',
-    'run'
+    'run',
+    'third-party',
   ]
 }
 
