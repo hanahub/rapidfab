@@ -14,45 +14,80 @@ const SaveButtonTitle = ({ uri, uuid, record }) => (
   </span>
 )
 
-const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, models, prints, apiErrors, snapshot }) => (
-  <BS.Form horizontal onSubmit={handleSubmit}>
-    <BS.Grid fluid>
+const Navigation = ({ fields, onDelete }) => (
+  <div>
+    <BS.Row>
+      <BS.Col xs={12}>
+        <BS.Breadcrumb>
+          <BS.Breadcrumb.Item>
+            <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
+          </BS.Breadcrumb.Item>
+          <BS.Breadcrumb.Item href="#/plan/orders">
+            <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
+          </BS.Breadcrumb.Item>
+          <BS.Breadcrumb.Item>
+            <Fa name='file-o'/> {fields.id.value || <FormattedMessage id="records.newOrder" defaultMessage='New Order'/>}
+          </BS.Breadcrumb.Item>
+        </BS.Breadcrumb>
+      </BS.Col>
+    </BS.Row>
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.Breadcrumb>
-            <BS.Breadcrumb.Item>
-              <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/plan/orders">
-              <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item>
-              <Fa name='file-o'/> {fields.id.value || <FormattedMessage id="records.newOrder" defaultMessage='New Order'/>}
-            </BS.Breadcrumb.Item>
-          </BS.Breadcrumb>
-        </BS.Col>
-      </BS.Row>
-
-      <BS.Row>
-        <BS.Col xs={6}>
-          <BS.Button href="#/plan/orders" bsSize="small">
-            <Fa name='arrow-left'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
+    <BS.Row>
+      <BS.Col xs={6}>
+        <BS.Button href="#/plan/orders" bsSize="small">
+          <Fa name='arrow-left'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
+        </BS.Button>
+      </BS.Col>
+      <BS.Col xs={6}>
+        <BS.ButtonToolbar className="pull-right">
+          <BS.Button bsSize="small" bsStyle="info">
+            <Fa name='cloud-upload'/> <FormattedMessage id="button.upload" defaultMessage='Upload Model'/>
           </BS.Button>
-        </BS.Col>
-        <BS.Col xs={6}>
-          <BS.ButtonToolbar className="pull-right">
-            <BS.Button bsSize="small" bsStyle="info">
-              <Fa name='cloud-upload'/> <FormattedMessage id="button.upload" defaultMessage='Upload Model'/>
-            </BS.Button>
-            <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)}>
-                <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
-              </BS.MenuItem>
-            </BS.SplitButton>
-          </BS.ButtonToolbar>
-        </BS.Col>
-      </BS.Row>
+          <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+            <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)}>
+              <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
+            </BS.MenuItem>
+          </BS.SplitButton>
+        </BS.ButtonToolbar>
+      </BS.Col>
+    </BS.Row>
+  </div>
+)
+
+const Loader = () => (
+  <BS.Row>
+    <BS.Col xs={12}>
+      <Fa name="spinner" spin/>
+    </BS.Col>
+  </BS.Row>
+)
+
+const OrderContainer = ({ fields, materials, models, prints, snapshot, providers }) => (
+  <div>
+    <BS.Row>
+      <BS.Col xs={4}>
+        <BS.Thumbnail src={snapshot} responsive/>
+      </BS.Col>
+      <BS.Col xs={8}>
+        <OrderForm fields={fields} materials={materials} models={models} providers={providers}/>
+      </BS.Col>
+    </BS.Row>
+
+    <BS.Row>
+      <BS.Col xs={4}>
+        <OrderEstimates estimates={fields.estimates}/>
+      </BS.Col>
+      <BS.Col xs={8}>
+        <OrderPrints prints={prints}/>
+      </BS.Col>
+    </BS.Row>
+  </div>
+)
+
+const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, prints, apiErrors, snapshot, providers }) => (
+  <BS.Form horizontal onSubmit={handleSubmit}>
+    <BS.Grid fuild>
+      <Navigation fields={fields} onDelete={onDelete}/>
 
       <hr/>
 
@@ -62,26 +97,10 @@ const Order = ({ fields, handleSubmit, load, submitting, onDelete, materials, mo
         </BS.Col>
       </BS.Row>
 
-      <BS.Row>
-        <BS.Col xs={4}>
-          {snapshot ?
-            <BS.Thumbnail src={snapshot} responsive/> :
-              <Fa name="spinner" spin/>
-          }
-        </BS.Col>
-        <BS.Col xs={8}>
-          <OrderForm fields={fields} materials={materials} models={models}/>
-        </BS.Col>
-      </BS.Row>
-
-      <BS.Row>
-        <BS.Col xs={4}>
-          <OrderEstimates estimates={fields.estimates}/>
-        </BS.Col>
-        <BS.Col xs={8}>
-          <OrderPrints prints={prints}/>
-        </BS.Col>
-      </BS.Row>
+      {fetching ?
+        <Loader /> :
+        <OrderContainer fields={fields} materials={materials} models={models} prints={prints} snapshot={snapshot} providers={providers} />
+      }
 
     </BS.Grid>
   </BS.Form>
