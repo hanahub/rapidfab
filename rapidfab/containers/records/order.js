@@ -111,7 +111,7 @@ function mapStateToProps(state, props) {
     initialValues : orderResource,
     materials     : Selectors.getMaterials(state),
     apiErrors     : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
-    prints        : Selectors.getPrints(state),
+    prints        : Selectors.getPrintsForOrder(state, orderResource),
     providers     : Selectors.getThirdPartyProviders(state),
     models,
     order,
