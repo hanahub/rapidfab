@@ -14,13 +14,15 @@ const fields = [
   'id',
   'uri',
   'uuid',
-  'address',
+  'name',
+  'model',
+  'quantity',
   'materials.base',
   'materials.support',
-  'model',
-  'name',
-  'quantity',
+  'shipping.name',
   'shipping.address',
+  'shipping.tracking',
+  'third_party_provider',
 ]
 
 class NewOrderContainer extends Component {
@@ -37,10 +39,18 @@ function mapDispatchToProps(dispatch, props) {
   return {
     onInitialize: uuid => {
       dispatch(Actions.Api.wyatt.material.list())
-      dispatch(Actions.Api.wyatt.model.list())
+      dispatch(Actions.Api.hoth.model.list())
+      dispatch(Actions.Api.wyatt['third-party'].list())
     },
     onSubmit: payload => {
       payload.bureau = Config.BUREAU
+
+      if (false === !!payload.materials.support) delete payload.materials.support
+      if (false === !!payload.shipping.name) delete payload.shipping.name
+      if (false === !!payload.shipping.address) delete payload.shipping.address
+      if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
+      if (false === !!payload.third_party_provider) delete payload.third_party_provider
+
       let modelPayload = {"name" : payload.name}
       dispatch(Actions.Api.hoth.model.post(modelPayload))
       .then( args => {
@@ -68,18 +78,21 @@ function mapStateToProps(state, props) {
   const fetching =
     material.list.fetching ||
     uploadModel.fetching ||
-    order.post.fetching
+    order.post.fetching ||
+    state.ui.wyatt['third-party'].list.fetching
 
   const errors = _.concat(
     material.list.errors ||
     uploadModel.errors ||
-    order.post.errors
+    order.post.errors ||
+    state.ui.wyatt['third-party'].list.errors
   )
 
   return {
-    materials     : Selectors.getMaterials(state),
-    uploadModel   : Selectors.getUploadModel(state),
-    model         : Selectors.getModels(state),
+    materials   : Selectors.getMaterials(state),
+    uploadModel : Selectors.getUploadModel(state),
+    model       : Selectors.getModels(state),
+    providers   : Selectors.getThirdPartyProviders(state),
     fetching,
     errors
   }

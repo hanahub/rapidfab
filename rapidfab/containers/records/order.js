@@ -13,7 +13,7 @@ const fields = [
   'uri',
   'uuid',
   'name',
-  'bereau',
+  'bureau',
   'model',
   'materials.base',
   'materials.support',
@@ -23,7 +23,10 @@ const fields = [
   'estimates.cost.currency',
   'estimates.materials.base',
   'estimates.materials.support',
+  'shipping.name',
   'shipping.address',
+  'shipping.tracking',
+  'third_party_provider',
   'quantity',
   'created'
 ]
@@ -43,6 +46,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: props => {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
+      dispatch(Actions.Api.wyatt['third-party'].list())
       if(props.route.uuid) {
         dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
         dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
@@ -50,6 +54,12 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       delete payload.estimates
+      if (false === !!payload.materials.support) delete payload.materials.support
+      if (false === !!payload.shipping.name) delete payload.shipping.name
+      if (false === !!payload.shipping.address) delete payload.shipping.address
+      if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
+      if (false === !!payload.third_party_provider) delete payload.third_party_provider
+
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload)).then(
           () => window.location.hash = "#/plan/orders"
@@ -88,16 +98,25 @@ function mapStateToProps(state, props) {
   const orderResource   = Selectors.getRouteResource(state, props)
   const snapshot        = getSnapshotFromOrder(orderResource, models)
 
+  const fetching =
+    model.list.fetching ||
+    material.list.fetching ||
+    print.list.fetching ||
+    order.get.fetching ||
+    order.put.fetching ||
+    state.ui.wyatt['third-party'].list.fetching
+
   return {
-    uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : orderResource,
-    materials       : Selectors.getMaterials(state),
-    submitting      : Selectors.getResourceFetching(state, "pao.users") || material.list.fetching || model.list.fetching || print.list.fetching,
-    apiErrors       : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
-    prints          : Selectors.getPrints(state),
+    uuid          : Selectors.getRoute(state, props).uuid,
+    initialValues : orderResource,
+    materials     : Selectors.getMaterials(state),
+    apiErrors     : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
+    prints        : Selectors.getPrints(state),
+    providers     : Selectors.getThirdPartyProviders(state),
     models,
     order,
     snapshot,
+    fetching,
   }
 }
 

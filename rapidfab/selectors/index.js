@@ -21,6 +21,7 @@ export const getStatePrints              = state => state.api.wyatt.print
 export const getStatePrinters            = state => state.api.wyatt.printer
 export const getStatePrinterTypes        = state => state.api.wyatt['printer-type']
 export const getStateRuns                = state => state.api.wyatt.run
+export const getStateThirdPartyProviders = state => state.api.wyatt['third-party']
 export const getStateUploadModel         = state => state.uploadModel
 
 export const getResourceByUuid = createSelector(
@@ -208,4 +209,9 @@ export const getOrdersForRunNew = createSelector(
     }
     return []
   }
+)
+
+export const getThirdPartyProviders = createSelector(
+  [ getStateThirdPartyProviders, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
