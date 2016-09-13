@@ -14,7 +14,7 @@ export function filtersToQuery(filters) {
     let values = filters[key];
     if(!values) continue;
     if(typeof values === "Array") values = values.join(',');
-    formatted.push(`filter[${key}]=${values}`);
+    formatted.push(`filter[${key}]=${encodeURIComponent(values)}`);
   }
   if(!formatted.length) return;
   return formatted.join('&');
