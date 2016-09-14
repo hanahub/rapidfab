@@ -68,23 +68,23 @@ const NewOrderForm = ({ fields, materials, model, providers }) => (
       </BS.FormGroup>
 
       <BS.FormGroup controlId="uxShippingName">
-        <BS.ControlLabel><FormattedMessage id="field.shipping_name" defaultMessage='Shipping Name'/>:</BS.ControlLabel>
+        <BS.ControlLabel><FormattedMessage id="field.shippingName" defaultMessage='Shipping Name'/>:</BS.ControlLabel>
         <BS.FormControl type="text" {...fields.shipping.name}/>
       </BS.FormGroup>
 
       <BS.FormGroup controlId="uxShippingAddress">
-        <BS.ControlLabel><FormattedMessage id="field.shipping_address" defaultMessage='Shipping Address'/>:</BS.ControlLabel>
+        <BS.ControlLabel><FormattedMessage id="field.shippingAddress" defaultMessage='Shipping Address'/>:</BS.ControlLabel>
         <BS.FormControl type="text" {...fields.shipping.address}/>
       </BS.FormGroup>
 
       <BS.FormGroup controlId="uxTrackingNumber">
-        <BS.ControlLabel><FormattedMessage id="field.tracking_number" defaultMessage='Tracking Number'/>:</BS.ControlLabel>
+        <BS.ControlLabel><FormattedMessage id="field.trackingNumber" defaultMessage='Tracking Number'/>:</BS.ControlLabel>
         <BS.FormControl type="text" {...fields.shipping.tracking}/>
       </BS.FormGroup>
 
       <BS.FormGroup controlId="uxThirdPartyProvider">
-        <BS.ControlLabel><FormattedMessage id="field.third_party_provider" defaultMessage='Third Party Provider'/>:</BS.ControlLabel>
-        <BS.FormControl componentClass="select" {...fields.third_party_provider}>
+        <BS.ControlLabel><FormattedMessage id="field.thirdPartyProvider" defaultMessage='Third Party Provider'/>:</BS.ControlLabel>
+        <BS.FormControl componentClass="select" {...fields.thirdPartyProvider}>
           <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
           {_.map(providers, provider => (
             <option key={provider.uri} value={provider.uri}>{provider.name}</option>
