@@ -157,7 +157,7 @@ export const getPrintsForOrder = createSelector(
   (order, uuids, resources) => {
     const prints = _.reduce(uuids, (results, uuid) => {
       const print = resources[uuid];
-      if(print && print.order == order.uri) {
+      if(print && order && print.order == order.uri) {
         results.push(print);
       }
       return results;
