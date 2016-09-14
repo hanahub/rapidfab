@@ -29,7 +29,8 @@ const Constants = [
   'UPLOAD_PROGRESS',
   'UPLOAD_MODEL',
   'UPLOAD_MODEL_FAILURE',
-  'UPLOAD_MODEL_SUCCESS'
+  'UPLOAD_MODEL_SUCCESS',
+  'SET_PAGE',
 ]
 
 export default make_constants(Constants)

@@ -103,7 +103,8 @@ class Runs extends Component {
       orders,
       apiErrors,
       fetching,
-      prints
+      prints,
+      pager,
     } = this.props
 
     const {
@@ -173,6 +174,8 @@ class Runs extends Component {
                     selected={selectedPrints}
                     onSelect={this.handleSelectPrint}
                     onActivate={this.handleActivatePrints}
+                    pager={pager}
+                    onPageChange={this.props.onPageChange}
                     orders={orders}
                   />
                 </BS.Col>
