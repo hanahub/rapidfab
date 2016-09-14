@@ -45,7 +45,7 @@ const ThirdPartyProvider = ({ fields, handleSubmit, submitting, onDelete, apiErr
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/third-party-providers">
-              <Fa name='map-marker'/> <FormattedMessage id="inventory.third_party_providers" defaultMessage='Third Party Providers'/>
+              <Fa name='map-marker'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
               <Fa name='map-marker'/> {fields.id.value || <FormattedMessage id="record.newThirdPartyProvider" defaultMessage='New Third Party Provider'/>}
@@ -57,7 +57,7 @@ const ThirdPartyProvider = ({ fields, handleSubmit, submitting, onDelete, apiErr
       <BS.Row>
         <BS.Col xs={6}>
           <BS.Button href="#/inventory/third-party-providers" bsSize="small">
-            <Fa name='arrow-left'/> <FormattedMessage id="inventory.third_party_providers" defaultMessage='Third Party PRoviders'/>
+            <Fa name='arrow-left'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party PRoviders'/>
           </BS.Button>
         </BS.Col>
         <BS.Col xs={6}>
