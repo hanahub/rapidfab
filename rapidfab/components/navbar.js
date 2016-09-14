@@ -47,7 +47,7 @@ class Navbar extends Component {
               <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={1.2} href="#/plan/runs">
-              <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
+              <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={1.4} href="#/plan/post-processing" style={{ display: "none" }}>
               <Fa name='flask'/> <FormattedMessage id="plan.postProcessing" defaultMessage='Post Processing'/>
@@ -96,7 +96,7 @@ class Navbar extends Component {
               <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.10} href="#/inventory/third-party-providers">
-              <Fa name='map-marker'/> <FormattedMessage id="inventory.third_party_providers" defaultMessage='Third Party Providers'/>
+              <Fa name='map-marker'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.11} href="#/inventory/users">
               <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>

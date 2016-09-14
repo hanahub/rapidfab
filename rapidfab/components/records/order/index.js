@@ -26,7 +26,7 @@ const Navigation = ({ fields, onDelete }) => (
             <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item>
-            <Fa name='file-o'/> {fields.id.value || <FormattedMessage id="records.newOrder" defaultMessage='New Order'/>}
+            <Fa name='file-o'/> {fields.id.value || <FormattedMessage id="record.order.new" defaultMessage='New Order'/>}
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -66,7 +66,7 @@ const OrderContainer = ({ fields, materials, models, prints, snapshot, providers
   <div>
     <BS.Row>
       <BS.Col xs={4}>
-        <BS.Thumbnail src={snapshot} responsive/>
+        <BS.Thumbnail src={snapshot} />
       </BS.Col>
       <BS.Col xs={8}>
         <OrderForm fields={fields} materials={materials} models={models} providers={providers}/>
@@ -86,7 +86,7 @@ const OrderContainer = ({ fields, materials, models, prints, snapshot, providers
 
 const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, prints, apiErrors, snapshot, providers }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
-    <BS.Grid fuild>
+    <BS.Grid fluid>
       <Navigation fields={fields} onDelete={onDelete}/>
 
       <hr/>
