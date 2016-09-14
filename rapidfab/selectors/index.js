@@ -152,6 +152,21 @@ export const getPrints = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
+export const getPrintsForOrder = createSelector(
+  [ getPredicate, getStatePrints, getStateResources ],
+  (order, uuids, resources) => {
+    const prints = _.reduce(uuids, (results, uuid) => {
+      const print = resources[uuid];
+      if(print && print.order == order.uri) {
+        results.push(print);
+      }
+      return results;
+    }, []);
+    return prints;
+  }
+);
+
+
 export const getPrintsCreated = createSelector(
   [ getStatePrints, getStateResources ],
   (uuids, resources) => {

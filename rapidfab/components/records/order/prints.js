@@ -1,3 +1,4 @@
+import _                                                      from 'lodash';
 import React, { PropTypes }                                   from "react";
 import * as BS                                                from 'react-bootstrap';
 import Fa                                                     from 'react-fontawesome';
@@ -6,8 +7,16 @@ import {
 } from 'rapidfab/i18n';
 import Grid, { IdColumn }     from 'rapidfab/components/grid'
 
+const Header = ( prints ) => {
+  const complete = (_.reduce(prints, (total, print) => print.status == 'complete' ? total + 1 : total, 0)).toString();
+  const total = (!!prints ? prints.length : 0).toString();
+  return (
+    <FormattedMessage id="prints" defaultMessage={`Prints - {complete} / {total} complete`} values={{complete: complete, total: total}}/>
+  )
+}
+
 const OrderPrints = ({ prints }) => (
-  <BS.Panel header={<FormattedMessage id="prints" defaultMessage='Prints'/>} bsStyle="primary">
+  <BS.Panel header={Header(prints)} bsStyle="primary">
     <Grid
       data={prints}
       columns={[
