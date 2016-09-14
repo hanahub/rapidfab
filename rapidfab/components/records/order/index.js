@@ -86,7 +86,7 @@ const OrderContainer = ({ fields, materials, models, prints, snapshot, providers
 
 const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, prints, apiErrors, snapshot, providers }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
-    <BS.Grid fuild>
+    <BS.Grid fluid>
       <Navigation fields={fields} onDelete={onDelete}/>
 
       <hr/>
