@@ -95,7 +95,10 @@ class Navbar extends Component {
             <BS.MenuItem eventKey={3.9} href="#/inventory/locations">
               <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.10} href="#/inventory/users">
+            <BS.MenuItem eventKey={3.10} href="#/inventory/third-party-providers">
+              <Fa name='map-marker'/> <FormattedMessage id="inventory.third_party_providers" defaultMessage='Third Party Providers'/>
+            </BS.MenuItem>
+            <BS.MenuItem eventKey={3.11} href="#/inventory/users">
               <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
             </BS.MenuItem>
           </BS.NavDropdown>

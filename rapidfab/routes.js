@@ -8,6 +8,7 @@ import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
 import InventoryPostProcessors      from 'rapidfab/containers/inventory/postProcessors'
 import InventoryPostProcessorTypes  from 'rapidfab/containers/inventory/postProcessorTypes'
 import InventoryUsers               from 'rapidfab/containers/inventory/users'
+import InventoryThirdPartyProviders from 'rapidfab/containers/inventory/thirdPartyProviders'
 import InventoryPrinters            from 'rapidfab/containers/inventory/printers'
 import InventoryPrinterTypes        from 'rapidfab/containers/inventory/printerTypes'
 
@@ -19,6 +20,7 @@ import Queues                       from 'rapidfab/containers/work/queues'
 import Order                        from 'rapidfab/containers/records/order'
 import NewOrder                     from 'rapidfab/containers/records/newOrder'
 import Location                     from 'rapidfab/containers/records/location'
+import ThirdPartyProvider           from 'rapidfab/containers/records/thirdPartyProvider'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
 import Material                     from 'rapidfab/containers/records/material'
 import Printer                      from 'rapidfab/containers/records/printer'
@@ -41,6 +43,7 @@ const Routes = {
   "/inventory/post-processors"           : InventoryPostProcessors,
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
   "/inventory/users"                     : InventoryUsers,
+  "/inventory/third-party-providers"     : InventoryThirdPartyProviders,
   "/inventory/printers"                  : InventoryPrinters,
   "/inventory/printer-types"             : InventoryPrinterTypes,
 
@@ -54,6 +57,8 @@ const Routes = {
   "/records/order/new"                   : NewOrder,
   "/records/location"                    : Location,
   "/records/location/:uuid"              : Location,
+  "/records/third-party-provider"        : ThirdPartyProvider,
+  "/records/third-party-provider/:uuid"  : ThirdPartyProvider,
   "/records/manufacturer"                : Manufacturer,
   "/records/manufacturer/:uuid"          : Manufacturer,
   "/records/material"                    : Material,
