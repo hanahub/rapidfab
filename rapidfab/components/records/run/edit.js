@@ -17,6 +17,16 @@ const SaveButtonTitle = () => (
   </span>
 )
 
+const FormRow = ({id, defaultMessage, children, controlId}) => (
+  <BS.FormGroup controlId={controlId}>
+    <BS.Col xs={3}>
+      <BS.ControlLabel><FormattedMessage id={id} defaultMessage={defaultMessage}/>:</BS.ControlLabel>
+    </BS.Col>
+    <BS.Col xs={9}>
+      { children }
+    </BS.Col>
+  </BS.FormGroup>
+)
 const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -129,40 +139,25 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
         </BS.Col>
 
         <BS.Col xs={8}>
-          <BS.FormGroup>
-            <BS.Col xs={3}>
-              <BS.ControlLabel><FormattedMessage id="field.id" defaultMessage='ID'/>:</BS.ControlLabel>
-            </BS.Col>
-            <BS.Col xs={9}>
-              <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
-            </BS.Col>
-          </BS.FormGroup>
+          <FormRow id="field.id" defaultMessage="ID">
+            <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
+          </FormRow>
 
-          <BS.FormGroup>
-            <BS.Col xs={3}>
-              <BS.ControlLabel><FormattedMessage id="field.status" defaultMessage='Status'/>:</BS.ControlLabel>
-            </BS.Col>
-            <BS.Col xs={9}>
-              <BS.FormControl componentClass="select" required {...fields.status}>
-                <option value="" disabled>Select a Status</option>
-                {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
-              </BS.FormControl>
-            </BS.Col>
-          </BS.FormGroup>
+          <FormRow id="field.status" defaultMessage="Status">
+            <BS.FormControl componentClass="select" required {...fields.status}>
+              <option value="" disabled>Select a Status</option>
+              {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
+            </BS.FormControl>
+          </FormRow>
 
-          <BS.FormGroup controlId="uxCreated">
-            <BS.Col xs={3}>
-              <BS.ControlLabel><FormattedMessage id="field.created" defaultMessage='Created'/>:</BS.ControlLabel>
-            </BS.Col>
-            <BS.Col xs={9}>
-              <BS.FormControl.Static>
-                {fields.created.value ?
-                  <FormattedDate value={fields.created.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
-                }
-              </BS.FormControl.Static>
-            </BS.Col>
-          </BS.FormGroup>
+          <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
+            <BS.FormControl.Static>
+              {fields.created.value ?
+                <FormattedDate value={fields.created.value}/> :
+                  (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+              }
+            </BS.FormControl.Static>
+          </FormRow>
 
           <Grid
             data={prints}
