@@ -26,7 +26,18 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
       { children }
     </BS.Col>
   </BS.FormGroup>
-)
+);
+
+const LinkField = ({uri, location}) => {
+  if(!uri) {
+    return (<BS.FormControl.Static> - </BS.FormControl.Static>);
+  }
+  const uuid = uri.substr(uri.length - 37, 36);
+  const display = uuid.substr(uuid.length - 6);
+  const fullLocation = location + uuid
+  return (<BS.FormControl.Static><a href={fullLocation}>{display}</a></BS.FormControl.Static>);
+};
+
 const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -157,6 +168,18 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
                   (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
               }
             </BS.FormControl.Static>
+          </FormRow>
+
+          <FormRow id="field.printer" defaultMessage="Printer">
+            <LinkField uri={fields.printer.value} location="#/records/printer/"/>
+          </FormRow>
+
+          <FormRow id="field.printer_type" defaultMessage="Printer Type">
+            <LinkField uri={fields.printer_type.value} location="#/records/printer-type/"/>
+          </FormRow>
+
+          <FormRow id="field.post_processor" defaultMessage="Post-Processor">
+            <LinkField uri={fields.post_processor.value} location="#/records/post-processor/"/>
           </FormRow>
 
           <Grid
