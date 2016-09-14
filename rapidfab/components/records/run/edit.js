@@ -10,12 +10,36 @@ import {
   FormattedMessage,
   FormattedVolume
 } from 'rapidfab/i18n'
+import {
+  FormControlSelect
+} from 'rapidfab/components/formTools'
 
 const SaveButtonTitle = () => (
   <span>
     <Fa name='floppy-o'/> <FormattedMessage id="button.save" defaultMessage='Save'/>
   </span>
 )
+
+const FormRow = ({id, defaultMessage, children, controlId}) => (
+  <BS.FormGroup controlId={controlId}>
+    <BS.Col xs={3}>
+      <BS.ControlLabel><FormattedMessage id={id} defaultMessage={defaultMessage}/>:</BS.ControlLabel>
+    </BS.Col>
+    <BS.Col xs={9}>
+      { children }
+    </BS.Col>
+  </BS.FormGroup>
+);
+
+const LinkField = ({uri, location}) => {
+  if(!uri) {
+    return (<BS.FormControl.Static> - </BS.FormControl.Static>);
+  }
+  const uuid = uri.substr(uri.length - 37, 36);
+  const display = uuid.substr(uuid.length - 6);
+  const fullLocation = location + uuid
+  return (<BS.FormControl.Static><a href={fullLocation}>{display}</a></BS.FormControl.Static>);
+};
 
 const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
@@ -129,32 +153,37 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
         </BS.Col>
 
         <BS.Col xs={8}>
+          <FormRow id="field.id" defaultMessage="ID">
+            <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
+          </FormRow>
 
-          <BS.FormGroup>
-            <BS.Col xs={3}>
-              <BS.ControlLabel><FormattedMessage id="field.status" defaultMessage='Status'/>:</BS.ControlLabel>
-            </BS.Col>
-            <BS.Col xs={9}>
-              <BS.FormControl componentClass="select" required {...fields.status}>
-                <option value="" disabled>Select a Status</option>
-                {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
-              </BS.FormControl>
-            </BS.Col>
-          </BS.FormGroup>
+          <FormRow id="field.status" defaultMessage="Status">
+            <FormControlSelect {...fields.status}>
+              <option value="" disabled>Select a Status</option>
+              {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
+            </FormControlSelect>
+          </FormRow>
 
-          <BS.FormGroup controlId="uxCreated">
-            <BS.Col xs={3}>
-              <BS.ControlLabel><FormattedMessage id="field.created" defaultMessage='Created'/>:</BS.ControlLabel>
-            </BS.Col>
-            <BS.Col xs={9}>
-              <BS.FormControl.Static>
-                {fields.created.value ?
-                  <FormattedDate value={fields.created.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
-                }
-              </BS.FormControl.Static>
-            </BS.Col>
-          </BS.FormGroup>
+          <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
+            <BS.FormControl.Static>
+              {fields.created.value ?
+                <FormattedDate value={fields.created.value}/> :
+                  (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+              }
+            </BS.FormControl.Static>
+          </FormRow>
+
+          <FormRow id="field.printer" defaultMessage="Printer">
+            <LinkField uri={fields.printer.value} location="#/records/printer/"/>
+          </FormRow>
+
+          <FormRow id="field.printerType" defaultMessage="Printer Type">
+            <LinkField uri={fields.printer_type.value} location="#/records/printer-type/"/>
+          </FormRow>
+
+          <FormRow id="field.postProcessor" defaultMessage="Post-Processor">
+            <LinkField uri={fields.post_processor.value} location="#/records/post-processor/"/>
+          </FormRow>
 
           <Grid
             data={prints}

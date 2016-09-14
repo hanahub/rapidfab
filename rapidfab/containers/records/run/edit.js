@@ -7,19 +7,22 @@ import { reduxForm }                    from 'redux-form'
 import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
-  'id',
-  'uri',
-  'uuid',
-  'status',
-  'estimates.time.print',
-  'estimates.time.post_processing',
-  'estimates.materials.base',
-  'estimates.materials.support',
-  'actuals.time.print',
-  'actuals.time.post_processing',
   'actuals.materials.base',
   'actuals.materials.support',
-  'created'
+  'actuals.time.print',
+  'actuals.time.post_processing',
+  'created',
+  'estimates.materials.base',
+  'estimates.materials.support',
+  'estimates.time.print',
+  'estimates.time.post_processing',
+  'id',
+  'post_processor',
+  'printer',
+  'printer_type',
+  'status',
+  'uri',
+  'uuid'
 ]
 
 class RunsContainer extends Component {

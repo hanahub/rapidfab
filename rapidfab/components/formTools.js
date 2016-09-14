@@ -15,3 +15,8 @@ export function FormControlTextArea({id, value, onChange}) {
   )
 }
 
+export function FormControlSelect({onChange, children, id, value}) {
+  return (
+    <BS.FormControl componentClass="select" id={id} value={value} onChange={onChange}>{ children }</BS.FormControl>
+  )
+}

@@ -15,10 +15,14 @@ export function extractUuid(uri) {
 export function hydrateRecord(record) {
   if(!record || !record.uri) return record;
   let uuid = extractUuid(record.uri);
-  return Object.assign({}, record, {
-    uuid,
-    id: uuid.substr(uuid.length - 6)
-  });
+  if(record.id) {
+    return Object.assign({}, record, {uuid, id: record.id});
+  } else {
+    return Object.assign({}, record, {
+      uuid,
+      id: uuid.substr(uuid.length - 6)
+    });
+  }
 }
 
 function reducer(state = {}, action) {
