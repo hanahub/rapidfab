@@ -6,6 +6,8 @@ import {
   FormattedMessage
 } from 'rapidfab/i18n';
 
+import { FormControlTextCareful }                             from 'rapidfab/components/formTools';
+
 
 const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
   <div>
@@ -79,7 +81,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
         <BS.ControlLabel><FormattedMessage id="field.shippingName" defaultMessage='Shipping Name'/>:</BS.ControlLabel>
       </BS.Col>
       <BS.Col xs={9}>
-        <BS.FormControl componentClass="text" required {...fields.shipping.name}/>
+        <FormControlTextCareful {...fields.shipping.name}/>
       </BS.Col>
     </BS.FormGroup>
 
@@ -97,7 +99,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
         <BS.ControlLabel><FormattedMessage id="field.trackingNumber" defaultMessage='Tracking Number'/>:</BS.ControlLabel>
       </BS.Col>
       <BS.Col xs={9}>
-        <BS.FormControl componentClass="input" required {...fields.shipping.tracking}/>
+        <FormControlTextCareful {...fields.shipping.tracking}/>
       </BS.Col>
     </BS.FormGroup>
 
