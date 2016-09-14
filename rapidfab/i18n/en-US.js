@@ -60,6 +60,10 @@ export default {
   "record.stock.new"                : "New Stock",
 
   "field.accessToAllLocations"      : "Access to All Locations",
+  "field.actualMaterialUsed"        : "Actual Material Used",
+  "field.actualPrintTime"           : "Actual Print Time",
+  "field.actualPostProcessingTime"  : "Actual Post-Processing Time",
+  "field.actualSupportUsed"         : "Actual Support Used",
   "field.address"                   : "Address",
   "field.baseMaterial"              : "Base Material",
   "field.color"                     : "Color",
@@ -74,6 +78,7 @@ export default {
   "field.estimatedShippingDate"     : "Estimated Shipping Date",
   "field.estimatedMaterialUsed"     : "Estimated Material Used",
   "field.estimatedSupportUsed"      : "Estimated Support Used",
+  "field.estimatedPostProcessingTime": "Estimated Post-Processing Time",
   "field.estimatedPrintTime"        : "Estimated Print Time",
   "field.et"                        : "ET",
   "field.fullfilledByThirdParty"    : "Fullfilled By Third Party",

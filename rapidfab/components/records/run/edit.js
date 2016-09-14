@@ -174,11 +174,11 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
             <LinkField uri={fields.printer.value} location="#/records/printer/"/>
           </FormRow>
 
-          <FormRow id="field.printer_type" defaultMessage="Printer Type">
+          <FormRow id="field.printerType" defaultMessage="Printer Type">
             <LinkField uri={fields.printer_type.value} location="#/records/printer-type/"/>
           </FormRow>
 
-          <FormRow id="field.post_processor" defaultMessage="Post-Processor">
+          <FormRow id="field.postProcessor" defaultMessage="Post-Processor">
             <LinkField uri={fields.post_processor.value} location="#/records/post-processor/"/>
           </FormRow>
 
