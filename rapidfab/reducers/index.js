@@ -10,6 +10,7 @@ import fakeData                 from './fakeData'
 import ui                       from './ui'
 import api                      from './api'
 import resources                from './resources'
+import pager                    from './pager'
 
 const Reducer = combineReducers({
   form: formReducer,
@@ -19,7 +20,8 @@ const Reducer = combineReducers({
   fakeData,
   resources,
   api,
-  ui
+  ui,
+  pager,
 })
 
 export default Reducer
