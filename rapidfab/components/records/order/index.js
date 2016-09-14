@@ -26,7 +26,7 @@ const Navigation = ({ fields, onDelete }) => (
             <Fa name='files-o'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item>
-            <Fa name='file-o'/> {fields.id.value || <FormattedMessage id="records.newOrder" defaultMessage='New Order'/>}
+            <Fa name='file-o'/> {fields.id.value || <FormattedMessage id="record.order.new" defaultMessage='New Order'/>}
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
