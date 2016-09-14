@@ -66,7 +66,7 @@ const OrderContainer = ({ fields, materials, models, prints, snapshot, providers
   <div>
     <BS.Row>
       <BS.Col xs={4}>
-        <BS.Thumbnail src={snapshot} responsive/>
+        <BS.Thumbnail src={snapshot} />
       </BS.Col>
       <BS.Col xs={8}>
         <OrderForm fields={fields} materials={materials} models={models} providers={providers}/>
