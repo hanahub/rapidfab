@@ -6,7 +6,10 @@ import {
   FormattedMessage
 } from 'rapidfab/i18n';
 
-import { FormControlTextCareful }                             from 'rapidfab/components/formTools';
+import {
+  FormControlTextArea,
+  FormControlTextCareful
+} from 'rapidfab/components/formTools';
 
 
 const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
@@ -90,7 +93,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
         <BS.ControlLabel><FormattedMessage id="field.shippingAddress" defaultMessage='Shipping Address'/>:</BS.ControlLabel>
       </BS.Col>
       <BS.Col xs={9}>
-        <BS.FormControl componentClass="textarea" required {...fields.shipping.address}/>
+        <FormControlTextArea {...fields.shipping.address}/>
       </BS.Col>
     </BS.FormGroup>
 
