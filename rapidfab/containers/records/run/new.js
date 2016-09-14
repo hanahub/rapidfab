@@ -7,6 +7,7 @@ import * as Selectors                   from 'rapidfab/selectors'
 import Fa                               from 'react-fontawesome'
 import * as BS                          from 'react-bootstrap'
 
+const printsPerPage = 10
 
 const Loading = ({  }) => (
   <BS.Row>
@@ -48,9 +49,15 @@ function mapDispatchToProps(dispatch) {
     },
     onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(
       () => window.location.hash = "#/plan/runs"
-    )
+    ),
+    onPageChange: value => dispatch(Actions.Pager.setPage(value))
   }
 }
+
+const getPager = (state, prints) => ({
+  items      : Math.ceil(prints.length / printsPerPage),
+  activePage : state.pager.activePage,
+})
 
 function mapStateToProps(state) {
   const printerType = state.ui.wyatt['printer-type']
@@ -86,17 +93,22 @@ function mapStateToProps(state) {
     printerType.list.errors
   )
 
+
   const orders = Selectors.getOrdersForRunNew(state)
   const prints = _.flatMap(orders, 'prints')
+  const pager = getPager(state, prints)
   const printers = Selectors.getPrintersForRunNew(state)
+
+  const page = pager.activePage - 1
 
   return {
     orders,
     printers,
-    prints,
+    prints      : prints.splice(page * printsPerPage, printsPerPage),
     fetching,
     loading     : (!orders.length || !printers.length) && fetching,
-    errors
+    errors,
+    pager
   }
 }
 

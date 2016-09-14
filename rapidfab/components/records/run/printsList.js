@@ -4,12 +4,6 @@ import * as BS                                from 'react-bootstrap'
 import { FormattedMessage, FormattedDate }    from 'react-intl';
 import Fa                                     from 'react-fontawesome';
 
-const listBodyStyle = {
-  height: 500,
-  verflowY: "scroll",
-  overflowX: "hidden"
-}
-
 const Header = ({ onActivate }) => (
   <BS.Row>
     <BS.Col xs={6}>
@@ -52,7 +46,7 @@ const PrintItem = ({ print, selected, onSelect }) => (
   </BS.ListGroupItem>
 )
 
-const PrintsList = ({ prints, selected, onSelect, onActivate }) => (
+const PrintsList = ({ prints, pager, selected, onSelect, onActivate, onPageChange }) => (
   <BS.Panel header={<Header onActivate={onActivate}/>}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
@@ -70,15 +64,23 @@ const PrintsList = ({ prints, selected, onSelect, onActivate }) => (
           </BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
-      <div style={listBodyStyle}>
-        {_.map(prints, print => (
-          <PrintItem
-            key={print.uuid}
-            selected={!!_.find(selected, ['uri', print.uri])}
-            print={print}
-            onSelect={onSelect}
+      {_.map(prints, print => (
+        <PrintItem
+          key={print.uuid}
+          selected={!!_.find(selected, ['uri', print.uri])}
+          print={print}
+          onSelect={onSelect}
+        />
+      ))}
+      <div style={{textAlign: 'center'}}>
+        <BS.Pagination
+          prev
+          next
+          items={pager.items}
+          maxButtons={5}
+          activePage={pager.activePage}
+          onSelect={onPageChange}
           />
-        ))}
       </div>
     </BS.ListGroup>
   </BS.Panel>
