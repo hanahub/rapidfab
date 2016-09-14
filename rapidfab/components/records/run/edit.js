@@ -10,6 +10,9 @@ import {
   FormattedMessage,
   FormattedVolume
 } from 'rapidfab/i18n'
+import {
+  FormControlSelect
+} from 'rapidfab/components/formTools'
 
 const SaveButtonTitle = () => (
   <span>
@@ -155,10 +158,10 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
           </FormRow>
 
           <FormRow id="field.status" defaultMessage="Status">
-            <BS.FormControl componentClass="select" required {...fields.status}>
+            <FormControlSelect {...fields.status}>
               <option value="" disabled>Select a Status</option>
               {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
-            </BS.FormControl>
+            </FormControlSelect>
           </FormRow>
 
           <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
