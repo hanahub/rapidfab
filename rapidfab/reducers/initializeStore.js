@@ -14,8 +14,8 @@ export default function initializeStore(initialState) {
     initialState,
     applyMiddleware(
       thunkMiddleware,
+      apiMiddleware,
       loggerMiddleware,
-      apiMiddleware
     )
   )
 }
