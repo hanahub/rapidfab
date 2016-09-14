@@ -129,6 +129,14 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
         </BS.Col>
 
         <BS.Col xs={8}>
+          <BS.FormGroup>
+            <BS.Col xs={3}>
+              <BS.ControlLabel><FormattedMessage id="field.id" defaultMessage='ID'/>:</BS.ControlLabel>
+            </BS.Col>
+            <BS.Col xs={9}>
+              <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
+            </BS.Col>
+          </BS.FormGroup>
 
           <BS.FormGroup>
             <BS.Col xs={3}>
