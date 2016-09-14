@@ -20,6 +20,7 @@ import Queues                       from 'rapidfab/containers/work/queues'
 import Order                        from 'rapidfab/containers/records/order'
 import NewOrder                     from 'rapidfab/containers/records/newOrder'
 import Location                     from 'rapidfab/containers/records/location'
+import ThirdPartyProvider           from 'rapidfab/containers/records/thirdPartyProvider'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
 import Material                     from 'rapidfab/containers/records/material'
 import Printer                      from 'rapidfab/containers/records/printer'
@@ -56,6 +57,8 @@ const Routes = {
   "/records/order/new"                   : NewOrder,
   "/records/location"                    : Location,
   "/records/location/:uuid"              : Location,
+  "/records/third-party-provider"        : ThirdPartyProvider,
+  "/records/third-party-provider/:uuid"  : ThirdPartyProvider,
   "/records/manufacturer"                : Manufacturer,
   "/records/manufacturer/:uuid"          : Manufacturer,
   "/records/material"                    : Material,
