@@ -82,7 +82,7 @@ function mapStateToProps(state) {
     run.post.fetching ||
     printerType.list.fetching
 
-  const errors = _.concat(
+  const apiErrors = _.concat(
     order.list.errors,
     material.list.errors,
     order.list.errors,
@@ -93,7 +93,6 @@ function mapStateToProps(state) {
     printerType.list.errors
   )
 
-
   const orders = Selectors.getOrdersForRunNew(state)
   const prints = _.flatMap(orders, 'prints')
   const pager = getPager(state, prints)
@@ -102,13 +101,13 @@ function mapStateToProps(state) {
   const page = pager.activePage - 1
 
   return {
-    orders,
-    printers,
-    prints      : prints.splice(page * printsPerPage, printsPerPage),
+    apiErrors,
     fetching,
     loading     : (!orders.length || !printers.length) && fetching,
-    errors,
-    pager
+    orders,
+    pager,
+    printers,
+    prints      : prints.splice(page * printsPerPage, printsPerPage)
   }
 }
 
