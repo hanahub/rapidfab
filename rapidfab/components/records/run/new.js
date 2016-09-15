@@ -125,7 +125,7 @@ class Runs extends Component {
                 <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/plan/runs">
-                <Fa name='list'/> <FormattedMessage id="plan.Runs" defaultMessage='Runs'/>
+                <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
