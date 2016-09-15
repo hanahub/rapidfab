@@ -6,6 +6,7 @@ import OrderForm              from './form'
 import OrderEstimates         from './estimates'
 import OrderPrints            from './prints'
 import Error                  from 'rapidfab/components/error'
+import ThumbnailPlaceholder   from 'rapidfab/images/thumbnail-placeholder.png'
 
 
 const SaveButtonTitle = ({ uri, uuid, record }) => (
@@ -62,11 +63,26 @@ const Loader = () => (
   </BS.Row>
 )
 
+const Thumbnail = ({src}) => {
+  if(!src) {
+    return (
+      <div>
+        <BS.Thumbnail src={ThumbnailPlaceholder} />
+        <Fa name="spinner" spin/>
+        <span> </span>
+        <FormattedMessage id="loading.thumbnail" defaultMessage="Loading Thumbnail..."/>
+      </div>
+    );
+  } else {
+    return (<BS.Thumbnail src={src} />);
+  }
+}
+
 const OrderContainer = ({ fields, materials, models, prints, snapshot, providers }) => (
   <div>
     <BS.Row>
       <BS.Col xs={4}>
-        <BS.Thumbnail src={snapshot} />
+        <Thumbnail src={snapshot} />
       </BS.Col>
       <BS.Col xs={8}>
         <OrderForm fields={fields} materials={materials} models={models} providers={providers}/>

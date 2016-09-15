@@ -1,6 +1,7 @@
 export default {
   "rapidfab"                        : "Rapid Fab",
 
+  "loading.thumbnail"               : "Loading Thumbnail...",
   "plan"                            : "Plan",
   "plan.orders"                     : "Orders",
   "plan.printQueue"                 : "Print Queue",
