@@ -14,18 +14,28 @@ const Header = ( prints ) => {
   )
 }
 
-const PrintItem = ({ print }) => (
-  <BS.ListGroupItem>
-    <BS.Row>
-      <BS.Col xs={6}>
-        {print.id}
-      </BS.Col>
-      <BS.Col xs={6}>
-        {print.status}
-      </BS.Col>
-    </BS.Row>
-  </BS.ListGroupItem>
-)
+const PrintItem = ({ print }) => {
+  const status = {
+    complete  : (<FormattedMessage id="print.status.complete" defaultMessage="Complete"/>),
+    created   : (<FormattedMessage id="print.status.created" defaultMessage="Created"/>),
+    error     : (<FormattedMessage id="print.status.error" defaultMessage="Error"/>),
+    printing  : (<FormattedMessage id="print.status.printing" defaultMessage="Printing"/>),
+    scheduled : (<FormattedMessage id="print.status.scheduled" defaultMessage="Scheduled"/>),
+  }[print.status];
+
+  return (
+    <BS.ListGroupItem>
+      <BS.Row>
+        <BS.Col xs={6}>
+          {print.id}
+        </BS.Col>
+        <BS.Col xs={6}>
+          {status}
+        </BS.Col>
+      </BS.Row>
+    </BS.ListGroupItem>
+  );
+}
 
 const OrderPrints = ({ prints }) => (
   <BS.Panel header={Header(prints)} bsStyle="primary">

@@ -41,6 +41,12 @@ export default {
   "button.save"                     : "Save",
   "button.reset"                    : "Reset",
 
+  "print.status.complete"           : "Complete",
+  "print.status.created"            : "Created",
+  "print.status.error"              : "Error",
+  "print.status.printing"           : "Printing",
+  "print.status.scheduled"          : "Scheduled",
+
   "record.order"                    : "Order",
   "record.order.add"                : "Add Order",
   "record.order.new"                : "New Order",
