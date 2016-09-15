@@ -38,7 +38,7 @@ function mapStateToProps(state) {
 
   return {
     resources,
-    fetching: run.list.fetching || printer.list.fetching || postProcessor.list.fetching || !resources.length,
+    fetching: run.list.fetching || printer.list.fetching || postProcessor.list.fetching,
     apiErrors: _.concat(run.list.errors, postProcessor.list.errors, printer.list.errors)
   }
 }
