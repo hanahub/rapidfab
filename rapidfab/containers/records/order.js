@@ -99,7 +99,6 @@ function mapStateToProps(state, props) {
   const snapshot        = getSnapshotFromOrder(orderResource, models)
 
   const fetching =
-    model.list.fetching ||
     material.list.fetching ||
     print.list.fetching ||
     order.get.fetching ||

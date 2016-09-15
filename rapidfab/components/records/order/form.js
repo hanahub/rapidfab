@@ -23,6 +23,23 @@ const FormRow = ({controlId, id, defaultMessage, children}) => (
   </BS.FormGroup>
 )
 
+const ModelSelect = ({models, value}) => {
+  if(models.length) {
+    return (
+      <BS.FormControl componentClass="select" required value={value}>
+        <option value="" disabled>Select a Model</option>
+        {_.map(models, model => (<option key={model.uri} value={model.uri}>{`${model.id} - ${model.name}`}</option>))}
+      </BS.FormControl>
+    );
+  } else {
+    return (
+      <BS.FormControl.Static>
+        <FormattedMessage id="loading.model" defaultMessage="Loading models..."/>
+      </BS.FormControl.Static>
+    );
+  }
+}
+
 const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
   <div>
     <FormRow controlId="uxId" id="field.id" defaultMessage="ID">
@@ -36,10 +53,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
     </FormRow>
 
     <FormRow controlId="uxModel" id="field.model" defaultMessage="Model">
-      <BS.FormControl componentClass="select" required {...fields.model}>
-        <option value="" disabled>Select a Model</option>
-        {_.map(models, model => (<option key={model.uri} value={model.uri}>{`${model.id} - ${model.name}`}</option>))}
-      </BS.FormControl>
+      <ModelSelect models={models} {...fields.model}/>
     </FormRow>
 
     <FormRow controlId="uxQuantity" id="field.quantity" defaultMessage="Quantity">
