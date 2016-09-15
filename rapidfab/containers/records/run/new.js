@@ -49,7 +49,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(
       () => window.location.hash = "#/plan/runs"
-    ),
+    ).catch((error) => {
+      console.error("Failed to POST run", error);
+    }),
     onPageChange: value => dispatch(Actions.Pager.setPage(value))
   }
 }
