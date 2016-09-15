@@ -1,6 +1,7 @@
 import React, { PropTypes }                   from "react";
 import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
+import Error                                  from 'rapidfab/components/error'
 import { FormattedDate, FormattedMessage }    from 'react-intl';
 
 const Colors = {
@@ -92,47 +93,32 @@ const ItemHeader = ({ index }) => {
 const Item = ({ resource, colCount }) => {
   const { queue } = resource
   const resourceType = getResourceType(resource)
-  let queueRuns = _.reduce(queue, (result, value) => {
+  let queueRuns = _.map(queue, value => {
     const estimatedTime = resourceType === "printer" ? value.estimates.time.print : value.estimates.time.post_processing
     const colSpan = Math.round(estimatedTime / 1800, 0)
-    const warmingStyle = {
-      backgroundColor: resourceType === "printer" ? Colors.Warning.color : Colors.Info.color,
-      color: "#333",
-      textAlign: "center",
-    }
     const printingStyle = {
-      backgroundColor: Colors.Default.color,
-      color: "#333",
-      textAlign: "center",
+      backgroundColor: Colors.Success.color,
     }
-    const coolingStyle = {
-      backgroundColor: resourceType === "printer" ? Colors.Success.color : Colors.Primary.color,
-      color: "#333",
-      textAlign: "center",
+    const postProcessorStyle = {
+      backgroundColor: Colors.Info.color,
     }
-    result.push((
-      <td style={cellStyle} colSpan={1}>
-        <div style={warmingStyle}>
-          {resourceType === "printer" ? "Warming" : "Loading" }
-        </div>
-      </td>
-    ))
-    result.push((
+    const linkStyle = {
+      padding: "0 10px",
+      color: "#fff",
+      display: "block"
+    }
+    return (
       <td style={cellStyle} colSpan={colSpan}>
-        <div style={printingStyle}>
-          {resourceType === "printer" ? "Printing" : "Post Processing" } <a href={`#/records/run/${value.uuid}`}>{value.id}</a>
+        <div style={resourceType === "printer" ? printingStyle : postProcessorStyle}>
+          <a href={`#/records/run/${value.uuid}`} style={linkStyle}>
+            <abbr title={value.uuid} style={{ cursor: "pointer" }}>
+              {value.uuid.substr(value.uuid.length - 6)}
+            </abbr>
+          </a>
         </div>
       </td>
-    ))
-    result.push((
-      <td style={cellStyle} colSpan={1}>
-        <div style={coolingStyle}>
-          {resourceType === "printer" ? "Cooling" : "Unloading" }
-        </div>
-      </td>
-    ))
-    return result
-  }, [])
+    )
+  })
   if(queueRuns.length < colCount) {
     queueRuns.push((
       <td style={cellStyle} colSpan={colCount - queueRuns.length}>
@@ -146,8 +132,14 @@ const Item = ({ resource, colCount }) => {
   )
 }
 
-const Queues = ({ resources }) => {
-  const colCount = getTimelineColCount(resources)
+const Loading = () => (
+  <div style={{ textAlign: "center" }}>
+    <Fa name="spinner" spin size='2x' />
+  </div>
+)
+
+const Queues = ({ resources, apiErrors, fetching }) => {
+  const colCount = fetching ? 0 : getTimelineColCount(resources)
   return (
     <BS.Grid fluid>
 
@@ -166,41 +158,49 @@ const Queues = ({ resources }) => {
 
       <BS.Row>
         <BS.Col xs={12}>
-          <div style={containerStyle}>
-            <div>
-              <BS.Table style={tableStyle}>
-                <thead>
-                  <tr>
-                    <th>
-                      <em style={{ visibility: "hidden" }}>Resources</em>
-                      <p>Resources</p>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {_.map(resources, resource => (
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
+
+      <BS.Row>
+        <BS.Col xs={12}>
+          {fetching ? <Loading/> : (
+            <div style={containerStyle}>
+              <div>
+                <BS.Table style={tableStyle}>
+                  <thead>
                     <tr>
-                      <td style={cellStyle}>
-                        <ResourceLink resource={resource} />
-                      </td>
+                      <th>
+                        <em style={{ visibility: "hidden" }}>Resources</em>
+                        <p>Resources</p>
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </BS.Table>
+                  </thead>
+                  <tbody>
+                    {_.map(resources, resource => (
+                      <tr>
+                        <td style={cellStyle}>
+                          <ResourceLink resource={resource} />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </BS.Table>
+              </div>
+              <div style={rightStyle}>
+                <BS.Table style={tableStyle}>
+                  <thead>
+                    <tr>
+                      {_.map(_.range(colCount), index => (<ItemHeader index={index} />))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {_.map(resources, resource => (<Item resource={resource} colCount={colCount}/>))}
+                  </tbody>
+                </BS.Table>
+              </div>
             </div>
-            <div style={rightStyle}>
-              <BS.Table style={tableStyle}>
-                <thead>
-                  <tr>
-                    {_.map(_.range(colCount), index => (<ItemHeader index={index} />))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {_.map(resources, resource => (<Item resource={resource} colCount={colCount}/>))}
-                </tbody>
-              </BS.Table>
-            </div>
-          </div>
+          )}
         </BS.Col>
       </BS.Row>
 

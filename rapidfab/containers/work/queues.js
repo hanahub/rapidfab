@@ -3,7 +3,7 @@ import React, { Component, PropTypes }  from "react"
 import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
 import QueuesComponent                  from 'rapidfab/components/work/queues'
-import FakeData                         from 'rapidfab/fakeData';
+import * as Selectors                   from 'rapidfab/selectors'
 
 
 const QueuesContainer = props => (
@@ -11,24 +11,35 @@ const QueuesContainer = props => (
 )
 
 function mapDispatchToProps(dispatch) {
+  const getResourceRuns = args => {
+    const runUuids = _.flatMap(args.json.resources, resource => resource.queue)
+    for(let runUuidsChunk of _.chunk(runUuids, 5)) {
+      dispatch(Actions.Api.wyatt.run.list({
+        uri: runUuidsChunk
+      }))
+    }
+  }
+  dispatch(Actions.Api.wyatt['post-processor-type'].list())
+  dispatch(Actions.Api.wyatt['post-processor'].list()).then(getResourceRuns)
+  dispatch(Actions.Api.wyatt.printer.list()).then(getResourceRuns)
+
   return {
   }
 }
 
 function mapStateToProps(state) {
-  const {
-    fakeData
-  } = state
-
+  const postProcessor = state.ui.wyatt['post-processor']
   const {
     printer,
-    post_processor
-  } = fakeData
+    run
+  } = state.ui.wyatt
 
-  let resources = _.assign({}, printer, post_processor)
+  const resources = Selectors.getResourcesForQueues(state)
 
   return {
-    resources: _.orderBy(resources, 'name')
+    resources,
+    fetching: run.list.fetching || printer.list.fetching || postProcessor.list.fetching || !resources.length,
+    apiErrors: _.concat(run.list.errors, postProcessor.list.errors, printer.list.errors)
   }
 }
 
