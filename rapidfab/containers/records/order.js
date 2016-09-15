@@ -106,13 +106,14 @@ function mapStateToProps(state, props) {
     state.ui.wyatt['third-party'].list.fetching
 
   return {
-    uuid          : Selectors.getRoute(state, props).uuid,
-    initialValues : orderResource,
-    materials     : Selectors.getMaterials(state),
-    apiErrors     : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
-    prints        : Selectors.getPrintsForOrder(state, orderResource),
-    providers     : Selectors.getThirdPartyProviders(state),
+    uuid              : Selectors.getRoute(state, props).uuid,
+    initialValues     : orderResource,
+    materials         : Selectors.getMaterials(state),
+    apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
+    prints            : Selectors.getPrintsForOrder(state, orderResource),
+    providers         : Selectors.getThirdPartyProviders(state),
     models,
+    modelsIsFetching  : model.list.fetching,
     order,
     snapshot,
     fetching,
