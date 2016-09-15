@@ -78,14 +78,14 @@ const Thumbnail = ({src}) => {
   }
 }
 
-const OrderContainer = ({ fields, materials, models, prints, snapshot, providers }) => (
+const OrderContainer = ({ fields, materials, models, modelsIsFetching, prints, snapshot, providers }) => (
   <div>
     <BS.Row>
       <BS.Col xs={4}>
         <Thumbnail src={snapshot} />
       </BS.Col>
       <BS.Col xs={8}>
-        <OrderForm fields={fields} materials={materials} models={models} providers={providers}/>
+        <OrderForm fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} providers={providers}/>
       </BS.Col>
     </BS.Row>
 
@@ -100,7 +100,7 @@ const OrderContainer = ({ fields, materials, models, prints, snapshot, providers
   </div>
 )
 
-const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, prints, apiErrors, snapshot, providers }) => (
+const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, modelsIsFetching, prints, apiErrors, snapshot, providers }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <Navigation fields={fields} onDelete={onDelete}/>
@@ -115,7 +115,7 @@ const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, pr
 
       {fetching ?
         <Loader /> :
-        <OrderContainer fields={fields} materials={materials} models={models} prints={prints} snapshot={snapshot} providers={providers} />
+        <OrderContainer fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} prints={prints} snapshot={snapshot} providers={providers} />
       }
 
     </BS.Grid>

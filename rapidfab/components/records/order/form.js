@@ -23,24 +23,25 @@ const FormRow = ({controlId, id, defaultMessage, children}) => (
   </BS.FormGroup>
 )
 
-const ModelSelect = ({models, value}) => {
-  if(models.length) {
+const ModelSelect = ({models, modelsIsFetching, value}) => {
+  console.log('models is fetching', modelsIsFetching);
+  if(modelsIsFetching) {
+    return (
+      <BS.FormControl.Static>
+        <FormattedMessage id="loading.model" defaultMessage="Loading models..."/>
+      </BS.FormControl.Static>
+    );
+  } else {
     return (
       <BS.FormControl componentClass="select" required value={value}>
         <option value="" disabled>Select a Model</option>
         {_.map(models, model => (<option key={model.uri} value={model.uri}>{`${model.id} - ${model.name}`}</option>))}
       </BS.FormControl>
     );
-  } else {
-    return (
-      <BS.FormControl.Static>
-        <FormattedMessage id="loading.model" defaultMessage="Loading models..."/>
-      </BS.FormControl.Static>
-    );
   }
 }
 
-const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
+const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers }) => (
   <div>
     <FormRow controlId="uxId" id="field.id" defaultMessage="ID">
       <BS.FormControl.Static>
@@ -53,7 +54,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, providers }) => (
     </FormRow>
 
     <FormRow controlId="uxModel" id="field.model" defaultMessage="Model">
-      <ModelSelect models={models} {...fields.model}/>
+      <ModelSelect models={models} modelsIsFetching={modelsIsFetching} {...fields.model}/>
     </FormRow>
 
     <FormRow controlId="uxQuantity" id="field.quantity" defaultMessage="Quantity">
