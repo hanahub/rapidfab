@@ -52,9 +52,9 @@ const Routes = {
 
   "/work/queues"                         : Queues,
 
+  "/records/new/order"                   : NewOrder,
   "/records/order"                       : Order,
   "/records/order/:uuid"                 : Order,
-  "/records/order/new"                   : NewOrder,
   "/records/location"                    : Location,
   "/records/location/:uuid"              : Location,
   "/records/third-party-provider"        : ThirdPartyProvider,
