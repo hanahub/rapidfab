@@ -56,7 +56,9 @@ function mapDispatchToProps(dispatch, props) {
       .then( args => {
         dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
         payload.model = args.headers.location;
-        dispatch(Actions.Api.wyatt.order.post(payload))
+        dispatch(Actions.Api.wyatt.order.post(payload)).then(() => {
+          window.location.hash = '#/plan/orders';
+        })
       })
     },
   }
@@ -69,11 +71,6 @@ function mapStateToProps(state, props) {
     model,
     order,
   } = state.ui.wyatt;
-
-  if(uploadModel.percent >= 100) {
-    uploadModel.percent = 0
-    window.location.hash = '#/plan/orders'
-  }
 
   const fetching =
     material.list.fetching ||
