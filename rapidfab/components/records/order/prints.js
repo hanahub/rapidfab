@@ -5,7 +5,6 @@ import Fa                                                     from 'react-fontaw
 import {
   FormattedMessage
 } from 'rapidfab/i18n';
-import Grid, { IdColumn }     from 'rapidfab/components/grid'
 
 const Header = ( prints ) => {
   const complete = (_.reduce(prints, (total, print) => print.status == 'complete' ? total + 1 : total, 0)).toString();
@@ -15,24 +14,38 @@ const Header = ( prints ) => {
   )
 }
 
+const PrintItem = ({ print }) => (
+  <BS.ListGroupItem>
+    <BS.Row>
+      <BS.Col xs={6}>
+        {print.id}
+      </BS.Col>
+      <BS.Col xs={6}>
+        {print.status}
+      </BS.Col>
+    </BS.Row>
+  </BS.ListGroupItem>
+)
+
 const OrderPrints = ({ prints }) => (
   <BS.Panel header={Header(prints)} bsStyle="primary">
-    <Grid
-      data={prints}
-      columns={[
-        "id",
-        "status",
-      ]}
-      columnMeta={[{
-        displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
-        columnName: "run.id",
-        customComponent: IdColumn("print"),
-        locked: true
-      }, {
-        columnName: "status",
-        displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>
-      }]}
-    />
+    <BS.ListGroup fill>
+      <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
+        <BS.Row>
+          <BS.Col xs={6}>
+            ID
+          </BS.Col>
+          <BS.Col xs={6}>
+            Status
+          </BS.Col>
+        </BS.Row>
+      </BS.ListGroupItem>
+      <div style={{overflowY: 'scroll', height: 215}}>
+        {_.map(prints, print => (
+          <PrintItem print={print} />))
+        }
+      </div>
+    </BS.ListGroup>
   </BS.Panel>
 )
 
