@@ -59,7 +59,7 @@ function getTimelineColCount(resources) {
     })
   })
   const max = _.max(resourceTimes)
-  return Math.round(max / 1800, 0)
+  return Math.round(max / 3600, 0)
 }
 
 const ResourceLink = ({ resource }) => {
@@ -72,19 +72,10 @@ const ResourceLink = ({ resource }) => {
 }
 
 const ItemHeader = ({ index }) => {
-  const date = new Date()
-  const time = `${index}:00`
-  const showDate = index % 12 === 0
-  const halfHour = index % 2 === 1
   return (
     <th>
       <div style={headerStyle}>
-        <em style={{ visibility: showDate ? "visible" : "hidden" }}>
-          <FormattedDate value={date}/>
-        </em>
-        <p>
-          {`${Math.round(index / 2, 0)}:${halfHour ? "30" : "00"}`}
-        </p>
+        {`${index}:00`}
       </div>
     </th>
   )
@@ -95,7 +86,7 @@ const Item = ({ resource, colCount }) => {
   const resourceType = getResourceType(resource)
   let queueRuns = _.map(queue, value => {
     const estimatedTime = resourceType === "printer" ? value.estimates.time.print : value.estimates.time.post_processing
-    const colSpan = Math.round(estimatedTime / 1800, 0)
+    const colSpan = Math.round(estimatedTime / 3600, 0)
     const printingStyle = {
       backgroundColor: Colors.Success.color,
     }
@@ -171,8 +162,7 @@ const Queues = ({ resources, apiErrors, fetching }) => {
                   <thead>
                     <tr>
                       <th>
-                        <em style={{ visibility: "hidden" }}>Resources</em>
-                        <p>Resources</p>
+                        Resources
                       </th>
                     </tr>
                   </thead>
