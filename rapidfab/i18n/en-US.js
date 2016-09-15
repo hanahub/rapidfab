@@ -83,7 +83,7 @@ export default {
   "field.estimatedPrintTime"        : "Estimated Print Time",
   "field.et"                        : "ET",
   "field.fullfilledByThirdParty"    : "Fullfilled By Third Party",
-  "field.id"                        : "Id",
+  "field.id"                        : "ID",
   "field.job"                       : "Job",
   "field.location"                  : 'Location',
   "field.locationAccess"            : "Location Access",
