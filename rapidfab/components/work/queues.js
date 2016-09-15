@@ -162,7 +162,7 @@ const Queues = ({ resources, apiErrors, fetching }) => {
                   <thead>
                     <tr>
                       <th>
-                        Resources
+                        <FormattedMessage id="field.resources" defaultMessage='Resources'/>
                       </th>
                     </tr>
                   </thead>
