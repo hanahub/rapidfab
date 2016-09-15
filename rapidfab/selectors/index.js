@@ -237,12 +237,16 @@ export const getResourcesForQueues = createSelector(
     if(!printers.length || !postProcessors.length || !runs.length) return []
     const resources = _.concat(printers, postProcessors)
     return _.sortBy(_.reduce(resources, (result, resource) => {
-      const queueRuns = _.map(resource.queue, runUri => _.find(runs, ['uri', runUri]))
-      if(queueRuns.length === resource.queue.length) {
-        result.push(_.assign({}, resource, {
-          queue: runs
-        }))
-      }
+      const queueRuns = _.reduce(resource.queue, (runResult, runUri) => {
+        const run = _.find(runs, ['uri', runUri])
+        if(run) {
+          runResult.push(run)
+        }
+        return runResult
+      }, [])
+      result.push(_.assign({}, resource, {
+        queue: queueRuns
+      }))
       return result
     }, []), 'name')
   }
