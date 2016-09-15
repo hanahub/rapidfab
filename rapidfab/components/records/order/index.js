@@ -41,9 +41,6 @@ const Navigation = ({ fields, onDelete }) => (
       </BS.Col>
       <BS.Col xs={6}>
         <BS.ButtonToolbar className="pull-right">
-          <BS.Button bsSize="small" bsStyle="info">
-            <Fa name='cloud-upload'/> <FormattedMessage id="button.upload" defaultMessage='Upload Model'/>
-          </BS.Button>
           <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
             <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)}>
               <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
