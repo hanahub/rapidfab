@@ -41,6 +41,12 @@ export default {
   "button.save"                     : "Save",
   "button.reset"                    : "Reset",
 
+  "print.status.complete"           : "Complete",
+  "print.status.created"            : "Created",
+  "print.status.error"              : "Error",
+  "print.status.printing"           : "Printing",
+  "print.status.scheduled"          : "Scheduled",
+
   "record.order"                    : "Order",
   "record.order.add"                : "Add Order",
   "record.order.new"                : "New Order",
@@ -83,7 +89,7 @@ export default {
   "field.estimatedPrintTime"        : "Estimated Print Time",
   "field.et"                        : "ET",
   "field.fullfilledByThirdParty"    : "Fullfilled By Third Party",
-  "field.id"                        : "Id",
+  "field.id"                        : "ID",
   "field.job"                       : "Job",
   "field.location"                  : 'Location',
   "field.locationAccess"            : "Location Access",
