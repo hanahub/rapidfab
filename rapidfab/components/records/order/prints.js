@@ -33,10 +33,10 @@ const OrderPrints = ({ prints }) => (
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
           <BS.Col xs={6}>
-            <FormattedMessage id="field.id" defaultMessage="ID"/>
+            <b><FormattedMessage id="field.id" defaultMessage="ID"/></b>
           </BS.Col>
           <BS.Col xs={6}>
-            <FormattedMessage id="field.status" defaultMessage="Status"/>
+            <b><FormattedMessage id="field.status" defaultMessage="Status"/></b>
           </BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
