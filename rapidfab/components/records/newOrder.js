@@ -3,6 +3,7 @@ import * as BS                  from 'react-bootstrap';
 import _                        from "lodash"
 import Fa                       from 'react-fontawesome';
 import { FormattedMessage }     from 'react-intl';
+import Error                    from 'rapidfab/components/error';
 
 
 const SaveButtonTitle = ({  }) => (
@@ -96,9 +97,14 @@ const NewOrderForm = ({ fields, materials, model, providers }) => (
   </BS.Row>
 )
 
-const NewOrder = ({ fields, handleSubmit, load, submitting, onDelete, materials, model, uploadModel, providers }) => (
+const NewOrder = ({ apiErrors, fields, handleSubmit, load, submitting, onDelete, materials, model, uploadModel, providers }) => (
   <div>
     <BreadCrumbs fields={fields} />
+    <BS.Row>
+      <BS.Col xs={12}>
+        <Error errors={apiErrors}/>
+      </BS.Col>
+    </BS.Row>
     <form onSubmit={handleSubmit}>
       <BS.Grid fluid>
         <BS.Row>
