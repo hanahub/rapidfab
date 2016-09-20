@@ -5,6 +5,7 @@ import { FormattedMessage }   from 'rapidfab/i18n'
 import OrderForm              from './form'
 import OrderEstimates         from './estimates'
 import OrderPrints            from './prints'
+import OrderRuns              from './runs'
 import Error                  from 'rapidfab/components/error'
 import ThumbnailPlaceholder   from 'rapidfab/images/thumbnail-placeholder.png'
 
@@ -75,7 +76,7 @@ const Thumbnail = ({src}) => {
   }
 }
 
-const OrderContainer = ({ fields, materials, models, modelsIsFetching, prints, snapshot, providers }) => (
+const OrderContainer = ({ fields, materials, models, modelsIsFetching, prints, providers, runs, snapshot}) => (
   <div>
     <BS.Row>
       <BS.Col xs={4}>
@@ -91,13 +92,14 @@ const OrderContainer = ({ fields, materials, models, modelsIsFetching, prints, s
         <OrderEstimates estimates={fields.estimates}/>
       </BS.Col>
       <BS.Col xs={8}>
+        <OrderRuns runs={runs}/>
         <OrderPrints prints={prints}/>
       </BS.Col>
     </BS.Row>
   </div>
 )
 
-const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, modelsIsFetching, prints, apiErrors, snapshot, providers }) => (
+const Order = ({ apiErrors, fields, handleSubmit, fetching, onDelete, materials, models, modelsIsFetching, prints, providers, runs, snapshot }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <Navigation fields={fields} onDelete={onDelete}/>
@@ -112,7 +114,7 @@ const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, mo
 
       {fetching ?
         <Loader /> :
-        <OrderContainer fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} prints={prints} snapshot={snapshot} providers={providers} />
+        <OrderContainer fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} prints={prints} providers={providers} runs={runs} snapshot={snapshot} />
       }
 
     </BS.Grid>

@@ -46,6 +46,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: props => {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
+      dispatch(Actions.Api.wyatt.run.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       if(props.route.uuid) {
         dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
@@ -87,7 +88,7 @@ function mapStateToProps(state, props) {
   const {
     order,
     material,
-    print
+    print,
   } = state.ui.wyatt
 
   const {
@@ -96,27 +97,29 @@ function mapStateToProps(state, props) {
 
   const models          = Selectors.getModels(state)
   const orderResource   = Selectors.getRouteResource(state, props)
+  const runs            = Selectors.getRunsForOrder(state, orderResource)
   const snapshot        = getSnapshotFromOrder(orderResource, models)
 
   const fetching =
     material.list.fetching ||
-    print.list.fetching ||
     order.get.fetching ||
     order.put.fetching ||
+    print.list.fetching ||
     state.ui.wyatt['third-party'].list.fetching
 
   return {
-    uuid              : Selectors.getRoute(state, props).uuid,
+    apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
+    fetching,
     initialValues     : orderResource,
     materials         : Selectors.getMaterials(state),
-    apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
-    prints            : Selectors.getPrintsForOrder(state, orderResource),
-    providers         : Selectors.getThirdPartyProviders(state),
     models,
     modelsIsFetching  : model.list.fetching,
     order,
+    prints            : Selectors.getPrintsForOrder(state, orderResource),
+    providers         : Selectors.getThirdPartyProviders(state),
+    runs,
     snapshot,
-    fetching,
+    uuid              : Selectors.getRoute(state, props).uuid,
   }
 }
 
