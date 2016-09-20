@@ -13,7 +13,7 @@ const listBodyStyle = {
 function printBedFill(printer, model) {
   const modelArea = model.size.x * model.size.y
   const bedArea = printer.printer_type.build_volume.x * printer.printer_type.build_volume.y
-  const percentage = Math.round(modelArea / bedArea * 100, -1)
+  const percentage = _.round(modelArea / bedArea * 100, 2)
   return `${percentage}%`
 }
 
