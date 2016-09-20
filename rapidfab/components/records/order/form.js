@@ -24,7 +24,6 @@ const FormRow = ({id, defaultMessage, children}) => (
 )
 
 const ModelSelect = ({models, modelsIsFetching, value}) => {
-  console.log('models is fetching', modelsIsFetching);
   if(modelsIsFetching) {
     return (
       <BS.FormControl.Static>
