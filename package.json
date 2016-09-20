@@ -70,6 +70,7 @@
     "font-awesome-webpack": "0.0.4",
     "griddle": "^0.1.2",
     "griddle-react": "^0.6.1",
+    "moment": "^2.15.0",
     "react-bootstrap": "^0.30.3",
     "react-fontawesome": "^1.1.0",
     "react-redux": "^4.4.5",

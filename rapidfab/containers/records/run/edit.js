@@ -5,6 +5,7 @@ import { connect }                      from 'react-redux'
 import RunsComponent                    from 'rapidfab/components/records/run/edit'
 import { reduxForm }                    from 'redux-form'
 import * as Selectors                     from 'rapidfab/selectors'
+import Moment                           from 'moment'
 
 const fields = [
   'actuals.materials.base',
@@ -33,6 +34,23 @@ class RunsContainer extends Component {
   render() {
     return <RunsComponent {...this.props}/>
   }
+}
+
+function handleDisplayTime(seconds) {
+  var convertedTime = Moment.duration(seconds, 'seconds')
+  var displayTime = `${convertedTime.seconds()} s`
+  if(convertedTime.minutes()) {
+    displayTime = `${convertedTime.minutes()} m ${displayTime}`
+    if(convertedTime.hours()) {
+      displayTime = `${convertedTime.hours()} h ${displayTime}`
+      if(convertedTime.days()) {
+        displayTime = `${convertedTime.days()} d ${displayTime}`
+      }
+    }
+  }
+  return (
+    <span>{displayTime}</span>
+  )
 }
 
 function mapDispatchToProps(dispatch) {
@@ -94,6 +112,7 @@ function mapStateToProps(state, props) {
       'complete',
       'error',
     ],
+    handleDisplayTime : handleDisplayTime,
   }
 }
 

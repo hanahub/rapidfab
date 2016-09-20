@@ -41,7 +41,8 @@ const LinkField = ({uri, location}) => {
   return (<BS.FormControl.Static><a href={fullLocation}>{display}</a></BS.FormControl.Static>);
 };
 
-const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
+
+const EditRun = ({ fields, handleDisplayTime, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -92,14 +93,14 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
                 {fields.estimates.time.print.value ?
-                  <FormattedDuration value={fields.estimates.time.print.value}/> :
+                  handleDisplayTime(fields.estimates.time.print.value) :
                     (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPostProcessingTime" defaultMessage='Estimated Post Processing Time'/>}>
                 {fields.estimates.time.post_processing.value ?
-                  <FormattedDuration value={fields.estimates.time.post_processing.value}/> :
+                  handleDisplayTime(fields.estimates.time.post_processing.value) :
                     (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
                 }
               </BS.ListGroupItem>
