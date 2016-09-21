@@ -44,7 +44,6 @@ const LinkField = ({uri, location}) => {
 };
 
 const TimeDisplay = ({ seconds }) => {
-  debugger;
   var convertedTime = Moment.duration(seconds, 'seconds')
   var displayTime = `${convertedTime.seconds()} s`
   if(convertedTime.minutes()) {
