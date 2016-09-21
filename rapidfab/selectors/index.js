@@ -251,3 +251,26 @@ export const getResourcesForQueues = createSelector(
     }, []), 'name')
   }
 )
+
+export const getRunStatusChartData = createSelector(
+  [ getRuns ],
+  runs => {
+    const groupedByStatus = _.assign({
+      calculating: [],
+      calculated: [],
+      'post-processing': [],
+      printing: [],
+      queued: [],
+      error: [],
+      complete: []
+    }, _.groupBy(runs, 'status'))
+    return [
+        groupedByStatus.calculating.length + groupedByStatus.calculated.length,
+        groupedByStatus.queued.length,
+        groupedByStatus.printing.length,
+        groupedByStatus['post-processing'].length,
+        groupedByStatus.error.length,
+        groupedByStatus.complete.length
+    ]
+  }
+)

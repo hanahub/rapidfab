@@ -66,6 +66,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.13.0",
+    "chart.js": "^2.2.2",
     "font-awesome": "^4.6.3",
     "font-awesome-webpack": "0.0.4",
     "griddle": "^0.1.2",

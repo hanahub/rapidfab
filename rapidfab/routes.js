@@ -1,4 +1,4 @@
-import Home                         from 'rapidfab/components/home'
+import Home                         from 'rapidfab/containers/home'
 import About                        from 'rapidfab/components/about'
 
 import InventoryLocations           from 'rapidfab/containers/inventory/locations'
