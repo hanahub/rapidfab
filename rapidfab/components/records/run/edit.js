@@ -4,6 +4,8 @@ import * as BS                                from 'react-bootstrap'
 import Fa                                     from 'react-fontawesome'
 import Error                                  from 'rapidfab/components/error'
 import Grid, { IdColumn }                     from 'rapidfab/components/grid'
+import Moment                                 from 'moment'
+
 import {
   FormattedDate,
   FormattedDuration,
@@ -39,6 +41,23 @@ const LinkField = ({uri, location}) => {
   const display = uuid.substr(uuid.length - 6);
   const fullLocation = location + uuid
   return (<BS.FormControl.Static><a href={fullLocation}>{display}</a></BS.FormControl.Static>);
+};
+
+const TimeDisplay = ({ seconds }) => {
+  var convertedTime = Moment.duration(seconds, 'seconds')
+  var displayTime = `${convertedTime.seconds()} s`
+  if(convertedTime.minutes()) {
+    displayTime = `${convertedTime.minutes()} m ${displayTime}`
+    if(convertedTime.hours()) {
+      displayTime = `${convertedTime.hours()} h ${displayTime}`
+      if(convertedTime.days()) {
+        displayTime = `${convertedTime.days()} d ${displayTime}`
+      }
+    }
+  }
+  return (
+    <span>{displayTime}</span>
+  );
 };
 
 const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
@@ -92,14 +111,14 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
                 {fields.estimates.time.print.value ?
-                  <FormattedDuration value={fields.estimates.time.print.value}/> :
+                  <TimeDisplay seconds={fields.estimates.time.print.value} /> :
                     (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPostProcessingTime" defaultMessage='Estimated Post Processing Time'/>}>
                 {fields.estimates.time.post_processing.value ?
-                  <FormattedDuration value={fields.estimates.time.post_processing.value}/> :
+                  <TimeDisplay seconds={fields.estimates.time.post_processing.value} /> :
                     (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
                 }
               </BS.ListGroupItem>
