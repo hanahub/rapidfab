@@ -3,6 +3,51 @@ import Chart, { SeriesStyle }   from 'rapidfab/components/chart'
 import * as BS                  from 'react-bootstrap'
 import Error                    from 'rapidfab/components/error'
 import Fa                       from 'react-fontawesome'
+import { FormattedMessage, FormattedDate }    from 'react-intl'
+import Grid, {
+  IdColumn,
+  NumberColumn,
+  ImageColumn,
+  DateColumn,
+} from 'rapidfab/components/grid'
+
+const panelBodyStyle = {
+  height: 359,
+  overflow: "scroll"
+}
+
+const LastTenOrders = ({ data }) => (
+  <BS.Panel header="Last Ten Orders">
+    <div style={panelBodyStyle} fill>
+      <Grid
+        data={data}
+        columns={[
+          "id",
+          "name",
+          "quantity",
+          "created"
+        ]}
+        columnMeta={[{
+          displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
+          columnName: "id",
+          customComponent: IdColumn("order"),
+          locked: true
+        }, {
+          columnName: "name",
+          displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
+        }, {
+          customComponent: NumberColumn,
+          columnName: "quantity",
+          displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
+        }, {
+          customComponent: DateColumn,
+          columnName: "created",
+          displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
+        }]}
+      />
+    </div>
+  </BS.Panel>
+)
 
 const RunsByStatusChart = ({ data }) => {
   const datasets = [{
@@ -35,13 +80,29 @@ const RunsByStatusChart = ({ data }) => {
   />
 }
 
-const Home = ({ fetching, apiErrors, chartData }) => (
+const Home = ({ fetching, apiErrors, data }) => (
   <BS.Grid fluid>
+    <BS.Row>
+      <BS.Col xs={12}>
+        <BS.ButtonToolbar className="pull-right">
+          <BS.Button bsStyle="primary" bsSize="small" href="#/records/new/order">
+            <Fa name='list'/> <FormattedMessage id="record.order.add" defaultMessage='Add Order'/>
+          </BS.Button>
+          <BS.Button bsStyle="primary" bsSize="small" href="#/records/run">
+            <Fa name='files-o'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
+          </BS.Button>
+       </BS.ButtonToolbar>
+      </BS.Col>
+    </BS.Row>
+
+    <hr/>
+
     <BS.Row>
       <BS.Col xs={12}>
         <Error errors={apiErrors}/>
       </BS.Col>
     </BS.Row>
+
     {(() => {
       if(fetching) {
         return (
@@ -57,9 +118,10 @@ const Home = ({ fetching, apiErrors, chartData }) => (
         return (
           <BS.Row>
             <BS.Col xs={6}>
+              <LastTenOrders data={data.lastTenOrders}/>
             </BS.Col>
             <BS.Col xs={6}>
-              <RunsByStatusChart data={chartData.runStatus}/>
+              <RunsByStatusChart data={data.runStatus}/>
             </BS.Col>
           </BS.Row>
         )

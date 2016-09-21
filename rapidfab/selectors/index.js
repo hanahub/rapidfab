@@ -1,6 +1,7 @@
 import _                  from "lodash"
 import { createSelector } from 'reselect'
 import { extractUuid }    from 'rapidfab/reducers/makeApiReducers'
+import moment             from 'moment'
 
 export const getStateResources           = state => state.resources
 export const getRoute                    = (state, props) => props.route
@@ -272,5 +273,14 @@ export const getRunStatusChartData = createSelector(
         groupedByStatus.error.length,
         groupedByStatus.complete.length
     ]
+  }
+)
+
+export const getLastTenOrders = createSelector(
+  [ getOrders ],
+  orders => {
+    return _.takeRight(_.sortBy(orders, order => {
+      return moment(order.created).unix()
+    }), 10)
   }
 )

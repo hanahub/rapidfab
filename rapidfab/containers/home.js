@@ -18,20 +18,23 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
       dispatch(Actions.Api.wyatt.run.list())
+      dispatch(Actions.Api.wyatt.order.list())
     }
   }
 }
 
 function mapStateToProps(state) {
   const {
-    run
+    run,
+    order,
   } = state.ui.wyatt
 
   return {
-    fetching        : run.list.fetching,
-    apiErrors       : run.list.errors,
-    chartData       : {
-      runStatus   : Selectors.getRunStatusChartData(state)
+    fetching        : order.list.fetching || run.list.fetching,
+    apiErrors       : _.concat(order.list.errors, run.list.errors),
+    data            : {
+      runStatus     : Selectors.getRunStatusChartData(state),
+      lastTenOrders : Selectors.getLastTenOrders(state)
     }
   }
 }
