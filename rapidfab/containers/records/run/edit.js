@@ -36,23 +36,6 @@ class RunsContainer extends Component {
   }
 }
 
-function handleDisplayTime(seconds) {
-  var convertedTime = Moment.duration(seconds, 'seconds')
-  var displayTime = `${convertedTime.seconds()} s`
-  if(convertedTime.minutes()) {
-    displayTime = `${convertedTime.minutes()} m ${displayTime}`
-    if(convertedTime.hours()) {
-      displayTime = `${convertedTime.hours()} h ${displayTime}`
-      if(convertedTime.days()) {
-        displayTime = `${convertedTime.days()} d ${displayTime}`
-      }
-    }
-  }
-  return (
-    <span>{displayTime}</span>
-  )
-}
-
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: props => {
@@ -112,7 +95,6 @@ function mapStateToProps(state, props) {
       'complete',
       'error',
     ],
-    handleDisplayTime : handleDisplayTime,
   }
 }
 
