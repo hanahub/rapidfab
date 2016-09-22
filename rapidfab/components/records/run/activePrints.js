@@ -57,7 +57,7 @@ const Item = ({ print, printer, selected, onSelect }) => (
   </BS.ListGroupItem>
 )
 
-const PrintsList = ({ prints, printer, selected, onSelect, onDeactivate }) => (
+const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) => (
   <BS.Panel header={<Header onDeactivate={onDeactivate}/>}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
@@ -90,14 +90,8 @@ const PrintsList = ({ prints, printer, selected, onSelect, onDeactivate }) => (
   </BS.Panel>
 )
 
-PrintsList.propTypes = {
-  prints: PropTypes.object.isRequired,
-  selected: PropTypes.object,
-  onSelect: PropTypes.func,
-}
-
-PrintsList.defaultProps = {
+ActivePrints.defaultProps = {
   onSelect: () => true
 }
 
-export default PrintsList
+export default ActivePrints

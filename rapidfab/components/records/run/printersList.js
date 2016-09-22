@@ -31,7 +31,10 @@ const PrinterItem = ({ printer, selected, onSelect }) => (
         </span>
       </BS.Col>
       <BS.Col xs={2}>
-        <FormattedDate value={printer.leadTime}/>
+        {printer.leadTime ?
+          <FormattedDate value={printer.leadTime}/> :
+          (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+        }
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>
@@ -72,12 +75,6 @@ const PrintersList = ({ printers, selected, onSelect }) => (
     </BS.ListGroup>
   </BS.Panel>
 )
-
-PrintersList.propTypes = {
-  printers: PropTypes.object.isRequired,
-  selected: PropTypes.object,
-  onSelect: PropTypes.func,
-}
 
 PrintersList.defaultProps = {
   onSelect: () => true
