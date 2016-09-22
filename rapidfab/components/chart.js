@@ -1,0 +1,66 @@
+import _                    from 'lodash';
+import Fa                   from 'react-fontawesome';
+import React, { Component } from 'react';
+import * as BS              from 'react-bootstrap';
+import ChartJS              from 'chart.js';
+
+export const SeriesStyle = {
+  Warning : { color: "#e4d836", hover: "#ccbf1b" },
+  Info    : { color: "#9f86ff", hover: "#7753ff" },
+  Danger  : { color: "#e64759", hover: "#dc1e33" },
+  Success : { color: "#1bc98e", hover: "#159c6e" },
+  Default : { color: "#ffffff", hover: "#e6e6e6" },
+  Primary : { color: "#1ca8dd", hover: "#1686b0" }
+};
+
+export const SeriesStyles = _.toArray(SeriesStyle);
+
+ChartJS.defaults.global.defaultFontColor = '#fff';
+ChartJS.defaults.global.defaultFontFamily = 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif';
+
+class Chart extends Component {
+  componentDidMount() {
+    let datasets = _.map(this.props.data.datasets, (dataset, index) => {
+      let style = SeriesStyles[index];
+      return _.assign({
+        borderColor: style.color,
+        hoverBorderColor: style.hover,
+        backgroundColor: style.color,
+        hoverBackgroundColor: style.hover,
+        pointHoverColor: style.hover,
+        pointBackgroundColor: style.color,
+        borderWidth: this.props.type === 'line' ? 2 : 0,
+        fill: false
+      }, dataset);
+    });
+    let chart = new ChartJS(this.refs.chart, {
+      type: this.props.type,
+      data: _.assign({}, this.props.data, { datasets: datasets }),
+      options: _.merge({
+        hover: { mode: 'single' },
+        legend: { position: 'bottom' },
+      }, this.props.options)
+    });
+    this.setState({ chart: chart });
+  }
+
+  componentDidUpdate () {
+    let chart = this.state.chart;
+    let data = this.props.data;
+    for(let index = 0; index < data.datasets.length && index < chart.data.datasets.length; ++index) {
+      chart.data.datasets[index].data = data.datasets[index].data;
+    }
+    chart.data.labels = data.labels;
+    chart.update();
+  }
+
+  render() {
+    return (
+      <BS.Panel header={this.props.title}>
+        <canvas ref='chart' height='300' width='600'></canvas>
+      </BS.Panel>
+    );
+  }
+};
+
+export default Chart
