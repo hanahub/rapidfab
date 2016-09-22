@@ -61,7 +61,7 @@ const NewOrderForm = ({ fields, materials, model, providers }) => (
       <BS.FormGroup controlId="uxSupportMaterials">
         <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
         <BS.FormControl componentClass="select" {...fields.materials.support}>
-          <option key="placeholder" value="" selected disabled>Select a Support Material</option>
+          <option key="placeholder" value="" selected disabled>No Support</option>
           {_.map(materials, material => (
             <option key={material.uri} value={material.uri}>{material.name}</option>
           ))}
