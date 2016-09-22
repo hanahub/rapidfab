@@ -50,7 +50,7 @@ const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetchin
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processors">
-            <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessor" defaultMessage='Post Processors'/>
+            <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Post Processors'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
