@@ -81,7 +81,7 @@ function mapDispatchToProps(dispatch) {
 function getSnapshotFromOrder(order, models) {
   if(!order || models.length === 0) return ''
   const model = models.filter(model => model.uri === order.model)
-  return !!model ? model[0].snapshot_content : ''
+  return (!!model && model.length) ? model[0].snapshot_content : ''
 }
 
 function mapStateToProps(state, props) {
