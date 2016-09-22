@@ -53,7 +53,7 @@ const ThirdPartyProviders = ({ providers, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/third-party-provider" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.third_party_provider.add" defaultMessage='Add Third Party Provider'/>
+          <Fa name='plus'/> <FormattedMessage id="record.thirdPartyProvider.add" defaultMessage='Add Third Party Provider'/>
         </BS.Button>
       </BS.Col>
     </BS.Row>
