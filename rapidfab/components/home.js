@@ -74,7 +74,14 @@ const RunsByStatusChart = ({ data }) => {
     title="Run Status"
     type="bar"
     data={{
-      labels: ["Pending", "Queued", "Printing", "Post Processing", "Error", "Complete"],
+      labels: [
+        <FormattedMessage id="status.pending" defaultMessage='Pending'/>,
+        <FormattedMessage id="status.queued" defaultMessage='Queued'/>,
+        <FormattedMessage id="status.printing" defaultMessage='Printing'/>,
+        <FormattedMessage id="status.postProcessing" defaultMessage='Post Processing'/>,
+        <FormattedMessage id="status.error" defaultMessage='Error'/>,
+        <FormattedMessage id="status.complete" defaultMessage='Complete'/>
+      ],
       datasets
     }}
   />

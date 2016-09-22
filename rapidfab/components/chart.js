@@ -1,8 +1,9 @@
-import _                    from 'lodash';
-import Fa                   from 'react-fontawesome';
-import React, { Component } from 'react';
-import * as BS              from 'react-bootstrap';
-import ChartJS              from 'chart.js';
+import _                    from 'lodash'
+import Fa                   from 'react-fontawesome'
+import React, { Component } from 'react'
+import * as BS              from 'react-bootstrap'
+import ChartJS              from 'chart.js'
+import { injectIntl }       from 'react-intl'
 
 export const SeriesStyle = {
   Warning : { color: "#e4d836", hover: "#ccbf1b" },
@@ -17,6 +18,15 @@ export const SeriesStyles = _.toArray(SeriesStyle);
 
 ChartJS.defaults.global.defaultFontColor = '#fff';
 ChartJS.defaults.global.defaultFontFamily = 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif';
+
+function formatLabel(intl, label) {
+  if(typeof label !== "object") return label
+  return intl.formatMessage(label.props ? label.props : label)
+}
+
+function formatLabels(intl, labels) {
+  return _.map(labels, label => formatLabel(intl, label))
+}
 
 class Chart extends Component {
   componentDidMount() {
@@ -35,7 +45,10 @@ class Chart extends Component {
     });
     let chart = new ChartJS(this.refs.chart, {
       type: this.props.type,
-      data: _.assign({}, this.props.data, { datasets: datasets }),
+      data: _.assign({}, this.props.data, {
+        labels: formatLabels(this.props.intl, this.props.data.labels),
+        datasets
+      }),
       options: _.merge({
         hover: { mode: 'single' },
         legend: { position: 'bottom' },
@@ -50,7 +63,7 @@ class Chart extends Component {
     for(let index = 0; index < data.datasets.length && index < chart.data.datasets.length; ++index) {
       chart.data.datasets[index].data = data.datasets[index].data;
     }
-    chart.data.labels = data.labels;
+    chart.data.labels = formatLabels(this.props.intl, data.labels);
     chart.update();
   }
 
@@ -63,4 +76,4 @@ class Chart extends Component {
   }
 };
 
-export default Chart
+export default injectIntl(Chart);

@@ -78,9 +78,9 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
           <BS.FormGroup controlId="uxStatus">
             <BS.ControlLabel><FormattedMessage id="field.status" defaultMessage='Status'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.status}>
-              <option value="in-use"><FormattedMessage id="field.status.inUse" defaultMessage='In Use'/></option>
-              <option value="available"><FormattedMessage id="field.status.available" defaultMessage='Available'/></option>
-              <option value="exhausted"><FormattedMessage id="field.status.exhausted" defaultMessage='Exhausted'/></option>
+              <option value="in-use"><FormattedMessage id="status.inUse" defaultMessage='In Use'/></option>
+              <option value="available"><FormattedMessage id="status.available" defaultMessage='Available'/></option>
+              <option value="exhausted"><FormattedMessage id="status.exhausted" defaultMessage='Exhausted'/></option>
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxQuantity">
