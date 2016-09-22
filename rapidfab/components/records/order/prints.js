@@ -16,11 +16,11 @@ const Header = ( prints ) => {
 
 const PrintItem = ({ print }) => {
   const status = {
-    complete  : (<FormattedMessage id="print.status.complete" defaultMessage="Complete"/>),
-    created   : (<FormattedMessage id="print.status.created" defaultMessage="Created"/>),
-    error     : (<FormattedMessage id="print.status.error" defaultMessage="Error"/>),
-    printing  : (<FormattedMessage id="print.status.printing" defaultMessage="Printing"/>),
-    scheduled : (<FormattedMessage id="print.status.scheduled" defaultMessage="Scheduled"/>),
+    complete  : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
+    created   : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
+    error     : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
+    printing  : (<FormattedMessage id="status.printing" defaultMessage="Printing"/>),
+    scheduled : (<FormattedMessage id="status.scheduled" defaultMessage="Scheduled"/>),
   }[print.status];
 
   return (
