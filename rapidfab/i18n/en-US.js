@@ -117,6 +117,8 @@ export default {
   "field.packageSize"               : "Package Size",
   "field.phone"                     : "Phone",
   "field.preview"                   : "Preview",
+  "field.prints"                    : "Prints",
+  "field.printID"                   : "Print ID",
   "field.printer"                   : "Printer",
   "field.printerType"               : "Printer Type",
   "field.postProcessor"             : "Post-Processor",

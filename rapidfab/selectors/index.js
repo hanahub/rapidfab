@@ -183,6 +183,19 @@ export const getRunsForOrder = createSelector(
   }
 );
 
+export const getPrintsForRun = createSelector(
+  [ getPredicate, getStateResources, getPrints ],
+  (run, resources, prints) => {
+    const runs = _.reduce(prints, (results, print) => {
+      if(run && print.run == run.uri) {
+        results.push(print);
+      }
+      return results;
+    }, []);
+    return runs;
+  }
+);
+
 export const getPrintsCreated = createSelector(
   [ getStatePrints, getStateResources ],
   (uuids, resources) => {

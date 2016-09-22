@@ -63,15 +63,7 @@ function mapStateToProps(state, props) {
 
   const runResource = Selectors.getRouteResource(state, props)
   const orders = Selectors.getOrders(state)
-  let prints = []
-  if (runResource) {
-    prints = Selectors.getPrints(state)
-    prints = runResource.prints.map(uri => {
-      const match = prints.filter(print => print.uri === uri)
-      // when there is no match, just display the id of the run
-      return match.length > 0 ? match : {id: uri.slice(-7, -1), order: null}
-    })
-  }
+  const prints = Selectors.getPrintsForRun(state, runResource);
 
   return {
     apiErrors     : _.concat(

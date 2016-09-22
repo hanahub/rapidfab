@@ -60,7 +60,8 @@ const TimeDisplay = ({ seconds }) => {
   );
 };
 
-const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }) => (
+const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, orders, prints }) => {
+  return (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -204,23 +205,25 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
             <LinkField uri={fields.post_processor.value} location="#/records/post-processor/"/>
           </FormRow>
 
-          <Grid
-            data={prints}
-            columns={[
-              "id",
-              "order",
-            ]}
-            columnMeta={[{
-              displayName: <FormattedMessage id="field.id" defaultMessage='Print Id'/>,
-              columnName: "print.id",
-              customComponent: IdColumn("print"),
-              locked: true
-            }, {
-              displayName: <FormattedMessage id="field.order" defaultMessage='Order Id'/>,
-              columnName: "order.id",
-              customComponent: IdColumn("order"),
-            }]}
-          />
+          <BS.Panel header={<FormattedMessage id="field.prints" defaultMessage="Prints"/>}>
+            <Grid
+              data={prints}
+              columns={[
+                "id",
+                "order",
+              ]}
+              columnMeta={[{
+                displayName     : <FormattedMessage id="field.id" defaultMessage='Print ID'/>,
+                columnName      : "id",
+                customComponent : IdColumn("print"),
+                locked          : true
+              }, {
+                displayName     : <FormattedMessage id="field.order" defaultMessage='Order ID'/>,
+                columnName      : "order",
+                customComponent : IdColumn("order", "order", orders),
+              }]}
+            />
+          </BS.Panel>
 
         </BS.Col>
 
@@ -229,6 +232,7 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, prints }
     </BS.Grid>
   </BS.Form>
 
-)
+);
+}
 
 export default EditRun
