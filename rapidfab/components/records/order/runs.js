@@ -19,7 +19,7 @@ const RunItem = ({ run }) => {
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={6}>
-        <a href={`#/records/run/${run.id}`}>{run.id}</a>
+        <a href={`#/records/run/${run.uuid}`}>{run.uuid}</a>
       </BS.Col>
       <BS.Col xs={6}>
         {run.status}
