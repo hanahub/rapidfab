@@ -76,45 +76,51 @@ const Thumbnail = ({src}) => {
   }
 }
 
-const OrderContainer = ({ fields, materials, models, modelsIsFetching, prints, providers, runs, snapshot}) => (
+const OrderContainer = (props) => (
   <div>
     <BS.Row>
       <BS.Col xs={4}>
-        <Thumbnail src={snapshot} />
+        <Thumbnail src={props.snapshot} />
       </BS.Col>
       <BS.Col xs={8}>
-        <OrderForm fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} providers={providers}/>
+        <OrderForm
+          fields={props.fields}
+          materials={props.materials}
+          models={props.models}
+          modelsIsFetching={props.modelsIsFetching}
+          providers={props.providers}
+        />
       </BS.Col>
     </BS.Row>
 
     <BS.Row>
       <BS.Col xs={4}>
-        <OrderEstimates estimates={fields.estimates}/>
+        <OrderEstimates estimates={props.fields.estimates}/>
       </BS.Col>
       <BS.Col xs={8}>
-        <OrderRuns runs={runs}/>
-        <OrderPrints prints={prints}/>
+        <OrderRuns runs={props.runs}/>
+        <OrderPrints prints={props.prints}/>
       </BS.Col>
     </BS.Row>
   </div>
 )
 
-const Order = ({ apiErrors, fields, handleSubmit, fetching, onDelete, materials, models, modelsIsFetching, prints, providers, runs, snapshot }) => (
-  <BS.Form horizontal onSubmit={handleSubmit}>
+const Order = (props) => (
+  <BS.Form horizontal onSubmit={props.handleSubmit}>
     <BS.Grid fluid>
-      <Navigation fields={fields} onDelete={onDelete}/>
+      <Navigation fields={props.fields} onDelete={props.onDelete}/>
 
       <hr/>
 
       <BS.Row>
         <BS.Col xs={12}>
-          <Error errors={apiErrors}/>
+          <Error errors={props.apiErrors}/>
         </BS.Col>
       </BS.Row>
 
-      {fetching ?
+      {props.fetching ?
         <Loader /> :
-        <OrderContainer fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} prints={prints} providers={providers} runs={runs} snapshot={snapshot} />
+        <OrderContainer {...props}/>
       }
 
     </BS.Grid>
