@@ -20,7 +20,7 @@ const RunItem = ({ run }) => {
     <BS.Row>
       <BS.Col xs={6}>
         <a href={`#/records/run/${run.uuid}`}>
-          <abbr title={run.uuid} style={{ cursor: "pointer" }}>{run.uuid}</abbr>
+          <abbr title={run.uuid} style={{ cursor: "pointer" }}>{run.id}</abbr>
         </a>
       </BS.Col>
       <BS.Col xs={6}>
