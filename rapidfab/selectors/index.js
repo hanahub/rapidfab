@@ -174,7 +174,6 @@ export const getRunsForOrder = createSelector(
       if(!print.run) return results;
       const runUUID = extractUuid(print.run);
       const run = resources[runUUID];
-      console.log("looking at run", run);
       if(run) {
         results.push(run);
       }
