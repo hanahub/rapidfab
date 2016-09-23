@@ -171,6 +171,7 @@ export const getRunsForOrder = createSelector(
   [ getPredicate, getStateResources, getPrintsForOrder ],
   (order, resources, prints) => {
     const runs = _.reduce(prints, (results, print) => {
+      if(!print.run) return results;
       const runUUID = extractUuid(print.run);
       const run = resources[runUUID];
       console.log("looking at run", run);
