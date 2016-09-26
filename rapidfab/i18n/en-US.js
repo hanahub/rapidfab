@@ -80,7 +80,6 @@ export default {
   "record.thirdPartyProvider.add"     : "Add Third Party Provider",
   "record.user.add"                   : "Add User",
 
-<<<<<<< HEAD
   "field.accessToAllLocations"        : "Access to All Locations",
   "field.actualMaterialUsed"          : "Actual Material Used",
   "field.actualPrintTime"             : "Actual Print Time",
