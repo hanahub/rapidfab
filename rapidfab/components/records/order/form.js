@@ -12,9 +12,9 @@ import {
 } from 'rapidfab/components/formTools';
 
 
-const FormRow = ({controlId, id, defaultMessage, children}) => (
+const FormRow = ({id, defaultMessage, children}) => (
   <BS.FormGroup>
-    <BS.Col xs={3} controlId={controlId}>
+    <BS.Col xs={3}>
       <BS.ControlLabel><FormattedMessage id={id} defaultMessage={defaultMessage}/>:</BS.ControlLabel>
     </BS.Col>
     <BS.Col xs={9}>
@@ -24,7 +24,6 @@ const FormRow = ({controlId, id, defaultMessage, children}) => (
 )
 
 const ModelSelect = ({models, modelsIsFetching, value}) => {
-  console.log('models is fetching', modelsIsFetching);
   if(modelsIsFetching) {
     return (
       <BS.FormControl.Static>
@@ -43,51 +42,51 @@ const ModelSelect = ({models, modelsIsFetching, value}) => {
 
 const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers }) => (
   <div>
-    <FormRow controlId="uxId" id="field.id" defaultMessage="ID">
+    <FormRow id="field.id" defaultMessage="ID">
       <BS.FormControl.Static>
         {fields.id.value}
       </BS.FormControl.Static>
     </FormRow>
 
-    <FormRow controlId="uxName" id="field.name" defaultMessage="Name">
+    <FormRow id="field.name" defaultMessage="Name">
       <BS.FormControl type="text" required {...fields.name}/>
     </FormRow>
 
-    <FormRow controlId="uxModel" id="field.model" defaultMessage="Model">
+    <FormRow id="field.model" defaultMessage="Model">
       <ModelSelect models={models} modelsIsFetching={modelsIsFetching} {...fields.model}/>
     </FormRow>
 
-    <FormRow controlId="uxQuantity" id="field.quantity" defaultMessage="Quantity">
+    <FormRow id="field.quantity" defaultMessage="Quantity">
       <BS.FormControl type="number" required {...fields.quantity}/>
     </FormRow>
 
-    <FormRow controlId="uxBaseMaterial" id="field.baseMaterial" defaultMessage="Base Material">
+    <FormRow id="field.baseMaterial" defaultMessage="Base Material">
       <BS.FormControl componentClass="select" required {...fields.materials.base}>
         <option value="" disabled>Select a Material</option>
         {_.map(materials, material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
       </BS.FormControl>
     </FormRow>
 
-    <FormRow controlId="uxSupportMaterial" id="field.supportMaterial" defaultMessage="Support Material">
+    <FormRow id="field.supportMaterial" defaultMessage="Support Material">
       <BS.FormControl componentClass="select" {...fields.materials.support}>
         <option value="">None</option>
         {_.map(materials, material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
       </BS.FormControl>
     </FormRow>
 
-    <FormRow controlId="uxShippingName" id="field.shippingName" defaultMessage="Shipping Name">
+    <FormRow id="field.shippingName" defaultMessage="Shipping Name">
       <FormControlTextCareful {...fields.shipping.name}/>
     </FormRow>
 
-    <FormRow controlId="uxShippingAddress" id="field.shippingAddress" defaultMessage="Shipping Address">
+    <FormRow id="field.shippingAddress" defaultMessage="Shipping Address">
       <FormControlTextArea {...fields.shipping.address}/>
     </FormRow>
 
-    <FormRow controlId="uxTrackingNumber" id="field.trackingNumber" defaultMessage="Tracking Number">
+    <FormRow id="field.trackingNumber" defaultMessage="Tracking Number">
       <FormControlTextCareful {...fields.shipping.tracking}/>
     </FormRow>
 
-    <FormRow controlId="uxThirdPartyProvider" id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
+    <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
       <BS.FormControl componentClass="select" {...fields.third_party_provider}>
         <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
         {_.map(providers, provider => (
@@ -96,7 +95,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
       </BS.FormControl>
     </FormRow>
 
-    <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
+    <FormRow id="field.created" defaultMessage="Created">
       <BS.FormControl.Static>
         {fields.created.value ?
           <FormattedDate value={fields.created.value}/> :

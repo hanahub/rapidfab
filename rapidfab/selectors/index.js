@@ -167,6 +167,34 @@ export const getPrintsForOrder = createSelector(
   }
 );
 
+export const getRunsForOrder = createSelector(
+  [ getPredicate, getStateResources, getPrintsForOrder ],
+  (order, resources, prints) => {
+    const runs = _.reduce(prints, (results, print) => {
+      if(!print.run) return results;
+      const runUUID = extractUuid(print.run);
+      const run = resources[runUUID];
+      if(run) {
+        results.push(run);
+      }
+      return results;
+    }, []);
+    return runs;
+  }
+);
+
+export const getPrintsForRun = createSelector(
+  [ getPredicate, getStateResources, getPrints ],
+  (run, resources, prints) => {
+    const runs = _.reduce(prints, (results, print) => {
+      if(run && print.run == run.uri) {
+        results.push(print);
+      }
+      return results;
+    }, []);
+    return runs;
+  }
+);
 
 export const getPrintsCreated = createSelector(
   [ getStatePrints, getStateResources ],

@@ -5,6 +5,7 @@ import { FormattedMessage }   from 'rapidfab/i18n'
 import OrderForm              from './form'
 import OrderEstimates         from './estimates'
 import OrderPrints            from './prints'
+import OrderRuns              from './runs'
 import Error                  from 'rapidfab/components/error'
 import ThumbnailPlaceholder   from 'rapidfab/images/thumbnail-placeholder.png'
 
@@ -75,44 +76,51 @@ const Thumbnail = ({src}) => {
   }
 }
 
-const OrderContainer = ({ fields, materials, models, modelsIsFetching, prints, snapshot, providers }) => (
+const OrderContainer = (props) => (
   <div>
     <BS.Row>
       <BS.Col xs={4}>
-        <Thumbnail src={snapshot} />
+        <Thumbnail src={props.snapshot} />
       </BS.Col>
       <BS.Col xs={8}>
-        <OrderForm fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} providers={providers}/>
+        <OrderForm
+          fields={props.fields}
+          materials={props.materials}
+          models={props.models}
+          modelsIsFetching={props.modelsIsFetching}
+          providers={props.providers}
+        />
       </BS.Col>
     </BS.Row>
 
     <BS.Row>
       <BS.Col xs={4}>
-        <OrderEstimates estimates={fields.estimates}/>
+        <OrderEstimates estimates={props.fields.estimates}/>
       </BS.Col>
       <BS.Col xs={8}>
-        <OrderPrints prints={prints}/>
+        <OrderRuns runs={props.runs}/>
+        <OrderPrints prints={props.prints}/>
       </BS.Col>
     </BS.Row>
   </div>
 )
 
-const Order = ({ fields, handleSubmit, fetching, onDelete, materials, models, modelsIsFetching, prints, apiErrors, snapshot, providers }) => (
-  <BS.Form horizontal onSubmit={handleSubmit}>
+const Order = (props) => (
+  <BS.Form horizontal onSubmit={props.handleSubmit}>
     <BS.Grid fluid>
-      <Navigation fields={fields} onDelete={onDelete}/>
+      <Navigation fields={props.fields} onDelete={props.onDelete}/>
 
       <hr/>
 
       <BS.Row>
         <BS.Col xs={12}>
-          <Error errors={apiErrors}/>
+          <Error errors={props.apiErrors}/>
         </BS.Col>
       </BS.Row>
 
-      {fetching ?
+      {props.fetching ?
         <Loader /> :
-        <OrderContainer fields={fields} materials={materials} models={models} modelsIsFetching={modelsIsFetching} prints={prints} snapshot={snapshot} providers={providers} />
+        <OrderContainer {...props}/>
       }
 
     </BS.Grid>

@@ -63,6 +63,7 @@ export default {
   "record.material"                   : "Material",
   "record.material.add"               : "Add Material",
   "record.material.new"               : "New Material",
+  "record.noRuns"                     : "Runs - order not assigned to any runs yet",
   "record.order"                      : "Order",
   "record.order.add"                  : "Add Order",
   "record.order.new"                  : "New Order",
@@ -73,6 +74,7 @@ export default {
   "record.printCompleteCount"         : "Prints - {complete} / {total} complete",
   "record.printer.add"                : "Add Printer",
   "record.printerType.add"            : "Add Printer Type",
+  "record.runCompleteCount"           : "Runs - {complete} / {total} complete",
   "record.run.add"                    : "Add Run",
   "record.stock"                      : "Stock",
   "record.stock.add"                  : "Add Stock",
@@ -116,6 +118,7 @@ export default {
   "field.material"                    : "Material",
   "field.materials"                   : "Materials",
   "field.materialType"                : "Material Type",
+  "field.prints"                      : "Prints",
   "field.model"                       : "Model",
   "field.processingTime"              : "Processing Time",
   "field.name"                        : "Name",
@@ -149,5 +152,5 @@ export default {
   "field.units"                       : "Units",
   "field.units.cm3"                   : "Cm3",
   "field.units.grams"                 : "Grams",
-  "field.volume"                      : "Volume",
+  "field.volume"                      : "Volume"
 }
