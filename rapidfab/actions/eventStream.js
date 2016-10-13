@@ -79,7 +79,5 @@ function createAction(event) {
 }
 
 export function subscribe(dispatch, host) {
-  return dispatch => {
-    new EventStream(host, event => dispatch(createAction(event)))
-  }
+  new EventStream(host, event => dispatch(createAction(event)))
 }
