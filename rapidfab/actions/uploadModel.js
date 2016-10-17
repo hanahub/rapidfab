@@ -4,14 +4,14 @@ import { postForm } from "rapidfab/api/makeApi"
 
 function uploadProgress(percent) {
   return {
-    type: Constants.UPLOAD_PROGRESS,
+    type: Constants.UPLOAD_MODEL_PROGRESS,
     percent: percent,
   }
 }
 
 function uploadModel(uploadUrl) {
   return {
-    type: Constants.UPLOAD_MODEL,
+    type: Constants.UPLOAD_MODEL_REQUEST,
     uploadUrl: uploadUrl
   }
 }
