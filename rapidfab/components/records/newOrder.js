@@ -30,7 +30,7 @@ const BreadCrumbs = ({ fields }) => (
   </BS.Row>
 )
 
-const NewOrderForm = ({ fields, materials, model, providers }) => (
+const NewOrderForm = ({ fields, materials, providers }) => (
   <BS.Row>
     <BS.Col xs={12}>
       <BS.FormGroup controlId="uxName">
