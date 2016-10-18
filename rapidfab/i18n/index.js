@@ -10,6 +10,7 @@ import jaMessages           from 'rapidfab/i18n/ja.js';
 ReactIntl.addLocaleData(enLocaleData);
 ReactIntl.addLocaleData(jaLocaleData);
 
+export const FormattedTime = ReactIntl.FormattedTime
 export const FormattedDate = ReactIntl.FormattedDate
 export const FormattedPlural = ReactIntl.FormattedPlural
 export const FormattedMessage = ReactIntl.FormattedMessage
