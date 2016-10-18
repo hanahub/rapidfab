@@ -8,7 +8,7 @@ import Grid, {
   NumberColumn,
   ImageColumn,
   CapitalizeColumn,
-  DateColumn,
+  DateTimeColumn,
   BooleanColumn,
   VolumeColumn
 } from 'rapidfab/components/grid';
@@ -80,7 +80,7 @@ const Orders = ({ orders, materials, fetching, apiErrors }) => (
               columnName: "quantity",
               displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
             }, {
-              customComponent: DateColumn,
+              customComponent: DateTimeColumn,
               columnName: "created",
               displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
             }]}

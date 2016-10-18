@@ -6,7 +6,7 @@ import Error                                  from 'rapidfab/components/error'
 import Grid, {
   IdColumn,
   CapitalizeColumn,
-  DateColumn
+  DateTimeColumn,
 } from 'rapidfab/components/grid';
 
 const RunsGrid = ({ runs }) => (
@@ -27,7 +27,7 @@ const RunsGrid = ({ runs }) => (
       displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
       customComponent: CapitalizeColumn
     }, {
-      customComponent: DateColumn,
+      customComponent: DateTimeColumn,
       columnName: "created",
       displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
     }]}
