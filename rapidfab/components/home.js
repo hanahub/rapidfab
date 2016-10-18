@@ -92,7 +92,7 @@ const Home = ({ fetching, apiErrors, data }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.ButtonToolbar className="pull-right">
-          <BS.Button bsStyle="primary" bsSize="small" href="#/records/new/order">
+          <BS.Button bsStyle="primary" bsSize="small" href="#/records/order">
             <Fa name='list'/> <FormattedMessage id="record.order.add" defaultMessage='Add Order'/>
           </BS.Button>
           <BS.Button bsStyle="primary" bsSize="small" href="#/records/run">

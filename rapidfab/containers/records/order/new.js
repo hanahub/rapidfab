@@ -8,7 +8,7 @@ import Config                             from 'rapidfab/config'
 import { extractUuid }                    from "rapidfab/reducers/makeApiReducers"
 import * as Selectors                     from 'rapidfab/selectors'
 
-import NewOrderComponent                  from 'rapidfab/components/records/newOrder'
+import NewOrderComponent                  from 'rapidfab/components/records/order/new'
 
 const fields = [
   'id',
@@ -30,6 +30,18 @@ class NewOrderContainer extends Component {
     this.props.onInitialize(this.props.uuid)
   }
 
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { model, uploadModel } = this.props
+    const prevModel = prevProps.model
+    if(prevModel && prevModel.status === "processing" && model && model.status === "processed") {
+      this.props.onSaveOrder(uploadModel.orderPayload)
+    }
+  }
+
   render() {
     return <NewOrderComponent {...this.props}/>
   }
@@ -37,10 +49,18 @@ class NewOrderContainer extends Component {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    onInitialize: uuid => {
+    onInitialize: () => {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
+    },
+    onSaveOrder: payload => {
+      dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+        window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
+      })
+    },
+    onUnmount: () => {
+      dispatch(Actions.UploadModel.clearState())
     },
     onSubmit: payload => {
       payload.bureau = Config.BUREAU
@@ -51,21 +71,18 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
 
-      let modelPayload = {"name" : payload.name}
-      dispatch(Actions.Api.hoth.model.post(modelPayload))
-      .then( args => {
+      dispatch(Actions.Api.hoth.model.post({
+        name: payload.name
+      })).then(args => {
         dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
-        payload.model = args.headers.location;
-        dispatch(Actions.Api.wyatt.order.post(payload)).then(() => {
-          window.location.hash = '#/plan/orders';
-        })
+        payload.model = args.headers.location
+        dispatch(Actions.UploadModel.storeOrderPayload(payload))
       })
-    },
+    }
   }
 }
 
 function mapStateToProps(state, props) {
-  const uploadModel = state.uploadModel
   const {
     material,
     model,
@@ -74,25 +91,25 @@ function mapStateToProps(state, props) {
 
   const fetching =
     material.list.fetching ||
-    uploadModel.fetching ||
     order.post.fetching ||
     state.ui.wyatt['third-party'].list.fetching
 
   const errors = _.concat(
     material.list.errors ||
-    uploadModel.errors ||
     order.post.errors ||
     state.ui.wyatt['third-party'].list.errors
   )
 
+  const uploadModel = state.uploadModel
+  const processingModel = state.resources[uploadModel.modelUuid]
+
   return {
     apiErrors   : order.post.errors,
-    errors,
-    fetching,
     materials   : Selectors.getMaterials(state),
-    model       : Selectors.getModels(state),
     providers   : Selectors.getThirdPartyProviders(state),
-    uploadModel : Selectors.getUploadModel(state),
+    fetching,
+    uploadModel,
+    model: processingModel,
   }
 }
 
