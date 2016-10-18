@@ -1,7 +1,7 @@
 import React, { PropTypes }                   from "react"
 import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
-import { FormattedMessage, FormattedDate }    from 'react-intl';
+import { FormattedMessage, FormattedDateTime }    from 'react-intl';
 
 const listBodyStyle = {
   height: 150,
@@ -32,7 +32,7 @@ const PrinterItem = ({ printer, selected, onSelect }) => (
       </BS.Col>
       <BS.Col xs={2}>
         {printer.leadTime ?
-          <FormattedDate value={printer.leadTime}/> :
+          <FormattedDateTime value={printer.leadTime}/> :
           (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
         }
       </BS.Col>

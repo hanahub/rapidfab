@@ -7,7 +7,7 @@ import Grid, { IdColumn }                     from 'rapidfab/components/grid'
 import Moment                                 from 'moment'
 
 import {
-  FormattedDate,
+  FormattedDateTime,
   FormattedDuration,
   FormattedMessage,
   FormattedVolume
@@ -187,7 +187,7 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, orders, 
           <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
             <BS.FormControl.Static>
               {fields.created.value ?
-                <FormattedDate value={fields.created.value}/> :
+                <FormattedDateTime value={fields.created.value}/> :
                   (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
               }
             </BS.FormControl.Static>

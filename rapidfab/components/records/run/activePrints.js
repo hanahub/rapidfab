@@ -1,7 +1,7 @@
 import React, { PropTypes }                   from "react"
 import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
-import { FormattedMessage, FormattedDate }    from 'react-intl';
+import { FormattedMessage }                   from 'react-intl';
 import Fa                                     from 'react-fontawesome';
 
 const listBodyStyle = {

@@ -2,7 +2,7 @@ import React, { PropTypes }                   from "react";
 import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import Error                                  from 'rapidfab/components/error'
-import { FormattedDate, FormattedMessage }    from 'react-intl';
+import { FormattedMessage }                   from 'react-intl';
 
 const Colors = {
   Warning : { color: "#e4d836", hover: "#ccbf1b" },

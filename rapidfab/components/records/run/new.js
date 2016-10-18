@@ -2,7 +2,7 @@ import React, { PropTypes, Component }        from "react"
 import _                                      from "lodash"
 import * as BS                                from 'react-bootstrap'
 import Fa                                     from 'react-fontawesome'
-import { FormattedMessage, FormattedDate }    from 'react-intl'
+import { FormattedMessage }                   from 'react-intl'
 
 import PrintersList                           from './printersList'
 import PrintsList                             from './printsList'
