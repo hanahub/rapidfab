@@ -2,7 +2,7 @@ import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
 import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
-import OrderComponent                     from 'rapidfab/components/records/order'
+import OrderComponent                     from 'rapidfab/components/records/order/edit'
 import { reduxForm }                      from 'redux-form'
 import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 import Config                             from 'rapidfab/config'

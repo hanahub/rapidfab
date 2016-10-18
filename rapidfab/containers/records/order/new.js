@@ -8,7 +8,7 @@ import Config                             from 'rapidfab/config'
 import { extractUuid }                    from "rapidfab/reducers/makeApiReducers"
 import * as Selectors                     from 'rapidfab/selectors'
 
-import NewOrderComponent                  from 'rapidfab/components/records/newOrder'
+import NewOrderComponent                  from 'rapidfab/components/records/order/new'
 
 const fields = [
   'id',

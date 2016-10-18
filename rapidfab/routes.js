@@ -17,8 +17,8 @@ import Runs                         from 'rapidfab/containers/plan/runs'
 
 import Queues                       from 'rapidfab/containers/work/queues'
 
-import Order                        from 'rapidfab/containers/records/order'
-import NewOrder                     from 'rapidfab/containers/records/newOrder'
+import OrderEdit                    from 'rapidfab/containers/records/order/edit'
+import OrderNew                     from 'rapidfab/containers/records/order/new'
 import Location                     from 'rapidfab/containers/records/location'
 import ThirdPartyProvider           from 'rapidfab/containers/records/thirdPartyProvider'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
@@ -52,9 +52,8 @@ const Routes = {
 
   "/work/queues"                         : Queues,
 
-  "/records/new/order"                   : NewOrder,
-  "/records/order"                       : Order,
-  "/records/order/:uuid"                 : Order,
+  "/records/order"                       : OrderNew,
+  "/records/order/:uuid"                 : OrderEdit,
   "/records/location"                    : Location,
   "/records/location/:uuid"              : Location,
   "/records/third-party-provider"        : ThirdPartyProvider,
