@@ -6,7 +6,6 @@ export const initialState = {
   uploadLocation: null,
   uploading: false,
   percent: 0,
-  processingModelUuid: null,
   orderPayload: null,
 }
 
