@@ -25,7 +25,7 @@ export function storeOrderPayload(payload) {
 
 export function clearState(payload) {
   return {
-    type: UPLOAD_MODEL_CLEAR,
+    type: Constants.UPLOAD_MODEL_CLEAR,
   }
 }
 
