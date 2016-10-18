@@ -6,15 +6,8 @@ export const initialState = {
   uploadLocation: null,
   uploading: false,
   percent: 0,
-  processingModel: null,
-}
-
-function processingModelReducer(state, action) {
-  return Object.assign({}, state, {
-    uuid            : extractUuid(action.headers.location),
-    uri             : action.headers.location,
-    uploadLocation  : action.headers.uploadLocation,
-  })
+  processingModelUuid: null,
+  orderPayload: null,
 }
 
 function reducer(state=initialState, action) {
@@ -22,7 +15,7 @@ function reducer(state=initialState, action) {
     case Constants.RESOURCE_POST_SUCCESS:
       if(action.api.resource === "model") {
         return Object.assign({}, state, {
-          processingModel: processingModelReducer(state.processingModel, action)
+          modelUuid: extractUuid(action.headers.location)
         })
       }
       return state
@@ -37,6 +30,12 @@ function reducer(state=initialState, action) {
         uploading: true,
         percent: action.percent,
       })
+    case Constants.UPLOAD_MODEL_STORE_ORDER_PAYLOAD:
+      return Object.assign({}, state, {
+        orderPayload: action.payload
+      })
+    case Constants.UPLOAD_MODEL_CLEAR:
+      return initialState
     default:
       return state
   }
