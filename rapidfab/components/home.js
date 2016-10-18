@@ -3,12 +3,12 @@ import Chart, { SeriesStyle }   from 'rapidfab/components/chart'
 import * as BS                  from 'react-bootstrap'
 import Error                    from 'rapidfab/components/error'
 import Fa                       from 'react-fontawesome'
-import { FormattedMessage, FormattedDate }    from 'react-intl'
+import { FormattedMessage }     from 'react-intl'
 import Grid, {
   IdColumn,
   NumberColumn,
   ImageColumn,
-  DateColumn,
+  DateTimeColumn,
 } from 'rapidfab/components/grid'
 
 const panelBodyStyle = {
@@ -40,7 +40,7 @@ const LastTenOrders = ({ data }) => (
           columnName: "quantity",
           displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
         }, {
-          customComponent: DateColumn,
+          customComponent: DateTimeColumn,
           columnName: "created",
           displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
         }]}

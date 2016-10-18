@@ -1,8 +1,8 @@
-import React, { PropTypes }                   from "react"
-import _                                      from "lodash"
-import * as BS                                from 'react-bootstrap'
-import { FormattedMessage, FormattedDate }    from 'react-intl';
-import Fa                                     from 'react-fontawesome';
+import React, { PropTypes }                       from "react"
+import _                                          from "lodash"
+import * as BS                                    from 'react-bootstrap'
+import { FormattedMessage, FormattedDateTime }    from 'react-intl';
+import Fa                                         from 'react-fontawesome';
 
 const Header = ({ onActivate }) => (
   <BS.Row>
@@ -40,7 +40,7 @@ const PrintItem = ({ print, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        <FormattedDate value={print.order.created}/>
+        <FormattedDateTime value={print.order.created}/>
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>

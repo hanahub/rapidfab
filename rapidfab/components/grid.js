@@ -6,6 +6,7 @@ import Griddle                  from 'griddle-react'
 import { extractUuid }          from 'rapidfab/reducers/makeApiReducers'
 import {
   FormattedDate,
+  FormattedDateTime,
   FormattedNumber,
   FormattedMessage,
   FormattedVolume,
@@ -29,6 +30,14 @@ export const IdColumn = (resource, field, records) => {
     )
   }
 }
+
+export const DateTimeColumn = ({ data }) => (
+  <FormattedDateTime value={data}/>
+)
+
+export const TimeColumn = ({ data }) => (
+  <FormattedTime value={data}/>
+)
 
 export const DateColumn = ({ data }) => (
   <FormattedDate value={data}/>

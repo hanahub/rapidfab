@@ -2,7 +2,7 @@ import React, { PropTypes }                                   from "react";
 import * as BS                                                from 'react-bootstrap';
 import Fa                                                     from 'react-fontawesome';
 import {
-  FormattedDate,
+  FormattedDateTime,
   FormattedMessage
 } from 'rapidfab/i18n';
 
@@ -98,7 +98,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
     <FormRow id="field.created" defaultMessage="Created">
       <BS.FormControl.Static>
         {fields.created.value ?
-          <FormattedDate value={fields.created.value}/> :
+          <FormattedDateTime value={fields.created.value}/> :
             (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
         }
       </BS.FormControl.Static>

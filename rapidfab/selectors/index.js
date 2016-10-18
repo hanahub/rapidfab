@@ -308,7 +308,7 @@ export const getLastTenOrders = createSelector(
   [ getOrders ],
   orders => {
     return _.takeRight(_.sortBy(orders, order => {
-      return moment(order.created).unix()
+      return moment(order.created).local()
     }), 10)
   }
 )

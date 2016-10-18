@@ -15,6 +15,16 @@ export const FormattedPlural = ReactIntl.FormattedPlural
 export const FormattedMessage = ReactIntl.FormattedMessage
 export const FormattedNumber = ReactIntl.FormattedNumber
 
+export const FormattedDateTime = ({ value }) => (
+  <span>
+    <FormattedDate value={value}/> <FormattedTime value={value}/>
+  </span>
+)
+
+FormattedDateTime.propTypes = {
+  value: PropTypes.object.isRequired
+}
+
 export const FormattedVolume = ({ value }) => (
   <span>
     <FormattedNumber value={value}/> cm<sup>3</sup>
