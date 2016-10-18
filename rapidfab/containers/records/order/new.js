@@ -30,6 +30,18 @@ class NewOrderContainer extends Component {
     this.props.onInitialize(this.props.uuid)
   }
 
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { model, uploadModel } = this.props
+    const prevModel = prevProps.model
+    if(prevModel && prevModel.status === "processing" && model && model.status === "processed") {
+      this.props.onSaveOrder(uploadModel.orderPayload)
+    }
+  }
+
   render() {
     return <NewOrderComponent {...this.props}/>
   }
@@ -37,7 +49,7 @@ class NewOrderContainer extends Component {
 
 function mapDispatchToProps(dispatch, props) {
   return {
-    onInitialize: uuid => {
+    onInitialize: () => {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
@@ -88,7 +100,7 @@ function mapStateToProps(state, props) {
     state.ui.wyatt['third-party'].list.errors
   )
 
-  const uploadModel = Selectors.getUploadModel(state)
+  const uploadModel = state.uploadModel
   const processingModel = state.resources[uploadModel.modelUuid]
 
   return {
