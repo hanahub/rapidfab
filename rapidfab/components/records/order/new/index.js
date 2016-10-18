@@ -32,16 +32,52 @@ const ApiErrors = ({ apiErrors }) => (
   </BS.Row>
 )
 
+const Processing = ({ model, percent }) => {
+  const statusStyleMapping = {
+    "not-uploaded": "primary",
+    processing: "info",
+    processed: "success",
+  }
+  const statusDisplayMapping = {
+    "not-uploaded"   : <FormattedMessage id="status.uploading" defaultMessage='Uploading'/>,
+    processing  : <FormattedMessage id="status.processing" defaultMessage='Processing'/>,
+    processed   : <FormattedMessage id="status.complete" defaultMessage='Complete'/>,
+  }
+  let status = model ? model.status : "not-uploaded"
+  if(percent >= 100) {
+    status = "processing"
+  }
+  return (
+    <BS.Row>
+      <BS.Col xsOffset={2} xs={8}>
+        <BS.ProgressBar
+          striped
+          bsStyle={statusStyleMapping[status]}
+          now={percent}
+          active={status === "processing"}
+        />
+      </BS.Col>
+      <BS.Col xsOffset={2} xs={8} style={{ textAlign: "center" }}>
+        <h4>{statusDisplayMapping[status]}</h4>
+      </BS.Col>
+    </BS.Row>
+  )
+}
+
 const NewOrder = props => (
   <BS.Grid fluid>
     <BreadCrumbs />
     <ApiErrors />
-    <NewOrderForm
-      fields={props.fields}
-      materials={props.materials}
-      providers={props.providers}
-      handleSubmit={props.handleSubmit}
-    />
+    { props.uploadModel.uploading ? (
+      <Processing percent={props.uploadModel.percent} model={props.model} />
+    ) : (
+      <NewOrderForm
+        fields={props.fields}
+        materials={props.materials}
+        providers={props.providers}
+        handleSubmit={props.handleSubmit}
+      />
+    ) }
   </BS.Grid>
 )
 

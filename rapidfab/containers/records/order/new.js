@@ -55,8 +55,8 @@ function mapDispatchToProps(dispatch, props) {
       dispatch(Actions.Api.wyatt['third-party'].list())
     },
     onSaveOrder: payload => {
-      dispatch(Actions.Api.wyatt.order.post(payload)).then(() => {
-        window.location.hash = '#/plan/orders';
+      dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+        window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
       })
     },
     onUnmount: () => {
