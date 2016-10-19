@@ -34,6 +34,7 @@
     "gulp-cloudfront": "0.0.14",
     "html-webpack-plugin": "^2.22.0",
     "intl": "^1.2.4",
+    "isomorphic-fetch": "^2.2.1",
     "karma": "^1.1.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^1.0.1",
