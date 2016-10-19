@@ -1,6 +1,8 @@
 import _      from 'lodash'
 import Config from 'rapidfab/config'
 
+import 'isomorphic-fetch'
+
 export const FETCH_CONFIG = {
   headers: {
     'Accept'        : 'application/json',
