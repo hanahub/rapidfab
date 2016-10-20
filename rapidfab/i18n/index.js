@@ -23,7 +23,10 @@ export const FormattedDateTime = ({ value }) => (
 )
 
 FormattedDateTime.propTypes = {
-  value: PropTypes.object.isRequired
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]).isRequired
 }
 
 export const FormattedVolume = ({ value }) => (
