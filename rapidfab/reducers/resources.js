@@ -29,6 +29,9 @@ function reducer(state = {}, action) {
   let record = null
   switch (action.type) {
     case Constants.EVENT_STREAM_MESSAGE:
+      if(!action.payload) {
+        return state;
+      }
       record = hydrateRecord(action.payload);
       return _.assign({}, state, {
         [record.uuid]: record
