@@ -1,8 +1,8 @@
 import React, { PropTypes }                       from "react"
 import _                                          from "lodash"
 import * as BS                                    from 'react-bootstrap'
-import { FormattedMessage, FormattedDateTime }    from 'react-intl';
-import Fa                                         from 'react-fontawesome';
+import { FormattedMessage, FormattedDateTime }    from 'rapidfab/i18n'
+import Fa                                         from 'react-fontawesome'
 
 const Header = ({ onActivate }) => (
   <BS.Row>
