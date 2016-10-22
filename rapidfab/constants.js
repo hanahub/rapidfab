@@ -33,6 +33,7 @@ const Constants = [
   'UPLOAD_MODEL_FAILURE',
   'UPLOAD_MODEL_SUCCESS',
   'SET_PAGE',
+  'CLEAR_UI_STATE',
 ]
 
 export default make_constants(Constants)
