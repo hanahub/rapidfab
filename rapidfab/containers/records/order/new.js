@@ -60,7 +60,7 @@ function mapDispatchToProps(dispatch, props) {
       })
     },
     onUnmount: () => {
-      dispatch(Actions.UI.clearUIState(["wyatt.order.post"]))
+      dispatch(Actions.UI.clearUIState(["wyatt.order.post.errors"]))
     },
     onSubmit: payload => {
       payload.bureau = Config.BUREAU

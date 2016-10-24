@@ -23,6 +23,9 @@ class RunContainer extends Component {
   componentWillMount() {
     this.props.onInitialize(this.props.uuid)
   }
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
 
   render() {
     return this.props.loading ? <Loading/> : <RunComponent {...this.props}/>
@@ -52,7 +55,10 @@ function mapDispatchToProps(dispatch) {
     ).catch((error) => {
       console.error("Failed to POST run", error);
     }),
-    onPageChange: value => dispatch(Actions.Pager.setPage(value))
+    onPageChange: value => dispatch(Actions.Pager.setPage(value)),
+    onUnmount: () => {
+      dispatch(Actions.UI.clearUIState(["wyatt.run.post.errors"]))
+    },
   }
 }
 
