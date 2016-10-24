@@ -121,7 +121,7 @@ function reducer(state = initialState, action) {
         })
 
         // deep applies the initial state paths to current state
-        return _.merge({}, tempState, mask)
+        return _.merge(tempState, mask)
       }
       // if they dont pass in paths, reset it all
       return initialState
