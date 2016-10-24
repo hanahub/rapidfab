@@ -105,6 +105,26 @@ function reducer(state = initialState, action) {
       return _.assign({}, state, {
         [action.api.host]: reduceHost(state[action.api.host], action)
       })
+    case Constants.CLEAR_UI_STATE:
+      //user passes in paths in the ui state to be reset, or nothing, and resets all ui state
+      // read _.set docs for path format https://lodash.com/docs/4.16.4#set
+      let mask = {}
+      let tempState = _.assign({}, state)
+
+      if(action.paths.length > 0) {
+        action.paths.map(function(path) {
+          // uses the provided path to get the initial values, and uses the same path to set a mask object
+          _.set(mask, path,  _.get(initialState, path))
+
+          //we must unset the path we're replacing, or the mask wont modify, because its empty
+          _.unset(tempState, path)
+        })
+
+        // deep applies the initial state paths to current state
+        return _.merge(tempState, mask)
+      }
+      // if they dont pass in paths, reset it all
+      return initialState
     default:
       return state
   }
