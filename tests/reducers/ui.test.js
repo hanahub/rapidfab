@@ -74,7 +74,6 @@ describe('ui', function(){
     });
 
     it("reduces CLEAR_UI_STATE action paths defined", () => {
-      let path = "wyatt.order.post.errors"
       let paths = ["wyatt.order.post.errors", "hoth.model.post.errors"]
       let action = {
         type: "CLEAR_UI_STATE",
@@ -85,11 +84,13 @@ describe('ui', function(){
       paths.map(function(path) {
         _.set(alteredState, path, ["uh oh, bad news"])
       })
+      let expected = _.assign({}, Reducer.initialState)
+      _.set(expected, "wyatt.order.put.errors", "bad news, but we don't want to clear it")
       _.set(alteredState, "wyatt.order.put.errors", "bad news, but we don't want to clear it")
 
       let results = Reducer.default(alteredState, action)
 
-      expect(results).to.eql(Reducer.initialState)
+      expect(results).to.eql(expected)
     });
 
     ["POST", "PUT", "DELETE", "LIST", "GET"].forEach(function(method) {
