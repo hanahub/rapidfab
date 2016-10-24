@@ -85,6 +85,7 @@ describe('ui', function(){
       paths.map(function(path) {
         _.set(alteredState, path, ["uh oh, bad news"])
       })
+      _.set(alteredState, "wyatt.order.put.errors", "bad news, but we don't want to clear it")
 
       let results = Reducer.default(alteredState, action)
 
