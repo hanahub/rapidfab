@@ -60,6 +60,7 @@ function mapDispatchToProps(dispatch, props) {
       })
     },
     onUnmount: () => {
+      dispatch(Actions.UploadModel.clearState())
       dispatch(Actions.UI.clearUIState(["wyatt.order.post.errors"]))
     },
     onSubmit: payload => {
