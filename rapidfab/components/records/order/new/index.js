@@ -5,6 +5,7 @@ import Fa                       from 'react-fontawesome'
 import { FormattedMessage }     from 'react-intl'
 import Error                    from 'rapidfab/components/error'
 import NewOrderForm             from './form'
+import Chart, { SeriesStyle }   from 'rapidfab/components/chart'
 
 const BreadCrumbs = ({  }) => (
   <BS.Row>
@@ -30,6 +31,14 @@ const ApiErrors = ({ apiErrors }) => (
       <Error errors={apiErrors}/>
     </BS.Col>
   </BS.Row>
+)
+
+const Pass = () => (
+  <Fa name="check" style={{ color: SeriesStyle.Success.color }}/>
+)
+
+const Fail = () => (
+  <Fa name="times" style={{ color: SeriesStyle.Danger.color }}/>
 )
 
 const Processing = ({ model, percent }) => {
@@ -64,20 +73,60 @@ const Processing = ({ model, percent }) => {
   )
 }
 
+const ModelError = ({ model }) => (
+  <BS.Row>
+    <BS.Row>
+      <BS.Col xsOffset={5} xs={2} style={{ textAlign: "center" }}>
+        <Fa name="ban" size="5x" style={{ color: SeriesStyle.Danger.color }}/>
+      </BS.Col>
+    </BS.Row>
+    <BS.Row>
+      <BS.Col xsOffset={4} xs={4} style={{ textAlign: "center" }}>
+        <h4><FormattedMessage id="orderFailure.header" defaultMessage="Unprintable model"/></h4>
+        <FormattedMessage id="orderFailure.description" defaultMessage="Some of the printability checks listed below failed. Please correct them and try again."/>
+      </BS.Col>
+    </BS.Row>
+    <BS.Row>
+      <BS.Col xsOffset={4} xs={4} style={{ textAlign: "center" }}>
+        <span>
+          { model.analyses.manifold ? <Pass/> : <Fail/> }
+          <FormattedMessage id="orderFailure.manifold" defaultMessage="Manifold"/>
+        </span>
+      </BS.Col>
+    </BS.Row>
+  </BS.Row>
+)
+
+const OrderForm = ({ props }) => (
+    <NewOrderForm
+      fields={props.fields}
+      materials={props.materials}
+      providers={props.providers}
+      handleSubmit={props.handleSubmit}
+    />
+)
+
+const Content = ({ props }) => {
+  let model = props.model
+  let uploadModel = props.uploadModel
+  let percent = props.uploadModel.percent
+
+  if(model && model.status === "processed" && !model.analyses.manifold) {
+    return(<ModelError model={model}/>)
+  } else if(uploadModel.uploading) {
+    return(<Processing model={model} percent={percent}/>)
+  } else {
+    return(<OrderForm props={props}/>)
+  }
+
+}
+
+
 const NewOrder = props => (
   <BS.Grid fluid>
     <BreadCrumbs />
     <ApiErrors />
-    { props.uploadModel.uploading ? (
-      <Processing percent={props.uploadModel.percent} model={props.model} />
-    ) : (
-      <NewOrderForm
-        fields={props.fields}
-        materials={props.materials}
-        providers={props.providers}
-        handleSubmit={props.handleSubmit}
-      />
-    ) }
+    <Content props={props}/>
   </BS.Grid>
 )
 

@@ -154,5 +154,8 @@ export default {
   "field.units"                       : "Units",
   "field.units.cm3"                   : "Cm3",
   "field.units.grams"                 : "Grams",
-  "field.volume"                      : "Volume"
+  "field.volume"                      : "Volume",
+  "orderFailure.header"               : "Unprintable model",
+  "orderFailure.description"          : "Some of the printability checks listed below failed. Please correct them and try again.",
+  "orderFailure.manifold"             : "Manifold",
 }
