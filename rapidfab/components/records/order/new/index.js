@@ -33,6 +33,14 @@ const ApiErrors = ({ apiErrors }) => (
   </BS.Row>
 )
 
+const Pass = () => (
+  <Fa name="check" style={{ color: SeriesStyle.Success.color }}/>
+)
+
+const Fail = () => (
+  <Fa name="times" style={{ color: SeriesStyle.Danger.color }}/>
+)
+
 const Processing = ({ model, percent }) => {
   const statusStyleMapping = {
     "not-uploaded": "primary",
@@ -65,53 +73,38 @@ const Processing = ({ model, percent }) => {
   )
 }
 
-const modelError = model => {
-  let pass = <Fa name="check" style={{ color: SeriesStyle.Success.color  }}/>
-  let fail = <Fa name="times" style={{ color: SeriesStyle.Danger.color }}/>
-
-  let issues = _.keys(model.analyses).map(function(key) {
-    if(key === "manifold") {
-      return(
+const ModelError = ({ model }) => (
+  <BS.Row>
+    <BS.Row>
+      <BS.Col xsOffset={5} xs={2} style={{ textAlign: "center" }}>
+        <Fa name="ban" size="5x" style={{ color: SeriesStyle.Danger.color }}/>
+      </BS.Col>
+    </BS.Row>
+    <BS.Row>
+      <BS.Col xsOffset={4} xs={4} style={{ textAlign: "center" }}>
+        <h4><FormattedMessage id="orderFailure.header" defaultMessage="Unprintable model"/></h4>
+        <FormattedMessage id="orderFailure.description" defaultMessage="Some of the printability checks listed below failed. Please correct them and try again."/>
+      </BS.Col>
+    </BS.Row>
+    <BS.Row>
+      <BS.Col xsOffset={4} xs={4} style={{ textAlign: "center" }}>
         <span>
-          {model.analyses[key] ? pass : fail}
+          { model.analyses.manifold ? <Pass/> : <Fail/> }
           <FormattedMessage id="orderFailure.manifold" defaultMessage="Manifold"/>
         </span>
-      )
-    }
-  })
-
-  return(
-    <BS.Row>
-      <BS.Row>
-        <BS.Col xsOffset={5} xs={2} style={{ textAlign: "center" }}>
-          <Fa name="ban" size="5x" style={{ color: SeriesStyle.Danger.color }}/>
-        </BS.Col>
-      </BS.Row>
-      <BS.Row>
-        <BS.Col xsOffset={4} xs={4} style={{ textAlign: "center" }}>
-          <h4><FormattedMessage id="orderFailure.header" defaultMessage="Unprintable model"/></h4>
-          <FormattedMessage id="orderFailure.description" defaultMessage="Some of the printability checks listed below failed. Please correct them and try again."/>
-        </BS.Col>
-      </BS.Row>
-      <BS.Row>
-        <BS.Col xsOffset={4} xs={4} style={{ textAlign: "center" }}>
-          {issues}
-        </BS.Col>
-      </BS.Row>
+      </BS.Col>
     </BS.Row>
-  )
-}
+  </BS.Row>
+)
 
-const orderForm = props => {
-  return(
+const OrderForm = ({ props }) => (
     <NewOrderForm
       fields={props.fields}
       materials={props.materials}
       providers={props.providers}
       handleSubmit={props.handleSubmit}
     />
-  )
-}
+)
 
 const Content = ({ props }) => {
   let model = props.model
@@ -119,11 +112,11 @@ const Content = ({ props }) => {
   let percent = props.uploadModel.percent
 
   if(model && model.status === "processed" && !model.analyses.manifold) {
-    return(modelError(model))
+    return(<ModelError model={model}/>)
   } else if(uploadModel.uploading) {
-    return(Processing({model: model, percent: percent}))
+    return(<Processing model={model} percent={percent}/>)
   } else {
-    return(orderForm(props))
+    return(<OrderForm props={props}/>)
   }
 
 }
