@@ -55,6 +55,8 @@ export default {
   "status.available"                  : "Available",
   "status.exhausted"                  : "Exhausted",
   "status.inUse"                      : "In Use",
+  "status.uploading"                  : "Uploading",
+  "status.processing"                 : "Processing",
 
   "record.location.add"               : "Add Location",
   "record.manufacturer"               : "Manufacturer",
