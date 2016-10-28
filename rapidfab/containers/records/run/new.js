@@ -58,6 +58,7 @@ function mapDispatchToProps(dispatch) {
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState(["wyatt.run.post.errors"]))
+      dispatch(Actions.UI.clearUIState(["wyatt.run.put.errors"]))
     },
   }
 }
