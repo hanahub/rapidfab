@@ -32,6 +32,7 @@ const headerStyle = {
 const cellStyle = {
   whiteSpace: "nowrap",
   borderBottom: "1px solid #434857",
+  height: "40px",
 }
 
 const tableStyle = {
