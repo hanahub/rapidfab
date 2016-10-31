@@ -27,6 +27,10 @@ class StockContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/stocks"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -36,17 +40,14 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.stock.put(payload.uuid, payload))
-        window.location.hash = "#/inventory/stocks"
+        dispatch(Actions.Api.wyatt.stock.put(payload.uuid, payload)).then(redirect)
       } else {
-        dispatch(Actions.Api.wyatt.stock.post(payload))
-        window.location.hash = "#/inventory/stocks"
+        dispatch(Actions.Api.wyatt.stock.post(payload)).then(redirect)
       }
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.wyatt.stock.delete(uuid))
-        window.location.hash = "#/inventory/stocks"
+        dispatch(Actions.Api.wyatt.stock.delete(uuid)).then(redirect)
       }
     }
   }

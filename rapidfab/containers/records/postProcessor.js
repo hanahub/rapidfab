@@ -25,6 +25,10 @@ class PostProcessorContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/post-processors"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -36,15 +40,12 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt['post-processor'].put(payload.uuid, payload))
+        dispatch(Actions.Api.wyatt['post-processor'].put(payload.uuid, payload)).then(redirect)
       } else {
-        dispatch(Actions.Api.wyatt['post-processor'].post(payload))
+        dispatch(Actions.Api.wyatt['post-processor'].post(payload)).then(redirect)
       }
-      window.location.hash = "#/inventory/post-processors"
     },
-    onDelete: uuid => dispatch(Actions.Api.wyatt['post-processor'].delete(uuid)).then(
-      () => window.location.hash = "#/inventory/post-processors"
-    )
+    onDelete: uuid => dispatch(Actions.Api.wyatt['post-processor'].delete(uuid)).then(redirect)
   }
 }
 

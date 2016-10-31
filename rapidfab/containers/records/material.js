@@ -31,6 +31,10 @@ class MaterialContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/materials"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -42,17 +46,14 @@ function mapDispatchToProps(dispatch) {
     onSubmit: payload => {
       if(!payload.third_party_fulfillment){ payload.third_party_fulfillment = false}
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.material.put(payload.uuid, payload))
-        window.location.hash = "#/inventory/materials"
+        dispatch(Actions.Api.wyatt.material.put(payload.uuid, payload)).then(redirect)
       } else {
-        dispatch(Actions.Api.wyatt.material.post(payload))
-        window.location.hash = "#/inventory/materials"
+        dispatch(Actions.Api.wyatt.material.post(payload)).then(redirect)
       }
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.wyatt.material.delete(uuid))
-        window.location.hash = "#/inventory/materials"
+        dispatch(Actions.Api.wyatt.material.delete(uuid)).then(redirect)
       }
     }
   }
