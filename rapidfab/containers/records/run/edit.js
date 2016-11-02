@@ -31,6 +31,10 @@ class RunsContainer extends Component {
     this.props.onInitialize(this.props)
   }
 
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
+
   render() {
     return <RunsComponent {...this.props}/>
   }
@@ -50,7 +54,13 @@ function mapDispatchToProps(dispatch) {
     },
     onDelete: uuid => dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
       () => window.location.hash = "#/plan/runs"
-    )
+    ),
+    onUnmount: () => {
+      dispatch(Actions.UI.clearUIState([
+        "wyatt.run.post",
+        "wyatt.run.put",
+      ]))
+    },
   }
 }
 
