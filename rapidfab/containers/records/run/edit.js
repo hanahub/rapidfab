@@ -54,7 +54,7 @@ function mapDispatchToProps(dispatch) {
     ),
     onModelDownload: (modelURI) => {
       dispatch(Actions.DownloadModel.fetchModel(modelURI)).then((response) => {
-        window.location = response.json.content;
+        dispatch(Actions.DownloadModel.downloadContent(response.json.content));
       });
     }
   }

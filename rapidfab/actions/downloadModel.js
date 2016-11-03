@@ -15,3 +15,10 @@ export function fetchModel(downloadURL) {
   }
 }
 
+export function downloadContent(contentURL) {
+  window.location = contentURL;
+  return {
+    type: Constants.DOWNLOAD_MODEL_CONTENT,
+    url: contentURL,
+  };
+}
