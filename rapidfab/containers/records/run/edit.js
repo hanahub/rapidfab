@@ -18,6 +18,7 @@ const fields = [
   'estimates.time.print',
   'estimates.time.post_processing',
   'id',
+  'model',
   'post_processor',
   'printer',
   'printer_type',

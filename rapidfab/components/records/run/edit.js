@@ -33,6 +33,16 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
   </BS.FormGroup>
 );
 
+const ModelDownloadField = ({model}) => {
+  if(!model) {
+    return (<BS.FormControl.Static> - </BS.FormControl.Static>);
+  }
+  function onClick() {
+    console.log("Got a click!");
+  }
+  return (<BS.FormControl.Static><a href={window.location.hash} onClick={onClick}>{model.value}</a></BS.FormControl.Static>);
+};
+
 const LinkField = ({uri, location}) => {
   if(!uri) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
@@ -191,6 +201,10 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, orders, 
                   (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
               }
             </BS.FormControl.Static>
+          </FormRow>
+
+          <FormRow id="field.model" defaultMessage="Model">
+            <ModelDownloadField model={fields.model}/>
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
