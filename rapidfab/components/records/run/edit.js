@@ -5,6 +5,8 @@ import Fa                                     from 'react-fontawesome'
 import Error                                  from 'rapidfab/components/error'
 import Grid, { IdColumn }                     from 'rapidfab/components/grid'
 import Moment                                 from 'moment'
+import { doGet }                              from 'rapidfab/api/makeApi';
+import { jsonTryParse }                       from 'rapidfab/middleware/api';
 
 import {
   FormattedDateTime,
@@ -38,7 +40,18 @@ const ModelDownloadField = ({model}) => {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
   }
   function onClick() {
-    console.log("Got a click!");
+    doGet(model.value).then((response) => {
+      response.text().then(text => {
+        let json = jsonTryParse(text);
+        if(text && !json) {
+          throw new Error(`Could not parse response when getting model ${model.value}`);
+        }
+        let content = json.content;
+        console.log("Content of model", content);
+      });
+    }).catch((error) => {
+      console.error("Failed to get model", error);
+    });
   }
   return (<BS.FormControl.Static><a href={window.location.hash} onClick={onClick}>{model.value}</a></BS.FormControl.Static>);
 };
