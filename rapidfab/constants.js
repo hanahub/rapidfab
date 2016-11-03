@@ -8,6 +8,10 @@ function make_constants(constants) {
 }
 
 const Constants = [
+  'DOWNLOAD_MODEL_CONTENT',
+  'DOWNLOAD_MODEL_REQUEST',
+  'DOWNLOAD_MODEL_SUCCESS',
+  'DOWNLOAD_MODEL_FAILURE',
   'HASH_CHANGE',
   'LOCALE_CHANGE',
   'EVENT_STREAM_MESSAGE',

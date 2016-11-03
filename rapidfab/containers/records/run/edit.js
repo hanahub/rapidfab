@@ -51,7 +51,12 @@ function mapDispatchToProps(dispatch) {
     },
     onDelete: uuid => dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
       () => window.location.hash = "#/plan/runs"
-    )
+    ),
+    onModelDownload: (modelURI) => {
+      dispatch(Actions.DownloadModel.fetchModel(modelURI)).then((response) => {
+        dispatch(Actions.DownloadModel.downloadContent(response.json.content));
+      });
+    }
   }
 }
 

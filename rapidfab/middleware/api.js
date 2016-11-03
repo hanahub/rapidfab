@@ -1,4 +1,4 @@
-export function jsonTryParse(text) {
+function jsonTryParse(text) {
   try {
     return JSON.parse(text || null)
   } catch(error) {

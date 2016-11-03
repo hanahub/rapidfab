@@ -5,8 +5,6 @@ import Fa                                     from 'react-fontawesome'
 import Error                                  from 'rapidfab/components/error'
 import Grid, { IdColumn }                     from 'rapidfab/components/grid'
 import Moment                                 from 'moment'
-import { doGet }                              from 'rapidfab/api/makeApi';
-import { jsonTryParse }                       from 'rapidfab/middleware/api';
 
 import {
   FormattedDateTime,
@@ -35,25 +33,11 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
   </BS.FormGroup>
 );
 
-const ModelDownloadField = ({model}) => {
+const ModelDownloadField = ({model, onClick}) => {
   if(!model) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
   }
-  function onClick() {
-    doGet(model.value).then((response) => {
-      response.text().then(text => {
-        let json = jsonTryParse(text);
-        if(text && !json) {
-          throw new Error(`Could not parse response when getting model ${model.value}`);
-        }
-        let content = json.content;
-        console.log("Content of model", content);
-      });
-    }).catch((error) => {
-      console.error("Failed to get model", error);
-    });
-  }
-  return (<BS.FormControl.Static><a href={window.location.hash} onClick={onClick}>{model.value}</a></BS.FormControl.Static>);
+  return (<BS.FormControl.Static><a href={window.location.hash} onClick={() => onClick(model.value)}>{model.value}</a></BS.FormControl.Static>);
 };
 
 const LinkField = ({uri, location}) => {
@@ -83,7 +67,7 @@ const TimeDisplay = ({ seconds }) => {
   );
 };
 
-const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, orders, prints }) => {
+const EditRun = ({ fields, handleSubmit, onModelDownload, onDelete, apiErrors, statuses, orders, prints }) => {
   return (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -217,7 +201,7 @@ const EditRun = ({ fields, handleSubmit, onDelete, apiErrors, statuses, orders, 
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            <ModelDownloadField model={fields.model}/>
+            <ModelDownloadField model={fields.model} onClick={onModelDownload}/>
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
