@@ -4,8 +4,9 @@ import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
 import RunsComponent                    from 'rapidfab/components/records/run/edit'
 import { reduxForm }                    from 'redux-form'
-import * as Selectors                     from 'rapidfab/selectors'
+import * as Selectors                   from 'rapidfab/selectors'
 import Moment                           from 'moment'
+import { extractUuid }                  from 'rapidfab/reducers/makeApiReducers'
 
 const fields = [
   'actuals.materials.base',
@@ -53,7 +54,8 @@ function mapDispatchToProps(dispatch) {
       () => window.location.hash = "#/plan/runs"
     ),
     onModelDownload: (modelURI) => {
-      dispatch(Actions.DownloadModel.fetchModel(modelURI)).then((response) => {
+      let uuid = extractUuid(modelURI);
+      dispatch(Actions.Api.hoth.model.get(uuid)).then((response) => {
         window.location = response.json.content;
       });
     }
