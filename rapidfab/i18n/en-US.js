@@ -1,6 +1,8 @@
 export default {
   "rapidfab"                          : "Rapid Fab",
 
+  "downloading"                       : "Downloading...",
+
   "loading.thumbnail"                 : "Loading Thumbnail...",
   "loading.model"                     : "Loading Models...",
 

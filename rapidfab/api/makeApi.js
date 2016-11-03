@@ -69,6 +69,12 @@ function makeGet(hostRoot, resource) {
   }
 }
 
+export function doGet(url) {
+  return fetch(url, _.assign({
+    credentials: 'include'
+  , FETCH_CONFIG}));
+}
+
 function makeList(hostRoot, resource) {
   return (filters, config) => {
     let query = filtersToQuery(filters) || ""

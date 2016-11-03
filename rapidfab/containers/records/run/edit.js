@@ -18,6 +18,7 @@ const fields = [
   'estimates.time.print',
   'estimates.time.post_processing',
   'id',
+  'model',
   'post_processor',
   'printer',
   'printer_type',
@@ -55,6 +56,11 @@ function mapDispatchToProps(dispatch) {
     onDelete: uuid => dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
       () => window.location.hash = "#/plan/runs"
     ),
+    onModelDownload: (modelURI) => {
+      dispatch(Actions.DownloadModel.fetchModel(modelURI)).then((response) => {
+        dispatch(Actions.DownloadModel.downloadContent(response.json.content));
+      });
+    }
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState([
         "wyatt.run.post",
@@ -71,6 +77,7 @@ function mapStateToProps(state, props) {
     run
   } = state.ui.wyatt
 
+  const downloadModel = state.downloadModel;
   const runResource = Selectors.getRouteResource(state, props)
   const orders = Selectors.getOrders(state)
   const prints = Selectors.getPrintsForRun(state, runResource);
@@ -82,7 +89,9 @@ function mapStateToProps(state, props) {
         run.get.errors,
         run.put.errors,
         run.delete.errors,
+        downloadModel.errors,
     ),
+    downloadModel,
     initialValues : runResource,
     orders,
     prints,
