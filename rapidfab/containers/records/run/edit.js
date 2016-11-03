@@ -60,7 +60,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.DownloadModel.fetchModel(modelURI)).then((response) => {
         dispatch(Actions.DownloadModel.downloadContent(response.json.content));
       });
-    }
+    },
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState([
         "wyatt.run.post",
