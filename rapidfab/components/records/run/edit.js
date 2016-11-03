@@ -33,9 +33,12 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
   </BS.FormGroup>
 );
 
-const ModelDownloadField = ({model, onClick}) => {
+const ModelDownloadField = ({model, onClick, isDownloading}) => {
   if(!model) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
+  }
+  if(isDownloading) {
+    return (<BS.FormControl.Static><FormattedMessage id="downloading" defaultMessage="Downloading..."/></BS.FormControl.Static>);
   }
   return (<BS.FormControl.Static><a href={window.location.hash} onClick={() => onClick(model.value)}>{model.value}</a></BS.FormControl.Static>);
 };
@@ -67,7 +70,7 @@ const TimeDisplay = ({ seconds }) => {
   );
 };
 
-const EditRun = ({ fields, handleSubmit, onModelDownload, onDelete, apiErrors, statuses, orders, prints }) => {
+const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelete, apiErrors, statuses, orders, prints }) => {
   return (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -201,7 +204,7 @@ const EditRun = ({ fields, handleSubmit, onModelDownload, onDelete, apiErrors, s
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            <ModelDownloadField model={fields.model} onClick={onModelDownload}/>
+            <ModelDownloadField model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} />
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">

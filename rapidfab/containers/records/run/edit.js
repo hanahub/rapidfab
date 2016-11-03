@@ -67,6 +67,7 @@ function mapStateToProps(state, props) {
     run
   } = state.ui.wyatt
 
+  const downloadModel = state.downloadModel;
   const runResource = Selectors.getRouteResource(state, props)
   const orders = Selectors.getOrders(state)
   const prints = Selectors.getPrintsForRun(state, runResource);
@@ -78,7 +79,9 @@ function mapStateToProps(state, props) {
         run.get.errors,
         run.put.errors,
         run.delete.errors,
+        downloadModel.errors,
     ),
+    downloadModel,
     initialValues : runResource,
     orders,
     prints,
