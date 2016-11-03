@@ -6,6 +6,7 @@ import RunComponent                     from 'rapidfab/components/records/run/ne
 import * as Selectors                   from 'rapidfab/selectors'
 import Fa                               from 'react-fontawesome'
 import * as BS                          from 'react-bootstrap'
+import { extractUuid }                  from 'rapidfab/reducers/makeApiReducers'
 
 const printsPerPage = 10
 
@@ -50,9 +51,9 @@ function mapDispatchToProps(dispatch) {
         }
       })
     },
-    onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(
-      () => window.location.hash = "#/plan/runs"
-    ).catch((error) => {
+    onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(args => {
+      window.location.hash = `#/records/run/${extractUuid(args.headers.location)}`;
+    }).catch((error) => {
       console.error("Failed to POST run", error);
     }),
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
