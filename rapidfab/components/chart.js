@@ -52,6 +52,11 @@ class Chart extends Component {
       options: _.merge({
         hover: { mode: 'single' },
         legend: { position: 'bottom' },
+        scales: {
+          yAxes: [{
+            ticks: { min: 0}
+          }]
+        },
       }, this.props.options)
     });
     this.setState({ chart: chart });
