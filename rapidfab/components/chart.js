@@ -51,7 +51,7 @@ class Chart extends Component {
       }),
       options: _.merge({
         hover: { mode: 'single' },
-        legend: { position: 'bottom' },
+        legend: { display: false },
         scales: {
           yAxes: [{
             ticks: { min: 0}
