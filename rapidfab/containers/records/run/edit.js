@@ -32,6 +32,10 @@ class RunsContainer extends Component {
     this.props.onInitialize(this.props)
   }
 
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
+
   render() {
     return <RunsComponent {...this.props}/>
   }
@@ -57,6 +61,12 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.DownloadModel.downloadContent(response.json.content));
       });
     }
+    onUnmount: () => {
+      dispatch(Actions.UI.clearUIState([
+        "wyatt.run.post",
+        "wyatt.run.put",
+      ]))
+    },
   }
 }
 
