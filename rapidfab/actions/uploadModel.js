@@ -35,3 +35,10 @@ export function upload(uploadUrl, model) {
     postForm(uploadUrl, {}, model, 'PUT', false, 'application/octet-stream', percent => dispatch(uploadProgress(percent)))
   }
 }
+
+export function addError(errors) {
+  return {
+    type: Constants.UPLOAD_MODEL_ADD_ERROR,
+    errors: errors,
+  }
+}
