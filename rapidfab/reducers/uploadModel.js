@@ -7,6 +7,7 @@ export const initialState = {
   uploading: false,
   percent: 0,
   orderPayload: null,
+  errors: [],
 }
 
 function reducer(state=initialState, action) {
@@ -35,6 +36,17 @@ function reducer(state=initialState, action) {
       })
     case Constants.UPLOAD_MODEL_CLEAR:
       return initialState
+    case Constants.UPLOAD_MODEL_ADD_ERROR:
+      let errors = _.assign([], state.errors)
+
+      action.errors.map(function(error) {
+        if(!_.find(errors, error)) {
+          errors.push(error)
+        }
+      })
+      return _.assign({}, state, {
+        errors: errors,
+      })
     default:
       return state
   }
