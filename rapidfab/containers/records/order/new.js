@@ -66,8 +66,9 @@ function mapDispatchToProps(dispatch, props) {
         "wyatt.order.put",
       ]))
     },
-    onSubmit: payload => {
+    submitModel: payload => {
       payload.bureau = Config.BUREAU
+      let valid = true
 
       if (false === !!payload.materials.support) delete payload.materials.support
       if (false === !!payload.shipping.name) delete payload.shipping.name
@@ -75,13 +76,26 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
 
-      dispatch(Actions.Api.hoth.model.post({
-        name: payload.name
-      })).then(args => {
-        dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
-        payload.model = args.headers.location
-        dispatch(Actions.UploadModel.storeOrderPayload(payload))
-      })
+      if(payload.base && payload.support) {
+        if(payload.base.retail_price.currency !== payload.support.retail_price.currency) {
+          valid = false
+          dispatch(Actions.UploadModel.addError([{title:"Base and Support material currencies don't match."}]))
+        }
+
+        // We don't actually want to ship this.
+        delete payload.base
+        delete payload.support
+      }
+
+      if(valid) {
+        dispatch(Actions.Api.hoth.model.post({
+          name: payload.name
+        })).then(args => {
+          dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
+          payload.model = args.headers.location
+          dispatch(Actions.UploadModel.storeOrderPayload(payload))
+        })
+      }
     }
   }
 }
@@ -101,16 +115,17 @@ function mapStateToProps(state, props) {
   const errors = _.concat(
     material.list.errors ||
     order.post.errors ||
-    state.ui.wyatt['third-party'].list.errors
+    state.ui.wyatt['third-party'].list.errors,
+    state.uploadModel.errors,
   )
 
   const uploadModel = state.uploadModel
   const processingModel = state.resources[uploadModel.modelUuid]
 
   return {
-    apiErrors   : order.post.errors,
-    materials   : Selectors.getMaterials(state),
-    providers   : Selectors.getThirdPartyProviders(state),
+    combinedErrors : errors,
+    materials      : Selectors.getMaterials(state),
+    providers      : Selectors.getThirdPartyProviders(state),
     fetching,
     uploadModel,
     model: processingModel,
