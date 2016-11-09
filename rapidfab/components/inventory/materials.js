@@ -61,9 +61,6 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
-          <BS.Breadcrumb.Item>
-            <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
-          </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/materials">
             <Fa name='object-group'/> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
           </BS.Breadcrumb.Item>

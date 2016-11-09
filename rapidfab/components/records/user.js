@@ -17,9 +17,6 @@ const UserForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors 
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item>
-              <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
-            </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/users">
               <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
             </BS.Breadcrumb.Item>

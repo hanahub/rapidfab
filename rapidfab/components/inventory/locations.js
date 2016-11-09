@@ -59,9 +59,6 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
-          <BS.Breadcrumb.Item>
-            <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
-          </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/locations">
             <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
           </BS.Breadcrumb.Item>

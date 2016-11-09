@@ -17,9 +17,6 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item>
-              <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
-            </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/materials">
               <Fa name='object-group'/> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
             </BS.Breadcrumb.Item>
