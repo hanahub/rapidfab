@@ -29,6 +29,10 @@ class ManufacturerContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/manufacturers"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -38,17 +42,14 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload))
-        window.location.hash = "#/inventory/manufacturers"
+        dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload)).then(redirect)
       } else {
-        dispatch(Actions.Api.wyatt.manufacturer.post(payload))
-        window.location.hash = "#/inventory/manufacturers"
+        dispatch(Actions.Api.wyatt.manufacturer.post(payload)).then(redirect)
       }
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.wyatt.manufacturer.delete(uuid))
-        window.location.hash = "#/inventory/manufacturers"
+        dispatch(Actions.Api.wyatt.manufacturer.delete(uuid)).then(redirect)
       }
     }
   }

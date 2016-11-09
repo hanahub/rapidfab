@@ -27,6 +27,10 @@ class LocationContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/locations"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -39,18 +43,15 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.location.put(payload.uuid, payload))
-        window.location.hash = "#/inventory/locations"
+        dispatch(Actions.Api.wyatt.location.put(payload.uuid, payload)).then(redirect)
       } else {
         payload.bureau = Config.BUREAU
-        dispatch(Actions.Api.wyatt.location.post(payload))
-        window.location.hash = "#/inventory/locations"
+        dispatch(Actions.Api.wyatt.location.post(payload)).then(redirect)
       }
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.wyatt.location.delete(uuid))
-        window.location.hash = "#/inventory/locations"
+        dispatch(Actions.Api.wyatt.location.delete(uuid)).then(redirect)
       }
     }
   }

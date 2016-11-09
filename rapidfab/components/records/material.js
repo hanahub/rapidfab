@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, apiErrors}) => (
+const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
