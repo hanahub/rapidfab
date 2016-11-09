@@ -44,6 +44,9 @@ const PostProcessorTypes = ({ postProcessorTypes, fetching, apiErrors, manufactu
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
+          <BS.Breadcrumb.Item>
+            <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
+          </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
             <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post Processor Types'/>
           </BS.Breadcrumb.Item>

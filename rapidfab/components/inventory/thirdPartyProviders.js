@@ -40,6 +40,9 @@ const ThirdPartyProviders = ({ providers, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
+          <BS.Breadcrumb.Item>
+            <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
+          </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/third-party-providers">
             <Fa name='map-marker'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
           </BS.Breadcrumb.Item>

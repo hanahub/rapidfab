@@ -11,6 +11,9 @@ const BreadCrumbs = ({  }) => (
   <BS.Row>
     <BS.Col xs={12}>
       <BS.Breadcrumb>
+        <BS.Breadcrumb.Item>
+          <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
+        </BS.Breadcrumb.Item>
         <BS.Breadcrumb.Item href="#/plan/orders">
           <Fa name='object-group'/> <FormattedMessage id="inventory.orders" defaultMessage='Orders'/>
         </BS.Breadcrumb.Item>
