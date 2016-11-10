@@ -25,7 +25,7 @@ class Navbar extends Component {
     );
     const inventoryTitle = (
       <span>
-        <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
+        <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
       </span>
     );
     const myProfileTitle = (

@@ -17,8 +17,8 @@ const PrinterTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, pri
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item>
-              <Fa name='book'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
+            <BS.Breadcrumb.Item active={true}>
+              <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/printer-types">
               <Fa name='print'/> <FormattedMessage id="inventory.printerTypes" defaultMessage='Printer Types'/>

@@ -17,7 +17,7 @@ const PostProcessorForm = ({ fields, handleSubmit, load, submitting, onDelete, l
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
-            <BS.Breadcrumb.Item>
+            <BS.Breadcrumb.Item active={true}>
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/post-processors">

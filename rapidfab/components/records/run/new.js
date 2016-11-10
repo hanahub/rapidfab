@@ -121,11 +121,14 @@ class Runs extends Component {
         <BS.Row>
           <BS.Col xs={12}>
             <BS.Breadcrumb>
-              <BS.Breadcrumb.Item>
+              <BS.Breadcrumb.Item active={true}>
                 <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/plan/runs">
                 <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
+              </BS.Breadcrumb.Item>
+              <BS.Breadcrumb.Item>
+                <Fa name='file-o'/> <FormattedMessage id="record.run.new" defaultMessage='New Run'/>
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
