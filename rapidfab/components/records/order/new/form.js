@@ -37,20 +37,14 @@ class NewOrderForm extends Component {
         address: state.shippingAddress,
         tracking: state.shippingTracking,
       },
-    }
-
-    if(state.baseMaterial && state.supportMaterial) {
-      payload["base"] = _.find(this.props.materials, function(mat) {return mat.uri == state.baseMaterial})
-      payload["support"] = _.find(this.props.materials, function(mat) {return mat.uri == state.supportMaterial})
+      third_party_provider: state.thirdPartyProvider,
     }
 
     this.props.submitModel(payload)
   }
 
   handleChange(event) {
-    if(event.target.name !== "model") {
-      this.setState({[event.target.name]: event.target.value})
-    }
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
@@ -82,7 +76,7 @@ class NewOrderForm extends Component {
 
             <BS.FormGroup controlId="uxModel">
               <BS.ControlLabel><FormattedMessage id="field.model" defaultMessage='Model'/>:</BS.ControlLabel>
-              <BS.FormControl type="file" ref="file" required onChange={this.handleChange} name="file"/>
+              <BS.FormControl type="file" ref="file" required name="file"/>
             </BS.FormGroup>
 
             <BS.FormGroup controlId="uxQuantity">

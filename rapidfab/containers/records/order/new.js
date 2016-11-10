@@ -1,6 +1,5 @@
 import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
-import { reduxForm }                      from 'redux-form'
 import _                                  from "lodash"
 
 import Actions                            from "rapidfab/actions"
@@ -9,21 +8,6 @@ import { extractUuid }                    from "rapidfab/reducers/makeApiReducer
 import * as Selectors                     from 'rapidfab/selectors'
 
 import NewOrderComponent                  from 'rapidfab/components/records/order/new'
-
-const fields = [
-  'id',
-  'uri',
-  'uuid',
-  'name',
-  'model',
-  'quantity',
-  'materials.base',
-  'materials.support',
-  'shipping.name',
-  'shipping.address',
-  'shipping.tracking',
-  'third_party_provider',
-]
 
 class NewOrderContainer extends Component {
   componentDidMount() {
@@ -68,7 +52,6 @@ function mapDispatchToProps(dispatch, props) {
     },
     submitModel: payload => {
       payload.bureau = Config.BUREAU
-      let valid = true
 
       if (false === !!payload.materials.support) delete payload.materials.support
       if (false === !!payload.shipping.name) delete payload.shipping.name
@@ -76,26 +59,13 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
 
-      if(payload.base && payload.support) {
-        if(payload.base.retail_price.currency !== payload.support.retail_price.currency) {
-          valid = false
-          dispatch(Actions.UploadModel.addError([{title:"Base and Support material currencies don't match."}]))
-        }
-
-        // We don't actually want to ship this.
-        delete payload.base
-        delete payload.support
-      }
-
-      if(valid) {
-        dispatch(Actions.Api.hoth.model.post({
-          name: payload.name
-        })).then(args => {
-          dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
-          payload.model = args.headers.location
-          dispatch(Actions.UploadModel.storeOrderPayload(payload))
-        })
-      }
+      dispatch(Actions.Api.hoth.model.post({
+        name: payload.name
+      })).then(args => {
+        dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
+        payload.model = args.headers.location
+        dispatch(Actions.UploadModel.storeOrderPayload(payload))
+      })
     }
   }
 }
@@ -132,7 +102,4 @@ function mapStateToProps(state, props) {
   }
 }
 
-export default reduxForm({
-  form: 'record.newOrder',
-  fields
-}, mapStateToProps, mapDispatchToProps)(NewOrderContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(NewOrderContainer)
