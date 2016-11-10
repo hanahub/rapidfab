@@ -81,7 +81,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
               <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/plan/runs">
-              <Fa name='files-o'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
+              <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
               <Fa name='file-o'/> {fields.id.value}
