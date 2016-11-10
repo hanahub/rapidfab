@@ -46,7 +46,7 @@ const Runs = ({ runs, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
-          <BS.Breadcrumb.Item>
+          <BS.Breadcrumb.Item active={true}>
             <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/plan/runs">
