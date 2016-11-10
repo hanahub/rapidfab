@@ -127,6 +127,9 @@ class Runs extends Component {
               <BS.Breadcrumb.Item href="#/plan/runs">
                 <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
               </BS.Breadcrumb.Item>
+              <BS.Breadcrumb.Item>
+                <Fa name='file-o'/> <FormattedMessage id="record.run.new" defaultMessage='New Run'/>
+              </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
         </BS.Row>
