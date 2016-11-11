@@ -1,6 +1,5 @@
 import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
-import { reduxForm }                      from 'redux-form'
 import _                                  from "lodash"
 
 import Actions                            from "rapidfab/actions"
@@ -9,21 +8,6 @@ import { extractUuid }                    from "rapidfab/reducers/makeApiReducer
 import * as Selectors                     from 'rapidfab/selectors'
 
 import NewOrderComponent                  from 'rapidfab/components/records/order/new'
-
-const fields = [
-  'id',
-  'uri',
-  'uuid',
-  'name',
-  'model',
-  'quantity',
-  'materials.base',
-  'materials.support',
-  'shipping.name',
-  'shipping.address',
-  'shipping.tracking',
-  'third_party_provider',
-]
 
 class NewOrderContainer extends Component {
   componentDidMount() {
@@ -101,23 +85,21 @@ function mapStateToProps(state, props) {
   const errors = _.concat(
     material.list.errors ||
     order.post.errors ||
-    state.ui.wyatt['third-party'].list.errors
+    state.ui.wyatt['third-party'].list.errors,
+    state.uploadModel.errors,
   )
 
   const uploadModel = state.uploadModel
   const processingModel = state.resources[uploadModel.modelUuid]
 
   return {
-    apiErrors   : order.post.errors,
-    materials   : Selectors.getMaterials(state),
-    providers   : Selectors.getThirdPartyProviders(state),
+    combinedErrors : errors,
+    materials      : Selectors.getMaterials(state),
+    providers      : Selectors.getThirdPartyProviders(state),
     fetching,
     uploadModel,
     model: processingModel,
   }
 }
 
-export default reduxForm({
-  form: 'record.newOrder',
-  fields
-}, mapStateToProps, mapDispatchToProps)(NewOrderContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(NewOrderContainer)

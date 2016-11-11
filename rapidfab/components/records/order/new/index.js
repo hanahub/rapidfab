@@ -25,10 +25,10 @@ const BreadCrumbs = ({  }) => (
   </BS.Row>
 )
 
-const ApiErrors = ({ apiErrors }) => (
+const Errors = ({ errors }) => (
   <BS.Row>
     <BS.Col xs={12}>
-      <Error errors={apiErrors}/>
+      <Error errors={errors}/>
     </BS.Col>
   </BS.Row>
 )
@@ -102,7 +102,7 @@ const OrderForm = ({ props }) => (
       fields={props.fields}
       materials={props.materials}
       providers={props.providers}
-      handleSubmit={props.handleSubmit}
+      onSubmit={props.onSubmit}
     />
 )
 
@@ -125,7 +125,7 @@ const Content = ({ props }) => {
 const NewOrder = props => (
   <BS.Grid fluid>
     <BreadCrumbs />
-    <ApiErrors />
+    <Errors errors={props.combinedErrors}/>
     <Content props={props}/>
   </BS.Grid>
 )
