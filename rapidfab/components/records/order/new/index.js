@@ -102,7 +102,7 @@ const OrderForm = ({ props }) => (
       fields={props.fields}
       materials={props.materials}
       providers={props.providers}
-      submitModel={props.submitModel}
+      onSubmit={props.onSubmit}
     />
 )
 

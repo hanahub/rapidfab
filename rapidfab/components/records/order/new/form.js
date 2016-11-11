@@ -40,7 +40,7 @@ class NewOrderForm extends Component {
       third_party_provider: state.thirdPartyProvider,
     }
 
-    this.props.submitModel(payload)
+    this.props.onSubmit(payload)
   }
 
   handleChange(event) {

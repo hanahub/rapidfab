@@ -50,7 +50,7 @@ function mapDispatchToProps(dispatch, props) {
         "wyatt.order.put",
       ]))
     },
-    submitModel: payload => {
+    onSubmit: payload => {
       payload.bureau = Config.BUREAU
 
       if (false === !!payload.materials.support) delete payload.materials.support
