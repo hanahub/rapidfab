@@ -53,7 +53,7 @@ class NewOrderForm extends Component {
         <BS.Row>
           <BS.Col xs={6}>
             <BS.Button href="#/plan/orders" bsSize="small">
-              <Fa name='arrow-left'/> <FormattedMessage id="inventory.orders" defaultMessage='Orders'/>
+              <Fa name='arrow-left'/> <FormattedMessage id="plan.orders" defaultMessage='Orders'/>
             </BS.Button>
           </BS.Col>
           <BS.Col xs={6}>
