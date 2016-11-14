@@ -83,10 +83,10 @@ function mapStateToProps(state, props) {
     state.ui.wyatt['third-party'].list.fetching
 
   const errors = _.concat(
-    material.list.errors ||
-    order.post.errors ||
-    state.ui.wyatt['third-party'].list.errors,
-    state.uploadModel.errors,
+    material.list.errors || [],
+    order.post.errors || [],
+    state.ui.wyatt['third-party'].list.errors || [],
+    state.uploadModel.errors || [],
   )
 
   const uploadModel = state.uploadModel
