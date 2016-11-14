@@ -113,6 +113,8 @@ const Content = ({ props }) => {
 
   if(model && model.status === "processed" && !model.analyses.manifold) {
     return(<ModelError model={model}/>)
+  } else if(uploadModel.uploading && props.combinedErrors.length) {
+    return(<div/>)
   } else if(uploadModel.uploading) {
     return(<Processing model={model} percent={percent}/>)
   } else {
