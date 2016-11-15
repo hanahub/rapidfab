@@ -15,6 +15,7 @@ export const getStateLocations           = state => state.api.wyatt.location
 export const getStatePostProcessorTypes  = state => state.api.wyatt['post-processor-type']
 export const getStatePostProcessors      = state => state.api.wyatt['post-processor']
 export const getStateManufacturers       = state => state.api.wyatt.manufacturer
+export const getStateShippings           = state => state.api.wyatt.shipping
 export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
@@ -115,6 +116,11 @@ export const getPostProcessors = createSelector(
 
 export const getManufacturers = createSelector(
   [ getStateManufacturers, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getShippings = createSelector(
+  [ getStateShippings, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
