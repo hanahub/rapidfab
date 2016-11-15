@@ -43,7 +43,7 @@ const Shippings = ({ shippings, fetching, apiErrors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/shipping">
-            <Fa name='cubes'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shippings'/>
+            <Fa name='truck'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shippings'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>

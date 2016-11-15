@@ -102,7 +102,7 @@ class Navbar extends Component {
               <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
             </BS.MenuItem>
             <BS.MenuItem eventKey={3.12} href="#/inventory/Shipping">
-              <Fa name='cubes'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shipping'/>
+              <Fa name='truck'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shipping'/>
             </BS.MenuItem>
           </BS.NavDropdown>
         </BS.Nav>

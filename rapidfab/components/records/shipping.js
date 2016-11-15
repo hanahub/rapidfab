@@ -21,10 +21,10 @@ const ShippingForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErr
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/shipping">
-              <Fa name='cubes'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shippings'/>
+              <Fa name='truck'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shippings'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='cubes'/> {fields.id.value || <FormattedMessage id="record.shipping.new" defaultMessage='New Shipping'/>}
+              <Fa name='truck'/> {fields.id.value || <FormattedMessage id="record.shipping.new" defaultMessage='New Shipping'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
