@@ -3,6 +3,7 @@ import About                        from 'rapidfab/components/about'
 
 import InventoryLocations           from 'rapidfab/containers/inventory/locations'
 import InventoryManufacturers       from 'rapidfab/containers/inventory/manufacturers'
+import InventoryShipping            from 'rapidfab/containers/inventory/shipping'
 import InventoryMaterials           from 'rapidfab/containers/inventory/materials'
 import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
 import InventoryPostProcessors      from 'rapidfab/containers/inventory/postProcessors'
@@ -22,6 +23,7 @@ import OrderNew                     from 'rapidfab/containers/records/order/new'
 import Location                     from 'rapidfab/containers/records/location'
 import ThirdPartyProvider           from 'rapidfab/containers/records/thirdPartyProvider'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
+import Shipping                     from 'rapidfab/containers/records/shipping'
 import Material                     from 'rapidfab/containers/records/material'
 import Printer                      from 'rapidfab/containers/records/printer'
 import PrinterType                  from 'rapidfab/containers/records/printerType'
@@ -40,6 +42,7 @@ const Routes = {
   "/inventory/stocks"                    : InventoryStocks,
   "/inventory/locations"                 : InventoryLocations,
   "/inventory/manufacturers"             : InventoryManufacturers,
+  "/inventory/shipping"                  : InventoryShipping,
   "/inventory/post-processors"           : InventoryPostProcessors,
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
   "/inventory/users"                     : InventoryUsers,
@@ -60,6 +63,8 @@ const Routes = {
   "/records/third-party-provider/:uuid"  : ThirdPartyProvider,
   "/records/manufacturer"                : Manufacturer,
   "/records/manufacturer/:uuid"          : Manufacturer,
+  "/records/shipping"                    : Shipping,
+  "/records/shipping/:uuid"              : Shipping,
   "/records/material"                    : Material,
   "/records/material/:uuid"              : Material,
   "/records/printer"                     : Printer,
