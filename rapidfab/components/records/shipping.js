@@ -58,6 +58,14 @@ const ShippingForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErr
       <BS.Row>
         <BS.Col xs={12}>
           <BS.FormGroup controlId="uxRegion">
+            <BS.FormGroup controlId="uxName">
+              <BS.ControlLabel><FormattedMessage id="field.name" defaultMessage='Name'/>:</BS.ControlLabel>
+              <BS.FormControl type="text" required {...fields.name}/>
+            </BS.FormGroup>
+            <BS.FormGroup controlId="uxDescription">
+              <BS.ControlLabel><FormattedMessage id="field.description" defaultMessage='Description'/>:</BS.ControlLabel>
+              <BS.FormControl componentClass="textarea" {...fields.description}/>
+            </BS.FormGroup>
             <BS.ControlLabel>Region:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required {...fields.region}>
               <option key="placeholder" value="" selected disabled>Select a Region</option>
