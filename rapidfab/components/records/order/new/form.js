@@ -4,7 +4,7 @@ import * as BS                             from 'react-bootstrap'
 import _                                   from "lodash"
 import Fa                                  from 'react-fontawesome'
 import { FormattedMessage }                from 'react-intl'
-import constants, { Currencies }           from 'rapidfab/constants'
+import { Currencies }                      from 'rapidfab/constants'
 
 
 const SaveButtonTitle = ({  }) => (
