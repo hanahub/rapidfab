@@ -28,7 +28,8 @@ const fields = [
   'shipping.tracking',
   'third_party_provider',
   'quantity',
-  'created'
+  'created',
+  'currency',
 ]
 
 class OrderContainer extends Component {

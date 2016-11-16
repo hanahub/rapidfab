@@ -1,6 +1,7 @@
 import React, { PropTypes }                                   from "react";
 import * as BS                                                from 'react-bootstrap';
 import Fa                                                     from 'react-fontawesome';
+import constants, { Currencies }                              from '../../../../constants'
 import {
   FormattedDateTime,
   FormattedMessage
@@ -92,6 +93,15 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
         {_.map(providers, provider => (
           <option key={provider.uri} value={provider.uri}>{provider.name}</option>
         ))}
+      </BS.FormControl>
+    </FormRow>
+
+    <FormRow id="field.currency" defaultMessage="Currency">
+      <BS.FormControl componentClass="select" {...fields.currency}>
+        <option key="placeholder" value="" selected disabled>Select a currency</option>
+          {_.map(Currencies, currency => (
+            <option key={currency} value={currency}>{currency}</option>
+          ))}
       </BS.FormControl>
     </FormRow>
 
