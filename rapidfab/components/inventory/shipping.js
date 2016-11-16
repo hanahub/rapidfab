@@ -1,15 +1,20 @@
-import React, { PropTypes }   from "react";
-import * as BS                from 'react-bootstrap';
-import Fa                     from 'react-fontawesome';
-import { FormattedMessage }   from 'react-intl';
-import Grid, { IdColumn }     from 'rapidfab/components/grid';
+import React, { PropTypes }   from 'react'
+import * as BS                from 'react-bootstrap'
+import Fa                     from 'react-fontawesome'
+import { FormattedMessage }   from 'react-intl'
+import Grid, {
+  IdColumn,
+  CapitalizeColumn
+}                             from 'rapidfab/components/grid'
 import Error                  from 'rapidfab/components/error'
+
 
 const ShippingsGrid = ({ records }) => (
   <Grid
     data={records}
     columns={[
       "id",
+      "name",
       "region",
       "cost",
     ]}
@@ -19,7 +24,11 @@ const ShippingsGrid = ({ records }) => (
       customComponent: IdColumn("shipping"),
       locked: true
     }, {
+      columnName: "name",
+      displayName: <FormattedMessage id='field.name' defaultMessage="Name"/>
+    }, {
       columnName: "region",
+      customComponent: CapitalizeColumn,
       displayName: <FormattedMessage id="field.region" defaultMessage='Region'/>,
     }, {
       columnName: "cost",

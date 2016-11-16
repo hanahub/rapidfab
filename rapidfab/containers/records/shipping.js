@@ -10,6 +10,8 @@ import * as Selectors                     from 'rapidfab/selectors'
 const fields = [
   'id',
   'uuid',
+  'name',
+  'description',
   'region',
   'cost',
 ]
