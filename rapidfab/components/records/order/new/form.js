@@ -4,6 +4,7 @@ import * as BS                             from 'react-bootstrap'
 import _                                   from "lodash"
 import Fa                                  from 'react-fontawesome'
 import { FormattedMessage }                from 'react-intl'
+import constants, { Currencies }           from '../../../../constants'
 
 
 const SaveButtonTitle = ({  }) => (
@@ -38,6 +39,7 @@ class NewOrderForm extends Component {
         tracking: state.shippingTracking,
       },
       third_party_provider: state.thirdPartyProvider,
+			currency: state.currency,
     }
 
     this.props.onSubmit(payload)
@@ -125,6 +127,16 @@ class NewOrderForm extends Component {
                 <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
                 {_.map(this.props.providers, provider => (
                   <option key={provider.uri} value={provider.uri}>{provider.name}</option>
+                ))}
+              </BS.FormControl>
+            </BS.FormGroup>
+
+            <BS.FormGroup controlId="uxCurrency">
+              <BS.ControlLabel><FormattedMessage id="field.currency" defaultMessage='Currency'/>:</BS.ControlLabel>
+              <BS.FormControl componentClass="select" onChange={this.handleChange} name="currency">
+                <option key="placeholder" value="" selected disabled>Select a Currency</option>
+                {_.map(Currencies, currency => (
+                  <option key={currency} value={currency}>{currency}</option>
                 ))}
               </BS.FormControl>
             </BS.FormGroup>

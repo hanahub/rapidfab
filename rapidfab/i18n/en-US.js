@@ -164,6 +164,7 @@ export default {
   "field.bureau"                      : "Bureau",
   "field.region"                      : "Region",
   "field.cost"                        : "Cost",
+  "field.currency"                    : "Currency",
   "orderFailure.header"               : "Unprintable model",
   "orderFailure.description"          : "Some of the printability checks listed below failed. Please correct them and try again.",
   "orderFailure.manifold"             : "Manifold",
