@@ -1,7 +1,7 @@
 import React, { PropTypes }                                   from "react";
 import * as BS                                                from 'react-bootstrap';
 import Fa                                                     from 'react-fontawesome';
-import constants, { Currencies }                              from '../../../../constants'
+import constants, { Currencies }                              from 'rapidfab/constants'
 import {
   FormattedDateTime,
   FormattedMessage

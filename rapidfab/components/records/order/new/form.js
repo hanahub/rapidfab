@@ -4,7 +4,7 @@ import * as BS                             from 'react-bootstrap'
 import _                                   from "lodash"
 import Fa                                  from 'react-fontawesome'
 import { FormattedMessage }                from 'react-intl'
-import constants, { Currencies }           from '../../../../constants'
+import constants, { Currencies }           from 'rapidfab/constants'
 
 
 const SaveButtonTitle = ({  }) => (
@@ -39,7 +39,7 @@ class NewOrderForm extends Component {
         tracking: state.shippingTracking,
       },
       third_party_provider: state.thirdPartyProvider,
-			currency: state.currency,
+      currency: state.currency,
     }
 
     this.props.onSubmit(payload)
