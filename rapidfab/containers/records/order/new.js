@@ -37,6 +37,7 @@ function mapDispatchToProps(dispatch, props) {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
+      dispatch(Actions.Api.wyatt.shipping.list())
     },
     onSaveOrder: payload => {
       dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
@@ -96,6 +97,7 @@ function mapStateToProps(state, props) {
     combinedErrors : errors,
     materials      : Selectors.getMaterials(state),
     providers      : Selectors.getThirdPartyProviders(state),
+    shippings      : Selectors.getShippings(state),
     fetching,
     uploadModel,
     model: processingModel,

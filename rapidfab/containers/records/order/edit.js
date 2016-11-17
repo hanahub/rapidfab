@@ -26,6 +26,7 @@ const fields = [
   'shipping.name',
   'shipping.address',
   'shipping.tracking',
+  'shipping.uri',
   'third_party_provider',
   'quantity',
   'created',
@@ -49,6 +50,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt.run.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
+      dispatch(Actions.Api.wyatt.shipping.list())
       if(props.route.uuid) {
         dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
         dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
@@ -118,6 +120,7 @@ function mapStateToProps(state, props) {
     order,
     prints            : Selectors.getPrintsForOrder(state, orderResource),
     providers         : Selectors.getThirdPartyProviders(state),
+    shippings         : Selectors.getShippings(state),
     runs,
     snapshot,
     uuid              : Selectors.getRoute(state, props).uuid,
