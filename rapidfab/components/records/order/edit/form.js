@@ -41,7 +41,7 @@ const ModelSelect = ({models, modelsIsFetching, value}) => {
   }
 }
 
-const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers }) => (
+const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers, shippings }) => (
   <div>
     <FormRow id="field.id" defaultMessage="ID">
       <BS.FormControl.Static>
@@ -85,6 +85,15 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
 
     <FormRow id="field.trackingNumber" defaultMessage="Tracking Number">
       <FormControlTextCareful {...fields.shipping.tracking}/>
+    </FormRow>
+
+    <FormRow id="field.shippingType" defaultMessage="Shipping Type">
+      <BS.FormControl componentClass="select" {...fields.shipping.uri}>
+        <option key="placeholder" value="" selected disabled>Select shipping type</option>
+          {_.map(shippings, shipping => (
+            <option key={shipping.uri} value={shipping.uri}>{shipping.name}</option>
+          ))}
+      </BS.FormControl>
     </FormRow>
 
     <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">

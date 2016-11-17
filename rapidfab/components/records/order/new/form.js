@@ -37,6 +37,7 @@ class NewOrderForm extends Component {
         name: state.shippingName,
         address: state.shippingAddress,
         tracking: state.shippingTracking,
+        uri: state.shippingType,
       },
       third_party_provider: state.thirdPartyProvider,
       currency: state.currency,
@@ -119,6 +120,16 @@ class NewOrderForm extends Component {
             <BS.FormGroup controlId="uxTrackingNumber">
               <BS.ControlLabel><FormattedMessage id="field.trackingNumber" defaultMessage='Tracking Number'/>:</BS.ControlLabel>
               <BS.FormControl type="text" onChange={this.handleChange} name="shippingTracking"/>
+            </BS.FormGroup>
+
+            <BS.FormGroup controlId="uxshippingType">
+              <BS.ControlLabel><FormattedMessage id="field.shippingType" defaultMessage='Shipping Type'/>:</BS.ControlLabel>
+              <BS.FormControl componentClass="select" onChange={this.handleChange} name="shippingType">
+                <option key="placeholder" value="" selected disabled>Select a shipping type</option>
+                {_.map(this.props.shippings, shipping => (
+                  <option key={shipping.uri} value={shipping.uri}>{shipping.name}</option>
+                ))}
+              </BS.FormControl>
             </BS.FormGroup>
 
             <BS.FormGroup controlId="uxThirdPartyProvider">
