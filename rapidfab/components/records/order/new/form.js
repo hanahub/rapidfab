@@ -124,7 +124,7 @@ class NewOrderForm extends Component {
 
             <BS.FormGroup controlId="uxshippingType">
               <BS.ControlLabel><FormattedMessage id="field.shippingType" defaultMessage='Shipping Type'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" onChange={this.handleChange} name="shippingType">
+              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="shippingType">
                 <option key="placeholder" value="" selected disabled>Select a shipping type</option>
                 {_.map(this.props.shippings, shipping => (
                   <option key={shipping.uri} value={shipping.uri}>{shipping.name}</option>
