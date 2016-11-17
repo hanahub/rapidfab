@@ -10,7 +10,7 @@ import {
 } from 'rapidfab/i18n';
 
 
-const OrderEstimates = ({ estimates }) => (
+const OrderEstimates = ({ estimates, currency }) => (
   <BS.Panel bsStyle="info">
     <BS.ListGroup fill>
       <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
@@ -39,7 +39,7 @@ const OrderEstimates = ({ estimates }) => (
       </BS.ListGroupItem>
       <BS.ListGroupItem header={<FormattedMessage id="field.estimatedCost" defaultMessage='Estimated Cost'/>}>
         {estimates.cost.amount.value ?
-          <FormattedCost currency={estimates.cost.currency.value} value={estimates.cost.amount.value} /> :
+          <FormattedCost currency={currency.value} value={estimates.cost.amount.value} /> :
             (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
         }
       </BS.ListGroupItem>

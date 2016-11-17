@@ -96,7 +96,10 @@ const OrderContainer = (props) => (
 
     <BS.Row>
       <BS.Col xs={4}>
-        <OrderEstimates estimates={props.fields.estimates}/>
+        <OrderEstimates
+          estimates={props.fields.estimates}
+          currency={props.fields.currency}
+        />
       </BS.Col>
       <BS.Col xs={8}>
         <OrderRuns runs={props.runs}/>
