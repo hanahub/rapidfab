@@ -144,7 +144,7 @@ class NewOrderForm extends Component {
 
             <BS.FormGroup controlId="uxCurrency">
               <BS.ControlLabel><FormattedMessage id="field.currency" defaultMessage='Currency'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" onChange={this.handleChange} name="currency">
+              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="currency">
                 <option key="placeholder" value="" selected disabled>Select a Currency</option>
                 {_.map(Currencies, currency => (
                   <option key={currency} value={currency}>{currency}</option>
