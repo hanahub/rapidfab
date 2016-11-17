@@ -121,6 +121,16 @@ class NewOrderForm extends Component {
               <BS.FormControl type="text" onChange={this.handleChange} name="shippingTracking"/>
             </BS.FormGroup>
 
+            <BS.FormGroup controlId="uxshippingType">
+              <BS.ControlLabel><FormattedMessage id="field.shippingType" defaultMessage='Shipping Type'/>:</BS.ControlLabel>
+              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="shippingType">
+                <option key="placeholder" value="" selected disabled>Select a shipping type</option>
+                {_.map(this.props.shippings, shipping => (
+                  <option key={shipping.uri} value={shipping.uri}>{shipping.name}</option>
+                ))}
+              </BS.FormControl>
+            </BS.FormGroup>
+
             <BS.FormGroup controlId="uxThirdPartyProvider">
               <BS.ControlLabel><FormattedMessage id="field.thirdPartyProvider" defaultMessage='Third Party Provider'/>:</BS.ControlLabel>
               <BS.FormControl componentClass="select" onChange={this.handleChange} name="thirdPartyProvider">
@@ -133,7 +143,7 @@ class NewOrderForm extends Component {
 
             <BS.FormGroup controlId="uxCurrency">
               <BS.ControlLabel><FormattedMessage id="field.currency" defaultMessage='Currency'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" onChange={this.handleChange} name="currency">
+              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="currency">
                 <option key="placeholder" value="" selected disabled>Select a Currency</option>
                 {_.map(Currencies, currency => (
                   <option key={currency} value={currency}>{currency}</option>

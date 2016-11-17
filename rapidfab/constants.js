@@ -42,6 +42,11 @@ const Constants = [
 ]
 
 export const Currencies = [
+  'USD', 'GBP', 'JPY', 'EUR',
+]
+
+/* Guess you guys aren't ready for that yet, But your kids are gonna love it.
+export const Currencies = [
   'AED', 'AFN', 'ALL', 'AMD',
   'ANG', 'AOA', 'ARS', 'AUD',
   'AWG', 'AZN', 'BAM', 'BBD',
@@ -88,6 +93,6 @@ export const Currencies = [
   'XOF', 'XPD', 'XPF', 'XPT',
   'XTS', 'XXX', 'YER', 'ZAR',
   'ZMK', 'ZWD',
-]
+]*/
 
 export default make_constants(Constants)
