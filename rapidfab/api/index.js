@@ -23,6 +23,7 @@ export const RESOURCES = {
     'run',
     'third-party',
     'shipping',
+    'currency-conversion',
   ]
 }
 
