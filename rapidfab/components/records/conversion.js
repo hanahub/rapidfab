@@ -21,7 +21,7 @@ const ConversionForm = ({ fields, handleSubmit, load, submitting, onDelete, apiE
           <BS.Breadcrumb.Item active={true}>
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/covnersions">
+            <BS.Breadcrumb.Item href="#/inventory/conversions">
               <Fa name='exchange'/> <FormattedMessage id="inventory.conversions" defaultMessage='Conversions'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
