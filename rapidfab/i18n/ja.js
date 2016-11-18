@@ -34,6 +34,7 @@ export default {
   "inventory.thirdPartyProviders"     : "第三者プロバイダー",
   "inventory.users"                   : "Users",
   "inventory.shippings"               : "Shippings",
+  "inventory.conversions"             : "Conversions",
 
   "myProfile"                         : "My Profile",
   "logout"                            : "Logout",
@@ -91,6 +92,9 @@ export default {
   "record.thirdPartyProvider"         : "Third Party Provider",
   "record.thirdPartyProvider.add"     : "Add Third Party Provider",
   "record.user.add"                   : "Add User",
+  "record.user.new"                   : "New User",
+  "record.conversion.add"             : "Add Conversion",
+  "record.conversion.new"             : "New Conversion",
 
   "field.accessToAllLocations"        : "Access to All Locations",
   "field.actualMaterialUsed"          : "Actual Material Used",
@@ -169,6 +173,8 @@ export default {
   "field.cost"                        : "Cost",
   "field.currency"                    : "Currency",
   "field.shippingType"                : "Shipping Type",
+  "field.multiplier"                  : "Multiplier",
+
   "orderFailure.header"               : "Unprintable model",
   "orderFailure.description"          : "Some of the printability checks listed below failed. Please correct them and try again.",
   "orderFailure.manifold"             : "Manifold",

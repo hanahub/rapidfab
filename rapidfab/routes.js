@@ -3,6 +3,7 @@ import About                        from 'rapidfab/components/about'
 
 import InventoryLocations           from 'rapidfab/containers/inventory/locations'
 import InventoryManufacturers       from 'rapidfab/containers/inventory/manufacturers'
+import InventoryConversions         from 'rapidfab/containers/inventory/conversions'
 import InventoryShipping            from 'rapidfab/containers/inventory/shipping'
 import InventoryMaterials           from 'rapidfab/containers/inventory/materials'
 import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
@@ -23,6 +24,7 @@ import OrderNew                     from 'rapidfab/containers/records/order/new'
 import Location                     from 'rapidfab/containers/records/location'
 import ThirdPartyProvider           from 'rapidfab/containers/records/thirdPartyProvider'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
+import conversion                   from 'rapidfab/containers/records/conversion'
 import Shipping                     from 'rapidfab/containers/records/shipping'
 import Material                     from 'rapidfab/containers/records/material'
 import Printer                      from 'rapidfab/containers/records/printer'
@@ -43,6 +45,7 @@ const Routes = {
   "/inventory/locations"                 : InventoryLocations,
   "/inventory/manufacturers"             : InventoryManufacturers,
   "/inventory/shipping"                  : InventoryShipping,
+  "/inventory/conversions"               : InventoryConversions,
   "/inventory/post-processors"           : InventoryPostProcessors,
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
   "/inventory/users"                     : InventoryUsers,
@@ -65,6 +68,8 @@ const Routes = {
   "/records/manufacturer/:uuid"          : Manufacturer,
   "/records/shipping"                    : Shipping,
   "/records/shipping/:uuid"              : Shipping,
+  "/records/conversion"                  : conversion,
+  "/records/conversion/:uuid"            : conversion,
   "/records/material"                    : Material,
   "/records/material/:uuid"              : Material,
   "/records/printer"                     : Printer,
