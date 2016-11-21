@@ -24,7 +24,7 @@ const FormRow = ({id, defaultMessage, children}) => (
   </BS.FormGroup>
 )
 
-const ModelSelect = ({models, modelsIsFetching, value}) => {
+const ModelSelect = ({models, modelsIsFetching, field}) => {
   if(modelsIsFetching) {
     return (
       <BS.FormControl.Static>
@@ -33,7 +33,7 @@ const ModelSelect = ({models, modelsIsFetching, value}) => {
     );
   } else {
     return (
-      <BS.FormControl componentClass="select" required value={value}>
+      <BS.FormControl componentClass="select" required {...field}>
         <option value="" disabled>Select a Model</option>
         {_.map(models, model => (<option key={model.uri} value={model.uri}>{`${model.id} - ${model.name}`}</option>))}
       </BS.FormControl>
@@ -54,7 +54,7 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
     </FormRow>
 
     <FormRow id="field.model" defaultMessage="Model">
-      <ModelSelect models={models} modelsIsFetching={modelsIsFetching} {...fields.model}/>
+      <ModelSelect models={models} modelsIsFetching={modelsIsFetching} field={fields.model}/>
     </FormRow>
 
     <FormRow id="field.quantity" defaultMessage="Quantity">
