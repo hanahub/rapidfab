@@ -19,12 +19,6 @@ const OrderEstimates = ({ estimates, currency }) => (
             (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
         }
       </BS.ListGroupItem>
-      <BS.ListGroupItem header={<FormattedMessage id="field.estimatedShippingDate" defaultMessage='Estimated Shipping Date'/>}>
-        {estimates.shipping_date.value ?
-          <FormattedDate value={estimates.shipping_date.value}/> :
-            (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
-        }
-      </BS.ListGroupItem>
       <BS.ListGroupItem header={<FormattedMessage id="field.estimatedMaterialUsed" defaultMessage='Estimated Material Used'/>}>
         {estimates.materials.base.value ?
           <FormattedVolume value={estimates.materials.base.value}/> :
@@ -40,6 +34,18 @@ const OrderEstimates = ({ estimates, currency }) => (
       <BS.ListGroupItem header={<FormattedMessage id="field.estimatedCost" defaultMessage='Estimated Cost'/>}>
         {estimates.cost.amount.value ?
           <FormattedCost currency={currency.value} value={estimates.cost.amount.value} /> :
+            (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+        }
+      </BS.ListGroupItem>
+      <BS.ListGroupItem header={<FormattedMessage id="field.estimatedShippingCost" defaultMessage='Estimated Shipping Cost'/>}>
+        {estimates.cost.shipping_amount.value ?
+          <FormattedCost currency={currency.value} value={estimates.cost.shipping_amount.value} /> :
+            (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+        }
+      </BS.ListGroupItem>
+      <BS.ListGroupItem header={<FormattedMessage id="field.estimatedTotalCost" defaultMessage='Estimated Total Cost'/>}>
+        {estimates.cost.amount.value + estimates.cost.shipping_amount.value ?
+          <FormattedCost currency={currency.value} value={estimates.cost.amount.value + estimates.cost.shipping_amount.value} /> :
             (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
         }
       </BS.ListGroupItem>

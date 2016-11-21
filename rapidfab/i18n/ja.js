@@ -174,6 +174,8 @@ export default {
   "field.currency"                    : "Currency",
   "field.shippingType"                : "Shipping Type",
   "field.multiplier"                  : "Multiplier",
+  "field.estimatedShippingCost"       : "Estimated Shipping Cost",
+  "field.estimatedTotalCost"          : "Estimated Total Cost",
 
   "orderFailure.header"               : "Unprintable model",
   "orderFailure.description"          : "Some of the printability checks listed below failed. Please correct them and try again.",
