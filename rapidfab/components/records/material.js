@@ -87,7 +87,7 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxRetailPrice">
-            <BS.ControlLabel><FormattedMessage id="field.retailPrice" defaultMessage='Retail Price'/>:</BS.ControlLabel>
+            <BS.ControlLabel><FormattedMessage id="field.cost" defaultMessage='Cost'/>:</BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.retail_price.amount}/>
           </BS.FormGroup>
           <BS.Checkbox {...fields.third_party_fulfillment}>
