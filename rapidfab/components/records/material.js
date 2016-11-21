@@ -86,13 +86,6 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
               <option value="support">Support</option>
             </BS.FormControl>
           </BS.FormGroup>
-          <BS.FormGroup controlId="uxRetailPriceCurrency">
-            <BS.ControlLabel>Retail Price Currency:</BS.ControlLabel>
-            <BS.FormControl componentClass="select" required {...fields.retail_price.currency}>
-              <option key="placeholder" value="" selected disabled>Select a Currency</option>
-              <option value="USD">USD</option>
-            </BS.FormControl>
-          </BS.FormGroup>
           <BS.FormGroup controlId="uxRetailPrice">
             <BS.ControlLabel><FormattedMessage id="field.retailPrice" defaultMessage='Retail Price'/>:</BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.retail_price.amount}/>

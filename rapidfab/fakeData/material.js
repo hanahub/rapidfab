@@ -20,7 +20,6 @@ const records = _.map(ids, id => {
     third_party_fulfillment: Faker.random.boolean(),
     post_processing_seconds: Faker.random.number(),
     retail_price: {
-      currency: "USD",
       amount: Faker.commerce.price()
     }
   }
