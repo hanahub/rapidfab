@@ -86,9 +86,9 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
               <option value="support">Support</option>
             </BS.FormControl>
           </BS.FormGroup>
-          <BS.FormGroup controlId="uxRetailPrice">
-            <BS.ControlLabel><FormattedMessage id="field.cost" defaultMessage='Cost'/>:</BS.ControlLabel>
-            <BS.FormControl type="number" required {...fields.retail_price.amount}/>
+          <BS.FormGroup controlId="uxCost">
+            <BS.ControlLabel><FormattedMessage id="field.costPerCC" defaultMessage='Cost Per CC'/>:</BS.ControlLabel>
+            <BS.FormControl type="number" required {...fields.cost}/>
           </BS.FormGroup>
           <BS.Checkbox {...fields.third_party_fulfillment}>
             <FormattedMessage id="field.fullfilledByThirdParty" defaultMessage='Fullfilled by Third Party'/>

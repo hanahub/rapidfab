@@ -15,7 +15,7 @@ const fields = [
   'color',
   'type',
   'manufacturer',
-  'retail_price.amount',
+  'cost',
   'third_party_fulfillment',
   'post_processing_seconds'
 ]
