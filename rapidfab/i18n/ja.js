@@ -146,7 +146,7 @@ export default {
   "field.resources"                   : "Resources",
   "field.order"                       : "Order",
   'field.resource'                    : 'Resource',
-  "field.retailPrice"                 : "Retail Price",
+  "field.costPerCC"                   : "Cost Per CC",
   "field.shippingAddress"             : "Shipping Address",
   "field.shippingName"                : "Shipping Name",
   "field.size"                        : "Size",
