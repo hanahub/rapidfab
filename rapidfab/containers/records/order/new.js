@@ -21,7 +21,7 @@ class NewOrderContainer extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { model, uploadModel } = this.props
     const prevModel = prevProps.model
-    if(prevModel && prevModel.status === "processing" && model && model.status === "processed" && model.analyses.manifold) {
+    if(prevModel && prevModel.status !== "processed" && model && model.status === "processed" && model.analyses.manifold) {
       this.props.onSaveOrder(uploadModel.orderPayload)
     }
   }
