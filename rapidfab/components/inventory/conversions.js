@@ -51,7 +51,7 @@ const Conversions = ({ conversions, fetching, apiErrors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/conversions">
-            <Fa name='exchange'/> <FormattedMessage id="inventory.conversions" defaultMessage='Conversions'/>
+            <Fa name='exchange'/> <FormattedMessage id="inventory.currencies" defaultMessage='Currencies'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -60,7 +60,7 @@ const Conversions = ({ conversions, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/conversion" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.conversion.add" defaultMessage='Add Conversion'/>
+          <Fa name='plus'/> <FormattedMessage id="record.currency.add" defaultMessage='Add Currency'/>
         </BS.Button>
       </BS.Col>
     </BS.Row>
