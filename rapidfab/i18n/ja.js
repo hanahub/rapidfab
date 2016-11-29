@@ -33,7 +33,6 @@ export default {
   "inventory.stocks"                  : "Stocks",
   "inventory.thirdPartyProviders"     : "第三者プロバイダー",
   "inventory.users"                   : "Users",
-  "inventory.shippings"               : "Shippings",
   "inventory.conversions"             : "Conversions",
 
   "myProfile"                         : "My Profile",

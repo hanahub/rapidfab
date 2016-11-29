@@ -31,7 +31,6 @@ export default {
   "inventory.stocks"                  : "Stocks",
   "inventory.thirdPartyProviders"     : "Third Party Providers",
   "inventory.users"                   : "Users",
-  "inventory.shippings"               : "Shippings",
   "inventory.conversions"             : "Conversions",
 
   "myProfile"                         : "My Profile",
