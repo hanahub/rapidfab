@@ -21,7 +21,7 @@ const ShippingForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErr
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/shipping">
-              <Fa name='truck'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shippings'/>
+              <Fa name='truck'/> <FormattedMessage id="work.shipping" defaultMessage='Shipping'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
               <Fa name='truck'/> {fields.id.value || <FormattedMessage id="record.shipping.new" defaultMessage='New Shipping'/>}
@@ -33,7 +33,7 @@ const ShippingForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErr
       <BS.Row>
         <BS.Col xs={6}>
           <BS.Button href="#/inventory/shipping" bsSize="small">
-            <Fa name='arrow-left'/> <FormattedMessage id="inventory.shippings" defaultMessage='Shippings'/>
+            <Fa name='arrow-left'/> <FormattedMessage id="work.shipping" defaultMessage='Shipping'/>
           </BS.Button>
         </BS.Col>
         <BS.Col xs={6}>
