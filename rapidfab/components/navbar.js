@@ -66,19 +66,19 @@ class Navbar extends Component {
             </BS.MenuItem>
           </BS.NavDropdown>
           <BS.NavDropdown eventKey={3} title={inventoryTitle} id="uxNavInventory">
-            <BS.MenuItem eventKey={3.1} href="#/inventory/materials">
-              <Fa name='object-group' /> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
+            <BS.MenuItem eventKey={3.1} href="#/inventory/stocks">
+              <Fa name='tags' /> <FormattedMessage id="inventory.materialStocks" defaultMessage='Material Stocks'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.2} href="#/inventory/stocks">
-              <Fa name='tags' /> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
-            </BS.MenuItem>
-            <BS.MenuItem eventKey={3.3} href="#/inventory/printers">
+            <BS.MenuItem eventKey={3.2} href="#/inventory/printers">
               <Fa name='print'/> <FormattedMessage id="inventory.printers" defaultMessage='Printers'/>
             </BS.MenuItem>
-            <BS.MenuItem eventKey={3.4} href="#/inventory/post-processors">
+            <BS.MenuItem eventKey={3.3} href="#/inventory/post-processors">
               <Fa name='object-ungroup'/> <FormattedMessage id="inventory.postProcessors" defaultMessage='Post processors'/>
             </BS.MenuItem>
             <BS.MenuItem divider />
+            <BS.MenuItem eventKey={3.4} href="#/inventory/materials">
+              <Fa name='object-group' /> <FormattedMessage id="inventory.materials" defaultMessage='Materials'/>
+            </BS.MenuItem>
             <BS.MenuItem eventKey={3.5} href="#/inventory/printer-types">
               <Fa name='print'/> <FormattedMessage id="inventory.printerTypes" defaultMessage='Printer Types'/>
             </BS.MenuItem>
