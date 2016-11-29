@@ -33,7 +33,7 @@ export default {
   "inventory.materialStocks"          : "Material Stocks",
   "inventory.thirdPartyProviders"     : "第三者プロバイダー",
   "inventory.users"                   : "Users",
-  "inventory.conversions"             : "Conversions",
+  "inventory.currencies"              : "Currencies",
 
   "myProfile"                         : "My Profile",
   "logout"                            : "Logout",
@@ -92,8 +92,8 @@ export default {
   "record.thirdPartyProvider.add"     : "Add Third Party Provider",
   "record.user.add"                   : "Add User",
   "record.user.new"                   : "New User",
-  "record.conversion.add"             : "Add Conversion",
-  "record.conversion.new"             : "New Conversion",
+  "record.currency.add"               : "Add Currency",
+  "record.currency.new"               : "New Currency",
 
   "field.accessToAllLocations"        : "Access to All Locations",
   "field.actualMaterialUsed"          : "Actual Material Used",

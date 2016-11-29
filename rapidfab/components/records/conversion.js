@@ -22,10 +22,10 @@ const ConversionForm = ({ fields, handleSubmit, load, submitting, onDelete, apiE
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/conversions">
-              <Fa name='exchange'/> <FormattedMessage id="inventory.conversions" defaultMessage='Conversions'/>
+              <Fa name='exchange'/> <FormattedMessage id="inventory.currencies" defaultMessage='Currencies'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='exchange'/> {fields.id.value || <FormattedMessage id="record.conversion.new" defaultMessage='New Conversion'/>}
+              <Fa name='exchange'/> {fields.id.value || <FormattedMessage id="record.currency.new" defaultMessage='New Currency'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
@@ -34,7 +34,7 @@ const ConversionForm = ({ fields, handleSubmit, load, submitting, onDelete, apiE
       <BS.Row>
         <BS.Col xs={6}>
           <BS.Button href="#/inventory/conversions" bsSize="small">
-            <Fa name='arrow-left'/> <FormattedMessage id="inventory.conversions" defaultMessage='Conversions'/>
+            <Fa name='arrow-left'/> <FormattedMessage id="inventory.currencies" defaultMessage='Currencies'/>
           </BS.Button>
         </BS.Col>
         <BS.Col xs={6}>
