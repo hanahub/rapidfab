@@ -67,7 +67,7 @@ const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/stocks">
-            <Fa name='tags'/> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
+            <Fa name='tags'/> <FormattedMessage id="inventory.materialStocks" defaultMessage='Material Stocks'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -76,7 +76,7 @@ const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/stock" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.stock.add" defaultMessage='Add Stock'/>
+          <Fa name='plus'/> <FormattedMessage id="record.materialStock.add" defaultMessage='Add Material Stock'/>
         </BS.Button>
       </BS.Col>
     </BS.Row>

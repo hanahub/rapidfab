@@ -21,10 +21,10 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
               <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/stocks">
-              <Fa name='tags'/> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
+              <Fa name='tags'/> <FormattedMessage id="inventory.materialStocks" defaultMessage='Material Stocks'/>
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name='tags'/> {fields.id.value || <FormattedMessage id="record.stock.new" defaultMessage='New Stock'/>}
+              <Fa name='tags'/> {fields.id.value || <FormattedMessage id="record.materialStock.new" defaultMessage='New Material Stock'/>}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
@@ -33,7 +33,7 @@ const StockForm = ({ fields, handleSubmit, load, submitting, onDelete, locations
       <BS.Row>
         <BS.Col xs={6}>
           <BS.Button href="#/inventory/stocks" bsSize="small">
-            <Fa name='arrow-left'/> <FormattedMessage id="inventory.stocks" defaultMessage='Stocks'/>
+            <Fa name='arrow-left'/> <FormattedMessage id="inventory.materialStocks" defaultMessage='Material Stocks'/>
           </BS.Button>
         </BS.Col>
         <BS.Col xs={6}>
