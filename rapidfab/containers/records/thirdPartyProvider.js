@@ -2,8 +2,8 @@ import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
 import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
-import ThirdPartyProviderComponent        from 'rapidfab/components/records/thirdPartyProvider'
 import Config                             from 'rapidfab/config'
+import ThirdPartyProviderComponent        from 'rapidfab/components/records/thirdPartyProvider'
 import { reduxForm }                      from 'redux-form'
 import * as Selectors                     from 'rapidfab/selectors'
 
@@ -40,6 +40,7 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt['third-party'].put(payload.uuid, payload)).then(redirect)
       } else {
+        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt['third-party'].post(payload)).then(redirect)
       }
     },

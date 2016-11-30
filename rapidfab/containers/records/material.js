@@ -2,6 +2,7 @@ import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
 import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
+import Config                             from 'rapidfab/config'
 import MaterialComponent                  from 'rapidfab/components/records/material'
 import { reduxForm }                      from 'redux-form'
 import * as Selectors                     from 'rapidfab/selectors'
@@ -47,6 +48,7 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.material.put(payload.uuid, payload)).then(redirect)
       } else {
+        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.material.post(payload)).then(redirect)
       }
     },

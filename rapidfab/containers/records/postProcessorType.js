@@ -2,8 +2,8 @@ import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
 import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
-import PostProcessorTypeComponent         from 'rapidfab/components/records/postProcessorType'
 import Config                             from 'rapidfab/config'
+import PostProcessorTypeComponent         from 'rapidfab/components/records/postProcessorType'
 import { reduxForm }                      from 'redux-form'
 import * as Selectors                     from 'rapidfab/selectors'
 
@@ -44,6 +44,7 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt['post-processor-type'].put(payload.uuid, payload)).then(redirect)
       } else {
+        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt['post-processor-type'].post(payload)).then(redirect)
       }
     },
