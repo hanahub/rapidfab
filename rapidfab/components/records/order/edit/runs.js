@@ -16,7 +16,7 @@ const Header = ( runs ) => {
 
 
 const RunItem = ({ run }) => {
-  const mapping = {
+  const statusMapping = {
     created           : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
     calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
     calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
@@ -36,7 +36,7 @@ const RunItem = ({ run }) => {
         </a>
       </BS.Col>
       <BS.Col xs={6}>
-        {mapping[run.status]}
+        {statusMapping[run.status]}
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>

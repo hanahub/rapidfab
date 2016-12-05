@@ -15,7 +15,7 @@ const Header = ( prints ) => {
 }
 
 const PrintItem = ({ print }) => {
-  const mapping = {
+  const statusMapping = {
     created           : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
     calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
     calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
@@ -33,7 +33,7 @@ const PrintItem = ({ print }) => {
           {print.id}
         </BS.Col>
         <BS.Col xs={6}>
-          {mapping[print.status]}
+          {statusMapping[print.status]}
         </BS.Col>
       </BS.Row>
     </BS.ListGroupItem>
