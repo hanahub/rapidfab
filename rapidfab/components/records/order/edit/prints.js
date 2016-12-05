@@ -16,14 +16,14 @@ const Header = ( prints ) => {
 
 const PrintItem = ({ print }) => {
   const status = {
-    created   : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
-    calculating   : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
-    calculated   : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
-    queued   : (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
-    printing   : (<FormattedMessage id="status.printing" defaultMessage="Printing"/>),
-    "post-processing"   : (<FormattedMessage id="status.post_processing" defaultMessage="Post Processing"/>),
-    complete   : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
-    error   : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
+    created           : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
+    calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
+    calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
+    queued            : (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
+    printing          : (<FormattedMessage id="status.printing" defaultMessage="Printing"/>),
+    "post-processing" : (<FormattedMessage id="status.post_processing" defaultMessage="Post Processing"/>),
+    complete          : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
+    error             : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
   }[print.status];
 
   return (
