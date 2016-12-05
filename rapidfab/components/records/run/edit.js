@@ -229,7 +229,6 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
               columnMeta={[{
                 displayName     : <FormattedMessage id="field.id" defaultMessage='Print ID'/>,
                 columnName      : "id",
-                customComponent : IdColumn("print"),
                 locked          : true
               }, {
                 displayName     : <FormattedMessage id="field.order" defaultMessage='Order ID'/>,
