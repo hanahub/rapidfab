@@ -50,7 +50,7 @@ function mapDispatchToProps(dispatch) {
     },
     onDelete: uuid => {
       if(uuid) {
-        dispatch(Actions.Api.wyatt['postProcessor'].delete(uuid)).then(redirect)
+        dispatch(Actions.Api.wyatt['post-processor-type'].delete(uuid)).then(redirect)
       }
     }
   }
