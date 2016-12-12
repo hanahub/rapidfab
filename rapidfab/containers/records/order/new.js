@@ -61,7 +61,8 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
 
       dispatch(Actions.Api.hoth.model.post({
-        name: payload.name
+        name: payload.name,
+        type: "stl",
       })).then(args => {
         dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
         payload.model = args.headers.location
