@@ -21,7 +21,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
       dispatch(Actions.Api.pao.users.list({
-        group: Config.group
+        group: Config.GROUP
       }))
     }
   }
