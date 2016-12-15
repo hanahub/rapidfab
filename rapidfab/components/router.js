@@ -1,6 +1,7 @@
 import _                                 from 'lodash';
 import React, { Component, PropTypes }   from 'react';
 import PathToRegexp                      from 'path-to-regexp';
+import NotFound                          from 'rapidfab/components/404'
 
 
 class Router extends Component {
@@ -49,7 +50,7 @@ class Router extends Component {
     if(!toRender) {
       return (
         <div className="router">
-          <p>You seem to have reached a link that doesn't go anywhere. Maybe you want <a href="#/">to go back to the beginning?</a></p>
+          <NotFound />
         </div>
       );
     } else {

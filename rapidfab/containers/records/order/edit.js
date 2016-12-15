@@ -3,6 +3,7 @@ import { connect }                        from 'react-redux'
 import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
 import OrderComponent                     from 'rapidfab/components/records/order/edit'
+import NotFound                           from 'rapidfab/components/404'
 import { reduxForm }                      from 'redux-form'
 import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 import Config                             from 'rapidfab/config'
@@ -39,7 +40,11 @@ class OrderContainer extends Component {
   }
 
   render() {
-    return <OrderComponent {...this.props}/>
+    if(this.props.notFound) {
+      return <NotFound />
+    } else {
+      return <OrderComponent {...this.props}/>
+    }
   }
 }
 
@@ -110,6 +115,16 @@ function mapStateToProps(state, props) {
     print.list.fetching ||
     state.ui.wyatt['third-party'].list.fetching
 
+  var notFound = false
+  if(order.get.errors.length != 0) {
+    console.log("checking")
+    _.forEach(order.get.errors, (error) => {
+      if(error.title === "Failed to fetch") {
+        notFound = true
+      }
+    })
+  }
+
   return {
     apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
     fetching,
@@ -124,6 +139,7 @@ function mapStateToProps(state, props) {
     runs,
     snapshot,
     uuid              : Selectors.getRoute(state, props).uuid,
+    notFound          : notFound,
   }
 }
 
