@@ -7,6 +7,7 @@ import OrderEstimates         from './estimates'
 import OrderPrints            from './prints'
 import OrderRuns              from './runs'
 import Error                  from 'rapidfab/components/error'
+import NotFound               from 'rapidfab/components/404'
 import ThumbnailPlaceholder   from 'rapidfab/images/thumbnail-placeholder.png'
 
 
@@ -109,26 +110,38 @@ const OrderContainer = (props) => (
   </div>
 )
 
-const Order = (props) => (
-  <BS.Form horizontal onSubmit={props.handleSubmit}>
-    <BS.Grid fluid>
-      <Navigation fields={props.fields} onDelete={props.onDelete}/>
-
-      <hr/>
-
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={props.apiErrors}/>
-        </BS.Col>
-      </BS.Row>
-
-      {props.fetching ?
-        <Loader /> :
-        <OrderContainer {...props}/>
+const Order = (props) => {
+  var notFound = false
+  if(props.order.get.errors.length != 0) {
+    _.forEach(props.order.get.errors, (error) => {
+      if(error.title === "Failed to fetch") {
+        notFound = true
       }
+    })
+  }
 
-    </BS.Grid>
-  </BS.Form>
-)
+  return(
+    <BS.Form horizontal onSubmit={props.handleSubmit}>
+      <BS.Grid fluid>
+        {notFound ? <div /> : <Navigation fields={props.fields} onDelete={props.onDelete}/>}
+
+        {notFound ? <div /> : <hr />}
+
+
+        <BS.Row>
+          <BS.Col xs={12}>
+            <Error errors={props.apiErrors}/>
+          </BS.Col>
+        </BS.Row>
+
+        {props.fetching ?
+          <Loader /> :
+          notFound ? <NotFound /> : <OrderContainer {...props}/>
+        }
+
+      </BS.Grid>
+    </BS.Form>
+  )
+}
 
 export default Order
