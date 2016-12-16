@@ -111,7 +111,7 @@ const OrderContainer = (props) => (
 )
 
 const Order = (props) => {
-  var notFound = false
+  let notFound = false
   if(props.order.get.errors.length != 0) {
     _.forEach(props.order.get.errors, (error) => {
       if(error.title === "Failed to fetch") {
@@ -120,28 +120,31 @@ const Order = (props) => {
     })
   }
 
-  return(
-    <BS.Form horizontal onSubmit={props.handleSubmit}>
-      <BS.Grid fluid>
-        {notFound ? <div /> : <Navigation fields={props.fields} onDelete={props.onDelete}/>}
+  if(notFound) {
+    return(<NotFound />)
+  } else {
+    return(
+      <BS.Form horizontal onSubmit={props.handleSubmit}>
+        <BS.Grid fluid>
+          <Navigation fields={props.fields} onDelete={props.onDelete}/>
 
-        {notFound ? <div /> : <hr />}
+          <hr />
 
+          <BS.Row>
+            <BS.Col xs={12}>
+              <Error errors={props.apiErrors}/>
+            </BS.Col>
+          </BS.Row>
 
-        <BS.Row>
-          <BS.Col xs={12}>
-            <Error errors={props.apiErrors}/>
-          </BS.Col>
-        </BS.Row>
+          {props.fetching ?
+            <Loader /> :
+            <OrderContainer {...props}/>
+          }
 
-        {props.fetching ?
-          <Loader /> :
-          notFound ? <NotFound /> : <OrderContainer {...props}/>
-        }
-
-      </BS.Grid>
-    </BS.Form>
-  )
+        </BS.Grid>
+      </BS.Form>
+    )
+  }
 }
 
 export default Order
