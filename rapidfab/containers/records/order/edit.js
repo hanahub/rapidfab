@@ -112,11 +112,11 @@ function mapStateToProps(state, props) {
     state.ui.wyatt['third-party'].list.fetching
 
   const statusOptions = {
-    pending:                 ["cancelled", "confirmed"],
-    confirmed:               ["cancelled"],
-    printing:                ["cancelled"],
-    printed:                 ["cancelled", "shipping", "complete"],
-    shipping:                ["cancelled", "complete"],
+    pending  : ["cancelled", "confirmed"],
+    confirmed: ["cancelled"],
+    printing : ["cancelled"],
+    printed  : ["cancelled", "shipping", "complete"],
+    shipping : ["cancelled", "complete"],
   }
 
   return {
