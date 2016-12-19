@@ -31,6 +31,7 @@ const fields = [
   'quantity',
   'created',
   'currency',
+  'status',
 ]
 
 class OrderContainer extends Component {
@@ -110,6 +111,14 @@ function mapStateToProps(state, props) {
     print.list.fetching ||
     state.ui.wyatt['third-party'].list.fetching
 
+  const statusOptions = {
+    pending:                 ["cancelled", "confirmed"],
+    confirmed:               ["cancelled"],
+    printing:                ["cancelled"],
+    printed:                 ["cancelled", "shipping", "complete"],
+    shipping:                ["cancelled", "complete"],
+  }
+
   return {
     apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
     fetching,
@@ -124,6 +133,7 @@ function mapStateToProps(state, props) {
     runs,
     snapshot,
     uuid              : Selectors.getRoute(state, props).uuid,
+    statusOptions,
   }
 }
 
