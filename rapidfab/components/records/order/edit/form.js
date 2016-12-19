@@ -41,7 +41,7 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
   }
 }
 
-const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers, shippings }) => (
+const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers, shippings, statusOptions }) => (
   <div>
     <FormRow id="field.id" defaultMessage="ID">
       <BS.FormControl.Static>
@@ -51,6 +51,13 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
 
     <FormRow id="field.name" defaultMessage="Name">
       <BS.FormControl type="text" required {...fields.name}/>
+    </FormRow>
+
+    <FormRow id="field.status" defaultMessage="Status">
+      <BS.FormControl componentClass="select" required {...fields.status}>
+        <option value={fields.status.value} disabled>{_.capitalize(fields.status.value)}</option>
+        {_.map(statusOptions[fields.status.value], status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
+      </BS.FormControl>
     </FormRow>
 
     <FormRow id="field.model" defaultMessage="Model">

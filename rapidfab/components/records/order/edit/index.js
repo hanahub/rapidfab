@@ -91,6 +91,7 @@ const OrderContainer = (props) => (
           modelsIsFetching={props.modelsIsFetching}
           providers={props.providers}
           shippings={props.shippings}
+          statusOptions={props.statusOptions}
         />
       </BS.Col>
     </BS.Row>
