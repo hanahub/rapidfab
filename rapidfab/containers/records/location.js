@@ -17,6 +17,7 @@ const fields = [
   'contact',
 ]
 
+
 class LocationContainer extends Component {
   componentWillMount() {
     this.props.onInitialize(this.props.uuid)
