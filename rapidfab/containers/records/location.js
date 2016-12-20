@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
       dispatch(Actions.Api.pao.users.list({
-        group: Config.group
+        group: Config.GROUP
       }))
       if(uuid) {
         dispatch(Actions.Api.wyatt.location.get(uuid))
