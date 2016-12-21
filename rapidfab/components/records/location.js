@@ -61,11 +61,11 @@ const LocationForm = ({ fields, handleSubmit, load, submitting, onDelete, users,
           </BS.FormGroup>
           <BS.FormGroup controlId="uxPhone">
             <BS.ControlLabel>Phone:</BS.ControlLabel>
-            <BS.FormControl name="phone" type="tel" required {...fields.phone}/>
+            <BS.FormControl name="phone" type="tel" {...fields.phone}/>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxContact">
             <BS.ControlLabel><FormattedMessage id="field.contact" defaultMessage='Contact'/>:</BS.ControlLabel>
-            <BS.FormControl componentClass="select" placeholder="contact" required {...fields.contact}>
+            <BS.FormControl componentClass="select" placeholder="contact" {...fields.contact}>
               <option key="placeholder" value="" disabled>Select a Contact</option>
               {_.map(users, user => (
                 <option key={user.uri} value={user.uri}>{user.username}</option>

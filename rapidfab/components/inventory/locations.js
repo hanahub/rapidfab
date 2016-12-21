@@ -7,12 +7,21 @@ import Grid, { IdColumn }     from 'rapidfab/components/grid';
 import Error                  from 'rapidfab/components/error'
 
 export const ContactColumn = ({ data, rowData, metadata }) => {
+  if(rowData.contact === null) return <span><FormattedMessage id="notAvailable" defaultMessage='N/A'/></span>
   const recordsByUri = _.keyBy(metadata.records, 'uri')
   let record = recordsByUri[rowData.contact]
   if(!record) return <Fa name="spinner" spin/>
   return (
     <span>{record.username}</span>
   )
+}
+
+export const PhoneColumn = ({ data, rowData, metadata }) => {
+  if(rowData.phone === null) {
+    return <span><FormattedMessage id="notAvailable" defaultMessage='N/A'/></span>
+  } else {
+    return <span>{rowData.phone}</span>
+  }
 }
 
 const LocationsGrid = ({ locations, users }) => (
@@ -38,7 +47,8 @@ const LocationsGrid = ({ locations, users }) => (
       displayName: <FormattedMessage id="field.address" defaultMessage='Address'/>
     }, {
       columnName: "phone",
-      displayName: <FormattedMessage id="field.phone" defaultMessage='Phone'/>
+      displayName: <FormattedMessage id="field.phone" defaultMessage='Phone'/>,
+      customComponent: PhoneColumn,
     }, {
       columnName: "contact",
       displayName: <FormattedMessage id='field.contact' defaultMessage="contact"/>,
