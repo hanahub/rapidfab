@@ -7,17 +7,22 @@ import Grid, { IdColumn }     from 'rapidfab/components/grid';
 import Error                  from 'rapidfab/components/error'
 
 export const ContactColumn = ({ data, rowData, metadata }) => {
-  if(rowData.contact === null) return <span><FormattedMessage id="notAvailable" defaultMessage='N/A'/></span>
+  if(!rowData.contact) {
+    return <span><FormattedMessage id="notAvailable" defaultMessage='N/A'/></span>
+  }
+
   const recordsByUri = _.keyBy(metadata.records, 'uri')
   let record = recordsByUri[rowData.contact]
-  if(!record) return <Fa name="spinner" spin/>
-  return (
-    <span>{record.username}</span>
-  )
+
+  if(!record) {
+    return <Fa name="spinner" spin/>
+  } else {
+    return <span>{record.username}</span>
+  }
 }
 
 export const PhoneColumn = ({ data, rowData, metadata }) => {
-  if(rowData.phone === null) {
+  if(!rowData.phone) {
     return <span><FormattedMessage id="notAvailable" defaultMessage='N/A'/></span>
   } else {
     return <span>{rowData.phone}</span>
