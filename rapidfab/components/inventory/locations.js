@@ -30,9 +30,9 @@ const LocationsGrid = ({ locations, users }) => (
     columns={[
       "id",
       "name",
-      "phone",
       "address",
       "contact",
+      "phone",
     ]}
     columnMeta={[{
       displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
