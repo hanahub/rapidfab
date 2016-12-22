@@ -249,7 +249,7 @@ export const getOrdersForRunNew = createSelector(
         const supportMaterial = _.find(materials, ['uri', order.materials.support])
         const model           = _.find(models, ['uri', order.model])
         const orderPrints     = _.filter(prints, ['order', order.uri])
-        if(baseMaterial && model && orderPrints.length && order.status == 'confirmed' || order.status == 'printing') {
+        if(baseMaterial && model && orderPrints.length && (order.status == 'confirmed' || order.status == 'printing')) {
           let hydratedRecord = _.assign({}, order, {
             materials: {
               base    : baseMaterial,
