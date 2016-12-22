@@ -172,8 +172,4 @@ export default {
   "field.multiplier"                  : "Multiplier",
   "field.estimatedShippingCost"       : "Estimated Shipping Cost",
   "field.estimatedTotalCost"          : "Estimated Total Cost",
-
-  "orderFailure.header"               : "Unprintable model",
-  "orderFailure.description"          : "Some of the printability checks listed below failed. Please correct them and try again.",
-  "orderFailure.manifold"             : "Manifold",
 }
