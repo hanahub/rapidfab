@@ -14,7 +14,7 @@ import {
 } from 'rapidfab/i18n'
 
 
-export const IdColumn = (resource, field, records) => {
+export const IdColumn = (resource, field, records, property="id") => {
   const recordsByUri = _.keyBy(records, 'uri')
   return ({ rowData }) => {
     let record = rowData
@@ -25,7 +25,7 @@ export const IdColumn = (resource, field, records) => {
     }
     return (
       <a href={`#/records/${resource}/${record.uuid}`}>
-        {record.id}
+        {record[property]}
       </a>
     )
   }
