@@ -41,11 +41,32 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
   }
 }
 
+const Printable = ({ models, uri }) => {
+  let model = _.find(models, {uri})
+  let printable = true
+
+  if(model && !model.analyses.manifold) {
+    printable = false
+  }
+
+  if(printable) {
+    return <BS.Label bsStyle="success"><FormattedMessage id="field.printable" defaultMessage='Printable'/></BS.Label>
+  } else {
+    return <BS.Label bsStyle="warning"><FormattedMessage id="field.printable" defaultMessage='Unknown'/></BS.Label>
+  }
+}
+
 const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers, shippings, statusOptions }) => (
   <div>
     <FormRow id="field.id" defaultMessage="ID">
       <BS.FormControl.Static>
         {fields.id.value}
+      </BS.FormControl.Static>
+    </FormRow>
+
+    <FormRow id="field.printable" defaultMessage="Printable">
+      <BS.FormControl.Static>
+        <Printable models={models} uri={fields.model.value}/>
       </BS.FormControl.Static>
     </FormRow>
 
