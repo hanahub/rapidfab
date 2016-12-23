@@ -52,7 +52,7 @@ const Printable = ({ models, uri }) => {
   if(printable) {
     return <BS.Label bsStyle="success"><FormattedMessage id="field.printable" defaultMessage='Printable'/></BS.Label>
   } else {
-    return <BS.Label bsStyle="warning"><FormattedMessage id="field.printable" defaultMessage='Unkown'/></BS.Label>
+    return <BS.Label bsStyle="warning"><FormattedMessage id="field.printable" defaultMessage='Unknown'/></BS.Label>
   }
 }
 
