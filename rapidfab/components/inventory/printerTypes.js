@@ -31,7 +31,7 @@ const PrinterTypesGrid = ({ printerTypes, manufacturers }) => (
     }, {
       displayName: <FormattedMessage id="field.manufacturer" defaultMessage='Manufacturer'/>,
       columnName: "manufacturer",
-      customComponent: IdColumn("manufacturer", "manufacturer", manufacturers),
+      customComponent: IdColumn("manufacturer", "manufacturer", manufacturers, "name"),
     }]}
   />
 )
