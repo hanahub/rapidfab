@@ -36,7 +36,7 @@ const MaterialsGrid = ({ materials, manufacturers }) => (
       displayName: <FormattedMessage id='field.type' defaultMessage="Type"/>
     }, {
       columnName: "manufacturer",
-      customComponent: IdColumn("manufacturer", "manufacturer", manufacturers),
+      customComponent: IdColumn("manufacturer", "manufacturer", manufacturers, "name"),
       displayName: <FormattedMessage id='field.manufacturer' defaultMessage="Manufacturer"/>
     }, {
       columnName: "color",
