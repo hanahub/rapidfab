@@ -27,7 +27,7 @@ const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers, materials }
       displayName: <FormattedMessage id="field.description" defaultMessage='Description'/>
     }, {
       columnName: "manufacturer",
-      customComponent: IdColumn("manufacturer", "manufacturer", manufacturers),
+      customComponent: IdColumn("manufacturer", "manufacturer", manufacturers, "name"),
       displayName: <FormattedMessage id='field.manufacturer' defaultMessage="Manufacturer"/>
     }]}
   />
