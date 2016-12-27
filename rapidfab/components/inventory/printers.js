@@ -8,12 +8,13 @@ import Grid, {
 } from 'rapidfab/components/grid'
 
 
-const PrintersGrid = ({ printers, printerTypes }) => (
+const PrintersGrid = ({ printers, locations, printerTypes }) => (
   <Grid
     data={printers}
     columns={[
       'id',
       'name',
+      'location',
       'printer_type'
     ]}
     columnMeta={[{
@@ -28,6 +29,10 @@ const PrintersGrid = ({ printers, printerTypes }) => (
       displayName: <FormattedMessage id="field.type" defaultMessage='Type'/>,
       columnName: "printer_type",
       customComponent: IdColumn("printer-type", "printer_type", printerTypes),
+    }, {
+      displayName: <FormattedMessage id="field.location" defaultMessage='Location'/>,
+      columnName: "location",
+      customComponent: IdColumn("location", "location", locations, "name"),
     }]}
   />
 )
@@ -38,7 +43,7 @@ const Loading = () => (
   </div>
 )
 
-const Printers = ({ printers, printerTypes, fetching, apiErrors }) => (
+const Printers = ({ printers, locations, printerTypes, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
@@ -71,7 +76,7 @@ const Printers = ({ printers, printerTypes, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading/> : <PrintersGrid printers={printers} printerTypes={printerTypes}/>}
+        {fetching ? <Loading/> : <PrintersGrid printers={printers} locations={locations} printerTypes={printerTypes}/>}
       </BS.Col>
     </BS.Row>
 
