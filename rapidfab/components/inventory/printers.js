@@ -28,7 +28,7 @@ const PrintersGrid = ({ printers, locations, printerTypes }) => (
     }, {
       displayName: <FormattedMessage id="field.type" defaultMessage='Type'/>,
       columnName: "printer_type",
-      customComponent: IdColumn("printer-type", "printer_type", printerTypes),
+      customComponent: IdColumn("printer-type", "printer_type", printerTypes, "name"),
     }, {
       displayName: <FormattedMessage id="field.location" defaultMessage='Location'/>,
       columnName: "location",
