@@ -30,11 +30,11 @@ const StocksGrid = ({ stocks, materials, locations, apiErrors }) => (
       locked: true
     }, {
       columnName: "material",
-      customComponent: IdColumn("material", "material", materials),
+      customComponent: IdColumn("material", "material", materials, "name"),
       displayName: <FormattedMessage id='field.material' defaultMessage="Material"/>
     }, {
       columnName: "location",
-      customComponent: IdColumn("location", "location", locations),
+      customComponent: IdColumn("location", "location", locations, "name"),
       displayName: <FormattedMessage id='field.location' defaultMessage="Location"/>
     }, {
       columnName: "status",
