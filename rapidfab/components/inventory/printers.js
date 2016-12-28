@@ -51,7 +51,7 @@ const Printers = ({ printers, locations, printerTypes, fetching, apiErrors }) =>
           <BS.Breadcrumb.Item active={true}>
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/printer">
+          <BS.Breadcrumb.Item href="#/inventory/printers">
             <Fa name='print'/> <FormattedMessage id="inventory.printers" defaultMessage='Printers'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
