@@ -20,3 +20,26 @@ body {
 
 .error-alert {
 }
+
+.dot {
+  display: inline-block;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background-color: @brand-primary;
+  &.primary {
+    background-color: @brand-primary;
+  }
+  &.success {
+    background-color: @brand-success;
+  }
+  &.info {
+    background-color: @brand-info;
+  }
+  &.warning {
+    background-color: @brand-warning;
+  }
+  &.danger {
+    background-color: @brand-danger;
+  }
+}
