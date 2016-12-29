@@ -96,14 +96,14 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
     <FormRow id="field.baseMaterial" defaultMessage="Base Material">
       <BS.FormControl componentClass="select" required {...fields.materials.base}>
         <option value="" disabled>Select a Material</option>
-        {_.map(materials, material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
+        {_.map(_.filter(materials, {type: "base"}), material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
       </BS.FormControl>
     </FormRow>
 
     <FormRow id="field.supportMaterial" defaultMessage="Support Material">
       <BS.FormControl componentClass="select" {...fields.materials.support}>
         <option value="">None</option>
-        {_.map(materials, material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
+        {_.map(_.filter(materials, {type: "support"}), material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
       </BS.FormControl>
     </FormRow>
 
