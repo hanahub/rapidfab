@@ -100,7 +100,7 @@ class NewOrderForm extends Component {
             <BS.FormGroup controlId="uxSupportMaterials">
               <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
               <BS.FormControl componentClass="select" onChange={this.handleChange} name="supportMaterial">
-                <option key="placeholder" value="" selected disabled>No Support</option>
+                <option key="placeholder" value="" selected>No Support</option>
                 {_.map(_.filter(this.props.materials, {type: "support"}), material => (
                   <option key={material.uri} value={material.uri}>{material.name}</option>
                 ))}
