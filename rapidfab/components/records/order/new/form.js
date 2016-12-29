@@ -91,7 +91,7 @@ class NewOrderForm extends Component {
               <BS.ControlLabel><FormattedMessage id="field.baseMaterials" defaultMessage='Base Materials'/>:</BS.ControlLabel>
               <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
                 <option key="placeholder" value="" selected disabled>Select a Base Material</option>
-                {_.map(this.props.materials, material => (
+                {_.map(_.filter(this.props.materials, {type: "base"}), material => (
                   <option key={material.uri} value={material.uri}>{material.name}</option>
                 ))}
               </BS.FormControl>
@@ -101,7 +101,7 @@ class NewOrderForm extends Component {
               <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
               <BS.FormControl componentClass="select" onChange={this.handleChange} name="supportMaterial">
                 <option key="placeholder" value="" selected disabled>No Support</option>
-                {_.map(this.props.materials, material => (
+                {_.map(_.filter(this.props.materials, {type: "support"}), material => (
                   <option key={material.uri} value={material.uri}>{material.name}</option>
                 ))}
               </BS.FormControl>
