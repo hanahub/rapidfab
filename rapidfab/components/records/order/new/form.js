@@ -84,7 +84,7 @@ class NewOrderForm extends Component {
 
             <BS.FormGroup controlId="uxQuantity">
               <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
-              <BS.FormControl type="number" required onChange={this.handleChange} name="quantity"/>
+              <BS.FormControl type="number" min="1" required onChange={this.handleChange} name="quantity"/>
             </BS.FormGroup>
 
             <BS.FormGroup controlId="uxBaseMaterials">
