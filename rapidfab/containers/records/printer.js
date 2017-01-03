@@ -12,7 +12,8 @@ const fields = [
   'uuid',
   'name',
   'printer_type',
-  'location'
+  'location',
+  'modeler',
 ]
 
 class PrinterContainer extends Component {
