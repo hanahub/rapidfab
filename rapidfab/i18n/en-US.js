@@ -130,6 +130,7 @@ export default {
   "field.material"                    : "Material",
   "field.materials"                   : "Materials",
   "field.materialType"                : "Material Type",
+  "field.modeler"                     : "Modeler",
   "field.prints"                      : "Prints",
   "field.model"                       : "Model",
   "field.processingTime"              : "Processing Time",

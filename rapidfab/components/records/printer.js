@@ -79,6 +79,10 @@ const PrinterForm = ({ fields, handleSubmit, load, submitting, onDelete, printer
               ))}
             </BS.FormControl>
           </BS.FormGroup>
+          <BS.FormGroup controlId="uxModeler">
+            <BS.ControlLabel><FormattedMessage id="field.modeler" defaultMessage='Modeler'/>:</BS.ControlLabel>
+            <BS.FormControl type="text" {...fields.modeler}/>
+          </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
