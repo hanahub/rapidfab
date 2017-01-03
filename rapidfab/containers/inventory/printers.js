@@ -22,6 +22,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['printer-type'].list())
       dispatch(Actions.Api.wyatt.printer.list())
       dispatch(Actions.Api.wyatt.location.list())
+      dispatch(Actions.Api.nautilus.modeler.list())
     }
   }
 }
@@ -36,6 +37,7 @@ function mapStateToProps(state) {
     printers      : Selectors.getPrinters(state),
     locations     : Selectors.getLocations(state),
     printerTypes  : Selectors.getPrinterTypes(state),
+    modelers      : Selectors.getModelers(state),
     fetching      : printer.list.fetching || printerType.list.fetching,
     apiErrors     : _.concat(printer.list.errors, printerType.list.errors)
   }

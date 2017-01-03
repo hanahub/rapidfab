@@ -5,14 +5,30 @@ import { FormattedMessage }   from 'react-intl'
 import Error                  from 'rapidfab/components/error'
 import Grid, {
   IdColumn,
+  StatusColumn,
 } from 'rapidfab/components/grid'
 
+const modelerMapping = {
+  idle: {
+    status: "success",
+    message: "The modeler is idle",
+  },
+  offline: {
+    status: "primary",
+    message: "The modeler is printing",
+  },
+  error: {
+    status: "danger",
+    message: "the modeler is in error",
+  },
+}
 
-const PrintersGrid = ({ printers, locations, printerTypes }) => (
+const PrintersGrid = ({ printers, locations, printerTypes, modelers }) => (
   <Grid
     data={printers}
     columns={[
       'id',
+      'modeler',
       'name',
       'location',
       'printer_type'
@@ -33,6 +49,10 @@ const PrintersGrid = ({ printers, locations, printerTypes }) => (
       displayName: <FormattedMessage id="field.location" defaultMessage='Location'/>,
       columnName: "location",
       customComponent: IdColumn("location", "location", locations, "name"),
+    }, {
+      displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
+      columnName: "modeler",
+      customComponent: StatusColumn("modeler", modelers, modelerMapping),
     }]}
   />
 )
@@ -43,7 +63,7 @@ const Loading = () => (
   </div>
 )
 
-const Printers = ({ printers, locations, printerTypes, fetching, apiErrors }) => (
+const Printers = ({ printers, locations, printerTypes, modelers, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
@@ -76,7 +96,7 @@ const Printers = ({ printers, locations, printerTypes, fetching, apiErrors }) =>
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading/> : <PrintersGrid printers={printers} locations={locations} printerTypes={printerTypes}/>}
+        {fetching ? <Loading/> : <PrintersGrid printers={printers} locations={locations} printerTypes={printerTypes} modelers={modelers}/>}
       </BS.Col>
     </BS.Row>
 

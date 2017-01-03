@@ -10,6 +10,7 @@ switch(process.env.NODE_ENV) {
         EVENT           : 'https://events.authentise.com/',
         HOTH            : 'https://models.authentise.com/',
         SCYLLA          : 'https://app.authentise.com',
+        NAUTILUS        : 'https://data.authentise.com',
       },
     };
     break;
@@ -24,6 +25,7 @@ switch(process.env.NODE_ENV) {
         EVENT           : 'https://events.dev-auth.com/',
         HOTH            : 'https://models.dev-auth.com/',
         SCYLLA          : 'https://app.dev-auth.com',
+        NAUTILUS        : 'https://data.dev-auth.com',
       },
     };
     break;
@@ -38,6 +40,7 @@ switch(process.env.NODE_ENV) {
         EVENT           : 'https://events.dev-auth.com/',
         HOTH            : 'https://models.dev-auth.com/',
         SCYLLA          : 'https://app.dev-auth.com',
+        NAUTILUS        : 'https://data.dev-auth.com',
       },
     };
 }

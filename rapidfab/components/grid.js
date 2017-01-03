@@ -12,6 +12,7 @@ import {
   FormattedVolume,
   FormattedDuration
 } from 'rapidfab/i18n'
+import StatusDot                from 'rapidfab/components/statusDot'
 
 
 export const IdColumn = (resource, field, records, property="id") => {
@@ -28,6 +29,27 @@ export const IdColumn = (resource, field, records, property="id") => {
         {record[property]}
       </a>
     )
+  }
+}
+
+export const StatusColumn = ( field, records, mapping ) => {
+  // field: field to search for on rowdata e.g. "modeler"
+  // records: records of the type the field is associated with e.g. modelers
+  // mapping: records should have a status, and the mapping maps a status string
+  //   to a class string defined in main.less. can optionally provide message for a popover
+  const recordsByUri = _.keyBy(records, "uri")
+  return ({ rowData }) => {
+    let uri = rowData[field]
+    let record = recordsByUri[uri]
+
+    if(record) {
+      const status = mapping[record.status].status
+      const message = mapping[record.status].message //undefined if message isnt passed, this is fine
+
+      return <StatusDot status={status} message={message} />
+    } else {
+      return <StatusDot status="unknown" message="Modeler not found" />
+    }
   }
 }
 

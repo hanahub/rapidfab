@@ -24,7 +24,10 @@ export const RESOURCES = {
     'third-party',
     'shipping',
     'currency-conversion',
-  ]
+  ],
+  nautilus: [
+    'modeler',
+  ],
 }
 
 export default MakeApi(RESOURCES)

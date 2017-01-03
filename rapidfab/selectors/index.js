@@ -25,6 +25,7 @@ export const getStatePrinters            = state => state.api.wyatt.printer
 export const getStatePrinterTypes        = state => state.api.wyatt['printer-type']
 export const getStateRuns                = state => state.api.wyatt.run
 export const getStateThirdPartyProviders = state => state.api.wyatt['third-party']
+export const getStateModelers            = state => state.api.nautilus.modeler
 export const getStateUploadModel         = state => state.uploadModel
 
 export const getResourceByUuid = createSelector(
@@ -147,6 +148,11 @@ export const getOrders = createSelector(
 
 export const getPrinters = createSelector(
   [ getStatePrinters, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getModelers = createSelector(
+  [ getStateModelers, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
