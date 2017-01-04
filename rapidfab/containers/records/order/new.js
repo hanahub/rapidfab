@@ -38,6 +38,7 @@ function mapDispatchToProps(dispatch, props) {
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt.shipping.list())
+      dispatch(Actions.Api.wyatt['post-processor-type'].list())
     },
     onSaveOrder: payload => {
       dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
@@ -59,6 +60,7 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.shipping.address) delete payload.shipping.address
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
+      if (false === !!payload.post_processor_type) delete payload.post_processor_type
 
       dispatch(Actions.Api.hoth.model.post({
         name: payload.name,
@@ -82,12 +84,14 @@ function mapStateToProps(state, props) {
   const fetching =
     material.list.fetching ||
     order.post.fetching ||
-    state.ui.wyatt['third-party'].list.fetching
+    state.ui.wyatt['third-party'].list.fetching ||
+    state.ui.wyatt['post-processor-type'].list.fetching
 
   const errors = _.concat(
     material.list.errors || [],
     order.post.errors || [],
     state.ui.wyatt['third-party'].list.errors || [],
+    state.ui.wyatt['post-processor-type'].list.errors || [],
     state.uploadModel.errors || [],
   )
 
@@ -95,10 +99,11 @@ function mapStateToProps(state, props) {
   const processingModel = state.resources[uploadModel.modelUuid]
 
   return {
-    combinedErrors : errors,
-    materials      : Selectors.getMaterials(state),
-    providers      : Selectors.getThirdPartyProviders(state),
-    shippings      : Selectors.getShippings(state),
+    combinedErrors     : errors,
+    materials          : Selectors.getMaterials(state),
+    providers          : Selectors.getThirdPartyProviders(state),
+    shippings          : Selectors.getShippings(state),
+    postProcessorTypes : Selectors.getPostProcessorTypes(state),
     fetching,
     uploadModel,
     model: processingModel,

@@ -71,6 +71,7 @@ const OrderForm = ({ props }) => (
       materials={props.materials}
       providers={props.providers}
       shippings={props.shippings}
+      postProcessorTypes={props.postProcessorTypes}
       onSubmit={props.onSubmit}
     />
 )

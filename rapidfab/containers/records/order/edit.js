@@ -28,6 +28,7 @@ const fields = [
   'shipping.tracking',
   'shipping.uri',
   'third_party_provider',
+  'post_processor_type',
   'quantity',
   'created',
   'currency',
@@ -51,6 +52,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt.run.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
+      dispatch(Actions.Api.wyatt['post-processor-type'].list())
       dispatch(Actions.Api.wyatt.shipping.list())
       if(props.route.uuid) {
         dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
@@ -64,6 +66,7 @@ function mapDispatchToProps(dispatch) {
       if (false === !!payload.shipping.address) delete payload.shipping.address
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
+      if (false === !!payload.post_processor_type) payload.post_processor_type = null
 
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload)).then(
@@ -109,7 +112,8 @@ function mapStateToProps(state, props) {
     order.get.fetching ||
     order.put.fetching ||
     print.list.fetching ||
-    state.ui.wyatt['third-party'].list.fetching
+    state.ui.wyatt['third-party'].list.fetching ||
+    state.ui.wyatt['post-processor-type'].list.fetching
 
   const statusOptions = {
     pending  : ["cancelled", "confirmed"],
@@ -129,6 +133,7 @@ function mapStateToProps(state, props) {
     order,
     prints            : Selectors.getPrintsForOrder(state, orderResource),
     providers         : Selectors.getThirdPartyProviders(state),
+    postProcessorTypes: Selectors.getPostProcessorTypes(state),
     shippings         : Selectors.getShippings(state),
     runs,
     snapshot,

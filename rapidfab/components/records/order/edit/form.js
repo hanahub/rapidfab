@@ -60,7 +60,7 @@ const Printable = ({ models, uri }) => {
   }
 }
 
-const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers, shippings, statusOptions }) => (
+const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, providers, shippings, statusOptions, postProcessorTypes }) => (
   <div>
     <FormRow id="field.id" defaultMessage="ID">
       <BS.FormControl.Static>
@@ -133,6 +133,15 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
         <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
         {_.map(providers, provider => (
           <option key={provider.uri} value={provider.uri}>{provider.name}</option>
+        ))}
+      </BS.FormControl>
+    </FormRow>
+
+    <FormRow id="field.postProcessorType" defaultMessage="Post Processor Type">
+      <BS.FormControl componentClass="select" {...fields.post_processor_type}>
+        <option key="placeholder" value="" selected>Select a Post Processor Type</option>
+        {_.map(postProcessorTypes, pp_type => (
+          <option key={pp_type.uri} value={pp_type.uri}>{pp_type.name}</option>
         ))}
       </BS.FormControl>
     </FormRow>
