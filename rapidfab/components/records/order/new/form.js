@@ -40,6 +40,7 @@ class NewOrderForm extends Component {
         uri: state.shippingType,
       },
       third_party_provider: state.thirdPartyProvider,
+      post_processor_type: state.postProcessorType,
       currency: state.currency,
     }
 
@@ -138,6 +139,16 @@ class NewOrderForm extends Component {
                 <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
                 {_.map(this.props.providers, provider => (
                   <option key={provider.uri} value={provider.uri}>{provider.name}</option>
+                ))}
+              </BS.FormControl>
+            </BS.FormGroup>
+
+            <BS.FormGroup controlId="uxPostProcessorType">
+              <BS.ControlLabel><FormattedMessage id="field.postProcessorType" defaultMessage='Post Processor Type'/>:</BS.ControlLabel>
+              <BS.FormControl componentClass="select" onChange={this.handleChange} name="postProcessorType">
+                <option key="placeholder" value="" selected>Select a Post Processor Type</option>
+                {_.map(this.props.postProcessorTypes, pp_type => (
+                  <option key={pp_type.uri} value={pp_type.uri}>{pp_type.name}</option>
                 ))}
               </BS.FormControl>
             </BS.FormGroup>
