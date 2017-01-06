@@ -278,24 +278,14 @@ export const getThirdPartyProviders = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
-export const getResourcesForQueues = createSelector(
-  [ getPrinters, getPostProcessors, getRuns ],
-  (printers, postProcessors, runs) => {
-    if(!printers.length || !postProcessors.length || !runs.length) return []
-    const resources = _.concat(printers, postProcessors)
-    return _.sortBy(_.reduce(resources, (result, resource) => {
-      const queueRuns = _.reduce(resource.queue, (runResult, runUri) => {
-        const run = _.find(runs, ['uri', runUri])
-        if(run) {
-          runResult.push(run)
-        }
-        return runResult
-      }, [])
-      result.push(_.assign({}, resource, {
-        queue: queueRuns
-      }))
-      return result
-    }, []), 'name')
+export const getMachinesForQueues = createSelector(
+  [ getPrinters, getPostProcessors, getModelers ],
+  (printers, postProcessors, modelers) => {
+    return _.map(_.concat(printers, postProcessors), machine => {
+      const modeler = _.find(modelers, ['uri', machine.modeler])
+      machine.status = modeler ? modeler.status : "unknown"
+      return machine
+    })
   }
 )
 
