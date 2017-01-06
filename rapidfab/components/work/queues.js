@@ -2,6 +2,16 @@ import React, { PropTypes, Component }        from 'react'
 import * as BS                                from 'react-bootstrap'
 
 
+const EVENT_COLOR_MAP = {
+  "calculating"     : "#e4d836",
+  "calculated"      : "#9f86ff",
+  "queued"          : "#9f86ff",
+  "printing"        : "#1ca8dd",
+  "post_processing" : "#e4d836",
+  "complete"        : "#1bc98e",
+  "error"           : "#e64759",
+}
+
 class Queues extends Component {
   constructor(props) {
     super(props);
@@ -33,6 +43,8 @@ class Queues extends Component {
         url: `#/records/run/${run.uuid}`,
         start: run.actuals.start || run.estimates.start,
         end: run.actuals.end || run.estimates.end,
+        backgroundColor: EVENT_COLOR_MAP[run.status],
+        borderColor: EVENT_COLOR_MAP[run.status],
       }
     })
     callback(events)
