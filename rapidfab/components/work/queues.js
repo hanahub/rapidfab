@@ -110,7 +110,6 @@ class Queues extends Component {
       events: this.fetchEvents,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resourceRender: (resourceObj, labelTds, bodyTds) => {
-        let icon = resourceObj.type === "printer" ? `dot ${resourceObj.status.status}` : "fa fa-qrcode"
         let cell = labelTds.find('.fc-cell-text')
         cell.wrapInner(`<a href="${resourceObj.url}">`)
         if(resourceObj.type === "printer") {
