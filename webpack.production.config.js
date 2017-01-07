@@ -27,5 +27,11 @@ module.exports = Object.assign(webpackConfig, {
         "BUILD_VERSION": JSON.stringify(process.env.BUILD_VERSION || 'development')
       }
     }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      "root.jQuery": "jquery",
+    }),
   ]
 });
