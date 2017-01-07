@@ -46,3 +46,41 @@ body {
     background-color: @gray;
   }
 }
+
+#scheduler {
+  margin: 10px 0 0 0;
+
+  th,
+  td,
+  thead,
+  tbody,
+  .fc-divider,
+  .fc-row,
+  .fc-content, /* for gutter border */
+  .fc-popover,
+  .fc-list-view,
+  .fc-list-heading td {
+   border-color: #666;
+  }
+
+  .machine-status {
+    &.primary {
+      color: @brand-primary;
+    }
+    &.success {
+      color: @brand-success;
+    }
+    &.info {
+      color: @brand-info;
+    }
+    &.warning {
+      color: @brand-warning;
+    }
+    &.danger {
+      color: @brand-danger;
+    }
+    &.unknown {
+      color: @gray;
+    }
+  }
+}

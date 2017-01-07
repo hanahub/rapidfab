@@ -19,6 +19,7 @@ function mapDispatchToProps(dispatch) {
       }))
     }
   }
+  dispatch(Actions.Api.nautilus.modeler.list())
   dispatch(Actions.Api.wyatt['post-processor-type'].list())
   dispatch(Actions.Api.wyatt['post-processor'].list()).then(getResourceRuns)
   dispatch(Actions.Api.wyatt.printer.list()).then(getResourceRuns)
@@ -34,10 +35,9 @@ function mapStateToProps(state) {
     run
   } = state.ui.wyatt
 
-  const resources = Selectors.getResourcesForQueues(state)
-
   return {
-    resources,
+    machines: Selectors.getMachinesForQueues(state),
+    runs: Selectors.getRuns(state),
     fetching: run.list.fetching || printer.list.fetching || postProcessor.list.fetching,
     apiErrors: _.concat(run.list.errors, postProcessor.list.errors, printer.list.errors)
   }

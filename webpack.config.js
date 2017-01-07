@@ -47,6 +47,12 @@ module.exports = {
         "BUILD_VERSION": JSON.stringify(process.env.BUILD_VERSION || 'development')
       }
     }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      "root.jQuery": "jquery",
+    })
   ],
   module: {
     loaders: [
@@ -60,6 +66,10 @@ module.exports = {
         loaders: ["style", "css?sourceMap", "less?sourceMap"],
         exclude: /(node_modules|bower_components)/,
         include: path.join(__dirname, 'rapidfab')
+      },
+      {
+        test: /\.css$/,
+        loaders: ["style", "css-loader"],
       },
       { test: /\.png$/,                         loader: "url-loader?mimetype=image/png" },
       { test: /\.jpg$/,                         loader: "url-loader?mimetype=image/jpg" },
