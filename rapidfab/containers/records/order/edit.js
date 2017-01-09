@@ -66,7 +66,7 @@ function mapDispatchToProps(dispatch) {
       if (false === !!payload.shipping.address) delete payload.shipping.address
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
-      if (false === !!payload.post_processor_type) delete payload.post_processor_type
+      if (false === !!payload.post_processor_type) payload.post_processor_type = null
 
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload)).then(
