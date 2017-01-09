@@ -205,7 +205,7 @@ export const getPrintsForRun = createSelector(
   [ getPredicate, getStateResources, getPrints ],
   (run, resources, prints) => {
     const runs = _.reduce(prints, (results, print) => {
-      if(run && print.run == run.uri || print.post_processor_run == run.uri) {
+      if(run && (print.run == run.uri || print.post_processor_run == run.uri)) {
         results.push(print);
       }
       return results;
