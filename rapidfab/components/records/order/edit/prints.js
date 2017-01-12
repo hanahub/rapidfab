@@ -20,8 +20,7 @@ const PrintItem = ({ print }) => {
     calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
     calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
     queued            : (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
-    printing          : (<FormattedMessage id="status.printing" defaultMessage="Printing"/>),
-    "post-processing" : (<FormattedMessage id="status.post_processing" defaultMessage="Post Processing"/>),
+    "in-progress"     : (<FormattedMessage id="status.in_progress" defaultMessage="In Progress"/>),
     complete          : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
     error             : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
   };

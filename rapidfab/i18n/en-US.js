@@ -59,6 +59,7 @@ export default {
   "status.inUse"                      : "In Use",
   "status.uploading"                  : "Uploading",
   "status.processing"                 : "Processing",
+  "status.inProgress"                 : "In Progress",
 
   "record.location.add"               : "Add Location",
   "record.manufacturer"               : "Manufacturer",
