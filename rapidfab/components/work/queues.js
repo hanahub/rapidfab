@@ -1,25 +1,7 @@
 import React, { PropTypes, Component }        from 'react'
 import * as BS                                from 'react-bootstrap'
+import { MODELER_STATUS_MAP }                 from 'rapidfab/constants'
 
-
-const MODELER_STATUS_MAP = {
-  idle: {
-    status: "success",
-    message: "The modeler is idle",
-  },
-  offline: {
-    status: "primary",
-    message: "The modeler is printing",
-  },
-  error: {
-    status: "danger",
-    message: "The modeler is in error",
-  },
-  unknown: {
-    status: "unknown",
-    message: "Modeler not found",
-  },
-}
 
 const EVENT_COLOR_MAP = {
   "calculating"     : "#e4d836",
@@ -114,6 +96,10 @@ class Queues extends Component {
         cell.wrapInner(`<a href="${resourceObj.url}">`)
         if(resourceObj.type === "printer") {
           let status = MODELER_STATUS_MAP[resourceObj.status]
+          if(!status) {
+            status = MODELER_STATUS_MAP.unknown
+            console.error("Unknown status for printer", resourceObj.status)
+          }
           cell.prepend(`<span class="dot ${status.status}" title="${status.message}" /> `)
         } else {
           cell.prepend('<span class="fa fa-qrcode" /> ')
