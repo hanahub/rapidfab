@@ -3,25 +3,12 @@ import * as BS                from 'react-bootstrap'
 import Fa                     from 'react-fontawesome'
 import { FormattedMessage }   from 'react-intl'
 import Error                  from 'rapidfab/components/error'
+import { MODELER_STATUS_MAP }                 from 'rapidfab/constants'
 import Grid, {
   IdColumn,
   StatusColumn,
 } from 'rapidfab/components/grid'
 
-const modelerMapping = {
-  idle: {
-    status: "success",
-    message: "The modeler is idle",
-  },
-  offline: {
-    status: "primary",
-    message: "The modeler is printing",
-  },
-  error: {
-    status: "danger",
-    message: "the modeler is in error",
-  },
-}
 
 const PrintersGrid = ({ printers, locations, printerTypes, modelers }) => (
   <Grid
@@ -52,7 +39,7 @@ const PrintersGrid = ({ printers, locations, printerTypes, modelers }) => (
     }, {
       displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
       columnName: "modeler",
-      customComponent: StatusColumn("modeler", modelers, modelerMapping),
+      customComponent: StatusColumn("modeler", modelers, MODELER_STATUS_MAP),
     }]}
   />
 )

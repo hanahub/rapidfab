@@ -45,4 +45,27 @@ export const Currencies = [
   'USD', 'GBP', 'JPY', 'EUR',
 ]
 
+export const MODELER_STATUS_MAP = {
+  idle: {
+    status: "info",
+    message: "The modeler is idle",
+  },
+  offline: {
+    status: "warning",
+    message: "The modeler is offline",
+  },
+  error: {
+    status: "danger",
+    message: "The modeler is in error",
+  },
+  printing: {
+    status: "success",
+    message: "The modeler is printing",
+  },
+  unknown: {
+    status: "unknown",
+    message: "The modeler could not be found",
+  },
+}
+
 export default make_constants(Constants)
