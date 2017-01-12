@@ -113,6 +113,7 @@ export default {
   "field.created"                     : "Created",
   "field.date"                        : "Date",
   "field.description"                 : "Description",
+  "field.duration"                    : "Duration",
   "field.email"                       : "Email",
   "field.estimatedCost"               : "Estimated Cost",
   "field.estimatedShippingDate"       : "Estimated Shipping Date",
