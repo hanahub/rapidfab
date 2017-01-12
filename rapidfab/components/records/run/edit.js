@@ -33,6 +33,27 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
   </BS.FormGroup>
 );
 
+const StatusField = ({ statuses, fields }) => {
+  status = fields.status.value;
+  if(status === 'calculated' || status === 'calculating' || status === 'queued') {
+    return (<FormRow id="field.status" defaultMessage="Status">
+      <FormControlSelect {...fields.status}>
+        <option value="" disabled>{_.capitalize(status)}</option>
+      </FormControlSelect>
+    </FormRow>);
+  }
+  else {
+    _.pull(statuses, 'calculated', 'calculating', 'queued');
+    return (<FormRow id="field.status" defaultMessage="Status">
+      <FormControlSelect {...fields.status}>
+        <option value="" disabled>Select a Status</option>
+        {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
+      </FormControlSelect>
+    </FormRow>);
+  }
+}
+
+
 const ModelDownloadField = ({model, onClick, isDownloading}) => {
   if(!model) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
@@ -187,12 +208,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
             <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
           </FormRow>
 
-          <FormRow id="field.status" defaultMessage="Status">
-            <FormControlSelect {...fields.status}>
-              <option value="" disabled>Select a Status</option>
-              {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
-            </FormControlSelect>
-          </FormRow>
+          <StatusField statuses={statuses} fields={fields}/>
 
           <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
             <BS.FormControl.Static>
