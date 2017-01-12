@@ -59,6 +59,7 @@ export default {
   "status.inUse"                      : "使用中",
   "status.uploading"                  : "アップロード中",
   "status.processing"                 : "処理中",
+  "status.inProgress"                 : "In Progress",
 
   "record.location.add"               : "場所の追加",
   "record.manufacturer"               : "製造業者",
