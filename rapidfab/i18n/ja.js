@@ -113,6 +113,7 @@ export default {
   "field.created"                     : "作成済み",
   "field.date"                        : "日付",
   "field.description"                 : "説明",
+  "field.duration"                    : "Duration",
   "field.email"                       : "メール",
   "field.estimatedCost"               : "予想費用",
   "field.estimatedShippingDate"       : "予定配送日",

@@ -12,6 +12,7 @@ const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations, api
     columns={[
       "id",
       "name",
+      "duration",
       "location",
       "post_processor_type",
     ]}
@@ -23,6 +24,9 @@ const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations, api
     }, {
       columnName: "name",
       displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
+    }, {
+      columnName: "duration",
+      displayName: <FormattedMessage id="field.duration" defaultMessage='Duration'/>
     }, {
       columnName: "post_processor_type",
       customComponent: IdColumn("post-processor-type", "post_processor_type", postProcessorTypes, "name"),
