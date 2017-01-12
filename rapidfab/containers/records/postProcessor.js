@@ -11,6 +11,7 @@ const fields = [
   'uri',
   'uuid',
   'name',
+  'duration',
   'location',
   'post_processor_type',
 ]
