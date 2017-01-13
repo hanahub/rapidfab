@@ -35,7 +35,7 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
 
 const StatusField = ({ statuses, fields }) => {
   let status = fields.status.value;
-  if(status === 'calculated' || status === 'calculating' || status === 'queued') {
+  if(status === 'calculated' || status === 'calculating') {
     return (<FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
         <option value="" disabled>{_.capitalize(status)}</option>
