@@ -34,7 +34,7 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
 );
 
 const StatusField = ({ statuses, fields }) => {
-  status = fields.status.value;
+  let status = fields.status.value;
   if(status === 'calculated' || status === 'calculating' || status === 'queued') {
     return (<FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
