@@ -4,12 +4,13 @@ import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
 import Error                                  from 'rapidfab/components/error'
 import Grid, {
-  IdColumn,
-  NumberColumn,
-  ImageColumn,
+  BooleanColumn,
   CapitalizeColumn,
   DateTimeColumn,
-  BooleanColumn,
+  IdColumn,
+  ImageColumn,
+  NumberColumn,
+  StatusColumn,
   VolumeColumn
 } from 'rapidfab/components/grid';
 
@@ -61,6 +62,7 @@ const Orders = ({ orders, materials, fetching, apiErrors }) => (
               "id",
               "name",
               "quantity",
+              "status",
               "created"
             ]}
             columnMeta={[{
@@ -80,10 +82,15 @@ const Orders = ({ orders, materials, fetching, apiErrors }) => (
               columnName: "quantity",
               displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
             }, {
+              columnName: "status",
+              displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>
+            }, {
               customComponent: DateTimeColumn,
               columnName: "created",
               displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
             }]}
+            initialSort="created"
+            initialSortAscending={false}
           />
         }
       </BS.Col>
