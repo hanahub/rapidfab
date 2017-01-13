@@ -43,7 +43,7 @@ const StatusField = ({ statuses, fields }) => {
     </FormRow>);
   }
   else {
-    _.pull(statuses, 'calculated', 'calculating', 'queued');
+    _.pull(statuses, 'calculated', 'calculating');
     return (<FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
         <option value="" disabled>Select a Status</option>
