@@ -11,18 +11,11 @@ const QueuesContainer = props => (
 )
 
 function mapDispatchToProps(dispatch) {
-  const getResourceRuns = args => {
-    const runUuids = _.flatMap(args.json.resources, resource => resource.queue)
-    for(let runUuidsChunk of _.chunk(runUuids, 5)) {
-      dispatch(Actions.Api.wyatt.run.list({
-        uri: runUuidsChunk
-      }))
-    }
-  }
   dispatch(Actions.Api.nautilus.modeler.list())
   dispatch(Actions.Api.wyatt['post-processor-type'].list())
-  dispatch(Actions.Api.wyatt['post-processor'].list()).then(getResourceRuns)
-  dispatch(Actions.Api.wyatt.printer.list()).then(getResourceRuns)
+  dispatch(Actions.Api.wyatt['post-processor'].list())
+  dispatch(Actions.Api.wyatt.printer.list())
+  dispatch(Actions.Api.wyatt.run.list())
 
   return {
   }
