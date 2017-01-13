@@ -31,6 +31,8 @@ const RunsGrid = ({ runs }) => (
       columnName: "created",
       displayName: <FormattedMessage id="field.created" defaultMessage='Created'/>
     }]}
+    initialSort="created"
+    initialSortAscending={false}
   />
 )
 
