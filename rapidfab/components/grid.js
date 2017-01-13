@@ -95,21 +95,23 @@ export const ColorColumn = ({ data }) => (
   <div style={{ margin: "0 auto", width: 24, height: 24, backgroundColor: data }}/>
 )
 
-const Grid = ({data, columnMeta, rowMeta, columns, useFixedHeader, bodyHeight, showTableHeading}) => (
+const Grid = ({data, columnMeta, rowMeta, columns, useFixedHeader, bodyHeight, showTableHeading, initialSort=null, initialSortAscending=true}) => (
   <Griddle
-    tableClassName="table table-bordered table-hover"
-    useGriddleStyles={false}
+    bodyHeight={bodyHeight}
+    columns={columns}
+    columnMetadata={columnMeta}
+    initialSort={initialSort}
+    initialSortAscending={false}
+    results={_.values(data)}
+    resultsPerPage={9999}
+    rowMetadata={rowMeta}
+    showPager={false}
+    showTableHeading={!showTableHeading}
     sortAscendingComponent={<Fa name="sort-asc" className="pull-right"/>}
     sortDescendingComponent={<Fa name="sort-desc" className="pull-right"/>}
-    showPager={false}
-    results={_.values(data)}
-    columnMetadata={columnMeta}
-    rowMetadata={rowMeta}
-    columns={columns}
-    resultsPerPage={9999}
+    tableClassName="table table-bordered table-hover"
+    useGriddleStyles={false}
     useFixedHeader={!!useFixedHeader}
-    bodyHeight={bodyHeight}
-    showTableHeading={!showTableHeading}
   />
 )
 
