@@ -34,23 +34,17 @@ const FormRow = ({id, defaultMessage, children, controlId}) => (
 );
 
 const StatusField = ({ statuses, fields }) => {
-  let status = fields.status.value;
-  if(status === 'calculated' || status === 'calculating') {
-    return (<FormRow id="field.status" defaultMessage="Status">
-      <FormControlSelect {...fields.status}>
-        <option value="" disabled>{_.capitalize(status)}</option>
-      </FormControlSelect>
-    </FormRow>);
-  }
-  else {
-    _.pull(statuses, 'calculated', 'calculating');
-    return (<FormRow id="field.status" defaultMessage="Status">
+  let restrictedStatuses = ['calculated', 'calculating', 'queued']
+  _.pull(restrictedStatuses, fields.status.value);
+  _.pullAll(statuses, restrictedStatuses);
+  return (
+    <FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
         <option value="" disabled>Select a Status</option>
         {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
       </FormControlSelect>
-    </FormRow>);
-  }
+    </FormRow>
+  );
 }
 
 
