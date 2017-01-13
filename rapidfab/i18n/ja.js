@@ -97,9 +97,11 @@ export default {
   "record.currency.new"               : "新規通貨",
 
   "field.accessToAllLocations"        : "すべての場所にアクセス",
+  "field.actualEndTime"               : "Actual End Time",
   "field.actualMaterialUsed"          : "材料実使用量",
   "field.actualPrintTime"             : "印刷実時間",
   "field.actualPostProcessingTime"    : "ポストプロセス実時間",
+  "field.actualStartTime"             : "Actual Start Time",
   "field.actualSupportUsed"           : "サポート実使用量",
   "field.address"                     : "住所",
   "field.baseMaterial"                : "基本材料",
