@@ -8,8 +8,10 @@ import * as Selectors                     from 'rapidfab/selectors'
 import Moment                           from 'moment'
 
 const fields = [
+  'actuals.end',
   'actuals.materials.base',
   'actuals.materials.support',
+  'actuals.start',
   'actuals.time.print',
   'actuals.time.post_processing',
   'created',

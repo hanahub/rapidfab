@@ -166,6 +166,20 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
 
           <BS.Panel bsStyle="success">
             <BS.ListGroup fill>
+              <BS.ListGroupItem header={<FormattedMessage id="field.actualStartTime" defaultMessage='Actual Start Time'/>}>
+                {fields.actuals.start.value ?
+                  (<span>{Moment(fields.actuals.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.start.value).fromNow()}) </span>) :
+                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                }
+              </BS.ListGroupItem>
+
+              <BS.ListGroupItem header={<FormattedMessage id="field.actualEndTime" defaultMessage='Actual End Time'/>}>
+                {fields.actuals.end.value ?
+                  (<span>{Moment(fields.actuals.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.end.value).fromNow()}) </span>) :
+                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                }
+              </BS.ListGroupItem>
+
               <BS.ListGroupItem header={<FormattedMessage id="field.actualPrintTime" defaultMessage='Actual Print Time'/>}>
                 {fields.actuals.time.print.value ?
                   <FormattedDuration value={fields.actuals.time.print.value}/> :

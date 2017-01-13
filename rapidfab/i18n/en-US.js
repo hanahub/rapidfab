@@ -97,9 +97,11 @@ export default {
   "record.currency.new"               : "New Currency",
 
   "field.accessToAllLocations"        : "Access to All Locations",
+  "field.actualEndTime"               : "Actual End Time",
   "field.actualMaterialUsed"          : "Actual Material Used",
   "field.actualPrintTime"             : "Actual Print Time",
   "field.actualPostProcessingTime"    : "Actual Post-Processing Time",
+  "field.actualStartTime"             : "Actual Start Time",
   "field.actualSupportUsed"           : "Actual Support Used",
   "field.address"                     : "Address",
   "field.baseMaterial"                : "Base Material",
