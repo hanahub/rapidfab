@@ -31,15 +31,16 @@ gulp.task('default', ['publish']);
 gulp.task('publish', ['publish:assets', 'publish:index']);
 
 gulp.task('rename:index', function() {
-  return gulp.src(['index.*.html'])
+  return gulp.src(['dist/index.*.html'])
     .pipe(rename(function (path) {
       path.basename = 'index';
-    }));
+    }))
+    .pipe(gulp.dest("./dist"));
 });
 gulp.task('publish:index', ['rename:index'], function() {
   var publisher = _getAWSPublisher();
   var headers = { 'Cache-Control': 'max-age=1, no-transform, public' };
-  return gulp.src(['index.html'])
+  return gulp.src(['dist/index.html'])
     .pipe(awspublish.gzip())
     .pipe(publisher.publish(headers), 10)
     .pipe(publisher.cache())
