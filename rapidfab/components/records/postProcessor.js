@@ -63,7 +63,7 @@ const PostProcessorForm = ({ fields, handleSubmit, load, submitting, onDelete, l
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDuration">
             <BS.ControlLabel>Duration:</BS.ControlLabel>
-            <BS.FormControl name="duration" type="integer" required {...fields.duration}/>
+            <BS.FormControl name="duration" type="number" required {...fields.duration}/>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxLocation">
             <BS.ControlLabel><FormattedMessage id="field.location" defaultMessage='Location'/>:</BS.ControlLabel>
