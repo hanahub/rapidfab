@@ -64,15 +64,20 @@ const ModelDownloadField = ({model, onClick, isDownloading}) => {
   return (<BS.FormControl.Static><a href={window.location.hash} onClick={() => onClick(model.value)}>{model.value}</a></BS.FormControl.Static>);
 };
 
-const LinkField = ({uri, location}) => {
+const LinkField = ({ uri, resources, endpoint}) => {
   if(!uri) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
   }
-  const uuid = uri.substr(uri.length - 37, 36);
-  const display = uuid.substr(uuid.length - 6);
-  const fullLocation = location + uuid
-  return (<BS.FormControl.Static><a href={fullLocation}>{display}</a></BS.FormControl.Static>);
-};
+
+  const record = _.find(resources, {uri: uri})
+
+  if(record && record.name) {
+    const uuid = uri.substr(uri.length - 37, 36);
+    const fullLocation = location + uuid
+    return(<BS.FormControl.Static><a href={fullLocation}>{record.name}</a></BS.FormControl.Static>)
+  }
+  return(<Fa name="spinner" spin/>)
+}
 
 const TimeDisplay = ({ seconds }) => {
   var convertedTime = Moment.duration(seconds, 'seconds')
@@ -91,7 +96,7 @@ const TimeDisplay = ({ seconds }) => {
   );
 };
 
-const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelete, apiErrors, statuses, orders, prints }) => {
+const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelete, apiErrors, statuses, orders, prints, printers, printerTypes, postProcessors }) => {
   return (
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -224,15 +229,15 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
-            <LinkField uri={fields.printer.value} location="#/records/printer/"/>
+						<LinkField uri={fields.printer.value} endpoint="printer" resources={printers} />
           </FormRow>
 
           <FormRow id="field.printerType" defaultMessage="Printer Type">
-            <LinkField uri={fields.printer_type.value} location="#/records/printer-type/"/>
+            <LinkField uri={fields.printer_type.value} endpoint="printer-type" resources={printerTypes} />
           </FormRow>
 
           <FormRow id="field.postProcessor" defaultMessage="Post-Processor">
-            <LinkField uri={fields.post_processor.value} location="#/records/post-processor/"/>
+            <LinkField uri={fields.post_processor.value} endpoint="post-processor" resources={postProcessors} />
           </FormRow>
 
           <BS.Panel header={<FormattedMessage id="field.prints" defaultMessage="Prints"/>}>
@@ -243,13 +248,13 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
                 "order",
               ]}
               columnMeta={[{
-                displayName     : <FormattedMessage id="field.id" defaultMessage='Print ID'/>,
+                displayName     : <FormattedMessage id="field.id" defaultMessage='ID'/>,
                 columnName      : "id",
                 locked          : true
               }, {
-                displayName     : <FormattedMessage id="field.order" defaultMessage='Order ID'/>,
+                displayName     : <FormattedMessage id="field.order" defaultMessage='Order'/>,
                 columnName      : "order",
-                customComponent : IdColumn("order", "order", orders),
+                customComponent : IdColumn("order", "order", orders, "name"),
               }]}
             />
           </BS.Panel>

@@ -47,6 +47,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.run.get(props.route.uuid))
       dispatch(Actions.Api.wyatt.print.list())
       dispatch(Actions.Api.wyatt.order.list())
+      dispatch(Actions.Api.wyatt['post-processor'].list())
+      dispatch(Actions.Api.wyatt['printer-type'].list())
+      dispatch(Actions.Api.wyatt.printer.list())
     },
     onSubmit: payload => {
       dispatch(Actions.Api.wyatt.run.put(payload.uuid, {status: payload.status})).then(
@@ -80,7 +83,10 @@ function mapStateToProps(state, props) {
   const downloadModel = state.downloadModel;
   const runResource = Selectors.getRouteResource(state, props)
   const orders = Selectors.getOrders(state)
-  const prints = Selectors.getPrintsForRun(state, runResource);
+  const prints = Selectors.getPrintsForRun(state, runResource)
+  const postProcessors = Selectors.getPostProcessors(state)
+  const printerTypes = Selectors.getPrinterTypes(state)
+  const printers = Selectors.getPrinters(state)
 
   return {
     apiErrors     : _.concat(
@@ -97,6 +103,9 @@ function mapStateToProps(state, props) {
     prints,
     resource      : runResource,
     run,
+    postProcessors,
+    printerTypes,
+    printers,
     statuses      : [
       'calculating',
       'calculated',
