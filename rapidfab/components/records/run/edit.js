@@ -237,7 +237,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
-						<LinkField uri={fields.printer.value} endpoint="printer" resources={printers} />
+            <LinkField uri={fields.printer.value} endpoint="printer" resources={printers} />
           </FormRow>
 
           <FormRow id="field.printerType" defaultMessage="Printer Type">
