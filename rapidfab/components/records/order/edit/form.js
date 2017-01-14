@@ -35,7 +35,7 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
     return (
       <BS.FormControl componentClass="select" required {...field}>
         <option value="" disabled>Select a Model</option>
-        {_.map(models, model => (<option key={model.uri} value={model.uri}>{`${model.id} - ${model.name}`}</option>))}
+        {_.map(models, model => (<option key={model.uri} value={model.uri}>{model.name}</option>))}
       </BS.FormControl>
     );
   }
@@ -96,14 +96,14 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
     <FormRow id="field.baseMaterial" defaultMessage="Base Material">
       <BS.FormControl componentClass="select" required {...fields.materials.base}>
         <option value="" disabled>Select a Material</option>
-        {_.map(_.filter(materials, {type: "base"}), material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
+        {_.map(_.filter(materials, {type: "base"}), material => (<option key={material.uri} value={material.uri}>{material.name}</option>))}
       </BS.FormControl>
     </FormRow>
 
     <FormRow id="field.supportMaterial" defaultMessage="Support Material">
       <BS.FormControl componentClass="select" {...fields.materials.support}>
         <option value="">None</option>
-        {_.map(_.filter(materials, {type: "support"}), material => (<option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>))}
+        {_.map(_.filter(materials, {type: "support"}), material => (<option key={material.uri} value={material.uri}>{material.name}</option>))}
       </BS.FormControl>
     </FormRow>
 
