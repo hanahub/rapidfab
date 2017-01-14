@@ -140,6 +140,20 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
         <BS.Col xs={4}>
           <BS.Panel bsStyle="info">
             <BS.ListGroup fill>
+              <BS.ListGroupItem header={<FormattedMessage id="field.estimatedStartTime" defaultMessage='Estimated Start Time'/>}>
+                {fields.estimates.start.value ?
+                  (<span>{Moment(fields.estimates.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.start.value).fromNow()}) </span>) :
+                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                }
+              </BS.ListGroupItem>
+
+              <BS.ListGroupItem header={<FormattedMessage id="field.estimatedEndTime" defaultMessage='Estimated End Time'/>}>
+                {fields.estimates.end.value ?
+                  (<span>{Moment(fields.estimates.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.end.value).fromNow()}) </span>) :
+                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                }
+              </BS.ListGroupItem>
+
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
                 {fields.estimates.time.print.value ?
                   <TimeDisplay seconds={fields.estimates.time.print.value} /> :
