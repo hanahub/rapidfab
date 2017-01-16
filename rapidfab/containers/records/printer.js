@@ -40,6 +40,7 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
+      if(!payload.modeler) payload.modeler = '';
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.printer.put(payload.uuid, payload)).then(redirect)
       } else {
