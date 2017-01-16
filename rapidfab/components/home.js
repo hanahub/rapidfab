@@ -17,7 +17,7 @@ const panelBodyStyle = {
 }
 
 const LastTenOrders = ({ data }) => (
-  <BS.Panel header="Last Ten Orders">
+  <BS.Panel header="Orders">
     <div style={panelBodyStyle} fill>
       <Grid
         data={data}
