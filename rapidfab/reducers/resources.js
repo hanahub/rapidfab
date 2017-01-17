@@ -34,7 +34,7 @@ function reducer(state = {}, action) {
       }
       record = hydrateRecord(action.payload);
       return _.assign({}, state, {
-        [record.uuid]: record
+        [record.uuid]: _.assign({}, state[record.uuid], record)
       })
     case Constants.RESOURCE_GET_SUCCESS:
       record = hydrateRecord(action.json);

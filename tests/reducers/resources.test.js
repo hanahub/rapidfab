@@ -71,7 +71,8 @@ describe('resources', function(){
           id,
           uuid,
           uri,
-          name: action.payload.name
+          name: action.payload.name,
+          status: "online"
         }
       }
       let initialState = {
@@ -79,7 +80,8 @@ describe('resources', function(){
           id,
           uuid,
           uri,
-          name
+          name,
+          status: "online"
         }
       }
       const results = Reducer.default(initialState, action)
