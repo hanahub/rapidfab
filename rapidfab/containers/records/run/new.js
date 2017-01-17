@@ -40,6 +40,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.printer.list())
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
+      dispatch(Actions.Api.nautilus.modeler.list())
       dispatch(Actions.Api.wyatt.order.list()).then(args => {
         for(let orders of _.chunk(args.json.resources, 5)) {
           dispatch(Actions.Api.wyatt.print.list({
@@ -85,12 +86,17 @@ function mapStateToProps(state) {
     model
   } = state.ui.hoth
 
+  const {
+    modeler
+  } = state.ui.nautilus
+
   const fetching =
     order.list.fetching ||
     material.list.fetching ||
     print.list.fetching ||
     printer.list.fetching ||
     model.list.fetching ||
+    modeler.list.fetching ||
     run.post.fetching ||
     printerType.list.fetching
 
@@ -102,6 +108,7 @@ function mapStateToProps(state) {
     printer.list.errors,
     run.post.errors,
     model.list.errors,
+    modeler.list.errors,
     printerType.list.errors
   )
 
@@ -109,6 +116,7 @@ function mapStateToProps(state) {
   const prints = _.flatMap(orders, 'prints')
   const pager = getPager(state, prints)
   const printers = Selectors.getPrintersForRunNew(state)
+  const modelers = Selectors.getModelers(state)
 
   const page = pager.activePage - 1
 
@@ -119,7 +127,8 @@ function mapStateToProps(state) {
     orders,
     pager,
     printers,
-    prints      : prints.splice(page * printsPerPage, printsPerPage)
+    prints      : prints.splice(page * printsPerPage, printsPerPage),
+    modelers,
   }
 }
 
