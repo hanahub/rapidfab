@@ -56,7 +56,6 @@ const RunsByStatusChart = ({ data }) => {
       SeriesStyle.Warning.color,
       SeriesStyle.Info.color,
       SeriesStyle.Default.color,
-      SeriesStyle.Primary.color,
       SeriesStyle.Danger.color,
       SeriesStyle.Success.color,
     ],
@@ -64,7 +63,6 @@ const RunsByStatusChart = ({ data }) => {
       SeriesStyle.Warning.hover,
       SeriesStyle.Info.hover,
       SeriesStyle.Default.hover,
-      SeriesStyle.Primary.hover,
       SeriesStyle.Danger.hover,
       SeriesStyle.Success.hover,
     ],
@@ -77,8 +75,7 @@ const RunsByStatusChart = ({ data }) => {
       labels: [
         <FormattedMessage id="status.pending" defaultMessage='Pending'/>,
         <FormattedMessage id="status.queued" defaultMessage='Queued'/>,
-        <FormattedMessage id="status.printing" defaultMessage='Printing'/>,
-        <FormattedMessage id="status.postProcessing" defaultMessage='Post Processing'/>,
+        <FormattedMessage id="status.inProgress" defaultMessage='In Progress'/>,
         <FormattedMessage id="status.error" defaultMessage='Error'/>,
         <FormattedMessage id="status.complete" defaultMessage='Complete'/>
       ],
