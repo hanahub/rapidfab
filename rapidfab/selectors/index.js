@@ -307,8 +307,7 @@ export const getRunStatusChartData = createSelector(
     const groupedByStatus = _.assign({
       calculating: [],
       calculated: [],
-      'post-processing': [],
-      printing: [],
+      'in-progress': [],
       queued: [],
       error: [],
       complete: []
@@ -316,8 +315,7 @@ export const getRunStatusChartData = createSelector(
     return [
         groupedByStatus.calculating.length + groupedByStatus.calculated.length,
         groupedByStatus.queued.length,
-        groupedByStatus.printing.length,
-        groupedByStatus['post-processing'].length,
+        groupedByStatus['in-progress'].length,
         groupedByStatus.error.length,
         groupedByStatus.complete.length
     ]
