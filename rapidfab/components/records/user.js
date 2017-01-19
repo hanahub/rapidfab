@@ -39,7 +39,7 @@ const UserForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors 
         <BS.Col xs={6}>
           <BS.ButtonToolbar className="pull-right">
             <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)} disabled={!fields.id.value}>
+              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uri.value)} disabled={!fields.id.value}>
                 <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
               </BS.MenuItem>
             </BS.SplitButton>
