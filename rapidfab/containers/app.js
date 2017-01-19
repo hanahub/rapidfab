@@ -77,9 +77,11 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onInitialize: () => {
-      dispatch(Actions.Api.pao.sessions.get('')).then(() => {
+      dispatch(Actions.Api.pao.sessions.get('')).then((response) => {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
       })
+      dispatch(Actions.Api.pao.groups.list())
+      dispatch(Actions.Api.wyatt.bureau.list())
     }
   }
 }
@@ -89,8 +91,17 @@ function mapStateToProps(state) {
     url,
     i18n,
   } = state;
+  let bureaus = Selectors.getBureaus(state)
+  let groups = Selectors.getGroups(state)
+  const user_bureau = [];
+  if(bureaus.length > 0 && groups.length > 0) {
+    _.forEach(groups, function(group) {
+      user_bureau.push(_.find(bureaus, {'group' : group.uri}))
+    });
+  }
   const session = {
     currentUser : Selectors.getSession(state),
+    bureau      : user_bureau[0],
     fetching    : state.ui.pao.sessions.get.fetching,
     errors      : state.ui.pao.sessions.get.errors
   }
