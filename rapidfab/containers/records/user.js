@@ -77,7 +77,10 @@ function mapStateToProps(state, props) {
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : initialValues,
     submitting      : Selectors.getResourceFetching(state, "pao.users"),
-    apiErrors       : Selectors.getResourceErrors(state, "pao.users")
+    apiErrors       : _.concat(
+      Selectors.getResourceErrors(state, "pao.users"),
+      Selectors.getResourceErrors(state, "pao.memberships")
+    )
   }
 }
 
