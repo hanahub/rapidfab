@@ -3,7 +3,6 @@ import React, { PropTypes }     from 'react'
 import Fa                       from 'react-fontawesome'
 import { Image }                from 'react-bootstrap'
 import Griddle                  from 'griddle-react'
-import { extractUuid }          from 'rapidfab/reducers/makeApiReducers'
 import {
   FormattedDate,
   FormattedDateTime,
