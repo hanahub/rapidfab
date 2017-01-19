@@ -57,9 +57,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
+  const initialValues = Selectors.getRouteResource(state, props)
+  initialValues.email = initialValues.emails[0].email
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
+    initialValues   : initialValues,
     submitting      : Selectors.getResourceFetching(state, "pao.users"),
     apiErrors       : Selectors.getResourceErrors(state, "pao.users")
   }
