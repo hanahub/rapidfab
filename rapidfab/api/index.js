@@ -15,6 +15,7 @@ export const RESOURCES = {
     'post-processor',
     'manufacturer',
     'material',
+    'membership-bureau',
     'stock',
     'order',
     'print',

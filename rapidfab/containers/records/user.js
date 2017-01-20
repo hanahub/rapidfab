@@ -43,9 +43,9 @@ function mapDispatchToProps(dispatch) {
       } else {
         payload.login = false
         dispatch(Actions.Api.pao.users.post(payload)).then(args => {
-          dispatch(Actions.Api.pao.memberships.post({
-            user  : args.headers.location,
-            group : Config.GROUP
+          dispatch(Actions.Api.wyatt['membership-bureau'].post({
+            user    : args.headers.location,
+            bureau  : Config.BUREAU,
           })).then(redirect)
         })
       }
