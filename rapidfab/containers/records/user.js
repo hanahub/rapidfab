@@ -52,12 +52,13 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onDelete: userURI => {
-      dispatch(Actions.Api.pao.memberships.list({'user': userURI, 'group' : Config.GROUP}))
+      dispatch(Actions.Api.wyatt['membership-bureau'].list({'user': userURI, 'bureau' : Config.BUREAU}))
         .then(response => {
             if(response && response.json && response.json.resources && response.json.resources.length) {
-              const membership = response.json.resources[0];
+              // for some reason we get back all memberships, not just for the user we are searching for
+              const membership = _.find(response.json.resources, resource => { return resource.user == userURI });
               const uuid = extractUuid(membership.uri);
-              dispatch(Actions.Api.pao.memberships.delete(uuid)).then(
+              dispatch(Actions.Api.wyatt['membership-bureau'].delete(uuid)).then(
                 () => window.location.hash = "#/inventory/users"
               );
             } else {
