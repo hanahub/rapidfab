@@ -16,11 +16,11 @@ export const initialState = _.reduce(RESOURCES, (result, hostResources, host) =>
   result[host] = {}
   for(let hostResource of hostResources) {
     result[host][hostResource] = {
-      put     : initialMethodState,
-      post    : initialMethodState,
-      list    : initialMethodState,
+      delete  : initialMethodState,
       get     : initialMethodState,
-      delete  : initialMethodState
+      list    : initialMethodState,
+      post    : initialMethodState,
+      put     : initialMethodState,
     }
   }
   return result;
