@@ -5,6 +5,7 @@ import Config                             from "rapidfab/config"
 import Actions                            from "rapidfab/actions"
 import UserComponent                      from 'rapidfab/components/records/user'
 import { reduxForm }                      from 'redux-form'
+import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 import * as Selectors                     from 'rapidfab/selectors'
 
 const fields = [
@@ -26,6 +27,10 @@ class UserContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/users"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -35,23 +40,32 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.pao.users.put(payload.uuid, payload))
+        dispatch(Actions.Api.pao.users.put(payload.uuid, payload)).then(redirect)
       } else {
         payload.login = false
         dispatch(Actions.Api.pao.users.post(payload)).then(args => {
-          dispatch(Actions.Api.pao.memberships.post({
-            user  : args.headers.location,
-            group : Config.GROUP
-          })).then(() => window.location.hash = "#/inventory/users")
+          dispatch(Actions.Api.wyatt['membership-bureau'].post({
+            user    : args.headers.location,
+            bureau  : Config.BUREAU,
+          })).then(redirect)
         })
       }
     },
-    onDelete: uuid => {
-      if(uuid) {
-        dispatch(Actions.Api.pao.memberships.get({'user': uuid, 'group' : Config.GROUP}))
-          .then(args => dispatch(Actions.Api.pao.memberships.delete(args.uri)))
-          .then(() => window.location.hash = "#/inventory/users")
-      }
+    onDelete: userURI => {
+      dispatch(Actions.Api.wyatt['membership-bureau'].list({'user': userURI, 'bureau' : Config.BUREAU}))
+        .then(response => {
+            if(response && response.json && response.json.resources && response.json.resources.length) {
+              // for some reason we get back all memberships, not just for the user we are searching for
+              const membership = _.find(response.json.resources, resource => { return resource.user == userURI });
+              const uuid = extractUuid(membership.uri);
+              dispatch(Actions.Api.wyatt['membership-bureau'].delete(uuid)).then(() => {
+                dispatch(Actions.Api.pao.users.remove(extractUuid(membership.user)));
+                redirect();
+              });
+            } else {
+              console.error("We shouldn't hit this point, it means the user is in the list but not part of the bureau's group");
+            }
+        })
     }
   }
 }
@@ -65,7 +79,11 @@ function mapStateToProps(state, props) {
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : initialValues,
     submitting      : Selectors.getResourceFetching(state, "pao.users"),
-    apiErrors       : Selectors.getResourceErrors(state, "pao.users")
+    apiErrors       : _.concat(
+      Selectors.getResourceErrors(state, "pao.users"),
+      Selectors.getResourceErrors(state, "pao.memberships"),
+      Selectors.getResourceErrors(state, "wyatt.membership-bureau")
+    )
   }
 }
 

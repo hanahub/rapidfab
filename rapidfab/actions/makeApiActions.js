@@ -88,6 +88,17 @@ function makeDelete(api, host, resource) {
   })
 }
 
+function makeRemove(api, host, resource) {
+  return uuid => ({
+    api: {
+      resource,
+      host,
+      method: "REMOVE"
+    },
+    uuid,
+    type: Constants.RESOURCE_MANUAL_REMOVE
+  })
+}
 export function makeApiActions(api, resources) {
   return _.reduce(resources, (result, resources, host) => {
     let hostActions = {}
@@ -97,7 +108,8 @@ export function makeApiActions(api, resources) {
         list      : makeList(api, host, resource),
         delete    : makeDelete(api, host, resource),
         put       : makePut(api, host, resource),
-        get       : makeGet(api, host, resource)
+        get       : makeGet(api, host, resource),
+        remove    : makeRemove(api, host, resource)
       }
     }
     result[host] = hostActions

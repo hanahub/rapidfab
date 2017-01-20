@@ -4,7 +4,6 @@ import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
 import OrderComponent                     from 'rapidfab/components/records/order/edit'
 import { reduxForm }                      from 'redux-form'
-import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 import Config                             from 'rapidfab/config'
 import * as Selectors                     from 'rapidfab/selectors'
 
