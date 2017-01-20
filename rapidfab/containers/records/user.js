@@ -26,6 +26,10 @@ class UserContainer extends Component {
   }
 }
 
+function redirect() {
+  window.location.hash = "#/inventory/users"
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
@@ -35,14 +39,14 @@ function mapDispatchToProps(dispatch) {
     },
     onSubmit: payload => {
       if(payload.uuid) {
-        dispatch(Actions.Api.pao.users.put(payload.uuid, payload))
+        dispatch(Actions.Api.pao.users.put(payload.uuid, payload)).then(redirect)
       } else {
         payload.login = false
         dispatch(Actions.Api.pao.users.post(payload)).then(args => {
           dispatch(Actions.Api.pao.memberships.post({
             user  : args.headers.location,
             group : Config.GROUP
-          })).then(() => window.location.hash = "#/inventory/users")
+          })).then(redirect)
         })
       }
     },
@@ -50,7 +54,7 @@ function mapDispatchToProps(dispatch) {
       if(uuid) {
         dispatch(Actions.Api.pao.memberships.get({'user': uuid, 'group' : Config.GROUP}))
           .then(args => dispatch(Actions.Api.pao.memberships.delete(args.uri)))
-          .then(() => window.location.hash = "#/inventory/users")
+          .then(redirect)
       }
     }
   }
