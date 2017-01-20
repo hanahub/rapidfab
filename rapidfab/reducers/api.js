@@ -46,6 +46,7 @@ function reduceMethod(state, action) {
     case Constants.RESOURCE_GET_SUCCESS:
       return _.union(state, [extractUuid(json.uri)])
     case Constants.RESOURCE_DELETE_SUCCESS:
+    case Constants.RESOURCE_MANUAL_REMOVE:
       return _.without(state, uuid)
     default:
       return state
@@ -59,6 +60,7 @@ function reducer(state = initialState, action) {
     case Constants.RESOURCE_LIST_SUCCESS:
     case Constants.RESOURCE_GET_SUCCESS:
     case Constants.RESOURCE_DELETE_SUCCESS:
+    case Constants.RESOURCE_MANUAL_REMOVE:
       return _.assign({}, state, {
         [action.api.host]: reduceResource(state[action.api.host], action)
       })

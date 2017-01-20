@@ -58,9 +58,10 @@ function mapDispatchToProps(dispatch) {
               // for some reason we get back all memberships, not just for the user we are searching for
               const membership = _.find(response.json.resources, resource => { return resource.user == userURI });
               const uuid = extractUuid(membership.uri);
-              dispatch(Actions.Api.wyatt['membership-bureau'].delete(uuid)).then(
-                () => window.location.hash = "#/inventory/users"
-              );
+              dispatch(Actions.Api.wyatt['membership-bureau'].delete(uuid)).then(() => {
+                dispatch(Actions.Api.pao.users.remove(extractUuid(membership.user)));
+                redirect();
+              });
             } else {
               console.error("We shouldn't hit this point, it means the user is in the list but not part of the bureau's group");
             }
