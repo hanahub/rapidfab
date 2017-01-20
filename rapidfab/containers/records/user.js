@@ -59,7 +59,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, props) {
   const initialValues = Selectors.getRouteResource(state, props)
   if(initialValues && initialValues.emails && initialValues.emails.length > 0) {
-    initialValues.email = initialValues.emails[0].email;
+    initialValues.email = initialValues.emails[0];
   }
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
