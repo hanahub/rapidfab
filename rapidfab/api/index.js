@@ -22,6 +22,7 @@ export const RESOURCES = {
     'printer',
     'printer-type',
     'run',
+    'stock',
     'third-party',
     'shipping',
     'currency-conversion',

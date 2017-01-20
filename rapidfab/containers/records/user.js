@@ -79,7 +79,8 @@ function mapStateToProps(state, props) {
     submitting      : Selectors.getResourceFetching(state, "pao.users"),
     apiErrors       : _.concat(
       Selectors.getResourceErrors(state, "pao.users"),
-      Selectors.getResourceErrors(state, "pao.memberships")
+      Selectors.getResourceErrors(state, "pao.memberships"),
+      Selectors.getResourceErrors(state, "wyatt.membership-bureau")
     )
   }
 }
