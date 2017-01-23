@@ -10,14 +10,20 @@ import Router                           from 'rapidfab/components/router'
 import { IntlProvider }                 from 'react-intl'
 import i18n                             from 'rapidfab/i18n'
 import * as Selectors                   from 'rapidfab/selectors'
+import Tos                              from 'rapidfab/components/tos'
 
-const SessionProvider = ({children, currentUser, fetching, errors}) => {
+
+const SessionProvider = ({ children, currentUser, fetching, errors, onAcceptTerms }) => {
   if(!currentUser && errors.length) {
     let next = window.location.hash.substr(1);
     window.location = `${Config.HOST.SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`
   }
 
   if(currentUser) {
+    if(!currentUser.tos && !currentUser.impersonating) {
+      return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />
+    }
+
     return (
       <div>
         {children}
@@ -38,20 +44,20 @@ class App extends Component {
       routes,
       onNavigate,
       onChangeLocale,
+      onAcceptTerms,
       url,
-      i18n
+      i18n,
     } = this.props;
     return (
       <IntlProvider
         locale={i18n.locale}
         messages={i18n.messages}
       >
-        <SessionProvider {...session}>
+        <SessionProvider {...session} onAcceptTerms={onAcceptTerms}>
           <Navbar
             onChangeLocale={onChangeLocale}
             locale={i18n.locale}
-            currentUser={session.currentUser}
-          />
+            currentUser={session.currentUser} />
           <Router
             routes={routes}
             onNavigate={onNavigate}
@@ -79,6 +85,11 @@ function mapDispatchToProps(dispatch) {
     onInitialize: () => {
       dispatch(Actions.Api.pao.sessions.get('')).then(() => {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
+      })
+    },
+    onAcceptTerms: user => {
+      dispatch(Actions.Api.pao.users.put(user.uuid, { tos: true })).then(() => {
+        dispatch(Actions.Api.pao.sessions.get(''))
       })
     }
   }
