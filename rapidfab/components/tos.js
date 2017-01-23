@@ -10,7 +10,7 @@ import Logo                             from 'rapidfab/images/logo.png'
 
 
 const TosLink = ({ }) => (
-  <a href="https://authentise.com/tech/etos.html" target="_blank">
+  <a href={Config.TOS_URL} target="_blank">
     <FormattedMessage id="tos" defaultMessage='Terms of Service'/>
   </a>
 )
