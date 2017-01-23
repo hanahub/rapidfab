@@ -40,6 +40,7 @@ export default {
 
   "notAvailable"                      : "該当なし",
 
+  "button.agree"                      : "Agree",
   "button.upload"                     : "アップロード",
   "button.delete"                     : "削除",
   "button.download"                   : "ダウンロード",
@@ -184,4 +185,6 @@ export default {
   "field.estimatedShippingCost"       : "予想配送料",
   "field.estimatedTotalCost"          : "予想総費用",
 
+  "tos"                               : "Terms of Service",
+  "tosDescription"                    : "To use this software you must agree to the {tosLink}.",
 }

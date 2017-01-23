@@ -40,6 +40,7 @@ export default {
 
   "notAvailable"                      : "N/A",
 
+  "button.agree"                      : "Agree",
   "button.upload"                     : "Upload",
   "button.delete"                     : "Delete",
   "button.download"                   : "Download",
@@ -183,4 +184,7 @@ export default {
   "field.multiplier"                  : "Multiplier",
   "field.estimatedShippingCost"       : "Estimated Shipping Cost",
   "field.estimatedTotalCost"          : "Estimated Total Cost",
+
+  "tos"                               : "Terms of Service",
+  "tosDescription"                    : "To use this software you must agree to the {tosLink}.",
 }
