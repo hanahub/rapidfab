@@ -16,11 +16,36 @@ const TosLink = ({ }) => (
 )
 
 class Tos extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      fetching: false,
+    }
+
+    this.handleAgree = this.handleAgree.bind(this)
+  }
+
+  handleAgree(e) {
+    e.preventDefault()
+    if(this.state.fetching) return
+
+    this.props.onAcceptTerms(this.props.user)
+
+    this.setState({
+      fetching: true,
+    })
+  }
+
   render() {
     const {
       user,
       onAcceptTerms,
     } = this.props
+
+    const {
+      fetching
+    } = this.state
 
     return (
       <BS.Grid>
@@ -36,8 +61,8 @@ class Tos extends Component {
                   values={{ tosLink: <TosLink /> }}
                 />
               </p>
-              <BS.Button bsSize="small" bsStyle="primary" onClick={() => onAcceptTerms(user)} style={{ marginTop: "20px" }}>
-                <Fa name='thumbs-up'/> <FormattedMessage id="button.agree" defaultMessage='Agree'/>
+              <BS.Button bsSize="small" bsStyle="primary" onClick={this.handleAgree} style={{ marginTop: "20px" }} disabled={fetching}>
+                <Fa name={fetching ? 'spinner' : 'thumbs-up'} spin={fetching}/> <FormattedMessage id="button.agree" defaultMessage='Agree'/>
               </BS.Button>
             </BS.Jumbotron>
           </BS.Col>
