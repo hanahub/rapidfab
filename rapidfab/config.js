@@ -12,6 +12,7 @@ switch(process.env.NODE_ENV) {
         SCYLLA          : 'https://app.authentise.com',
         NAUTILUS        : 'https://data.authentise.com',
       },
+      TOS_URL           : 'https://authentise.com/tech/etos.html',
     };
     break;
   case "development":
@@ -27,6 +28,7 @@ switch(process.env.NODE_ENV) {
         SCYLLA          : 'https://app.dev-auth.com',
         NAUTILUS        : 'https://data.dev-auth.com',
       },
+      TOS_URL           : 'https://authentise.com/tech/etos.html',
     };
     break;
   default:
@@ -42,5 +44,6 @@ switch(process.env.NODE_ENV) {
         SCYLLA          : 'https://app.dev-auth.com',
         NAUTILUS        : 'https://data.dev-auth.com',
       },
+      TOS_URL           : 'https://authentise.com/tech/etos.html',
     };
 }
