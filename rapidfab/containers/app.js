@@ -79,7 +79,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: () => {
       dispatch(Actions.Api.pao.sessions.get('')).then(() => {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
-        dispatch(Actions.Api.wyatt.bureau.get(''))
+        dispatch(Actions.Api.wyatt.bureau.list())
       })
     }
   }
