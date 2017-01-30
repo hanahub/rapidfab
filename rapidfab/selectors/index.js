@@ -17,6 +17,9 @@ export const getStatePostProcessors      = state => state.api.wyatt['post-proces
 export const getStateManufacturers       = state => state.api.wyatt.manufacturer
 export const getStateShippings           = state => state.api.wyatt.shipping
 export const getStateConversions         = state => state.api.wyatt["currency-conversion"]
+
+export const getStateGroups              = state => state.api.pao.groups
+export const getStateBureaus             = state => state.api.wyatt.bureau
 export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
@@ -79,6 +82,16 @@ export const getSession = createSelector(
     const sessionUuid = sessions[0]
     return resources[sessionUuid]
   }
+)
+
+export const getGroups = createSelector(
+  [ getStateGroups, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getBureaus = createSelector(
+  [ getStateBureaus, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
 export const getModels = createSelector(

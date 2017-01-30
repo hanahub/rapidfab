@@ -6,10 +6,12 @@ export const RESOURCES = {
   ],
   pao: [
     'memberships',
+    'groups',
     'sessions',
     'users'
   ],
   wyatt: [
+    'bureau',
     'location',
     'post-processor-type',
     'post-processor',
