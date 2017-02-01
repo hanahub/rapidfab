@@ -52,6 +52,19 @@ export const StatusColumn = ( field, records, mapping ) => {
   }
 }
 
+export const MappedColumn = (field, mapping, id=null) => {
+  // field: field to search for on rowdata e.g. "status"
+  // mapping: an object mapping with keys matching records, and values of what value should go out.
+  //     if no match is found in the mapping, returns actual record.
+  // id: id to give formattedMessage for a custom i18n mapping.
+  //     otherwise builds an id such as "mappedMessage.<original message passed in to be mapped>".
+  return ({ rowData }) => {
+    const message = mapping[rowData[field]] || rowData[field]
+
+    return <FormattedMessage id={id || `mappedMessage.${rowData[field]}`} defaultMessage={_.startCase(message)}/>
+  }
+}
+
 export const DateTimeColumn = ({ data }) => (
   <FormattedDateTime value={data}/>
 )

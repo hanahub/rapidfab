@@ -5,6 +5,7 @@ import Fa                                     from 'react-fontawesome'
 import Error                                  from 'rapidfab/components/error'
 import Grid, { IdColumn }                     from 'rapidfab/components/grid'
 import Moment                                 from 'moment'
+import { RUN_STATUS_MAP }                     from 'rapidfab/constants'
 
 import {
   FormattedDateTime,
@@ -41,7 +42,7 @@ const StatusField = ({ statuses, fields }) => {
     <FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
         <option value="" disabled>Select a Status</option>
-        {statuses.map(status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
+        {statuses.map(status => (<option key={status} value={status}>{_.startCase(RUN_STATUS_MAP[status] || status)}</option>))}
       </FormControlSelect>
     </FormRow>
   );

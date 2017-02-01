@@ -69,4 +69,13 @@ export const MODELER_STATUS_MAP = {
   },
 }
 
+export const ORDER_STATUS_MAP = {
+  calculating_estimates: "calculating estimates",
+  "post-processing"    : "post processing",
+}
+
+export const RUN_STATUS_MAP = {
+  "in-progress": "in progress",
+}
+
 export default make_constants(Constants)

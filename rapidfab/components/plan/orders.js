@@ -3,6 +3,7 @@ import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
 import Error                                  from 'rapidfab/components/error'
+import { ORDER_STATUS_MAP }                   from 'rapidfab/constants'
 import Grid, {
   BooleanColumn,
   CapitalizeColumn,
@@ -10,6 +11,7 @@ import Grid, {
   IdColumn,
   ImageColumn,
   NumberColumn,
+  MappedColumn,
   StatusColumn,
   VolumeColumn
 } from 'rapidfab/components/grid';
@@ -82,6 +84,7 @@ const Orders = ({ orders, materials, fetching, apiErrors }) => (
               columnName: "quantity",
               displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
             }, {
+              customComponent: MappedColumn("status", ORDER_STATUS_MAP),
               columnName: "status",
               displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>
             }, {
