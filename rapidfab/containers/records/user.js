@@ -40,6 +40,8 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
+      const bureau = payload.bureau
+      delete payload.bureau
       if(payload.uuid) {
         dispatch(Actions.Api.pao.users.put(payload.uuid, payload)).then(redirect)
       } else {
@@ -47,13 +49,13 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.pao.users.post(payload)).then(args => {
           dispatch(Actions.Api.wyatt['membership-bureau'].post({
             user    : args.headers.location,
-            bureau  : Config.BUREAU,
+            bureau  : bureau,
           })).then(redirect)
         })
       }
     },
-    onDelete: userURI => {
-      dispatch(Actions.Api.wyatt['membership-bureau'].list({'user': userURI, 'bureau' : Config.BUREAU}))
+    onDelete: (userURI, bureaus) => {
+      dispatch(Actions.Api.wyatt['membership-bureau'].list({'user': userURI, 'bureau' : bureaus[0].uri}))
         .then(response => {
             if(response && response.json && response.json.resources && response.json.resources.length) {
               // for some reason we get back all memberships, not just for the user we are searching for
