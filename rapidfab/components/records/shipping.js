@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const ShippingForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors }) => (
+const ShippingForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -81,6 +81,14 @@ const ShippingForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErr
           <BS.FormGroup controlId="uxCost">
             <BS.ControlLabel>Cost:</BS.ControlLabel>
             <BS.FormControl name="cost" type="number" required {...fields.cost}/>
+          </BS.FormGroup>
+          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
+            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
+            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
+              {_.map(bureaus, bureau => (
+                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
+              ))}
+            </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>

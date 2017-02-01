@@ -15,6 +15,7 @@ const fields = [
   'email',
   'name',
   'username',
+  'bureau',
 ]
 
 class UserContainer extends Component {
@@ -79,11 +80,12 @@ function mapStateToProps(state, props) {
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : initialValues,
     submitting      : Selectors.getResourceFetching(state, "pao.users"),
+    bureaus         : Selectors.getBureaus(state, props),
     apiErrors       : _.concat(
       Selectors.getResourceErrors(state, "pao.users"),
       Selectors.getResourceErrors(state, "pao.memberships"),
       Selectors.getResourceErrors(state, "wyatt.membership-bureau")
-    )
+    ),
   }
 }
 

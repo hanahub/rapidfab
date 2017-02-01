@@ -14,6 +14,7 @@ const fields = [
   'description',
   'region',
   'cost',
+  'bureau',
 ]
 
 class ShippingContainer extends Component {
@@ -38,7 +39,6 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
-      payload.bureau = Config.BUREAU
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.shipping.put(payload.uuid, payload)).then(redirect)
       } else {
@@ -58,7 +58,8 @@ function mapStateToProps(state, props) {
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : Selectors.getRouteResource(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.shipping"),
-    apiErrors       : Selectors.getResourceErrors(state, "wyatt.shipping")
+    apiErrors       : Selectors.getResourceErrors(state, "wyatt.shipping"),
+    bureaus         : Selectors.getBureaus(state, props),
   }
 }
 

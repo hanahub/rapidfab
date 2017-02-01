@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const LocationForm = ({ fields, handleSubmit, load, submitting, onDelete, users, apiErrors }) => (
+const LocationForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, users, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -69,6 +69,15 @@ const LocationForm = ({ fields, handleSubmit, load, submitting, onDelete, users,
               <option key="placeholder" value="" disabled>Select a Contact</option>
               {_.map(users, user => (
                 <option key={user.uri} value={user.uri}>{user.username}</option>
+              ))}
+            </BS.FormControl>
+          </BS.FormGroup>
+
+          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
+            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
+            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
+              {_.map(bureaus, bureau => (
+                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>

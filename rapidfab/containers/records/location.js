@@ -13,6 +13,7 @@ const fields = [
   'uuid',
   'name',
   'phone',
+  'bureau',
   'address',
   'contact',
 ]
@@ -45,7 +46,6 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.location.put(payload.uuid, payload)).then(redirect)
       } else {
-        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.location.post(payload)).then(redirect)
       }
     },
@@ -63,7 +63,8 @@ function mapStateToProps(state, props) {
     initialValues   : Selectors.getRouteResource(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.location"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.location"),
-    users           : Selectors.getUsers(state)
+    users           : Selectors.getUsers(state),
+    bureaus         : Selectors.getBureaus(state, props),
   }
 }
 

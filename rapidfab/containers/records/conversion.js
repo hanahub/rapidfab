@@ -12,6 +12,7 @@ const fields = [
   'uuid',
   'currency',
   'value',
+  'bureau',
 ]
 
 class ConversionContainer extends Component {
@@ -37,7 +38,6 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
-      payload.bureau = Config.BUREAU
       if(payload.uuid) {
         dispatch(conversion.put(payload.uuid, payload)).then(redirect)
       } else {
@@ -57,7 +57,8 @@ function mapStateToProps(state, props) {
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : Selectors.getRouteResource(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.currency-conversion"),
-    apiErrors       : Selectors.getResourceErrors(state, "wyatt.currency-conversion")
+    apiErrors       : Selectors.getResourceErrors(state, "wyatt.currency-conversion"),
+    bureaus         : Selectors.getBureaus(state, props)
   }
 }
 
