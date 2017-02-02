@@ -19,8 +19,7 @@ const Loader = () => (
   </BS.Row>
 )
 
-
-const ThirdPartyProviderForm = ({ fields, bureaus }) => (
+const ThirdPartyProviderForm = ({ fields }) => (
   <BS.Row>
     <BS.Col xs={12}>
       <BS.FormGroup controlId="uxName">
@@ -31,19 +30,11 @@ const ThirdPartyProviderForm = ({ fields, bureaus }) => (
         <BS.ControlLabel>Description:</BS.ControlLabel>
         <BS.FormControl name="address" type="text" componentClass="textarea" {...fields.description}/>
       </BS.FormGroup>
-      <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
-        <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
-        <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
-          {_.map(bureaus, bureau => (
-            <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
-          ))}
-        </BS.FormControl>
-      </BS.FormGroup>
     </BS.Col>
   </BS.Row>
 )
 
-const ThirdPartyProvider = ({ fields, bureaus, handleSubmit, submitting, onDelete, apiErrors }) => (
+const ThirdPartyProvider = ({ fields, handleSubmit, submitting, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -89,7 +80,7 @@ const ThirdPartyProvider = ({ fields, bureaus, handleSubmit, submitting, onDelet
 
       {submitting ?
         <Loader /> :
-        <ThirdPartyProviderForm fields={fields} bureaus={bureaus} />
+        <ThirdPartyProviderForm fields={fields}/>
       }
 
     </BS.Grid>

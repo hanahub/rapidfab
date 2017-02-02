@@ -68,6 +68,7 @@ const Processing = ({ model, percent }) => {
 const OrderForm = ({ props }) => (
     <NewOrderForm
       fields={props.fields}
+      bureau={props.bureau}
       materials={props.materials}
       providers={props.providers}
       shippings={props.shippings}

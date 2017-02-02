@@ -63,7 +63,7 @@ function mapStateToProps(state, props) {
     initialValues   : Selectors.getRouteResource(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.manufacturer"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.manufacturer"),
-    bureaus         : Selectors.getBureaus(state, props)
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
   }
 }
 

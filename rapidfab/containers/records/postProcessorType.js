@@ -59,12 +59,11 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, props) {
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.post-processor-type"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.post-processor-type"),
     materials       : Selectors.getMaterials(state),
     manufacturers   : Selectors.getManufacturers(state),
-    bureaus         : Selectors.getBureaus(state, props)
   }
 }
 

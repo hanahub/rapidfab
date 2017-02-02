@@ -60,11 +60,10 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, props) {
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.location"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.location"),
     users           : Selectors.getUsers(state),
-    bureaus         : Selectors.getBureaus(state, props),
   }
 }
 

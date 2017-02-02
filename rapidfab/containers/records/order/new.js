@@ -53,8 +53,6 @@ function mapDispatchToProps(dispatch, props) {
       ]))
     },
     onSubmit: payload => {
-      payload.bureau = Config.BUREAU
-
       if (false === !!payload.materials.support) delete payload.materials.support
       if (false === !!payload.shipping.name) delete payload.shipping.name
       if (false === !!payload.shipping.address) delete payload.shipping.address

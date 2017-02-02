@@ -12,7 +12,6 @@ const fields = [
   'uri',
   'uuid',
   'name',
-  'bureau',
   'model',
   'materials.base',
   'materials.support',
@@ -72,7 +71,6 @@ function mapDispatchToProps(dispatch) {
           () => window.location.hash = "#/plan/orders"
         )
       } else {
-        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.order.post(payload)).then(
           () => window.location.hash = "#/plan/orders"
         )
