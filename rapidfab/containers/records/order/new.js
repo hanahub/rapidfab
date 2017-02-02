@@ -97,6 +97,7 @@ function mapStateToProps(state, props) {
   const processingModel = state.resources[uploadModel.modelUuid]
 
   return {
+    bureau             : Selectors.getBureau(state),
     combinedErrors     : errors,
     materials          : Selectors.getMaterials(state),
     providers          : Selectors.getThirdPartyProviders(state),
