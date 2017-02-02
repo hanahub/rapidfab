@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const PrinterTypeForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, printerTypes, manufacturers, materials, apiErrors}) => (
+const PrinterTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, printerTypes, manufacturers, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -91,14 +91,6 @@ const PrinterTypeForm = ({ fields, bureaus, handleSubmit, load, submitting, onDe
             <BS.FormControl componentClass="select" multiple required {...fields.materials}>
               {_.map(materials, material => (
                 <option key={material.uri} value={material.uri}>{`${material.id} - ${material.name}`}</option>
-              ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
-            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
-            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
-              {_.map(bureaus, bureau => (
-                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>
