@@ -19,7 +19,7 @@ const SessionProvider = ({ children, currentUser, fetching, errors, onAcceptTerm
     window.location = `${Config.HOST.SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`
   }
 
-  if(currentUser) {
+  if(currentUser && !fetching) {
     if(!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />
     }
@@ -87,6 +87,7 @@ function mapDispatchToProps(dispatch) {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
         dispatch(Actions.Api.wyatt.bureau.list())
       })
+      dispatch(Actions.Api.wyatt.bureau.list())
     },
     onAcceptTerms: user => {
       dispatch(Actions.Api.pao.users.put(user.uuid, { tos: true })).then(() => {
@@ -101,9 +102,14 @@ function mapStateToProps(state) {
     url,
     i18n,
   } = state;
+  let currentUser = Selectors.getSession(state)
+  let bureaus = Selectors.getBureaus(state)
+  let fetching = !currentUser || state.ui.wyatt.bureau.list.fetching
+
   const session = {
-    currentUser : Selectors.getSession(state),
-    fetching    : state.ui.pao.sessions.get.fetching,
+    currentUser,
+    bureaus,
+    fetching,
     errors      : state.ui.pao.sessions.get.errors
   }
   return {
