@@ -80,8 +80,8 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
 
     <FormRow id="field.status" defaultMessage="Status">
       <BS.FormControl componentClass="select" required {...fields.status}>
-        <option value={fields.status.value} disabled>{_.startCase(ORDER_STATUS_MAP[fields.status.value] || fields.status.value)}</option>
-        {_.map(statusOptions[fields.status.value], status => (<option key={status} value={status}>{_.startCase(ORDER_STATUS_MAP[status] || status)}</option>))}
+        <option value={fields.status.value} disabled>{ORDER_STATUS_MAP[fields.status.value]}</option>
+        {_.map(statusOptions[fields.status.value], status => (<option key={status} value={status}>{ORDER_STATUS_MAP[status]}</option>))}
       </BS.FormControl>
     </FormRow>
 

@@ -42,7 +42,7 @@ const StatusField = ({ statuses, fields }) => {
     <FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
         <option value="" disabled>Select a Status</option>
-        {statuses.map(status => (<option key={status} value={status}>{_.startCase(RUN_STATUS_MAP[status] || status)}</option>))}
+        {statuses.map(status => (<option key={status} value={status}>{RUN_STATUS_MAP[status]}</option>))}
       </FormControlSelect>
     </FormRow>
   );

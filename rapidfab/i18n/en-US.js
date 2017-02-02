@@ -61,6 +61,11 @@ export default {
   "status.uploading"                  : "Uploading",
   "status.processing"                 : "Processing",
   "status.inProgress"                 : "In Progress",
+  "status.calculated"                 : "Calculated",
+  "status.calculating"                : "Calculating",
+  "status.confirmed"                  : "Confirmed",
+  "status.printed"                    : "Printed",
+  "status.calculatingEstimates"       : "Calculating Estimates",
 
   "record.location.add"               : "Add Location",
   "record.manufacturer"               : "Manufacturer",
