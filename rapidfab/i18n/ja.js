@@ -61,6 +61,11 @@ export default {
   "status.uploading"                  : "アップロード中",
   "status.processing"                 : "処理中",
   "status.inProgress"                 : "In Progress",
+  "status.calculated"                 : "Calculated",
+  "status.calculating"                : "Calculating",
+  "status.confirmed"                  : "Confirmed",
+  "status.printed"                    : "Printed",
+  "status.calculatingEstimates"       : "Calculating Estimates",
 
   "record.location.add"               : "場所の追加",
   "record.manufacturer"               : "製造業者",
