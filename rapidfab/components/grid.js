@@ -60,7 +60,7 @@ export const MappedColumn = (field, mapping) => {
     const message = mapping[rowData[field]]
 
     if(!message) {
-      throw Error(`no mapping for ${rowData[field]} found`)
+      throw new Error(`no mapping for ${rowData[field]} found`)
     }
     return message
   }
