@@ -1,7 +1,8 @@
 import React, { PropTypes }                                   from "react";
 import * as BS                                                from 'react-bootstrap';
 import Fa                                                     from 'react-fontawesome';
-import { Currencies, ORDER_STATUS_MAP }                       from 'rapidfab/constants'
+import { Currencies }                                         from 'rapidfab/constants'
+import { ORDER_STATUS_MAP }                                   from 'rapidfab/mappings'
 import {
   FormattedDateTime,
   FormattedMessage

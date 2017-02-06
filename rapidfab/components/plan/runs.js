@@ -3,7 +3,7 @@ import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
 import Error                                  from 'rapidfab/components/error'
-import { RUN_STATUS_MAP }                     from 'rapidfab/constants'
+import { RUN_STATUS_MAP }                     from 'rapidfab/mappings'
 import Grid, {
   IdColumn,
   CapitalizeColumn,

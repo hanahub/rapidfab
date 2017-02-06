@@ -5,7 +5,7 @@ import Fa                                     from 'react-fontawesome'
 import Error                                  from 'rapidfab/components/error'
 import Grid, { IdColumn }                     from 'rapidfab/components/grid'
 import Moment                                 from 'moment'
-import { RUN_STATUS_MAP }                     from 'rapidfab/constants'
+import { RUN_STATUS_MAP }                     from 'rapidfab/mappings'
 
 import {
   FormattedDateTime,
