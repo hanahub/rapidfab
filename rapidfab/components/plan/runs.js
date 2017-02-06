@@ -3,10 +3,12 @@ import * as BS                                from 'react-bootstrap';
 import Fa                                     from 'react-fontawesome';
 import { FormattedMessage }                   from 'react-intl';
 import Error                                  from 'rapidfab/components/error'
+import { RUN_STATUS_MAP }                     from 'rapidfab/mappings'
 import Grid, {
   IdColumn,
   CapitalizeColumn,
   DateTimeColumn,
+  MappedColumn,
 } from 'rapidfab/components/grid';
 
 const RunsGrid = ({ runs }) => (
@@ -25,7 +27,7 @@ const RunsGrid = ({ runs }) => (
     }, {
       columnName: "status",
       displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
-      customComponent: CapitalizeColumn
+      customComponent: MappedColumn("status", RUN_STATUS_MAP),
     }, {
       customComponent: DateTimeColumn,
       columnName: "created",

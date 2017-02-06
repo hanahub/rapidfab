@@ -2,6 +2,7 @@ import React, { PropTypes }                                   from "react";
 import * as BS                                                from 'react-bootstrap';
 import Fa                                                     from 'react-fontawesome';
 import { Currencies }                                         from 'rapidfab/constants'
+import { ORDER_STATUS_MAP }                                   from 'rapidfab/mappings'
 import {
   FormattedDateTime,
   FormattedMessage
@@ -80,8 +81,8 @@ const OrderForm = ({ handleSubmit, fields, materials, models, modelsIsFetching, 
 
     <FormRow id="field.status" defaultMessage="Status">
       <BS.FormControl componentClass="select" required {...fields.status}>
-        <option value={fields.status.value} disabled>{_.capitalize(fields.status.value)}</option>
-        {_.map(statusOptions[fields.status.value], status => (<option key={status} value={status}>{_.capitalize(status)}</option>))}
+        <option value={fields.status.value} disabled>{ORDER_STATUS_MAP[fields.status.value]}</option>
+        {_.map(statusOptions[fields.status.value], status => (<option key={status} value={status}>{ORDER_STATUS_MAP[status]}</option>))}
       </BS.FormControl>
     </FormRow>
 

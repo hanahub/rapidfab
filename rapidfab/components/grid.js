@@ -52,6 +52,20 @@ export const StatusColumn = ( field, records, mapping ) => {
   }
 }
 
+export const MappedColumn = (field, mapping) => {
+  // field: field to search for on rowdata e.g. "status"
+  // mapping: an object mapping with keys matching records, and values being i18n formatted messages.
+  //     if no match is found in the mapping, throws an error.
+  return ({ rowData }) => {
+    const message = mapping[rowData[field]]
+
+    if(!message) {
+      throw new Error(`no mapping for ${rowData[field]} found`)
+    }
+    return message
+  }
+}
+
 export const DateTimeColumn = ({ data }) => (
   <FormattedDateTime value={data}/>
 )
