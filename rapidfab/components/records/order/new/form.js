@@ -42,6 +42,7 @@ class NewOrderForm extends Component {
       third_party_provider: state.thirdPartyProvider,
       post_processor_type: state.postProcessorType,
       currency: state.currency,
+      bureau: this.props.bureau.uri,
     }
 
     this.props.onSubmit(payload)

@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, apiErrors }) => (
+const MaterialForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, manufacturers, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -96,6 +96,14 @@ const MaterialForm = ({ fields, handleSubmit, load, submitting, onDelete, manufa
           <BS.FormGroup controlId="uxProcessingTime">
             <BS.ControlLabel><FormattedMessage id="field.processingTime" defaultMessage='Processing Time'/>:</BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.post_processing_seconds}/>
+          </BS.FormGroup>
+          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
+            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
+            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
+              {_.map(bureaus, bureau => (
+                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
+              ))}
+            </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>

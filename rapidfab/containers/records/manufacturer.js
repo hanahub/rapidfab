@@ -17,7 +17,8 @@ const fields = [
   'support.name',
   'support.phone',
   'address',
-  'notes'
+  'notes',
+  'bureau'
 ]
 
 class ManufacturerContainer extends Component {
@@ -45,7 +46,6 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload)).then(redirect)
       } else {
-        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.manufacturer.post(payload)).then(redirect)
       }
     },
@@ -62,7 +62,8 @@ function mapStateToProps(state, props) {
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : Selectors.getRouteResource(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.manufacturer"),
-    apiErrors       : Selectors.getResourceErrors(state, "wyatt.manufacturer")
+    apiErrors       : Selectors.getResourceErrors(state, "wyatt.manufacturer"),
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
   }
 }
 

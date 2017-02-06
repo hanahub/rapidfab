@@ -18,7 +18,8 @@ const fields = [
   'manufacturer',
   'cost',
   'third_party_fulfillment',
-  'post_processing_seconds'
+  'post_processing_seconds',
+  'bureau'
 ]
 
 class MaterialContainer extends Component {
@@ -48,7 +49,6 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.material.put(payload.uuid, payload)).then(redirect)
       } else {
-        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt.material.post(payload)).then(redirect)
       }
     },
@@ -63,10 +63,10 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, props) {
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.material"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.material"),
-    manufacturers   : Selectors.getManufacturers(state)
+    manufacturers   : Selectors.getManufacturers(state),
   }
 }
 

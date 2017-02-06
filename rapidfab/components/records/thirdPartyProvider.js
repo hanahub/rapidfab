@@ -19,7 +19,6 @@ const Loader = () => (
   </BS.Row>
 )
 
-
 const ThirdPartyProviderForm = ({ fields }) => (
   <BS.Row>
     <BS.Col xs={12}>
@@ -81,7 +80,7 @@ const ThirdPartyProvider = ({ fields, handleSubmit, submitting, onDelete, apiErr
 
       {submitting ?
         <Loader /> :
-        <ThirdPartyProviderForm fields={fields} />
+        <ThirdPartyProviderForm fields={fields}/>
       }
 
     </BS.Grid>

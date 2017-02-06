@@ -13,6 +13,7 @@ const fields = [
   'uuid',
   'name',
   'description',
+  'bureau',
 ]
 
 class ThirdPartyProviderContainer extends Component {
@@ -40,7 +41,6 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt['third-party'].put(payload.uuid, payload)).then(redirect)
       } else {
-        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt['third-party'].post(payload)).then(redirect)
       }
     },
@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, props) {
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.third-party"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.third-party"),
   }

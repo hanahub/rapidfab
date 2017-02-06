@@ -75,6 +75,28 @@ export const getRouteResource = createSelector(
   (route, resources) => resources[route.uuid]
 )
 
+export const getBureau = createSelector(
+  [ getStateBureaus, getStateResources ],
+  (uuids, resources) => {
+    let bureau = resources[_.head(uuids)]
+    if(!bureau) {
+      throw new Error("No bureau found. A Bureau is required.")
+    }
+    return bureau
+  }
+)
+
+export const getInitialValuesBureau = createSelector(
+  [ getRoute, getStateResources, getBureau ],
+  (route, resources, bureau) => {
+    let resource = resources[route.uuid] || {}
+    if(!resource.bureau) {
+      resource.bureau = bureau.uri
+    }
+    return resource
+  }
+)
+
 export const getSession = createSelector(
   [ getStateSessions, getStateResources ],
   (sessions, resources) => {

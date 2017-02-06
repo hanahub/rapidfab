@@ -12,7 +12,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const ConversionForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors }) => (
+const ConversionForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -69,6 +69,15 @@ const ConversionForm = ({ fields, handleSubmit, load, submitting, onDelete, apiE
               <option key="placeholder" value="" selected disabled>Select a currency</option>
               {_.map(Currencies, currency => (
                 <option key={currency} value={currency}>{currency}</option>
+              ))}
+            </BS.FormControl>
+          </BS.FormGroup>
+
+          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
+            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
+            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
+              {_.map(bureaus, bureau => (
+                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>

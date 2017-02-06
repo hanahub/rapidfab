@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const PrinterTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, printerTypes, manufacturers, materials, apiErrors}) => (
+const PrinterTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, printerTypes, manufacturers, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>

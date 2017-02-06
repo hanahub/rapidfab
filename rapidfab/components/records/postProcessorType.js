@@ -10,7 +10,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelete, manufacturers, materials, apiErrors }) => (
+const PostProcessorTypeForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, manufacturers, materials, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -78,6 +78,14 @@ const PostProcessorTypeForm = ({ fields, handleSubmit, load, submitting, onDelet
               <option key="placeholder" value="" selected disabled>Select a Manufacturer</option>
               {_.map(manufacturers, manufacturer=> (
                 <option key={manufacturer.uri} value={manufacturer.uri}>{manufacturer.name}</option>
+              ))}
+            </BS.FormControl>
+          </BS.FormGroup>
+          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
+            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
+            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
+              {_.map(bureaus, bureau => (
+                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>

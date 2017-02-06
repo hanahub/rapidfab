@@ -17,7 +17,8 @@ const fields = [
   'build_volume.x',
   'build_volume.y',
   'build_volume.z',
-  'materials'
+  'materials',
+  'bureau'
 ]
 
 class PrinterTypeContainer extends Component {
@@ -47,7 +48,6 @@ function mapDispatchToProps(dispatch) {
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt['printer-type'].put(payload.uuid, payload)).then(redirect)
       } else {
-        payload.bureau = Config.BUREAU
         dispatch(Actions.Api.wyatt['printer-type'].post(payload)).then(redirect)
       }
     },
@@ -62,7 +62,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state, props) {
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
+    initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.printer-type"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.printer-type"),
     manufacturers   : Selectors.getManufacturers(state),

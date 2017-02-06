@@ -11,7 +11,7 @@ const SaveButtonTitle = ({  }) => (
   </span>
 )
 
-const UserForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors }) => (
+const UserForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
@@ -39,7 +39,7 @@ const UserForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors 
         <BS.Col xs={6}>
           <BS.ButtonToolbar className="pull-right">
             <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uri.value)} disabled={!fields.id.value}>
+              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uri.value, bureaus)} disabled={!fields.id.value}>
                 <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
               </BS.MenuItem>
             </BS.SplitButton>
@@ -68,6 +68,14 @@ const UserForm = ({ fields, handleSubmit, load, submitting, onDelete, apiErrors 
           <BS.FormGroup controlId="uxUsername">
             <BS.ControlLabel><FormattedMessage id="field.username" defaultMessage='Username'/>:</BS.ControlLabel>
             <BS.FormControl name="username" type="text" required {...fields.username}/>
+          </BS.FormGroup>
+          <BS.FormGroup style={{ display: "none" }} controlId="uxBureau">
+            <BS.ControlLabel><FormattedMessage id="field.bureau" defaultMessage='Bureau'/>:</BS.ControlLabel>
+            <BS.FormControl componentClass="select" placeholder="bureau" {...fields.bureau}>
+              {_.map(bureaus, bureau => (
+                <option key={bureau.uri} value={bureau.uri}>{bureau.uri}</option>
+              ))}
+            </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
