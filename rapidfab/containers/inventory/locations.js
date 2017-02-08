@@ -8,7 +8,7 @@ import Config                   from 'rapidfab/config'
 
 class LocationsContainer extends Component {
   componentDidMount() {
-    this.props.onInitialize()
+    this.props.onInitialize(this.props.bureau)
   }
 
   render() {
@@ -18,9 +18,9 @@ class LocationsContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: () => {
+    onInitialize: bureau => {
       dispatch(Actions.Api.pao.users.list({
-        group: Config.GROUP
+        group: bureau.GROUP
       }))
       dispatch(Actions.Api.wyatt.location.list())
     }
@@ -40,7 +40,8 @@ function mapStateToProps(state) {
     locations : Selectors.getLocations(state),
     users     : Selectors.getUsers(state),
     fetching  : location.list.fetching || users.list.fetching,
-    errors    : _.concat(location.list.errors, users.list.errors)
+    errors    : _.concat(location.list.errors, users.list.errors),
+    bureau    : Selectors.getBureau(state),
   }
 }
 

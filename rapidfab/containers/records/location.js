@@ -20,7 +20,7 @@ const fields = [
 
 class LocationContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    this.props.onInitialize(this.props.uuid, this.props.bureau)
   }
 
   render() {
@@ -34,9 +34,9 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
+    onInitialize: (uuid, bureau) => {
       dispatch(Actions.Api.pao.users.list({
-        group: Config.GROUP
+        group: bureau.group
       }))
       if(uuid) {
         dispatch(Actions.Api.wyatt.location.get(uuid))
@@ -64,6 +64,7 @@ function mapStateToProps(state, props) {
     submitting      : Selectors.getResourceFetching(state, "wyatt.location"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.location"),
     users           : Selectors.getUsers(state),
+    bureau          : Selectors.getBureau(state),
   }
 }
 
