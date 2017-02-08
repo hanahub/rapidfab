@@ -1,5 +1,6 @@
 import Home                         from 'rapidfab/containers/home'
 import About                        from 'rapidfab/components/about'
+import BureauError                  from 'rapidfab/components/bureauError'
 
 import InventoryLocations           from 'rapidfab/containers/inventory/locations'
 import InventoryManufacturers       from 'rapidfab/containers/inventory/manufacturers'
@@ -41,6 +42,7 @@ import Styles                       from 'rapidfab/containers/styles'
 const Routes = {
   "/"                                    : Home,
   "/about"                               : About,
+  "/bureau-error"                        : BureauError,
   "/styles"                              : Styles,
 
   "/inventory/materials"                 : InventoryMaterials,

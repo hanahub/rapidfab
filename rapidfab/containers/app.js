@@ -8,12 +8,13 @@ import Routes                           from 'rapidfab/routes'
 import Router                           from 'rapidfab/components/router'
 
 import { IntlProvider }                 from 'react-intl'
+import BureauError                      from 'rapidfab/components/bureauError'
 import i18n                             from 'rapidfab/i18n'
 import * as Selectors                   from 'rapidfab/selectors'
 import Tos                              from 'rapidfab/components/tos'
 
 
-const SessionProvider = ({ children, currentUser, fetching, errors, onAcceptTerms }) => {
+const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onAcceptTerms }) => {
   if(!currentUser && errors.length) {
     let next = window.location.hash.substr(1);
     window.location = `${Config.HOST.SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`
@@ -22,6 +23,11 @@ const SessionProvider = ({ children, currentUser, fetching, errors, onAcceptTerm
   if(currentUser && !fetching) {
     if(!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />
+    }
+    if(bureaus.length != 1) {
+      return (
+        <BureauError bureaus={bureaus}/>
+      )
     }
 
     return (
@@ -110,7 +116,10 @@ function mapStateToProps(state) {
     currentUser,
     bureaus,
     fetching,
-    errors      : state.ui.pao.sessions.get.errors
+    errors  : _.concat(
+        state.ui.pao.sessions.get.errors,
+        state.ui.wyatt.bureau.list.errors
+    )
   }
   return {
     session,
