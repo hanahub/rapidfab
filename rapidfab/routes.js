@@ -36,9 +36,12 @@ import User                         from 'rapidfab/containers/records/user'
 import RunEdit                      from 'rapidfab/containers/records/run/edit'
 import RunNew                       from 'rapidfab/containers/records/run/new'
 
+import Styles                       from 'rapidfab/containers/styles'
+
 const Routes = {
   "/"                                    : Home,
   "/about"                               : About,
+  "/styles"                              : Styles,
 
   "/inventory/materials"                 : InventoryMaterials,
   "/inventory/stocks"                    : InventoryStocks,
