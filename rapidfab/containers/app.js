@@ -57,7 +57,9 @@ class App extends Component {
           <Navbar
             onChangeLocale={onChangeLocale}
             locale={i18n.locale}
-            currentUser={session.currentUser} />
+            currentUser={session.currentUser}
+            bureaus={session.bureaus}
+          />
           <Router
             routes={routes}
             onNavigate={onNavigate}
