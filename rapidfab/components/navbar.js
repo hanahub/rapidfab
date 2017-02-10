@@ -11,7 +11,7 @@ const LanguageFlagMap = {
 
 class Navbar extends Component {
   render() {
-    const { locale, onChangeLocale, currentUser } = this.props;
+    const { locale, onChangeLocale, currentUser, bureaus } = this.props;
     const flag = LanguageFlagMap[locale];
     const planTitle = (
       <span>
@@ -38,7 +38,7 @@ class Navbar extends Component {
       <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
-            <a href="#/"><FormattedMessage id="rapidfab" defaultMessage='Rapid Fab'/></a>
+            <a href="#/"><FormattedMessage id="uxNavBrand" defaultMessage={bureaus[0].name}/></a>
           </BS.Navbar.Brand>
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>
