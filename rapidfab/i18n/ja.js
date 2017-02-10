@@ -190,6 +190,10 @@ export default {
   "field.estimatedShippingCost"       : "予想配送料",
   "field.estimatedTotalCost"          : "予想総費用",
 
+  'bureauError.multiple'              : 'You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ',
+  'bureauError.empty'                 : 'You are not assigned to any Bureaus. A Bureau is required to use MES. ',
+  'bureauError.docsMessage'           : 'You can find the docs for this process ',
+
   "tos"                               : "Terms of Service",
   "tosDescription"                    : "To use this software you must agree to the {tosLink}.",
 }
