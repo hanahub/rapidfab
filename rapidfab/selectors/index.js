@@ -30,6 +30,7 @@ export const getStateRuns                = state => state.api.wyatt.run
 export const getStateThirdPartyProviders = state => state.api.wyatt['third-party']
 export const getStateModelers            = state => state.api.nautilus.modeler
 export const getStateUploadModel         = state => state.uploadModel
+export const getStateLocationFilter      = state => state.locationFilter.location
 
 export const getResourceByUuid = createSelector(
   [ (state, uuid) => { uuid }, getStateResources ],
@@ -194,6 +195,11 @@ export const getModelers = createSelector(
 export const getUploadModel = createSelector(
   [ getStateUploadModel ],
   uploadModel => uploadModel
+)
+
+export const getLocationFilter = createSelector(
+  [ getStateLocationFilter ],
+  location => location
 )
 
 export const getPrinterTypes = createSelector(

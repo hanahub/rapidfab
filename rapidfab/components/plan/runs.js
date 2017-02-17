@@ -42,11 +42,19 @@ const Loading = () => (
   <div style={{ textAlign: "center" }}>
     <Fa name="spinner" spin size='2x' />
   </div>
-)
+);
 
-const Runs = ({ runs, fetching, apiErrors }) => (
+const Locations = ({ locationFilter, locations, handleOnChange }) => (
+  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter} componentClass="select">
+    <option key="placeholder" value="" selected>All</option>
+    {_.map(locations, location => (
+      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
+    ))}
+  </BS.FormControl>
+);
+
+const Runs = ({ locationFilter, locations, runs, fetching, apiErrors, handleOnChange }) => (
   <BS.Grid fluid>
-
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
@@ -59,9 +67,17 @@ const Runs = ({ runs, fetching, apiErrors }) => (
         </BS.Breadcrumb>
       </BS.Col>
     </BS.Row>
-
     <BS.Row>
-      <BS.Col xs={12}>
+      <BS.Col xs={6}>
+      </BS.Col>
+      <BS.Col xs={4}>
+        {locations.length > 1 ? <Locations
+          locations={locations}
+          handleOnChange={handleOnChange}
+          locationFilter={locationFilter}
+        /> : <div/>}
+      </BS.Col>
+      <BS.Col xs={2}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/run" className="pull-right">
           <Fa name='plus'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
         </BS.Button>
