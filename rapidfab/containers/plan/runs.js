@@ -20,19 +20,31 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
       dispatch(Actions.Api.wyatt.run.list())
+      dispatch(Actions.Api.wyatt.location.list())
+    },
+    handleOnChange: location => {
+      dispatch(Actions.LocationFilter.setLocation(location))
     }
   }
 }
 
 function mapStateToProps(state) {
   const {
-    run
+    run,
+    location
   } = state.ui.wyatt
-
+  const runs = Selectors.getRuns(state)
+  const locationFilter = Selectors.getLocationFilter(state)
+  let filteredRuns = null;
+  if(locationFilter) {
+     filteredRuns = _.find(runs, ['location', state.locationFilter.location]);
+  }
   return {
-    runs      : Selectors.getRuns(state),
-    fetching  : run.list.fetching,
-    apiErrors : run.list.errors
+    runs           : filteredRuns || runs,
+    locations      : Selectors.getLocations(state),
+    locationFilter : locationFilter,
+    fetching       : run.list.fetching || location.list.fetching,
+    apiErrors      : run.list.errors || location.list.errors,
   }
 }
 

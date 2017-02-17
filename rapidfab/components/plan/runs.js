@@ -44,45 +44,59 @@ const Loading = () => (
   </div>
 )
 
-const Runs = ({ runs, fetching, apiErrors }) => (
-  <BS.Grid fluid>
+const onChangeLocation = ( value, handleOnChange ) => {
+  handleOnChange(value)
+}
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active={true}>
-            <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/plan/runs">
-            <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+const Runs = ({ locationFilter, locations, runs, fetching, apiErrors, handleOnChange }) => {
+  return (
+    <BS.Grid fluid>
+      <BS.Row>
+        <BS.Col xs={12}>
+          <BS.Breadcrumb>
+            <BS.Breadcrumb.Item active={true}>
+              <Fa name='road'/> <FormattedMessage id="plan" defaultMessage='Plan'/>
+            </BS.Breadcrumb.Item>
+            <BS.Breadcrumb.Item href="#/plan/runs">
+              <Fa name='list'/> <FormattedMessage id="plan.runs" defaultMessage='Runs'/>
+            </BS.Breadcrumb.Item>
+          </BS.Breadcrumb>
+        </BS.Col>
+      </BS.Row>
+      <BS.Row>
+        <BS.Col xs={6}>
+        </BS.Col>
+        <BS.Col xs={4}>
+          <BS.FormControl onChange={e => {onChangeLocation(e.target.value, handleOnChange)}} value={locationFilter} componentClass="select">
+            <option key="placeholder" value="" selected>All</option>
+            {_.map(locations, location => (
+              <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
+            ))}
+          </BS.FormControl>
+        </BS.Col>
+        <BS.Col xs={2}>
+          <BS.Button bsStyle="primary" bsSize="small" href="#/records/run" className="pull-right">
+            <Fa name='plus'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
+          </BS.Button>
+        </BS.Col>
+      </BS.Row>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/run" className="pull-right">
-          <Fa name='plus'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+      <hr/>
 
-    <hr/>
+      <BS.Row>
+        <BS.Col xs={12}>
+          <Error errors={apiErrors}/>
+        </BS.Col>
+      </BS.Row>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors}/>
-      </BS.Col>
-    </BS.Row>
+      <BS.Row>
+        <BS.Col xs={12}>
+          {fetching ? <Loading/> : <RunsGrid runs={runs}/>}
+        </BS.Col>
+      </BS.Row>
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        {fetching ? <Loading/> : <RunsGrid runs={runs}/>}
-      </BS.Col>
-    </BS.Row>
-
-  </BS.Grid>
-);
+    </BS.Grid>
+  )
+};
 
 export default Runs
