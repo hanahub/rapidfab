@@ -81,7 +81,7 @@ class NewOrderForm extends Component {
 
             <BS.FormGroup controlId="uxModel">
               <BS.ControlLabel><FormattedMessage id="field.model" defaultMessage='Model'/>:</BS.ControlLabel>
-              <BS.FormControl type="file" accept=".stl,.obj" ref="file" required name="file"/>
+              <BS.FormControl type="file" accept=".stl" ref="file" required name="file"/>
             </BS.FormGroup>
 
             <BS.FormGroup controlId="uxQuantity">
