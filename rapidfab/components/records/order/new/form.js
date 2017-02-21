@@ -76,7 +76,7 @@ class NewOrderForm extends Component {
           <BS.Col xs={12}>
             <BS.FormGroup controlId="uxName">
               <BS.ControlLabel><FormattedMessage id="field.name" defaultMessage='Name'/>:</BS.ControlLabel>
-              <BS.FormControl type="text" required  onChange={this.handleChange} name="name"/>
+              <BS.FormControl type="text" required maxLength="255" onChange={this.handleChange} name="name"/>
             </BS.FormGroup>
 
             <BS.FormGroup controlId="uxModel">
