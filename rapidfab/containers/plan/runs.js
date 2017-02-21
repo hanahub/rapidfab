@@ -37,7 +37,7 @@ function mapStateToProps(state) {
   const locationFilter = Selectors.getLocationFilter(state)
   let filteredRuns = null;
   if(locationFilter) {
-     filteredRuns = _.find(runs, ['location', state.locationFilter.location]);
+     filteredRuns = _.filter(runs, ['location' , state.locationFilter.location]);
   }
   return {
     runs           : filteredRuns || runs,
