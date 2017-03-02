@@ -51,12 +51,15 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.wyatt.order.get(props.route.uuid)).then(
           response => {
             dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)))
+            const modelSwappable = ['new', 'calculating_estimates', 'pending'].indexOf(response.json.status) >= 0
+            if(modelSwappable) {
+              dispatch(Actions.Api.hoth.model.list())
+            }
           }
         )
         dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
       }
       dispatch(Actions.Api.wyatt.material.list())
-      dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt.run.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
@@ -131,7 +134,7 @@ function mapStateToProps(state, props) {
     initialValues     : orderResource,
     materials         : Selectors.getMaterials(state),
     models,
-    modelsIsFetching  : model.list.fetching,
+    modelsIsFetching  : model.list.fetching | model.get.fetching,
     order,
     prints            : Selectors.getPrintsForOrder(state, orderResource),
     providers         : Selectors.getThirdPartyProviders(state),
