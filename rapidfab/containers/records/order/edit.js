@@ -46,16 +46,16 @@ class OrderContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: props => {
+      if(props.route.uuid) {
+        dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
+        dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
+      }
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt.run.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
       dispatch(Actions.Api.wyatt.shipping.list())
-      if(props.route.uuid) {
-        dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
-        dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
-      }
     },
     onSubmit: payload => {
       delete payload.estimates
