@@ -6,6 +6,7 @@ import OrderComponent                     from 'rapidfab/components/records/orde
 import { reduxForm }                      from 'redux-form'
 import Config                             from 'rapidfab/config'
 import * as Selectors                     from 'rapidfab/selectors'
+import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
 
 const fields = [
   'id',
@@ -47,7 +48,11 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: props => {
       if(props.route.uuid) {
-        dispatch(Actions.Api.wyatt.order.get(props.route.uuid))
+        dispatch(Actions.Api.wyatt.order.get(props.route.uuid)).then(
+          response => {
+            dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)))
+          }
+        )
         dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
       }
       dispatch(Actions.Api.wyatt.material.list())
