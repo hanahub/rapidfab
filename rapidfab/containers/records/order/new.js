@@ -35,7 +35,6 @@ function mapDispatchToProps(dispatch, props) {
   return {
     onInitialize: () => {
       dispatch(Actions.Api.wyatt.material.list())
-      dispatch(Actions.Api.hoth.model.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt.shipping.list())
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
