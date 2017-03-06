@@ -49,14 +49,14 @@ const StatusField = ({ statuses, fields }) => {
 }
 
 
-const ModelDownloadField = ({model, onClick, isDownloading}) => {
+const ModelDownloadField = ({runUUID, model, onClick, isDownloading}) => {
   if(!model) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
   }
   if(isDownloading) {
     return (<BS.FormControl.Static><FormattedMessage id="downloading" defaultMessage="Downloading..."/></BS.FormControl.Static>);
   }
-  return (<BS.FormControl.Static><a href={window.location.hash} onClick={() => onClick(model.value)}>{model.value}</a></BS.FormControl.Static>);
+  return (<BS.FormControl.Static><a href={window.location.hash} onClick={() => onClick(runUUID, model.value)}>{model.value}</a></BS.FormControl.Static>);
 };
 
 const LinkField = ({ uri, resources, endpoint}) => {
@@ -248,7 +248,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            <ModelDownloadField model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} />
+            <ModelDownloadField runUUID={fields.uuid.value} model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} />
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
