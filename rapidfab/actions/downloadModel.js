@@ -15,8 +15,9 @@ export function fetchModel(downloadURL) {
   }
 }
 
-export function downloadContent(contentURL) {
-  window.location = contentURL;
+export function downloadContent(filename, contentURL) {
+  var withFilename = `${contentURL}&filename=${filename}`;
+  window.location = withFilename;
   return {
     type: Constants.DOWNLOAD_MODEL_CONTENT,
     url: contentURL,
