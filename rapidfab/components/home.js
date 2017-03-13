@@ -16,6 +16,15 @@ const panelBodyStyle = {
   overflow: "scroll"
 }
 
+const Locations = ({ locationFilter, locations, handleOnChange }) => (
+  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter} componentClass="select">
+    <option key="placeholder" value="" selected>All</option>
+    {_.map(locations, location => (
+      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
+    ))}
+  </BS.FormControl>
+);
+
 const LastTenOrders = ({ data }) => (
   <BS.Panel header="Orders">
     <div style={panelBodyStyle} fill>
@@ -84,10 +93,19 @@ const RunsByStatusChart = ({ data }) => {
   />
 }
 
-const Home = ({ fetching, apiErrors, data }) => (
+const Home = ({ fetching, apiErrors, data, locationFilter, locations, handleOnChange }) => (
   <BS.Grid fluid>
     <BS.Row>
-      <BS.Col xs={12}>
+      <BS.Col xs={4}>
+      </BS.Col>
+      <BS.Col xs={4}>
+        {locations.length > 1 ? <Locations
+          locations={locations}
+          handleOnChange={handleOnChange}
+          locationFilter={locationFilter}
+        /> : <div/>}
+      </BS.Col>
+      <BS.Col xs={4}>
         <BS.ButtonToolbar className="pull-right">
           <BS.Button bsStyle="primary" bsSize="small" href="#/records/order">
             <Fa name='list'/> <FormattedMessage id="record.order.add" defaultMessage='Add Order'/>
