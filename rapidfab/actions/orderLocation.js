@@ -1,4 +1,5 @@
 import Actions      from "rapidfab/actions"
+import Config       from "rapidfab/config"
 import Constants    from 'rapidfab/constants';
 import { doGet }    from 'rapidfab/api/makeApi'
 
@@ -18,7 +19,7 @@ function orderLocationSuccess(payload) {
 export function getOrderLocations() {
   return dispatch => {
     dispatch(orderLocationRequest())
-    doGet('https://erp.dev-auth.com/order-location/').then(response => {
+    doGet(`${Config.HOST.WYATT}/order-location/`).then(response => {
       response.text().then(text => {
         try {
           let json = JSON.parse(text);
