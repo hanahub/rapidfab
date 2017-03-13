@@ -75,7 +75,7 @@ function makeList(host, resource) {
       return Object.assign({}, state, {
         uxFetching  : false,
         uxErrors    : []
-      }, _.keyBy(records, state.uuid ? 'uuid' : 'location'))
+      }, _.keyBy(records, "uuid"))
     },
     [`${typePrefix}_LIST_FAILURE`](state, action) {
       let uxErrors = []
