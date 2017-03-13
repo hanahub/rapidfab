@@ -22,15 +22,13 @@ export function getOrderLocations() {
       response.text().then(text => {
         try {
           let json = JSON.parse(text);
-          console.log("Response", json);
           dispatch(orderLocationSuccess(json.resources))
         } catch (e) {
-          console.error("Failed to parse as JSON", e);
-          return
+          dispatch(addError(e))
         }
       });
     }).catch(error => {
-      console.error("Something bad happened", error);
+      dispatch(addError(error))
     })
   }
 }
