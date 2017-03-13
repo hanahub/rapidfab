@@ -22,7 +22,16 @@ const Loading = () => (
   </div>
 )
 
-const Orders = ({ orders, materials, fetching, apiErrors }) => (
+const Locations = ({ locationFilter, locations, handleOnChange }) => (
+  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter} componentClass="select">
+    <option key="placeholder" value="" selected>All</option>
+    {_.map(locations, location => (
+      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
+    ))}
+  </BS.FormControl>
+);
+
+const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, fetching, apiErrors }) => (
   <BS.Grid fluid>
 
     <BS.Row>
@@ -39,7 +48,16 @@ const Orders = ({ orders, materials, fetching, apiErrors }) => (
     </BS.Row>
 
     <BS.Row>
-      <BS.Col xs={12}>
+      <BS.Col xs={4}>
+      </BS.Col>
+      <BS.Col xs={4}>
+        {locations.length > 1 ? <Locations
+          locations={locations}
+          handleOnChange={handleOnChange}
+          locationFilter={locationFilter}
+        /> : <div/>}
+      </BS.Col>
+      <BS.Col xs={4}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/order" className="pull-right">
           <Fa name='plus'/> <FormattedMessage id="record.order.add" defaultMessage='Add Order'/>
         </BS.Button>
