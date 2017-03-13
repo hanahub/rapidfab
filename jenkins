@@ -73,6 +73,9 @@ def publish(commit_info):
     elif commit_info.branch == 'master':
         LOGGER.info("Publishing dev version %s-%s-g%s", commit_info.tag, commit_info.commits, commit_info.sha)
         execute(['npm', 'run', 'publish', '--', '--region', REGION, '--bucket', DEV_BUCKET, '--cloudfront', CLOUDFRONT_DISTRIBUTION_DEV])
+    else:
+        LOGGER.warning("Refusing to push anything to dev or prod because I'm not on the master branch, I'm on %s", commit_info.branch)
+
 
 def get_commit_information(description):
     match = re.match(r'(?P<tag>[\.\d]+)$', description)
