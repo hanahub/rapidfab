@@ -7,6 +7,7 @@ import downloadModel            from './downloadModel'
 import uploadModel              from './uploadModel'
 import url                      from './url'
 import locationFilter           from './locationFilter'
+import orderLocation            from './orderLocation'
 import i18n                     from './i18n'
 import fakeData                 from './fakeData'
 import ui                       from './ui'
@@ -20,6 +21,7 @@ const Reducer = combineReducers({
   i18n,
   downloadModel,
   locationFilter,
+  orderLocation,
   uploadModel,
   fakeData,
   resources,

@@ -23,6 +23,7 @@ export const getStateBureaus             = state => state.api.wyatt.bureau
 export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
+export const getStateOrderLocations      = state => state.orderLocation
 export const getStatePrints              = state => state.api.wyatt.print
 export const getStatePrinters            = state => state.api.wyatt.printer
 export const getStatePrinterTypes        = state => state.api.wyatt['printer-type']
@@ -180,6 +181,11 @@ export const getStocks = createSelector(
 export const getOrders = createSelector(
   [ getStateOrders, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getOrderLocations = createSelector(
+  [ getStateOrderLocations, getStateResources ],
+  orderLocation => orderLocation
 )
 
 export const getPrinters = createSelector(

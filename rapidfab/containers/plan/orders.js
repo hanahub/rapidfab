@@ -19,8 +19,13 @@ class OrdersContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
+      dispatch(Actions.OrderLocation.getOrderLocations())
+      dispatch(Actions.Api.wyatt.location.list())
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.wyatt.order.list())
+    },
+    handleOnChange: location => {
+      dispatch(Actions.LocationFilter.setLocation(location))
     }
   }
 }
@@ -30,12 +35,21 @@ function mapStateToProps(state) {
     order,
     material
   } = state.ui.wyatt;
-
+  const orderLocation = Selectors.getOrderLocations(state)
+  const locationFilter = Selectors.getLocationFilter(state)
+  const orders = Selectors.getOrders(state)
+  let filteredOrders = null;
+  if(locationFilter) {
+     let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location' , state.locationFilter.location])[0].orders;
+     filteredOrders = _.filter(orders, order => { return _.indexOf(ordersForMyLocation, order.uri) >= 0})
+  }
   return {
-    orders        : Selectors.getOrders(state),
+    orders        : filteredOrders || Selectors.getOrders(state),
     materials     : Selectors.getMaterials(state),
-    fetching      : material.list.fetching || order.list.fetching,
-    apiErrors     : _.concat(order.list.errors, material.list.errors)
+    locationFilter: locationFilter,
+    locations     : Selectors.getLocations(state),
+    fetching      : material.list.fetching || order.list.fetching || orderLocaiton.fetching,
+    apiErrors     : _.concat(order.list.errors, material.list.errors, orderLocation.errors)
   }
 }
 
