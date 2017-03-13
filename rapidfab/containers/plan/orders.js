@@ -48,7 +48,7 @@ function mapStateToProps(state) {
     materials     : Selectors.getMaterials(state),
     locationFilter: locationFilter,
     locations     : Selectors.getLocations(state),
-    fetching      : material.list.fetching || order.list.fetching || orderLocaiton.fetching,
+    fetching      : material.list.fetching || order.list.fetching || orderLocation.fetching,
     apiErrors     : _.concat(order.list.errors, material.list.errors, orderLocation.errors)
   }
 }
