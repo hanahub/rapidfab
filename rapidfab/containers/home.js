@@ -39,19 +39,20 @@ function mapStateToProps(state) {
   const orders = Selectors.getOrders(state)
   const runs = Selectors.getRuns(state)
   let locationFilter = Selectors.getLocationFilter(state)
-  let filteredRuns = null;
-  let filteredOrders = null;
+  let filteredRuns = null
+  let filteredOrders = null
   if(locationFilter) {
-    if(locationFilter == "unassigned") { locationFilter = null;}
-      let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location' , locationFilter]);
+    if(locationFilter == "unassigned")
+      locationFilter = null
+    let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location' , locationFilter]);
     if(ordersForMyLocation.length > 0) {
-      ordersForMyLocation = ordersForMyLocation[0].orders;
+      ordersForMyLocation = ordersForMyLocation[0].orders
       filteredOrders = _.filter(orders, order => { return _.indexOf(ordersForMyLocation, order.uri) >= 0})
       filteredOrders = _.slice(filteredOrders, 0, 10)
     } else {
       filteredOrders = []
     }
-    filteredRuns = _.filter(runs, ['location' , state.locationFilter.location]);
+    filteredRuns = _.filter(runs, ['location' , state.locationFilter.location])
   }
   return {
     fetching        : order.list.fetching || run.list.fetching || location.list.fetching || orderLocation.fetching,
