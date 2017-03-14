@@ -22,6 +22,7 @@ const Locations = ({ locationFilter, locations, handleOnChange }) => (
     {_.map(locations, location => (
       <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
     ))}
+    <option key="unassigned" value="unassigned">Unassigned</option>
   </BS.FormControl>
 );
 
