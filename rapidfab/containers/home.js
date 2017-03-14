@@ -36,13 +36,14 @@ function mapStateToProps(state) {
     location,
   } = state.ui.wyatt
   const orderLocation = Selectors.getOrderLocations(state)
-  const locationFilter = Selectors.getLocationFilter(state)
   const orders = Selectors.getOrders(state)
   const runs = Selectors.getRuns(state)
+  let locationFilter = Selectors.getLocationFilter(state)
   let filteredRuns = null;
   let filteredOrders = null;
   if(locationFilter) {
-     let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location' , state.locationFilter.location])[0].orders;
+     if(locationFilter == "unassigned") { locationFilter = null;}
+     let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location' , locationFilter])[0].orders;
      filteredOrders = _.filter(orders, order => { return _.indexOf(ordersForMyLocation, order.uri) >= 0})
      filteredOrders = _.slice(filteredOrders, 0, 10)
      filteredRuns = _.filter(runs, ['location' , state.locationFilter.location]);
