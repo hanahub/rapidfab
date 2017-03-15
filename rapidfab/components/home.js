@@ -17,8 +17,8 @@ const panelBodyStyle = {
 }
 
 const Locations = ({ locationFilter, locations, handleOnChange }) => (
-  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter || ""} componentClass="select">
-    <option key="placeholder" value="" selected>All</option>
+  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
+    <option key="placeholder" value="">All</option>
     {_.map(locations, location => (
       <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
     ))}
