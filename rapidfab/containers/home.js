@@ -1,9 +1,10 @@
-import React, { Component, PropTypes }  from "react"
-import { connect }                      from 'react-redux'
-import Actions                          from 'rapidfab/actions'
-import HomeComponent                    from 'rapidfab/components/home'
-import { extractUuid }                  from 'rapidfab/reducers/makeApiReducers'
-import * as Selectors                   from 'rapidfab/selectors'
+import React, { Component, PropTypes }   from "react"
+import { connect }                       from 'react-redux'
+import Actions                           from 'rapidfab/actions'
+import HomeComponent                     from 'rapidfab/components/home'
+import { extractUuid }                   from 'rapidfab/reducers/makeApiReducers'
+import { getRunStatusChart }             from 'rapidfab/selectors'
+import * as Selectors                    from 'rapidfab/selectors'
 
 class HomeContainer extends Component {
   componentWillMount() {
@@ -53,6 +54,7 @@ function mapStateToProps(state) {
       filteredOrders = []
     }
     filteredRuns = _.filter(runs, ['location' , state.locationFilter.location])
+    filteredRuns = getRunStatusChart(filteredRuns)
   }
   return {
     fetching        : order.list.fetching || run.list.fetching || location.list.fetching || orderLocation.fetching,
@@ -60,7 +62,7 @@ function mapStateToProps(state) {
     locationFilter  : locationFilter,
     locations       : Selectors.getLocations(state),
     data            : {
-      runStatus     : filteredRuns || runs,
+      runStatus     : filteredRuns || Selectors.getRunStatusChartData(state),
       lastTenOrders : filteredOrders || Selectors.getLastTenOrders(state),
     }
   }
