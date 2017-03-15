@@ -348,32 +348,36 @@ export const getMachinesForQueues = createSelector(
   }
 )
 
-export const getRunStatusChartData = createSelector(
-  [ getRuns ],
-  runs => {
-    const groupedByStatus = _.assign({
-      calculating: [],
-      calculated: [],
-      'in-progress': [],
-      queued: [],
-      error: [],
-      complete: []
-    }, _.groupBy(runs, 'status'))
-    return [
-        groupedByStatus.calculating.length + groupedByStatus.calculated.length,
-        groupedByStatus.queued.length,
-        groupedByStatus['in-progress'].length,
-        groupedByStatus.error.length,
-        groupedByStatus.complete.length
-    ]
-  }
-)
-
 export const getLastTenOrders = createSelector(
   [ getOrders ],
   orders => {
     return _.takeRight(_.sortBy(orders, order => {
       return moment(order.created).local()
     }), 10)
+  }
+)
+
+export function getRunStatusChart(runs) {
+  const groupedByStatus = _.assign({
+    calculating: [],
+    calculated: [],
+    'in-progress': [],
+    queued: [],
+    error: [],
+    complete: []
+  }, _.groupBy(runs, 'status'))
+  return [
+      groupedByStatus.calculating.length + groupedByStatus.calculated.length,
+      groupedByStatus.queued.length,
+      groupedByStatus['in-progress'].length,
+      groupedByStatus.error.length,
+      groupedByStatus.complete.length
+  ]
+}
+
+export const getRunStatusChartData = createSelector(
+  [ getRuns ],
+  runs => {
+    return getRunStatusChart(runs)
   }
 )
