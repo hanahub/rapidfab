@@ -33,12 +33,12 @@ class Navbar extends Component {
         <Fa name='user'/> {currentUser.name}
       </span>
     );
-
+    const bureauName = (bureaus && bureaus.length && bureaus[0].name) || "...";
     return (
       <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
-            <a href="#/"><FormattedMessage id="uxNavBrand" defaultMessage={bureaus[0].name}/></a>
+            <a href="#/">{ bureauName }</a>
           </BS.Navbar.Brand>
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>

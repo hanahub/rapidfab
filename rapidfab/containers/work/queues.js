@@ -6,22 +6,29 @@ import QueuesComponent                  from 'rapidfab/components/work/queues'
 import * as Selectors                   from 'rapidfab/selectors'
 
 
-const QueuesContainer = props => (
-  <QueuesComponent {...props}/>
-)
+class QueuesContainer extends Component {
+  componentWillMount() {
+    this.props.onInitialize()
+  }
+
+  render() {
+    return <QueuesComponent {...this.props}/>
+  }
+}
 
 function mapDispatchToProps(dispatch) {
-  dispatch(Actions.Api.nautilus.modeler.list())
-  dispatch(Actions.Api.wyatt['post-processor-type'].list())
-  dispatch(Actions.Api.wyatt['post-processor'].list())
-  dispatch(Actions.Api.wyatt.printer.list())
-  dispatch(Actions.Api.wyatt.run.list())
-  dispatch(Actions.Api.wyatt.location.list())
-
   return {
     handleOnChange: location => {
       dispatch(Actions.LocationFilter.setLocation(location))
-    }
+    },
+    onInitialize: () => {
+      dispatch(Actions.Api.nautilus.modeler.list())
+      dispatch(Actions.Api.wyatt['post-processor-type'].list())
+      dispatch(Actions.Api.wyatt['post-processor'].list())
+      dispatch(Actions.Api.wyatt.printer.list())
+      dispatch(Actions.Api.wyatt.run.list())
+      dispatch(Actions.Api.wyatt.location.list())
+    },
   }
 }
 
