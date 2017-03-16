@@ -57,6 +57,9 @@ class Queues extends Component {
         borderColor: EVENT_COLOR_MAP[run.status],
       }
     })
+    events = _.filter(events, event => {
+      return event.start != null && event.end != null
+    })
     callback(events)
   }
 
