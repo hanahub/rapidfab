@@ -1,10 +1,10 @@
 import React                    from 'react'
 import Chart, { SeriesStyle }   from 'rapidfab/components/chart'
+import Locations                from 'rapidfab/components/locations'
 import * as BS                  from 'react-bootstrap'
 import Error                    from 'rapidfab/components/error'
 import Fa                       from 'react-fontawesome'
 import {
-  injectIntl,
   FormattedMessage }            from 'react-intl'
 import Grid, {
   IdColumn,
@@ -17,29 +17,6 @@ const panelBodyStyle = {
   height: 359,
   overflow: "scroll"
 }
-
-const Locations = injectIntl(({ locationFilter, locations, handleOnChange, intl }) => (
-  <BS.Form inline>
-    <BS.FormGroup controlID="locations">
-      <BS.ControlLabel><FormattedMessage id="field.location" defaultMessage="Location"/></BS.ControlLabel>
-      {' '}
-      <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
-        <option key="placeholder" value="">{intl.formatMessage({
-          id: 'field.location.all',
-          defaultMessage: 'All',
-        })}</option>
-        {_.map(locations, location => (
-          <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
-        ))}
-        <option key="unassigned" value="unassigned">{intl.formatMessage({
-          id: 'field.location.unassigned',
-          defaultMessage: 'Unassigned',
-        })}</option>
-      </BS.FormControl>
-    </BS.FormGroup>
-  </BS.Form>
-));
-
 
 const LastTenOrders = ({ data }) => (
   <BS.Panel header="Orders">
