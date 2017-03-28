@@ -1,9 +1,11 @@
 import React                    from 'react'
 import Chart, { SeriesStyle }   from 'rapidfab/components/chart'
+import Locations                from 'rapidfab/components/locations'
 import * as BS                  from 'react-bootstrap'
 import Error                    from 'rapidfab/components/error'
 import Fa                       from 'react-fontawesome'
-import { FormattedMessage }     from 'react-intl'
+import {
+  FormattedMessage }            from 'react-intl'
 import Grid, {
   IdColumn,
   NumberColumn,
@@ -15,16 +17,6 @@ const panelBodyStyle = {
   height: 359,
   overflow: "scroll"
 }
-
-const Locations = ({ locationFilter, locations, handleOnChange }) => (
-  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
-    <option key="placeholder" value="">All</option>
-    {_.map(locations, location => (
-      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
-    ))}
-    <option key="unassigned" value="unassigned">Unassigned</option>
-  </BS.FormControl>
-);
 
 const LastTenOrders = ({ data }) => (
   <BS.Panel header="Orders">
