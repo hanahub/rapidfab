@@ -129,16 +129,12 @@ class Queues extends Component {
     return (
       <div>
         <BS.Row>
-          <BS.Col xs={6}>
-          </BS.Col>
           <BS.Col xs={4}>
             {this.props.locations.length > 1 ? <Locations
               locations={this.props.locations}
               handleOnChange={this.props.handleOnChange}
               locationFilter={this.props.locationFilter}
             /> : <div/>}
-          </BS.Col>
-          <BS.Col xs={2}>
           </BS.Col>
         </BS.Row>
         <div id="scheduler" />
