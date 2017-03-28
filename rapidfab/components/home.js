@@ -5,7 +5,8 @@ import * as BS                  from 'react-bootstrap'
 import Error                    from 'rapidfab/components/error'
 import Fa                       from 'react-fontawesome'
 import {
-  FormattedMessage }            from 'react-intl'
+  FormattedMessage
+} from 'react-intl'
 import Grid, {
   IdColumn,
   NumberColumn,
