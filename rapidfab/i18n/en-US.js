@@ -138,6 +138,8 @@ export default {
   "field.job"                         : "Job",
   "field.loading"                     : "Loading",
   "field.location"                    : "Location",
+  "field.location.all"                : "All",
+  "field.location.unassigned"         : "Unassigned",
   "field.locationAccess"              : "Location Access",
   "field.manufacturer"                : "Manufacturer",
   "field.material"                    : "Material",
