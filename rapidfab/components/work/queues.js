@@ -1,6 +1,7 @@
 import React, { PropTypes, Component }        from 'react'
 import * as BS                                from 'react-bootstrap'
 import { MODELER_STATUS_MAP }                 from 'rapidfab/constants'
+import Locations                              from 'rapidfab/components/locations'
 
 
 const EVENT_COLOR_MAP = {
@@ -12,15 +13,6 @@ const EVENT_COLOR_MAP = {
   "complete"        : "#1bc98e",
   "error"           : "#e64759",
 }
-
-const Locations = ({ locationFilter, locations, handleOnChange }) => (
-  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
-    <option key="placeholder" value="">All</option>
-    {_.map(locations, location => (
-      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
-    ))}
-  </BS.FormControl>
-);
 
 class Queues extends Component {
   constructor(props) {
