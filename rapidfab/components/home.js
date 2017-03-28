@@ -17,13 +17,19 @@ const panelBodyStyle = {
 }
 
 const Locations = ({ locationFilter, locations, handleOnChange }) => (
-  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
-    <option key="placeholder" value="">All</option>
-    {_.map(locations, location => (
-      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
-    ))}
-    <option key="unassigned" value="unassigned">Unassigned</option>
-  </BS.FormControl>
+  <BS.Form inline>
+    <BS.FormGroup controlID="locations">
+      <BS.ControlLabel>Location</BS.ControlLabel>
+      {' '}
+      <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
+        <option key="placeholder" value="">All</option>
+        {_.map(locations, location => (
+          <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
+        ))}
+        <option key="unassigned" value="unassigned">Unassigned</option>
+      </BS.FormControl>
+    </BS.FormGroup>
+  </BS.Form>
 );
 
 const LastTenOrders = ({ data }) => (
