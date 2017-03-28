@@ -1,8 +1,9 @@
-import React, { PropTypes }                   from "react";
-import * as BS                                from 'react-bootstrap';
-import Fa                                     from 'react-fontawesome';
-import { FormattedMessage }                   from 'react-intl';
+import React, { PropTypes }                   from "react"
+import * as BS                                from 'react-bootstrap'
+import Fa                                     from 'react-fontawesome'
+import { FormattedMessage }                   from 'react-intl'
 import Error                                  from 'rapidfab/components/error'
+import Locations                              from 'rapidfab/components/locations'
 import { ORDER_STATUS_MAP }                   from 'rapidfab/mappings'
 import Grid, {
   BooleanColumn,
@@ -21,16 +22,6 @@ const Loading = () => (
     <Fa name="spinner" spin size='2x' />
   </div>
 )
-
-const Locations = ({ locationFilter, locations, handleOnChange }) => (
-  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter} componentClass="select">
-    <option key="placeholder" value="" selected>All</option>
-    {_.map(locations, location => (
-      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
-    ))}
-    <option key="unassigned" value="unassigned">Unassigned</option>
-  </BS.FormControl>
-);
 
 const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, fetching, apiErrors }) => (
   <BS.Grid fluid>
