@@ -37,7 +37,13 @@ const LocationForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelet
           </BS.Button>
         </BS.Col>
         <BS.Col xs={6}>
-          <BS.Button className="pull-right" type="submit" bsStyle="success" bsSize="small"><SaveButtonTitle /></BS.Button>
+          <BS.ButtonToolbar className="pull-right">
+            <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)} disabled={!fields.id.value}>
+                <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
+              </BS.MenuItem>
+            </BS.SplitButton>
+          </BS.ButtonToolbar>
         </BS.Col>
       </BS.Row>
 

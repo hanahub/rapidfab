@@ -22,6 +22,9 @@ class LocationContainer extends Component {
   componentWillMount() {
     this.props.onInitialize(this.props.uuid, this.props.bureau)
   }
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
 
   render() {
     return <LocationComponent {...this.props}/>
@@ -48,6 +51,12 @@ function mapDispatchToProps(dispatch) {
       } else {
         dispatch(Actions.Api.wyatt.location.post(payload)).then(redirect)
       }
+    },
+    onUnmount: () => {
+      //get rid of pesky lingering errors
+      dispatch(Actions.UI.clearUIState([
+        "wyatt.location",
+      ]))
     },
     onDelete: uuid => {
       if(uuid) {
