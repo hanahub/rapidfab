@@ -66,7 +66,7 @@ export default {
   "status.confirmed"                  : "Confirmed",
   "status.printed"                    : "Printed",
   "status.calculatingEstimates"       : "Calculating Estimates",
-  "status.new"                        : "new",
+  "status.new"                        : "New",
 
   "record.location.add"               : "場所の追加",
   "record.manufacturer"               : "製造業者",
