@@ -40,14 +40,19 @@ function mapStateToProps(state) {
     run
   } = state.ui.wyatt
   const runs = Selectors.getRuns(state)
+  const machines = Selectors.getMachinesForQueues(state)
   const locationFilter = Selectors.getLocationFilter(state)
   let filteredRuns = null;
   if(locationFilter) {
      filteredRuns = _.filter(runs, ['location', locationFilter]);
   }
+  let filteredMachines = null;
+  if(locationFilter) {
+     filteredMachines = _.filter(machines, ['location', locationFilter]);
+  }
 
   return {
-    machines  : Selectors.getMachinesForQueues(state),
+    machines  : filteredMachines || machines,
     runs      : filteredRuns || runs,
     locations : Selectors.getLocations(state),
     fetching  : run.list.fetching || printer.list.fetching || postProcessor.list.fetching || location.list.fetching,
