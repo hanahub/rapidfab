@@ -66,6 +66,7 @@ export default {
   "status.confirmed"                  : "Confirmed",
   "status.printed"                    : "Printed",
   "status.calculatingEstimates"       : "Calculating Estimates",
+  "status.new"                        : "New",
 
   "record.location.add"               : "Add Location",
   "record.manufacturer"               : "Manufacturer",
