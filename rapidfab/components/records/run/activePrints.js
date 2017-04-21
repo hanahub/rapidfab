@@ -48,7 +48,7 @@ const Item = ({ print, printer, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        {`${print.order.model.size.x}x${print.order.model.size.y}`}
+        {`${_.round(print.order.model.size.x, 2)} x ${_.round(print.order.model.size.y, 2)}`}
       </BS.Col>
       <BS.Col xs={3}>
         {printBedFill(printer, print.order.model)}
