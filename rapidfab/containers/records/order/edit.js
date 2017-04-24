@@ -129,7 +129,7 @@ function mapStateToProps(state, props) {
   }
 
   return {
-    apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors),
+    apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors, order.delete.errors),
     fetching,
     initialValues     : orderResource,
     materials         : Selectors.getMaterials(state),
