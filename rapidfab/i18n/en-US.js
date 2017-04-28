@@ -63,6 +63,7 @@ export default {
   "status.inProgress"                 : "In Progress",
   "status.calculated"                 : "Calculated",
   "status.calculating"                : "Calculating",
+  "status.cancelled"                  : "Cancelled",
   "status.confirmed"                  : "Confirmed",
   "status.printed"                    : "Printed",
   "status.calculatingEstimates"       : "Calculating Estimates",
