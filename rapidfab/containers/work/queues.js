@@ -52,11 +52,12 @@ function mapStateToProps(state) {
   }
 
   return {
-    machines  : filteredMachines || machines,
-    runs      : filteredRuns || runs,
-    locations : Selectors.getLocations(state),
-    fetching  : run.list.fetching || printer.list.fetching || postProcessor.list.fetching || location.list.fetching,
-    apiErrors : _.concat(run.list.errors, postProcessor.list.errors, printer.list.errors, location.list.errors)
+    machines      : filteredMachines || machines,
+    runs          : filteredRuns || runs,
+    locations     : Selectors.getLocations(state),
+    locationFilter: locationFilter,
+    fetching      : run.list.fetching || printer.list.fetching || postProcessor.list.fetching || location.list.fetching,
+    apiErrors     : _.concat(run.list.errors, postProcessor.list.errors, printer.list.errors, location.list.errors)
   }
 }
 
