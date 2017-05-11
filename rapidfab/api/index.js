@@ -26,6 +26,7 @@ export const RESOURCES = {
     'run',
     'stock',
     'third-party',
+    'template',
     'shipping',
     'currency-conversion',
   ],
