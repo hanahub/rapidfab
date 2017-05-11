@@ -87,6 +87,9 @@ class Navbar extends Component {
               <BS.MenuItem eventKey={3.6} href="#/inventory/post-processor-types">
                 <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post processor Types'/>
               </BS.MenuItem>
+              <BS.MenuItem eventKey={3.6} href="#/inventory/templates">
+                <Fa name='object-group'/> <FormattedMessage id="inventory.templates" defaultMessage='Templates'/>
+              </BS.MenuItem>
               <BS.MenuItem eventKey={3.7} href="#/inventory/third-party-provider" style={{ display: "none" }}>
                 <Fa name='building'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
               </BS.MenuItem>

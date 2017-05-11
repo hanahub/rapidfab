@@ -32,6 +32,7 @@ export default {
   "inventory.thirdPartyProviders"     : "サードパーティープロバイダー",
   "inventory.users"                   : "ユーザー",
   "inventory.currencies"              : "通貨",
+  "inventory.templates"               : "Templates",
 
   "myProfile"                         : "プロファイル",
   "logout"                            : "ログアウト",
@@ -76,6 +77,8 @@ export default {
   "record.shipping"                   : "配送",
   "record.shipping.add"               : "配送の追加",
   "record.shipping.new"               : "新規配送",
+  "record.template"                   : "Templates",
+  "record.template.add"               : "Add Template",
   "record.material"                   : "材料",
   "record.material.add"               : "材料の追加",
   "record.material.new"               : "新規材料",

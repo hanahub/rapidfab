@@ -6,6 +6,7 @@ import InventoryLocations           from 'rapidfab/containers/inventory/location
 import InventoryManufacturers       from 'rapidfab/containers/inventory/manufacturers'
 import InventoryConversions         from 'rapidfab/containers/inventory/conversions'
 import InventoryShipping            from 'rapidfab/containers/inventory/shipping'
+import InventoryTemplates           from 'rapidfab/containers/inventory/templates'
 import InventoryMaterials           from 'rapidfab/containers/inventory/materials'
 import InventoryStocks              from 'rapidfab/containers/inventory/stocks'
 import InventoryPostProcessors      from 'rapidfab/containers/inventory/postProcessors'
@@ -50,6 +51,7 @@ const Routes = {
   "/inventory/locations"                 : InventoryLocations,
   "/inventory/manufacturers"             : InventoryManufacturers,
   "/inventory/shipping"                  : InventoryShipping,
+  "/inventory/templates"                 : InventoryTemplates,
   "/inventory/conversions"               : InventoryConversions,
   "/inventory/post-processors"           : InventoryPostProcessors,
   "/inventory/post-processor-types"      : InventoryPostProcessorTypes,
