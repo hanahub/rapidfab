@@ -32,6 +32,7 @@ export default {
   "inventory.thirdPartyProviders"     : "Third Party Providers",
   "inventory.users"                   : "Users",
   "inventory.currencies"              : "Currencies",
+  "inventory.templates"               : "Templates",
 
   "myProfile"                         : "My Profile",
   "logout"                            : "Logout",
@@ -76,6 +77,8 @@ export default {
   "record.shipping"                   : "Shipping",
   "record.shipping.add"               : "Add Shipping",
   "record.shipping.new"               : "New Shipping",
+  "record.template"                   : "Templates",
+  "record.template.add"               : "Add Template",
   "record.material"                   : "Material",
   "record.material.add"               : "Add Material",
   "record.material.new"               : "New Material",
