@@ -79,6 +79,7 @@ export default {
   "record.shipping.new"               : "New Shipping",
   "record.template"                   : "Templates",
   "record.template.add"               : "Add Template",
+  "record.template.new"               : "New Template",
   "record.material"                   : "Material",
   "record.material.add"               : "Add Material",
   "record.material.new"               : "New Material",

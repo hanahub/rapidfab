@@ -34,6 +34,7 @@ import PrinterType                  from 'rapidfab/containers/records/printerTyp
 import PostProcessor                from 'rapidfab/containers/records/postProcessor'
 import PostProcessorType            from 'rapidfab/containers/records/postProcessorType'
 import Stock                        from 'rapidfab/containers/records/stock'
+import template                     from 'rapidfab/containers/records/template'
 import User                         from 'rapidfab/containers/records/user'
 import RunEdit                      from 'rapidfab/containers/records/run/edit'
 import RunNew                       from 'rapidfab/containers/records/run/new'
@@ -93,6 +94,8 @@ const Routes = {
   "/records/user/:uuid"                  : User,
   "/records/run"                         : RunNew,
   "/records/run/:uuid"                   : RunEdit,
+  "/records/template/"                   : template,
+  "/records/template/:uuid"              : template,
 }
 
 export default Routes
