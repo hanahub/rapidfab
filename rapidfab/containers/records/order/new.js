@@ -40,9 +40,12 @@ function mapDispatchToProps(dispatch, props) {
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
     },
     onSaveOrder: payload => {
-      dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
-        window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
-      })
+      if(payload) {
+        dispatch(Actions.UploadModel.storeOrderPayload(null))
+        dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+          window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
+        })
+      }
     },
     onUnmount: () => {
       dispatch(Actions.UploadModel.clearState())
