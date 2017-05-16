@@ -3,7 +3,6 @@ import * as BS                                from 'react-bootstrap'
 import { MODELER_STATUS_MAP }                 from 'rapidfab/constants'
 import Locations                              from 'rapidfab/components/locations'
 
-
 const EVENT_COLOR_MAP = {
   "calculating"     : "#e4d836",
   "calculated"      : "#9f86ff",
@@ -17,10 +16,16 @@ const EVENT_COLOR_MAP = {
 class Queues extends Component {
   constructor(props) {
     super(props);
-
+    this.state = { focusedRun: false }
     this.fetchResources = this.fetchResources.bind(this);
     this.fetchEvents = this.fetchEvents.bind(this);
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
   }
+
+  close() { this.setState({ focusedRun: false }); }
+
+  open(run) { this.setState({ focusedRun: run }); }
 
   fetchResources(callback) {
     let machines = _.map(this.props.machines, machine => {
@@ -42,7 +47,7 @@ class Queues extends Component {
         id: run.uri,
         resourceId: run.printer || run.post_processor,
         title: run.id,
-        url: `#/records/run/${run.uuid}`,
+        href: `#/records/run/${run.uuid}`, // when the key is 'url', fullCalender will make the event a link
         start: run.actuals.start || run.estimates.start,
         end: run.actuals.end || run.estimates.end,
         backgroundColor: EVENT_COLOR_MAP[run.status],
@@ -94,6 +99,7 @@ class Queues extends Component {
       resourceLabelText: 'Machines',
       resources: this.fetchResources,
       events: this.fetchEvents,
+      eventClick: (event) => { this.open(event) },
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resourceRender: (resourceObj, labelTds, bodyTds) => {
         let cell = labelTds.find('.fc-cell-text')
@@ -126,6 +132,8 @@ class Queues extends Component {
   }
 
   render() {
+    const { focusedRun } = this.state;
+    const { title, href } = focusedRun;
     return (
       <div>
         <BS.Row>
@@ -138,6 +146,13 @@ class Queues extends Component {
           </BS.Col>
         </BS.Row>
         <div id="scheduler" />
+        <BS.Modal show={focusedRun} onHide={this.close}>
+          <BS.Modal.Header closeButton>
+            <BS.Modal.Title>
+              <a href={href}>{title}</a>
+            </BS.Modal.Title>
+          </BS.Modal.Header>
+        </BS.Modal>
       </div>
     );
   }
