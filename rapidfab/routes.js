@@ -20,6 +20,7 @@ import Orders                       from 'rapidfab/containers/plan/orders'
 import Runs                         from 'rapidfab/containers/plan/runs'
 
 import Queues                       from 'rapidfab/containers/work/queues'
+import TempQueues                   from 'rapidfab/containers/work/tempqueues'
 
 import OrderEdit                    from 'rapidfab/containers/records/order/edit'
 import OrderNew                     from 'rapidfab/containers/records/order/new'
@@ -65,6 +66,7 @@ const Routes = {
   "/plan/runs"                           : Runs,
 
   "/work/queues"                         : Queues,
+  "/work/tempqueues"                     : TempQueues,
 
   "/records/order"                       : OrderNew,
   "/records/order/:uuid"                 : OrderEdit,
