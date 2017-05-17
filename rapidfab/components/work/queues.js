@@ -1,7 +1,9 @@
 import React, { PropTypes, Component }        from 'react'
+import ReactDOM                               from "react-dom"
 import * as BS                                from 'react-bootstrap'
 import { MODELER_STATUS_MAP }                 from 'rapidfab/constants'
 import Locations                              from 'rapidfab/components/locations'
+import Fa                                     from 'react-fontawesome'
 
 const EVENT_COLOR_MAP = {
   "calculating"     : "#e4d836",
@@ -11,6 +13,68 @@ const EVENT_COLOR_MAP = {
   "post_processing" : "#e4d836",
   "complete"        : "#1bc98e",
   "error"           : "#e64759",
+}
+
+class RunForm extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      notes: "",
+      status: "success"
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value
+    });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+    const state = this.state;
+
+    const payload = {
+      document: ReactDOM.findDOMNode(this.refs.file).files,
+      notes: state.notes,
+      status: state.status
+    }
+
+    console.log(payload); // TODO: finish submit
+  }
+
+  render() {
+    return(
+      <form onSubmit={this.onSubmit}>
+        <BS.FormGroup controlId="uxUploadDocument">
+          <BS.ControlLabel>Upload Document:</BS.ControlLabel>
+          <BS.FormControl type="file" ref="file" name="file"/>
+        </BS.FormGroup>
+        <BS.FormGroup controlId="uxNotes">
+          <BS.ControlLabel>Notes:</BS.ControlLabel>
+          <BS.FormControl componentClass="textarea" onChange={this.handleChange} name="notes" />
+        </BS.FormGroup>
+        <BS.FormGroup>
+          <BS.Radio name="status" inline value="success" checked={this.state.status === "success"} onChange={this.handleChange}>
+            Success
+          </BS.Radio>
+          {' '}
+          <BS.Radio name="status" inline value="fail" checked={this.state.status === "fail"} onChange={this.handleChange}>
+            Fail
+          </BS.Radio>
+        </BS.FormGroup>
+        <BS.Button bsStyle="success" type="submit">
+          <Fa name="floppy-o"/> Save
+        </BS.Button>
+      </form>
+    );
+  }
 }
 
 class Queues extends Component {
@@ -133,6 +197,7 @@ class Queues extends Component {
 
   render() {
     const { focusedRun } = this.state;
+    const show = focusedRun ? true : false;
     const { title, href } = focusedRun;
     return (
       <div>
@@ -146,12 +211,15 @@ class Queues extends Component {
           </BS.Col>
         </BS.Row>
         <div id="scheduler" />
-        <BS.Modal show={focusedRun} onHide={this.close}>
+        <BS.Modal show={show} onHide={this.close}>
           <BS.Modal.Header closeButton>
             <BS.Modal.Title>
               <a href={href}>{title}</a>
             </BS.Modal.Title>
           </BS.Modal.Header>
+          <BS.Modal.Body>
+            <RunForm />
+          </BS.Modal.Body>
         </BS.Modal>
       </div>
     );
