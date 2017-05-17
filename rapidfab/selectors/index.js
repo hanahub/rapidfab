@@ -12,6 +12,7 @@ export const getStateMemberships         = state => state.api.pao.memberships
 export const getStateSessions            = state => state.api.pao.sessions
 export const getStateUsers               = state => state.api.pao.users
 export const getStateLocations           = state => state.api.wyatt.location
+export const getStateProcessStep         = state => state.api.wyatt['process-step']
 export const getStatePostProcessorTypes  = state => state.api.wyatt['post-processor-type']
 export const getStatePostProcessors      = state => state.api.wyatt['post-processor']
 export const getStateManufacturers       = state => state.api.wyatt.manufacturer
@@ -218,6 +219,25 @@ export const getPrinterTypes = createSelector(
   [ getStatePrinterTypes, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
+
+export const getProcessSteps = createSelector(
+  [ getStateProcessStep, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getStepsForTemplate = createSelector(
+  [ getPredicate, getStateProcessStep, getStateResources ],
+  (template, uuids, resources) => {
+    const steps = _.reduce(uuids, (results, uuid) => {
+      const step = resources[uuid];
+      if(step && template && step.template == template.uri) {
+        results.push(step);
+      }
+      return results;
+    }, []);
+    return steps;
+  }
+);
 
 export const getPrints = createSelector(
   [ getStatePrints, getStateResources, getStateOrders ],
