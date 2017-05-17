@@ -92,11 +92,11 @@ class Template extends Component {
     const Arrows = ({ index }) => {
       return(
         <div>
-          <div onClick={()=>{this.moveRow(index, "up")}} style={_.assign({}, styles.centerIcons, styles.splitDivs)}>
-            <Fa name='caret-up' size="2x"/>
-          </div>
           <div onClick={()=>{this.moveRow(index, "down")}} style={_.assign({}, styles.centerIcons, styles.splitDivs)}>
-            <Fa name='caret-down' size="2x"/>
+            <Fa name='angle-down' size="2x"/>
+          </div>
+          <div onClick={()=>{this.moveRow(index, "up")}} style={_.assign({}, styles.centerIcons, styles.splitDivs)}>
+            <Fa name='angle-up' size="2x"/>
           </div>
         </div>
       );
