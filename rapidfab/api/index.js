@@ -20,6 +20,7 @@ export const RESOURCES = {
     'membership-bureau',
     'stock',
     'order',
+    'process-step',
     'print',
     'printer',
     'printer-type',

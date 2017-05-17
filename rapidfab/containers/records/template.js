@@ -36,6 +36,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: uuid => {
       if(uuid) {
         dispatch(Actions.Api.wyatt.template.get(uuid))
+        dispatch(Actions.Api.wyatt["process-step"].list())
       }
     },
     onSubmit: payload => {
@@ -54,11 +55,14 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
+  const templateResource   = Selectors.getRouteResource(state, props)
+
   return {
-    uuid            : Selectors.getRoute(state, props).uuid,
+    uuid            : templateResource.uuid,
     initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.template"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.template"),
+    steps           : Selectors.getStepsForTemplate(state, templateResource)
   }
 }
 
