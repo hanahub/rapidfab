@@ -47,7 +47,7 @@ class Template extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const payoad = {
+    const payload = {
 
     };
     this.props.onSubmit(payload);
@@ -84,7 +84,6 @@ class Template extends Component {
     let steps = _.cloneDeep(this.state.steps)
 
     // modal coming soon
-    steps.unshift({name: "im a step"})
 
     this.setState({steps: steps})
   }
