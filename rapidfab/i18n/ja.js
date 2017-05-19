@@ -176,6 +176,7 @@ export default {
   "field.supportMaterial"             : "サポート材料",
   "field.supportMaterials"            : "サポート材料",
   "field.supportPhone"                : "サポート窓口電話番号",
+  "field.template"                    : "Template",
   "field.thirdParty"                  : "サードパーティー",
   "field.thirdPartyProvider"          : "サードパーティープロバイダー",
   "field.trackingNumber"              : "追跡番号",
