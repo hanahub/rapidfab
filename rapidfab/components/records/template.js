@@ -12,7 +12,7 @@ const styles = {
   stepHeader: {
     width: "90%",
   },
-  deleteHeader: {
+  optionsHeader: {
     width: "5%",
   },
   centerIcons: {
@@ -45,29 +45,52 @@ class Template extends Component {
     this.state = {
       steps: [],
       haveReceivedProps: false,
-      showModal: false,
+      showStepForm: false,
+      showOverwriteWarning: false,
     }
 
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
+    this.closeOverwriteWarning = this.closeOverwriteWarning.bind(this);
+    this.shouldOpenOverwriteWarning = this.shouldOpenOverwriteWarning.bind(this);
+    this.openOverwriteWarning = this.openOverwriteWarning.bind(this);
+    this.closeStepForm = this.closeStepForm.bind(this);
+    this.openStepForm = this.openStepForm.bind(this);
+    this.addStep = this.addStep.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  close() {
-    this.setState({ showModal: false });
+  closeOverwriteWarning() {
+    this.setState({ showOverwriteWarning: false });
   }
 
-  open() {
-    // TODO: check if name of template is the same
-    this.setState({ showModal: true });
+  shouldOpenOverwriteWarning() {
+    // TODO: check if name of template is used already
+    // if so, return true
+    // else, return false
+    return true;
   }
 
-  onDelete(event) {
+  openOverwriteWarning() {
+    if (this.shouldOpenOverwriteWarning())
+      this.setState({ showOverwriteWarning: true });
+    else
+      this.onSubmit();
+  }
+
+  closeStepForm() {
+    this.setState({ showStepForm: false })
+  }
+
+  openStepForm() {
+    this.setState({ showStepForm: true });
+  }
+
+  onDelete() {
     this.props.onDelete(this.props.route.uuid)
   }
 
-  onSubmit(event) {
-    this.close();
+  onSubmit() {
+    if (this.state.showOverwriteWarning)
+      this.closeOverwriteWarning();
 
     let steps = this.state.steps
     const existingSteps = _.filter(steps, step => (_.has(step, "uri")))
@@ -122,17 +145,16 @@ class Template extends Component {
     this.setState({steps: steps})
   }
 
-  deleteRow(index) {
+  deleteStep(index) {
     let steps = _.cloneDeep(this.state.steps)
     _.pullAt(steps, index) //js sucks at poping items at a given index
 
     this.setState({steps: steps})
   }
 
-  addRow() {
+  addStep() {
+    this.closeStepForm();
     let steps = _.cloneDeep(this.state.steps)
-
-    // modal coming soon
 
     this.setState({steps: steps})
   }
@@ -164,9 +186,14 @@ class Template extends Component {
       const rows = _.map(this.state.steps, (step, index) => (
         <tr key={index}>
           <td><Arrows index={index} /></td>
-          <td style={{width: "90%"}}>{step.name}</td>
+          <td>{step.name}</td>
           <td style={styles.centerIcons}>
-            <div onClick={()=>{this.deleteRow(index)}}>
+            <div onClick={()=>{this.openStepForm()}}>
+              <Fa name='edit'/>
+            </div>
+          </td>
+          <td style={styles.centerIcons}>
+            <div onClick={()=>{this.deleteStep(index)}}>
               <Fa name='times'/>
             </div>
           </td>
@@ -175,6 +202,74 @@ class Template extends Component {
 
       return(<tbody>{rows}</tbody>)
     }
+
+    const OverwriteWarningModal = ({ show, close, submit }) => (
+      <BS.Modal show={show} onHide={close}>
+        <BS.Modal.Header closeButton>
+          <BS.Modal.Title>
+            A template with the same name already exists.
+          </BS.Modal.Title>
+        </BS.Modal.Header>
+        <BS.Modal.Body>
+          Do you want to replace the existing template?
+        </BS.Modal.Body>
+        <BS.Modal.Footer>
+          <BS.Button onClick={close}>Cancel</BS.Button>
+          <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
+        </BS.Modal.Footer>
+      </BS.Modal>
+    )
+
+    const StepFormModal = ({ show, close, submit }) => (
+      <BS.Modal show={show} onHide={close}>
+        <BS.Modal.Header closeButton>
+          <BS.Modal.Title>Step Form</BS.Modal.Title>
+        </BS.Modal.Header>
+        <BS.Modal.Body>
+          <StepForm />
+        </BS.Modal.Body>
+        <BS.Modal.Footer>
+          <BS.Button onClick={close}>Cancel</BS.Button>
+          <BS.Button onClick={submit} bsStyle="success">Add</BS.Button>
+        </BS.Modal.Footer>
+      </BS.Modal>
+    )
+
+    const StepForm = () => (
+      <form>
+        <BS.FormGroup controlId="formControlsSelect">
+          <BS.ControlLabel>Process step</BS.ControlLabel>
+          <BS.FormControl componentClass="select" placeholder="select">
+            <option value="select">select</option>
+            <option value="other">...</option>
+          </BS.FormControl>
+        </BS.FormGroup>
+        <BS.FormGroup className="clearfix">
+          <BS.ControlLabel className="pull-left">Notes</BS.ControlLabel>
+          <div className="pull-right">
+            <BS.Radio name="notes" inline>None</BS.Radio>
+            <BS.Radio name="notes" inline>Optional</BS.Radio>
+            <BS.Radio name="notes" inline>Required</BS.Radio>
+          </div>
+        </BS.FormGroup>
+        <BS.FormGroup className="clearfix">
+          <BS.ControlLabel className="pull-left">Upload</BS.ControlLabel>
+          <div className="pull-right">
+            <BS.Radio name="notes" inline>None</BS.Radio>
+            <BS.Radio name="notes" inline>Optional</BS.Radio>
+            <BS.Radio name="notes" inline>Required</BS.Radio>
+          </div>
+        </BS.FormGroup>
+        <BS.FormGroup className="clearfix">
+          <BS.ControlLabel className="pull-left">Success</BS.ControlLabel>
+          <div className="pull-right">
+            <BS.Radio name="notes" inline>None</BS.Radio>
+            <BS.Radio name="notes" inline>Optional</BS.Radio>
+            <BS.Radio name="notes" inline>Required</BS.Radio>
+          </div>
+        </BS.FormGroup>
+      </form>
+    )
 
     return(
       <BS.Grid fluid>
@@ -202,7 +297,7 @@ class Template extends Component {
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.SplitButton onClick={this.open} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+              <BS.SplitButton onClick={this.openOverwriteWarning} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
                 <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
                   <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                 </BS.MenuItem>
@@ -223,44 +318,43 @@ class Template extends Component {
           <BS.Col xs={12}>
 
             <BS.Row>
-              <BS.Col xsOffset={3} xs={6}>
+              <BS.Col xs={12} sm={8} smOffset={2} lg={6} lgOffset={3}>
                 <BS.FormGroup>
-                  <BS.ControlLabel>Name</BS.ControlLabel>
+                  <BS.ControlLabel>Template Name</BS.ControlLabel>
                   <FormControlTextCareful type="text" required {...this.props.fields.name} />
                 </BS.FormGroup>
               </BS.Col>
             </BS.Row>
 
             <BS.Row>
-              <BS.Col xsOffset={3} xs={6}>
+              <BS.Col xs={12} sm={8} smOffset={2} lg={6} lgOffset={3}>
                 <BS.Table responsive hover>
                   <thead>
                     <tr>
                       <th style={styles.positionHeader}>Position</th>
                       <th style={styles.stepHeader}>Step</th>
-                      <th style={styles.deleteHeader}>Delete</th>
+                      <th style={styles.optionsHeader}>Edit</th>
+                      <th style={styles.optionsHeader}>Delete</th>
                     </tr>
                   </thead>
                   <Rows />
                 </BS.Table>
-                <BS.Button bsStyle="success" className="pull-right" onClick={() => {this.addRow()}}>Add Step</BS.Button>
+                <BS.Button bsStyle="success" className="pull-right" onClick={this.openStepForm}>Add Step</BS.Button>
               </BS.Col>
             </BS.Row>
 
           </BS.Col>
         </BS.Row>
-        <BS.Modal show={this.state.showModal} onHide={this.close}>
-          <BS.Modal.Header closeButton>
-            <BS.Modal.Title>A template with the same name already exists.</BS.Modal.Title>
-          </BS.Modal.Header>
-          <BS.Modal.Body>
-            Do you want to replace the existing template?
-          </BS.Modal.Body>
-          <BS.Modal.Footer>
-            <BS.Button onClick={this.close}>Cancel</BS.Button>
-            <BS.Button onClick={this.onSubmit} bsStyle="success">Replace</BS.Button>
-          </BS.Modal.Footer>
-        </BS.Modal>
+
+        <StepFormModal
+          show={this.state.showStepForm}
+          close={this.closeStepForm}
+          submit={this.addStep} />
+        <OverwriteWarningModal
+          show={this.state.showOverwriteWarning}
+          close={this.closeOverwriteWarning}
+          submit={this.onSubmit} />
+
       </BS.Grid>
     )
   }
