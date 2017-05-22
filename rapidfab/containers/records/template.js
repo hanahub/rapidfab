@@ -40,6 +40,17 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
+      //TODO use the best way to CRUD these resources, the other method is in the component
+      if(payload.process_steps) {
+        _.map(pay.load.process_steps, step => {
+          if(step.uuid) {
+            dispatch(Actions.Api.wyatt["process-step"].put(step.uuid, payload))
+          } else {
+            dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect)
+          }
+        })
+      }
+
       if(payload.uuid) {
         dispatch(Actions.Api.wyatt.template.put(payload.uuid, payload)).then(redirect)
       } else {
@@ -50,15 +61,15 @@ function mapDispatchToProps(dispatch) {
       if(uuid) {
         dispatch(Actions.Api.wyatt.template.delete(uuid)).then(redirect)
       }
-    }
+    },
   }
 }
 
 function mapStateToProps(state, props) {
-  const templateResource   = Selectors.getRouteResource(state, props)
-
+  const templateResource = Selectors.getRouteResource(state, props)
   return {
-    uuid            : templateResource.uuid,
+    uuid            : Selectors.getRoute(state, props).uuid,
+    bureau          : Selectors.getBureau(state),
     initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.template"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.template"),
