@@ -67,7 +67,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   const templateResource = Selectors.getRouteResource(state, props)
-
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
     bureau          : Selectors.getBureau(state),

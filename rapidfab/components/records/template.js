@@ -1,10 +1,9 @@
-import React, { Component, PropTypes }     from "react"
-import * as BS                  from 'react-bootstrap';
-import Fa                       from 'react-fontawesome';
-import { FormattedMessage }     from 'react-intl';
-import Error                  from 'rapidfab/components/error'
-
-
+import React, { Component, PropTypes }     from "react";
+import * as BS                             from 'react-bootstrap';
+import Fa                                  from 'react-fontawesome';
+import { FormattedMessage }                from 'react-intl';
+import Error                               from 'rapidfab/components/error';
+import { FormControlTextCareful }          from 'rapidfab/components/formTools';
 
 const styles = {
   positionHeader: {
@@ -46,11 +45,21 @@ class Template extends Component {
     this.state = {
       steps: [],
       haveReceivedProps: false,
-      name: "",
       showModal: false,
     }
 
-    this.onSubmit = this.onSubmit.bind(this)
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    // TODO: check if name of template is the same
+    this.setState({ showModal: true });
   }
 
   onDelete(event) {
@@ -58,7 +67,7 @@ class Template extends Component {
   }
 
   onSubmit(event) {
-    event.preventDefault();
+    this.close();
 
     let steps = this.state.steps
     const existingSteps = _.filter(steps, step => (_.has(step, "uri")))
@@ -193,7 +202,7 @@ class Template extends Component {
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.SplitButton onClick={this.onSubmit} id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+              <BS.SplitButton onClick={this.open} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
                 <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
                   <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                 </BS.MenuItem>
@@ -215,7 +224,10 @@ class Template extends Component {
 
             <BS.Row>
               <BS.Col xsOffset={3} xs={6}>
-                <BS.Button bsStyle="success" className="pull-right" onClick={() => {this.addRow()}}>Add Step</BS.Button>
+                <BS.FormGroup>
+                  <BS.ControlLabel>Name</BS.ControlLabel>
+                  <FormControlTextCareful type="text" required {...this.props.fields.name} />
+                </BS.FormGroup>
               </BS.Col>
             </BS.Row>
 
@@ -231,11 +243,24 @@ class Template extends Component {
                   </thead>
                   <Rows />
                 </BS.Table>
+                <BS.Button bsStyle="success" className="pull-right" onClick={() => {this.addRow()}}>Add Step</BS.Button>
               </BS.Col>
             </BS.Row>
 
           </BS.Col>
         </BS.Row>
+        <BS.Modal show={this.state.showModal} onHide={this.close}>
+          <BS.Modal.Header closeButton>
+            <BS.Modal.Title>A template with the same name already exists.</BS.Modal.Title>
+          </BS.Modal.Header>
+          <BS.Modal.Body>
+            Do you want to replace the existing template?
+          </BS.Modal.Body>
+          <BS.Modal.Footer>
+            <BS.Button onClick={this.close}>Cancel</BS.Button>
+            <BS.Button onClick={this.onSubmit} bsStyle="success">Replace</BS.Button>
+          </BS.Modal.Footer>
+        </BS.Modal>
       </BS.Grid>
     )
   }
