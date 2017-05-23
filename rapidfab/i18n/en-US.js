@@ -168,6 +168,7 @@ export default {
   "field.postProcessor"               : "Post-Processor",
   "field.postProcessorType"           : "Post Processor Type",
   "field.quantity"                    : "Quantity",
+  "field.record"                      : "Record",
   "field.resources"                   : "Resources",
   "field.order"                       : "Order",
   "field.resource"                    : "Resource",

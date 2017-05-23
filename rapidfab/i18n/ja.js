@@ -166,6 +166,7 @@ export default {
   "field.quantity"                    : "数量",
   "field.resources"                   : "リソース",
   "field.order"                       : "注文",
+  "field.record"                      : "Record",
   "field.resource"                    : "リソース",
   "field.costPerCC"                   : "CC 単価",
   "field.shippingAddress"             : "配送先住所",

@@ -20,7 +20,6 @@ import Orders                       from 'rapidfab/containers/plan/orders'
 import Runs                         from 'rapidfab/containers/plan/runs'
 
 import Queues                       from 'rapidfab/containers/work/queues'
-import TempQueues                   from 'rapidfab/containers/work/tempqueues'
 
 import OrderEdit                    from 'rapidfab/containers/records/order/edit'
 import TempOrderEdit                from 'rapidfab/containers/records/order/tempedit'
@@ -41,7 +40,10 @@ import PostProcessorType            from 'rapidfab/containers/records/postProces
 import Stock                        from 'rapidfab/containers/records/stock'
 import Template                     from 'rapidfab/containers/records/template'
 import User                         from 'rapidfab/containers/records/user'
+
 import RunEdit                      from 'rapidfab/containers/records/run/edit'
+import TempRunEdit                  from 'rapidfab/containers/records/run/tempedit'
+
 import RunNew                       from 'rapidfab/containers/records/run/new'
 
 import Styles                       from 'rapidfab/containers/styles'
@@ -70,7 +72,6 @@ const Routes = {
   "/plan/runs"                           : Runs,
 
   "/work/queues"                         : Queues,
-  "/work/tempqueues"                     : TempQueues,
 
   "/records/order"                       : OrderNew,
   "/records/temporder"                   : TempOrderNew,
@@ -103,7 +104,10 @@ const Routes = {
   "/records/user"                        : User,
   "/records/user/:uuid"                  : User,
   "/records/run"                         : RunNew,
+
   "/records/run/:uuid"                   : RunEdit,
+  "/records/temprun/:uuid"               : TempRunEdit,
+
   "/records/template/"                   : Template,
   "/records/template/:uuid"              : Template,
 }
