@@ -17,64 +17,6 @@ import {
   FormControlSelect
 } from 'rapidfab/components/formTools'
 
-class RunForm extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      notes: "",
-      status: "success"
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value
-    });
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
-
-    const state = this.state;
-
-    const payload = {
-      document: ReactDOM.findDOMNode(this.refs.file).files,
-      notes: state.notes,
-      status: state.status
-    }
-
-    console.log(payload); // TODO: finish submit
-  }
-
-  render() {
-    return(
-      <div>
-        <BS.FormGroup controlId="uxUploadDocument">
-          <BS.ControlLabel>Upload Document:</BS.ControlLabel>
-          <BS.FormControl type="file" ref="file" name="file"/>
-        </BS.FormGroup>
-        <BS.FormGroup controlId="uxNotes">
-          <BS.ControlLabel>Notes:</BS.ControlLabel>
-          <BS.FormControl componentClass="textarea" onChange={this.handleChange} name="notes" />
-        </BS.FormGroup>
-        <BS.FormGroup>
-          <BS.Radio name="status" inline value="success" checked={this.state.status === "success"} onChange={this.handleChange}>
-            Success
-          </BS.Radio>
-          <BS.Radio name="status" inline value="fail" checked={this.state.status === "fail"} onChange={this.handleChange}>
-            Fail
-          </BS.Radio>
-        </BS.FormGroup>
-      </div>
-    );
-  }
-}
-
 const SaveButtonTitle = () => (
   <span>
     <Fa name='floppy-o'/> <FormattedMessage id="button.save" defaultMessage='Save'/>
@@ -324,7 +266,28 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           <BS.Panel header={<FormattedMessage id="field.record" defaultMessage="Record"/>}>
             <BS.Row>
               <BS.Col xs={10} xsOffset={1} md={8} lg={6}>
-                <RunForm />
+                <BS.FormGroup controlId="uxUploadDocument">
+                  <BS.ControlLabel><FormattedMessage id={"field.uploadDocument"} defaultMessage={"Upload Document"}/>:</BS.ControlLabel>
+                  <BS.FormControl type="file" name="file"/>
+                </BS.FormGroup>
+                <BS.FormGroup controlId="uxNotes">
+                  <BS.ControlLabel><FormattedMessage id={"field.notes"} defaultMessage={"Notes"}/>:</BS.ControlLabel>
+                  <BS.FormControl componentClass="textarea" name="notes" {...fields.notes}/>
+                </BS.FormGroup>
+                <BS.FormGroup>
+                  <BS.Radio
+                    inline {...fields.success}
+                    value="success"
+                    checked={fields.success.value === 'success' || fields.success.value === true}>
+                    <FormattedMessage id={"field.success"} defaultMessage={"Success"}/>
+                  </BS.Radio>
+                  <BS.Radio
+                    inline {...fields.success}
+                    value="fail"
+                    checked={fields.success.value === 'fail' || fields.success.value === false}>
+                    <FormattedMessage id={"field.fail"} defaultMessage={"Fail"}/>
+                  </BS.Radio>
+                </BS.FormGroup>
               </BS.Col>
             </BS.Row>
           </BS.Panel>
