@@ -44,7 +44,6 @@ class NewOrderForm extends Component {
       template: state.template,
       third_party_provider: state.thirdPartyProvider,
     }
-    debugger
     this.props.onSubmit(payload)
   }
 
