@@ -45,6 +45,7 @@ export default {
   "button.upload"                     : "Upload",
   "button.delete"                     : "Delete",
   "button.download"                   : "Download",
+  "button.duplicate"                  : "Duplicate",
   "button.save"                       : "Save",
   "button.reset"                      : "Reset",
 

@@ -45,6 +45,7 @@ export default {
   "button.upload"                     : "アップロード",
   "button.delete"                     : "削除",
   "button.download"                   : "ダウンロード",
+  "button.duplicate"                  : "Duplicate",
   "button.save"                       : "保存",
   "button.reset"                      : "リセット",
 
