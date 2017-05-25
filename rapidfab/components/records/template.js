@@ -56,7 +56,7 @@ class Template extends Component {
     this.openStepForm = this.openStepForm.bind(this);
     this.addStep = this.addStep.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.duplicate = this.duplicate.bind(this);
+    this.onDuplicate = this.onDuplicate.bind(this);
   }
 
   closeOverwriteWarning() {
@@ -89,8 +89,13 @@ class Template extends Component {
     this.props.onDelete(this.props.route.uuid)
   }
 
-  duplicate() {
-    
+  onDuplicate() {
+    const templateCopy = {
+      bureau: this.props.bureau.uri,
+      name: this.props.fields.name.value + " copy",
+      steps: this.state.steps,
+    }
+    this.props.onDuplicate(templateCopy);
   }
 
   onSubmit() {
@@ -306,7 +311,7 @@ class Template extends Component {
                 <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
                   <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                 </BS.MenuItem>
-                <BS.MenuItem eventKey={2} onClick={() => this.duplicate()} disabled={!this.props.fields.id.value}>
+                <BS.MenuItem eventKey={2} onClick={() => this.onDuplicate()} disabled={!this.props.fields.id.value}>
                   <Fa name='clone'/> <FormattedMessage id="button.duplicate" defaultMessage='Duplicate'/>
                 </BS.MenuItem>
               </BS.SplitButton>
