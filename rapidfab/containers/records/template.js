@@ -62,6 +62,24 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.wyatt.template.delete(uuid)).then(redirect)
       }
     },
+    onDuplicate: templateCopy => {
+      const { bureau, name, steps } = templateCopy;
+      const stepCopies = steps.map( step => {
+        const step_data = _.omit(step, ['step_position', 'template']);
+        return new Promise((resolve) => {
+          dispatch(Actions.Api.wyatt["process-step"].post(step_data))
+            .then( response => resolve(response.payload.uri) )
+        });
+      });
+      Promise.all(stepCopies).then(process_steps => {
+        const payload = {
+          bureau,
+          name,
+          process_steps,
+        }
+        dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect);
+      });
+    }
   }
 }
 
