@@ -64,11 +64,13 @@ class Template extends Component {
   }
 
   shouldOpenOverwriteWarning() {
-    // TODO: check if name of template is used already
-    // if so, return true
-    // else, return false
-    return true;
-  }
+    const { name } = this.props.fields;
+    const { steps } = this.state;
+
+    const hasNewName = name.initialValue !== name.value;
+    const hasNewSteps = !_.isEqual(steps, this.props.steps);
+    return hasNewName || hasNewSteps;
+  }  
 
   openOverwriteWarning() {
     if (this.shouldOpenOverwriteWarning())
