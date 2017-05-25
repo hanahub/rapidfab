@@ -57,6 +57,7 @@ class Template extends Component {
     this.addStep = this.addStep.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDuplicate = this.onDuplicate.bind(this);
+    this.onSave = this.onSave.bind(this);
   }
 
   closeOverwriteWarning() {
@@ -73,10 +74,7 @@ class Template extends Component {
   }
 
   openOverwriteWarning() {
-    if (this.shouldOpenOverwriteWarning())
-      this.setState({ showOverwriteWarning: true });
-    else
-      this.onSubmit();
+    this.setState({ showOverwriteWarning: true });
   }
 
   closeStepForm() {
@@ -104,6 +102,13 @@ class Template extends Component {
       steps: this.state.steps,
     }
     this.props.onDuplicate(templateCopy);
+  }
+
+  onSave() {
+    if (this.shouldOpenOverwriteWarning())
+      this.openOverwriteWarning();
+    else
+      this.onSubmit();
   }
 
   onSubmit() {
@@ -316,7 +321,7 @@ class Template extends Component {
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.SplitButton onClick={this.openOverwriteWarning} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+              <BS.SplitButton onClick={this.onSave} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
                 <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
                   <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                 </BS.MenuItem>
