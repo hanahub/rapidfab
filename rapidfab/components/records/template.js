@@ -70,7 +70,7 @@ class Template extends Component {
     const hasNewName = name.initialValue !== name.value;
     const hasNewSteps = !_.isEqual(steps, this.props.steps);
     return hasNewName || hasNewSteps;
-  }  
+  }
 
   openOverwriteWarning() {
     if (this.shouldOpenOverwriteWarning())
@@ -92,9 +92,15 @@ class Template extends Component {
   }
 
   onDuplicate() {
+    if (this.state.showOverwriteWarning)
+      this.closeOverwriteWarning();
+
+    const { value: name, initialValue: initialName } = this.props.fields.name;
+    const duplicateName = name === initialName ? name + " copy" : name;
+
     const templateCopy = {
       bureau: this.props.bureau.uri,
-      name: this.props.fields.name.value + " copy",
+      name: duplicateName,
       steps: this.state.steps,
     }
     this.props.onDuplicate(templateCopy);
@@ -215,18 +221,19 @@ class Template extends Component {
       return(<tbody>{rows}</tbody>)
     }
 
-    const OverwriteWarningModal = ({ show, close, submit }) => (
+    const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
       <BS.Modal show={show} onHide={close}>
         <BS.Modal.Header closeButton>
           <BS.Modal.Title>
-            A template with the same name already exists.
+            Saving over an existing template could affect other orders.
           </BS.Modal.Title>
         </BS.Modal.Header>
         <BS.Modal.Body>
-          Do you want to replace the existing template?
+          Do you want to replace the existing template or duplicate a new one?
         </BS.Modal.Body>
         <BS.Modal.Footer>
           <BS.Button onClick={close}>Cancel</BS.Button>
+          <BS.Button onClick={duplicate} bsStyle="primary">Duplicate</BS.Button>
           <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
         </BS.Modal.Footer>
       </BS.Modal>
@@ -368,6 +375,7 @@ class Template extends Component {
         <OverwriteWarningModal
           show={this.state.showOverwriteWarning}
           close={this.closeOverwriteWarning}
+          duplicate={this.onDuplicate}
           submit={this.onSubmit} />
 
       </BS.Grid>
