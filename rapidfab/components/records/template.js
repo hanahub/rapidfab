@@ -57,6 +57,7 @@ class Template extends Component {
     this.addStep = this.addStep.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDuplicate = this.onDuplicate.bind(this);
+    this.onSave = this.onSave.bind(this);
   }
 
   closeOverwriteWarning() {
@@ -64,17 +65,16 @@ class Template extends Component {
   }
 
   shouldOpenOverwriteWarning() {
-    // TODO: check if name of template is used already
-    // if so, return true
-    // else, return false
-    return true;
+    const { name } = this.props.fields;
+    const { steps } = this.state;
+
+    const hasNewName = name.initialValue !== name.value;
+    const hasNewSteps = !_.isEqual(steps, this.props.steps);
+    return hasNewName || hasNewSteps;
   }
 
   openOverwriteWarning() {
-    if (this.shouldOpenOverwriteWarning())
-      this.setState({ showOverwriteWarning: true });
-    else
-      this.onSubmit();
+    this.setState({ showOverwriteWarning: true });
   }
 
   closeStepForm() {
@@ -90,12 +90,25 @@ class Template extends Component {
   }
 
   onDuplicate() {
+    if (this.state.showOverwriteWarning)
+      this.closeOverwriteWarning();
+
+    const { value: name, initialValue: initialName } = this.props.fields.name;
+    const duplicateName = name === initialName ? name + " copy" : name;
+
     const templateCopy = {
       bureau: this.props.bureau.uri,
-      name: this.props.fields.name.value + " copy",
+      name: duplicateName,
       steps: this.state.steps,
     }
     this.props.onDuplicate(templateCopy);
+  }
+
+  onSave() {
+    if (this.shouldOpenOverwriteWarning())
+      this.openOverwriteWarning();
+    else
+      this.onSubmit();
   }
 
   onSubmit() {
@@ -213,18 +226,19 @@ class Template extends Component {
       return(<tbody>{rows}</tbody>)
     }
 
-    const OverwriteWarningModal = ({ show, close, submit }) => (
+    const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
       <BS.Modal show={show} onHide={close}>
         <BS.Modal.Header closeButton>
           <BS.Modal.Title>
-            A template with the same name already exists.
+            Saving over an existing template could affect other orders.
           </BS.Modal.Title>
         </BS.Modal.Header>
         <BS.Modal.Body>
-          Do you want to replace the existing template?
+          Do you want to replace the existing template or duplicate a new one?
         </BS.Modal.Body>
         <BS.Modal.Footer>
           <BS.Button onClick={close}>Cancel</BS.Button>
+          <BS.Button onClick={duplicate} bsStyle="primary">Duplicate</BS.Button>
           <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
         </BS.Modal.Footer>
       </BS.Modal>
@@ -307,7 +321,7 @@ class Template extends Component {
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.SplitButton onClick={this.openOverwriteWarning} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
+              <BS.SplitButton onClick={this.onSave} id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
                 <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
                   <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                 </BS.MenuItem>
@@ -366,6 +380,7 @@ class Template extends Component {
         <OverwriteWarningModal
           show={this.state.showOverwriteWarning}
           close={this.closeOverwriteWarning}
+          duplicate={this.onDuplicate}
           submit={this.onSubmit} />
 
       </BS.Grid>
