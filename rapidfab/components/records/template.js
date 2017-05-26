@@ -65,12 +65,14 @@ class Template extends Component {
   }
 
   shouldOpenOverwriteWarning() {
-    const { name } = this.props.fields;
+    const { name, uuid } = this.props.fields;
     const { steps } = this.state;
 
     const hasNewName = name.initialValue !== name.value;
     const hasNewSteps = !_.isEqual(steps, this.props.steps);
-    return hasNewName || hasNewSteps;
+    const isExistingTemplate = uuid.value;
+
+    return (hasNewName || hasNewSteps) && isExistingTemplate;
   }
 
   openOverwriteWarning() {
