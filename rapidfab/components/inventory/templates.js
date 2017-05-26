@@ -15,7 +15,6 @@ const TemplateGrid = ({ records }) => (
     columns={[
       "id",
       "name",
-      "description",
     ]}
     columnMeta={[{
       displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
@@ -25,10 +24,8 @@ const TemplateGrid = ({ records }) => (
     }, {
       columnName: "name",
       displayName: <FormattedMessage id='field.name' defaultMessage="Name"/>
-    }, {
-      columnName: "description",
-      displayName: <FormattedMessage id='field.description' defaultMessage="Description"/>
-    }]}
+    },
+    ]}
   />
 )
 
@@ -70,7 +67,7 @@ const Templates = ({ templates, fetching, apiErrors }) => (
     </BS.Row>
 
     <BS.Row>
-      <BS.Col xs={12}>
+      <BS.Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2} lg={6} lgOffset={3}>
         {fetching ? <Loading/> : <TemplateGrid records={templates}/>}
       </BS.Col>
     </BS.Row>
