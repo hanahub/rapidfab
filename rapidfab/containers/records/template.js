@@ -22,6 +22,10 @@ class TemplateContainer extends Component {
     this.props.onInitialize(this.props.uuid)
   }
 
+  componentWillUnmount() {
+    this.props.onUnmount()
+  }
+
   render() {
     return <TemplateComponent {...this.props}/>
   }
@@ -34,28 +38,25 @@ function redirect() {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
+      dispatch(Actions.Api.wyatt['printer-type'].list())
+      dispatch(Actions.Api.wyatt['post-processor-type'].list())
+      dispatch(Actions.Api.wyatt.shipping.list())
       if(uuid) {
         dispatch(Actions.Api.wyatt.template.get(uuid))
         dispatch(Actions.Api.wyatt["process-step"].list())
       }
     },
-    onSubmit: payload => {
-      //TODO use the best way to CRUD these resources, the other method is in the component
-      if(payload.process_steps) {
-        _.map(pay.load.process_steps, step => {
-          if(step.uuid) {
-            dispatch(Actions.Api.wyatt["process-step"].put(step.uuid, payload))
-          } else {
-            dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect)
-          }
-        })
+    onSave: (payload, deletedSteps) => {
+      if(payload.uuid) {
+        dispatch(Actions.Api.wyatt.template.put(payload.uuid, payload))
+      } else {
+        dispatch(Actions.Api.wyatt.template.post(payload))
       }
 
-      if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.template.put(payload.uuid, payload)).then(redirect)
-      } else {
-        dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect)
-      }
+      const deletePromises = _.map(deletedSteps, uuid => {
+        return dispatch(Actions.Api.wyatt["process-step"].delete(uuid))
+      })
+      Promise.all(deletePromises).then(redirect)
     },
     onDelete: uuid => {
       if(uuid) {
@@ -79,19 +80,49 @@ function mapDispatchToProps(dispatch) {
         }
         dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect);
       });
-    }
+    },
+    submitStep: payload => {
+      if(payload.uuid) {
+        return dispatch(Actions.Api.wyatt["process-step"].put(payload.uuid, payload))
+      } else {
+        return dispatch(Actions.Api.wyatt["process-step"].post(payload))
+      }
+    },
+    deleteStep: uuid => {
+      return dispatch(Actions.Api.wyatt["process-step"].delete(uuid))
+    },
+    onUnmount: () => {
+      //get rid of pesky lingering errors
+      dispatch(Actions.UI.clearUIState([
+        "wyatt.location",
+      ]))
+    },
   }
 }
 
 function mapStateToProps(state, props) {
-  const templateResource = Selectors.getRouteResource(state, props)
+  const template = Selectors.getRouteResource(state, props)
+
+  const processTypes = _.concat(
+    Selectors.getPrinterTypes(state),
+    Selectors.getPostProcessorTypes(state),
+    Selectors.getShippings(state),
+  )
+
+  const fetching =
+    state.ui.wyatt["process-step"].list.fetching ||
+    state.ui.wyatt.template.list.fetching
+
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
+    template        : template,
     bureau          : Selectors.getBureau(state),
     initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.template"),
     apiErrors       : Selectors.getResourceErrors(state, "wyatt.template"),
-    steps           : Selectors.getStepsForTemplate(state, templateResource)
+    steps           : Selectors.getStepsForTemplate(state, template),
+    processTypes    : processTypes,
+    fetching,
   }
 }
 

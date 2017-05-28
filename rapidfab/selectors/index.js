@@ -230,7 +230,7 @@ export const getStepsForTemplate = createSelector(
   (template, uuids, resources) => {
     const steps = _.reduce(uuids, (results, uuid) => {
       const step = resources[uuid];
-      if(step && template && step.template == template.uri) {
+      if(step && template && step.template && template.uri && step.template == template.uri) {
         results.push(step);
       }
       return results;
