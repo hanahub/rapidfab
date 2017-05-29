@@ -4,7 +4,7 @@ import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
 import RunsComponent                    from 'rapidfab/components/records/run/edit'
 import { reduxForm }                    from 'redux-form'
-import * as Selectors                     from 'rapidfab/selectors'
+import * as Selectors                   from 'rapidfab/selectors'
 import Moment                           from 'moment'
 
 const fields = [
@@ -23,10 +23,14 @@ const fields = [
   'estimates.time.post_processing',
   'id',
   'model',
+  'notes',
   'post_processor',
   'printer',
   'printer_type',
   'status',
+  'success',
+  'tracking_number',
+  'upload',
   'uri',
   'uuid'
 ]
@@ -56,7 +60,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.printer.list())
     },
     onSubmit: payload => {
-      dispatch(Actions.Api.wyatt.run.put(payload.uuid, {status: payload.status})).then(
+      dispatch(Actions.Api.wyatt.run.put(payload.uuid, {
+        notes: payload.notes,
+        status: payload.status,
+        success: payload.success === 'success' // html radio inputs do not support boolean
+      })).then(
         () => window.location.hash = "#/plan/runs"
       )
     },

@@ -93,6 +93,7 @@ const OrderContainer = (props) => (
           shippings={props.shippings}
           postProcessorTypes={props.postProcessorTypes}
           statusOptions={props.statusOptions}
+          templates={props.templates}
         />
       </BS.Col>
     </BS.Row>

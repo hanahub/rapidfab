@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch, props) {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt.shipping.list())
-      dispatch(Actions.Api.wyatt['post-processor-type'].list())
+      dispatch(Actions.Api.wyatt.template.list())
     },
     onSaveOrder: payload => {
       if(payload) {
@@ -85,13 +85,13 @@ function mapStateToProps(state, props) {
     material.list.fetching ||
     order.post.fetching ||
     state.ui.wyatt['third-party'].list.fetching ||
-    state.ui.wyatt['post-processor-type'].list.fetching
+    state.ui.wyatt.template.list.fetching
 
   const errors = _.concat(
     material.list.errors || [],
     order.post.errors || [],
     state.ui.wyatt['third-party'].list.errors || [],
-    state.ui.wyatt['post-processor-type'].list.errors || [],
+    state.ui.wyatt.template.list.errors || [],
     state.uploadModel.errors || [],
   )
 
@@ -102,12 +102,12 @@ function mapStateToProps(state, props) {
     bureau             : Selectors.getBureau(state),
     combinedErrors     : errors,
     materials          : Selectors.getMaterials(state),
+    model              : processingModel,
     providers          : Selectors.getThirdPartyProviders(state),
     shippings          : Selectors.getShippings(state),
-    postProcessorTypes : Selectors.getPostProcessorTypes(state),
+    templates          : Selectors.getTemplates(state),
     fetching,
     uploadModel,
-    model: processingModel,
   }
 }
 

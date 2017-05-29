@@ -26,25 +26,24 @@ class NewOrderForm extends Component {
     const state = this.state
 
     const payload = {
-      name: state.name,
-      model: ReactDOM.findDOMNode(this.refs.file).files,
-      quantity: _.parseInt(state.quantity),
+      bureau: this.props.bureau.uri,
+      currency: state.currency,
       materials: {
         base: state.baseMaterial,
         support: state.supportMaterial,
       },
+      model: ReactDOM.findDOMNode(this.refs.file).files,
+      name: state.name,
+      quantity: _.parseInt(state.quantity),
       shipping: {
         name: state.shippingName,
         address: state.shippingAddress,
         tracking: state.shippingTracking,
         uri: state.shippingType,
       },
+      template: state.template,
       third_party_provider: state.thirdPartyProvider,
-      post_processor_type: state.postProcessorType,
-      currency: state.currency,
-      bureau: this.props.bureau.uri,
     }
-
     this.props.onSubmit(payload)
   }
 
@@ -53,6 +52,10 @@ class NewOrderForm extends Component {
   }
 
   render() {
+    const { materials, shippings, providers, templates } = this.props;
+    const baseMaterials = _.filter(materials, {type: "base"});
+    const supportMaterials = _.filter(materials, {type: "support"});
+
     return(
       <form onSubmit={this.onSubmit}>
         <BS.Row>
@@ -63,7 +66,7 @@ class NewOrderForm extends Component {
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.Button id="uxSave" type="submit" bsStyle="success" bsSize="small" pullRight>
+              <BS.Button id="uxSave" type="submit" bsStyle="success" bsSize="small">
                 <SaveButtonTitle />
               </BS.Button>
             </BS.ButtonToolbar>
@@ -93,22 +96,24 @@ class NewOrderForm extends Component {
               <BS.ControlLabel><FormattedMessage id="field.baseMaterials" defaultMessage='Base Materials'/>:</BS.ControlLabel>
               <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
                 <option key="placeholder" value="" selected disabled>Select a Base Material</option>
-                {_.map(_.filter(this.props.materials, {type: "base"}), material => (
+                {_.map(baseMaterials, material => (
                   <option key={material.uri} value={material.uri}>{material.name}</option>
                 ))}
               </BS.FormControl>
             </BS.FormGroup>
-
-            <BS.FormGroup controlId="uxSupportMaterials">
-              <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" onChange={this.handleChange} name="supportMaterial">
-                <option key="placeholder" value="" selected>No Support</option>
-                {_.map(_.filter(this.props.materials, {type: "support"}), material => (
-                  <option key={material.uri} value={material.uri}>{material.name}</option>
-                ))}
-              </BS.FormControl>
-            </BS.FormGroup>
-
+            {
+              supportMaterials.length > 0 ?
+              <BS.FormGroup controlId="uxSupportMaterials">
+                <BS.ControlLabel><FormattedMessage id="field.supportMaterials" defaultMessage='Support Materials'/>:</BS.ControlLabel>
+                <BS.FormControl componentClass="select" onChange={this.handleChange} name="supportMaterial">
+                  <option key="placeholder" value="" selected>No Support</option>
+                  {_.map(supportMaterials, material => (
+                    <option key={material.uri} value={material.uri}>{material.name}</option>
+                  ))}
+                </BS.FormControl>
+              </BS.FormGroup>
+              : null
+            }
             <BS.FormGroup controlId="uxShippingName">
               <BS.ControlLabel><FormattedMessage id="field.shippingName" defaultMessage='Shipping Name'/>:</BS.ControlLabel>
               <BS.FormControl type="text" onChange={this.handleChange} name="shippingName"/>
@@ -128,42 +133,43 @@ class NewOrderForm extends Component {
               <BS.ControlLabel><FormattedMessage id="field.shippingType" defaultMessage='Shipping Type'/>:</BS.ControlLabel>
               <BS.FormControl componentClass="select" required onChange={this.handleChange} name="shippingType">
                 <option key="placeholder" value="" selected disabled>Select a shipping type</option>
-                {_.map(this.props.shippings, shipping => (
+                {_.map(shippings, shipping => (
                   <option key={shipping.uri} value={shipping.uri}>{shipping.name}</option>
                 ))}
               </BS.FormControl>
             </BS.FormGroup>
-
-            <BS.FormGroup controlId="uxThirdPartyProvider">
-              <BS.ControlLabel><FormattedMessage id="field.thirdPartyProvider" defaultMessage='Third Party Provider'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" onChange={this.handleChange} name="thirdPartyProvider">
-                <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
-                {_.map(this.props.providers, provider => (
-                  <option key={provider.uri} value={provider.uri}>{provider.name}</option>
-                ))}
-              </BS.FormControl>
-            </BS.FormGroup>
-
-            <BS.FormGroup controlId="uxPostProcessorType">
-              <BS.ControlLabel><FormattedMessage id="field.postProcessorType" defaultMessage='Post Processor Type'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" onChange={this.handleChange} name="postProcessorType">
-                <option key="placeholder" value="" selected>Select a Post Processor Type</option>
-                {_.map(this.props.postProcessorTypes, pp_type => (
-                  <option key={pp_type.uri} value={pp_type.uri}>{pp_type.name}</option>
+            {
+              providers.length > 0 ?
+              <BS.FormGroup controlId="uxThirdPartyProvider">
+                <BS.ControlLabel><FormattedMessage id="field.thirdPartyProvider" defaultMessage='Third Party Provider'/>:</BS.ControlLabel>
+                <BS.FormControl componentClass="select" onChange={this.handleChange} name="thirdPartyProvider">
+                  <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
+                  {_.map(providers, provider => (
+                    <option key={provider.uri} value={provider.uri}>{provider.name}</option>
+                  ))}
+                </BS.FormControl>
+              </BS.FormGroup>
+              : null
+            }
+            <BS.FormGroup controlId="uxTemplate">
+              <BS.ControlLabel><FormattedMessage id="field.template" defaultMessage='Template'/>:</BS.ControlLabel>
+              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="template">
+                <option key="placeholder" value="" selected disabled>Select a Template</option>
+                {_.map(templates, template => (
+                  <option key={template.uri} value={template.uri}>{template.name}</option>
                 ))}
               </BS.FormControl>
             </BS.FormGroup>
 
             <BS.FormGroup controlId="uxCurrency">
               <BS.ControlLabel><FormattedMessage id="field.currency" defaultMessage='Currency'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="currency">
+              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="currency" placeholder="Select a Currency">
                 <option key="placeholder" value="" selected disabled>Select a Currency</option>
                 {_.map(Currencies, currency => (
                   <option key={currency} value={currency}>{currency}</option>
                 ))}
               </BS.FormControl>
             </BS.FormGroup>
-
           </BS.Col>
         </BS.Row>
       </form>

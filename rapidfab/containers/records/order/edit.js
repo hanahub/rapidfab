@@ -2,11 +2,12 @@ import React, { Component, PropTypes }    from "react"
 import { connect }                        from 'react-redux'
 import _                                  from "lodash"
 import Actions                            from "rapidfab/actions"
-import OrderComponent                     from 'rapidfab/components/records/order/edit'
 import { reduxForm }                      from 'redux-form'
 import Config                             from 'rapidfab/config'
 import * as Selectors                     from 'rapidfab/selectors'
 import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
+
+import OrderComponent                     from 'rapidfab/components/records/order/edit'
 
 const fields = [
   'id',
@@ -28,6 +29,7 @@ const fields = [
   'shipping.uri',
   'third_party_provider',
   'post_processor_type',
+  'template',
   'quantity',
   'created',
   'currency',
@@ -63,6 +65,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.run.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
+      dispatch(Actions.Api.wyatt.template.list())
       dispatch(Actions.Api.wyatt.shipping.list())
     },
     onSubmit: payload => {
@@ -142,6 +145,7 @@ function mapStateToProps(state, props) {
     shippings         : Selectors.getShippings(state),
     runs,
     snapshot,
+    templates         : Selectors.getTemplates(state),
     uuid              : Selectors.getRoute(state, props).uuid,
     statusOptions,
   }
