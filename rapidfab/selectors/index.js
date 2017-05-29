@@ -235,7 +235,7 @@ export const getStepsForTemplate = createSelector(
       }
       return results;
     }, []);
-    return steps;
+    return _.sortBy(steps, ["step_position"], ["desc"]);
   }
 );
 
