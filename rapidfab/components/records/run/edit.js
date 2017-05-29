@@ -138,7 +138,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
 
       <BS.Row>
 
-        <BS.Col xs={4}>
+        <BS.Col xs={12} sm={4}>
           <BS.Panel bsStyle="info">
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedStartTime" defaultMessage='Estimated Start Time'/>}>
@@ -231,7 +231,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
 
         </BS.Col>
 
-        <BS.Col xs={8}>
+        <BS.Col xs={12} sm={8}>
           <FormRow id="field.id" defaultMessage="ID">
             <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
           </FormRow>
@@ -262,6 +262,37 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           <FormRow id="field.postProcessor" defaultMessage="Post-Processor">
             <LinkField uri={fields.post_processor.value} endpoint="post-processor" resources={postProcessors} />
           </FormRow>
+
+          <BS.Panel header={<FormattedMessage id="field.record" defaultMessage="Record"/>}>
+            <BS.Row>
+              <BS.Col xs={10} xsOffset={1} md={8} lg={6}>
+                {/* Upload Document pending backend implementation: 
+                  <BS.FormGroup controlId="uxUploadDocument">
+                    <BS.ControlLabel><FormattedMessage id={"field.uploadDocument"} defaultMessage={"Upload Document"}/>:</BS.ControlLabel>
+                    <BS.FormControl type="file" name="file"/>
+                  </BS.FormGroup>
+                */}
+                <BS.FormGroup controlId="uxNotes">
+                  <BS.ControlLabel><FormattedMessage id={"field.notes"} defaultMessage={"Notes"}/>:</BS.ControlLabel>
+                  <BS.FormControl componentClass="textarea" name="notes" {...fields.notes}/>
+                </BS.FormGroup>
+                <BS.FormGroup>
+                  <BS.Radio
+                    inline {...fields.success}
+                    value="success"
+                    checked={fields.success.value === 'success' || fields.success.value === true}>
+                    <FormattedMessage id={"field.success"} defaultMessage={"Success"}/>
+                  </BS.Radio>
+                  <BS.Radio
+                    inline {...fields.success}
+                    value="fail"
+                    checked={fields.success.value === 'fail' || fields.success.value === false}>
+                    <FormattedMessage id={"field.fail"} defaultMessage={"Fail"}/>
+                  </BS.Radio>
+                </BS.FormGroup>
+              </BS.Col>
+            </BS.Row>
+          </BS.Panel>
 
           <BS.Panel header={<FormattedMessage id="field.prints" defaultMessage="Prints"/>}>
             <Grid

@@ -22,11 +22,7 @@ import Runs                         from 'rapidfab/containers/plan/runs'
 import Queues                       from 'rapidfab/containers/work/queues'
 
 import OrderEdit                    from 'rapidfab/containers/records/order/edit'
-import TempOrderEdit                from 'rapidfab/containers/records/order/tempedit'
-
 import OrderNew                     from 'rapidfab/containers/records/order/new'
-import TempOrderNew                 from 'rapidfab/containers/records/order/tempnew'
-
 import Location                     from 'rapidfab/containers/records/location'
 import ThirdPartyProvider           from 'rapidfab/containers/records/thirdPartyProvider'
 import Manufacturer                 from 'rapidfab/containers/records/manufacturer'
@@ -40,10 +36,7 @@ import PostProcessorType            from 'rapidfab/containers/records/postProces
 import Stock                        from 'rapidfab/containers/records/stock'
 import Template                     from 'rapidfab/containers/records/template'
 import User                         from 'rapidfab/containers/records/user'
-
 import RunEdit                      from 'rapidfab/containers/records/run/edit'
-import TempRunEdit                  from 'rapidfab/containers/records/run/tempedit'
-
 import RunNew                       from 'rapidfab/containers/records/run/new'
 
 import Styles                       from 'rapidfab/containers/styles'
@@ -74,11 +67,7 @@ const Routes = {
   "/work/queues"                         : Queues,
 
   "/records/order"                       : OrderNew,
-  "/records/temporder"                   : TempOrderNew,
-
   "/records/order/:uuid"                 : OrderEdit,
-  "/records/temporder/:uuid"             : TempOrderEdit,
-
   "/records/location"                    : Location,
   "/records/location/:uuid"              : Location,
   "/records/third-party-provider"        : ThirdPartyProvider,
@@ -104,10 +93,7 @@ const Routes = {
   "/records/user"                        : User,
   "/records/user/:uuid"                  : User,
   "/records/run"                         : RunNew,
-
   "/records/run/:uuid"                   : RunEdit,
-  "/records/temprun/:uuid"               : TempRunEdit,
-
   "/records/template/"                   : Template,
   "/records/template/:uuid"              : Template,
 }
