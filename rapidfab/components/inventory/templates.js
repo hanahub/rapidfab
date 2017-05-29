@@ -44,7 +44,7 @@ const Templates = ({ templates, fetching, apiErrors }) => (
             <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/templates">
-            <Fa name='truck'/> <FormattedMessage id="record.template" defaultMessage='Templates'/>
+            <Fa name='list-ol'/> <FormattedMessage id="record.template" defaultMessage='Templates'/>
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>

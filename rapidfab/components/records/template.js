@@ -290,10 +290,10 @@ class Template extends Component {
                 <Fa name='list'/> <FormattedMessage id="inventory" defaultMessage='Inventory'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/inventory/templates">
-                <Fa name='object-group'/> <FormattedMessage id="inventory.templates" defaultMessage='Templates'/>
+                <Fa name='list-ol'/> <FormattedMessage id="inventory.templates" defaultMessage='Templates'/>
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item>
-                <Fa name='object-group'/> {this.props.fields.id.value || <FormattedMessage id="record.template.new" defaultMessage='New Template'/>}
+                <Fa name='list-ol'/> {this.props.fields.id.value || <FormattedMessage id="record.template.new" defaultMessage='New Template'/>}
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
