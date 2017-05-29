@@ -47,16 +47,18 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSave: (payload, deletedSteps) => {
+      let templatePromise = null
       if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.template.put(payload.uuid, payload))
+        templatePromise = dispatch(Actions.Api.wyatt.template.put(payload.uuid, payload))
       } else {
-        dispatch(Actions.Api.wyatt.template.post(payload))
+        templatePromise = dispatch(Actions.Api.wyatt.template.post(payload))
       }
-
-      const deletePromises = _.map(deletedSteps, uuid => {
-        return dispatch(Actions.Api.wyatt["process-step"].delete(uuid))
+      Promise.all([templatePromise]).then(() => {
+        const deletePromises = _.map(deletedSteps, uuid => {
+          return dispatch(Actions.Api.wyatt["process-step"].delete(uuid))
+        })
+        Promise.all(deletePromises).then(redirect)
       })
-      Promise.all(deletePromises).then(redirect)
     },
     onDelete: uuid => {
       if(uuid) {
@@ -87,9 +89,6 @@ function mapDispatchToProps(dispatch) {
       } else {
         return dispatch(Actions.Api.wyatt["process-step"].post(payload))
       }
-    },
-    deleteStep: uuid => {
-      return dispatch(Actions.Api.wyatt["process-step"].delete(uuid))
     },
     onUnmount: () => {
       //get rid of pesky lingering errors
