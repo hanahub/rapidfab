@@ -50,6 +50,7 @@ function mapDispatchToProps(dispatch) {
           }))
         }
       })
+      dispatch(Actions.Api.wyatt["process-step"].list())
       dispatch(Actions.Api.wyatt['printer-type'].list())
       dispatch(Actions.Api.wyatt.printer.list())
       dispatch(Actions.Api.wyatt.material.list())
@@ -84,6 +85,7 @@ function mapStateToProps(state) {
     printer,
     run
   } = state.ui.wyatt
+  const processStep = state.ui.wyatt["process-step"]
 
   const {
     model
@@ -101,7 +103,8 @@ function mapStateToProps(state) {
     model.list.fetching ||
     modeler.list.fetching ||
     run.post.fetching ||
-    printerType.list.fetching
+    printerType.list.fetching ||
+    processStep.list.fetching
 
   const apiErrors = _.concat(
     order.list.errors,
@@ -112,12 +115,27 @@ function mapStateToProps(state) {
     run.post.errors,
     model.list.errors,
     modeler.list.errors,
-    printerType.list.errors
+    printerType.list.errors,
+    processStep.list.errors,
   )
 
   const orders = Selectors.getOrdersForRunNew(state)
   const prints = _.flatMap(orders, 'prints')
-  const pager = getPager(state, prints)
+  const processSteps = Selectors.getProcessSteps(state)
+  const printerTypes = Selectors.getPrinterTypes(state)
+
+  const printablePrints = _.filter(prints, print => {
+    if(!print.process_step) {
+      return
+    }
+    const step = _.find(processSteps, step => (print.process_step == step.uri))
+
+    if(_.find(printerTypes, type => (type.uri == step.process_type_uri))) {
+      return print
+    }
+  })
+
+  const pager = getPager(state, printablePrints)
   const printers = Selectors.getPrintersForRunNew(state)
   const modelers = Selectors.getModelers(state)
 
@@ -130,7 +148,7 @@ function mapStateToProps(state) {
     orders,
     pager,
     printers,
-    prints      : prints.splice(page * printsPerPage, printsPerPage),
+    prints      : printablePrints.splice(page * printsPerPage, printsPerPage),
     modelers,
   }
 }
