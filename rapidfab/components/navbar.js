@@ -87,26 +87,29 @@ class Navbar extends Component {
               <BS.MenuItem eventKey={3.6} href="#/inventory/post-processor-types">
                 <Fa name='object-group'/> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage='Post processor Types'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.7} href="#/inventory/third-party-provider" style={{ display: "none" }}>
+              <BS.MenuItem eventKey={3.7} href="#/inventory/templates">
+                <Fa name='list-ol'/> <FormattedMessage id="inventory.templates" defaultMessage='Templates'/>
+              </BS.MenuItem>
+              <BS.MenuItem eventKey={3.8} href="#/inventory/third-party-provider" style={{ display: "none" }}>
                 <Fa name='building'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
               </BS.MenuItem>
               <BS.MenuItem divider />
-              <BS.MenuItem eventKey={3.8} href="#/inventory/manufacturers">
+              <BS.MenuItem eventKey={3.9} href="#/inventory/manufacturers">
                 <Fa name='industry'/> <FormattedMessage id="inventory.manufacturers" defaultMessage='Manufacturers'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.9} href="#/inventory/locations">
+              <BS.MenuItem eventKey={3.10} href="#/inventory/locations">
                 <Fa name='map-marker'/> <FormattedMessage id="inventory.locations" defaultMessage='Locations'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.10} href="#/inventory/third-party-providers">
+              <BS.MenuItem eventKey={3.11} href="#/inventory/third-party-providers">
                 <Fa name='map-marker'/> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage='Third Party Providers'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.11} href="#/inventory/users">
+              <BS.MenuItem eventKey={3.12} href="#/inventory/users">
                 <Fa name='users'/> <FormattedMessage id="inventory.users" defaultMessage='Users'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.12} href="#/inventory/shipping">
+              <BS.MenuItem eventKey={3.13} href="#/inventory/shipping">
                 <Fa name='truck'/> <FormattedMessage id="work.shipping" defaultMessage='Shipping'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.13} href="#/inventory/conversions">
+              <BS.MenuItem eventKey={3.14} href="#/inventory/conversions">
                 <Fa name='exchange'/> <FormattedMessage id="inventory.currencies" defaultMessage='Currencies'/>
               </BS.MenuItem>
             </BS.NavDropdown>
