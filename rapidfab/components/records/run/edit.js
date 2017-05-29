@@ -68,7 +68,7 @@ const LinkField = ({ uri, resources, endpoint}) => {
 
   if(record && record.name) {
     const uuid = uri.substr(uri.length - 37, 36);
-    const fullLocation = location + uuid
+    const fullLocation = `${location.origin}/#/records/${endpoint}/${uuid}`
     return(<BS.FormControl.Static><a href={fullLocation}>{record.name}</a></BS.FormControl.Static>)
   }
   return(<Fa name="spinner" spin/>)
@@ -266,7 +266,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           <BS.Panel header={<FormattedMessage id="field.record" defaultMessage="Record"/>}>
             <BS.Row>
               <BS.Col xs={10} xsOffset={1} md={8} lg={6}>
-                {/* Upload Document pending backend implementation: 
+                {/* Upload Document pending backend implementation:
                   <BS.FormGroup controlId="uxUploadDocument">
                     <BS.ControlLabel><FormattedMessage id={"field.uploadDocument"} defaultMessage={"Upload Document"}/>:</BS.ControlLabel>
                     <BS.FormControl type="file" name="file"/>
