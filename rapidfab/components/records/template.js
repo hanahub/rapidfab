@@ -173,84 +173,81 @@ class Template extends Component {
       haveReceivedProps: false,
       showStepForm: false,
       showOverwriteWarning: false,
+      showDeleteWarning: false,
     }
 
-    this.closeOverwriteWarning = this.closeOverwriteWarning.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.shouldOpenOverwriteWarning = this.shouldOpenOverwriteWarning.bind(this);
-    this.openOverwriteWarning = this.openOverwriteWarning.bind(this);
-    this.closeStepForm = this.closeStepForm.bind(this);
-    this.openStepForm = this.openStepForm.bind(this);
-    this.addStep = this.addStep.bind(this);
+    this.onSave = this.onSave.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDuplicate = this.onDuplicate.bind(this);
-    this.onSave = this.onSave.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.addStep = this.addStep.bind(this);
   }
 
-  closeOverwriteWarning() {
-    this.setState({ showOverwriteWarning: false });
+  componentDidUpdate(prevProps, prevState) {
+    if(!this.state.haveReceivedProps && !this.props.fetching) {
+      const template = this.props.template || {}
+      this.setState({
+        template: template,
+        steps: this.props.steps,
+        haveReceivedProps: true,
+      })
+    }
+  }
+
+  handleChange(event) {
+    let { template } = this.state;
+    const { name, value } = event.target;
+    template[name] = value;
+    this.setState({ template });
+  }
+
+
+  openModal(modalState, stepIndex) {
+    if (typeof(stepIndex) === "number") {
+      this.setState({
+        [modalState]: true,
+        alteredStepIndex: stepIndex,
+      });
+    } else {
+      this.setState({ [modalState]: true });
+    }
+  }
+
+  closeModal(modalState) {
+    if (this.state.alteredStepIndex !== null) {
+      this.setState({
+        [modalState]: false,
+        alteredStepIndex: null,
+      })
+    } else {
+      this.setState({ [modalState]: false });
+    }
   }
 
   shouldOpenOverwriteWarning() {
-    const { name, uuid } = this.props.fields;
+    const { name: initialName, uuid: isExistingTemplate } = this.props.values;
     const { steps } = this.state;
-
-    const hasNewName = name.initialValue !== name.value;
+    const { name: currentName } = this.state.template;
+    const hasNewName = initialName !== currentName;
     const hasNewSteps = !_.isEqual(steps, this.props.steps);
-    const isExistingTemplate = uuid.value;
-
     return (hasNewName || hasNewSteps) && isExistingTemplate;
   }
 
-  openOverwriteWarning() {
-    this.setState({ showOverwriteWarning: true });
-  }
-
-  closeStepForm() {
-    this.setState({
-      showStepForm: false,
-      alteredStepIndex: null,
-    })
-  }
-
-  openStepForm(index) {
-    this.setState({
-      showStepForm: true,
-      alteredStepIndex: index,
-    });
-  }
-
-  onDelete() {
-    this.props.onDelete(this.props.route.uuid)
-  }
-
-  onDuplicate() {
-    if (this.state.showOverwriteWarning)
-      this.closeOverwriteWarning();
-
-    const { value: name, initialValue: initialName } = this.props.fields.name;
-    const duplicateName = name === initialName ? name + " copy" : name;
-
-    const templateCopy = {
-      bureau: this.props.bureau.uri,
-      name: duplicateName,
-      steps: this.state.steps,
-    }
-    this.props.onDuplicate(templateCopy);
-  }
-
   onSave(event) {
-    event.preventDefault()
-
+    event.preventDefault();
     if (this.shouldOpenOverwriteWarning())
-      this.openOverwriteWarning();
+      this.openModal('showOverwriteWarning');
     else
       this.onSubmit();
   }
 
   onSubmit() {
     if (this.state.showOverwriteWarning)
-      this.closeOverwriteWarning();
+      this.closeModal('showOverwiteWarning');
 
     let steps = _.clone(this.state.steps)
 
@@ -291,8 +288,46 @@ class Template extends Component {
 
       this.props.onSave(payload, deletedSteps);
     })
+  }
 
+  onDuplicate() {
+    if (this.state.showOverwriteWarning)
+    this.closeModal('showOverwriteWarning');
 
+    const { value: name, initialValue: initialName } = this.props.fields.name;
+    const duplicateName = name === initialName ? name + " copy" : name;
+
+    const templateCopy = {
+      bureau: this.props.bureau.uri,
+      name: duplicateName,
+      steps: this.state.steps,
+    }
+    this.props.onDuplicate(templateCopy);
+  }
+
+  onDelete() {
+    this.props.onDelete(this.props.route.uuid)
+  }
+
+  addStep(payload) {
+
+    const index = this.state.alteredStepIndex
+    let steps = _.cloneDeep(this.state.steps)
+    this.closeModal('showStepForm');
+
+    if(index == null) {
+      steps.push(payload)
+    } else {
+      const step = steps[index]
+      if(step.uri)
+        payload.uri = step.uri
+      if(step.uuid)
+        payload.uuid = step.uuid
+
+      steps[index] = payload
+    }
+
+    this.setState({steps: steps})
   }
 
   moveRow(index, direction) {
@@ -322,45 +357,6 @@ class Template extends Component {
     this.setState({steps: steps})
   }
 
-  addStep(payload) {
-
-    const index = this.state.alteredStepIndex
-    let steps = _.cloneDeep(this.state.steps)
-    this.closeStepForm();
-
-    if(index == null) {
-      steps.push(payload)
-    } else {
-      const step = steps[index]
-      if(step.uri)
-        payload.uri = step.uri
-      if(step.uuid)
-        payload.uuid = step.uuid
-
-      steps[index] = payload
-    }
-
-    this.setState({steps: steps})
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(!this.state.haveReceivedProps && !this.props.fetching) {
-      const template = this.props.template || {}
-      this.setState({
-        template: template,
-        steps: this.props.steps,
-        haveReceivedProps: true,
-      })
-    }
-  }
-
-  handleChange(event) {
-    let template = this.state.template
-
-    template[event.target.name] = event.target.value
-    this.setState({ template: template })
-  }
-
   render() {
     const Arrows = ({ index }) => {
       return(
@@ -381,12 +377,12 @@ class Template extends Component {
           <td><Arrows index={index} /></td>
           <td>{_.find(this.props.processTypes, {uri: step.process_type_uri}).name}</td>
           <td style={styles.centerIcons}>
-            <div onClick={()=>{this.openStepForm(index)}}>
+            <div onClick={ () => this.openModal('showStepForm', index) }>
               <Fa name='edit'/>
             </div>
           </td>
           <td style={styles.centerIcons}>
-            <div onClick={()=>{this.deleteStep(index)}}>
+            <div onClick={ () => this.deleteStep(index) }>
               <Fa name='times'/>
             </div>
           </td>
@@ -396,6 +392,8 @@ class Template extends Component {
       return(<tbody>{rows}</tbody>)
     }
 
+    const { template, steps, alteredStepIndex, showStepForm, showOverwriteWarning, showDeleteWarning } = this.state;
+    const { values, processTypes, apiErrors } = this.props;
 
     return(
       <BS.Grid fluid>
@@ -425,7 +423,7 @@ class Template extends Component {
             <BS.Col xs={6}>
               <BS.ButtonToolbar className="pull-right">
                 <BS.SplitButton type="submit" id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-                  <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
+                  <BS.MenuItem eventKey={1} onClick={() => this.openModal('showDeleteWarning')} disabled={!this.props.fields.id.value}>
                     <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                   </BS.MenuItem>
                   <BS.MenuItem eventKey={2} onClick={() => this.onDuplicate()} disabled={!this.props.fields.id.value}>
@@ -440,18 +438,17 @@ class Template extends Component {
 
           <BS.Row>
             <BS.Col xs={12}>
-              <Error errors={this.props.apiErrors}/>
+              <Error errors={apiErrors}/>
             </BS.Col>
           </BS.Row>
 
           <BS.Row>
             <BS.Col xs={12}>
-
               <BS.Row>
                 <BS.Col xs={12} sm={8} smOffset={2} lg={6} lgOffset={3}>
                   <BS.FormGroup>
                     <BS.ControlLabel>Template Name</BS.ControlLabel>
-                    <BS.FormControl type="text" name="name" required onChange={this.handleChange} value={this.state.template.name}/>
+                    <BS.FormControl type="text" name="name" required onChange={this.handleChange} value={template.name}/>
                   </BS.FormGroup>
                 </BS.Col>
               </BS.Row>
@@ -469,27 +466,32 @@ class Template extends Component {
                     </thead>
                     <Rows />
                   </BS.Table>
-                  <BS.Button bsStyle="success" className="pull-right" onClick={() => {this.openStepForm(null)}}>Add Step</BS.Button>
+                  <BS.Button bsStyle="success" className="pull-right" onClick={() => this.openModal('showStepForm')}>Add Step</BS.Button>
                 </BS.Col>
               </BS.Row>
-
             </BS.Col>
           </BS.Row>
         </form>
 
         <StepFormModal
-          show={this.state.showStepForm}
-          close={this.closeStepForm}
+          show={showStepForm}
+          close={() => this.closeModal('showStepForm')}
           submit={this.addStep}
-          data={this.state.steps[this.state.alteredStepIndex]}
-          processTypes={this.props.processTypes}
+          data={steps[alteredStepIndex]}
+          processTypes={processTypes}
         />
         <OverwriteWarningModal
-          show={this.state.showOverwriteWarning}
-          close={this.closeOverwriteWarning}
+          show={showOverwriteWarning}
+          close={() => this.closeModal('showOverwriteWarning')}
           duplicate={this.onDuplicate}
-          submit={this.onSubmit} />
-
+          submit={this.onSubmit}
+        />
+        <DeleteWarningModal
+          show={showDeleteWarning}
+          close={() => this.closeModal('showDeleteWarning')}
+          name={values.name}
+          submit={this.onDelete}
+        />
       </BS.Grid>
     )
   }
