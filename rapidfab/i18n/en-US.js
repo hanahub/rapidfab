@@ -92,7 +92,7 @@ export default {
   "record.postProcessor.add"          : "Add Post Processor",
   "record.postProcessorType.new"      : "New Post Processor Type",
   "record.postProcessorType.add"      : "Add Post Processor Type",
-  "record.printCompleteCount"         : "Prints - {complete} / {total} complete",
+  "record.printCompleteCount"         : "Process Steps - {complete} / {total} complete",
   "record.printer.add"                : "Add Printer",
   "record.printer.new"                : "New Printer",
   "record.printerType.add"            : "Add Printer Type",

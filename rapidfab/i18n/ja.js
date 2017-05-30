@@ -92,7 +92,7 @@ export default {
   "record.postProcessor.add"          : "ポストプロセッサの追加",
   "record.postProcessorType.new"      : "新規ポストプロセッサタイプ",
   "record.postProcessorType.add"      : "ポストプロセッサタイプの追加",
-  "record.printCompleteCount"         : "印刷 - {complete} / {total} が完了しました",
+  "record.printCompleteCount"         :"Process Steps - {complete} / {total} complete",
   "record.printer.add"                : "プリンターの追加",
   "record.printer.new"                : "New Printer",
   "record.printerType.add"            : "プリンタータイプの追加",
