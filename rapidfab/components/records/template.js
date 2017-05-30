@@ -30,6 +30,139 @@ const SaveButtonTitle = () => (
   </span>
 )
 
+const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
+  <BS.Modal show={show} onHide={close}>
+    <BS.Modal.Header closeButton>
+      <BS.Modal.Title>
+        Saving over an existing template could affect other orders.
+      </BS.Modal.Title>
+    </BS.Modal.Header>
+    <BS.Modal.Body>
+      Do you want to replace the existing template or duplicate a new one?
+    </BS.Modal.Body>
+    <BS.Modal.Footer>
+      <BS.Button onClick={close}>Cancel</BS.Button>
+      <BS.Button onClick={duplicate} bsStyle="primary">Duplicate</BS.Button>
+      <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
+    </BS.Modal.Footer>
+  </BS.Modal>
+)
+
+const DeleteWarningModal = ({ show, close, name, id, submit }) => (
+  <BS.Modal show={show} onHide={close}>
+    <BS.Modal.Header closeButton>
+      { `Are you sure you want to delete ${name}?` }
+    </BS.Modal.Header>
+    <BS.Modal.Footer>
+      <BS.Button onClick={close}>Cancel</BS.Button>
+      <BS.Button onClick={() => submit(id)} bsStyle="danger">Delete</BS.Button>
+    </BS.Modal.Footer>
+  </BS.Modal>
+)
+
+class StepFormModal extends Component {
+  constructor(props) {
+    super(props)
+
+    // The modal gets mounted and unmounted on open and close, thus we populate every time we open
+    const data = props.data || {}
+    this.state = {
+      step: {
+        notes:             "optional",
+        upload:            "optional",
+        success:           "optional",
+        tracking_id:       "hidden",
+        process_type_uri:  "",
+      },
+      stepReset: false,
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if(nextProps.show && !nextState.stepReset) {
+      const data = nextProps.data || {}
+      const stepInfo = {
+          notes:             data.notes || "optional",
+          upload:            data.upload || "optional",
+          success:           data.success || "optional",
+          tracking_id:       data.tracking_id || "hidden",
+          process_type_uri:  data.process_type_uri || "",
+      }
+      this.setState({step: stepInfo, stepReset: true})
+    } else if(!nextProps.show && nextState.stepReset) {
+      this.setState({stepReset: false})
+    }
+  }
+
+  handleChange(event) {
+    let { step } = this.state;
+    const { name, value } = event.target;
+    step[name] = value;
+    this.setState({ step });
+  }
+
+  onSubmit(event) {
+    event.preventDefault()
+    this.props.submit(this.state.step)
+  }
+
+  render() {
+    const { show, close, processTypes, data } = this.props;
+    const { step } = this.state;
+    return(
+      <BS.Modal show={show} onHide={close}>
+        <form onSubmit={this.onSubmit}>
+          <BS.Modal.Header closeButton>
+            <BS.Modal.Title>Step Form</BS.Modal.Title>
+          </BS.Modal.Header>
+          <BS.Modal.Body>
+              <BS.FormGroup controlId="formControlsSelect">
+                <BS.ControlLabel>Process Type</BS.ControlLabel>
+                <BS.FormControl componentClass="select" name="process_type_uri" onChange={this.handleChange} value={step.process_type_uri} required>
+                  <option value="" selected disabled>Select a Process Step</option>
+                  {processTypes.map( processType => (
+                    <option value={processType.uri} key={processType.uri}>{processType.name}</option>
+                  ))}
+                </BS.FormControl>
+              </BS.FormGroup>
+              <BS.FormGroup className="clearfix" name="notes">
+                <BS.ControlLabel className="pull-left">Notes</BS.ControlLabel>
+                <div className="pull-right">
+                  <BS.Radio name="notes" onChange={this.handleChange} checked={step.notes == "optional"} value="optional" inline>Optional</BS.Radio>
+                  <BS.Radio name="notes" onChange={this.handleChange} checked={step.notes == "required"} value="required" inline>Required</BS.Radio>
+                  <BS.Radio name="notes" onChange={this.handleChange} checked={step.notes == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
+                </div>
+              </BS.FormGroup>
+              <BS.FormGroup className="clearfix" name="upload">
+                <BS.ControlLabel className="pull-left">Upload</BS.ControlLabel>
+                <div className="pull-right">
+                  <BS.Radio name="upload" onChange={this.handleChange} checked={step.upload == "optional"} value="optional" inline>Optional</BS.Radio>
+                  <BS.Radio name="upload" onChange={this.handleChange} checked={step.upload == "required"} value="required" inline>Required</BS.Radio>
+                  <BS.Radio name="upload" onChange={this.handleChange} checked={step.upload == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
+                </div>
+              </BS.FormGroup>
+              <BS.FormGroup className="clearfix" name="success">
+                <BS.ControlLabel className="pull-left">Success</BS.ControlLabel>
+                <div className="pull-right">
+                  <BS.Radio name="success" onChange={this.handleChange} checked={step.success == "optional"} value="optional" inline>Optional</BS.Radio>
+                  <BS.Radio name="success" onChange={this.handleChange} checked={step.success == "required"} value="required" inline>Required</BS.Radio>
+                  <BS.Radio name="success" onChange={this.handleChange} checked={step.success == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
+                </div>
+              </BS.FormGroup>
+          </BS.Modal.Body>
+          <BS.Modal.Footer>
+            <BS.Button onClick={close}>Cancel</BS.Button>
+            <BS.Button type="submit" bsStyle="success">{data ? "Save" : "Add"}</BS.Button>
+          </BS.Modal.Footer>
+        </form>
+      </BS.Modal>
+    )
+  }
+}
+
 class Template extends Component {
   constructor(props) {
     super(props)
@@ -263,23 +396,6 @@ class Template extends Component {
       return(<tbody>{rows}</tbody>)
     }
 
-    const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
-      <BS.Modal show={show} onHide={close}>
-        <BS.Modal.Header closeButton>
-          <BS.Modal.Title>
-            Saving over an existing template could affect other orders.
-          </BS.Modal.Title>
-        </BS.Modal.Header>
-        <BS.Modal.Body>
-          Do you want to replace the existing template or duplicate a new one?
-        </BS.Modal.Body>
-        <BS.Modal.Footer>
-          <BS.Button onClick={close}>Cancel</BS.Button>
-          <BS.Button onClick={duplicate} bsStyle="primary">Duplicate</BS.Button>
-          <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
-        </BS.Modal.Footer>
-      </BS.Modal>
-    )
 
     return(
       <BS.Grid fluid>
@@ -375,109 +491,6 @@ class Template extends Component {
           submit={this.onSubmit} />
 
       </BS.Grid>
-    )
-  }
-}
-
-class StepFormModal extends Component {
-  constructor(props) {
-    super(props)
-
-    // The modal gets mounted and unmounted on open and close, thus we populate every time we open
-    const data = props.data || {}
-    this.state = {
-      step: {
-        notes:             "optional",
-        upload:            "optional",
-        success:           "optional",
-        tracking_id:       "hidden",
-        process_type_uri:  "",
-      },
-      stepReset: false,
-    }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if(nextProps.show && !nextState.stepReset) {
-      const data = nextProps.data || {}
-      const stepInfo = {
-          notes:             data.notes || "optional",
-          upload:            data.upload || "optional",
-          success:           data.success || "optional",
-          tracking_id:       data.tracking_id || "hidden",
-          process_type_uri:  data.process_type_uri || "",
-      }
-      this.setState({step: stepInfo, stepReset: true})
-    } else if(!nextProps.show && nextState.stepReset) {
-      this.setState({stepReset: false})
-    }
-  }
-
-  handleChange(event) {
-    // we need to pull out the step so we can modify and overwrite, since setstate cant merge objects
-    let step = this.state.step
-    step[event.target.name] = event.target.value
-
-    this.setState({ step: step })
-  }
-
-  onSubmit(event) {
-    event.preventDefault()
-
-    this.props.submit(this.state.step)
-  }
-
-  render() {
-    return(
-      <BS.Modal show={this.props.show} onHide={this.props.close}>
-        <form onSubmit={this.onSubmit}>
-          <BS.Modal.Header closeButton>
-            <BS.Modal.Title>Step Form</BS.Modal.Title>
-          </BS.Modal.Header>
-          <BS.Modal.Body>
-              <BS.FormGroup controlId="formControlsSelect">
-                <BS.ControlLabel>Process Type</BS.ControlLabel>
-                <BS.FormControl componentClass="select" name="process_type_uri" onChange={this.handleChange} value={this.state.step.process_type_uri} required>
-                  <option value="" selected disabled>Select a Process Step</option>
-                  {_.map(this.props.processTypes, processType => (
-                    <option value={processType.uri} key={processType.uri}>{processType.name}</option>
-                  ))}
-                </BS.FormControl>
-              </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="notes">
-                <BS.ControlLabel className="pull-left">Notes</BS.ControlLabel>
-                <div className="pull-right">
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={this.state.step.notes == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={this.state.step.notes == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={this.state.step.notes == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
-                </div>
-              </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="upload">
-                <BS.ControlLabel className="pull-left">Upload</BS.ControlLabel>
-                <div className="pull-right">
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={this.state.step.upload == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={this.state.step.upload == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={this.state.step.upload == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
-                </div>
-              </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="success">
-                <BS.ControlLabel className="pull-left">Success</BS.ControlLabel>
-                <div className="pull-right">
-                  <BS.Radio name="success" onChange={this.handleChange} checked={this.state.step.success == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="success" onChange={this.handleChange} checked={this.state.step.success == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="success" onChange={this.handleChange} checked={this.state.step.success == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
-                </div>
-              </BS.FormGroup>
-          </BS.Modal.Body>
-          <BS.Modal.Footer>
-            <BS.Button onClick={this.props.close}>Cancel</BS.Button>
-            <BS.Button type="submit" bsStyle="success">Add</BS.Button>
-          </BS.Modal.Footer>
-        </form>
-      </BS.Modal>
     )
   }
 }
