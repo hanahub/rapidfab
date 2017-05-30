@@ -10,7 +10,7 @@ const Header = ( prints ) => {
   const complete = (_.reduce(prints, (total, print) => print.status == 'complete' ? total + 1 : total, 0)).toString();
   const total = (!!prints ? prints.length : 0).toString();
   return (
-    <FormattedMessage id="record.printCompleteCount" defaultMessage={`Prints - {complete} / {total} complete`} values={{complete: complete, total: total}}/>
+    <FormattedMessage id="record.printCompleteCount" defaultMessage={`Process Steps - {complete} / {total} complete`} values={{complete: complete, total: total}}/>
   )
 }
 
