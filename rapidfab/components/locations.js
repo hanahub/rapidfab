@@ -7,7 +7,7 @@ import {
 
 const Locations = injectIntl(({ locationFilter, locations, handleOnChange, intl }) => (
   <BS.Form inline>
-    <BS.FormGroup controlID="locations">
+    <BS.FormGroup>
       <BS.ControlLabel><FormattedMessage id="field.location" defaultMessage="Location"/></BS.ControlLabel>
       {' '}
       <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} defaultValue={locationFilter || ""} componentClass="select">
