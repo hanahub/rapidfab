@@ -64,7 +64,7 @@ const DeleteWarningModal = ({ show, close, name, id, submit }) => (
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
       <FormattedMessage
-        id="message.deleteWwarning"
+        id="message.deletePrompt"
         defaultMessage="Are you sure you want to delete"
       />
       { ` ${name}?` }
