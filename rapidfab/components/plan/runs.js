@@ -10,6 +10,7 @@ import Grid, {
   DateTimeColumn,
   MappedColumn,
 } from 'rapidfab/components/grid';
+import Loading from 'rapidfab/components/loading';
 
 const RunsGrid = ({ runs }) => (
   <Grid
@@ -37,12 +38,6 @@ const RunsGrid = ({ runs }) => (
     initialSortAscending={false}
   />
 )
-
-const Loading = () => (
-  <div style={{ textAlign: "center" }}>
-    <Fa name="spinner" spin size='2x' />
-  </div>
-);
 
 const Locations = ({ locationFilter, locations, handleOnChange }) => (
   <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter} componentClass="select">
