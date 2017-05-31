@@ -30,6 +30,237 @@ const SaveButtonTitle = () => (
   </span>
 )
 
+const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
+  <BS.Modal show={show} onHide={close}>
+    <BS.Modal.Header closeButton>
+      <BS.Modal.Title>
+        <FormattedMessage
+          id="message.overwriteWarning"
+          defaultMessage="Saving over an existing template could affect other orders."
+        />
+      </BS.Modal.Title>
+    </BS.Modal.Header>
+    <BS.Modal.Body>
+      <FormattedMessage
+        id="message.overwritePrompt"
+        defaultMessage="Do you want to replace the existing template or duplicate a new one?"
+      />
+    </BS.Modal.Body>
+    <BS.Modal.Footer>
+      <BS.Button onClick={close}>
+        <FormattedMessage id="button.cancel" defaultMessage="Cancel"/>
+      </BS.Button>
+      <BS.Button onClick={duplicate} bsStyle="primary">
+        <FormattedMessage id="button.duplicate" defaultMessage="Duplicate"/>
+      </BS.Button>
+      <BS.Button onClick={submit} bsStyle="success">
+        <FormattedMessage id="button.replace" defaultMessage="Replace"/>
+      </BS.Button>
+    </BS.Modal.Footer>
+  </BS.Modal>
+)
+
+const DeleteWarningModal = ({ show, close, name, id, submit }) => (
+  <BS.Modal show={show} onHide={close}>
+    <BS.Modal.Header closeButton>
+      <FormattedMessage
+        id="message.deletePrompt"
+        defaultMessage="Are you sure you want to delete"
+      />
+      { ` ${name}?` }
+    </BS.Modal.Header>
+    <BS.Modal.Footer>
+      <BS.Button onClick={close}>
+        <FormattedMessage id="button.cancel" defaultMessage="Cancel"/>
+      </BS.Button>
+      <BS.Button onClick={() => submit(id)} bsStyle="danger">
+        <FormattedMessage id="button.delete" defaultMessage="Delete"/>
+      </BS.Button>
+    </BS.Modal.Footer>
+  </BS.Modal>
+)
+
+class StepFormModal extends Component {
+  constructor(props) {
+    super(props)
+
+    // The modal gets mounted and unmounted on open and close, thus we populate every time we open
+    const data = props.data || {}
+    this.state = {
+      step: {
+        notes:             "optional",
+        upload:            "optional",
+        success:           "optional",
+        tracking_id:       "hidden",
+        process_type_uri:  "",
+      },
+      stepReset: false,
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if(nextProps.show && !nextState.stepReset) {
+      const data = nextProps.data || {}
+      const stepInfo = {
+          notes:             data.notes || "optional",
+          upload:            data.upload || "optional",
+          success:           data.success || "optional",
+          tracking_id:       data.tracking_id || "hidden",
+          process_type_uri:  data.process_type_uri || "",
+      }
+      this.setState({step: stepInfo, stepReset: true})
+    } else if(!nextProps.show && nextState.stepReset) {
+      this.setState({stepReset: false})
+    }
+  }
+
+  handleChange(event) {
+    let { step } = this.state;
+    const { name, value } = event.target;
+    step[name] = value;
+    this.setState({ step });
+  }
+
+  onSubmit(event) {
+    event.preventDefault()
+    this.props.submit(this.state.step)
+  }
+
+  render() {
+    const { show, close, processTypes, data } = this.props;
+    const { step } = this.state;
+    return(
+      <BS.Modal show={show} onHide={close}>
+        <form onSubmit={this.onSubmit}>
+          <BS.Modal.Header closeButton/>
+          <BS.Modal.Body>
+              <BS.FormGroup controlId="formControlsSelect">
+                <BS.ControlLabel>
+                  <FormattedMessage id="field.processType" defaultMessage="Process Type"/>
+                </BS.ControlLabel>
+                <BS.FormControl componentClass="select" name="process_type_uri" onChange={this.handleChange} value={step.process_type_uri} required>
+                  <option value="" selected disabled>
+                    Select a Process Step
+                  </option>
+                  {processTypes.map( processType => (
+                    <option value={processType.uri} key={processType.uri}>{processType.name}</option>
+                  ))}
+                </BS.FormControl>
+              </BS.FormGroup>
+              <BS.FormGroup className="clearfix" name="notes">
+                <BS.ControlLabel className="pull-left">
+                  <FormattedMessage id="field.notes" defaultMessage="Notes"/>
+                </BS.ControlLabel>
+                <div className="pull-right">
+                  <BS.Radio
+                    name="notes"
+                    onChange={this.handleChange}
+                    checked={step.notes == "optional"}
+                    value="optional"
+                    inline>
+                    <FormattedMessage id="field.optional" defaultMessage="Optional"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="notes"
+                    onChange={this.handleChange}
+                    checked={step.notes == "required"}
+                    value="required"
+                    inline>
+                    <FormattedMessage id="field.required" defaultMessage="Required"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="notes"
+                    onChange={this.handleChange}
+                    checked={step.notes == "hidden"}
+                    value="hidden"
+                    inline>
+                    <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
+                  </BS.Radio>
+                </div>
+              </BS.FormGroup>
+              <BS.FormGroup className="clearfix" name="upload">
+                <BS.ControlLabel className="pull-left">
+                  <FormattedMessage id="field.upload" defaultMessage="Upload"/>
+                </BS.ControlLabel>
+                <div className="pull-right">
+                  <BS.Radio
+                    name="upload"
+                    onChange={this.handleChange}
+                    checked={step.upload == "optional"}
+                    value="optional"
+                    inline>
+                    <FormattedMessage id="field.optional" defaultMessage="Optional"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="upload"
+                    onChange={this.handleChange}
+                    checked={step.upload == "required"}
+                    value="required"
+                    inline>
+                    <FormattedMessage id="field.required" defaultMessage="Required"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="upload"
+                    onChange={this.handleChange}
+                    checked={step.upload == "hidden"}
+                    value="hidden"
+                    inline>
+                    <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
+                  </BS.Radio>
+                </div>
+              </BS.FormGroup>
+              <BS.FormGroup className="clearfix" name="success">
+                <BS.ControlLabel className="pull-left">
+                  <FormattedMessage id="field.success" defaultMessage="Success"/>
+                </BS.ControlLabel>
+                <div className="pull-right">
+                  <BS.Radio
+                    name="success"
+                    onChange={this.handleChange}
+                    checked={step.success == "optional"}
+                    value="optional"
+                    inline>
+                    <FormattedMessage id="field.optional" defaultMessage="Optional"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="success"
+                    onChange={this.handleChange}
+                    checked={step.success == "required"}
+                    value="required"
+                    inline>
+                    <FormattedMessage id="field.required" defaultMessage="Required"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="success"
+                    onChange={this.handleChange}
+                    checked={step.success == "hidden"}
+                    value="hidden"
+                    inline>
+                    <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
+                  </BS.Radio>
+                </div>
+              </BS.FormGroup>
+          </BS.Modal.Body>
+          <BS.Modal.Footer>
+            <BS.Button onClick={close}>
+              <FormattedMessage id="button.cancel" defaultMessage="Cancel"/>
+            </BS.Button>
+            <BS.Button type="submit" bsStyle="success">
+              {data ?
+                <FormattedMessage id="button.save" defaultMessage="Save"/>
+                : <FormattedMessage id="button.add" defaultMessage="Add"/>
+              }
+            </BS.Button>
+          </BS.Modal.Footer>
+        </form>
+      </BS.Modal>
+    )
+  }
+}
+
 class Template extends Component {
   constructor(props) {
     super(props)
@@ -40,84 +271,81 @@ class Template extends Component {
       haveReceivedProps: false,
       showStepForm: false,
       showOverwriteWarning: false,
+      showDeleteWarning: false,
     }
 
-    this.closeOverwriteWarning = this.closeOverwriteWarning.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.shouldOpenOverwriteWarning = this.shouldOpenOverwriteWarning.bind(this);
-    this.openOverwriteWarning = this.openOverwriteWarning.bind(this);
-    this.closeStepForm = this.closeStepForm.bind(this);
-    this.openStepForm = this.openStepForm.bind(this);
-    this.addStep = this.addStep.bind(this);
+    this.onSave = this.onSave.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDuplicate = this.onDuplicate.bind(this);
-    this.onSave = this.onSave.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+    this.addStep = this.addStep.bind(this);
   }
 
-  closeOverwriteWarning() {
-    this.setState({ showOverwriteWarning: false });
+  componentDidUpdate(prevProps, prevState) {
+    if(!this.state.haveReceivedProps && !this.props.fetching) {
+      const template = this.props.template || {}
+      this.setState({
+        template: template,
+        steps: this.props.steps,
+        haveReceivedProps: true,
+      })
+    }
+  }
+
+  handleChange(event) {
+    let { template } = this.state;
+    const { name, value } = event.target;
+    template[name] = value;
+    this.setState({ template });
+  }
+
+
+  openModal(modalState, stepIndex) {
+    if (typeof(stepIndex) === "number") {
+      this.setState({
+        [modalState]: true,
+        alteredStepIndex: stepIndex,
+      });
+    } else {
+      this.setState({ [modalState]: true });
+    }
+  }
+
+  closeModal(modalState) {
+    if (this.state.alteredStepIndex !== null) {
+      this.setState({
+        [modalState]: false,
+        alteredStepIndex: null,
+      })
+    } else {
+      this.setState({ [modalState]: false });
+    }
   }
 
   shouldOpenOverwriteWarning() {
-    const { name, uuid } = this.props.fields;
+    const { name: initialName, uuid: isExistingTemplate } = this.props.values;
     const { steps } = this.state;
-
-    const hasNewName = name.initialValue !== name.value;
+    const { name: currentName } = this.state.template;
+    const hasNewName = initialName !== currentName;
     const hasNewSteps = !_.isEqual(steps, this.props.steps);
-    const isExistingTemplate = uuid.value;
-
     return (hasNewName || hasNewSteps) && isExistingTemplate;
   }
 
-  openOverwriteWarning() {
-    this.setState({ showOverwriteWarning: true });
-  }
-
-  closeStepForm() {
-    this.setState({
-      showStepForm: false,
-      alteredStepIndex: null,
-    })
-  }
-
-  openStepForm(index) {
-    this.setState({
-      showStepForm: true,
-      alteredStepIndex: index,
-    });
-  }
-
-  onDelete() {
-    this.props.onDelete(this.props.route.uuid)
-  }
-
-  onDuplicate() {
-    if (this.state.showOverwriteWarning)
-      this.closeOverwriteWarning();
-
-    const { value: name, initialValue: initialName } = this.props.fields.name;
-    const duplicateName = name === initialName ? name + " copy" : name;
-
-    const templateCopy = {
-      bureau: this.props.bureau.uri,
-      name: duplicateName,
-      steps: this.state.steps,
-    }
-    this.props.onDuplicate(templateCopy);
-  }
-
   onSave(event) {
-    event.preventDefault()
-
+    event.preventDefault();
     if (this.shouldOpenOverwriteWarning())
-      this.openOverwriteWarning();
+      this.openModal('showOverwriteWarning');
     else
       this.onSubmit();
   }
 
   onSubmit() {
     if (this.state.showOverwriteWarning)
-      this.closeOverwriteWarning();
+      this.closeModal('showOverwiteWarning');
 
     let steps = _.clone(this.state.steps)
 
@@ -158,8 +386,46 @@ class Template extends Component {
 
       this.props.onSave(payload, deletedSteps);
     })
+  }
 
+  onDuplicate() {
+    if (this.state.showOverwriteWarning)
+    this.closeModal('showOverwriteWarning');
 
+    const { value: name, initialValue: initialName } = this.props.fields.name;
+    const duplicateName = name === initialName ? name + " copy" : name;
+
+    const templateCopy = {
+      bureau: this.props.bureau.uri,
+      name: duplicateName,
+      steps: this.state.steps,
+    }
+    this.props.onDuplicate(templateCopy);
+  }
+
+  onDelete() {
+    this.props.onDelete(this.props.route.uuid)
+  }
+
+  addStep(payload) {
+
+    const index = this.state.alteredStepIndex
+    let steps = _.cloneDeep(this.state.steps)
+    this.closeModal('showStepForm');
+
+    if(index == null) {
+      steps.push(payload)
+    } else {
+      const step = steps[index]
+      if(step.uri)
+        payload.uri = step.uri
+      if(step.uuid)
+        payload.uuid = step.uuid
+
+      steps[index] = payload
+    }
+
+    this.setState({steps: steps})
   }
 
   moveRow(index, direction) {
@@ -189,45 +455,6 @@ class Template extends Component {
     this.setState({steps: steps})
   }
 
-  addStep(payload) {
-
-    const index = this.state.alteredStepIndex
-    let steps = _.cloneDeep(this.state.steps)
-    this.closeStepForm();
-
-    if(index == null) {
-      steps.push(payload)
-    } else {
-      const step = steps[index]
-      if(step.uri)
-        payload.uri = step.uri
-      if(step.uuid)
-        payload.uuid = step.uuid
-
-      steps[index] = payload
-    }
-
-    this.setState({steps: steps})
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if(!this.state.haveReceivedProps && !this.props.fetching) {
-      const template = this.props.template || {}
-      this.setState({
-        template: template,
-        steps: this.props.steps,
-        haveReceivedProps: true,
-      })
-    }
-  }
-
-  handleChange(event) {
-    let template = this.state.template
-
-    template[event.target.name] = event.target.value
-    this.setState({ template: template })
-  }
-
   render() {
     const Arrows = ({ index }) => {
       return(
@@ -248,12 +475,12 @@ class Template extends Component {
           <td><Arrows index={index} /></td>
           <td>{_.find(this.props.processTypes, {uri: step.process_type_uri}).name}</td>
           <td style={styles.centerIcons}>
-            <div onClick={()=>{this.openStepForm(index)}}>
+            <div onClick={ () => this.openModal('showStepForm', index) }>
               <Fa name='edit'/>
             </div>
           </td>
           <td style={styles.centerIcons}>
-            <div onClick={()=>{this.deleteStep(index)}}>
+            <div onClick={ () => this.deleteStep(index) }>
               <Fa name='times'/>
             </div>
           </td>
@@ -263,23 +490,8 @@ class Template extends Component {
       return(<tbody>{rows}</tbody>)
     }
 
-    const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
-      <BS.Modal show={show} onHide={close}>
-        <BS.Modal.Header closeButton>
-          <BS.Modal.Title>
-            Saving over an existing template could affect other orders.
-          </BS.Modal.Title>
-        </BS.Modal.Header>
-        <BS.Modal.Body>
-          Do you want to replace the existing template or duplicate a new one?
-        </BS.Modal.Body>
-        <BS.Modal.Footer>
-          <BS.Button onClick={close}>Cancel</BS.Button>
-          <BS.Button onClick={duplicate} bsStyle="primary">Duplicate</BS.Button>
-          <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
-        </BS.Modal.Footer>
-      </BS.Modal>
-    )
+    const { template, steps, alteredStepIndex, showStepForm, showOverwriteWarning, showDeleteWarning } = this.state;
+    const { values, processTypes, apiErrors } = this.props;
 
     return(
       <BS.Grid fluid>
@@ -309,7 +521,7 @@ class Template extends Component {
             <BS.Col xs={6}>
               <BS.ButtonToolbar className="pull-right">
                 <BS.SplitButton type="submit" id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-                  <BS.MenuItem eventKey={1} onClick={() => this.onDelete(this.props.fields.uuid.value)} disabled={!this.props.fields.id.value}>
+                  <BS.MenuItem eventKey={1} onClick={() => this.openModal('showDeleteWarning')} disabled={!this.props.fields.id.value}>
                     <Fa name='ban'/> <FormattedMessage id="button.delete" defaultMessage='Delete'/>
                   </BS.MenuItem>
                   <BS.MenuItem eventKey={2} onClick={() => this.onDuplicate()} disabled={!this.props.fields.id.value}>
@@ -324,18 +536,19 @@ class Template extends Component {
 
           <BS.Row>
             <BS.Col xs={12}>
-              <Error errors={this.props.apiErrors}/>
+              <Error errors={apiErrors}/>
             </BS.Col>
           </BS.Row>
 
           <BS.Row>
             <BS.Col xs={12}>
-
               <BS.Row>
                 <BS.Col xs={12} sm={8} smOffset={2} lg={6} lgOffset={3}>
                   <BS.FormGroup>
-                    <BS.ControlLabel>Template Name</BS.ControlLabel>
-                    <BS.FormControl type="text" name="name" required onChange={this.handleChange} value={this.state.template.name}/>
+                    <BS.ControlLabel>
+                      <FormattedMessage id="field.templateName" defaultMessage="Template Name"/>
+                    </BS.ControlLabel>
+                    <BS.FormControl type="text" name="name" required onChange={this.handleChange} value={template.name}/>
                   </BS.FormGroup>
                 </BS.Col>
               </BS.Row>
@@ -353,131 +566,38 @@ class Template extends Component {
                     </thead>
                     <Rows />
                   </BS.Table>
-                  <BS.Button bsStyle="success" className="pull-right" onClick={() => {this.openStepForm(null)}}>Add Step</BS.Button>
+                  <BS.Button
+                    bsStyle="success"
+                    className="pull-right"
+                    onClick={() => this.openModal('showStepForm')}>
+                    <FormattedMessage id="button.addStep" defaultMessage="Add Step"/>
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
-
             </BS.Col>
           </BS.Row>
         </form>
 
         <StepFormModal
-          show={this.state.showStepForm}
-          close={this.closeStepForm}
+          show={showStepForm}
+          close={() => this.closeModal('showStepForm')}
           submit={this.addStep}
-          data={this.state.steps[this.state.alteredStepIndex]}
-          processTypes={this.props.processTypes}
+          data={steps[alteredStepIndex]}
+          processTypes={processTypes}
         />
         <OverwriteWarningModal
-          show={this.state.showOverwriteWarning}
-          close={this.closeOverwriteWarning}
+          show={showOverwriteWarning}
+          close={() => this.closeModal('showOverwriteWarning')}
           duplicate={this.onDuplicate}
-          submit={this.onSubmit} />
-
+          submit={this.onSubmit}
+        />
+        <DeleteWarningModal
+          show={showDeleteWarning}
+          close={() => this.closeModal('showDeleteWarning')}
+          name={values.name}
+          submit={this.onDelete}
+        />
       </BS.Grid>
-    )
-  }
-}
-
-class StepFormModal extends Component {
-  constructor(props) {
-    super(props)
-
-    // The modal gets mounted and unmounted on open and close, thus we populate every time we open
-    const data = props.data || {}
-    this.state = {
-      step: {
-        notes:             "optional",
-        upload:            "optional",
-        success:           "optional",
-        tracking_id:       "hidden",
-        process_type_uri:  "",
-      },
-      stepReset: false,
-    }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if(nextProps.show && !nextState.stepReset) {
-      const data = nextProps.data || {}
-      const stepInfo = {
-          notes:             data.notes || "optional",
-          upload:            data.upload || "optional",
-          success:           data.success || "optional",
-          tracking_id:       data.tracking_id || "hidden",
-          process_type_uri:  data.process_type_uri || "",
-      }
-      this.setState({step: stepInfo, stepReset: true})
-    } else if(!nextProps.show && nextState.stepReset) {
-      this.setState({stepReset: false})
-    }
-  }
-
-  handleChange(event) {
-    // we need to pull out the step so we can modify and overwrite, since setstate cant merge objects
-    let step = this.state.step
-    step[event.target.name] = event.target.value
-
-    this.setState({ step: step })
-  }
-
-  onSubmit(event) {
-    event.preventDefault()
-
-    this.props.submit(this.state.step)
-  }
-
-  render() {
-    return(
-      <BS.Modal show={this.props.show} onHide={this.props.close}>
-        <form onSubmit={this.onSubmit}>
-          <BS.Modal.Header closeButton>
-            <BS.Modal.Title>Step Form</BS.Modal.Title>
-          </BS.Modal.Header>
-          <BS.Modal.Body>
-              <BS.FormGroup controlId="formControlsSelect">
-                <BS.ControlLabel>Process Type</BS.ControlLabel>
-                <BS.FormControl componentClass="select" name="process_type_uri" onChange={this.handleChange} value={this.state.step.process_type_uri} required>
-                  <option value="" selected disabled>Select a Process Step</option>
-                  {_.map(this.props.processTypes, processType => (
-                    <option value={processType.uri} key={processType.uri}>{processType.name}</option>
-                  ))}
-                </BS.FormControl>
-              </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="notes">
-                <BS.ControlLabel className="pull-left">Notes</BS.ControlLabel>
-                <div className="pull-right">
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={this.state.step.notes == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={this.state.step.notes == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={this.state.step.notes == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
-                </div>
-              </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="upload">
-                <BS.ControlLabel className="pull-left">Upload</BS.ControlLabel>
-                <div className="pull-right">
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={this.state.step.upload == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={this.state.step.upload == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={this.state.step.upload == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
-                </div>
-              </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="success">
-                <BS.ControlLabel className="pull-left">Success</BS.ControlLabel>
-                <div className="pull-right">
-                  <BS.Radio name="success" onChange={this.handleChange} checked={this.state.step.success == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="success" onChange={this.handleChange} checked={this.state.step.success == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="success" onChange={this.handleChange} checked={this.state.step.success == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
-                </div>
-              </BS.FormGroup>
-          </BS.Modal.Body>
-          <BS.Modal.Footer>
-            <BS.Button onClick={this.props.close}>Cancel</BS.Button>
-            <BS.Button type="submit" bsStyle="success">Add</BS.Button>
-          </BS.Modal.Footer>
-        </form>
-      </BS.Modal>
     )
   }
 }
