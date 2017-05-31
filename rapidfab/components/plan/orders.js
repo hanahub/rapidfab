@@ -16,12 +16,7 @@ import Grid, {
   StatusColumn,
   VolumeColumn
 } from 'rapidfab/components/grid';
-
-const Loading = () => (
-  <div style={{ textAlign: "center" }}>
-    <Fa name="spinner" spin size='2x' />
-  </div>
-)
+import Loading from 'rapidfab/components/loading';
 
 const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, fetching, apiErrors }) => (
   <BS.Grid fluid>

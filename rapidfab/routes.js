@@ -18,6 +18,7 @@ import InventoryPrinterTypes        from 'rapidfab/containers/inventory/printerT
 
 import Orders                       from 'rapidfab/containers/plan/orders'
 import Runs                         from 'rapidfab/containers/plan/runs'
+import Prints                       from 'rapidfab/containers/plan/prints'
 
 import Queues                       from 'rapidfab/containers/work/queues'
 
@@ -63,6 +64,7 @@ const Routes = {
 
   "/plan/orders"                         : Orders,
   "/plan/runs"                           : Runs,
+  "/plan/prints"                         : Prints,
 
   "/work/queues"                         : Queues,
 
