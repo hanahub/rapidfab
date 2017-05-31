@@ -22,4 +22,8 @@ export const RUN_STATUS_MAP = {
   "in-progress": <FormattedMessage id="status.inProgress" defaultMessage="In Progress"/>,
   "complete": <FormattedMessage id="status.complete" defaultMessage="Complete"/>,
   "error": <FormattedMessage id="status.error" defaultMessage="Error"/>,
+
+}
+export const PRINT_STATUS_MAP = {
+  "created": <FormattedMessage id="status.created" defaultMessage="Created"/>,
 }
