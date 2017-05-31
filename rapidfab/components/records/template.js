@@ -34,16 +34,28 @@ const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
       <BS.Modal.Title>
-        Saving over an existing template could affect other orders.
+        <FormattedMessage
+          id="message.overwriteWarning"
+          defaultMessage="Saving over an existing template could affect other orders."
+        />
       </BS.Modal.Title>
     </BS.Modal.Header>
     <BS.Modal.Body>
-      Do you want to replace the existing template or duplicate a new one?
+      <FormattedMessage
+        id="message.overwritePrompt"
+        defaultMessage="Do you want to replace the existing template or duplicate a new one?"
+      />
     </BS.Modal.Body>
     <BS.Modal.Footer>
-      <BS.Button onClick={close}>Cancel</BS.Button>
-      <BS.Button onClick={duplicate} bsStyle="primary">Duplicate</BS.Button>
-      <BS.Button onClick={submit} bsStyle="success">Replace</BS.Button>
+      <BS.Button onClick={close}>
+        <FormattedMessage id="button.cancel" defaultMessage="Cancel"/>
+      </BS.Button>
+      <BS.Button onClick={duplicate} bsStyle="primary">
+        <FormattedMessage id="button.duplicate" defaultMessage="Duplicate"/>
+      </BS.Button>
+      <BS.Button onClick={submit} bsStyle="success">
+        <FormattedMessage id="button.replace" defaultMessage="Replace"/>
+      </BS.Button>
     </BS.Modal.Footer>
   </BS.Modal>
 )
@@ -51,11 +63,19 @@ const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
 const DeleteWarningModal = ({ show, close, name, id, submit }) => (
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
-      { `Are you sure you want to delete ${name}?` }
+      <FormattedMessage
+        id="message.deleteWwarning"
+        defaultMessage="Are you sure you want to delete"
+      />
+      { ` ${name}?` }
     </BS.Modal.Header>
     <BS.Modal.Footer>
-      <BS.Button onClick={close}>Cancel</BS.Button>
-      <BS.Button onClick={() => submit(id)} bsStyle="danger">Delete</BS.Button>
+      <BS.Button onClick={close}>
+        <FormattedMessage id="button.cancel" defaultMessage="Cancel"/>
+      </BS.Button>
+      <BS.Button onClick={() => submit(id)} bsStyle="danger">
+        <FormattedMessage id="button.delete" defaultMessage="Delete"/>
+      </BS.Button>
     </BS.Modal.Footer>
   </BS.Modal>
 )
@@ -115,47 +135,125 @@ class StepFormModal extends Component {
     return(
       <BS.Modal show={show} onHide={close}>
         <form onSubmit={this.onSubmit}>
-          <BS.Modal.Header closeButton>
-            <BS.Modal.Title>Step Form</BS.Modal.Title>
-          </BS.Modal.Header>
+          <BS.Modal.Header closeButton/>
           <BS.Modal.Body>
               <BS.FormGroup controlId="formControlsSelect">
-                <BS.ControlLabel>Process Type</BS.ControlLabel>
+                <BS.ControlLabel>
+                  <FormattedMessage id="field.processType" defaultMessage="Process Type"/>
+                </BS.ControlLabel>
                 <BS.FormControl componentClass="select" name="process_type_uri" onChange={this.handleChange} value={step.process_type_uri} required>
-                  <option value="" selected disabled>Select a Process Step</option>
+                  <option value="" selected disabled>
+                    Select a Process Step
+                  </option>
                   {processTypes.map( processType => (
                     <option value={processType.uri} key={processType.uri}>{processType.name}</option>
                   ))}
                 </BS.FormControl>
               </BS.FormGroup>
               <BS.FormGroup className="clearfix" name="notes">
-                <BS.ControlLabel className="pull-left">Notes</BS.ControlLabel>
+                <BS.ControlLabel className="pull-left">
+                  <FormattedMessage id="field.notes" defaultMessage="Notes"/>
+                </BS.ControlLabel>
                 <div className="pull-right">
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={step.notes == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={step.notes == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="notes" onChange={this.handleChange} checked={step.notes == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
+                  <BS.Radio
+                    name="notes"
+                    onChange={this.handleChange}
+                    checked={step.notes == "optional"}
+                    value="optional"
+                    inline>
+                    <FormattedMessage id="field.optional" defaultMessage="Optional"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="notes"
+                    onChange={this.handleChange}
+                    checked={step.notes == "required"}
+                    value="required"
+                    inline>
+                    <FormattedMessage id="field.required" defaultMessage="Required"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="notes"
+                    onChange={this.handleChange}
+                    checked={step.notes == "hidden"}
+                    value="hidden"
+                    inline>
+                    <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
+                  </BS.Radio>
                 </div>
               </BS.FormGroup>
               <BS.FormGroup className="clearfix" name="upload">
-                <BS.ControlLabel className="pull-left">Upload</BS.ControlLabel>
+                <BS.ControlLabel className="pull-left">
+                  <FormattedMessage id="field.upload" defaultMessage="Upload"/>
+                </BS.ControlLabel>
                 <div className="pull-right">
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={step.upload == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={step.upload == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="upload" onChange={this.handleChange} checked={step.upload == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
+                  <BS.Radio
+                    name="upload"
+                    onChange={this.handleChange}
+                    checked={step.upload == "optional"}
+                    value="optional"
+                    inline>
+                    <FormattedMessage id="field.optional" defaultMessage="Optional"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="upload"
+                    onChange={this.handleChange}
+                    checked={step.upload == "required"}
+                    value="required"
+                    inline>
+                    <FormattedMessage id="field.required" defaultMessage="Required"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="upload"
+                    onChange={this.handleChange}
+                    checked={step.upload == "hidden"}
+                    value="hidden"
+                    inline>
+                    <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
+                  </BS.Radio>
                 </div>
               </BS.FormGroup>
               <BS.FormGroup className="clearfix" name="success">
-                <BS.ControlLabel className="pull-left">Success</BS.ControlLabel>
+                <BS.ControlLabel className="pull-left">
+                  <FormattedMessage id="field.success" defaultMessage="Success"/>
+                </BS.ControlLabel>
                 <div className="pull-right">
-                  <BS.Radio name="success" onChange={this.handleChange} checked={step.success == "optional"} value="optional" inline>Optional</BS.Radio>
-                  <BS.Radio name="success" onChange={this.handleChange} checked={step.success == "required"} value="required" inline>Required</BS.Radio>
-                  <BS.Radio name="success" onChange={this.handleChange} checked={step.success == "hidden"}   value="hidden"   inline>hidden</BS.Radio>
+                  <BS.Radio
+                    name="success"
+                    onChange={this.handleChange}
+                    checked={step.success == "optional"}
+                    value="optional"
+                    inline>
+                    <FormattedMessage id="field.optional" defaultMessage="Optional"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="success"
+                    onChange={this.handleChange}
+                    checked={step.success == "required"}
+                    value="required"
+                    inline>
+                    <FormattedMessage id="field.required" defaultMessage="Required"/>
+                  </BS.Radio>
+                  <BS.Radio
+                    name="success"
+                    onChange={this.handleChange}
+                    checked={step.success == "hidden"}
+                    value="hidden"
+                    inline>
+                    <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
+                  </BS.Radio>
                 </div>
               </BS.FormGroup>
           </BS.Modal.Body>
           <BS.Modal.Footer>
-            <BS.Button onClick={close}>Cancel</BS.Button>
-            <BS.Button type="submit" bsStyle="success">{data ? "Save" : "Add"}</BS.Button>
+            <BS.Button onClick={close}>
+              <FormattedMessage id="button.cancel" defaultMessage="Cancel"/>
+            </BS.Button>
+            <BS.Button type="submit" bsStyle="success">
+              {data ?
+                <FormattedMessage id="button.save" defaultMessage="Save"/>
+                : <FormattedMessage id="button.add" defaultMessage="Add"/>
+              }
+            </BS.Button>
           </BS.Modal.Footer>
         </form>
       </BS.Modal>
@@ -447,7 +545,9 @@ class Template extends Component {
               <BS.Row>
                 <BS.Col xs={12} sm={8} smOffset={2} lg={6} lgOffset={3}>
                   <BS.FormGroup>
-                    <BS.ControlLabel>Template Name</BS.ControlLabel>
+                    <BS.ControlLabel>
+                      <FormattedMessage id="field.templateName" defaultMessage="Template Name"/>
+                    </BS.ControlLabel>
                     <BS.FormControl type="text" name="name" required onChange={this.handleChange} value={template.name}/>
                   </BS.FormGroup>
                 </BS.Col>
@@ -466,7 +566,12 @@ class Template extends Component {
                     </thead>
                     <Rows />
                   </BS.Table>
-                  <BS.Button bsStyle="success" className="pull-right" onClick={() => this.openModal('showStepForm')}>Add Step</BS.Button>
+                  <BS.Button
+                    bsStyle="success"
+                    className="pull-right"
+                    onClick={() => this.openModal('showStepForm')}>
+                    <FormattedMessage id="button.addStep" defaultMessage="Add Step"/>
+                  </BS.Button>
                 </BS.Col>
               </BS.Row>
             </BS.Col>
