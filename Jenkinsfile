@@ -26,7 +26,6 @@ pipeline {
         stage('Build') {
             steps {
                     sh 'docker exec rapidfab -v $(pwd):/src npm run build:clean'
-                }
             }
         }
         stage('Publish Dev') {
