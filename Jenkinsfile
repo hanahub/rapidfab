@@ -34,7 +34,7 @@ pipeline {
             }
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
-                    withEnv(["IS_PROD=${sh(script: 'echo $GITDESCRIBE | grep \'\-g\'')}"]) {
+                    withEnv(["IS_PROD=${sh(script: 'echo $GITDESCRIBE | grep \'\\-g\'')}"]) {
                         sh 'if [ $IS_PROD ]; then echo "pushing to prod"; else echo "pushing to dev"; fi'
                     }
                 }
