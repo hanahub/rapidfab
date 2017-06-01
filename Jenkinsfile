@@ -22,7 +22,7 @@ pipeline {
         stage('Docker container start') {
             when {
                 expression {
-                    sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"').notBlank
+                    sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"')
                 }
             }
             steps {
