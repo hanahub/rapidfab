@@ -6,26 +6,37 @@ pipeline {
         stage('Docker Image') {
             when {
                 expression {
-                    not sh(returnStdout: true, script: 'docker ps -q -f "name=rapidfab"')
+                    not sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"')
                 }
             }
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     sh 'docker build -t authentise/mes:$GITDESCRIBE .'
-                    sh 'docker run --name rapidfab -v $(pwd):/src authentise/mes:$GITDESCRIBE npm install'
-                    sh 'docker exec rapidfab -v $(pwd):/src npm prune'
-                    sh 'docker exec rapidfab -v $(pwd):/src npm run build:clean'
+                    sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $(pwd):/src -v $$HOME/.aws:/root/.aws -d authentise/mes:$GITDESCRIBE sleep infinity'
+                    sh 'docker exec rapidfab npm install'
+                    sh 'docker exec rapidfab npm prune'
+                    sh 'docker exec rapidfab npm run build:clean'
                 }
+            }
+        }
+        stage('Docker container start') {
+            when {
+                expression {
+                    sh 'docker ps -q -f "name=rapidfab"'
+                }
+            }
+            steps {
+                sh 'docker start rapidfab'
             }
         }
         stage('Test') {
             steps {
-                sh 'docker -v $(pwd):/src --env BROWSER=PhantomJS2 exec rapidfab npm run test:junit'
+                sh 'docker exec rapidfab npm run test:junit'
             }
         }
         stage('Build') {
             steps {
-                    sh 'docker exec rapidfab -v $(pwd):/src npm run build:clean'
+                    sh 'docker exec rapidfab npm run build:clean'
             }
         }
         stage('Publish Dev') {
@@ -39,6 +50,11 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        always {
+            sh 'docker stop rapidfab'
         }
     }
 }
