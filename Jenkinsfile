@@ -20,11 +20,6 @@ pipeline {
             }
         }
         stage('Docker container start') {
-            when {
-                expression {
-                    sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"')
-                }
-            }
             steps {
                 sh 'docker start rapidfab'
             }
