@@ -34,6 +34,7 @@ def execute(args, log_output=True, **kwargs):
 
 def get_branch(sha):
     reflog = execute(['git', 'reflog', 'show', '--all'], log_output=False)
+    LOGGER.debug("Getting the branch that matches %s", sha)
     for line in reflog.split('\n'):
         if sha in line:
             match = re.match('(?P<sha>[a-z0-9]+) [a-z/]+/(?P<branch>[^@]+)@', line)
