@@ -37,6 +37,7 @@ export default {
 
   "myProfile"                         : "My Profile",
   "logout"                            : "Logout",
+  "home"                              : "Home",
 
   "models"                            : "Models",
 
