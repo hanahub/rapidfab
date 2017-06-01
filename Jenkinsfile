@@ -6,7 +6,7 @@ pipeline {
         stage('Docker Image') {
             when {
                 expression {
-                    not sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"')
+                    not sh(script: 'docker ps -a -q -f "name=rapidfab" | read REPLY')
                 }
             }
             steps {
