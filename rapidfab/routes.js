@@ -30,6 +30,7 @@ import Manufacturer                 from 'rapidfab/containers/records/manufactur
 import conversion                   from 'rapidfab/containers/records/conversion'
 import Shipping                     from 'rapidfab/containers/records/shipping'
 import Material                     from 'rapidfab/containers/records/material'
+import Print                        from 'rapidfab/containers/records/print'
 import Printer                      from 'rapidfab/containers/records/printer'
 import PrinterType                  from 'rapidfab/containers/records/printerType'
 import PostProcessor                from 'rapidfab/containers/records/postProcessor'
@@ -82,6 +83,7 @@ const Routes = {
   "/records/conversion/:uuid"            : conversion,
   "/records/material"                    : Material,
   "/records/material/:uuid"              : Material,
+  "/records/print/:uuid"                 : Print,
   "/records/printer"                     : Printer,
   "/records/printer/:uuid"               : Printer,
   "/records/printer-type"                : PrinterType,
