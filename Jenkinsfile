@@ -6,7 +6,7 @@ pipeline {
         stage('Docker Image') {
             when {
                 expression {
-                    sh(script: '! docker ps -a -q -f "name=rapidfab" | read REPLY')
+                    ${sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"')}.trim() == ''
                 }
             }
             steps {
@@ -22,7 +22,7 @@ pipeline {
         stage('Docker container start') {
             when {
                 expression {
-                    sh 'docker ps -q -f "name=rapidfab"'
+                    ${sh(returnStdout: true, script: 'docker ps -a -q -f "name=rapidfab"')}.notBlank
                 }
             }
             steps {
