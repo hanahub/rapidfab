@@ -34,10 +34,8 @@ pipeline {
             }
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
-                    if ($GITDESCRIBE.indexOf('-g') > 0) {
-                        sh 'docker exec rapidfab -v $(pwd):/src -v $HOME/.aws:/root/.aws npm run publish -- --region us-west-2 --bucket rapidfab.dev-auth.com --cloudfront E204AX3Y5WR2B4'
-                    } else {
-                        sh 'docker exec rapidfab -v $(pwd):/src -v $HOME/.aws:/root/.aws npm run publish -- --region us-west-2 --bucket rapidfab.authentise.com --cloudfront EOPZ6L10IQ06S'
+                    withEnv(["IS_PROD=${sh(script: 'echo $GITDESCRIBE | grep \'\-g\'')}"]) {
+                        sh 'if [ $IS_PROD ]; then echo "pushing to prod"; else echo "pushing to dev"; fi'
                     }
                 }
             }
