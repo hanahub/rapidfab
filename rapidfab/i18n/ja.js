@@ -37,6 +37,7 @@ export default {
 
   "myProfile"                         : "プロファイル",
   "logout"                            : "ログアウト",
+  "home"                              : "Home",
 
   "models"                            : "モデル",
 
