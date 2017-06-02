@@ -38,7 +38,7 @@ pipeline {
                 }
             }
         }
-        stage('Publish Dev') {
+        stage('Publish') {
             when {
                 branch 'master'
             }
