@@ -6,7 +6,7 @@ import Loading from './loading';
 
 const Gatekeeper = ({ errors, loading, children }) => {
   if (errors.length > 0)
-    return <Error errors={error} />
+    return <Error errors={errors} />
   else if (loading)
     return <Loading />
   else
