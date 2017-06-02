@@ -23,4 +23,5 @@ export const RUN_STATUS_MAP = {
   "error": <FormattedMessage id="status.error" defaultMessage="Error"/>,
   "in-progress": <FormattedMessage id="status.inProgress" defaultMessage="In Progress"/>,
   "queued": <FormattedMessage id="status.queued" defaultMessage="Queued"/>,
+  "error": <FormattedMessage id="status.error" defaultMessage="Error"/>,
 }
