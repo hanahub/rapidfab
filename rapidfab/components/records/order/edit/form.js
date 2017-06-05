@@ -72,7 +72,7 @@ class OrderForm extends React.Component {
     const { statusOptions } = this.state;
     if (fields.status.value && statusOptions && !(statusOptions.length > 0) ) {
       const statusOptions = propOptions[fields.status.value];
-      this.state = { statusOptions };
+      this.setState({ statusOptions });
     }
   }
 
