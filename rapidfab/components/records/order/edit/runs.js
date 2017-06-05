@@ -57,9 +57,7 @@ const OrderRuns = ({ runs }) => {
             </BS.Row>
           </BS.ListGroupItem>
           <div style={{overflowY: 'scroll', height: 215}}>
-            {_.map(runs, run => (
-              <RunItem run={run} />))
-            }
+            { runs.map(run => <RunItem key={run.id} run={run} />) }
           </div>
         </BS.ListGroup>
       </BS.Panel>

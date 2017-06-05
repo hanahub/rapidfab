@@ -53,9 +53,7 @@ const OrderPrints = ({ prints }) => (
         </BS.Row>
       </BS.ListGroupItem>
       <div style={{overflowY: 'scroll', height: 215}}>
-        {_.map(prints, print => (
-          <PrintItem print={print} />))
-        }
+        { prints.map( print => <PrintItem key={print.id} print={print} />)}
       </div>
     </BS.ListGroup>
   </BS.Panel>
