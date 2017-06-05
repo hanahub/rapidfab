@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'rapidfab/i18n'
 
 export const ORDER_STATUS_MAP = {
@@ -18,12 +18,9 @@ export const ORDER_STATUS_MAP = {
 export const RUN_STATUS_MAP = {
   "calculating": <FormattedMessage id="status.calculating" defaultMessage="Calculating"/>,
   "calculated": <FormattedMessage id="status.calculated" defaultMessage="Calculated"/>,
-  "queued": <FormattedMessage id="status.queued" defaultMessage="Queued"/>,
-  "in-progress": <FormattedMessage id="status.inProgress" defaultMessage="In Progress"/>,
   "complete": <FormattedMessage id="status.complete" defaultMessage="Complete"/>,
-  "error": <FormattedMessage id="status.error" defaultMessage="Error"/>,
-
-}
-export const PRINT_STATUS_MAP = {
   "created": <FormattedMessage id="status.created" defaultMessage="Created"/>,
+  "error": <FormattedMessage id="status.error" defaultMessage="Error"/>,
+  "in-progress": <FormattedMessage id="status.inProgress" defaultMessage="In Progress"/>,
+  "queued": <FormattedMessage id="status.queued" defaultMessage="Queued"/>,
 }
