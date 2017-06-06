@@ -2,7 +2,7 @@ import React from 'react';
 import Fa from 'react-fontawesome';
 
 const Loading = () => (
-  <div style={{ textAlign: "center" }}>
+  <div className="text-center">
     <Fa name="spinner" spin size='2x' />
   </div>
 );
