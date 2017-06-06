@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
-import Loading from 'rapidfab/components/loading';
-import Error from 'rapidfab/components/error';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
+import Gatekeeper from 'rapidfab/components/gatekeeper';
 import PrintComponent from 'rapidfab/components/records/print';
 
 class PrintContainer extends Component {
@@ -14,28 +14,58 @@ class PrintContainer extends Component {
   }
 
   render() {
-    const { apiErrors, print } = this.props;
-    if (apiErrors.length > 0)
-      return <Error errors={apiErrors} />
-    else if (!this.props.print)
-      return <Loading />
-    else
-      return <PrintComponent print={this.props.print} />
+    const { apiErrors, fetching, print, order, model } = this.props;
+    const loading = fetching || !print || !order;
+    return(
+      <Gatekeeper errors={apiErrors} loading={loading}>
+        <PrintComponent print={print} order={order} model={model} />
+      </Gatekeeper>
+    );
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => { dispatch(Actions.Api.wyatt.print.get(uuid)) },
+    onInitialize: uuid => {
+      dispatch(Actions.Api.wyatt.print.get(uuid))
+        .then( response => {
+          dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)))
+            .then( response => {
+              dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)))
+            });
+        });
+    },
   }
 }
 
 function mapStateToProps(state, props) {
+  const uuid = Selectors.getRoute(state, props).uuid;
+  const print = Selectors.getRouteResource(state, props);
+  const orders = Selectors.getOrders(state, props);
+  const models = Selectors.getModels(state, props);
+  const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
+
+  const order = orders.find( order => order.uri === print.order);
+  const model = models.find( model => model.uri === order.model);
+
+  const fetching =
+    state.ui.wyatt.print.get.fetching ||
+    state.ui.wyatt.order.get.fetching
+
   return {
-    uuid: Selectors.getRoute(state, props).uuid,
-    print: Selectors.getRouteResource(state, props),
-    apiErrors : Selectors.getResourceErrors(state, "wyatt.print"),
+    uuid,
+    print,
+    order,
+    model,
+    fetching,
+    apiErrors,
   }
 }
+PrintContainer.propTypes = {
+  uuid: PropTypes.string,
+  print: PropTypes.object,
+  fetching: PropTypes.bool,
+  apiErrors: PropTypes.array,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintContainer);
