@@ -36,7 +36,7 @@ pipeline {
                         sh 'rm -Rf dist/*'
                         sh 'rm -Rf rapidfab-*.tgz'
                         sh 'if [ -z $DEV_COMMIT ]; then docker exec -e NODE_ENV=production rapidfab npm run build; else docker exec -e NODE_ENV=development rapidfab npm run build; fi'
-                        sh 'docker exec rapidfab chmod a+rw -R /src/dist'
+                        sh 'docker exec rapidfab chmod -f a+rw -R /src/dist*'
                         sh 'tar -czvf rapidfab-$GITDESCRIBE.tgz dist'
                         archiveArtifacts artifacts: 'rapidfab-*.tgz', fingerprint: true
                     }
