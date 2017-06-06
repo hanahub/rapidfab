@@ -133,10 +133,10 @@ const Home = ({ fetching, apiErrors, data, locationFilter, locations, handleOnCh
       } else {
         return (
           <BS.Row>
-            <BS.Col xs={6}>
+            <BS.Col md={6}>
               <LastTenOrders data={data.lastTenOrders}/>
             </BS.Col>
-            <BS.Col xs={6}>
+            <BS.Col md={6}>
               <RunsByStatusChart data={data.runStatus}/>
             </BS.Col>
           </BS.Row>
