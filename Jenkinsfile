@@ -32,7 +32,7 @@ pipeline {
         stage('Build') {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
-                    withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\'')}"]) {
+                    withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\'' | cat)}"]) {
                         sh 'rm -Rf dist/*'
                         sh 'mkdir -p dist'
                         sh 'rm -Rf rapidfab-*.tgz'
