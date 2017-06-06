@@ -34,6 +34,7 @@ pipeline {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\'')}"]) {
                         sh 'rm -Rf dist/*'
+                        sh 'mkdir -p dist'
                         sh 'rm -Rf rapidfab-*.tgz'
                         sh 'if [ -z $DEV_COMMIT ]; then docker exec -e NODE_ENV=production rapidfab npm run build; else docker exec -e NODE_ENV=development rapidfab npm run build; fi'
                         sh 'docker exec rapidfab chmod -f a+rw -R /src/dist'
