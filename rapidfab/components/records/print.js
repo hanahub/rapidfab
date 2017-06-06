@@ -20,7 +20,7 @@ import {
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButton from 'rapidfab/components/saveButton';
-import ThumbnailPlaceholder from 'rapidfab/images/thumbnail-placeholder.png'
+import ModelThumbnail from 'rapidfab/components/modelThumbnail';
 
 const ActionToolbar = () => (
   <ButtonToolbar className="clearfix">
@@ -37,49 +37,49 @@ const ExportButton = () => (
   </Button>
 );
 
-const PrintSummary = () => (
-  <Panel header="Print Summary">
-    <Row>
-      <Col xs={6}>
-        <Thumbnail src={ThumbnailPlaceholder} />
-      </Col>
-      <Col xs={6}>
-        <ListGroup>
-          <ListGroupItem>
-            <SpaceBetweenText
-              left="Client:"
-              right="Greek Embassy"
-            />
-          </ListGroupItem>
-          <ListGroupItem>
-            <SpaceBetweenText
-              left="Date Ordered:"
-              right="3/27/2017"
-            />
-          </ListGroupItem>
-          <ListGroupItem>
-            <SpaceBetweenText
-              left="Date Delivered:"
-              right="3/27/2017"
-            />
-          </ListGroupItem>
-          <ListGroupItem>
-            <SpaceBetweenText
-              left="Model:"
-              right="BigArms.stl"
-            />
-          </ListGroupItem>
-          <ListGroupItem>
-            <SpaceBetweenText
-              left="Order:"
-              right="X45FDT"
-            />
-          </ListGroupItem>
-        </ListGroup>
-      </Col>
-    </Row>
-  </Panel>
-);
+const PrintSummary = ({ print, order, model }) => {
+  const { order_step_status: status } = print;
+  const {
+    created,
+    name,
+    uuid,
+   } = order;
+  return (
+    <Panel header="Print Summary">
+      <Row>
+        <Col xs={6}>
+          <ModelThumbnail model={model} />
+        </Col>
+        <Col xs={6}>
+          <ListGroup>
+            <ListGroupItem>
+              <div className="clearfix">
+                <div className="pull-left">
+                  <span>Order:</span>
+                </div>
+                <div className="pull-right">
+                  <a href={`#/records/order/${uuid}`}>{name}</a>
+                </div>
+              </div>
+            </ListGroupItem>
+            <ListGroupItem>
+              <SpaceBetweenText
+                left="Status:"
+                right={status}
+              />
+            </ListGroupItem>
+            <ListGroupItem>
+              <SpaceBetweenText
+                left="Created:"
+                right={created}
+              />
+            </ListGroupItem>
+          </ListGroup>
+        </Col>
+      </Row>
+    </Panel>
+  )
+};
 
 const SpaceBetweenText = ({ left, right }) => (
   <div className="clearfix">
@@ -90,27 +90,6 @@ const SpaceBetweenText = ({ left, right }) => (
       {right}
     </div>
   </div>
-);
-SpaceBetweenText.propTypes = { left: PropTypes.string, right: PropTypes.string }
-
-const PrintInfo = () => (
-  <Accordion>
-    <Panel header="Price Generated" eventKey="1">
-      This is the price generated panel.
-    </Panel>
-    <Panel header="Order Confirmed" eventKey="2">
-      This is the order confirmed panel.
-    </Panel>
-    <Panel header="Model Changed" eventKey="3">
-      This is the model changed panel.
-    </Panel>
-    <Panel header="Build Volume Created" eventKey="4">
-      This is the build volume panel.
-    </Panel>
-    <Panel header="Print Scheduled" eventKey="5">
-      This is the print scheduled panel.
-    </Panel>
-  </Accordion>
 );
 
 const PrintRecord = () => (
@@ -147,16 +126,8 @@ const PrintRecord = () => (
 );
 
 
-const PrintComponent = ({ print }) => {
-  const breadcrumbs = [{
-    href: '#/plan/prints',
-    iconName: 'list',
-    i18nID: 'plan.prints',
-    defaultMessage: 'Print',
-  }, {
-    iconName: 'list',
-    defaultMessage: print.id,
-  }];
+const PrintComponent = ({ print, order, model }) => {
+  const breadcrumbs = [ "prints", print.id ];
 
   return (
     <Grid fluid className="container">
@@ -164,8 +135,7 @@ const PrintComponent = ({ print }) => {
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
       <ActionToolbar />
       <hr />
-      <PrintSummary />
-      <PrintInfo />
+      <PrintSummary print={print} order={order} model={model} />
       <PrintRecord />
 
     </Grid>
