@@ -4,39 +4,51 @@ import { Breadcrumb } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
 
+const spacing = { marginRight: "1rem" }
+
+const breadcrumbMap = {
+  prints: {
+    href: "#/plan/prints",
+    icon: "list",
+    message: <FormattedMessage id="plan.prints" defaultMessage="Prints" />,
+  }
+}
+
+const HomeLink = () => (
+  <Breadcrumb.Item href="/#/" >
+    <Fa name="home" style={spacing}/>
+    <FormattedMessage id='home' defaultMessage='Home'/>
+  </Breadcrumb.Item>
+);
+
+const BreadcrumbLink = ({ crumb, active }) => {
+  if (crumb in breadcrumbMap) {
+    const { href, icon, message } = breadcrumbMap[crumb];
+    return(
+      <Breadcrumb.Item href={href} key={href} active={active}>
+        <Fa name={icon} style={spacing} /> {message}
+      </Breadcrumb.Item>
+    );
+  }
+  return <Breadcrumb.Item active={active}>{crumb}</Breadcrumb.Item>
+}
+BreadcrumbLink.propTypes = { crumb: PropTypes.string };
+
 const BreadcrumbNav = ({ breadcrumbs }) => (
   <Breadcrumb>
-    <Breadcrumb.Item
-      href="/#/"
-    >
-      <Fa name="home"/>
-      {` `}
-      <FormattedMessage id='home' defaultMessage='Home'/>
-    </Breadcrumb.Item>
-    {
-      breadcrumbs.map( crumb => {
-        const { href, iconName, i18nID, defaultMessage } = crumb;
+    <HomeLink />
+    { breadcrumbs.map( (crumb, index) => {
         return (
-          <Breadcrumb.Item
-            href={href}
-            active={href ? false : true }
-            key={defaultMessage}
-          >
-            <Fa name={iconName}/>
-            {` `}
-            { i18nID ?
-              <FormattedMessage id={i18nID} defaultMessage={defaultMessage}/>
-              : <span>{defaultMessage}</span>
-            }
-          </Breadcrumb.Item>
+          <BreadcrumbLink
+            crumb={crumb}
+            key={crumb}
+            active={index === breadcrumbs.length - 1}
+          />
         )
       })
     }
   </Breadcrumb>
 );
-
-BreadcrumbNav.propTypes = {
-  breadcrumbs: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-}
+BreadcrumbNav.propTypes = { breadcrumbs: PropTypes.arrayOf(PropTypes.string) }
 
 export default BreadcrumbNav;
