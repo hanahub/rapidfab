@@ -32,7 +32,7 @@ class Model extends Component {
           </BS.Col>
           <BS.Col md={2}>
             <BS.ControlLabel><FormattedMessage id="field.supportMaterial" defaultMessage='Support Material'/>:</BS.ControlLabel>
-            <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
+            <BS.FormControl componentClass="select" required onChange={this.handleChange} name="supportMaterial">
               <option key="placeholder" value="" selected disabled></option>
               {_.map(baseMaterials, material => (
                 <option key={material.uri} value={material.uri}>{material.name}</option>
