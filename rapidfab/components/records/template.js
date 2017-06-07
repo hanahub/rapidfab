@@ -404,6 +404,7 @@ class Template extends Component {
   }
 
   onDelete() {
+    this.closeModal('showDeleteWarning');
     this.props.onDelete(this.props.route.uuid)
   }
 
