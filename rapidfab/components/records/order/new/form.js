@@ -5,6 +5,7 @@ import _                                   from "lodash"
 import Fa                                  from 'react-fontawesome'
 import { FormattedMessage }                from 'react-intl'
 import { Currencies }                      from 'rapidfab/constants'
+import Model                               from 'rapidfab/components/records/order/new/models'
 
 
 const SaveButtonTitle = ({  }) => (
@@ -18,6 +19,9 @@ class NewOrderForm extends Component {
     super(props)
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.onAddModel = this.onAddModel.bind(this)
+    this.onRemoveModel = this.onRemoveModel.bind(this)
+    this.state = {numModel: 0}
   }
 
   onSubmit(event) {
@@ -51,10 +55,24 @@ class NewOrderForm extends Component {
     this.setState({[event.target.name]: event.target.value})
   }
 
+  onAddModel() {
+    this.setState({numModel: this.state.numModel + 1});
+  }
+
+  onRemoveModel() {
+    this.setState({numModel: this.state.numModel - 1});
+  }
+
   render() {
     const { materials, shippings, providers, templates } = this.props;
     const baseMaterials = _.filter(materials, {type: "base"});
     const supportMaterials = _.filter(materials, {type: "support"});
+
+    const models = [];
+
+    for (var i = 0; i < this.state.numModel; i += 1) {
+      models.push(<Model {...this.props} onRemoveModel={this.onRemoveModel}/>);
+    };
 
     return(
       <form onSubmit={this.onSubmit}>
@@ -82,50 +100,7 @@ class NewOrderForm extends Component {
               <BS.FormControl type="text" required maxLength="255" onChange={this.handleChange} name="name"/>
             </BS.FormGroup>
 
-            <BS.FormGroup controlId="uxModel">
-              <fieldset class="form-inline">
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.model" defaultMessage='Model'/>:</BS.ControlLabel>
-                  <input type="file" class="input-medium" accept=".stl" ref="file" required name="file" />
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.material" defaultMessage='Material'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
-                    <option key="placeholder" value="" selected disabled></option>
-                    {_.map(baseMaterials, material => (
-                      <option key={material.uri} value={material.uri}>{material.name}</option>
-                    ))}
-                  </BS.FormControl>
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.supportMaterial" defaultMessage='Support Material'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
-                    <option key="placeholder" value="" selected disabled></option>
-                    {_.map(baseMaterials, material => (
-                      <option key={material.uri} value={material.uri}>{material.name}</option>
-                    ))}
-                  </BS.FormControl>
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
-                    <option key="placeholder" value="" selected disabled></option>
-                    {_.map(baseMaterials, material => (
-                      <option key={material.uri} value={material.uri}>{material.name}</option>
-                    ))}
-                  </BS.FormControl>
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.remove" defaultMessage='Remove'/>:</BS.ControlLabel>
-                   <br />
-                    <BS.Button>
-                      <span>
-                        <Fa name='minus'/>
-                      </span>
-                    </BS.Button>
-                </BS.Col>
-              </fieldset>
-            </BS.FormGroup>
+            {models}
 
             <BS.FormGroup controlId="uxModel">
               <fieldset class="form-inline">
@@ -144,26 +119,38 @@ class NewOrderForm extends Component {
                 </BS.Col>
                 <BS.Col md={2}>
                   <BS.ControlLabel><FormattedMessage id="field.supportMaterial" defaultMessage='Support Material'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
+                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="supportMaterial">
                     <option key="placeholder" value="" selected disabled></option>
-                    {_.map(baseMaterials, material => (
+                    {_.map(supportMaterials, material => (
                       <option key={material.uri} value={material.uri}>{material.name}</option>
                     ))}
                   </BS.FormControl>
                 </BS.Col>
-                <BS.Col md={2}>
+                <BS.Col md={1}>
                   <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
                   <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
                     <option key="placeholder" value="" selected disabled></option>
-                    {_.map(baseMaterials, material => (
+                    {_.map(supportMaterials, material => (
                       <option key={material.uri} value={material.uri}>{material.name}</option>
                     ))}
                   </BS.FormControl>
                 </BS.Col>
                 <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.add" defaultMessage='Add Another'/>:</BS.ControlLabel>
-                   <br />
-                    <BS.Button>
+                  <BS.ControlLabel><FormattedMessage id="field.template" defaultMessage='Template'/>:</BS.ControlLabel>
+                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
+                    <option key="placeholder" value="" selected disabled></option>
+                    {_.map(supportMaterials, material => (
+                      <option key={material.uri} value={material.uri}>{material.name}</option>
+                    ))}
+                  </BS.FormControl>
+                </BS.Col>
+                <BS.Col md={2}>
+                  <BS.ControlLabel><FormattedMessage id="field.notes" defaultMessage='Notes'/>:</BS.ControlLabel>
+                  <BS.FormControl type="text" required maxLength="255" onChange={this.handleChange} name="notes"/>
+                </BS.Col>
+                <BS.Col md={1}>
+                  <br />
+                    <BS.Button onClick={this.onAddModel}>
                       <span>
                         <Fa name='plus'/>
                       </span>
@@ -172,20 +159,6 @@ class NewOrderForm extends Component {
               </fieldset>
             </BS.FormGroup>
 
-            <BS.FormGroup controlId="uxQuantity">
-              <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
-              <BS.FormControl type="number" min="1" required onChange={this.handleChange} name="quantity"/>
-            </BS.FormGroup>
-
-            <BS.FormGroup controlId="uxBaseMaterials">
-              <BS.ControlLabel><FormattedMessage id="field.baseMaterials" defaultMessage='Base Materials'/>:</BS.ControlLabel>
-              <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
-                <option key="placeholder" value="" selected disabled>Select a Base Material</option>
-                {_.map(baseMaterials, material => (
-                  <option key={material.uri} value={material.uri}>{material.name}</option>
-                ))}
-              </BS.FormControl>
-            </BS.FormGroup>
             {
               supportMaterials.length > 0 ?
               <BS.FormGroup controlId="uxSupportMaterials">
