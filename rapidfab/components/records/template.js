@@ -181,7 +181,7 @@ class StepFormModal extends Component {
                   </BS.Radio>
                 </div>
               </BS.FormGroup>
-              <BS.FormGroup className="clearfix" name="upload">
+              {/* <BS.FormGroup className="clearfix" name="upload">
                 <BS.ControlLabel className="pull-left">
                   <FormattedMessage id="field.upload" defaultMessage="Upload"/>
                 </BS.ControlLabel>
@@ -242,7 +242,7 @@ class StepFormModal extends Component {
                     <FormattedMessage id="field.hidden" defaultMessage="Hidden"/>
                   </BS.Radio>
                 </div>
-              </BS.FormGroup>
+              </BS.FormGroup> */}
           </BS.Modal.Body>
           <BS.Modal.Footer>
             <BS.Button onClick={close}>
