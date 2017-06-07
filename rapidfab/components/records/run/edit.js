@@ -276,7 +276,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
                   <BS.ControlLabel><FormattedMessage id={"field.notes"} defaultMessage={"Notes"}/>:</BS.ControlLabel>
                   <BS.FormControl componentClass="textarea" name="notes" {...fields.notes}/>
                 </BS.FormGroup>
-                <BS.FormGroup>
+                {/* <BS.FormGroup>
                   <BS.Radio
                     inline {...fields.success}
                     value="success"
@@ -289,7 +289,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
                     checked={fields.success.value === 'fail' || fields.success.value === false}>
                     <FormattedMessage id={"field.fail"} defaultMessage={"Fail"}/>
                   </BS.Radio>
-                </BS.FormGroup>
+                </BS.FormGroup> */}
               </BS.Col>
             </BS.Row>
           </BS.Panel>
