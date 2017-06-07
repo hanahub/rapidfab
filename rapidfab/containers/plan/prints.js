@@ -57,7 +57,6 @@ function mapStateToProps(state) {
     apiErrors: print.list.errors || location.list.errors,
   }
 }
-
 PrintsContainer.propTypes = {
   prints: PropTypes.array,
   locations: PropTypes.array,

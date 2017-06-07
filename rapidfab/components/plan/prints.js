@@ -33,11 +33,7 @@ const PrintsGrid = ({ prints }) => (
 PrintsGrid.propTypes = { prints: PropTypes.array };
 
 const Prints = ({ prints, locations, locationFilter, onLocationChange }) => {
-  const breadcrumbs = [{
-    iconName: "list",
-    il8nID: "plan.prints",
-    defaultMessage: "Prints",
-  }];
+  const breadcrumbs = ["prints"];
   return (
     <Grid fluid className='container'>
 
