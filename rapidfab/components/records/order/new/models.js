@@ -41,12 +41,7 @@ class Model extends Component {
           </BS.Col>
           <BS.Col md={1}>
             <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
-            <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
-              <option key="placeholder" value="" selected disabled></option>
-              {_.map(supportMaterials, material => (
-                <option key={material.uri} value={material.uri}>{material.name}</option>
-              ))}
-            </BS.FormControl>
+            <BS.FormControl type="number" min="1" required onChange={this.handleChange} name="quantity"/>
           </BS.Col>
           <BS.Col md={2}>
             <BS.ControlLabel><FormattedMessage id="field.template" defaultMessage='Template'/>:</BS.ControlLabel>
