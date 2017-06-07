@@ -8,7 +8,6 @@ import Grid, {
 }                             from 'rapidfab/components/grid'
 import Error                  from 'rapidfab/components/error'
 
-
 const TemplateGrid = ({ records }) => (
   <Grid
     data={records}
