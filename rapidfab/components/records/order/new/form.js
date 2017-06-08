@@ -56,11 +56,15 @@ class NewOrderForm extends Component {
   }
 
   onAddModel() {
-    this.setState({numModel: this.state.numModel + 1});
+    this.setState((prevState) => {
+      return {numModel: prevState.numModel + 1};
+    });
   }
 
   onRemoveModel() {
-    this.setState({numModel: this.state.numModel - 1});
+    this.setState((prevState) => {
+      return {numModel: prevState.numModel - 1};
+    });
   }
 
   render() {
@@ -70,8 +74,8 @@ class NewOrderForm extends Component {
 
     const models = [];
 
-    for (var i = 0; i < this.state.numModel; i += 1) {
-      models.push(<Model {...this.props} onRemoveModel={this.onRemoveModel}/>);
+    for (let i = 0; i < this.state.numModel; i += 1) {
+      models.push(<Model {...this.props} onRemoveModel={this.onRemoveModel} />);
     };
 
     return(

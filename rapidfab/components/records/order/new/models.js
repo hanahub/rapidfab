@@ -1,5 +1,4 @@
 import React, { Component, PropTypes }     from "react"
-import ReactDOM                            from "react-dom"
 import * as BS                             from 'react-bootstrap'
 import { FormattedMessage }                from 'react-intl'
 import Fa                                  from 'react-fontawesome'
@@ -8,7 +7,7 @@ class Model extends Component {
   constructor(props) {
     super(props)
   }
- 
+
   render() {
     const { materials, shippings, providers, templates } = this.props;
     const baseMaterials = _.filter(materials, {type: "base"});
@@ -34,7 +33,7 @@ class Model extends Component {
             <BS.ControlLabel><FormattedMessage id="field.supportMaterial" defaultMessage='Support Material'/>:</BS.ControlLabel>
             <BS.FormControl componentClass="select" required onChange={this.handleChange} name="supportMaterial">
               <option key="placeholder" value="" selected disabled></option>
-              {_.map(baseMaterials, material => (
+              {_.map(supportMaterials, material => (
                 <option key={material.uri} value={material.uri}>{material.name}</option>
               ))}
             </BS.FormControl>
