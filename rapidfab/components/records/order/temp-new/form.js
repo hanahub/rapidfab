@@ -5,7 +5,7 @@ import _                                   from "lodash"
 import Fa                                  from 'react-fontawesome'
 import { FormattedMessage }                from 'react-intl'
 import { Currencies }                      from 'rapidfab/constants'
-import Model                               from 'rapidfab/components/records/order/new/models'
+import Model                               from './models'
 
 
 const SaveButtonTitle = ({  }) => (
