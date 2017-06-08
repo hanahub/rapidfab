@@ -8,7 +8,7 @@ class Model extends Component {
   constructor(props) {
     super(props)
   }
-
+ 
   render() {
     const { materials, shippings, providers, templates } = this.props;
     const baseMaterials = _.filter(materials, {type: "base"});
