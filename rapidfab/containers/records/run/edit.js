@@ -59,15 +59,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['printer-type'].list())
       dispatch(Actions.Api.wyatt.printer.list())
     },
-    onSubmit: payload => {
-      dispatch(Actions.Api.wyatt.run.put(payload.uuid, {
-        notes: payload.notes,
-        status: payload.status,
-        success: payload.success === 'success' // html radio inputs do not support boolean
-      })).then(
-        () => window.location.hash = "#/plan/runs"
-      )
-    },
     onDelete: uuid => dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
       () => window.location.hash = "#/plan/runs"
     ),
@@ -100,6 +91,8 @@ function mapStateToProps(state, props) {
   const printerTypes = Selectors.getPrinterTypes(state)
   const printers = Selectors.getPrinters(state)
 
+  const initialStatus = state.form["record.run"] ? state.form["record.run"].status.initial : null;
+
   return {
     apiErrors     : _.concat(
         print.list.errors,
@@ -112,6 +105,7 @@ function mapStateToProps(state, props) {
     downloadModel,
     initialValues : runResource,
     orders,
+    initialStatus,
     prints,
     resource      : runResource,
     run,
@@ -129,7 +123,23 @@ function mapStateToProps(state, props) {
   }
 }
 
+function mergeProps(stateProps, dispatchProps, ownProps) {
+  const props = Object.assign(stateProps, dispatchProps, ownProps);
+  props.onSubmit = (run) => {
+    const payload = {
+      notes: run.notes,
+      success: run.success === 'success',
+      status: run.status,
+    }
+    if (props.initialStatus === run.status)
+      delete payload.status;
+    props.dispatch(Actions.Api.wyatt.run.put(run.uuid, payload))
+      .then( () => window.location.hash = "#/plan/runs" );
+  }
+  return props;
+}
+
 export default reduxForm({
   form: 'record.run',
   fields
-}, mapStateToProps, mapDispatchToProps)(RunsContainer)
+}, mapStateToProps, mapDispatchToProps, mergeProps)(RunsContainer)
