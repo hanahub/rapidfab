@@ -248,7 +248,10 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            <ModelDownloadField runUUID={fields.uuid.value} model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} />
+            { fields.model.value ?
+              <ModelDownloadField runUUID={fields.uuid.value} model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} /> :
+                (<em><FormattedMessage id="notAvailable" defaultMessage="N/A"/></em>)
+            }
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
