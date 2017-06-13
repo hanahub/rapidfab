@@ -152,6 +152,7 @@ export default {
   "field.estimatedTotalCost"          : "予想総費用",
   "field.et"                          : "ET",
   "field.fail"                        : "Fail",
+  "field.file"                        : "File",
   "field.fullfilledByThirdParty"      : "サードパーティーが処理",
   "field.hidden"                      : "Hidden",
   "field.id"                          : "ID",

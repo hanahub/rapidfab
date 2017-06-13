@@ -1,4 +1,5 @@
-import React, { Component, PropTypes }     from "react"
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM                            from "react-dom"
 import * as BS                             from 'react-bootstrap'
 import _                                   from "lodash"
@@ -17,37 +18,59 @@ const SaveButtonTitle = ({  }) => (
 class NewOrderForm extends Component {
   constructor(props) {
     super(props)
+
+    this.state = {
+      numModel: 1,
+      itar: false,
+    }
+
     this.onSubmit = this.onSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.onAddModel = this.onAddModel.bind(this)
     this.onRemoveModel = this.onRemoveModel.bind(this)
-    this.state = {numModel: 0}
+    this.toggleItar = this.toggleItar.bind(this)
   }
 
   onSubmit(event) {
     event.preventDefault()
 
-    const state = this.state
+    const bureau = this.props.bureau.uri;
+    const quantity = _.parseInt(this.state.quantity);
+    const {
+      baseMaterial,
+      currency,
+      itar,
+      name,
+      shippingName,
+      shippingAddress,
+      shippingTracking,
+      shippingType,
+      supportMaterial,
+      template,
+      thirdPartyProvider,
+    } = this.state;
+    const model = itar ? null : ReactDOM.findDOMNode(this.refs.file).files;
 
     const payload = {
-      bureau: this.props.bureau.uri,
-      currency: state.currency,
+      bureau,
+      currency,
       materials: {
-        base: state.baseMaterial,
-        support: state.supportMaterial,
+        base: baseMaterial,
+        support: supportMaterial,
       },
-      model: ReactDOM.findDOMNode(this.refs.file).files,
-      name: state.name,
-      quantity: _.parseInt(state.quantity),
+      model,
+      name,
+      quantity,
       shipping: {
-        name: state.shippingName,
-        address: state.shippingAddress,
-        tracking: state.shippingTracking,
-        uri: state.shippingType,
+        name: shippingName,
+        address: shippingAddress,
+        tracking: shippingTracking,
+        uri: shippingType,
       },
-      template: state.template,
-      third_party_provider: state.thirdPartyProvider,
-    }
+      template,
+      third_party_provider: thirdPartyProvider,
+    };
+
     this.props.onSubmit(payload)
   }
 
@@ -67,16 +90,35 @@ class NewOrderForm extends Component {
     });
   }
 
+  toggleItar() {
+    this.setState( prevState => {
+      return { itar: !prevState.itar }
+    });
+  }
+
   render() {
     const { materials, shippings, providers, templates } = this.props;
     const baseMaterials = _.filter(materials, {type: "base"});
     const supportMaterials = _.filter(materials, {type: "support"});
 
-    const models = [];
+    const {
+      handleChange,
+      onRemoveModel,
+      toggleItar,
+    } = this;
+    const { numModel, itar } = this.state;
 
-    for (let i = 0; i < this.state.numModel; i += 1) {
-      models.push(<Model {...this.props} onRemoveModel={this.onRemoveModel} />);
-    };
+    const models = [...Array(numModel)].map( index => {
+      return (
+        <Model
+          {...this.props}
+          handleChange={handleChange}
+          onRemoveModel={onRemoveModel}
+          isOnly={numModel === 1}
+          itar={itar}
+        />
+      );
+    });
 
     return(
       <form onSubmit={this.onSubmit}>
@@ -104,59 +146,19 @@ class NewOrderForm extends Component {
               <BS.FormControl type="text" required maxLength="255" onChange={this.handleChange} name="name"/>
             </BS.FormGroup>
 
-            {models}
-
-            <BS.FormGroup controlId="uxModel">
-              <fieldset class="form-inline">
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.model" defaultMessage='Model'/>:</BS.ControlLabel>
-                  <input type="file" class="input-medium" accept=".stl" ref="file" required name="file" />
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.material" defaultMessage='Material'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="baseMaterial">
-                    <option key="placeholder" value="" selected disabled></option>
-                    {_.map(baseMaterials, material => (
-                      <option key={material.uri} value={material.uri}>{material.name}</option>
-                    ))}
-                  </BS.FormControl>
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.supportMaterial" defaultMessage='Support Material'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="supportMaterial">
-                    <option key="placeholder" value="" selected disabled></option>
-                    {_.map(supportMaterials, material => (
-                      <option key={material.uri} value={material.uri}>{material.name}</option>
-                    ))}
-                  </BS.FormControl>
-                </BS.Col>
-                <BS.Col md={1}>
-                  <BS.ControlLabel><FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:</BS.ControlLabel>
-                  <BS.FormControl type="number" min="1" required onChange={this.handleChange} name="quantity"/>
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.template" defaultMessage='Template'/>:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select" required onChange={this.handleChange} name="template">
-                    <option key="placeholder" value="" selected disabled>Select a Template</option>
-                    {_.map(templates, template => (
-                      <option key={template.uri} value={template.uri}>{template.name}</option>
-                    ))}
-                  </BS.FormControl>
-                </BS.Col>
-                <BS.Col md={2}>
-                  <BS.ControlLabel><FormattedMessage id="field.notes" defaultMessage='Notes'/>:</BS.ControlLabel>
-                  <BS.FormControl type="text" required maxLength="255" onChange={this.handleChange} name="notes"/>
-                </BS.Col>
-                <BS.Col md={1}>
-                  <br />
-                    <BS.Button onClick={this.onAddModel}>
-                      <span>
-                        <Fa name='plus'/>
-                      </span>
-                    </BS.Button>
-                </BS.Col>
-              </fieldset>
-            </BS.FormGroup>
+            <BS.Panel header="Models">
+              <BS.Checkbox checked={itar} onClick={toggleItar}>
+                ITAR Order
+              </BS.Checkbox>
+              <hr/>
+              {models}
+              <hr />
+              <BS.Col md={1} mdOffset={11}>
+                <BS.Button onClick={this.onAddModel} bsSize="small">
+                  Add Model
+                </BS.Button>
+              </BS.Col>
+            </BS.Panel>
 
             {
               supportMaterials.length > 0 ?

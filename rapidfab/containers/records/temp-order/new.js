@@ -62,14 +62,20 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
       if (false === !!payload.post_processor_type) delete payload.post_processor_type
 
-      dispatch(Actions.Api.hoth.model.post({
-        name: payload.name,
-        type: "stl",
-      })).then(args => {
-        dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
-        payload.model = args.headers.location
-        dispatch(Actions.UploadModel.storeOrderPayload(payload))
-      })
+      if (!payload.model) {
+        dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+          window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
+        })
+      } else {
+        dispatch(Actions.Api.hoth.model.post({
+          name: payload.name,
+          type: "stl",
+        })).then(args => {
+          dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
+          payload.model = args.headers.location
+          dispatch(Actions.UploadModel.storeOrderPayload(payload))
+        })
+      }
     }
   }
 }
