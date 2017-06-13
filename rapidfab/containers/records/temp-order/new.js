@@ -66,16 +66,16 @@ function mapDispatchToProps(dispatch, props) {
         dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
           window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
         })
+      } else {
+        dispatch(Actions.Api.hoth.model.post({
+          name: payload.name,
+          type: "stl",
+        })).then(args => {
+          dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
+          payload.model = args.headers.location
+          dispatch(Actions.UploadModel.storeOrderPayload(payload))
+        })
       }
-
-      dispatch(Actions.Api.hoth.model.post({
-        name: payload.name,
-        type: "stl",
-      })).then(args => {
-        dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
-        payload.model = args.headers.location
-        dispatch(Actions.UploadModel.storeOrderPayload(payload))
-      })
     }
   }
 }
