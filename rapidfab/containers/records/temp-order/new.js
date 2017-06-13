@@ -62,6 +62,12 @@ function mapDispatchToProps(dispatch, props) {
       if (false === !!payload.third_party_provider) delete payload.third_party_provider
       if (false === !!payload.post_processor_type) delete payload.post_processor_type
 
+      if (!payload.model) {
+        dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+          window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
+        })
+      }
+
       dispatch(Actions.Api.hoth.model.post({
         name: payload.name,
         type: "stl",
