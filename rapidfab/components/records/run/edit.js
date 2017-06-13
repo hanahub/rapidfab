@@ -143,42 +143,42 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedStartTime" defaultMessage='Estimated Start Time'/>}>
                 {fields.estimates.start.value ?
-                  (<span>{Moment(fields.estimates.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.start.value).fromNow()}) </span>) :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                  <span>{Moment(fields.estimates.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.start.value).fromNow()}) </span> :
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedEndTime" defaultMessage='Estimated End Time'/>}>
                 {fields.estimates.end.value ?
-                  (<span>{Moment(fields.estimates.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.end.value).fromNow()}) </span>) :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                  <span>{Moment(fields.estimates.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.end.value).fromNow()}) </span> :
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage='Estimated Print Time'/>}>
                 {fields.estimates.time.print.value ?
                   <TimeDisplay seconds={fields.estimates.time.print.value} /> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPostProcessingTime" defaultMessage='Estimated Post Processing Time'/>}>
                 {fields.estimates.time.post_processing.value ?
                   <TimeDisplay seconds={fields.estimates.time.post_processing.value} /> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedMaterialUsed" defaultMessage='Estimated Material Used'/>}>
                 {fields.estimates.materials.base.value ?
                   <FormattedVolume value={fields.estimates.materials.base.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedSupportUsed" defaultMessage='Estimated Support Used'/>}>
                 {fields.estimates.materials.support.value ?
                   <FormattedVolume value={fields.estimates.materials.support.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
             </BS.ListGroup>
@@ -188,42 +188,42 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.actualStartTime" defaultMessage='Actual Start Time'/>}>
                 {fields.actuals.start.value ?
-                  (<span>{Moment(fields.actuals.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.start.value).fromNow()}) </span>) :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                  <span>{Moment(fields.actuals.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.start.value).fromNow()}) </span> :
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualEndTime" defaultMessage='Actual End Time'/>}>
                 {fields.actuals.end.value ?
-                  (<span>{Moment(fields.actuals.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.end.value).fromNow()}) </span>) :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                  <span>{Moment(fields.actuals.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.end.value).fromNow()}) </span> :
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualPrintTime" defaultMessage='Actual Print Time'/>}>
                 {fields.actuals.time.print.value ?
                   <FormattedDuration value={fields.actuals.time.print.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualPostProcessingTime" defaultMessage='Actual Post Processing Time'/>}>
                 {fields.actuals.time.post_processing.value ?
                   <FormattedDuration value={fields.actuals.time.post_processing.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualMaterialUsed" defaultMessage='Actual Material Used'/>}>
                 {fields.actuals.materials.base.value ?
                   <FormattedVolume value={fields.actuals.materials.base.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
               <BS.ListGroupItem header={<FormattedMessage id="field.actualSupportUsed" defaultMessage='Actual Support Used'/>}>
                 {fields.actuals.materials.support.value ?
                   <FormattedVolume value={fields.actuals.materials.support.value}/> :
-                    (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                    <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
                 }
               </BS.ListGroupItem>
             </BS.ListGroup>
@@ -242,13 +242,16 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
             <BS.FormControl.Static>
               {fields.created.value ?
                 <FormattedDateTime value={fields.created.value}/> :
-                  (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+                  <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
               }
             </BS.FormControl.Static>
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            <ModelDownloadField runUUID={fields.uuid.value} model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} />
+            { fields.model.value ?
+              <ModelDownloadField runUUID={fields.uuid.value} model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} /> :
+                <em><FormattedMessage id="notAvailable" defaultMessage="N/A"/></em>
+            }
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
