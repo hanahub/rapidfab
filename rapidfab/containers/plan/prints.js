@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from "lodash"
 
 import Actions from "rapidfab/actions";
 import * as Selectors from 'rapidfab/selectors';
@@ -29,7 +30,15 @@ class PrintsContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
-      dispatch(Actions.Api.wyatt.print.list())
+      dispatch(Actions.Api.wyatt.order.list())
+        .then( response => {
+          const orders = response.json.resources.map(order => order.uri);
+          for(let ordersChunk of _.chunk(orders, 15)) {
+            dispatch(Actions.Api.wyatt.print.list({
+              order: ordersChunk
+            }));
+          }
+        });
       dispatch(Actions.Api.wyatt.location.list())
     },
     handleOnChange: location => {
