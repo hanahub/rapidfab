@@ -10,6 +10,7 @@ import * as UploadModel    from './uploadModel'
 import * as Url            from './url'
 import * as UI             from './ui'
 import * as Pager          from './pager'
+import * as RouteUUID      from './routeUUID'
 
 
 const Actions = {
@@ -23,6 +24,7 @@ const Actions = {
   UploadModel,
   Url,
   UI,
+  RouteUUID,
 }
 
 export default Actions

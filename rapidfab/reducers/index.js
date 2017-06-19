@@ -11,6 +11,7 @@ import orderLocation            from './orderLocation'
 import i18n                     from './i18n'
 import fakeData                 from './fakeData'
 import ui                       from './ui'
+import routeUUID                from './routeUUID'
 import api                      from './api'
 import resources                from './resources'
 import pager                    from './pager'
@@ -27,6 +28,7 @@ const Reducer = combineReducers({
   resources,
   api,
   ui,
+  routeUUID,
   pager,
 })
 
