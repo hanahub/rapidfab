@@ -43,6 +43,7 @@ const Constants = [
   'UPLOAD_MODEL_ADD_ERROR',
   'STORE_LOCATION',
   'SET_PAGE',
+  'SET_ROUTE_UUID',
   'CLEAR_UI_STATE',
 ]
 
