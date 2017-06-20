@@ -14,7 +14,7 @@ const SaveButtonTitle = () => (
   </span>
 );
 
-const saveButton = ({ onSubmit, onDelete }) => (
+const SaveButton = ({ onSubmit, onDelete }) => (
   <SplitButton
     id="actions"
     type="submit"
@@ -33,4 +33,4 @@ const saveButton = ({ onSubmit, onDelete }) => (
   </SplitButton>
 );
 
-export default saveButton;
+export default SaveButton;

@@ -11,7 +11,12 @@ const breadcrumbMap = {
     href: "#/plan/prints",
     icon: "list",
     message: <FormattedMessage id="plan.prints" defaultMessage="Prints" />,
-  }
+  },
+  orders: {
+    href: "#/plan/orders",
+    icon: "files-o",
+    message: <FormattedMessage id="plan.orders" defaultMessage="Orders" />,
+  },
 }
 
 const HomeLink = () => (
