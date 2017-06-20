@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { Form, FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
+import {
+  Form,
+  FormControl,
+  FormGroup,
+  Col,
+  ControlLabel
+} from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
-
-import * as Selectors from 'rapidfab/selectors'
+import { getThirdPartyProviders, getShippings } from 'rapidfab/selectors'
 import { Currencies } from 'rapidfab/constants';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
@@ -42,14 +47,13 @@ const FormRow = ({id, defaultMessage, children}) => (
 );
 
 const EditOrderFormComponent = ({
-  handleSubmit,
   created,
   fields,
   providers,
   shippings,
   statusOptions,
 }) => (
-  <Form horizontal onSubmit={() => console.log('submit')}>
+  <Form horizontal>
 
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name}/>
@@ -137,21 +141,19 @@ class EditOrderForm extends Component {
     const { statusOptions } = this.state;
 
     const {
-      handleSubmit,
+      created,
       fields,
       providers,
       shippings,
-      created,
     } = this.props;
 
     return(
       <EditOrderFormComponent
-        handleSubmit={handleSubmit}
+        created={created}
         fields={fields}
-        statusOptions={statusOptions}
         providers={providers}
         shippings={shippings}
-        created={created}
+        statusOptions={statusOptions}
       />
     );
   }
@@ -173,8 +175,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   const initialValues = state.resources[state.routeUUID.uuid];
   const { created } = initialValues;
-  const providers = Selectors.getThirdPartyProviders(state);
-  const shippings = Selectors.getShippings(state);
+  const providers = getThirdPartyProviders(state);
+  const shippings = getShippings(state);
 
   return { initialValues, created, providers, shippings };
 };
