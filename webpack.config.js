@@ -58,7 +58,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel?presets[]=es2015&plugins[]=transform-runtime'],
+        loaders: ['react-hot', 'babel?presets[]=env&plugins[]=transform-runtime'],
         exclude: /(node_modules|bower_components)/,
       },
       {
