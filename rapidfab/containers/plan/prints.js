@@ -30,16 +30,8 @@ class PrintsContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
-      dispatch(Actions.Api.wyatt.order.list())
-        .then( response => {
-          const orders = response.json.resources.map(order => order.uri);
-          for(let ordersChunk of _.chunk(orders, 15)) {
-            dispatch(Actions.Api.wyatt.print.list({
-              order: ordersChunk
-            }));
-          }
-        });
-      dispatch(Actions.Api.wyatt.location.list())
+      dispatch(Actions.Api.wyatt.print.list());
+      dispatch(Actions.Api.wyatt.location.list());
     },
     handleOnChange: location => {
       dispatch(Actions.LocationFilter.setLocation(location))
