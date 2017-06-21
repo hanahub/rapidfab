@@ -1,47 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import {
-  ButtonToolbar,
-  Col,
-  MenuItem,
-  Panel,
-  SplitButton,
-} from 'react-bootstrap';
+import { Col, Panel } from 'react-bootstrap';
 
 import EditOrderForm from './EditOrderForm';
 import OrderRuns from './OrderRuns';
-
-const ActionToolbar = ({onSubmit, onDelete}) => (
-  <ButtonToolbar className="clearfix">
-    <div className="pull-right">
-      <SplitButton
-        id="actions"
-        type="submit"
-        bsStyle="success"
-        bsSize="small"
-        title={<SaveButtonTitle />}
-        onClick={onSubmit}
-      >
-        <MenuItem
-          eventKey={1}
-          onClick={onDelete}
-        >
-          <Fa name='ban'/>
-          <FormattedMessage id="button.delete" defaultMessage='Delete'/>
-        </MenuItem>
-      </SplitButton>
-    </div>
-  </ButtonToolbar>
-);
-
-const SaveButtonTitle = () => (
-  <span>
-    <Fa name='floppy-o'/> <FormattedMessage id="button.save" defaultMessage='Save'/>
-  </span>
-);
+import SaveDropdownButton from './SaveDropdownButton';
 
 class OrderSummary extends Component {
   constructor(props) {
@@ -58,9 +23,7 @@ class OrderSummary extends Component {
   }
 
   onDelete() {
-    const { uuid } = this;
-
-    dispatch(Actions.Api.wyatt.order.delete(uuid))
+    dispatch(Actions.Api.wyatt.order.delete(this.uuid))
       .then( () => window.location.hash = "#/plan/orders" )
   }
 
@@ -69,7 +32,7 @@ class OrderSummary extends Component {
     return (
       <Panel header="Order Summary">
 
-        <ActionToolbar onSubmit={onSubmit} onDelete={onDelete} />
+        <SaveDropdownButton onSubmit={onSubmit} onDelete={onDelete} />
         <hr />
 
         <Col xs={12} md={7}>
@@ -85,8 +48,6 @@ class OrderSummary extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { uuid: state.routeUUID.uuid }
-}
+const mapStateToProps = state => ({ uuid: state.routeUUID.uuid });
 
 export default connect(mapStateToProps)(OrderSummary)

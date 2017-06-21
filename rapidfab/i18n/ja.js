@@ -114,6 +114,18 @@ export default {
   "record.currency.add"               : "通貨の追加",
   "record.currency.new"               : "新規通貨",
 
+  "estimates.estimates"               : "Estimates",
+  "estimates.cost"                    : "Cost",
+  "estimates.endTime"                 : "End Time",
+  "estimates.materialUsed"            : "Material Used",
+  "estimates.postProcessingTime"      : "Post-Processing Time",
+  "estimates.printTime"               : "Print Time",
+  "estimates.shippingCost"            : "Shipping Cost",
+  "estimates.shippingDate"            : "Shipping Date",
+  "estimates.startTime"               : "Start Time",
+  "estimates.supportUsed"             : "Support Used",
+  "estimates.totalCost"               : "Total Cost",
+
   "field.accessToAllLocations"        : "すべての場所にアクセス",
   "field.actualEndTime"               : "Actual End Time",
   "field.actualMaterialUsed"          : "材料実使用量",

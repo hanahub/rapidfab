@@ -115,6 +115,18 @@ export default {
   "record.currency.add"               : "Add Currency",
   "record.currency.new"               : "New Currency",
 
+  "estimates.estimates"               : "Estimates",
+  "estimates.cost"                    : "Cost",
+  "estimates.endTime"                 : "End Time",
+  "estimates.materialUsed"            : "Material Used",
+  "estimates.postProcessingTime"      : "Post-Processing Time",
+  "estimates.printTime"               : "Print Time",
+  "estimates.shippingCost"            : "Shipping Cost",
+  "estimates.shippingDate"            : "Shipping Date",
+  "estimates.startTime"               : "Start Time",
+  "estimates.supportUsed"             : "Support Used",
+  "estimates.totalCost"               : "Total Cost",
+
   "field.accessToAllLocations"        : "Access to All Locations",
   "field.actualEndTime"               : "Actual End Time",
   "field.actualMaterialUsed"          : "Actual Material Used",
