@@ -29,10 +29,13 @@ function mapDispatchToProps(dispatch) {
     onInitialize: uuid => {
       dispatch(Actions.Api.wyatt.print.get(uuid))
         .then( response => {
-          dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)))
-            .then( response => {
-              dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)))
-            });
+          return dispatch( Actions.Api.wyatt.order.get( extractUuid(response.json.order)));
+        })
+        .then( response => {
+          return dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)));
+        })
+        .catch ( err => {
+          window.location.hash = "#/plan/prints";
         });
     },
   }
