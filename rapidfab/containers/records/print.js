@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: uuid => {
       dispatch(Actions.Api.wyatt.print.get(uuid))
         .then( response => {
-          return dispatch( Actions.Api.wyatt.order.get( extractUuid(response.json.order)));
+          return dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)));
         })
         .then( response => {
           return dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)));
@@ -48,8 +48,8 @@ function mapStateToProps(state, props) {
   const models = Selectors.getModels(state, props);
   const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
 
-  const order = orders.find( order => order.uri === print.order);
-  const model = models.find( model => model.uri === order.model);
+  const order = print ? orders.find( order => order.uri === print.order) : null;
+  const model = order ? models.find( model => model.uri === order.model) : null;
 
   const fetching =
     state.ui.wyatt.print.get.fetching ||
