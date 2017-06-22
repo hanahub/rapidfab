@@ -5,6 +5,7 @@ import { Grid } from 'react-bootstrap';
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import OrderSummary from './OrderSummary';
 import LineItem from './LineItem';
+import AddLineItem from './AddLineItem';
 
 const EditOrder = ({ orderResource }) => {
   const breadcrumbs = ["orders", orderResource.id]
@@ -13,6 +14,7 @@ const EditOrder = ({ orderResource }) => {
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
       <OrderSummary />
       <LineItem />
+      <AddLineItem />
     </Grid>
   );
 }
