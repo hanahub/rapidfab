@@ -68,9 +68,9 @@ describe('uploadModel', function(){
       expect(results).to.eql(expected)
     })
 
-    it(`reduces UPLOAD_MODEL_STORE_ORDER_PAYLOAD action`, () => {
+    it(`reduces UPLOAD_MODEL_STORE_PAYLOAD action`, () => {
       let action = {
-        type: 'UPLOAD_MODEL_STORE_ORDER_PAYLOAD',
+        type: 'UPLOAD_MODEL_STORE_PAYLOAD',
         payload: {
           count: 42,
           name: "New Order",

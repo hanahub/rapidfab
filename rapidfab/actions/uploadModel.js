@@ -16,9 +16,9 @@ function uploadModel(uploadUrl) {
   }
 }
 
-export function storeOrderPayload(payload) {
+export function storePayload(payload) {
   return {
-    type: Constants.UPLOAD_MODEL_STORE_ORDER_PAYLOAD,
+    type: Constants.UPLOAD_MODEL_STORE_PAYLOAD,
     payload,
   }
 }

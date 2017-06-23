@@ -30,7 +30,7 @@ function reducer(state=initialState, action) {
         uploading: true,
         percent: action.percent,
       })
-    case Constants.UPLOAD_MODEL_STORE_ORDER_PAYLOAD:
+    case Constants.UPLOAD_MODEL_STORE_PAYLOAD:
       return Object.assign({}, state, {
         orderPayload: action.payload
       })
