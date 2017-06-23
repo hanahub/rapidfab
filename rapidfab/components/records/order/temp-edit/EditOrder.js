@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'react';
+import { connect } from 'react-redux';
 import { Grid } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
@@ -7,8 +8,8 @@ import OrderSummary from './OrderSummary';
 import LineItem from './LineItem';
 import AddLineItem from './AddLineItem';
 
-const EditOrder = ({ orderResource }) => {
-  const breadcrumbs = ["orders", orderResource.id]
+const EditOrder= ({ order }) => {
+  const breadcrumbs = ["orders", order.id]
   return(
     <Grid fluid>
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
@@ -19,4 +20,7 @@ const EditOrder = ({ orderResource }) => {
   );
 }
 
-export default EditOrder
+
+const mapStateToProps = state => ({order: state.resources[state.routeUUID.uuid]});
+
+export default connect(mapStateToProps)(EditOrder)

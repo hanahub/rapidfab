@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch, props) {
     },
     onSaveOrder: payload => {
       if(payload) {
-        dispatch(Actions.UploadModel.storeOrderPayload(null))
+        dispatch(Actions.UploadModel.storePayload(null))
         dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
           window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
         })
@@ -73,7 +73,7 @@ function mapDispatchToProps(dispatch, props) {
         })).then(args => {
           dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
           payload.model = args.headers.location
-          dispatch(Actions.UploadModel.storeOrderPayload(payload))
+          dispatch(Actions.UploadModel.storePayload(payload))
         })
       }
     }
