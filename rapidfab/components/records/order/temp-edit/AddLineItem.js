@@ -13,6 +13,7 @@ import {
   Panel,
 } from 'react-bootstrap';
 
+import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 
 const AddLineItemPresentation = ({
@@ -149,22 +150,23 @@ class AddLineItem extends Component {
     super(props)
 
     const { baseMaterials, supportMaterials, templates } = props;
-    const baseMaterial = baseMaterials[0];
-    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0] : null;
-    const template = templates[0];
+    const baseMaterial = baseMaterials[0].uri;
+    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
+    const template = templates[0].uri;
 
     this.state = {
       baseMaterial,
       supportMaterial,
       template,
-    }
+    };
 
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   handleFileChange(event) {
-    this.setState({ file: event.target.files[0] });
+    this.setState({ model: event.target.files[0] });
   }
 
   handleInputChange(event) {
@@ -172,9 +174,39 @@ class AddLineItem extends Component {
   }
 
   onSubmit(event) {
-    // TODO: Implement Payload
     event.preventDefault();
-    console.log('Submit');
+
+    const {
+      baseMaterial,
+      model,
+      notes,
+      quantity,
+      supportMaterial,
+      template,
+    } = this.state;
+
+    const { bureau, dispatch, order } = this.props;
+
+    const payload = {
+      bureau: bureau.uri,
+      materials: {
+        base: baseMaterial,
+        support: supportMaterial,
+      },
+      // notes: PENDING api implementation
+      quantity: parseInt(quantity),
+      template,
+    };
+
+    dispatch(Actions.Api.hoth.model.post({ name: order.name, type: "stl", }))
+      .then(args => {
+        const { location, uploadLocation } = args.headers;
+        payload.model = location;
+
+        dispatch(Actions.UploadModel.upload(uploadLocation, model))
+        dispatch(Actions.UploadModel.storePayload(payload))
+        // After the model is uploaded, the edit container posts the line-item
+      })
   }
 
   render() {
@@ -197,13 +229,23 @@ class AddLineItem extends Component {
   }
 }
 const mapStateToProps = (state) => {
+  const bureau = Selectors.getBureau(state);
   const materials = Selectors.getMaterials(state);
   const templates = Selectors.getTemplates(state);
+  const order = state.resources[state.routeUUID.uuid];
+  const uploadModel = state.uploadModel;
 
   const baseMaterials = materials.filter( material => material.type === 'base');
   const supportMaterials = materials.filter( material => material.type === 'support');
 
-  return { baseMaterials, supportMaterials, templates };
+  return {
+    baseMaterials,
+    bureau,
+    order,
+    supportMaterials,
+    templates
+  };
 }
+
 
 export default connect(mapStateToProps)(AddLineItem)
