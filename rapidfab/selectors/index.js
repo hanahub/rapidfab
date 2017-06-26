@@ -258,6 +258,20 @@ export const getPrintsForOrder = createSelector(
   }
 );
 
+export const getPrintsForLineItem = createSelector(
+  [ getPredicate, getStatePrints, getStateResources ],
+  (lineItem, uuids, resources) => {
+    const prints = _.reduce(uuids, (results, uuid) => {
+      const print = resources[uuid];
+      if(print && lineItem && print['line_item'] === lineItem.uri) {
+        results.push(print);
+      }
+      return results;
+    }, []);
+    return prints;
+  }
+);
+
 export const getRunsForOrder = createSelector(
   [ getPredicate, getStateResources, getPrintsForOrder ],
   (order, resources, prints) => {
