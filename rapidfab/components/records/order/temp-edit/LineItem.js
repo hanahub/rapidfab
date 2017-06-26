@@ -10,7 +10,8 @@ import {
   Thumbnail,
 } from 'react-bootstrap';
 
-import { getPrintsForOrder, getModels } from 'rapidfab/selectors';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
+import { getPrintsForLineItem, getModels } from 'rapidfab/selectors';
 import {
   FormattedCost,
   FormattedDate,
@@ -75,9 +76,7 @@ const Prints = ({ prints }) => (
           </Col>
         </Row>
       </ListGroupItem>
-
-      { prints.map( print => <PrintItem key={print.id} print={print} />)}
-
+      { prints.map( print => <PrintItem key={print.id} print={print} />) }
     </ListGroup>
   </Panel>
 );
@@ -138,36 +137,8 @@ const Estimates = ({ estimates, currency }) => (
             <FormattedMessage id="estimates.cost" defaultMessage='Cost'/>
           </Col>
           <Col xs={4}>
-            {estimates.cost.amount ?
+            {estimates.amount ?
               <FormattedCost currency={currency} value={estimates.cost.amount} /> :
-                (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
-            }
-          </Col>
-        </Row>
-      </ListGroupItem>
-
-      <ListGroupItem>
-        <Row>
-          <Col xs={8}>
-            <FormattedMessage id="estimates.shippingCost" defaultMessage='Shipping Cost'/>
-          </Col>
-          <Col xs={4}>
-            {estimates.cost.shipping_amount ?
-              <FormattedCost currency={currency} value={estimates.cost.shipping_amount} /> :
-                (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
-            }
-          </Col>
-        </Row>
-      </ListGroupItem>
-
-      <ListGroupItem>
-        <Row>
-          <Col xs={8}>
-            <FormattedMessage id="estimates.totalCost" defaultMessage='Total Cost'/>
-          </Col>
-          <Col xs={4}>
-            {estimates.cost.amount + estimates.cost.shipping_amount ?
-              <FormattedCost currency={currency} value={estimates.cost.amount + estimates.cost.shipping_amount} /> :
                 (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
             }
           </Col>
@@ -192,58 +163,62 @@ const ModelThumbnail = ({src}) => {
   }
 }
 
-const LineItem = ({ currency, estimates, prints, snapshot }) => (
-  <Panel header="Line Item">
+const LineItem = ({ lineItem, prints, snapshot }) => {
+  const { currency, estimates } = lineItem;
+  return(
+    <Panel header="Line Item">
 
-    <Col xs={12} sm={4}>
-      <Row>
-        <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
-          <ModelThumbnail src={snapshot}/>
-        </Col>
-      </Row>
+      <Col xs={12} sm={4}>
+        <Row>
+          <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
+            <ModelThumbnail src={snapshot}/>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col xs={12} lg={10} lgOffset={1}>
-          <Estimates estimates={estimates} currency={currency}/>
-        </Col>
-      </Row>
-    </Col>
+        <Row>
+          <Col xs={12} lg={10} lgOffset={1}>
+            <Estimates estimates={estimates} currency={currency}/>
+          </Col>
+        </Row>
+      </Col>
 
-    <Col xs={12} sm={8}>
-      <Row>
-        <Col>
-          <LineItemForm />
-        </Col>
-      </Row>
+      <Col xs={12} sm={8}>
+        <Row>
+          <Col>
+            <LineItemForm lineItem={lineItem} formKey={lineItem.uri}/>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col xs={9} xsOffset={3}>
-          <Prints prints={prints} style={{padding: "20px"}}/>
-        </Col>
-      </Row>
-    </Col>
+        <Row>
+          <Col xs={9} xsOffset={3}>
+            <Prints prints={prints} style={{padding: "20px"}}/>
+          </Col>
+        </Row>
+      </Col>
 
-  </Panel>
-);
+    </Panel>
+  );
+};
 
-function getSnapshotFromOrder(order, models) {
-  if (!order || models.length === 0)
+function getSnapshotFromLineItem(lineItem, models) {
+  if (!lineItem || models.length === 0)
     return ''
 
-  const model = models.filter(model => model.uri === order.model);
+  const model = models.filter(model => model.uri === lineItem.model);
 
   return (model && model.length) ? model[0].snapshot_content : '';
 }
 
-const mapStateToProps = (state) => {
-  const { order } = state.ui.wyatt;
-  const orderResource = state.resources[state.routeUUID.uuid];
-  const { currency, estimates } = orderResource;
-  const prints = getPrintsForOrder(state, orderResource);
-  const models = getModels(state);
-  const snapshot = getSnapshotFromOrder(orderResource, models);
 
-  return { currency, estimates, prints, snapshot };
+const mapStateToProps = (state, ownProps) => {
+  const { uri } = ownProps;
+  const uuid = extractUuid(uri);
+  const lineItem = state.resources[uuid];
+  const prints = getPrintsForLineItem(state, lineItem);
+  const models = getModels(state);
+  const snapshot = getSnapshotFromLineItem(lineItem, models);
+
+  return { lineItem, prints, snapshot };
 }
 
 export default connect(mapStateToProps)(LineItem)
