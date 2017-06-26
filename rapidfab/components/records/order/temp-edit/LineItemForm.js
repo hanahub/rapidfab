@@ -11,8 +11,10 @@ import {
   Label,
 } from 'react-bootstrap';
 
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 import SaveDropdownButton from './SaveDropdownButton';
 import * as Selectors from 'rapidfab/selectors';
+import Actions from 'rapidfab/actions';
 
 const fields = [
   'model',
@@ -45,8 +47,17 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
   } else {
     return (
       <FormControl componentClass="select" required {...field}>
-        <option value="" disabled>Select a Model</option>
-        {_.map(models, model => (<option key={model.uri} value={model.uri}>{model.name}</option>))}
+        { models.map( model => {
+            return (
+              <option
+                key={model.uri}
+                value={model.uri}
+              >
+                {model.name}
+              </option>
+            );
+          })
+        }
       </FormControl>
     );
   }
@@ -112,10 +123,14 @@ const LineItemFormComponent = ({
 
     <FormRow id="field.template" defaultMessage="Select a template">
       <FormControl componentClass="select" {...fields.template}>
-        <option key="placeholder" value="" selected>Select a Template</option>
-        {_.map(templates, template => (
-          <option key={template.uri} value={template.uri}>{template.name}</option>
-        ))}
+        { templates.map( template => {
+            return (
+              <option key={template.uri} value={template.uri}>
+                {template.name}
+              </option>
+            );
+          })
+        }
       </FormControl>
     </FormRow>
   </Form>
@@ -146,28 +161,32 @@ const mapDispatchToProps = (dispatch) => {
       console.log(payload);
     },
     onDelete: uuid => {
-      // TODO: Pending Line Item API
+      // TODO: Implement delete
+      //dispatch(Actions.Api.wyatt['line-item'].delete(uuid));
       console.log('delete', uuid);
-    }
+    },
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const { model } = state.ui.hoth;
-  const { uuid } = state.routeUUID;
-  const initialValues = state.resources[uuid];
+  const { lineItem } = ownProps;
+
+  const materials = Selectors.getMaterials(state);
   const models = Selectors.getModels(state);
   const modelsIsFetching = model.list.fetching || model.get.fetching;
   const templates = Selectors.getTemplates(state);
-  const materials = Selectors.getMaterials(state);
+  const uuid = extractUuid(lineItem.uri);
+
+  const initialValues = lineItem;
 
   return {
     initialValues,
+    materials,
     models,
     modelsIsFetching,
     templates,
     uuid,
-    materials,
   }
 }
 

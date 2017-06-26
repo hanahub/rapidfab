@@ -24,6 +24,7 @@ class OrderContainer extends Component {
       if (modelSwappable)
         dispatch(Actions.Api.hoth.model.list());
     });
+    dispatch(Actions.Api.wyatt['line-item'].list({'order': props.order.uri}));
     dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}));
     dispatch(Actions.Api.wyatt.material.list());
     dispatch(Actions.Api.wyatt.run.list());
@@ -80,6 +81,7 @@ class OrderContainer extends Component {
 
 function mapStateToProps(state, props) {
   const { order, material, print } = state.ui.wyatt
+  const lineItem = state.ui.wyatt['line-item'];
   const { model } = state.ui.hoth
   const orderResource = Selectors.getRouteResource(state, props)
 
@@ -94,6 +96,7 @@ function mapStateToProps(state, props) {
   ];
 
   const fetching = (
+    lineItem.list.fetching ||
     material.list.fetching ||
     order.get.fetching ||
     order.put.fetching ||
