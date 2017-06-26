@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
+import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import SaveDropdownButton from './SaveDropdownButton';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
@@ -21,8 +22,18 @@ const fields = [
   'materials.base',
   'materials.support',
   'template',
+  'status',
+  'uuid',
   'quantity',
 ];
+
+const statusOptionsMap = {
+  pending  : ["cancelled", "confirmed"],
+  confirmed: ["cancelled"],
+  printing : ["cancelled"],
+  printed  : ["cancelled", "shipping", "complete"],
+  shipping : ["cancelled", "complete"],
+};
 
 const FormRow = ({id, defaultMessage, children}) => (
   <FormGroup>
@@ -36,6 +47,26 @@ const FormRow = ({id, defaultMessage, children}) => (
     </Col>
   </FormGroup>
 );
+
+const StatusOptions = ({ initialValue }) => {
+  const statusOptions = statusOptionsMap[initialValue];
+  if (statusOptions) {
+    return (
+      <div>
+        { statusOptions.map(status => {
+            return (
+              <option key={status} value={status}>
+                {ORDER_STATUS_MAP[status]}
+              </option>
+            )
+          })
+        }
+      </div>
+    );
+  } else {
+    return null;
+  }
+}
 
 const ModelSelect = ({models, modelsIsFetching, field}) => {
   if(modelsIsFetching) {
@@ -99,6 +130,15 @@ const LineItemFormComponent = ({
       </FormControl.Static>
     </FormRow>
 
+    <FormRow id="field.status" defaultMessage="Status">
+      <FormControl componentClass="select" required {...fields.status}>
+        <option value={fields.status.initialValue}>
+          {ORDER_STATUS_MAP[fields.status.initialValue]}
+        </option>
+        <StatusOptions initialValue={fields.status.initialValue}/>
+      </FormControl>
+    </FormRow>
+
     <FormRow id="field.model" defaultMessage="Model">
       <ModelSelect models={models} modelsIsFetching={modelsIsFetching} field={fields.model}/>
     </FormRow>
@@ -157,13 +197,17 @@ class LineItemForm extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSubmit: payload => {
-      // TODO: Pending Line Item API
-      console.log(payload);
+      if (!payload.materials.support) delete payload.materials.support
+
+      dispatch(Actions.Api.wyatt['line-item'].put(payload.uuid, payload))
+        .then( () => window.location.hash = "#/plan/orders" );
     },
     onDelete: uuid => {
-      // TODO: Implement delete
-      //dispatch(Actions.Api.wyatt['line-item'].delete(uuid));
-      console.log('delete', uuid);
+      // TODO: race condition =(
+      // the delete reducer removes the line-item from the store
+      // but the order still thinks that it exists, causing the UI to break
+      //dispatch(Actions.Api.wyatt['line-item'].delete(uuid))
+      // .then( () => window.location.hash = "#/plan/orders" );
     },
   }
 }

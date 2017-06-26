@@ -163,8 +163,8 @@ const ModelThumbnail = ({src}) => {
   }
 }
 
-const LineItem = ({ lineItem, prints, snapshot }) => {
-  const { currency, estimates } = lineItem;
+const LineItem = ({ currency, lineItem, prints, snapshot }) => {
+  const { estimates } = lineItem;
   return(
     <Panel header="Line Item">
 
@@ -213,12 +213,14 @@ function getSnapshotFromLineItem(lineItem, models) {
 const mapStateToProps = (state, ownProps) => {
   const { uri } = ownProps;
   const uuid = extractUuid(uri);
+  const order = state.resources[state.routeUUID.uuid];
+  const { currency } = order;
   const lineItem = state.resources[uuid];
   const prints = getPrintsForLineItem(state, lineItem);
   const models = getModels(state);
   const snapshot = getSnapshotFromLineItem(lineItem, models);
 
-  return { lineItem, prints, snapshot };
+  return { currency, lineItem, prints, snapshot };
 }
 
 export default connect(mapStateToProps)(LineItem)
