@@ -1,13 +1,15 @@
-import React, { Component, PropTypes }    from "react"
-import { connect }                        from 'react-redux'
-import _                                  from "lodash"
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
-import Actions                            from "rapidfab/actions"
-import Config                             from 'rapidfab/config'
-import { extractUuid }                    from "rapidfab/reducers/makeApiReducers"
-import * as Selectors                     from 'rapidfab/selectors'
+import Actions from 'rapidfab/actions';
+import Config from 'rapidfab/config';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import * as Selectors from 'rapidfab/selectors';
 
-import NewOrderComponent                  from 'rapidfab/components/records/order/temp-new'
+import NewOrder from 'rapidfab/components/records/order/temp-new/NewOrder';
+import Gatekeeper from 'rapidfab/components/gatekeeper.js'
 
 class NewOrderContainer extends Component {
   componentDidMount() {
@@ -27,7 +29,13 @@ class NewOrderContainer extends Component {
   }
 
   render() {
-    return <NewOrderComponent {...this.props}/>
+    const { apiErrors, fetching } = this.props;
+
+    return (
+      <Gatekeeper errors={apiErrors} loading={fetching}>
+        <NewOrder {...this.props}/>
+      </Gatekeeper>
+    );
   }
 }
 
@@ -106,7 +114,7 @@ function mapStateToProps(state, props) {
 
   return {
     bureau             : Selectors.getBureau(state),
-    combinedErrors     : errors,
+    apiErrors          : errors,
     materials          : Selectors.getMaterials(state),
     model              : processingModel,
     providers          : Selectors.getThirdPartyProviders(state),
