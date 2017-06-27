@@ -13,6 +13,7 @@ export const RESOURCES = {
   wyatt: [
     'bureau',
     'currency-conversion',
+    'feature',
     'line-item',
     'location',
     'manufacturer',

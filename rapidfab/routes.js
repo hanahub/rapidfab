@@ -1,4 +1,5 @@
 import Home                         from 'rapidfab/containers/home'
+import AdminDashboard               from 'rapidfab/containers/admin/AdminDashboard'
 import About                        from 'rapidfab/components/about'
 import BureauError                  from 'rapidfab/components/bureauError'
 
@@ -50,6 +51,7 @@ import Styles                       from 'rapidfab/containers/styles'
 const Routes = {
   "/"                                    : Home,
   "/about"                               : About,
+  "/admin/dashboard"                     : AdminDashboard,
   "/bureau-error"                        : BureauError,
   "/styles"                              : Styles,
 
