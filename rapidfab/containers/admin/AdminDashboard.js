@@ -22,6 +22,11 @@ function mapDispatchToProps(dispatch) {
       if(payload) {
         dispatch(Actions.Api.wyatt.feature.post(payload))
       }
+    },
+    updateFeature: payload => {
+      if(payload) {
+        dispatch(Actions.Api.wyatt.feature.put(payload.uuid, payload))
+      }
     }
   }
 }

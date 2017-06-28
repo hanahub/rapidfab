@@ -9,31 +9,49 @@ import NewFeature                      from './AddFeature'
 class Dashboard extends Component {
   constructor(props) {
     super(props)
-    this.state = { toggleActive: true };
+    const { features } = props;
+    this.state = { features: features };
     this.onToggle = this.onToggle.bind(this);
   }
 
-  onToggle() {
-    this.setState({ toggleActive: !this.state.toggleActive });
+  onToggle(updatedFeature, updatedFeatureIndex) {
+    const { features } = this.state;
+    const updatedFeatures = features.map((feature, index) => {
+      if (index === updatedFeatureIndex) {
+        return Object.assign({}, feature, { enabled: !feature.enabled});
+      }
+      else {
+        return feature;
+      }
+      this.setState({ features: updatedFeatures });
+    });
+    debugger
+    const feature = {
+      uuid: updatedFeature.uuid,
+      enabled: !updatedFeature.enabled
+    }
+
+    this.props.updateFeature(feature);
   }
+
 
   render() {
     const { features } = this.props;
     const FeatureTable = () => {
-      const feature = this.props.features.map((feature, index) => (
-          <tr>
+      const feature = features.map((feature, index) => (
+          <tr key={index}>
             <td>
               <span className="glyphicon glyphicon-file"></span>
-              {feature.name} - {feature.description}
+               {feature.name} - {feature.description}
             </td>
             <td className="text-right text-nowrap">
               <Toggle
-                onClick={this.onToggle}
-                on={<div>ON</div>}
-                off={<div>OFF</div>}
+                onClick={ () => this.onToggle(feature, index) }
+                on={ <div>ON</div> }
+                off={ <div>OFF</div> }
                 size="sm"
                 offstyle="primary"
-                active={feature.enabled ? this.state.toggleActive : !this.state.toggleActive}
+                active={ feature.enabled }
               />
             </td>
           </tr>
@@ -53,7 +71,7 @@ class Dashboard extends Component {
           <br />
           <div className="panel panel-default">
           <BS.Table responsive className="table table-hover">
-            <FeatureTable {...this.props} onToggle={this.onToggle}/>
+            <FeatureTable {...this.props} />
           </BS.Table>
           </div>
         </div>
