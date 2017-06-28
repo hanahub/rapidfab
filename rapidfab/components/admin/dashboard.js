@@ -15,25 +15,12 @@ class Dashboard extends Component {
   }
 
   onToggle(updatedFeature, updatedFeatureIndex) {
-    const { features } = this.state;
-    const updatedFeatures = features.map((feature, index) => {
-      if (index === updatedFeatureIndex) {
-        return Object.assign({}, feature, { enabled: !feature.enabled});
-      }
-      else {
-        return feature;
-      }
-      this.setState({ features: updatedFeatures });
-    });
-    debugger
     const feature = {
       uuid: updatedFeature.uuid,
       enabled: !updatedFeature.enabled
     }
-
     this.props.updateFeature(feature);
   }
-
 
   render() {
     const { features } = this.props;
