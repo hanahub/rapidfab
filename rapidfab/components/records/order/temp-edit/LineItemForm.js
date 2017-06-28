@@ -184,8 +184,8 @@ class LineItemForm extends Component {
   }
 
   handleDelete() {
-    const { uuid, onDelete } = this.props;
-    onDelete(uuid);
+    const { uuid, onDelete, orderUuid } = this.props;
+    onDelete(uuid, orderUuid);
   }
 
   render() {
@@ -202,12 +202,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(Actions.Api.wyatt['line-item'].put(payload.uuid, payload))
         .then( () => window.location.hash = "#/plan/orders" );
     },
-    onDelete: uuid => {
-      // TODO: race condition =(
-      // the delete reducer removes the line-item from the store
-      // but the order still thinks that it exists, causing the UI to break
-      //dispatch(Actions.Api.wyatt['line-item'].delete(uuid))
-      // .then( () => window.location.hash = "#/plan/orders" );
+    onDelete: (uuid, orderUuid) => {
+      dispatch(Actions.Api.wyatt['line-item'].delete(uuid))
+        .then( () => dispatch(Actions.Api.wyatt.order.get(orderUuid)) )
     },
   }
 }
@@ -221,6 +218,7 @@ const mapStateToProps = (state, ownProps) => {
   const modelsIsFetching = model.list.fetching || model.get.fetching;
   const templates = Selectors.getTemplates(state);
   const uuid = extractUuid(lineItem.uri);
+  const orderUuid = extractUuid(lineItem.order);
 
   const initialValues = lineItem;
 
@@ -229,6 +227,7 @@ const mapStateToProps = (state, ownProps) => {
     materials,
     models,
     modelsIsFetching,
+    orderUuid,
     templates,
     uuid,
   }

@@ -164,6 +164,9 @@ const ModelThumbnail = ({src}) => {
 }
 
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
+  // Check if lineItem is stale data from order
+  if (!lineItem)
+    return null;
   const { estimates } = lineItem;
   return(
     <Panel header="Line Item">
