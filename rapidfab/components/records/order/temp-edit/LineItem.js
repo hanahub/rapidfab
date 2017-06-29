@@ -42,13 +42,13 @@ const Header = (prints) => {
 }
 
 const statusMapping = {
-  created           : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
-  calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
-  calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
-  queued            : (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
-  "in-progress"     : (<FormattedMessage id="status.in_progress" defaultMessage="In Progress"/>),
-  complete          : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
-  error             : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
+  created: (<FormattedMessage id="status.created" defaultMessage="Created"/>),
+  calculating: (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
+  calculated: (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
+  queued: (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
+  "in-progress": (<FormattedMessage id="status.in_progress" defaultMessage="In Progress"/>),
+  complete: (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
+  error: (<FormattedMessage id="status.error" defaultMessage="Error"/>),
 };
 
 const PrintItem = ({ print }) => (
@@ -162,7 +162,7 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
       <Col xs={12} sm={4}>
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
-            <ModelThumbnail src={snapshot} itar={itar}/>
+            <ModelThumbnail snapshot={snapshot} itar={itar}/>
           </Col>
         </Row>
 

@@ -15,10 +15,10 @@ const Loading = () => (
 const ModelThumbnail = ({ snapshot, itar }) => {
   if (itar)
     return <span>ITAR Model</span>
-  else if (!snapshot)
-    return <Loading />
+  else if (snapshot)
+    return <Thumbnail src={snapshot} />
   else
-    return <Thumbnail src={model.snapshot_content} />
+    return <Loading />
 };
 
 ModelThumbnail.propTypes = {
