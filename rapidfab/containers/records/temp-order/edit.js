@@ -17,13 +17,7 @@ class OrderContainer extends Component {
 
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
     dispatch(Actions.Api.wyatt.order.get(uuid))
-    .then( response => {
-      const { model, status } = response.json;
-      dispatch(Actions.Api.hoth.model.get(extractUuid(model)));
-      const modelSwappable = ['new', 'calculating_estimates', 'pending'].includes(status);
-      if (modelSwappable)
-        dispatch(Actions.Api.hoth.model.list());
-    });
+    dispatch(Actions.Api.hoth.model.list());
     dispatch(Actions.Api.wyatt['line-item'].list({'order': props.order.uri}));
     dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}));
     dispatch(Actions.Api.wyatt.material.list());
@@ -98,6 +92,7 @@ function mapStateToProps(state, props) {
   const fetching = (
     lineItem.list.fetching ||
     material.list.fetching ||
+    model.list.fetching ||
     order.get.fetching ||
     order.put.fetching ||
     print.list.fetching ||

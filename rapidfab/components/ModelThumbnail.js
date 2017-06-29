@@ -12,11 +12,18 @@ const Loading = () => (
   </div>
 );
 
-const ModelThumbnail = ({ model }) => {
-  if (!model)
+const ModelThumbnail = ({ snapshot, itar }) => {
+  if (itar)
+    return <span>ITAR Model</span>
+  else if (snapshot)
+    return <Thumbnail src={snapshot} />
+  else
     return <Loading />
-  return <Thumbnail src={model.snapshot_content} />
 };
-ModelThumbnail.propTypes = { model: PropTypes.object };
+
+ModelThumbnail.propTypes = {
+  itar: PropTypes.bool,
+  model: PropTypes.object
+};
 
 export default ModelThumbnail;
