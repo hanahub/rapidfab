@@ -20,7 +20,7 @@ import {
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButton from 'rapidfab/components/saveButton';
-import ModelThumbnail from 'rapidfab/components/modelThumbnail';
+import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 
 const ActionToolbar = () => (
   <ButtonToolbar className="clearfix">
