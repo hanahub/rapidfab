@@ -16,7 +16,7 @@ import Grid, {
   StatusColumn,
   VolumeColumn
 } from 'rapidfab/components/grid';
-import Loading from 'rapidfab/components/loading';
+import Loading from 'rapidfab/components/Loading';
 
 const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, fetching, apiErrors }) => (
   <BS.Grid fluid>

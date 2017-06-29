@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Error from './error';
-import Loading from './loading';
+import Loading from './Loading';
 
 const Gatekeeper = ({ errors, loading, children }) => {
   if (errors.length > 0)
