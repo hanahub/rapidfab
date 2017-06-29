@@ -22,6 +22,7 @@ export const getStateConversions         = state => state.api.wyatt["currency-co
 
 export const getStateGroups              = state => state.api.pao.groups
 export const getStateBureaus             = state => state.api.wyatt.bureau
+export const getStateFeatures            = state => state.api.wyatt.feature
 export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
@@ -88,6 +89,11 @@ export const getBureau = createSelector(
     }
     return bureau
   }
+)
+
+export const getFeature = createSelector(
+  [ getStateFeatures, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
 export const getInitialValuesBureau = createSelector(
