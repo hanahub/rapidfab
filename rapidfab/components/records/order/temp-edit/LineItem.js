@@ -23,7 +23,9 @@ import {
   FormControlTextArea,
   FormControlTextCareful
 } from 'rapidfab/components/formTools';
+
 import LineItemForm from './LineItemForm';
+import ModelThumbnail from 'rapidfab/components/ModelThumbnail.js'
 
 const Header = (prints) => {
   const complete = prints.reduce( (total, print) => {
@@ -149,32 +151,18 @@ const Estimates = ({ estimates, currency }) => (
   </Panel>
 );
 
-const ModelThumbnail = ({src}) => {
-  if(!src) {
-    return (
-      <div>
-        <Fa name="spinner" spin/>
-        <span> </span>
-        <FormattedMessage id="loading.thumbnail" defaultMessage="Loading Thumbnail..."/>
-      </div>
-    );
-  } else {
-    return (<Thumbnail src={src} />);
-  }
-}
-
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
   // Check if lineItem is stale data from order
   if (!lineItem)
     return null;
-  const { estimates } = lineItem;
+  const { estimates, itar } = lineItem;
   return(
     <Panel header="Line Item">
 
       <Col xs={12} sm={4}>
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
-            <ModelThumbnail src={snapshot}/>
+            <ModelThumbnail src={snapshot} itar={itar}/>
           </Col>
         </Row>
 
