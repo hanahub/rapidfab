@@ -3,7 +3,7 @@ import Actions                           from 'rapidfab/actions'
 import { connect }                       from 'react-redux'
 import DashboardComponent                from 'rapidfab/components/admin/Dashboard'
 import * as Selectors                    from 'rapidfab/selectors'
-
+ 
 class DashboardContainer extends Component {
   componentWillMount() {
     this.props.onInitialize()
