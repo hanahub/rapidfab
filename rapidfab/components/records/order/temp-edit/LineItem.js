@@ -140,7 +140,7 @@ const Estimates = ({ estimates, currency }) => (
           </Col>
           <Col xs={4}>
             {estimates.amount ?
-              <FormattedCost currency={currency} value={estimates.cost.amount} /> :
+              <FormattedCost currency={currency} value={estimates.amount} /> :
                 (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
             }
           </Col>
