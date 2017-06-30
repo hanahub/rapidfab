@@ -25,7 +25,8 @@ import {
 } from 'rapidfab/components/formTools';
 
 import LineItemForm from './LineItemForm';
-import ModelThumbnail from 'rapidfab/components/ModelThumbnail.js'
+import ModelThumbnail from 'rapidfab/components/ModelThumbnail.js';
+import Loading from 'rapidfab/components/Loading';
 
 const Header = (prints) => {
   const complete = prints.reduce( (total, print) => {
@@ -86,7 +87,6 @@ const Prints = ({ prints }) => (
 const Estimates = ({ estimates, currency }) => (
   <Panel bsStyle="info">
     <ListGroup fill>
-
       <ListGroupItem key="header">
         <b><FormattedMessage id="estimates.estimates" defaultMessage="Estimates"/></b>
       </ListGroupItem>
@@ -151,6 +151,14 @@ const Estimates = ({ estimates, currency }) => (
   </Panel>
 );
 
+const EstimatesLoadingState = ({ estimates, children }) => {
+  if(estimates){
+    return(<div> { children } </div>)
+  }else{
+    return(<Loading />)
+  }
+}
+
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
   // Check if lineItem is stale data from order
   if (!lineItem)
@@ -168,7 +176,9 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
 
         <Row>
           <Col xs={12} lg={10} lgOffset={1}>
-            <Estimates estimates={estimates} currency={currency}/>
+            <EstimatesLoadingState estimates={estimates}>
+              <Estimates estimates={estimates} currency={currency}/>
+            </EstimatesLoadingState>
           </Col>
         </Row>
       </Col>

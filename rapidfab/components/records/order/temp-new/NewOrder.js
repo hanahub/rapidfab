@@ -10,6 +10,7 @@ import {
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
@@ -207,10 +208,25 @@ class NewOrder extends Component {
           });
           Promise.all(lineItemsPosts)
             .then(responses => {
-              debugger
-                // POST order with line-items uris array
-                //
-                // redirect to order
+              const lineItemUris = responses.map(response => {
+                return response.payload.uri
+              });
+
+              const orderPayload = {
+                bureau: bureau.uri,
+                name: orderForm.name.value,
+                currency: orderForm.currency.value,
+                'line_items': lineItemUris,
+                shipping: {
+                  uri: orderForm.shipping.uri.value
+                }
+              }
+
+              dispatch(Actions.Api.wyatt.order.post(orderPayload))
+                .then(response => {
+                  const orderUuid = extractUuid(response.payload.uri);
+                  window.location = `/#/records/order/${orderUuid}`;
+                })
             });
         });
     });
