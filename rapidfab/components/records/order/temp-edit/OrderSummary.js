@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Col, Panel } from 'react-bootstrap';
+import { Col, Form, Panel } from 'react-bootstrap';
 
 import EditOrderForm from './EditOrderForm';
 import OrderRuns from './OrderRuns';
@@ -32,16 +32,20 @@ class OrderSummary extends Component {
     return (
       <Panel header="Order Summary">
 
-        <SaveDropdownButton onSubmit={onSubmit} onDelete={onDelete} />
-        <hr />
+        <Form horizontal onSubmit={onSubmit}>
 
-        <Col xs={12} md={7}>
-          <EditOrderForm ref="orderForm"/>
-        </Col>
+          <SaveDropdownButton onDelete={onDelete} />
+          <hr />
 
-        <Col xs={12} md={5}>
-          <OrderRuns />
-        </Col>
+          <Col xs={12} md={7}>
+            <EditOrderForm ref="orderForm"/>
+          </Col>
+
+          <Col xs={12} md={5}>
+            <OrderRuns />
+          </Col>
+
+        </Form>
 
       </Panel>
     );

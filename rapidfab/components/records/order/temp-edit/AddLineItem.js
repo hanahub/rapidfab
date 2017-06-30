@@ -49,8 +49,8 @@ const AddLineItemPresentation = ({
   templates,
 }) => (
   <Panel header="Add Line Item">
-    <Form>
-      <Col lg={2}>
+    <Form onSubmit={onSubmit}>
+      {/*<Col lg={2}>
         <ControlLabel>
           <span>ITAR Model</span>
         </ControlLabel>
@@ -60,7 +60,8 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
         />
       </Col>
-      { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
+      */}
+      <ModelInput handleFileChange={handleFileChange}/>
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage='Material'/>:
@@ -150,7 +151,6 @@ const AddLineItemPresentation = ({
         <ButtonToolbar className="clearfix" >
           <Button
             type="submit"
-            onClick={onSubmit}
             bsStyle="success"
             className="pull-right"
             style={{marginTop: "2rem"}}
@@ -254,6 +254,7 @@ class AddLineItem extends Component {
     )
   }
 }
+
 const mapStateToProps = (state) => {
   const bureau = Selectors.getBureau(state);
   const materials = Selectors.getMaterials(state);
