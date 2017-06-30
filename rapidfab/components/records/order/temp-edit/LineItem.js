@@ -23,7 +23,10 @@ import {
   FormControlTextArea,
   FormControlTextCareful
 } from 'rapidfab/components/formTools';
+
 import LineItemForm from './LineItemForm';
+import ModelThumbnail from 'rapidfab/components/ModelThumbnail.js';
+import Loading from 'rapidfab/components/Loading';
 
 const Header = (prints) => {
   const complete = prints.reduce( (total, print) => {
@@ -40,13 +43,13 @@ const Header = (prints) => {
 }
 
 const statusMapping = {
-  created           : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
-  calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
-  calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
-  queued            : (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
-  "in-progress"     : (<FormattedMessage id="status.in_progress" defaultMessage="In Progress"/>),
-  complete          : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
-  error             : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
+  created: (<FormattedMessage id="status.created" defaultMessage="Created"/>),
+  calculating: (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
+  calculated: (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
+  queued: (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
+  "in-progress": (<FormattedMessage id="status.in_progress" defaultMessage="In Progress"/>),
+  complete: (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
+  error: (<FormattedMessage id="status.error" defaultMessage="Error"/>),
 };
 
 const PrintItem = ({ print }) => (
@@ -84,7 +87,6 @@ const Prints = ({ prints }) => (
 const Estimates = ({ estimates, currency }) => (
   <Panel bsStyle="info">
     <ListGroup fill>
-
       <ListGroupItem key="header">
         <b><FormattedMessage id="estimates.estimates" defaultMessage="Estimates"/></b>
       </ListGroupItem>
@@ -138,7 +140,7 @@ const Estimates = ({ estimates, currency }) => (
           </Col>
           <Col xs={4}>
             {estimates.amount ?
-              <FormattedCost currency={currency} value={estimates.cost.amount} /> :
+              <FormattedCost currency={currency} value={estimates.amount} /> :
                 (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
             }
           </Col>
@@ -149,35 +151,34 @@ const Estimates = ({ estimates, currency }) => (
   </Panel>
 );
 
-const ModelThumbnail = ({src}) => {
-  if(!src) {
-    return (
-      <div>
-        <Fa name="spinner" spin/>
-        <span> </span>
-        <FormattedMessage id="loading.thumbnail" defaultMessage="Loading Thumbnail..."/>
-      </div>
-    );
-  } else {
-    return (<Thumbnail src={src} />);
+const EstimatesLoadingState = ({ estimates, children }) => {
+  if(estimates){
+    return(<div> { children } </div>)
+  }else{
+    return(<Loading />)
   }
 }
 
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
-  const { estimates } = lineItem;
+  // Check if lineItem is stale data from order
+  if (!lineItem)
+    return null;
+  const { estimates, itar } = lineItem;
   return(
     <Panel header="Line Item">
 
       <Col xs={12} sm={4}>
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
-            <ModelThumbnail src={snapshot}/>
+            <ModelThumbnail snapshot={snapshot} itar={itar}/>
           </Col>
         </Row>
 
         <Row>
           <Col xs={12} lg={10} lgOffset={1}>
-            <Estimates estimates={estimates} currency={currency}/>
+            <EstimatesLoadingState estimates={estimates}>
+              <Estimates estimates={estimates} currency={currency}/>
+            </EstimatesLoadingState>
           </Col>
         </Row>
       </Col>

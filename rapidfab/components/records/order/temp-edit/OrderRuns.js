@@ -13,6 +13,8 @@ import {
 
 import { getRunsForOrder } from 'rapidfab/selectors';
 
+import Loading from 'rapidfab/components/Loading';
+
 const Header = (runs) => {
   const complete = runs.reduce( (total, run) => {
     return run.status == 'complete' ? total + 1 : total;
@@ -53,8 +55,14 @@ const RunItem = ({ run }) => (
   </ListGroupItem>
 );
 
-const OrderRuns = ({ runs = [] }) => {
-  if(runs.length) {
+const OrderRuns = ({ runs = [], fetching = true }) => {
+  if ( fetching ) {
+    return (
+      <Panel header="Runs">
+        <Loading />
+      </Panel>
+    );
+  } else if (runs.length) {
     return (
       <Panel header={Header(runs)}>
         <ListGroup fill>
@@ -70,7 +78,7 @@ const OrderRuns = ({ runs = [] }) => {
           </ListGroupItem>
 
           { runs.map(run => <RunItem key={run.id} run={run} />) }
-          
+
         </ListGroup>
       </Panel>
     );
@@ -90,8 +98,10 @@ const OrderRuns = ({ runs = [] }) => {
 
 const mapStateToProps = (state) => {
   const order = state.resources[state.routeUUID.uuid];
-  const runs = getRunsForOrder(state, order)
-  return { runs };
+  const runs = getRunsForOrder(state, order);
+  const { fetching } = state.ui.wyatt.run.list;
+
+  return { fetching, runs };
 }
 
 export default connect(mapStateToProps)(OrderRuns)

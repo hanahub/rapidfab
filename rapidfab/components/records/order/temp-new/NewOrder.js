@@ -4,9 +4,14 @@ import { connect } from 'react-redux';
 import {
   Button,
   ButtonToolbar,
+  Form,
   Grid,
   Panel,
 } from 'react-bootstrap';
+
+import Actions from 'rapidfab/actions';
+import * as Selectors from 'rapidfab/selectors';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
@@ -22,14 +27,14 @@ const AddLineItemButton = ({ onAddLineItem }) => (
   </div>
 );
 
-const SaveButton = ({ onSubmit }) => (
+const SaveButton = () => (
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
       <Button
         type="submit"
+        value="submit"
         bsStyle="success"
         bsSize="small"
-        onClick={onSubmit}
       >
         <SaveButtonTitle />
       </Button>
@@ -72,27 +77,31 @@ const NewOrderComponent = ({
 
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
 
-      <SaveButton onSubmit={onSubmit}/>
-      <hr />
+      <Form horizontal onSubmit={onSubmit}>
 
-      <Panel header="Order">
-
-        <NewOrderForm onSubmit={onSubmit}/>
-
-      </Panel>
-
-      <Panel header="Line Items">
-
-        <LineItems
-          handleDeleteLineItem={handleDeleteLineItem}
-          handleLineItemModelChange={handleLineItemModelChange}
-          handleLineItemChange={handleLineItemChange}
-          lineItems={lineItems}
-        />
+        <SaveButton />
         <hr />
-        <AddLineItemButton onAddLineItem={onAddLineItem} />
 
-      </Panel>
+        <Panel header="Order">
+
+          <NewOrderForm />
+
+        </Panel>
+
+        <Panel header="Line Items">
+
+          <LineItems
+            handleDeleteLineItem={handleDeleteLineItem}
+            handleLineItemModelChange={handleLineItemModelChange}
+            handleLineItemChange={handleLineItemChange}
+            lineItems={lineItems}
+          />
+          <hr />
+          <AddLineItemButton onAddLineItem={onAddLineItem} />
+
+        </Panel>
+
+      </Form>
 
     </Grid>
   );
@@ -151,15 +160,97 @@ class NewOrder extends Component {
 
   onAddLineItem() {
     const { lineItems } = this.state;
-    const updatedLineItems = [ ...lineItems, {}, ];
+    const { baseMaterials, supportMaterials, templates } = this.props;
 
+    const initialBaseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
+    const initialSupportMaterial = supportMaterials[0] ? supportMaterials[0].uri : null;
+    const initialTemplate = templates[0] ? templates[0].uri : null;
+
+    const initialLineItemState = {
+      baseMaterial: initialBaseMaterial,
+      supportMaterial: initialSupportMaterial,
+      template: initialTemplate,
+    };
+
+    const updatedLineItems = [
+      ...lineItems,
+      initialLineItemState,
+    ];
     this.setState({ lineItems: updatedLineItems });
   }
 
 
-  onSubmit() {
-    const { orderForm } = this.props;
-    console.log(orderForm);
+  onSubmit(event) {
+    event.preventDefault();
+
+    const { bureau, dispatch, orderForm } = this.props;
+
+    const { lineItems } = this.state;
+
+    const modelPosts = lineItems.map(lineItem => {
+      return dispatch(Actions.Api.hoth.model.post(
+        { name: lineItem.model.name, type: "stl", }
+      ));
+    });
+    Promise.all(modelPosts)
+      .then( responses => {
+        const modelLocations = responses.map(response => {
+          const { location, uploadLocation } = response.headers;
+          return { location, uploadLocation };
+        });
+        const updatedLineItems = lineItems.map((lineItem,  index) => {
+          return Object.assign(
+            {}, lineItem,
+            { modelLocation: modelLocations[index].location },
+            { uploadLocation: modelLocations[index].uploadLocation }
+          );
+        });
+
+        updatedLineItems.forEach(lineItem => {
+          const { model, uploadLocation } = lineItem;
+          dispatch(Actions.UploadModel.upload(uploadLocation, model))
+
+          // Prepare the payload
+          const lineItemsPosts = updatedLineItems.map(lineItem => {
+            const { baseMaterial, modelLocation, supportMaterial, quantity, template } = lineItem;
+            const payload = {
+              bureau: bureau.uri,
+              materials: {
+                base: baseMaterial,
+                support: supportMaterial,
+              },
+              model: modelLocation,
+              quantity: parseInt(quantity),
+              template,
+            };
+            if (!payload.materials.support) delete payload.materials.support;
+
+            return dispatch(Actions.Api.wyatt['line-item'].post(payload))
+          });
+          Promise.all(lineItemsPosts)
+            .then(responses => {
+              const lineItemUris = responses.map(response => {
+                return response.payload.uri
+              });
+
+              const orderPayload = {
+                bureau: bureau.uri,
+                name: orderForm.name.value,
+                currency: orderForm.currency.value,
+                'line_items': lineItemUris,
+                shipping: {
+                  uri: orderForm.shipping.uri.value
+                }
+              }
+
+              dispatch(Actions.Api.wyatt.order.post(orderPayload))
+                .then(response => {
+                  const orderUuid = extractUuid(response.payload.uri);
+                  window.location = `/#/records/order/${orderUuid}`;
+                })
+            });
+        });
+    });
   }
 
   render() {
@@ -186,8 +277,20 @@ class NewOrder extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const bureau = Selectors.getBureau(state);
   const orderForm = state.form['record.order'];
-  return { orderForm };
+  const materials = Selectors.getMaterials(state);
+  const baseMaterials = materials.filter(material => material.type === 'base');
+  const supportMaterials = materials.filter(material => material.type === 'success');
+  const templates = Selectors.getTemplates(state);
+
+  return {
+    baseMaterials,
+    bureau,
+    orderForm,
+    supportMaterials,
+    templates,
+  };
 }
 
 export default connect(mapStateToProps)(NewOrder)

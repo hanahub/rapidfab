@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   Button,
   ButtonToolbar,
+  Checkbox,
   Col,
   ControlLabel,
   Form,
@@ -16,35 +17,50 @@ import {
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 
+const ModelInput = ({ handleFileChange }) => (
+  <Col lg={2}>
+    <FormGroup>
+      <ControlLabel>
+        <FormattedMessage id="field.model" defaultMessage='Model'/>:
+      </ControlLabel>
+      <FormControl
+        name="model"
+        type="file"
+        accept=".stl"
+        required
+        onChange={handleFileChange}
+      />
+    </FormGroup>
+  </Col>
+);
+
 const AddLineItemPresentation = ({
-    baseMaterial,
-    baseMaterials,
-    handleFileChange,
-    handleInputChange,
-    notes,
-    onSubmit,
-    quantity,
-    supportMaterial,
-    supportMaterials,
-    template,
-    templates,
+  baseMaterial,
+  baseMaterials,
+  handleFileChange,
+  handleInputChange,
+  itar,
+  notes,
+  onSubmit,
+  quantity,
+  supportMaterial,
+  supportMaterials,
+  template,
+  templates,
 }) => (
   <Panel header="Add Line Item">
     <Form>
       <Col lg={2}>
-        <FormGroup>
-          <ControlLabel>
-            <FormattedMessage id="field.file" defaultMessage='File'/>:
-          </ControlLabel>
-          <FormControl
-            name="model"
-            type="file"
-            accept=".stl"
-            required
-            onChange={handleFileChange}
-          />
-        </FormGroup>
+        <ControlLabel>
+          <span>ITAR Model</span>
+        </ControlLabel>
+        <Checkbox
+          name="itar"
+          checked={itar}
+          onChange={handleInputChange}
+        />
       </Col>
+      { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage='Material'/>:
@@ -114,6 +130,7 @@ const AddLineItemPresentation = ({
           ))}
         </FormControl>
       </Col>
+      {/*
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage
@@ -128,6 +145,7 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
         />
       </Col>
+      */}
       <Col lg={1}>
         <ButtonToolbar className="clearfix" >
           <Button
@@ -152,9 +170,11 @@ class AddLineItem extends Component {
     const { baseMaterials, supportMaterials, templates } = props;
     const baseMaterial = baseMaterials[0].uri;
     const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
+    const itar = false;
     const template = templates[0].uri;
 
     this.state = {
+      itar,
       baseMaterial,
       supportMaterial,
       template,
@@ -170,7 +190,11 @@ class AddLineItem extends Component {
   }
 
   handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    const { target } = event;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name } = target;
+
+    this.setState({ [name]: value });
   }
 
   onSubmit(event) {
@@ -178,6 +202,7 @@ class AddLineItem extends Component {
 
     const {
       baseMaterial,
+      itar,
       model,
       notes,
       quantity,
@@ -189,6 +214,7 @@ class AddLineItem extends Component {
 
     const payload = {
       bureau: bureau.uri,
+      itar,
       materials: {
         base: baseMaterial,
         support: supportMaterial,

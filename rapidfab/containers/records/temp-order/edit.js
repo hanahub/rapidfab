@@ -15,19 +15,18 @@ class OrderContainer extends Component {
   componentWillMount() {
     const { props, props: { dispatch, route: { uuid }}} = this;
 
+    // Set route UUID in state
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
+
+    // Fetch order and related resources
     dispatch(Actions.Api.wyatt.order.get(uuid))
-    .then( response => {
-      const { model, status } = response.json;
-      dispatch(Actions.Api.hoth.model.get(extractUuid(model)));
-      const modelSwappable = ['new', 'calculating_estimates', 'pending'].includes(status);
-      if (modelSwappable)
-        dispatch(Actions.Api.hoth.model.list());
-    });
     dispatch(Actions.Api.wyatt['line-item'].list({'order': props.order.uri}));
     dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}));
-    dispatch(Actions.Api.wyatt.material.list());
     dispatch(Actions.Api.wyatt.run.list());
+
+    // Fetch resource options for input selections
+    dispatch(Actions.Api.hoth.model.list());
+    dispatch(Actions.Api.wyatt.material.list());
     dispatch(Actions.Api.wyatt['third-party'].list());
     dispatch(Actions.Api.wyatt['post-processor-type'].list());
     dispatch(Actions.Api.wyatt.template.list());
@@ -80,7 +79,7 @@ class OrderContainer extends Component {
 }
 
 function mapStateToProps(state, props) {
-  const { order, material, print } = state.ui.wyatt
+  const { order, material, print, run } = state.ui.wyatt
   const lineItem = state.ui.wyatt['line-item'];
   const { model } = state.ui.hoth
   const orderResource = Selectors.getRouteResource(state, props)
@@ -90,14 +89,19 @@ function mapStateToProps(state, props) {
 
   const apiErrors = [
     ...Selectors.getResourceErrors(state, "pao.users"),
+    ...lineItem.list.errors,
+    ...lineItem.delete.errors,
     ...material.list.errors,
     ...model.list.errors,
-    ...order.delete.errors
+    ...order.get.errors,
+    ...order.delete.errors,
+    ...run.list.errors,
   ];
 
   const fetching = (
     lineItem.list.fetching ||
     material.list.fetching ||
+    model.list.fetching ||
     order.get.fetching ||
     order.put.fetching ||
     print.list.fetching ||

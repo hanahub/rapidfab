@@ -10,7 +10,7 @@ import Grid, {
   DateTimeColumn,
   MappedColumn,
 } from 'rapidfab/components/grid';
-import Loading from 'rapidfab/components/loading';
+import Loading from 'rapidfab/components/Loading';
 
 const RunsGrid = ({ runs }) => (
   <Grid
