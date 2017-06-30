@@ -1,157 +1,124 @@
-import React, { Component, PropTypes }    from "react"
-import { connect }                        from 'react-redux'
-import _                                  from "lodash"
-import Actions                            from "rapidfab/actions"
-import { reduxForm }                      from 'redux-form'
-import Config                             from 'rapidfab/config'
-import * as Selectors                     from 'rapidfab/selectors'
-import { extractUuid }                    from 'rapidfab/reducers/makeApiReducers'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux'
 
-import OrderComponent                     from 'rapidfab/components/records/order/edit'
+import Actions from "rapidfab/actions"
+import * as Selectors from 'rapidfab/selectors'
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
-const fields = [
-  'id',
-  'uri',
-  'uuid',
-  'name',
-  'model',
-  'materials.base',
-  'materials.support',
-  'estimates.print_time',
-  'estimates.cost.amount',
-  'estimates.cost.shipping_amount',
-  'estimates.cost.currency',
-  'estimates.materials.base',
-  'estimates.materials.support',
-  'shipping.name',
-  'shipping.address',
-  'shipping.tracking',
-  'shipping.uri',
-  'third_party_provider',
-  'post_processor_type',
-  'template',
-  'quantity',
-  'created',
-  'currency',
-  'status',
-]
+import Uploading from 'rapidfab/components/Uploading';
+import EditOrder from 'rapidfab/components/records/order/edit/EditOrder';
+import GateKeeper from 'rapidfab/components/gatekeeper';
 
 class OrderContainer extends Component {
+
   componentWillMount() {
-    this.props.onInitialize(this.props)
+    const { props, props: { dispatch, route: { uuid }}} = this;
+
+    // Set route UUID in state
+    dispatch(Actions.RouteUUID.setRouteUUID(uuid));
+
+    // Fetch order and related resources
+    dispatch(Actions.Api.wyatt.order.get(uuid))
+    dispatch(Actions.Api.wyatt['line-item'].list({'order': props.order.uri}));
+    dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}));
+    dispatch(Actions.Api.wyatt.run.list());
+
+    // Fetch resource options for input selections
+    dispatch(Actions.Api.hoth.model.list());
+    dispatch(Actions.Api.wyatt.material.list());
+    dispatch(Actions.Api.wyatt['third-party'].list());
+    dispatch(Actions.Api.wyatt['post-processor-type'].list());
+    dispatch(Actions.Api.wyatt.template.list());
+    dispatch(Actions.Api.wyatt.shipping.list());
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { uploadingModel, uploadModel } = this.props;
+    const prevModel = prevProps.uploadingModel;
+
+    const wasUploading = prevModel && prevModel.status !== 'processed';
+    const isNotUploading = uploadingModel && uploadingModel.status === 'processed';
+
+    // Check if model has been uploaded
+    // Once model has uploaded, post new line item
+    if (wasUploading && isNotUploading)
+
+      this.saveLineItem(uploadModel.orderPayload);
+  }
+
+  saveLineItem(payload) {
+    if(payload) {
+      const { dispatch, orderResource } = this.props;
+
+      dispatch(Actions.Api.wyatt['line-item'].post(payload))
+        .then(response => {
+          const newLineItem = response.headers.location;
+          const payload = { 'line_items': [ ...orderResource.line_items, newLineItem ]};
+          const uuid = extractUuid(orderResource.uri);
+          return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+        })
+        .then( () => dispatch(Actions.UploadModel.clearState() ))
+        .catch( () => dispatch(Actions.UploadModel.clearState() ));
+    }
   }
 
   render() {
-    return <OrderComponent {...this.props}/>
+    const { apiErrors, fetching, orderResource } = this.props;
+    const { uploading } = this.props.uploadModel;
+    const loading = fetching || !orderResource;
+
+    if ( uploading )
+      return <Uploading />
+    return (
+      <GateKeeper errors={apiErrors} loading={loading}>
+        <EditOrder />
+      </GateKeeper>
+    );
   }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: props => {
-      if(props.route.uuid) {
-        dispatch(Actions.Api.wyatt.order.get(props.route.uuid)).then(
-          response => {
-            dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)))
-            const modelSwappable = ['new', 'calculating_estimates', 'pending'].indexOf(response.json.status) >= 0
-            if(modelSwappable) {
-              dispatch(Actions.Api.hoth.model.list())
-            }
-          }
-        )
-        dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}))
-      }
-      dispatch(Actions.Api.wyatt.material.list())
-      dispatch(Actions.Api.wyatt.run.list())
-      dispatch(Actions.Api.wyatt['third-party'].list())
-      dispatch(Actions.Api.wyatt['post-processor-type'].list())
-      dispatch(Actions.Api.wyatt.template.list())
-      dispatch(Actions.Api.wyatt.shipping.list())
-    },
-    onSubmit: payload => {
-      delete payload.estimates
-      if (false === !!payload.materials.support) delete payload.materials.support
-      if (false === !!payload.shipping.name) delete payload.shipping.name
-      if (false === !!payload.shipping.address) delete payload.shipping.address
-      if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
-      if (false === !!payload.third_party_provider) delete payload.third_party_provider
-      if (false === !!payload.post_processor_type) payload.post_processor_type = null
-
-      if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload)).then(
-          () => window.location.hash = "#/plan/orders"
-        )
-      } else {
-        dispatch(Actions.Api.wyatt.order.post(payload)).then(
-          () => window.location.hash = "#/plan/orders"
-        )
-      }
-    },
-    onDelete: uuid => dispatch(Actions.Api.wyatt.order.delete(uuid)).then(
-      () => window.location.hash = "#/plan/orders"
-    )
-  }
-}
-
-function getSnapshotFromOrder(order, models) {
-  if(!order || models.length === 0) return ''
-  const model = models.filter(model => model.uri === order.model)
-  return (model && model.length) ? model[0].snapshot_content : ''
 }
 
 function mapStateToProps(state, props) {
-  const {
-    order,
-    material,
-    print,
-  } = state.ui.wyatt
+  const { order, material, print, run } = state.ui.wyatt
+  const lineItem = state.ui.wyatt['line-item'];
+  const { model } = state.ui.hoth
+  const orderResource = Selectors.getRouteResource(state, props)
 
-  const {
-    model,
-  } = state.ui.hoth
+  const { uploadModel } = state;
+  const uploadingModel = state.resources[uploadModel.modelUuid]
 
-  const models          = Selectors.getModels(state)
-  const orderResource   = Selectors.getRouteResource(state, props)
-  const runs            = Selectors.getRunsForOrder(state, orderResource)
-  const snapshot        = getSnapshotFromOrder(orderResource, models)
+  const apiErrors = [
+    ...Selectors.getResourceErrors(state, "pao.users"),
+    ...lineItem.list.errors,
+    ...lineItem.delete.errors,
+    ...material.list.errors,
+    ...model.list.errors,
+    ...order.get.errors,
+    ...order.delete.errors,
+    ...run.list.errors,
+  ];
 
-  const fetching =
+  const fetching = (
+    lineItem.list.fetching ||
     material.list.fetching ||
+    model.list.fetching ||
     order.get.fetching ||
     order.put.fetching ||
     print.list.fetching ||
     state.ui.wyatt['third-party'].list.fetching ||
-    state.ui.wyatt['post-processor-type'].list.fetching
-
-  const statusOptions = {
-    pending  : ["cancelled", "confirmed"],
-    confirmed: ["cancelled"],
-    printing : ["cancelled"],
-    printed  : ["cancelled", "shipping", "complete"],
-    shipping : ["cancelled", "complete"],
-  }
+    state.ui.wyatt['post-processor-type'].list.fetching ||
+    state.ui.wyatt.template.list.fetching
+  );
 
   return {
-    apiErrors         : _.concat(Selectors.getResourceErrors(state, "pao.users"), material.list.errors, model.list.errors, order.delete.errors),
+    apiErrors,
     fetching,
-    initialValues     : orderResource,
-    materials         : Selectors.getMaterials(state),
-    models,
-    modelsIsFetching  : model.list.fetching | model.get.fetching,
+    orderResource,
+    model,
     order,
-    prints            : Selectors.getPrintsForOrder(state, orderResource),
-    providers         : Selectors.getThirdPartyProviders(state),
-    postProcessorTypes: Selectors.getPostProcessorTypes(state),
-    shippings         : Selectors.getShippings(state),
-    runs,
-    snapshot,
-    templates         : Selectors.getTemplates(state),
-    uuid              : Selectors.getRoute(state, props).uuid,
-    statusOptions,
+    uploadModel,
+    uploadingModel,
   }
 }
 
-export default reduxForm({
-  form: 'record.order',
-  fields
-}, mapStateToProps, mapDispatchToProps)(OrderContainer)
+export default connect(mapStateToProps)(OrderContainer)
