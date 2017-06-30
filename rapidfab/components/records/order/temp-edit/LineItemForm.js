@@ -218,7 +218,7 @@ const mapStateToProps = (state, ownProps) => {
   const modelsIsFetching = model.list.fetching || model.get.fetching;
   const templates = Selectors.getTemplates(state);
   const uuid = extractUuid(lineItem.uri);
-  const orderUuid = extractUuid(lineItem.order);
+  const orderUuid = state.routeUUID.uuid;
 
   const initialValues = lineItem;
 

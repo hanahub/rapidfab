@@ -8,6 +8,10 @@ import {
   Panel,
 } from 'react-bootstrap';
 
+import Actions from 'rapidfab/actions';
+import * as Selectors from 'rapidfab/selectors';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
+
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
@@ -158,8 +162,74 @@ class NewOrder extends Component {
 
 
   onSubmit() {
-    const { orderForm } = this.props;
-    console.log(orderForm);
+    const { bureau, dispatch, orderForm } = this.props;
+
+    const { lineItems } = this.state;
+
+    const modelPosts = lineItems.map(lineItem => {
+      return dispatch(Actions.Api.hoth.model.post(
+        { name: lineItem.model.name, type: "stl", }
+      ));
+    });
+    Promise.all(modelPosts)
+      .then( responses => {
+        const modelLocations = responses.map(response => {
+          const { location, uploadLocation } = response.headers;
+          return { location, uploadLocation };
+        });
+        const updatedLineItems = lineItems.map((lineItem,  index) => {
+          return Object.assign(
+            {}, lineItem,
+            { modelLocation: modelLocations[index].location },
+            { uploadLocation: modelLocations[index].uploadLocation }
+          );
+        });
+
+        updatedLineItems.forEach(lineItem => {
+          const { model, uploadLocation } = lineItem;
+          dispatch(Actions.UploadModel.upload(uploadLocation, model))
+
+          // Prepare the payload
+          const lineItemsPosts = updatedLineItems.map(lineItem => {
+            const { baseMaterial, modelLocation, supportMaterial, quantity, template } = lineItem;
+            const payload = {
+              bureau: bureau.uri,
+              materials: {
+                base: baseMaterial,
+                support: supportMaterial,
+              },
+              model: modelLocation,
+              quantity: parseInt(quantity),
+              template,
+            };
+            if (!payload.materials.support) delete payload.materials.support;
+
+            return dispatch(Actions.Api.wyatt['line-item'].post(payload))
+          });
+          Promise.all(lineItemsPosts)
+            .then(responses => {
+              const lineItemUris = responses.map(response => {
+                return response.payload.uri
+              });
+
+              const orderPayload = {
+                bureau: bureau.uri,
+                name: orderForm.name.value,
+                currency: orderForm.currency.value,
+                'line_items': lineItemUris,
+                shipping: {
+                  uri: orderForm.shipping.uri.value
+                }
+              }
+
+              dispatch(Actions.Api.wyatt.order.post(orderPayload))
+                .then(response => {
+                  const orderUuid = extractUuid(response.payload.uri);
+                  window.location = `/#/records/order/${orderUuid}`;
+                })
+            });
+        });
+    });
   }
 
   render() {
@@ -186,8 +256,10 @@ class NewOrder extends Component {
 }
 
 const mapStateToProps = (state) => {
+  const bureau = Selectors.getBureau(state);
   const orderForm = state.form['record.order'];
-  return { orderForm };
+
+  return { bureau, orderForm };
 }
 
 export default connect(mapStateToProps)(NewOrder)
