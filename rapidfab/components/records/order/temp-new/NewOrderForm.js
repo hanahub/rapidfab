@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import {
-  Form,
   FormControl,
   FormGroup,
   Col,
@@ -11,7 +10,10 @@ import {
 import { getThirdPartyProviders, getShippings } from 'rapidfab/selectors'
 import { Currencies } from 'rapidfab/constants';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
-import { FormControlTextArea, FormControlTextCareful } from 'rapidfab/components/formTools';
+import {
+  FormControlTextArea,
+  FormControlTextCareful }
+from 'rapidfab/components/formTools';
 
 import LineItem from './LineItem';
 
@@ -43,7 +45,7 @@ const NewOrderForm = ({
   providers,
   shippings,
 }) => (
-  <Form horizontal>
+  <div>
 
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name}/>
@@ -94,14 +96,26 @@ const NewOrderForm = ({
       </FormControl>
     </FormRow>
 
-  </Form>
+  </div>
 );
 
 const mapStateToProps = (state) => {
   const providers = getThirdPartyProviders(state);
   const shippings = getShippings(state);
 
-  return { providers, shippings };
+  const initialCurrency = Currencies[0];
+  const initialShipping = shippings[0] ? shippings[0].uri : null;
+  const initialProvider = providers[0] ? providers[0].uri : null;
+
+  const initialValues = {
+    currency: initialCurrency,
+    shipping: {
+      uri: initialShipping
+    },
+    'third_party_provider': initialProvider,
+  }
+
+  return { initialValues, providers, shippings };
 };
 
 export default reduxForm({
