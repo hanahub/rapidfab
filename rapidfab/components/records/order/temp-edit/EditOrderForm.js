@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import {
-  Form,
   FormControl,
   FormGroup,
   Col,
@@ -53,7 +52,7 @@ const EditOrderFormComponent = ({
   shippings,
   statusOptions,
 }) => (
-  <Form horizontal>
+  <div>
 
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name}/>
@@ -118,7 +117,8 @@ const EditOrderFormComponent = ({
         }
       </FormControl.Static>
     </FormRow>
-  </Form>
+
+  </div>
 );
 
 class EditOrderForm extends Component {
