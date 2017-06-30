@@ -168,6 +168,7 @@ class NewOrder extends Component {
 
     const initialLineItemState = {
       baseMaterial: initialBaseMaterial,
+      itar: false,
       supportMaterial: initialSupportMaterial,
       template: initialTemplate,
     };
@@ -188,8 +189,9 @@ class NewOrder extends Component {
     const { lineItems } = this.state;
 
     const modelPosts = lineItems.map(lineItem => {
+      const modelName = lineItem.itar ? 'na' : lineItem.model.name;
       return dispatch(Actions.Api.hoth.model.post(
-        { name: lineItem.model.name, type: "stl", }
+        { name: modelName, type: "stl", }
       ));
     });
     Promise.all(modelPosts)
@@ -212,9 +214,17 @@ class NewOrder extends Component {
 
           // Prepare the payload
           const lineItemsPosts = updatedLineItems.map(lineItem => {
-            const { baseMaterial, modelLocation, supportMaterial, quantity, template } = lineItem;
+            const {
+              baseMaterial,
+              itar,
+              modelLocation,
+              supportMaterial,
+              quantity,
+              template,
+            } = lineItem;
             const payload = {
               bureau: bureau.uri,
+              itar,
               materials: {
                 base: baseMaterial,
                 support: supportMaterial,
@@ -223,6 +233,8 @@ class NewOrder extends Component {
               quantity: parseInt(quantity),
               template,
             };
+
+            if (itar) delete payload.model
             if (!payload.materials.support) delete payload.materials.support;
 
             return dispatch(Actions.Api.wyatt['line-item'].post(payload))

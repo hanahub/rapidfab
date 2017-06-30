@@ -33,43 +33,10 @@ class OrderContainer extends Component {
     dispatch(Actions.Api.wyatt.shipping.list());
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { uploadingModel, uploadModel } = this.props;
-    const prevModel = prevProps.uploadingModel;
-
-    const wasUploading = prevModel && prevModel.status !== 'processed';
-    const isNotUploading = uploadingModel && uploadingModel.status === 'processed';
-
-    // Check if model has been uploaded
-    // Once model has uploaded, post new line item
-    if (wasUploading && isNotUploading)
-
-      this.saveLineItem(uploadModel.orderPayload);
-  }
-
-  saveLineItem(payload) {
-    if(payload) {
-      const { dispatch, orderResource } = this.props;
-
-      dispatch(Actions.Api.wyatt['line-item'].post(payload))
-        .then(response => {
-          const newLineItem = response.headers.location;
-          const payload = { 'line_items': [ ...orderResource.line_items, newLineItem ]};
-          const uuid = extractUuid(orderResource.uri);
-          return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
-        })
-        .then( () => dispatch(Actions.UploadModel.clearState() ))
-        .catch( () => dispatch(Actions.UploadModel.clearState() ));
-    }
-  }
-
   render() {
     const { apiErrors, fetching, orderResource } = this.props;
-    const { uploading } = this.props.uploadModel;
     const loading = fetching || !orderResource;
 
-    if ( uploading )
-      return <Uploading />
     return (
       <GateKeeper errors={apiErrors} loading={loading}>
         <EditOrder />
@@ -83,9 +50,6 @@ function mapStateToProps(state, props) {
   const lineItem = state.ui.wyatt['line-item'];
   const { model } = state.ui.hoth
   const orderResource = Selectors.getRouteResource(state, props)
-
-  const { uploadModel } = state;
-  const uploadingModel = state.resources[uploadModel.modelUuid]
 
   const apiErrors = [
     ...Selectors.getResourceErrors(state, "pao.users"),
@@ -116,8 +80,6 @@ function mapStateToProps(state, props) {
     orderResource,
     model,
     order,
-    uploadModel,
-    uploadingModel,
   }
 }
 
