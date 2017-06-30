@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
   Button,
   ButtonToolbar,
+  Form,
   Grid,
   Panel,
 } from 'react-bootstrap';
@@ -26,14 +27,14 @@ const AddLineItemButton = ({ onAddLineItem }) => (
   </div>
 );
 
-const SaveButton = ({ onSubmit }) => (
+const SaveButton = () => (
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
       <Button
         type="submit"
+        value="submit"
         bsStyle="success"
         bsSize="small"
-        onClick={onSubmit}
       >
         <SaveButtonTitle />
       </Button>
@@ -76,27 +77,31 @@ const NewOrderComponent = ({
 
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
 
-      <SaveButton onSubmit={onSubmit}/>
-      <hr />
+      <Form horizontal onSubmit={onSubmit}>
 
-      <Panel header="Order">
-
-        <NewOrderForm onSubmit={onSubmit}/>
-
-      </Panel>
-
-      <Panel header="Line Items">
-
-        <LineItems
-          handleDeleteLineItem={handleDeleteLineItem}
-          handleLineItemModelChange={handleLineItemModelChange}
-          handleLineItemChange={handleLineItemChange}
-          lineItems={lineItems}
-        />
+        <SaveButton />
         <hr />
-        <AddLineItemButton onAddLineItem={onAddLineItem} />
 
-      </Panel>
+        <Panel header="Order">
+
+          <NewOrderForm />
+
+        </Panel>
+
+        <Panel header="Line Items">
+
+          <LineItems
+            handleDeleteLineItem={handleDeleteLineItem}
+            handleLineItemModelChange={handleLineItemModelChange}
+            handleLineItemChange={handleLineItemChange}
+            lineItems={lineItems}
+          />
+          <hr />
+          <AddLineItemButton onAddLineItem={onAddLineItem} />
+
+        </Panel>
+
+      </Form>
 
     </Grid>
   );
@@ -155,13 +160,29 @@ class NewOrder extends Component {
 
   onAddLineItem() {
     const { lineItems } = this.state;
-    const updatedLineItems = [ ...lineItems, {}, ];
+    const { baseMaterials, supportMaterials, templates } = this.props;
 
+    const initialBaseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
+    const initialSupportMaterial = supportMaterials[0] ? supportMaterials[0].uri : null;
+    const initialTemplate = templates[0] ? templates[0].uri : null;
+
+    const initialLineItemState = {
+      baseMaterial: initialBaseMaterial,
+      supportMaterial: initialSupportMaterial,
+      template: initialTemplate,
+    };
+
+    const updatedLineItems = [
+      ...lineItems,
+      initialLineItemState,
+    ];
     this.setState({ lineItems: updatedLineItems });
   }
 
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
+
     const { bureau, dispatch, orderForm } = this.props;
 
     const { lineItems } = this.state;
@@ -258,8 +279,18 @@ class NewOrder extends Component {
 const mapStateToProps = (state) => {
   const bureau = Selectors.getBureau(state);
   const orderForm = state.form['record.order'];
+  const materials = Selectors.getMaterials(state);
+  const baseMaterials = materials.filter(material => material.type === 'base');
+  const supportMaterials = materials.filter(material => material.type === 'success');
+  const templates = Selectors.getTemplates(state);
 
-  return { bureau, orderForm };
+  return {
+    baseMaterials,
+    bureau,
+    orderForm,
+    supportMaterials,
+    templates,
+  };
 }
 
 export default connect(mapStateToProps)(NewOrder)

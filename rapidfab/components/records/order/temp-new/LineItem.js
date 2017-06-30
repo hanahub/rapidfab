@@ -13,15 +13,16 @@ import {
 
 import * as Selectors from 'rapidfab/selectors';
 
-const FileInput = ({ itar, onFileInputChange }) => {
+const FileInput = ({ itar, onFileInputChange, value }) => {
   if (itar) return <p>ITAR Model</p>
   return (
     <input
       name="model"
       type="file"
-      class="input-medium"
+      className="input-medium"
       accept=".stl"
       required
+      value={value}
       onChange={onFileInputChange}
     />
   );
@@ -37,13 +38,14 @@ const LineItemComponent = ({
   templates,
 }) => (
   <FormGroup controlId="uxModel">
-    <fieldset class="form-inline">
+    <fieldset>
       <Col md={2}>
         <ControlLabel>
           <FormattedMessage id="field.file" defaultMessage='File'/>:
         </ControlLabel>
         <FileInput
           itar={false}
+          value={lineItem.value}
           onFileInputChange={onFileInputChange}
         />
       </Col>
@@ -55,6 +57,7 @@ const LineItemComponent = ({
           name="baseMaterial"
           componentClass="select"
           required
+          value={lineItem.baseMaterial}
           onChange={onInputChange}
         >
           { baseMaterials.map(material => (
@@ -75,6 +78,7 @@ const LineItemComponent = ({
         <FormControl
           name="supportMaterial"
           componentClass="select"
+          value={lineItem.supportMaterial}
           onChange={onInputChange}
         >
           { supportMaterials.map(material => (
@@ -94,6 +98,7 @@ const LineItemComponent = ({
           type="number"
           min="1"
           required
+          value={lineItem.quantity}
           onChange={onInputChange}
         />
       </Col>
@@ -105,6 +110,7 @@ const LineItemComponent = ({
           name="template"
           componentClass="select"
           required
+          value={lineItem.template}
           onChange={onInputChange}
         >
           { templates.map(template => (
@@ -115,7 +121,7 @@ const LineItemComponent = ({
           }
         </FormControl>
       </Col>
-      <Col md={2}>
+      {/*<Col md={2}>
         <ControlLabel>
           <FormattedMessage id="field.notes" defaultMessage='Notes'/>:
         </ControlLabel>
@@ -126,7 +132,7 @@ const LineItemComponent = ({
           onChange={onInputChange}
           name="notes"
         />
-      </Col>
+      </Col>*/}
       <Col md={1}>
         <br />
           <Button onClick={onDelete}>
