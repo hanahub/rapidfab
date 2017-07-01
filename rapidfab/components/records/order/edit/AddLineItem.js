@@ -16,6 +16,7 @@ import {
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
 const ModelInput = ({ handleFileChange }) => (
   <Col lg={2}>
@@ -50,7 +51,7 @@ const AddLineItemPresentation = ({
 }) => (
   <Panel header="Add Line Item">
     <Form onSubmit={onSubmit}>
-      {/*<Col lg={2}>
+      <Col lg={2}>
         <ControlLabel>
           <span>ITAR Model</span>
         </ControlLabel>
@@ -60,8 +61,7 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
         />
       </Col>
-      */}
-      <ModelInput handleFileChange={handleFileChange}/>
+      { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage='Material'/>:
@@ -224,15 +224,21 @@ class AddLineItem extends Component {
       template,
     };
 
+    if (itar) delete payload.itar
+
     dispatch(Actions.Api.hoth.model.post({ name: order.name, type: "stl", }))
       .then(args => {
         const { location, uploadLocation } = args.headers;
         payload.model = location;
 
-        dispatch(Actions.UploadModel.upload(uploadLocation, model))
-        dispatch(Actions.UploadModel.storePayload(payload))
-        // After the model is uploaded, the edit container posts the line-item
-      })
+        dispatch(Actions.Api.wyatt['line-item'].post(payload))
+          .then(response => {
+            const newLineItem = response.headers.location;
+            const payload = { 'line_items': [ ...order.line_items, newLineItem ]};
+            const uuid = extractUuid(order.uri);
+            return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+        });
+      });
   }
 
   render() {
