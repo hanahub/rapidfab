@@ -168,14 +168,14 @@ class AddLineItem extends Component {
     super(props)
 
     const { baseMaterials, supportMaterials, templates } = props;
-    const baseMaterial = baseMaterials[0].uri;
-    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
+    const baseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
     const itar = false;
-    const template = templates[0].uri;
+    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
+    const template = templates[0] ? templates[0].uri : null;
 
     this.state = {
-      itar,
       baseMaterial,
+      itar,
       supportMaterial,
       template,
     };
@@ -266,7 +266,6 @@ const mapStateToProps = (state) => {
   const materials = Selectors.getMaterials(state);
   const templates = Selectors.getTemplates(state);
   const order = state.resources[state.routeUUID.uuid];
-  const uploadModel = state.uploadModel;
 
   const baseMaterials = materials.filter( material => material.type === 'base');
   const supportMaterials = materials.filter( material => material.type === 'support');
@@ -279,6 +278,5 @@ const mapStateToProps = (state) => {
     templates
   };
 }
-
 
 export default connect(mapStateToProps)(AddLineItem)
