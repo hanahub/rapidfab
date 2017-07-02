@@ -211,58 +211,60 @@ class NewOrder extends Component {
         updatedLineItems.forEach(lineItem => {
           const { model, uploadLocation } = lineItem;
           dispatch(Actions.UploadModel.upload(uploadLocation, model))
+        });
 
           // Prepare the payload
-          const lineItemsPosts = updatedLineItems.map(lineItem => {
-            const {
-              baseMaterial,
-              itar,
-              modelLocation,
-              supportMaterial,
-              quantity,
-              template,
-            } = lineItem;
-            const payload = {
+        const lineItemsPosts = updatedLineItems.map(lineItem => {
+          const {
+            baseMaterial,
+            itar,
+            modelLocation,
+            supportMaterial,
+            quantity,
+            template,
+          } = lineItem;
+          const payload = {
+            bureau: bureau.uri,
+            itar,
+            materials: {
+              base: baseMaterial,
+              support: supportMaterial,
+            },
+            model: modelLocation,
+            quantity: parseInt(quantity),
+            template,
+          };
+
+          if (itar) delete payload.model
+          if (!payload.materials.support) delete payload.materials.support;
+
+          return dispatch(Actions.Api.wyatt['line-item'].post(payload))
+        });
+        Promise.all(lineItemsPosts)
+          .then(responses => {
+            const lineItemUris = responses.map(response => {
+              return response.payload.uri
+            });
+
+            const orderPayload = {
               bureau: bureau.uri,
-              itar,
-              materials: {
-                base: baseMaterial,
-                support: supportMaterial,
-              },
-              model: modelLocation,
-              quantity: parseInt(quantity),
-              template,
+              name: orderForm.name.value,
+              currency: orderForm.currency.value,
+              'line_items': lineItemUris,
+              shipping: {
+                uri: orderForm.shipping.uri.value
+              }
             };
 
-            if (itar) delete payload.model
-            if (!payload.materials.support) delete payload.materials.support;
-
-            return dispatch(Actions.Api.wyatt['line-item'].post(payload))
-          });
-          Promise.all(lineItemsPosts)
-            .then(responses => {
-              const lineItemUris = responses.map(response => {
-                return response.payload.uri
+            dispatch(Actions.Api.wyatt.order.post(orderPayload))
+              .then(response => {
+                const orderUuid = extractUuid(response.payload.uri);
+                window.location = `/#/records/order/${orderUuid}`;
+              }).
+              catch(error => {
               });
-
-              const orderPayload = {
-                bureau: bureau.uri,
-                name: orderForm.name.value,
-                currency: orderForm.currency.value,
-                'line_items': lineItemUris,
-                shipping: {
-                  uri: orderForm.shipping.uri.value
-                }
-              }
-
-              dispatch(Actions.Api.wyatt.order.post(orderPayload))
-                .then(response => {
-                  const orderUuid = extractUuid(response.payload.uri);
-                  window.location = `/#/records/order/${orderUuid}`;
-                })
-            });
-        });
-    });
+          });
+      });
   }
 
   render() {
