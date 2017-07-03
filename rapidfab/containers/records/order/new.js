@@ -13,7 +13,7 @@ import Gatekeeper from 'rapidfab/components/gatekeeper.js'
 
 class NewOrderContainer extends Component {
   componentDidMount() {
-    this.props.onInitialize(this.props.uuid)
+    this.props.onInitialize(this.props.bureau.group)
   }
 
   componentWillUnmount() {
@@ -39,13 +39,16 @@ class NewOrderContainer extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch, props) {
+function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onInitialize: () => {
+    onInitialize: (bureauGroup) => {
       dispatch(Actions.Api.wyatt.material.list())
       dispatch(Actions.Api.wyatt['third-party'].list())
       dispatch(Actions.Api.wyatt.shipping.list())
       dispatch(Actions.Api.wyatt.template.list())
+      if(bureauGroup){
+        dispatch(Actions.Api.pao.users.list({ 'group': bureauGroup }))
+      }
     },
     onSaveOrder: payload => {
       if(payload) {

@@ -31,6 +31,7 @@ class OrderContainer extends Component {
     dispatch(Actions.Api.wyatt['post-processor-type'].list());
     dispatch(Actions.Api.wyatt.template.list());
     dispatch(Actions.Api.wyatt.shipping.list());
+    dispatch(Actions.Api.pao.users.list({ 'group': props.bureau.group }));
   }
 
   render() {
@@ -78,6 +79,7 @@ function mapStateToProps(state, props) {
     apiErrors,
     fetching,
     orderResource,
+    bureau : Selectors.getBureau(state),
     model,
     order,
   }

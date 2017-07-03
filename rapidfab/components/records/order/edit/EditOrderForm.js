@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
-import { getThirdPartyProviders, getShippings } from 'rapidfab/selectors'
+import { getThirdPartyProviders, getShippings, getUsers } from 'rapidfab/selectors'
 import { Currencies } from 'rapidfab/constants';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
@@ -17,6 +17,7 @@ import { FormControlTextArea, FormControlTextCareful } from 'rapidfab/components
 const fields = [
   'currency',
   'name',
+  'order_owner',
   'shipping.name',
   'shipping.address',
   'shipping.tracking',
@@ -50,6 +51,7 @@ const EditOrderFormComponent = ({
   fields,
   providers,
   shippings,
+  users,
   statusOptions,
 }) => (
   <div>
@@ -72,6 +74,16 @@ const EditOrderFormComponent = ({
       <FormControlTextCareful {...fields.shipping.name}/>
     </FormRow>
 
+    <FormRow id="field.order_owner" defaultMessage="Assign Owner">
+      <FormControl componentClass="select" {...fields.order_owner}>
+        {_.map(users, user => (
+          <option key={user.uuid} value={user.uri}>
+            {user.name}
+          </option>
+          ))
+        }
+      </FormControl>
+    </FormRow>
 
     <FormRow id="field.shippingAddress" defaultMessage="Shipping Address">
       <FormControlTextArea {...fields.shipping.address}/>
@@ -145,6 +157,7 @@ class EditOrderForm extends Component {
       fields,
       providers,
       shippings,
+      users,
     } = this.props;
 
     return(
@@ -153,6 +166,7 @@ class EditOrderForm extends Component {
         fields={fields}
         providers={providers}
         shippings={shippings}
+        users={users}
         statusOptions={statusOptions}
       />
     );
@@ -177,8 +191,9 @@ const mapStateToProps = (state) => {
   const { created } = initialValues;
   const providers = getThirdPartyProviders(state);
   const shippings = getShippings(state);
+  const users = getUsers(state);
 
-  return { initialValues, created, providers, shippings };
+  return { initialValues, created, providers, shippings, users };
 };
 
 export default reduxForm({
