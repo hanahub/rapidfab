@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Thumbnail } from 'react-bootstrap';
+import { Panel, Thumbnail } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
@@ -14,7 +14,9 @@ const Loading = () => (
 
 const ModelThumbnail = ({ snapshot, itar }) => {
   if (itar)
-    return <span>ITAR Model</span>
+    return <Panel>ITAR Model</Panel>
+  else if (snapshot === 'NO_SNAPSHOT')
+    return <Panel>No Snapshot</Panel>
   else if (snapshot)
     return <Thumbnail src={snapshot} />
   else
