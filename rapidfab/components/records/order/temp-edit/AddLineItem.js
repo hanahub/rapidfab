@@ -17,6 +17,8 @@ import {
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 
+import Feature from 'rapidfab/components/Feature';
+
 const ModelInput = ({ handleFileChange }) => (
   <Col lg={2}>
     <FormGroup>
@@ -50,17 +52,22 @@ const AddLineItemPresentation = ({
 }) => (
   <Panel header="Add Line Item">
     <Form>
-      <Col lg={2}>
-        <ControlLabel>
-          <span>ITAR Model</span>
-        </ControlLabel>
-        <Checkbox
-          name="itar"
-          checked={itar}
-          onChange={handleInputChange}
-        />
-      </Col>
-      { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
+
+      <Feature featureName={'itar'}>
+        <Col lg={2}>
+          <ControlLabel>
+            <span>ITAR Model</span>
+          </ControlLabel>
+          <Checkbox
+            name="itar"
+            checked={itar}
+            onChange={handleInputChange}
+          />
+        </Col>
+
+        { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
+      </Feature>
+
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage='Material'/>:
