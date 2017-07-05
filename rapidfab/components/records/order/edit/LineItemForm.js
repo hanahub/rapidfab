@@ -203,7 +203,6 @@ const mapDispatchToProps = (dispatch) => {
       if (!payload.materials.support) delete payload.materials.support
 
       dispatch(Actions.Api.wyatt['line-item'].put(payload.uuid, payload))
-        .then( () => window.location.hash = "#/plan/orders" );
     },
     onDelete: (uuid, orderUuid) => {
       dispatch(Actions.Api.wyatt['line-item'].delete(uuid))
