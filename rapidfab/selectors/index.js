@@ -23,6 +23,7 @@ export const getStateConversions         = state => state.api.wyatt["currency-co
 export const getStateGroups              = state => state.api.pao.groups
 export const getStateBureaus             = state => state.api.wyatt.bureau
 export const getStateFeatures            = state => state.api.wyatt.feature
+export const getStateEvents              = state => state.api.wyatt.event
 export const getStateMaterials           = state => state.api.wyatt.material
 export const getStateStocks              = state => state.api.wyatt.stock
 export const getStateOrders              = state => state.api.wyatt.order
@@ -281,6 +282,29 @@ export const getPrintsForLineItem = createSelector(
       return results;
     }, []);
     return prints;
+  }
+);
+
+export const getEvents = createSelector(
+  [ getStateEvents, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
+export const getEventsForPrint = createSelector(
+  [ getPredicate, getPrints, getEvents, getStateResources ],
+  (print, prints, events, resources) => {
+
+    if(print) {
+      const relevantPrints = _.filter(prints, p => print.line_item == p.line_item)
+
+      const uris = _.compact([
+        print.order,
+        print.line_item,
+        ..._.filter(_.map(relevantPrints, p => p.run)),
+      ])
+
+      return _.filter(events, event => _.includes(uris, event.reference))
+    }
   }
 );
 
