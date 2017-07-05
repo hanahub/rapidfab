@@ -70,22 +70,20 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
   if(modelsIsFetching) {
     return (
       <FormControl.Static>
-        <FormattedMessage id="loading.model" defaultMessage="Loading models..."/>
+        <FormattedMessage
+          id="loading.model"
+          defaultMessage="Loading models..."
+        />
       </FormControl.Static>
     );
   } else {
     return (
       <FormControl componentClass="select" required {...field}>
-        { models.map( model => {
-            return (
-              <option
-                key={model.uri}
-                value={model.uri}
-              >
-                {model.name}
-              </option>
-            );
-          })
+        { models.map( model => (
+            <option key={model.uri} value={model.uri}>
+              {model.name}
+            </option>
+          ))
         }
       </FormControl>
     );
