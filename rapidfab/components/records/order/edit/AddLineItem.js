@@ -18,6 +18,13 @@ import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
+const PanelHeader = () => (
+  <FormattedMessage
+    id="record.lineItem.add"
+    defaultMessage="Add Line Item"
+  />
+);
+
 const ModelInput = ({ handleFileChange }) => (
   <Col lg={2}>
     <FormGroup>
@@ -49,11 +56,11 @@ const AddLineItemPresentation = ({
   template,
   templates,
 }) => (
-  <Panel header="Add Line Item">
+  <Panel header={<PanelHeader />}>
     <Form onSubmit={onSubmit}>
       <Col lg={2}>
         <ControlLabel>
-          <span>ITAR Model</span>
+          <FormattedMessage id="record.itar" defaultMessage="ITAR Model"/>
         </ControlLabel>
         <Checkbox
           name="itar"
@@ -148,14 +155,13 @@ const AddLineItemPresentation = ({
       </Col>
       */}
       <Col lg={1}>
-        <ButtonToolbar className="clearfix" >
+        <ButtonToolbar className="clearfix">
           <Button
             type="submit"
             bsStyle="success"
             className="pull-right"
             style={{marginTop: "2rem"}}
-          >
-            Add
+          > Add
           </Button>
         </ButtonToolbar>
       </Col>
@@ -267,8 +273,12 @@ const mapStateToProps = (state) => {
   const templates = Selectors.getTemplates(state);
   const order = state.resources[state.routeUUID.uuid];
 
-  const baseMaterials = materials.filter( material => material.type === 'base');
-  const supportMaterials = materials.filter( material => material.type === 'support');
+  const baseMaterials = materials.filter( material => (
+    material.type === 'base'
+  ));
+  const supportMaterials = materials.filter( material => (
+    material.type === 'support'
+  ));
 
   return {
     baseMaterials,

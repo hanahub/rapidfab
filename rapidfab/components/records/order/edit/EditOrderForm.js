@@ -12,7 +12,10 @@ import { getThirdPartyProviders, getShippings } from 'rapidfab/selectors'
 import { Currencies } from 'rapidfab/constants';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
-import { FormControlTextArea, FormControlTextCareful } from 'rapidfab/components/formTools';
+import {
+  FormControlTextArea,
+  FormControlTextCareful
+} from 'rapidfab/components/formTools';
 
 const fields = [
   'currency',
@@ -37,7 +40,9 @@ const statusOptionsMap = {
 const FormRow = ({id, defaultMessage, children}) => (
   <FormGroup>
     <Col xs={3}>
-      <ControlLabel><FormattedMessage id={id} defaultMessage={defaultMessage}/>:</ControlLabel>
+      <ControlLabel>
+        <FormattedMessage id={id} defaultMessage={defaultMessage}/>:
+      </ControlLabel>
     </Col>
     <Col xs={9}>
       {children}
@@ -60,10 +65,15 @@ const EditOrderFormComponent = ({
 
     <FormRow id="field.status" defaultMessage="Status">
       <FormControl componentClass="select" required {...fields.status}>
-        <option value={fields.status.initialValue}>{ORDER_STATUS_MAP[fields.status.initialValue]}</option>
+        <option value={fields.status.initialValue}>
+          {ORDER_STATUS_MAP[fields.status.initialValue]}
+        </option>
         { statusOptions ?
-            statusOptions.map(status => <option key={status} value={status}>{ORDER_STATUS_MAP[status]}</option> )
-            : null
+            statusOptions.map(status =>
+              <option key={status} value={status}>
+                {ORDER_STATUS_MAP[status]}
+              </option>
+            ) : null
         }
       </FormControl>
     </FormRow>
@@ -74,7 +84,7 @@ const EditOrderFormComponent = ({
 
 
     <FormRow id="field.shippingAddress" defaultMessage="Shipping Address">
-      <FormControlTextArea {...fields.shipping.address}/>
+      <FormControl componentClass="textarea" {...fields.shipping.address}/>
     </FormRow>
 
     <FormRow id="field.trackingNumber" defaultMessage="Tracking Number">
@@ -84,36 +94,39 @@ const EditOrderFormComponent = ({
 
     <FormRow id="field.shippingType" defaultMessage="Shipping Type">
       <FormControl componentClass="select" {...fields.shipping.uri}>
-        <option key="placeholder" value="" selected disabled>Select shipping type</option>
-          {_.map(shippings, shipping => (
-            <option key={shipping.uri} value={shipping.uri}>{shipping.name}</option>
-          ))}
+        {_.map(shippings, shipping => (
+          <option key={shipping.uri} value={shipping.uri}>
+            {shipping.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
       <FormControl componentClass="select" {...fields.third_party_provider}>
-        <option key="placeholder" value="" selected disabled>Select a Third Party Provider</option>
         {_.map(providers, provider => (
-          <option key={provider.uri} value={provider.uri}>{provider.name}</option>
+          <option key={provider.uri} value={provider.uri}>
+            {provider.name}
+          </option>
         ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.currency" defaultMessage="Currency">
       <FormControl componentClass="select" {...fields.currency}>
-        <option key="placeholder" value="" selected disabled>Select a currency</option>
-          {_.map(Currencies, currency => (
-            <option key={currency} value={currency}>{currency}</option>
-          ))}
+        {_.map(Currencies, currency => (
+          <option key={currency} value={currency}>
+            {currency}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.created" defaultMessage="Created">
       <FormControl.Static>
         {created ?
-          <FormattedDateTime value={created}/> :
-            (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+          <FormattedDateTime value={created}/>
+          : <em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>
         }
       </FormControl.Static>
     </FormRow>

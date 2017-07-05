@@ -8,6 +8,10 @@ import EditOrderForm from './EditOrderForm';
 import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
 
+const PanelHeader = () => (
+  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary"/>
+);
+
 class OrderSummary extends Component {
   constructor(props) {
     super(props)
@@ -30,7 +34,7 @@ class OrderSummary extends Component {
   render() {
     const { onSubmit, onDelete } = this;
     return (
-      <Panel header="Order Summary">
+      <Panel header={<PanelHeader />}>
 
         <Form horizontal onSubmit={onSubmit}>
 
