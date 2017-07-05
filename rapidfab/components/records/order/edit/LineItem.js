@@ -238,6 +238,8 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
 function getSnapshotFromLineItem(lineItem, models) {
   if (!lineItem || models.length === 0)
     return 'LOADING'
+  if (lineItem.itar)
+    return 'ITAR'
 
   const model = models.find(model => model.uri === lineItem.model);
 
@@ -252,8 +254,6 @@ function getSnapshotFromLineItem(lineItem, models) {
 
   if (snapshot_content)
     return snapshot_content;
-  else if (lineItem.itar)
-    return 'ITAR'
   else if (lineItem.status === 'error')
     return 'ERROR'
   else
