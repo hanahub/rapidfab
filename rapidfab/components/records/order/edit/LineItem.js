@@ -237,16 +237,27 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
 
 function getSnapshotFromLineItem(lineItem, models) {
   if (!lineItem || models.length === 0)
-    return ''
+    return 'LOADING'
 
   const model = models.find(model => model.uri === lineItem.model);
 
-  if (model && model.snapshot_content)
-    return model.snapshot_content;
-  else if (model && !model.snapshot_content)
-    return 'NO_SNAPSHOT'
+  if (!model)
+    return 'ERROR'
+
+  const { snapshot_content, status } = model;
+
+  // the default must return 'loading' due to imperfect information from the
+  // event stream. E.g: The UI can receive a model that is 'processed' but
+  // without a snapshot
+
+  if (snapshot_content)
+    return snapshot_content;
+  else if (lineItem.itar)
+    return 'ITAR'
+  else if (lineItem.status === 'error')
+    return 'ERROR'
   else
-    return '';
+    return 'LOADING'
 }
 
 
