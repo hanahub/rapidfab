@@ -53,13 +53,11 @@ const StatusOptions = ({ initialValue }) => {
   if (statusOptions) {
     return (
       <div>
-        { statusOptions.map(status => {
-            return (
-              <option key={status} value={status}>
-                {ORDER_STATUS_MAP[status]}
-              </option>
-            )
-          })
+        { statusOptions.map(status => (
+            <option key={status} value={status}>
+              {ORDER_STATUS_MAP[status]}
+            </option>
+          ))
         }
       </div>
     );
@@ -150,27 +148,32 @@ const LineItemFormComponent = ({
     <FormRow id="field.baseMaterial" defaultMessage="Base Material">
       <FormControl componentClass="select" required {...fields.materials.base}>
         <option value="" disabled>Select a Material</option>
-        {_.map(_.filter(materials, {type: "base"}), material => (<option key={material.uri} value={material.uri}>{material.name}</option>))}
+        {_.map(_.filter(materials, {type: "base"}), material => (
+          <option key={material.uri} value={material.uri}>
+            {material.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.supportMaterial" defaultMessage="Support Material">
       <FormControl componentClass="select" {...fields.materials.support}>
         <option value="">None</option>
-        {_.map(_.filter(materials, {type: "support"}), material => (<option key={material.uri} value={material.uri}>{material.name}</option>))}
+        {_.map(_.filter(materials, {type: "support"}), material => (
+          <option key={material.uri} value={material.uri}>
+            {material.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.template" defaultMessage="Select a template">
       <FormControl componentClass="select" {...fields.template}>
-        { templates.map( template => {
-            return (
-              <option key={template.uri} value={template.uri}>
-                {template.name}
-              </option>
-            );
-          })
-        }
+        { templates.map( template => (
+          <option key={template.uri} value={template.uri}>
+            {template.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
   </Form>
