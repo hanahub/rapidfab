@@ -110,6 +110,7 @@ const Printable = ({ models, uri }) => {
 }
 
 const LineItemFormComponent = ({
+  lineItem,
   models,
   modelsIsFetching,
   fields,
@@ -122,7 +123,11 @@ const LineItemFormComponent = ({
     <SaveDropdownButton onSubmit={handleSubmit} onDelete={handleDelete} />
     <FormRow id="field.printable" defaultMessage="Printable">
       <FormControl.Static>
-        <Printable models={models} uri={fields.model.value} />
+        <Printable
+          models={models}
+          uri={fields.model.value}
+          itar={lineItem.itar}
+        />
       </FormControl.Static>
     </FormRow>
 
@@ -135,9 +140,16 @@ const LineItemFormComponent = ({
       </FormControl>
     </FormRow>
 
-    <FormRow id="field.model" defaultMessage="Model">
-      <ModelSelect models={models} modelsIsFetching={modelsIsFetching} field={fields.model}/>
-    </FormRow>
+    { lineItem.itar ?
+        null
+        : <FormRow id="field.model" defaultMessage="Model">
+            <ModelSelect
+              models={models}
+              modelsIsFetching={modelsIsFetching}
+              field={fields.model}
+            />
+          </FormRow>
+    }
 
     <FormRow id="field.quantity" defaultMessage="Quantity">
       <FormControl type="number" required {...fields.quantity}/>
