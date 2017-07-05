@@ -237,21 +237,39 @@ class AddLineItem extends Component {
       template,
     };
 
-    if (itar) delete payload.itar
+    if (itar) {
+      dispatch(Actions.Api.wyatt['line-item'].post(payload))
+        .then(response => {
+          const newLineItem = response.headers.location;
+          const payload = {
+            'line_items': [ ...order.line_items, newLineItem ]
+          };
+          const uuid = extractUuid(order.uri);
 
-    dispatch(Actions.Api.hoth.model.post({ name: order.name, type: "stl", }))
-      .then(args => {
-        const { location, uploadLocation } = args.headers;
-        payload.model = location;
-
-        dispatch(Actions.Api.wyatt['line-item'].post(payload))
-          .then(response => {
-            const newLineItem = response.headers.location;
-            const payload = { 'line_items': [ ...order.line_items, newLineItem ]};
-            const uuid = extractUuid(order.uri);
-            return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+          return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
         });
-      });
+    } else {
+      dispatch(Actions.Api.hoth.model.post({ name: model.name, type: "stl", }))
+        .then(args => {
+          const { location, uploadLocation } = args.headers;
+
+          // Post model to hoth
+          dispatch(Actions.UploadModel.upload(uploadLocation, model))
+
+          // Post line-item to wyatt
+          payload.model = location;
+          dispatch(Actions.Api.wyatt['line-item'].post(payload))
+            .then(response => {
+              const newLineItem = response.headers.location;
+              const payload = {
+                'line_items': [ ...order.line_items, newLineItem ]
+              };
+              const uuid = extractUuid(order.uri);
+
+              return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+          });
+        });
+    }
   }
 
   render() {
