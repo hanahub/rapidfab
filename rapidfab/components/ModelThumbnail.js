@@ -4,19 +4,46 @@ import { Panel, Thumbnail } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
+const Itar = () => (
+  <Panel>
+    <div className="text-center">
+      <FormattedMessage
+        id="record.itar"
+        defaultMessage="ITAR Model"
+      />
+    </div>
+  </Panel>
+);
+
+const NoSnapshot = () => (
+  <Panel>
+    <div className="text-center">
+      <FormattedMessage
+        id="record.snapshot.none"
+        defaultMessage="No Snapshot"
+      />
+    </div>
+  </Panel>
+);
+
 const Loading = () => (
-  <div className="text-center">
-    <Fa name="spinner" spin/>
-    <span> </span>
-    <FormattedMessage id="loading.thumbnail" defaultMessage="Loading Thumbnail..."/>
-  </div>
+  <Panel>
+    <div className="text-center">
+      <Fa name="spinner" spin/>
+      <span> </span>
+      <FormattedMessage
+        id="loading.thumbnail"
+        defaultMessage="Loading Thumbnail..."
+      />
+    </div>
+  </Panel>
 );
 
 const ModelThumbnail = ({ snapshot, itar }) => {
   if (itar)
-    return <Panel>ITAR Model</Panel>
+    return <Itar />
   else if (snapshot === 'NO_SNAPSHOT')
-    return <Panel>No Snapshot</Panel>
+    return <NoSnapshot />
   else if (snapshot)
     return <Thumbnail src={snapshot} />
   else
