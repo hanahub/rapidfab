@@ -32,7 +32,7 @@ class Feature extends Component {
 function mapStateToProps(state) {
   const feature = state.ui.wyatt.feature;
   return {
-    features      : Selectors.getFeature(state),
+    features      : Selectors.getFeatures(state),
     fetching      : feature.list.fetching,
     apiErrors     : feature.list.errors
   }
