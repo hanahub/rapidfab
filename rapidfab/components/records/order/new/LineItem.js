@@ -14,6 +14,8 @@ import {
 
 import * as Selectors from 'rapidfab/selectors';
 
+import Feature from 'rapidfab/components/Feature';
+
 const FileInput = ({ itar, onFileInputChange, value }) => {
   if (itar) return <p>ITAR Model</p>
   return (
@@ -40,6 +42,7 @@ const LineItemComponent = ({
 }) => (
   <FormGroup controlId="uxModel">
     <fieldset>
+      <Feature featureName={'itar'}>
       <Col lg={2}>
         <ControlLabel>
           <span>ITAR Model</span>
@@ -50,6 +53,7 @@ const LineItemComponent = ({
           onChange={onInputChange}
         />
       </Col>
+      </Feature>
       { lineItem.itar ?
           null :
           <Col md={2}>

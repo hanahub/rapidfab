@@ -18,6 +18,8 @@ import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
+import Feature from 'rapidfab/components/Feature';
+
 const PanelHeader = () => (
   <FormattedMessage
     id="record.lineItem.add"
@@ -58,16 +60,18 @@ const AddLineItemPresentation = ({
 }) => (
   <Panel header={<PanelHeader />}>
     <Form onSubmit={onSubmit}>
-      <Col lg={2}>
-        <ControlLabel>
-          <FormattedMessage id="record.itar" defaultMessage="ITAR Model"/>
-        </ControlLabel>
-        <Checkbox
-          name="itar"
-          checked={itar}
-          onChange={handleInputChange}
-        />
-      </Col>
+      <Feature featureName={'itar'}>
+        <Col lg={2}>
+          <ControlLabel>
+            <FormattedMessage id="record.itar" defaultMessage="ITAR Model"/>
+          </ControlLabel>
+          <Checkbox
+            name="itar"
+            checked={itar}
+            onChange={handleInputChange}
+          />
+        </Col>
+      </Feature>
       { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
       <Col lg={2}>
         <ControlLabel>

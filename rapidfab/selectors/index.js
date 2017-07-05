@@ -92,7 +92,7 @@ export const getBureau = createSelector(
   }
 )
 
-export const getFeature = createSelector(
+export const getFeatures = createSelector(
   [ getStateFeatures, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )

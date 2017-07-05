@@ -3,7 +3,7 @@ import Actions                           from 'rapidfab/actions'
 import { connect }                       from 'react-redux'
 import DashboardComponent                from 'rapidfab/components/admin/Dashboard'
 import * as Selectors                    from 'rapidfab/selectors'
- 
+
 class DashboardContainer extends Component {
   componentWillMount() {
     this.props.onInitialize()
@@ -37,7 +37,7 @@ function mapStateToProps(state) {
   return {
     user          : Selectors.getSession(state),
     bureau        : Selectors.getBureau(state),
-    features      : Selectors.getFeature(state),
+    features      : Selectors.getFeatures(state),
     fetching      : feature.list.fetching,
     apiErrors     : feature.list.errors
   }
