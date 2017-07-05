@@ -174,10 +174,17 @@ class AddLineItem extends Component {
     super(props)
 
     const { baseMaterials, supportMaterials, templates } = props;
-    const baseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
+
+    const baseMaterial = (
+      baseMaterials[0] ? baseMaterials[0].uri : null
+    );
     const itar = false;
-    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
-    const template = templates[0] ? templates[0].uri : null;
+    const supportMaterial = (
+      supportMaterials.length > 0 ? supportMaterials[0].uri : null
+    );
+    const template = (
+      templates[0] ? templates[0].uri : null
+    );
 
     this.state = {
       baseMaterial,
