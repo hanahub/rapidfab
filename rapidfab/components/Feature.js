@@ -15,17 +15,11 @@ class Feature extends Component {
 
   render() {
     const { features } = this.props;
-    const DisplayFeature = () => {
-      const feature = features.map((feature, index) => {
-        <div>{feature.name}</div>
-      })
-      feature.name == this.props.featureName
-      debugger
-      if(feature.enabled && feature.name == this.props.featureName){
-        return (<tbody>{ this.props.children }</tbody>)
-      }else{
-        return (<tbody></tbody>)
-      }
+    const DisplayFeature = ({ feature }) => {
+      const enabledFeature = _.map(_.filter(features, {name: this.props.featureName, enabled: true}), feature => (
+        <div>{this.props.children}</div>
+      ));
+      return (<div>{enabledFeature}</div>)
     }
     return (
       <div>

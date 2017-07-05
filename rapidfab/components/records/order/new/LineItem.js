@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
 import {
   Button,
+  Checkbox,
   FormGroup,
   FormControl,
   Col,
@@ -12,6 +13,8 @@ import {
 } from 'react-bootstrap';
 
 import * as Selectors from 'rapidfab/selectors';
+
+import Feature from 'rapidfab/components/Feature';
 
 const FileInput = ({ itar, onFileInputChange, value }) => {
   if (itar) return <p>ITAR Model</p>
@@ -39,16 +42,31 @@ const LineItemComponent = ({
 }) => (
   <FormGroup controlId="uxModel">
     <fieldset>
-      <Col md={2}>
+      <Feature featureName={'itar'}>
+      <Col lg={2}>
         <ControlLabel>
-          <FormattedMessage id="field.file" defaultMessage='File'/>:
+          <span>ITAR Model</span>
         </ControlLabel>
-        <FileInput
-          itar={false}
-          value={lineItem.value}
-          onFileInputChange={onFileInputChange}
+        <Checkbox
+          name="itar"
+          checked={lineItem.itar}
+          onChange={onInputChange}
         />
       </Col>
+      </Feature>
+      { lineItem.itar ?
+          null :
+          <Col md={2}>
+            <ControlLabel>
+              <FormattedMessage id="field.file" defaultMessage='File'/>:
+            </ControlLabel>
+            <FileInput
+              itar={false}
+              value={lineItem.value}
+              onFileInputChange={onFileInputChange}
+            />
+          </Col>
+      }
       <Col md={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage='Material'/>:
@@ -172,7 +190,10 @@ class LineItem extends Component {
   }
 
   onInputChange(event) {
-    const { value, name } = event.target;
+    const { target } = event;
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
     const { handleLineItemChange, index } = this.props;
     const lineItemChange = {
       updatedLineItemIndex: index,

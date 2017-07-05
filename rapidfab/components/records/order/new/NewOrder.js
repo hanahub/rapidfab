@@ -168,6 +168,7 @@ class NewOrder extends Component {
 
     const initialLineItemState = {
       baseMaterial: initialBaseMaterial,
+      itar: false,
       supportMaterial: initialSupportMaterial,
       template: initialTemplate,
     };
@@ -188,8 +189,9 @@ class NewOrder extends Component {
     const { lineItems } = this.state;
 
     const modelPosts = lineItems.map(lineItem => {
+      const modelName = lineItem.itar ? 'na' : lineItem.model.name;
       return dispatch(Actions.Api.hoth.model.post(
-        { name: lineItem.model.name, type: "stl", }
+        { name: modelName, type: "stl", }
       ));
     });
     Promise.all(modelPosts)
@@ -209,48 +211,60 @@ class NewOrder extends Component {
         updatedLineItems.forEach(lineItem => {
           const { model, uploadLocation } = lineItem;
           dispatch(Actions.UploadModel.upload(uploadLocation, model))
+        });
 
           // Prepare the payload
-          const lineItemsPosts = updatedLineItems.map(lineItem => {
-            const { baseMaterial, modelLocation, supportMaterial, quantity, template } = lineItem;
-            const payload = {
-              bureau: bureau.uri,
-              materials: {
-                base: baseMaterial,
-                support: supportMaterial,
-              },
-              model: modelLocation,
-              quantity: parseInt(quantity),
-              template,
-            };
-            if (!payload.materials.support) delete payload.materials.support;
+        const lineItemsPosts = updatedLineItems.map(lineItem => {
+          const {
+            baseMaterial,
+            itar,
+            modelLocation,
+            supportMaterial,
+            quantity,
+            template,
+          } = lineItem;
+          const payload = {
+            bureau: bureau.uri,
+            itar,
+            materials: {
+              base: baseMaterial,
+              support: supportMaterial,
+            },
+            model: modelLocation,
+            quantity: parseInt(quantity),
+            template,
+          };
 
-            return dispatch(Actions.Api.wyatt['line-item'].post(payload))
-          });
-          Promise.all(lineItemsPosts)
-            .then(responses => {
-              const lineItemUris = responses.map(response => {
-                return response.payload.uri
-              });
+          if (itar) delete payload.model
+          if (!payload.materials.support) delete payload.materials.support;
 
-              const orderPayload = {
-                bureau: bureau.uri,
-                name: orderForm.name.value,
-                currency: orderForm.currency.value,
-                'line_items': lineItemUris,
-                shipping: {
-                  uri: orderForm.shipping.uri.value
-                }
-              }
-
-              dispatch(Actions.Api.wyatt.order.post(orderPayload))
-                .then(response => {
-                  const orderUuid = extractUuid(response.payload.uri);
-                  window.location = `/#/records/order/${orderUuid}`;
-                })
-            });
+          return dispatch(Actions.Api.wyatt['line-item'].post(payload))
         });
-    });
+        Promise.all(lineItemsPosts)
+          .then(responses => {
+            const lineItemUris = responses.map(response => {
+              return response.payload.uri
+            });
+
+            const orderPayload = {
+              bureau: bureau.uri,
+              name: orderForm.name.value,
+              currency: orderForm.currency.value,
+              'line_items': lineItemUris,
+              shipping: {
+                uri: orderForm.shipping.uri.value
+              }
+            };
+
+            dispatch(Actions.Api.wyatt.order.post(orderPayload))
+              .then(response => {
+                const orderUuid = extractUuid(response.payload.uri);
+                window.location = `/#/records/order/${orderUuid}`;
+              }).
+              catch(error => {
+              });
+          });
+      });
   }
 
   render() {

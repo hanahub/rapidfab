@@ -16,6 +16,7 @@ import {
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
 import Feature from 'rapidfab/components/Feature';
 
@@ -51,23 +52,20 @@ const AddLineItemPresentation = ({
   templates,
 }) => (
   <Panel header="Add Line Item">
-    <Form>
-
+    <Form onSubmit={onSubmit}>
       <Feature featureName={'itar'}>
-        <Col lg={2}>
-          <ControlLabel>
-            <span>ITAR Model</span>
-          </ControlLabel>
-          <Checkbox
-            name="itar"
-            checked={itar}
-            onChange={handleInputChange}
-          />
-        </Col>
-
-        { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
+          <Col lg={2}>
+            <ControlLabel>
+              <span>ITAR Model</span>
+            </ControlLabel>
+            <Checkbox
+              name="itar"
+              checked={itar}
+              onChange={handleInputChange}
+            />
+          </Col>
       </Feature>
-
+       { itar ? null : <ModelInput handleFileChange={handleFileChange}/> }
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage='Material'/>:
@@ -157,7 +155,6 @@ const AddLineItemPresentation = ({
         <ButtonToolbar className="clearfix" >
           <Button
             type="submit"
-            onClick={onSubmit}
             bsStyle="success"
             className="pull-right"
             style={{marginTop: "2rem"}}
@@ -175,14 +172,14 @@ class AddLineItem extends Component {
     super(props)
 
     const { baseMaterials, supportMaterials, templates } = props;
-    const baseMaterial = baseMaterials[0].uri;
-    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
+    const baseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
     const itar = false;
-    const template = templates[0].uri;
+    const supportMaterial = supportMaterials.length > 0 ? supportMaterials[0].uri : null;
+    const template = templates[0] ? templates[0].uri : null;
 
     this.state = {
-      itar,
       baseMaterial,
+      itar,
       supportMaterial,
       template,
     };
@@ -231,15 +228,21 @@ class AddLineItem extends Component {
       template,
     };
 
+    if (itar) delete payload.itar
+
     dispatch(Actions.Api.hoth.model.post({ name: order.name, type: "stl", }))
       .then(args => {
         const { location, uploadLocation } = args.headers;
         payload.model = location;
 
-        dispatch(Actions.UploadModel.upload(uploadLocation, model))
-        dispatch(Actions.UploadModel.storePayload(payload))
-        // After the model is uploaded, the edit container posts the line-item
-      })
+        dispatch(Actions.Api.wyatt['line-item'].post(payload))
+          .then(response => {
+            const newLineItem = response.headers.location;
+            const payload = { 'line_items': [ ...order.line_items, newLineItem ]};
+            const uuid = extractUuid(order.uri);
+            return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+        });
+      });
   }
 
   render() {
@@ -261,12 +264,12 @@ class AddLineItem extends Component {
     )
   }
 }
+
 const mapStateToProps = (state) => {
   const bureau = Selectors.getBureau(state);
   const materials = Selectors.getMaterials(state);
   const templates = Selectors.getTemplates(state);
   const order = state.resources[state.routeUUID.uuid];
-  const uploadModel = state.uploadModel;
 
   const baseMaterials = materials.filter( material => material.type === 'base');
   const supportMaterials = materials.filter( material => material.type === 'support');
@@ -279,6 +282,5 @@ const mapStateToProps = (state) => {
     templates
   };
 }
-
 
 export default connect(mapStateToProps)(AddLineItem)

@@ -7,7 +7,7 @@ import {
   ControlLabel
 } from 'react-bootstrap';
 
-import { getThirdPartyProviders, getShippings } from 'rapidfab/selectors'
+import { getThirdPartyProviders, getShippings, getUsers } from 'rapidfab/selectors'
 import { Currencies } from 'rapidfab/constants';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import {
@@ -20,6 +20,7 @@ import LineItem from './LineItem';
 const fields = [
   'currency',
   'name',
+  'order_owner',
   'shipping.name',
   'shipping.address',
   'shipping.tracking',
@@ -44,11 +45,23 @@ const NewOrderForm = ({
   fields,
   providers,
   shippings,
+  users,
 }) => (
   <div>
 
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name}/>
+    </FormRow>
+
+    <FormRow id="field.order_owner" defaultMessage="Assign Owner">
+      <FormControl componentClass="select" {...fields.order_owner}>
+        {users.map(user => (
+          <option key={user.uuid} value={user.uri}>
+            {user.name}
+          </option>
+          ))
+        }
+      </FormControl>
     </FormRow>
 
     <FormRow id="field.shippingName" defaultMessage="Shipping Name">
@@ -102,6 +115,7 @@ const NewOrderForm = ({
 const mapStateToProps = (state) => {
   const providers = getThirdPartyProviders(state);
   const shippings = getShippings(state);
+  const users = getUsers(state);
 
   const initialCurrency = Currencies[0];
   const initialShipping = shippings[0] ? shippings[0].uri : null;
@@ -115,7 +129,7 @@ const mapStateToProps = (state) => {
     'third_party_provider': initialProvider,
   }
 
-  return { initialValues, providers, shippings };
+  return { initialValues, providers, shippings, users };
 };
 
 export default reduxForm({

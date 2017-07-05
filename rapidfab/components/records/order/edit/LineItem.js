@@ -205,9 +205,14 @@ function getSnapshotFromLineItem(lineItem, models) {
   if (!lineItem || models.length === 0)
     return ''
 
-  const model = models.filter(model => model.uri === lineItem.model);
+  const model = models.find(model => model.uri === lineItem.model);
 
-  return (model && model.length) ? model[0].snapshot_content : '';
+  if (model && model.snapshot_content)
+    return model.snapshot_content;
+  else if (model && !model.snapshot_content)
+    return 'NO_SNAPSHOT'
+  else
+    return '';
 }
 
 
