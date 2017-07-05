@@ -15,17 +15,6 @@ const Itar = () => (
   </Panel>
 );
 
-const NoSnapshot = () => (
-  <Panel>
-    <div className="text-center">
-      <FormattedMessage
-        id="record.snapshot.none"
-        defaultMessage="No Snapshot"
-      />
-    </div>
-  </Panel>
-);
-
 const Loading = () => (
   <Panel>
     <div className="text-center">
@@ -39,20 +28,45 @@ const Loading = () => (
   </Panel>
 );
 
-const ModelThumbnail = ({ snapshot, itar }) => {
-  if (itar)
-    return <Itar />
-  else if (snapshot === 'NO_SNAPSHOT')
-    return <NoSnapshot />
-  else if (snapshot)
-    return <Thumbnail src={snapshot} />
-  else
-    return <Loading />
+const NoSnapshot = () => (
+  <Panel>
+    <div className="text-center">
+      <FormattedMessage
+        id="record.snapshot.none"
+        defaultMessage="No Snapshot"
+      />
+    </div>
+  </Panel>
+);
+
+const Error = () => (
+  <Panel>
+    <div className="text-center">
+      <FormattedMessage
+        id="status.error"
+        defaultMessage="Error"
+      />
+    </div>
+  </Panel>
+);
+
+const ModelThumbnail = ({ snapshot }) => {
+  switch (snapshot) {
+    case 'ERROR':
+      return <Error />
+    case 'ITAR':
+      return <Itar />
+    case 'LOADING':
+      return <Loading />
+    case 'NO_SNAPSHOT':
+      return <NoSnapshot />
+    default:
+      return <Thumbnail src={snapshot} />
+  }
 };
 
 ModelThumbnail.propTypes = {
-  itar: PropTypes.bool,
-  model: PropTypes.object
+  snapshot: PropTypes.string
 };
 
 export default ModelThumbnail;
