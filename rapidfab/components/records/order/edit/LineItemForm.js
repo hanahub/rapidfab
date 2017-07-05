@@ -53,13 +53,11 @@ const StatusOptions = ({ initialValue }) => {
   if (statusOptions) {
     return (
       <div>
-        { statusOptions.map(status => {
-            return (
-              <option key={status} value={status}>
-                {ORDER_STATUS_MAP[status]}
-              </option>
-            )
-          })
+        { statusOptions.map(status => (
+            <option key={status} value={status}>
+              {ORDER_STATUS_MAP[status]}
+            </option>
+          ))
         }
       </div>
     );
@@ -72,48 +70,57 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
   if(modelsIsFetching) {
     return (
       <FormControl.Static>
-        <FormattedMessage id="loading.model" defaultMessage="Loading models..."/>
+        <FormattedMessage
+          id="loading.model"
+          defaultMessage="Loading models..."
+        />
       </FormControl.Static>
     );
   } else {
     return (
       <FormControl componentClass="select" required {...field}>
-        { models.map( model => {
-            return (
-              <option
-                key={model.uri}
-                value={model.uri}
-              >
-                {model.name}
-              </option>
-            );
-          })
+        { models.map( model => (
+            <option key={model.uri} value={model.uri}>
+              {model.name}
+            </option>
+          ))
         }
       </FormControl>
     );
   }
 }
 
-const Printable = ({ models, uri }) => {
-  let model = _.find(models, {uri})
-  let printable = true
+const Printable = ({ models, uri, itar }) => {
+  let model = models.find(model => model.uri === uri);
+  let printable = true;
 
-  if(model && !model.analyses.manifold) {
+  if ( (model && model.analyses && !model.analyses.manifold) ) {
     printable = false
   }
 
-  if(model) {
-    if(printable) {
-      return <Label bsStyle="success"><FormattedMessage id="field.printable" defaultMessage='Printable'/></Label>
-    } else {
-      return <Label bsStyle="warning"><FormattedMessage id="field.unknown" defaultMessage='Unknown'/></Label>
-    }
+  if (model && printable) {
+    return (
+      <Label bsStyle="success">
+        <FormattedMessage id="field.printable" defaultMessage='Printable'/>
+      </Label>
+    );
+  } else if ((model && !printable) || itar) {
+    return (
+      <Label bsStyle="warning">
+        <FormattedMessage id="field.unknown" defaultMessage='Unknown'/>
+      </Label>
+    );
   } else {
-    return <Label bsStyle="info"><FormattedMessage id="field.loading" defaultMessage='Loading'/></Label>
+    return (
+      <Label bsStyle="info">
+        <FormattedMessage id="field.loading" defaultMessage='Loading'/>
+      </Label>
+    );
   }
 }
 
 const LineItemFormComponent = ({
+  lineItem,
   models,
   modelsIsFetching,
   fields,
@@ -126,7 +133,11 @@ const LineItemFormComponent = ({
     <SaveDropdownButton onSubmit={handleSubmit} onDelete={handleDelete} />
     <FormRow id="field.printable" defaultMessage="Printable">
       <FormControl.Static>
-        <Printable models={models} uri={fields.model.value} />
+        <Printable
+          models={models}
+          uri={fields.model.value}
+          itar={lineItem.itar}
+        />
       </FormControl.Static>
     </FormRow>
 
@@ -139,9 +150,16 @@ const LineItemFormComponent = ({
       </FormControl>
     </FormRow>
 
-    <FormRow id="field.model" defaultMessage="Model">
-      <ModelSelect models={models} modelsIsFetching={modelsIsFetching} field={fields.model}/>
-    </FormRow>
+    { lineItem.itar ?
+        null
+        : <FormRow id="field.model" defaultMessage="Model">
+            <ModelSelect
+              models={models}
+              modelsIsFetching={modelsIsFetching}
+              field={fields.model}
+            />
+          </FormRow>
+    }
 
     <FormRow id="field.quantity" defaultMessage="Quantity">
       <FormControl type="number" required {...fields.quantity}/>
@@ -150,27 +168,32 @@ const LineItemFormComponent = ({
     <FormRow id="field.baseMaterial" defaultMessage="Base Material">
       <FormControl componentClass="select" required {...fields.materials.base}>
         <option value="" disabled>Select a Material</option>
-        {_.map(_.filter(materials, {type: "base"}), material => (<option key={material.uri} value={material.uri}>{material.name}</option>))}
+        {_.map(_.filter(materials, {type: "base"}), material => (
+          <option key={material.uri} value={material.uri}>
+            {material.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.supportMaterial" defaultMessage="Support Material">
       <FormControl componentClass="select" {...fields.materials.support}>
         <option value="">None</option>
-        {_.map(_.filter(materials, {type: "support"}), material => (<option key={material.uri} value={material.uri}>{material.name}</option>))}
+        {_.map(_.filter(materials, {type: "support"}), material => (
+          <option key={material.uri} value={material.uri}>
+            {material.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.template" defaultMessage="Select a template">
       <FormControl componentClass="select" {...fields.template}>
-        { templates.map( template => {
-            return (
-              <option key={template.uri} value={template.uri}>
-                {template.name}
-              </option>
-            );
-          })
-        }
+        { templates.map( template => (
+          <option key={template.uri} value={template.uri}>
+            {template.name}
+          </option>
+        ))}
       </FormControl>
     </FormRow>
   </Form>
@@ -200,7 +223,6 @@ const mapDispatchToProps = (dispatch) => {
       if (!payload.materials.support) delete payload.materials.support
 
       dispatch(Actions.Api.wyatt['line-item'].put(payload.uuid, payload))
-        .then( () => window.location.hash = "#/plan/orders" );
     },
     onDelete: (uuid, orderUuid) => {
       dispatch(Actions.Api.wyatt['line-item'].delete(uuid))
