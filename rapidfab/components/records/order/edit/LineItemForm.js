@@ -90,22 +90,32 @@ const ModelSelect = ({models, modelsIsFetching, field}) => {
   }
 }
 
-const Printable = ({ models, uri }) => {
-  let model = _.find(models, {uri})
-  let printable = true
+const Printable = ({ models, uri, itar }) => {
+  let model = models.find(model => model.uri === uri);
+  let printable = true;
 
-  if(model && !model.analyses.manifold) {
+  if ( (model && model.analyses && !model.analyses.manifold) ) {
     printable = false
   }
 
-  if(model) {
-    if(printable) {
-      return <Label bsStyle="success"><FormattedMessage id="field.printable" defaultMessage='Printable'/></Label>
-    } else {
-      return <Label bsStyle="warning"><FormattedMessage id="field.unknown" defaultMessage='Unknown'/></Label>
-    }
+  if (model && printable) {
+    return (
+      <Label bsStyle="success">
+        <FormattedMessage id="field.printable" defaultMessage='Printable'/>
+      </Label>
+    );
+  } else if ((model && !printable) || itar) {
+    return (
+      <Label bsStyle="warning">
+        <FormattedMessage id="field.unknown" defaultMessage='Unknown'/>
+      </Label>
+    );
   } else {
-    return <Label bsStyle="info"><FormattedMessage id="field.loading" defaultMessage='Loading'/></Label>
+    return (
+      <Label bsStyle="info">
+        <FormattedMessage id="field.loading" defaultMessage='Loading'/>
+      </Label>
+    );
   }
 }
 
