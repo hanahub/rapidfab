@@ -381,30 +381,52 @@ export const getPrintersForRunNew = createSelector(
   }
 )
 
-export const getOrdersForRunNew = createSelector(
-  [ getOrders, getMaterials, getPrintsCreated, getModels ],
-  (orders, materials, prints, models) => {
-    if(orders.length && materials.length && prints.length && models.length) {
-      return _.reduce(orders, (result, order) => {
-        const baseMaterial    = _.find(materials, ['uri', order.materials.base])
-        const supportMaterial = _.find(materials, ['uri', order.materials.support])
-        const model           = _.find(models, ['uri', order.model])
-        const orderPrints     = _.filter(prints, ['order', order.uri])
-        if(baseMaterial && model && orderPrints.length && (order.status == 'confirmed' || order.status == 'printing')) {
-          let hydratedRecord = _.assign({}, order, {
-            materials: {
-              base    : baseMaterial,
-              support : supportMaterial
-            },
-            model
+export const getLineItemsForRunNew = createSelector(
+  [ getLineItems, getMaterials, getPrintsCreated, getModels ],
+  ( lineItems, materials, prints, models) => {
+    if (
+      lineItems.length &&
+      materials.length &&
+      prints.length &&
+      models.length
+    ) {
+      return _.reduce(lineItems, (result, lineItem) => {
+        const baseMaterial = materials.find(material => (
+          material.uri === lineItem.materials.base
+        ));
+        const supportMaterial = materials.find(material => (
+          material.uri === lineItem.materials.support
+        ));
+        const model = models.find(model => (
+          model.uri === lineItem.model
+        ));
+        const lineItemPrints = prints.filter(print => (
+          print['line_item'] === lineItem.uri
+        ));
+
+        if (
+          baseMaterial &&
+          model &&
+          lineItemPrints.length &&
+          (lineItem.status === 'confirmed' || lineItem.status === 'printing')
+        ) {
+          let hydratedRecord = Object.assign( {}, lineItem, {
+              materials: {
+                base: baseMaterial,
+                support: supportMaterial
+              },
+              model
           })
-          hydratedRecord.prints = _.map(orderPrints, print => _.assign({}, print, { order: hydratedRecord }))
+          hydratedRecord.prints = lineItemPrints.map(print => (
+            Object.assign({}, print, { lineItem: hydratedRecord })
+          ));
           result.push(hydratedRecord)
         }
-        return result
-      }, [])
+        return result;
+      }, []);
+    } else {
+      return [];
     }
-    return []
   }
 )
 

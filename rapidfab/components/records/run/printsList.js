@@ -7,7 +7,7 @@ import Fa                                         from 'react-fontawesome'
 const Header = ({ onActivate }) => (
   <BS.Row>
     <BS.Col xs={6}>
-      Pending Order Prints
+      Pending Prints
     </BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
@@ -35,12 +35,12 @@ const PrintItem = ({ print, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        <a href={`#/records/material/${print.order.materials.base.uuid}`}>
-          {print.order.materials.base.name}
+        <a href={`#/records/material/${print.lineItem.materials.base.uuid}`}>
+          {print.lineItem.materials.base.name}
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        <FormattedDateTime value={print.order.created}/>
+        <FormattedDateTime value={print.lineItem.created}/>
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>
