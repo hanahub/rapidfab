@@ -37,18 +37,20 @@ const ExportButton = () => (
   </Button>
 );
 
-const PrintSummary = ({ print, order, model }) => {
-  const { order_step_status: status } = print;
+const PrintSummary = ({ print, order, lineItem, model , events }) => {
+  const { status } = print;
   const {
     created,
+  } = lineItem;
+  const {
     name,
     uuid,
-   } = order;
+  } = order;
   return (
     <Panel header="Print Summary">
       <Row>
         <Col xs={6}>
-          <ModelThumbnail model={model} />
+          <ModelThumbnail snapshot={model.snapshot_content} />
         </Col>
         <Col xs={6}>
           <ListGroup>
@@ -126,7 +128,7 @@ const PrintRecord = () => (
 );
 
 
-const PrintComponent = ({ print, order, model }) => {
+const PrintComponent = ({ print, order, lineItem, model, events }) => {
   const breadcrumbs = [ "prints", print.id ];
 
   return (
@@ -135,8 +137,7 @@ const PrintComponent = ({ print, order, model }) => {
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
       <ActionToolbar />
       <hr />
-      <PrintSummary print={print} order={order} model={model} />
-      <PrintRecord />
+      <PrintSummary print={print} order={order} lineItem={lineItem} model={model} />
 
     </Grid>
   );
