@@ -6,7 +6,7 @@ import * as Selectors                    from 'rapidfab/selectors'
 
 class DashboardContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize()
+    this.props.onInitialize(this.props.bureau.group)
   }
   render() {
     return <DashboardComponent {...this.props} />
@@ -15,8 +15,11 @@ class DashboardContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: () => {
+    onInitialize: (bureauGroup) => {
       dispatch(Actions.Api.wyatt.feature.list())
+      if(bureauGroup){
+        dispatch(Actions.Api.pao.users.list({ 'group': bureauGroup }))
+      }
     },
     onSaveFeature: payload => {
       if(payload) {
@@ -38,6 +41,7 @@ function mapStateToProps(state) {
     user          : Selectors.getSession(state),
     bureau        : Selectors.getBureau(state),
     features      : Selectors.getFeatures(state),
+    users         : Selectors.getUsers(state),
     fetching      : feature.list.fetching,
     apiErrors     : feature.list.errors
   }
