@@ -9,10 +9,13 @@ import {
 } from 'react-intl'
 import Grid, {
   IdColumn,
+  MappedColumn,
   NumberColumn,
   ImageColumn,
   DateTimeColumn,
 } from 'rapidfab/components/grid'
+
+import { ORDER_STATUS_MAP }                   from 'rapidfab/mappings'
 
 const panelBodyStyle = {
   height: 359,
@@ -27,7 +30,7 @@ const LastTenOrders = ({ data }) => (
         columns={[
           "id",
           "name",
-          "quantity",
+          "status",
           "created"
         ]}
         columnMeta={[{
@@ -39,9 +42,9 @@ const LastTenOrders = ({ data }) => (
           columnName: "name",
           displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
         }, {
-          customComponent: NumberColumn,
-          columnName: "quantity",
-          displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
+          customComponent: MappedColumn("status", ORDER_STATUS_MAP),
+          columnName: "status",
+          displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>
         }, {
           customComponent: DateTimeColumn,
           columnName: "created",
