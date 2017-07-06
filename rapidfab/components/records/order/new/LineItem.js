@@ -234,8 +234,13 @@ class LineItem extends Component {
 
 const mapStateToProps = (state) => {
   const materials = Selectors.getMaterials(state);
-  const baseMaterials = materials.filter(material => material.type === 'base');
-  const supportMaterials = materials.filter(material => material.type === 'success');
+  const baseMaterials = materials.filter(material => (
+    material.type === 'base'
+  ));
+  const supportMaterials = materials.filter(material => (
+    material.type === 'support'
+  ));
+
   const templates = Selectors.getTemplates(state);
 
   return { baseMaterials, supportMaterials, templates };
