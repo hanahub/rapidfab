@@ -100,7 +100,7 @@ class Runs extends Component {
   render() {
     const {
       printers,
-      orders,
+      lineItems,
       apiErrors,
       fetching,
       prints,
@@ -179,7 +179,6 @@ class Runs extends Component {
                     onActivate={this.handleActivatePrints}
                     pager={pager}
                     onPageChange={this.props.onPageChange}
-                    orders={orders}
                   />
                 </BS.Col>
                 <BS.Col xs={9}>

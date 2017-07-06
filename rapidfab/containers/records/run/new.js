@@ -36,19 +36,28 @@ class RunContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: uuid => {
-      dispatch(Actions.Api.wyatt.order.list()).then(response => {
-        const printableOrders = _.filter(response.json.resources, order => {
-          if(_.includes(["confirmed", "printing"], order.status))
-            return order
-        })
-        for(let orders of _.chunk(printableOrders, 15)) {
-          dispatch(Actions.Api.wyatt.print.list({
-            order: _.map(orders, 'uri')
-          }))
-          dispatch(Actions.Api.hoth.model.list({
-            uri: _.map(orders, 'model')
-          }))
-        }
+      dispatch(Actions.Api.wyatt['line-item'].list())
+        .then(response => {
+          const lineItems = response.json.resources;
+          const printableLineItems = lineItems.filter(lineItem => {
+            const { status } = lineItem;
+            return (status === 'confirmed' || status === 'printing');
+          });
+
+          for(let lineItems of _.chunk(printableLineItems, 15)) {
+            const lineItemURIs = lineItems.map(lineItem => lineItem.uri);
+            const lineItemModels = lineItems.map(lineItem => lineItem.model);
+            // remove null models from ITAR lineItems
+            const filteredModels = lineItemModels.filter(model => model);
+
+            dispatch(Actions.Api.wyatt.print.list({
+              'line_item': lineItemURIs
+            }))
+
+            dispatch(Actions.Api.hoth.model.list({
+              uri: filteredModels
+            }))
+          }
       })
       dispatch(Actions.Api.wyatt["process-step"].list())
       dispatch(Actions.Api.wyatt['printer-type'].list())
@@ -78,14 +87,15 @@ const getPager = (state, prints) => ({
 
 function mapStateToProps(state) {
   const printerType = state.ui.wyatt['printer-type']
+  const processStep = state.ui.wyatt["process-step"]
+  const lineItem = state.ui.wyatt['line-item']
+
   const {
-    order,
     material,
     print,
     printer,
     run
   } = state.ui.wyatt
-  const processStep = state.ui.wyatt["process-step"]
 
   const {
     model
@@ -96,7 +106,7 @@ function mapStateToProps(state) {
   } = state.ui.nautilus
 
   const fetching =
-    order.list.fetching ||
+    lineItem.list.fetching ||
     material.list.fetching ||
     print.list.fetching ||
     printer.list.fetching ||
@@ -107,9 +117,8 @@ function mapStateToProps(state) {
     processStep.list.fetching
 
   const apiErrors = _.concat(
-    order.list.errors,
     material.list.errors,
-    order.list.errors,
+    lineItem.list.errors,
     print.list.errors,
     printer.list.errors,
     run.post.errors,
@@ -119,8 +128,9 @@ function mapStateToProps(state) {
     processStep.list.errors,
   )
 
-  const orders = Selectors.getOrdersForRunNew(state)
-  const prints = _.flatMap(orders, 'prints')
+  const lineItems = Selectors.getLineItemsForRunNew(state)
+  //const orders = Selectors.getOrdersForRunNew(state)
+  const prints = _.flatMap(lineItems, 'prints')
   const processSteps = Selectors.getProcessSteps(state)
   const printerTypes = Selectors.getPrinterTypes(state)
 
@@ -144,8 +154,8 @@ function mapStateToProps(state) {
   return {
     apiErrors,
     fetching,
-    loading     : (!orders.length || !printers.length) && fetching,
-    orders,
+    loading     : (!lineItems.length || !printers.length) && fetching,
+    lineItems,
     pager,
     printers,
     prints      : printablePrints.splice(page * printsPerPage, printsPerPage),

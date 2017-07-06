@@ -48,10 +48,10 @@ const Item = ({ print, printer, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        {`${_.round(print.order.model.size.x, 2)} x ${_.round(print.order.model.size.y, 2)}`}
+        {`${_.round(print.lineItem.model.size.x, 2)} x ${_.round(print.lineItem.model.size.y, 2)}`}
       </BS.Col>
       <BS.Col xs={3}>
-        {printBedFill(printer, print.order.model)}
+        {printBedFill(printer, print.lineItem.model)}
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>
