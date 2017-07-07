@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Button,
@@ -16,36 +15,25 @@ import {
   Radio,
   Row,
   Thumbnail,
+  Table,
 } from 'react-bootstrap';
+
+import { ORDER_STATUS_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButton from 'rapidfab/components/saveButton';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
-
-const ActionToolbar = () => (
-  <ButtonToolbar className="clearfix">
-    <div className="pull-right">
-      <ExportButton />
-      <SaveButton />
-    </div>
-  </ButtonToolbar>
-);
-
-const ExportButton = () => (
-  <Button bsStyle="primary" bsSize="small">
-    Export
-  </Button>
-);
+import {
+  FormattedCost,
+  FormattedDateTime,
+  FormattedMessage,
+  FormattedVolume
+} from 'rapidfab/i18n';
 
 const PrintSummary = ({ print, order, lineItem, model , events }) => {
   const { status } = print;
-  const {
-    created,
-  } = lineItem;
-  const {
-    name,
-    uuid,
-  } = order;
+  const { created } = lineItem;
+  const { name, uuid } = order;
   return (
     <Panel header="Print Summary">
       <Row>
@@ -57,7 +45,12 @@ const PrintSummary = ({ print, order, lineItem, model , events }) => {
             <ListGroupItem>
               <div className="clearfix">
                 <div className="pull-left">
-                  <span>Order:</span>
+                  <span>
+                    <FormattedMessage
+                      id="field.order"
+                      defaultMessage="Order"
+                    />:
+                  </span>
                 </div>
                 <div className="pull-right">
                   <a href={`#/records/order/${uuid}`}>{name}</a>
@@ -66,14 +59,24 @@ const PrintSummary = ({ print, order, lineItem, model , events }) => {
             </ListGroupItem>
             <ListGroupItem>
               <SpaceBetweenText
-                left="Status:"
-                right={status}
+                left={
+                  <FormattedMessage
+                    id="field.status"
+                    defaultMessage="Status"
+                  />
+                }
+                right={RUN_STATUS_MAP[status]}
               />
             </ListGroupItem>
             <ListGroupItem>
               <SpaceBetweenText
-                left="Created:"
-                right={created}
+                left={
+                  <FormattedMessage
+                    id="status.created"
+                    defaultMessage="Created"
+                  />
+                }
+                right={<FormattedDateTime value={created} /> }
               />
             </ListGroupItem>
           </ListGroup>
@@ -127,17 +130,199 @@ const PrintRecord = () => (
   </Panel>
 );
 
+const PriceChanges = ({ currency, priceEvents }) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Price Changes" eventKey="1">
+      <Table responsive fill>
+        <thead>
+          <tr>
+            <th>
+              <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          { priceEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+                <FormattedCost
+                  currency={currency}
+                  value={event.current_value}
+                />
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Panel>
+  </Accordion>
+);
 
-const PrintComponent = ({ print, order, lineItem, model, events }) => {
-  const breadcrumbs = [ "prints", print.id ];
+const OrderStatusChanges = ({statusEvents}) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Order Status Changes" eventKey="1">
+      <Table responsive fill>
+        <thead>
+          <tr>
+            <th>
+              <FormattedMessage id="field.status" defaultMessage="status" />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          { statusEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+               {ORDER_STATUS_MAP[event.current_value]}
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Panel>
+  </Accordion>
+);
+
+const ModelChanges = ({modelEvents}) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Model Changes" eventKey="1">
+      <Table responsive fill>
+        <thead>
+          <tr>
+            <th>
+              <FormattedMessage id="field.model" defaultMessage="Model" />
+            </th>
+            <th>
+              <FormattedMessage
+                id="field.username"
+                defaultMessage="Username"
+              />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          { modelEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+               {event.model.name}
+              </td>
+              <td>
+               {event.user.name}
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Panel>
+  </Accordion>
+);
+
+const VolumeChanges = ({ volumeEvents }) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Build Volume Changes" eventKey="1">
+      <Table responsive fill>
+        <thead>
+          <tr>
+            <th>
+              <FormattedMessage
+                id="record.material"
+                defaultMessage="Material"
+              />
+            </th>
+            <th>
+              <FormattedMessage
+                id="field.volume"
+                defaultMessage="Volume"
+              />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          { volumeEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+                { event.key === 'base_material_used' ?
+                  <FormattedMessage
+                    id="estimates.materialUsed"
+                    defaultMessage='Material Used'
+                  />
+                  :
+                  <FormattedMessage
+                    id="estimates.supportUsed"
+                    defaultMessage='Support Used'
+                  />
+                }
+              </td>
+              <td>
+                <FormattedVolume value={event.current_value} />
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Panel>
+  </Accordion>
+);
+
+const PrintComponent = ({ print, order, lineItem, model, models, events, users }) => {
+  const breadcrumbs = [ 'prints', print.id ];
+
+  const priceEvents = events.filter(event => event.key === 'amount');
+  const statusEvents = events.filter(event => event.key === 'status' );
+
+  const modelEvents = events.filter(event => {
+    return event.key === 'model'
+  }).map(event => {
+    const model = models.find(model => model.uri === event.current_value);
+    const user = users.find(user => user.uri === event.user);
+    return Object.assign({}, event, { model, user })
+  });
+
+  const volumeEvents = events.filter(event => {
+    return (
+      event.key === 'base_material_used' ||
+      event.key === 'support_material_used'
+    );
+  });
+
 
   return (
     <Grid fluid className="container">
 
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
-      <ActionToolbar />
+
       <hr />
+
       <PrintSummary print={print} order={order} lineItem={lineItem} model={model} />
+
+      <PriceChanges priceEvents={priceEvents} currency={order.currency} />
+      <OrderStatusChanges statusEvents={statusEvents} />
+      <ModelChanges modelEvents={modelEvents} />
+      <VolumeChanges volumeEvents={volumeEvents} />
 
     </Grid>
   );

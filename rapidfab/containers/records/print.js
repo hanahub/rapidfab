@@ -10,15 +10,15 @@ import PrintComponent from 'rapidfab/components/records/print';
 
 class PrintContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid);
+    this.props.onInitialize(this.props);
   }
 
   render() {
-    const { apiErrors, fetching, print, order, lineItem, model, events } = this.props;
-    const loading = fetching || !print || !order || !lineItem || !model || !events;
+    const { apiErrors, fetching, print, order, lineItem, model, models, events, users } = this.props;
+    const loading = fetching || !print || !order || !lineItem || !model || !events || !users;
     return(
       <Gatekeeper errors={apiErrors} loading={loading}>
-        <PrintComponent print={print} order={order} lineItem={lineItem} model={model} events={events} />
+        <PrintComponent print={print} order={order} lineItem={lineItem} model={model} models={models} events={events} users={users} />
       </Gatekeeper>
     );
   }
@@ -26,8 +26,10 @@ class PrintContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
-      const print = dispatch(Actions.Api.wyatt.print.get(uuid))
+    onInitialize: props => {
+      dispatch(Actions.Api.hoth.model.list());
+      dispatch(Actions.Api.pao.users.list({group: props.bureau.group}));
+      const print = dispatch(Actions.Api.wyatt.print.get(props.uuid))
 
       // GET model
       print
@@ -73,6 +75,8 @@ function mapStateToProps(state, props) {
   const orders = Selectors.getOrders(state, props);
   const lineItems = Selectors.getLineItems(state, props);
   const models = Selectors.getModels(state, props);
+  const users = Selectors.getUsers(state);
+  const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
   const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
 
@@ -86,15 +90,19 @@ function mapStateToProps(state, props) {
     state.ui.wyatt.order.get.fetching ||
     state.ui.wyatt.event.list.fetching ||
     state.ui.wyatt['line-item'].get.fetching ||
-    state.ui.hoth.model.get.fetching
+    state.ui.hoth.model.get.fetching ||
+    state.ui.pao.users.list.fetching
 
   return {
     uuid,
     print,
     order,
     lineItem,
+    users,
+    bureau,
     events,
     model,
+    models,
     fetching,
     apiErrors,
   }
