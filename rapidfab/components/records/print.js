@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Button,
@@ -19,37 +18,22 @@ import {
   Table,
 } from 'react-bootstrap';
 
+import { ORDER_STATUS_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
+
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButton from 'rapidfab/components/saveButton';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
-
-import { FormattedDateTime, FormatedMessage, FormatedVolume } from 'rapidfab/i18n';
-import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
-
-const ActionToolbar = () => (
-  <ButtonToolbar className="clearfix">
-    <div className="pull-right">
-      <ExportButton />
-      <SaveButton />
-    </div>
-  </ButtonToolbar>
-);
-
-const ExportButton = () => (
-  <Button bsStyle="primary" bsSize="small">
-    Export
-  </Button>
-);
+import {
+  FormattedCost,
+  FormattedDateTime,
+  FormattedMessage,
+  FormattedVolume
+} from 'rapidfab/i18n';
 
 const PrintSummary = ({ print, order, lineItem, model , events }) => {
   const { status } = print;
-  const {
-    created,
-  } = lineItem;
-  const {
-    name,
-    uuid,
-  } = order;
+  const { created } = lineItem;
+  const { name, uuid } = order;
   return (
     <Panel header="Print Summary">
       <Row>
@@ -61,7 +45,12 @@ const PrintSummary = ({ print, order, lineItem, model , events }) => {
             <ListGroupItem>
               <div className="clearfix">
                 <div className="pull-left">
-                  <span>Order:</span>
+                  <span>
+                    <FormattedMessage
+                      id="field.order"
+                      defaultMessage="Order"
+                    />:
+                  </span>
                 </div>
                 <div className="pull-right">
                   <a href={`#/records/order/${uuid}`}>{name}</a>
@@ -70,14 +59,24 @@ const PrintSummary = ({ print, order, lineItem, model , events }) => {
             </ListGroupItem>
             <ListGroupItem>
               <SpaceBetweenText
-                left="Status:"
-                right={status}
+                left={
+                  <FormattedMessage
+                    id="field.status"
+                    defaultMessage="Status"
+                  />
+                }
+                right={RUN_STATUS_MAP[status]}
               />
             </ListGroupItem>
             <ListGroupItem>
               <SpaceBetweenText
-                left="Created:"
-                right={created}
+                left={
+                  <FormattedMessage
+                    id="status.created"
+                    defaultMessage="Created"
+                  />
+                }
+                right={<FormattedDateTime value={created} /> }
               />
             </ListGroupItem>
           </ListGroup>
