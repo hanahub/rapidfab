@@ -74,7 +74,7 @@ const PrintItem = ({ print }) => (
   <ListGroupItem>
     <Row>
       <Col xs={6}>
-        {print.id}
+        <a href={`/#/records/print/${print.uuid}`}>{print.id}</a>
       </Col>
       <Col xs={6}>
         {statusMapping[print.status]}
