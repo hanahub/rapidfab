@@ -16,11 +16,15 @@ import {
   Radio,
   Row,
   Thumbnail,
+  Table,
 } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButton from 'rapidfab/components/saveButton';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
+
+import { FormattedDateTime, FormatedMessage, FormatedVolume } from 'rapidfab/i18n';
+import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 
 const ActionToolbar = () => (
   <ButtonToolbar className="clearfix">
@@ -127,18 +131,142 @@ const PrintRecord = () => (
   </Panel>
 );
 
+const OrderConfirmed = ({statusEvents}) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Order Status Changed" eventKey="1">
+      <Table responsive striped bordered>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        { statusEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+               {ORDER_STATUS_MAP[event.current_value]}
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+        ))}
+      </Table>
+    </Panel>
+  </Accordion>
+);
 
-const PrintComponent = ({ print, order, lineItem, model, events }) => {
-  const breadcrumbs = [ "prints", print.id ];
+const ModelChanged = ({modelEvents}) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Model Changed" eventKey="1">
+      <Table responsive striped bordered>
+        <thead>
+          <tr>
+            <th>Model Name</th>
+            <th>User</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        { modelEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+               {event.model.name}
+              </td>
+              <td>
+               {event.userObj.name}
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+        ))}
+      </Table>
+    </Panel>
+  </Accordion>
+);
+
+const BuildVolumeCreated = () => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Build Volume Created" eventKey="1">
+      <ListGroup fill>
+        <ListGroupItem>
+          <div className="clearfix">
+            <div className="pull-left">
+              <span>Price Generated:</span>
+            </div>
+          </div>
+        </ListGroupItem>
+        <ListGroupItem>
+          <SpaceBetweenText
+            left="Order Confirmed:"
+
+          />
+        </ListGroupItem>
+        <ListGroupItem>
+          <SpaceBetweenText
+            left="Created:"
+
+          />
+        </ListGroupItem>
+      </ListGroup>
+    </Panel>
+  </Accordion>
+);
+
+const PriceGenerated = () => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Price Generated" eventKey="1">
+      <ListGroup fill>
+        <ListGroupItem>
+          <div className="clearfix">
+            <div className="pull-left">
+              <span>Price Generated:</span>
+            </div>
+          </div>
+        </ListGroupItem>
+        <ListGroupItem>
+          <SpaceBetweenText
+            left="Order Confirmed:"
+
+          />
+        </ListGroupItem>
+        <ListGroupItem>
+          <SpaceBetweenText
+            left="Created:"
+
+          />
+        </ListGroupItem>
+      </ListGroup>
+    </Panel>
+  </Accordion>
+);
+
+const PrintComponent = ({ print, order, lineItem, model, models, events, users }) => {
+  const breadcrumbs = [ 'prints', print.id ];
+
+  const statusEvents = events.filter(event => {
+    return event.key === 'status'
+  })
+
+  const modelEvents = events.filter(event => {
+    return event.key === 'model'
+  }).map(event => {
+    const model = models.find(model => model.uri === event.current_value);
+    const user = users.find(user => user.uri === event.user);
+    return Object.assign({}, event, { model, userObj: user })
+  })
 
   return (
     <Grid fluid className="container">
 
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
-      <ActionToolbar />
+
       <hr />
       <PrintSummary print={print} order={order} lineItem={lineItem} model={model} />
-
+      <PriceGenerated />
+      <OrderConfirmed statusEvents={statusEvents} />
+      <ModelChanged modelEvents={modelEvents} />
+      <BuildVolumeCreated />
     </Grid>
   );
 };
