@@ -130,17 +130,56 @@ const PrintRecord = () => (
   </Panel>
 );
 
-const OrderConfirmed = ({statusEvents}) => (
+const PriceChanges = ({ currency, priceEvents }) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Order Status Changed" eventKey="1">
-      <Table responsive striped bordered>
+    <Panel bsStyle="primary" header="Price Changes" eventKey="1">
+      <Table responsive fill>
         <thead>
           <tr>
-            <th>Status</th>
-            <th>Time</th>
+            <th>
+              <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
           </tr>
         </thead>
-        { statusEvents.map( event => (
+        <tbody>
+          { priceEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+                <FormattedCost
+                  currency={currency}
+                  value={event.current_value}
+                />
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Panel>
+  </Accordion>
+);
+
+const OrderStatusChanges = ({statusEvents}) => (
+  <Accordion>
+    <Panel bsStyle="primary" header="Order Status Changes" eventKey="1">
+      <Table responsive fill>
+        <thead>
+          <tr>
+            <th>
+              <FormattedMessage id="field.status" defaultMessage="status" />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          { statusEvents.map( event => (
             <tr key={event.uuid}>
               <td>
                {ORDER_STATUS_MAP[event.current_value]}
@@ -149,93 +188,102 @@ const OrderConfirmed = ({statusEvents}) => (
                <FormattedDateTime value={event.created} />
               </td>
             </tr>
-        ))}
+          ))}
+        </tbody>
       </Table>
     </Panel>
   </Accordion>
 );
 
-const ModelChanged = ({modelEvents}) => (
+const ModelChanges = ({modelEvents}) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Model Changed" eventKey="1">
-      <Table responsive striped bordered>
+    <Panel bsStyle="primary" header="Model Changes" eventKey="1">
+      <Table responsive fill>
         <thead>
           <tr>
-            <th>Model Name</th>
-            <th>User</th>
-            <th>Created</th>
+            <th>
+              <FormattedMessage id="field.model" defaultMessage="Model" />
+            </th>
+            <th>
+              <FormattedMessage
+                id="field.username"
+                defaultMessage="Username"
+              />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
           </tr>
         </thead>
-        { modelEvents.map( event => (
+        <tbody>
+          { modelEvents.map( event => (
             <tr key={event.uuid}>
               <td>
                {event.model.name}
               </td>
               <td>
-               {event.userObj.name}
+               {event.user.name}
               </td>
               <td>
                <FormattedDateTime value={event.created} />
               </td>
             </tr>
-        ))}
+          ))}
+        </tbody>
       </Table>
     </Panel>
   </Accordion>
 );
 
-const BuildVolumeCreated = () => (
+const VolumeChanges = ({ volumeEvents }) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Build Volume Created" eventKey="1">
-      <ListGroup fill>
-        <ListGroupItem>
-          <div className="clearfix">
-            <div className="pull-left">
-              <span>Price Generated:</span>
-            </div>
-          </div>
-        </ListGroupItem>
-        <ListGroupItem>
-          <SpaceBetweenText
-            left="Order Confirmed:"
-
-          />
-        </ListGroupItem>
-        <ListGroupItem>
-          <SpaceBetweenText
-            left="Created:"
-
-          />
-        </ListGroupItem>
-      </ListGroup>
-    </Panel>
-  </Accordion>
-);
-
-const PriceGenerated = () => (
-  <Accordion>
-    <Panel bsStyle="primary" header="Price Generated" eventKey="1">
-      <ListGroup fill>
-        <ListGroupItem>
-          <div className="clearfix">
-            <div className="pull-left">
-              <span>Price Generated:</span>
-            </div>
-          </div>
-        </ListGroupItem>
-        <ListGroupItem>
-          <SpaceBetweenText
-            left="Order Confirmed:"
-
-          />
-        </ListGroupItem>
-        <ListGroupItem>
-          <SpaceBetweenText
-            left="Created:"
-
-          />
-        </ListGroupItem>
-      </ListGroup>
+    <Panel bsStyle="primary" header="Build Volume Changes" eventKey="1">
+      <Table responsive fill>
+        <thead>
+          <tr>
+            <th>
+              <FormattedMessage
+                id="record.material"
+                defaultMessage="Material"
+              />
+            </th>
+            <th>
+              <FormattedMessage
+                id="field.volume"
+                defaultMessage="Volume"
+              />
+            </th>
+            <th>
+              <FormattedMessage id="field.date" defaultMessage="Date" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          { volumeEvents.map( event => (
+            <tr key={event.uuid}>
+              <td>
+                { event.key === 'base_material_used' ?
+                  <FormattedMessage
+                    id="estimates.materialUsed"
+                    defaultMessage='Material Used'
+                  />
+                  :
+                  <FormattedMessage
+                    id="estimates.supportUsed"
+                    defaultMessage='Support Used'
+                  />
+                }
+              </td>
+              <td>
+                <FormattedVolume value={event.current_value} />
+              </td>
+              <td>
+               <FormattedDateTime value={event.created} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </Panel>
   </Accordion>
 );
@@ -243,17 +291,24 @@ const PriceGenerated = () => (
 const PrintComponent = ({ print, order, lineItem, model, models, events, users }) => {
   const breadcrumbs = [ 'prints', print.id ];
 
-  const statusEvents = events.filter(event => {
-    return event.key === 'status'
-  })
+  const priceEvents = events.filter(event => event.key === 'amount');
+  const statusEvents = events.filter(event => event.key === 'status' );
 
   const modelEvents = events.filter(event => {
     return event.key === 'model'
   }).map(event => {
     const model = models.find(model => model.uri === event.current_value);
     const user = users.find(user => user.uri === event.user);
-    return Object.assign({}, event, { model, userObj: user })
-  })
+    return Object.assign({}, event, { model, user })
+  });
+
+  const volumeEvents = events.filter(event => {
+    return (
+      event.key === 'base_material_used' ||
+      event.key === 'support_material_used'
+    );
+  });
+
 
   return (
     <Grid fluid className="container">
@@ -261,11 +316,14 @@ const PrintComponent = ({ print, order, lineItem, model, models, events, users }
       <BreadcrumbNav breadcrumbs={breadcrumbs}/>
 
       <hr />
+
       <PrintSummary print={print} order={order} lineItem={lineItem} model={model} />
-      <PriceGenerated />
-      <OrderConfirmed statusEvents={statusEvents} />
-      <ModelChanged modelEvents={modelEvents} />
-      <BuildVolumeCreated />
+
+      <PriceChanges priceEvents={priceEvents} currency={order.currency} />
+      <OrderStatusChanges statusEvents={statusEvents} />
+      <ModelChanges modelEvents={modelEvents} />
+      <VolumeChanges volumeEvents={volumeEvents} />
+
     </Grid>
   );
 };
