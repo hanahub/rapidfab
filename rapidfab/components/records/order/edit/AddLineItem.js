@@ -106,6 +106,9 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
           value={supportMaterial}
         >
+          <option value="">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
           {supportMaterials.map( material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
@@ -204,16 +207,10 @@ class AddLineItem extends Component {
 
     const { baseMaterials, supportMaterials, templates } = props;
 
-    const baseMaterial = (
-      baseMaterials[0] ? baseMaterials[0].uri : null
-    );
+    const baseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
     const itar = false;
-    const supportMaterial = (
-      supportMaterials.length > 0 ? supportMaterials[0].uri : null
-    );
-    const template = (
-      templates[0] ? templates[0].uri : null
-    );
+    const supportMaterial = "";
+    const template = templates[0] ? templates[0].uri : null;
     const thirdPartyProvider = "";
 
     this.state = {
@@ -269,6 +266,7 @@ class AddLineItem extends Component {
       template,
       'third_party_provider': thirdPartyProvider,
     };
+    if (!payload.materials.support) delete payload.materials.support
     if (!payload['third_party_provider']) delete payload['third_party_provider']
 
     if (itar) {
