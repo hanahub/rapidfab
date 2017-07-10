@@ -40,6 +40,10 @@ const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onA
   return <div/>
 }
 
+function redirect() {
+  window.location = "https://app.dev-auth.com/?nextPath=/&subdomain=rapidfab#/login"
+}
+
 class App extends Component {
   componentWillMount() {
     this.props.onInitialize()
@@ -50,10 +54,12 @@ class App extends Component {
       routes,
       onNavigate,
       onChangeLocale,
+      onLogout,
       onAcceptTerms,
       url,
       i18n,
     } = this.props;
+
     return (
       <IntlProvider
         locale={i18n.locale}
@@ -62,6 +68,7 @@ class App extends Component {
         <SessionProvider {...session} onAcceptTerms={onAcceptTerms}>
           <Navbar
             onChangeLocale={onChangeLocale}
+            onLogout={onLogout}
             locale={i18n.locale}
             currentUser={session.currentUser}
             bureaus={session.bureaus}
@@ -89,6 +96,9 @@ function mapDispatchToProps(dispatch) {
       if(currentLocale !== newLocale) {
         dispatch(Actions.I18n.change(currentLocale, newLocale))
       }
+    },
+    onLogout: () => {
+      dispatch(Actions.Api.pao.sessions.delete('')).then(redirect)
     },
     onInitialize: () => {
       dispatch(Actions.Api.pao.sessions.get('')).then(() => {

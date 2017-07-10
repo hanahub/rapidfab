@@ -20,6 +20,7 @@ function mapDispatchToProps(dispatch) {
       if(bureauGroup){
         dispatch(Actions.Api.pao.users.list({ 'group': bureauGroup }))
       }
+      dispatch(Actions.Api.wyatt.location.list())
     },
     onSaveFeature: payload => {
       if(payload) {
@@ -38,6 +39,7 @@ function mapStateToProps(state) {
   const feature = state.ui.wyatt.feature;
 
   return {
+    locations     : Selectors.getLocations(state),
     user          : Selectors.getSession(state),
     bureau        : Selectors.getBureau(state),
     features      : Selectors.getFeatures(state),

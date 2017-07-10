@@ -30,7 +30,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { features, users } = this.props;
+    const { features, users, locations } = this.props;
     const FeatureTable = () => {
       const feature = features.map((feature, index) => (
           <tr key={index}>
@@ -62,7 +62,7 @@ class Dashboard extends Component {
               {user.emails[0]}
             </td>
             <td>
-              test 2
+              {locations[0] ? locations[0].name: null}
             </td>
             <td>
               test 2
@@ -94,7 +94,7 @@ class Dashboard extends Component {
                     <br />
                   </div>
 
-                  <BS.Table responsive className="striped bordered condensed hover">
+                  <BS.Table responsive striped hover>
                     <FeatureTable {...this.props} />
                   </BS.Table>
                 </div>
@@ -109,7 +109,7 @@ class Dashboard extends Component {
                     <br />
                   </div>
 
-                  <BS.Table responsive striped bordered condensed hover>
+                  <BS.Table responsive striped bordered hover>
                     <thead>
                       <tr>
                         <th>Username</th>

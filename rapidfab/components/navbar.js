@@ -11,7 +11,7 @@ const LanguageFlagMap = {
 
 class Navbar extends Component {
   render() {
-    const { locale, onChangeLocale, currentUser, bureaus } = this.props;
+    const { locale, onChangeLocale, onLogout, currentUser, bureaus } = this.props;
     const flag = LanguageFlagMap[locale];
     const planTitle = (
       <span>
@@ -119,8 +119,14 @@ class Navbar extends Component {
               <BS.MenuItem eventKey={1.1} href="#/profile" disabled>
                 <Fa name='user'/> <FormattedMessage id="myProfile" defaultMessage='My Profile'/>
               </BS.MenuItem>
+              <BS.MenuItem eventKey={1.2} href="#/manage">
+                <Fa name='user'/> <FormattedMessage id="impersonate" defaultMessage='Impersonate'/>
+              </BS.MenuItem>
+              <BS.MenuItem eventKey={1.2} href="#/manage">
+                <Fa name='users'/> <FormattedMessage id="manage" defaultMessage='Manage Users'/>
+              </BS.MenuItem>
               <BS.MenuItem divider style={{ display: "none" }}/>
-              <BS.MenuItem eventKey={1.2} href="#/logout" style={{ display: "none" }}>
+              <BS.MenuItem eventKey={1.2} onClick={() => onLogout()}>
                 <Fa name='sign-out'/> <FormattedMessage id="logout" defaultMessage='Logout'/>
               </BS.MenuItem>
             </BS.NavDropdown>
