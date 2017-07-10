@@ -48,24 +48,6 @@ const FormRow = ({id, defaultMessage, children}) => (
   </FormGroup>
 );
 
-const StatusOptions = ({ initialValue }) => {
-  const statusOptions = statusOptionsMap[initialValue];
-  if (statusOptions) {
-    return (
-      <div>
-        { statusOptions.map(status => (
-            <option key={status} value={status}>
-              {ORDER_STATUS_MAP[status]}
-            </option>
-          ))
-        }
-      </div>
-    );
-  } else {
-    return null;
-  }
-}
-
 const ModelSelect = ({models, modelsIsFetching, field}) => {
   if(modelsIsFetching) {
     return (
@@ -128,76 +110,87 @@ const LineItemFormComponent = ({
   handleSubmit,
   handleDelete,
   templates,
-}) => (
-  <Form horizontal>
-    <SaveDropdownButton onSubmit={handleSubmit} onDelete={handleDelete} />
-    <FormRow id="field.printable" defaultMessage="Printable">
-      <FormControl.Static>
-        <Printable
-          models={models}
-          uri={fields.model.value}
-          itar={lineItem.itar}
-        />
-      </FormControl.Static>
-    </FormRow>
+}) => {
+  const initialStatus = fields.status.initialValue;
+  const statusOptions = statusOptionsMap[initialStatus];
+  return (
+    <Form horizontal>
+      <SaveDropdownButton onSubmit={handleSubmit} onDelete={handleDelete} />
+      <FormRow id="field.printable" defaultMessage="Printable">
+        <FormControl.Static>
+          <Printable
+            models={models}
+            uri={fields.model.value}
+            itar={lineItem.itar}
+          />
+        </FormControl.Static>
+      </FormRow>
 
-    <FormRow id="field.status" defaultMessage="Status">
-      <FormControl componentClass="select" required {...fields.status}>
-        <option value={fields.status.initialValue}>
-          {ORDER_STATUS_MAP[fields.status.initialValue]}
-        </option>
-        <StatusOptions initialValue={fields.status.initialValue}/>
-      </FormControl>
-    </FormRow>
-
-    { lineItem.itar ?
-        null
-        : <FormRow id="field.model" defaultMessage="Model">
-            <ModelSelect
-              models={models}
-              modelsIsFetching={modelsIsFetching}
-              field={fields.model}
-            />
-          </FormRow>
-    }
-
-    <FormRow id="field.quantity" defaultMessage="Quantity">
-      <FormControl type="number" required {...fields.quantity}/>
-    </FormRow>
-
-    <FormRow id="field.baseMaterial" defaultMessage="Base Material">
-      <FormControl componentClass="select" required {...fields.materials.base}>
-        <option value="" disabled>Select a Material</option>
-        {_.map(_.filter(materials, {type: "base"}), material => (
-          <option key={material.uri} value={material.uri}>
-            {material.name}
+      <FormRow id="field.status" defaultMessage="Status">
+        <FormControl componentClass="select" required {...fields.status}>
+          <option value={initialStatus}>
+            {ORDER_STATUS_MAP[initialStatus]}
           </option>
-        ))}
-      </FormControl>
-    </FormRow>
+          { statusOptions ?
+              statusOptions.map(status => (
+                <option key={status} value={status}>
+                  {ORDER_STATUS_MAP[status]}
+                </option>
+              ))
+              : null
+          }
+        </FormControl>
+      </FormRow>
 
-    <FormRow id="field.supportMaterial" defaultMessage="Support Material">
-      <FormControl componentClass="select" {...fields.materials.support}>
-        <option value="">None</option>
-        {_.map(_.filter(materials, {type: "support"}), material => (
-          <option key={material.uri} value={material.uri}>
-            {material.name}
-          </option>
-        ))}
-      </FormControl>
-    </FormRow>
+      { lineItem.itar ?
+          null
+          : <FormRow id="field.model" defaultMessage="Model">
+              <ModelSelect
+                models={models}
+                modelsIsFetching={modelsIsFetching}
+                field={fields.model}
+              />
+            </FormRow>
+      }
 
-    <FormRow id="field.template" defaultMessage="Select a template">
-      <FormControl componentClass="select" {...fields.template}>
-        { templates.map( template => (
-          <option key={template.uri} value={template.uri}>
-            {template.name}
-          </option>
-        ))}
-      </FormControl>
-    </FormRow>
-  </Form>
-);
+      <FormRow id="field.quantity" defaultMessage="Quantity">
+        <FormControl type="number" required {...fields.quantity}/>
+      </FormRow>
+
+      <FormRow id="field.baseMaterial" defaultMessage="Base Material">
+        <FormControl componentClass="select" required {...fields.materials.base}>
+          <option value="" disabled>Select a Material</option>
+          {_.map(_.filter(materials, {type: "base"}), material => (
+            <option key={material.uri} value={material.uri}>
+              {material.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+
+      <FormRow id="field.supportMaterial" defaultMessage="Support Material">
+        <FormControl componentClass="select" {...fields.materials.support}>
+          <option value="">None</option>
+          {_.map(_.filter(materials, {type: "support"}), material => (
+            <option key={material.uri} value={material.uri}>
+              {material.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+
+      <FormRow id="field.template" defaultMessage="Select a template">
+        <FormControl componentClass="select" {...fields.template}>
+          { templates.map( template => (
+            <option key={template.uri} value={template.uri}>
+              {template.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Form>
+  );
+};
 
 class LineItemForm extends Component {
   constructor(props) {

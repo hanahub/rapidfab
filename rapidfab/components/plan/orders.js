@@ -68,9 +68,8 @@ const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, 
             columns={[
               "id",
               "name",
-              "quantity",
               "status",
-              "created"
+              "created",
             ]}
             columnMeta={[{
               displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
@@ -78,16 +77,8 @@ const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, 
               customComponent: IdColumn("order"),
               locked: true
             }, {
-              customComponent: ImageColumn,
-              columnName: "snapshot",
-              displayName: <FormattedMessage id="field.preview" defaultMessage='Preview'/>
-            }, {
               columnName: "name",
               displayName: <FormattedMessage id="field.name" defaultMessage='Name'/>
-            }, {
-              customComponent: NumberColumn,
-              columnName: "quantity",
-              displayName: <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>
             }, {
               customComponent: MappedColumn("status", ORDER_STATUS_MAP),
               columnName: "status",

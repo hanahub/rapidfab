@@ -14,6 +14,7 @@ export const RESOURCES = {
     'bureau',
     'currency-conversion',
     'feature',
+    'event',
     'line-item',
     'location',
     'manufacturer',

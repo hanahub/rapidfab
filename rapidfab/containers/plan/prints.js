@@ -31,6 +31,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
       dispatch(Actions.Api.wyatt.print.list());
+      dispatch(Actions.Api.wyatt['process-step'].list());
       dispatch(Actions.Api.wyatt.location.list());
     },
     handleOnChange: location => {
@@ -44,7 +45,13 @@ function mapStateToProps(state) {
     print,
     location,
   } = state.ui.wyatt
-  const prints = Selectors.getPrints(state)
+  const allPrints = Selectors.getPrints(state)
+  const printProcessSteps = Selectors.getProcessSteps(state).filter(step => {
+    return step.process_type_uri.includes('printer-type');
+  });
+  const prints = allPrints.filter(print => {
+    return printProcessSteps.some(step => step.uri === print.process_step);
+  });
   const locationFilter = Selectors.getLocationFilter(state)
   let filteredPrints = null;
   if(locationFilter)
