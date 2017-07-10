@@ -52,16 +52,18 @@ const AddLineItemPresentation = ({
   itar,
   notes,
   onSubmit,
+  providers,
   quantity,
   supportMaterial,
   supportMaterials,
   template,
   templates,
+  thirdPartyProvider,
 }) => (
   <Panel header={<PanelHeader />}>
     <Form onSubmit={onSubmit}>
       <Feature featureName={'itar'}>
-        <Col lg={2}>
+        <Col lg={1}>
           <ControlLabel>
             <FormattedMessage id="record.itar" defaultMessage="ITAR Model"/>
           </ControlLabel>
@@ -142,6 +144,29 @@ const AddLineItemPresentation = ({
           ))}
         </FormControl>
       </Col>
+      <Col lg={2}>
+        <ControlLabel>
+          <FormattedMessage
+            id="field.thirdPartyProvider"
+            defaultMessage="Third-Party Provider"
+          />
+        </ControlLabel>
+        <FormControl
+          name="thirdPartyProvider"
+          componentClass="select"
+          onChange={handleInputChange}
+          value={thirdPartyProvider}
+        >
+          <option value="">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
+          { providers.map( provider => (
+            <option key={provider.uri} value={provider.uri}>
+              {provider.name}
+            </option>
+          ))}
+        </FormControl>
+      </Col>
       {/*
       <Col lg={2}>
         <ControlLabel>
@@ -158,7 +183,7 @@ const AddLineItemPresentation = ({
         />
       </Col>
       */}
-      <Col lg={1}>
+      <Col xs={12}>
         <ButtonToolbar className="clearfix">
           <Button
             type="submit"
@@ -189,12 +214,14 @@ class AddLineItem extends Component {
     const template = (
       templates[0] ? templates[0].uri : null
     );
+    const thirdPartyProvider = "";
 
     this.state = {
       baseMaterial,
       itar,
       supportMaterial,
       template,
+      thirdPartyProvider,
     };
 
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -225,6 +252,7 @@ class AddLineItem extends Component {
       quantity,
       supportMaterial,
       template,
+      thirdPartyProvider,
     } = this.state;
 
     const { bureau, dispatch, order } = this.props;
@@ -239,7 +267,9 @@ class AddLineItem extends Component {
       // notes: PENDING api implementation
       quantity: parseInt(quantity),
       template,
+      'third_party_provider': thirdPartyProvider,
     };
+    if (!payload['third_party_provider']) delete payload['third_party_provider']
 
     if (itar) {
       dispatch(Actions.Api.wyatt['line-item'].post(payload))
@@ -299,6 +329,7 @@ class AddLineItem extends Component {
 const mapStateToProps = (state) => {
   const bureau = Selectors.getBureau(state);
   const materials = Selectors.getMaterials(state);
+  const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const order = state.resources[state.routeUUID.uuid];
 
@@ -313,6 +344,7 @@ const mapStateToProps = (state) => {
     baseMaterials,
     bureau,
     order,
+    providers,
     supportMaterials,
     templates
   };
