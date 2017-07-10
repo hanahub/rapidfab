@@ -147,7 +147,8 @@ class NewOrder extends Component {
 
   handleLineItemChange(lineItemChange) {
     const { lineItems } = this.state;
-    const { updatedLineItemIndex, name, value } = lineItemChange;
+    const { updatedLineItemIndex, name } = lineItemChange;
+    const value = lineItemChange.value === 'none' ? null : lineItemChange.value;
 
     const updatedLineItems = lineItems.map( (lineItem, index) => {
       if (index === updatedLineItemIndex)
@@ -179,7 +180,6 @@ class NewOrder extends Component {
     ];
     this.setState({ lineItems: updatedLineItems });
   }
-
 
   onSubmit(event) {
     event.preventDefault();
@@ -222,6 +222,7 @@ class NewOrder extends Component {
             supportMaterial,
             quantity,
             template,
+            thirdPartyProvider,
           } = lineItem;
           const payload = {
             bureau: bureau.uri,
@@ -233,10 +234,12 @@ class NewOrder extends Component {
             model: modelLocation,
             quantity: parseInt(quantity),
             template,
+            'third_party_provider': thirdPartyProvider,
           };
 
           if (itar) delete payload.model
           if (!payload.materials.support) delete payload.materials.support;
+          if (!payload.thirdPartyProvider) delete payload.thirdPartyProvider;
 
           return dispatch(Actions.Api.wyatt['line-item'].post(payload))
         });
