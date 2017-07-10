@@ -189,6 +189,7 @@ export default {
   "field.multiplier"                  : "Multiplier",
   "field.name"                        : "Name",
   "field.notes"                       : "Notes",
+  "field.none"                        : "None",
   "field.order"                       : "Order",
   "field.order_owner"                 : "Assign Owner",
   "field.optional"                    : "Optional",

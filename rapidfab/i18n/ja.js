@@ -189,6 +189,7 @@ export default {
   "field.order_owner"                 : "Assign Owner",
   "field.name"                        : "名前",
   "field.notes"                       : "注",
+  "field.none"                        : "None",
   "field.prints"                      : "印刷",
   "field.processingTime"              : "処理時間",
   "field.packageSize"                 : "パッケージサイズ",
