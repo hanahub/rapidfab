@@ -3,6 +3,11 @@ export default {
 
   "downloading"                       : "ダウンロードしています...",
 
+  "events.model"                      : "Model Changes ({num})",
+  "events.orderStatus"                : "Order Status Changes ({num})",
+  "events.prices"                     : "Price Changes ({num})",
+  "events.volume"                     : "Build Volume Changes ({num})",
+
   "loading.thumbnail"                 : "サムネイルを読み込んでいます...",
   "loading.model"                     : "モデルを読み込んでいます...",
 
