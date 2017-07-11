@@ -132,7 +132,19 @@ const PrintRecord = () => (
 
 const PriceChanges = ({ currency, priceEvents }) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Price Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.prices"
+            defaultMessage={`Price Changes (${priceEvents.length})`}
+            values={{num: priceEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -166,7 +178,19 @@ const PriceChanges = ({ currency, priceEvents }) => (
 
 const OrderStatusChanges = ({statusEvents}) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Order Status Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.orderStatus"
+            defaultMessage={`Order Status Changes (${statusEvents.length})`}
+            values={{num: statusEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -197,7 +221,20 @@ const OrderStatusChanges = ({statusEvents}) => (
 
 const ModelChanges = ({modelEvents}) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Model Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.model"
+            defaultMessage={`Model Changes (${modelEvents.length})`}
+            values={{num: modelEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+      defaultExpanded
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -237,7 +274,19 @@ const ModelChanges = ({modelEvents}) => (
 
 const VolumeChanges = ({ volumeEvents }) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Build Volume Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.volume"
+            defaultMessage={`Volume Changes (${volumeEvents.length})`}
+            values={{num: volumeEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+    >
       <Table responsive fill>
         <thead>
           <tr>
