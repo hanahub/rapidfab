@@ -317,16 +317,34 @@ const PrintComponent = ({ print, order, lineItem, model, models, events, users }
 
       <hr />
 
-      <PrintSummary print={print} order={order} lineItem={lineItem} model={model} />
+      <PrintSummary
+        print={print}
+        order={order}
+        lineItem={lineItem}
+        model={model}
+      />
 
-      <PriceChanges priceEvents={priceEvents} currency={order.currency} />
-      <OrderStatusChanges statusEvents={statusEvents} />
-      <ModelChanges modelEvents={modelEvents} />
-      <VolumeChanges volumeEvents={volumeEvents} />
+      { priceEvents.length ?
+        <PriceChanges priceEvents={priceEvents} currency={order.currency} />
+        : null
+      }
+      { statusEvents.length ?
+        <OrderStatusChanges statusEvents={statusEvents} />
+        : null
+      }
+      { modelEvents.length ?
+        <ModelChanges modelEvents={modelEvents} />
+        : null
+      }
+      { volumeEvents.length ?
+        <VolumeChanges volumeEvents={volumeEvents} />
+        : null
+      }
 
     </Grid>
   );
 };
+
 PrintComponent.propTypes = { print: PropTypes.object };
 
 export default PrintComponent;
