@@ -21,8 +21,10 @@ import {
 import { ORDER_STATUS_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import Feature from 'rapidfab/components/Feature';
 import SaveButton from 'rapidfab/components/saveButton';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
+import TraceabilityReport from './TraceabilityReport';
 import {
   FormattedCost,
   FormattedDateTime,
@@ -372,6 +374,10 @@ const PrintComponent = ({ print, order, lineItem, model, models, events, users }
         lineItem={lineItem}
         model={model}
       />
+
+      <Feature featureName={'traceability-dev'}>
+        <TraceabilityReport events={events}/>
+      </Feature>
 
       { priceEvents.length ?
         <PriceChanges priceEvents={priceEvents} currency={order.currency} />
