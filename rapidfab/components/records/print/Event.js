@@ -17,17 +17,17 @@ import {
 } from 'rapidfab/i18n';
 
 const ExpandedContent = ({event}) => (
-<Row>
-  <Col xs={1}/>
-  <Col xs={8}>
-    <span>{`${event.current_value}`}</span>
-  </Col>
-  <Col xs={3} className="text-right">
-    <FormattedTime value={event.created}/>
-    <br/>
-    <span>{`${event.user}`}</span>
-  </Col>
-</Row>
+  <Row>
+    <Col xs={1}/>
+    <Col xs={8}>
+      <span>{`${event.current_value}`}</span>
+    </Col>
+    <Col xs={3} className="text-right">
+      <FormattedTime value={event.created}/>
+      <br/>
+      <span>{`${event.user}`}</span>
+    </Col>
+  </Row>
 );
 
 class Event extends Component {
