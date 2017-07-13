@@ -12,6 +12,7 @@ export const ORDER_STATUS_MAP = {
   "post-processing": <FormattedMessage id="status.postProcessing" defaultMessage="Post Processing"/>,
   "printed": <FormattedMessage id="status.printed" defaultMessage="Printed"/>,
   "printing": <FormattedMessage id="status.printing" defaultMessage="Printing"/>,
+  "processing": <FormattedMessage id="status.processing" defaultMessage="Processing"/>,
   "shipping": <FormattedMessage id="status.shipping" defaultMessage="Shipping"/>,
 }
 
