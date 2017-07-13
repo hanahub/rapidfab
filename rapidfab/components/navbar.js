@@ -2,14 +2,40 @@ import React, { Component }     from "react";
 import * as BS                  from 'react-bootstrap';
 import Fa                       from 'react-fontawesome';
 import Flag                     from 'rapidfab/components/flag';
+import { connect }              from 'react-redux'
 import { FormattedMessage }     from 'react-intl';
+import Permissions              from 'rapidfab/permissions';
+import ShowMaybe                from 'rapidfab/components/showMaybe';
 
 const LanguageFlagMap = {
   "en-US": "us",
   "ja": "jp"
 }
 
+const mapStateToProps = (state) => {
+    return {
+        state: state
+    }
+};
+
 class Navbar extends Component {
+  constructor(props) {
+    super(props)
+    this.handleImpersonateClick = this.handleImpersonateClick.bind(this);
+  }
+
+  handleImpersonateClick() {
+    console.log('Not currently working.');
+  }
+
+  shouldShowImpersonate() {
+    return Permissions.has('pao', 'impersonation', this.props.session);
+  }
+
+  shouldShowAdmin() {
+    return Permissions.has('pao', 'administrate.group', this.props.session);
+  }
+
   render() {
     const { locale, onChangeLocale, onLogout, currentUser, bureaus } = this.props;
     const flag = LanguageFlagMap[locale];
@@ -122,14 +148,18 @@ class Navbar extends Component {
               <BS.MenuItem eventKey={1.1} href="#/profile" disabled>
                 <Fa name='user'/> <FormattedMessage id="myProfile" defaultMessage='My Profile'/>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={1.2} href="#/manage">
-                <Fa name='user'/> <FormattedMessage id="impersonate" defaultMessage='Impersonate'/>
+              <BS.MenuItem eventKey={1.2} onClick={this.handleImpersonateClick}>
+              <ShowMaybe showIf={this.shouldShowImpersonate()}>
+                <Fa name='user-secret'/> <FormattedMessage id="impersonate" defaultMessage='Impersonate'/>
+              </ShowMaybe>
               </BS.MenuItem>
-              <BS.MenuItem eventKey={1.2} href="#/manage">
-                <Fa name='users'/> <FormattedMessage id="manage" defaultMessage='Manage Users'/>
+              <BS.MenuItem eventKey={1.3} href="#/admin/dashboard">
+              <ShowMaybe showIf={this.shouldShowAdmin()}>
+                <Fa name='users'/> <FormattedMessage id="admin" defaultMessage='Admin'/>
+              </ShowMaybe>
               </BS.MenuItem>
               <BS.MenuItem divider style={{ display: "none" }}/>
-              <BS.MenuItem eventKey={1.2} onClick={() => onLogout()}>
+              <BS.MenuItem eventKey={1.4} onClick={() => onLogout()}>
                 <Fa name='sign-out'/> <FormattedMessage id="logout" defaultMessage='Logout'/>
               </BS.MenuItem>
             </BS.NavDropdown>
@@ -148,4 +178,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar
+export default connect(mapStateToProps)(Navbar)

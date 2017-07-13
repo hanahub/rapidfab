@@ -41,7 +41,7 @@ const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onA
 }
 
 function redirect() {
-  window.location = "https://app.dev-auth.com/?nextPath=/&subdomain=rapidfab#/login"
+  window.location = "/?nextPath=/&subdomain=rapidfab#/"
 }
 
 class App extends Component {
@@ -72,6 +72,7 @@ class App extends Component {
             locale={i18n.locale}
             currentUser={session.currentUser}
             bureaus={session.bureaus}
+            session={session}
           />
           <Router
             routes={routes}
@@ -105,6 +106,7 @@ function mapDispatchToProps(dispatch) {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
         dispatch(Actions.Api.wyatt.bureau.list())
       })
+      dispatch(Actions.Api.pao.permissions.list())
       dispatch(Actions.Api.wyatt.bureau.list())
     },
     onAcceptTerms: user => {
@@ -120,12 +122,14 @@ function mapStateToProps(state) {
     url,
     i18n,
   } = state;
-  let currentUser = Selectors.getSession(state)
-  let bureaus = Selectors.getBureaus(state)
+  let currentUser = Selectors.getSession(state);
+  let permissions = Selectors.getPermissions(state);
+  let bureaus = Selectors.getBureaus(state);
   let fetching = !currentUser || state.ui.wyatt.bureau.list.fetching
 
   const session = {
     currentUser,
+    permissions,
     bureaus,
     fetching,
     errors  : _.concat(

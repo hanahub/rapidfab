@@ -1,10 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import * as BS                         from 'react-bootstrap'
-import Error                           from 'rapidfab/components/error'
-import Fa                              from 'react-fontawesome'
-import Toggle                          from 'react-bootstrap-toggle'
-import NewFeature                      from './AddFeature'
-import NewUser                         from './AddUser'
+import React, { Component, PropTypes } from 'react';
+import * as BS                         from 'react-bootstrap';
+import Error                           from 'rapidfab/components/error';
+import Fa                              from 'react-fontawesome';
+import Toggle                          from 'react-bootstrap-toggle';
+import NewFeature                      from './AddFeature';
+import AddUser                         from './AddUser';
+import ModifyUser                      from './ModifyUser';
+import Permissions                     from 'rapidfab/permissions';
+import ShowMaybe                       from 'rapidfab/components/showMaybe';
 
 
 class Dashboard extends Component {
@@ -27,6 +30,14 @@ class Dashboard extends Component {
 
   handleSelect(selectedKey) {
     this.setState({ selectedKey: selectedKey });
+  }
+
+  shouldShowAdminFeatures() {
+    return Permissions.has('wyatt', 'feature.all', this.props);
+  }
+
+  openUserModal(user){
+    console.log(user)
   }
 
   render() {
@@ -59,13 +70,16 @@ class Dashboard extends Component {
               {user.name}
             </td>
             <td>
-              {user.emails[0]}
+              { Array.isArray(user.emails) ? user.emails[0] : user.emails }
             </td>
             <td>
-              {locations[0] ? locations[0].name: null}
+              {locations[0] ? locations[0].name : null}
             </td>
             <td>
-              test 2
+              Manager
+            </td>
+            <td>
+              <ModifyUser user={user} locations={locations} bureau={this.props.bureau} {...this.props} />
             </td>
           </tr>
         ))
@@ -77,13 +91,18 @@ class Dashboard extends Component {
         <BS.PageHeader>Admin Dashboard</BS.PageHeader>
         <div>
           <BS.Nav bsStyle="tabs" justified activeKey={this.state.selectedKey} onSelect={this.handleSelect}>
-            <BS.NavItem eventKey={1} href="/">Features</BS.NavItem>
+             {
+               this.shouldShowAdminFeatures() ?
+                <BS.NavItem eventKey={1} href="/">Features</BS.NavItem> :
+                null
+             }
             <BS.NavItem eventKey={2} href="/admin/manage">Manage Users</BS.NavItem>
           </BS.Nav>
 
           <BS.Nav activeKey={this.state.selectedKey} style={{"border-left": "1px solid #ddd", "border-bottom": "1px solid #ddd", "border-right": "1px solid #ddd" }}>
             <br />
             {this.state.selectedKey == 1 ? (
+              <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
                 <div>
                   <div className="container">
                     <BS.Row>
@@ -98,12 +117,13 @@ class Dashboard extends Component {
                     <FeatureTable {...this.props} />
                   </BS.Table>
                 </div>
+              </ShowMaybe>
               ) : (
                 <div>
                   <div className="container">
                     <BS.Row>
                       <BS.ButtonToolbar className="pull-right">
-                        <NewUser {...this.props} />
+                        <AddUser {...this.props} />
                       </BS.ButtonToolbar>
                     </BS.Row>
                     <br />
@@ -116,6 +136,7 @@ class Dashboard extends Component {
                         <th>Email</th>
                         <th>Location</th>
                         <th>Permissions</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <UserTable {...this.props} />

@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 import * as BS                         from 'react-bootstrap'
 
-class NewUser extends Component {
+class ModifyUser extends Component {
   constructor(props) {
     super(props);
     this.state = { showModal: false };
-
     this.onSubmit = this.onSubmit.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -14,7 +14,6 @@ class NewUser extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
     const bureau = this.props.bureau.uri;
     const user = this.props.user.uri;
     const {
@@ -31,11 +30,21 @@ class NewUser extends Component {
       name: userName,
       uri: undefined,
       username: userName,
-      uuid: undefined,
+      uuid: this.props.user.uuid,
       bureau: bureau,
     }
+
     this.props.onSaveUser(payload);
     this.setState({ showModal: false });
+  }
+
+  deleteUser(){
+    const user = this.props.user.uri;
+    const payload = {
+
+    }
+    this.props.onDeleteUser(payload);
+    console.log('User deleted: ', user)
   }
 
   handleChange(event) {
@@ -56,16 +65,15 @@ class NewUser extends Component {
       <div>
 
         <BS.Button
-          bsStyle="success"
-          bsSize="medium"
+          bsSize="small"
           onClick={this.open}
         >
-          Add User
+          Modify User
         </BS.Button>
           <BS.Modal show={this.state.showModal} onHide={this.close}>
             <BS.Form onSubmit={this.onSubmit}>
               <BS.Modal.Header closeButton>
-                <BS.Modal.Title>Add new user</BS.Modal.Title>
+                <BS.Modal.Title>Modify a user</BS.Modal.Title>
               </BS.Modal.Header>
               <BS.Modal.Body>
                 <BS.FormGroup controlId="formBasicText">
@@ -74,8 +82,7 @@ class NewUser extends Component {
                     type="text"
                     name="userEmail"
                     onChange={this.handleChange}
-                    placeholder="Enter user email"
-                    onChange={this.handleChange}
+                    defaultValue={this.props.user.emails[0]}
                     required
                   />
                   <br />
@@ -84,8 +91,7 @@ class NewUser extends Component {
                     type="text"
                     name="userName"
                     onChange={this.handleChange}
-                    placeholder="Enter user name"
-                    onChange={this.handleChange}
+                    defaultValue={this.props.user.name}
                     required
                   />
                   <br />
@@ -115,7 +121,8 @@ class NewUser extends Component {
               </BS.Modal.Body>
               <BS.Modal.Footer>
                 <BS.Button onClick={this.close}>Cancel</BS.Button>
-                <BS.Button bsStyle="success" type="submit">Save </BS.Button>
+                <BS.Button bsStyle="danger" onClick={this.deleteUser}>Delete </BS.Button>
+                <BS.Button bsStyle="warning" type="submit">Update </BS.Button>
               </BS.Modal.Footer>
              </BS.Form>
           </BS.Modal>
@@ -125,4 +132,4 @@ class NewUser extends Component {
 }
 
 
-export default NewUser
+export default ModifyUser

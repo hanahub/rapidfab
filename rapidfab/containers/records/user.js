@@ -80,6 +80,7 @@ function mapStateToProps(state, props) {
   }
   return {
     uuid            : Selectors.getRoute(state, props).uuid,
+    bureaus         : Selectors.getBureaus(state),
     initialValues   : initialValues,
     submitting      : Selectors.getResourceFetching(state, "pao.users"),
     initialValues   : Selectors.getInitialValuesBureau(state, props),
