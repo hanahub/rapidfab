@@ -21,8 +21,10 @@ import {
 import { ORDER_STATUS_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import Feature from 'rapidfab/components/Feature';
 import SaveButton from 'rapidfab/components/saveButton';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
+import TraceabilityReport from './TraceabilityReport';
 import {
   FormattedCost,
   FormattedDateTime,
@@ -132,7 +134,19 @@ const PrintRecord = () => (
 
 const PriceChanges = ({ currency, priceEvents }) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Price Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.prices"
+            defaultMessage={`Price Changes (${priceEvents.length})`}
+            values={{num: priceEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -166,7 +180,19 @@ const PriceChanges = ({ currency, priceEvents }) => (
 
 const OrderStatusChanges = ({statusEvents}) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Order Status Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.orderStatus"
+            defaultMessage={`Order Status Changes (${statusEvents.length})`}
+            values={{num: statusEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -197,7 +223,20 @@ const OrderStatusChanges = ({statusEvents}) => (
 
 const ModelChanges = ({modelEvents}) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Model Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.model"
+            defaultMessage={`Model Changes (${modelEvents.length})`}
+            values={{num: modelEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+      defaultExpanded
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -237,7 +276,19 @@ const ModelChanges = ({modelEvents}) => (
 
 const VolumeChanges = ({ volumeEvents }) => (
   <Accordion>
-    <Panel bsStyle="primary" header="Build Volume Changes" eventKey="1">
+    <Panel
+      bsStyle="primary"
+      header={
+        <div>
+          <FormattedMessage
+            id="events.volume"
+            defaultMessage={`Volume Changes (${volumeEvents.length})`}
+            values={{num: volumeEvents.length}}
+          />
+        </div>
+      }
+      eventKey="1"
+    >
       <Table responsive fill>
         <thead>
           <tr>
@@ -317,16 +368,38 @@ const PrintComponent = ({ print, order, lineItem, model, models, events, users }
 
       <hr />
 
-      <PrintSummary print={print} order={order} lineItem={lineItem} model={model} />
+      <PrintSummary
+        print={print}
+        order={order}
+        lineItem={lineItem}
+        model={model}
+      />
 
-      <PriceChanges priceEvents={priceEvents} currency={order.currency} />
-      <OrderStatusChanges statusEvents={statusEvents} />
-      <ModelChanges modelEvents={modelEvents} />
-      <VolumeChanges volumeEvents={volumeEvents} />
+      <Feature featureName={'traceability-dev'}>
+        <TraceabilityReport events={events}/>
+      </Feature>
+
+      { priceEvents.length ?
+        <PriceChanges priceEvents={priceEvents} currency={order.currency} />
+        : null
+      }
+      { statusEvents.length ?
+        <OrderStatusChanges statusEvents={statusEvents} />
+        : null
+      }
+      { modelEvents.length ?
+        <ModelChanges modelEvents={modelEvents} />
+        : null
+      }
+      { volumeEvents.length ?
+        <VolumeChanges volumeEvents={volumeEvents} />
+        : null
+      }
 
     </Grid>
   );
 };
+
 PrintComponent.propTypes = { print: PropTypes.object };
 
 export default PrintComponent;

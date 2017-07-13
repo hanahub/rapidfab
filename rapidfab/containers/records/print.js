@@ -6,7 +6,7 @@ import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 import Gatekeeper from 'rapidfab/components/gatekeeper';
-import PrintComponent from 'rapidfab/components/records/print';
+import PrintComponent from 'rapidfab/components/records/print/print';
 
 class PrintContainer extends Component {
   componentWillMount() {
@@ -27,6 +27,7 @@ class PrintContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: props => {
+      dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
       dispatch(Actions.Api.hoth.model.list());
       dispatch(Actions.Api.pao.users.list({group: props.bureau.group}));
       const print = dispatch(Actions.Api.wyatt.print.get(props.uuid))
@@ -107,6 +108,7 @@ function mapStateToProps(state, props) {
     apiErrors,
   }
 }
+
 PrintContainer.propTypes = {
   uuid: PropTypes.string,
   print: PropTypes.object,

@@ -26,7 +26,6 @@ const fields = [
   'shipping.tracking',
   'shipping.uri',
   'status',
-  'third_party_provider',
   'uuid',
 ];
 
@@ -54,7 +53,6 @@ const FormRow = ({id, defaultMessage, children}) => (
 const EditOrderFormComponent = ({
   created,
   fields,
-  providers,
   shippings,
   users,
   statusOptions,
@@ -114,16 +112,6 @@ const EditOrderFormComponent = ({
       </FormControl>
     </FormRow>
 
-    <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
-      <FormControl componentClass="select" {...fields.third_party_provider}>
-        {_.map(providers, provider => (
-          <option key={provider.uri} value={provider.uri}>
-            {provider.name}
-          </option>
-        ))}
-      </FormControl>
-    </FormRow>
-
     <FormRow id="field.currency" defaultMessage="Currency">
       <FormControl componentClass="select" {...fields.currency}>
         {_.map(Currencies, currency => (
@@ -168,7 +156,6 @@ class EditOrderForm extends Component {
     const {
       created,
       fields,
-      providers,
       shippings,
       users,
     } = this.props;
@@ -177,7 +164,6 @@ class EditOrderForm extends Component {
       <EditOrderFormComponent
         created={created}
         fields={fields}
-        providers={providers}
         shippings={shippings}
         users={users}
         statusOptions={statusOptions}
@@ -192,7 +178,6 @@ const mapDispatchToProps = (dispatch) => {
       if (false === !!payload.shipping.name) delete payload.shipping.name
       if (false === !!payload.shipping.address) delete payload.shipping.address
       if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
-      if (false === !!payload.third_party_provider) delete payload.third_party_provider
       dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload))
         .then( () => window.location.hash = "#/plan/orders" )
     }
@@ -202,11 +187,10 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   const initialValues = state.resources[state.routeUUID.uuid];
   const { created } = initialValues;
-  const providers = getThirdPartyProviders(state);
   const shippings = getShippings(state);
   const users = getUsers(state);
 
-  return { initialValues, created, providers, shippings, users };
+  return { initialValues, created, shippings, users };
 };
 
 export default reduxForm({

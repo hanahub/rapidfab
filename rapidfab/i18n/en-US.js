@@ -3,6 +3,11 @@ export default {
 
   "downloading"                       : "Downloading...",
 
+  "events.model"                      : "Model Changes ({num})",
+  "events.orderStatus"                : "Order Status Changes ({num})",
+  "events.prices"                     : "Price Changes ({num})",
+  "events.volume"                     : "Build Volume Changes ({num})",
+
   "loading.thumbnail"                 : "Loading Thumbnail...",
   "loading.model"                     : "Loading Models...",
 
@@ -189,6 +194,7 @@ export default {
   "field.multiplier"                  : "Multiplier",
   "field.name"                        : "Name",
   "field.notes"                       : "Notes",
+  "field.none"                        : "None",
   "field.order"                       : "Order",
   "field.order_owner"                 : "Assign Owner",
   "field.optional"                    : "Optional",

@@ -25,7 +25,6 @@ const fields = [
   'shipping.address',
   'shipping.tracking',
   'shipping.uri',
-  'third_party_provider',
 ];
 
 const FormRow = ({id, defaultMessage, children}) => (
@@ -43,7 +42,6 @@ const FormRow = ({id, defaultMessage, children}) => (
 
 const NewOrderForm = ({
   fields,
-  providers,
   shippings,
   users,
 }) => (
@@ -87,17 +85,6 @@ const NewOrderForm = ({
       </FormControl>
     </FormRow>
 
-    <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
-      <FormControl componentClass="select" {...fields.third_party_provider}>
-        {providers.map(provider => (
-          <option key={provider.uri} value={provider.uri}>
-            {provider.name}
-          </option>
-          ))
-        }
-      </FormControl>
-    </FormRow>
-
     <FormRow id="field.currency" defaultMessage="Currency">
       <FormControl componentClass="select" {...fields.currency}>
         {Currencies.map(currency => (
@@ -113,23 +100,20 @@ const NewOrderForm = ({
 );
 
 const mapStateToProps = (state) => {
-  const providers = getThirdPartyProviders(state);
   const shippings = getShippings(state);
   const users = getUsers(state);
 
   const initialCurrency = Currencies[0];
   const initialShipping = shippings[0] ? shippings[0].uri : null;
-  const initialProvider = providers[0] ? providers[0].uri : null;
 
   const initialValues = {
     currency: initialCurrency,
     shipping: {
       uri: initialShipping
     },
-    'third_party_provider': initialProvider,
   }
 
-  return { initialValues, providers, shippings, users };
+  return { initialValues, shippings, users };
 };
 
 export default reduxForm({

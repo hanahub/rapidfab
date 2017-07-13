@@ -37,6 +37,7 @@ const LineItemComponent = ({
   onDelete,
   onFileInputChange,
   onInputChange,
+  providers,
   supportMaterials,
   templates,
 }) => (
@@ -99,6 +100,9 @@ const LineItemComponent = ({
           value={lineItem.supportMaterial}
           onChange={onInputChange}
         >
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
           { supportMaterials.map(material => (
               <option key={material.uri} value={material.uri}>
                 {material.name}
@@ -137,6 +141,30 @@ const LineItemComponent = ({
             </option>
             ))
           }
+        </FormControl>
+      </Col>
+      <Col md={2}>
+        <ControlLabel>
+          <FormattedMessage
+            id="field.thirdPartyProvider"
+            defaultMessage="Third-Party Provider"
+          />
+        </ControlLabel>
+        <FormControl
+          name="thirdPartyProvider"
+          componentClass="select"
+          required
+          value={lineItem.thirdPartyProvider}
+          onChange={onInputChange}
+        >
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
+          { providers.map( provider => (
+            <option key={provider.uri} value={provider.uri}>
+              {provider.name}
+            </option>
+          ))}
         </FormControl>
       </Col>
       {/*<Col md={2}>
@@ -213,6 +241,7 @@ class LineItem extends Component {
     const {
       baseMaterials,
       lineItem,
+      providers,
       supportMaterials,
       templates,
     } = this.props;
@@ -224,16 +253,17 @@ class LineItem extends Component {
         onDelete={onDelete}
         onFileInputChange={onFileInputChange}
         onInputChange={onInputChange}
+        providers={providers}
         supportMaterials={supportMaterials}
         templates={templates}
       />
     );
   }
-
 }
 
 const mapStateToProps = (state) => {
   const materials = Selectors.getMaterials(state);
+  const providers = Selectors.getThirdPartyProviders(state);
   const baseMaterials = materials.filter(material => (
     material.type === 'base'
   ));
@@ -243,7 +273,7 @@ const mapStateToProps = (state) => {
 
   const templates = Selectors.getTemplates(state);
 
-  return { baseMaterials, supportMaterials, templates };
+  return { baseMaterials, providers, supportMaterials, templates };
 }
 
 export default connect(mapStateToProps)(LineItem)

@@ -3,6 +3,11 @@ export default {
 
   "downloading"                       : "ダウンロードしています...",
 
+  "events.model"                      : "Model Changes ({num})",
+  "events.orderStatus"                : "Order Status Changes ({num})",
+  "events.prices"                     : "Price Changes ({num})",
+  "events.volume"                     : "Build Volume Changes ({num})",
+
   "loading.thumbnail"                 : "サムネイルを読み込んでいます...",
   "loading.model"                     : "モデルを読み込んでいます...",
 
@@ -189,6 +194,7 @@ export default {
   "field.order_owner"                 : "Assign Owner",
   "field.name"                        : "名前",
   "field.notes"                       : "注",
+  "field.none"                        : "None",
   "field.prints"                      : "印刷",
   "field.processingTime"              : "処理時間",
   "field.packageSize"                 : "パッケージサイズ",

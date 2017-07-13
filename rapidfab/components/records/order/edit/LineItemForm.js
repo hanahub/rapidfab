@@ -11,7 +11,7 @@ import {
   Label,
 } from 'react-bootstrap';
 
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import SaveDropdownButton from './SaveDropdownButton';
 import * as Selectors from 'rapidfab/selectors';
@@ -25,6 +25,7 @@ const fields = [
   'status',
   'uuid',
   'quantity',
+  'third_party_provider',
 ];
 
 const statusOptionsMap = {
@@ -107,6 +108,7 @@ const LineItemFormComponent = ({
   modelsIsFetching,
   fields,
   materials,
+  providers,
   handleSubmit,
   handleDelete,
   templates,
@@ -170,7 +172,9 @@ const LineItemFormComponent = ({
 
       <FormRow id="field.supportMaterial" defaultMessage="Support Material">
         <FormControl componentClass="select" {...fields.materials.support}>
-          <option value="">None</option>
+          <option value="">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
           {_.map(_.filter(materials, {type: "support"}), material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
@@ -184,6 +188,19 @@ const LineItemFormComponent = ({
           { templates.map( template => (
             <option key={template.uri} value={template.uri}>
               {template.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+
+      <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
+        <FormControl componentClass="select" {...fields['third_party_provider']}>
+          <option value="">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
+          { providers.map( provider => (
+            <option key={provider.uri} value={provider.uri}>
+              {provider.name}
             </option>
           ))}
         </FormControl>
@@ -214,6 +231,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSubmit: payload => {
       if (!payload.materials.support) delete payload.materials.support
+      if (!payload['third_party_provider']) delete payload['third_party_provider']
 
       dispatch(Actions.Api.wyatt['line-item'].put(payload.uuid, payload))
     },
@@ -231,6 +249,7 @@ const mapStateToProps = (state, ownProps) => {
   const materials = Selectors.getMaterials(state);
   const models = Selectors.getModels(state);
   const modelsIsFetching = model.list.fetching || model.get.fetching;
+  const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const uuid = extractUuid(lineItem.uri);
   const orderUuid = state.routeUUID.uuid;
@@ -243,6 +262,7 @@ const mapStateToProps = (state, ownProps) => {
     models,
     modelsIsFetching,
     orderUuid,
+    providers,
     templates,
     uuid,
   }
