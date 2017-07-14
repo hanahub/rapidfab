@@ -14,8 +14,7 @@ class Dashboard extends Component {
   constructor(props) {
     super(props)
     const { features } = props;
-    this.state = { features: features };
-    this.state = { selectedKey: 2 };
+    this.state = { selectedKey: 2, features: features };
     this.onToggle = this.onToggle.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
