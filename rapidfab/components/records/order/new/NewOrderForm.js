@@ -185,9 +185,12 @@ const mapStateToProps = (state) => {
 
   const initialValues = {
     currency: initialCurrency,
+    'order_type': initialOrderType,
+    'sales_status': initialSalesStatus,
     shipping: {
       uri: initialShipping
     },
+
   }
 
   return { initialValues, shippings, users };
