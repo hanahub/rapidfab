@@ -93,9 +93,6 @@ const NewOrderForm = ({
 
     <FormRow id="field.shippingType" defaultMessage="Shipping Type">
       <FormControl componentClass="select" {...fields.shipping.uri}>
-        <option value="none">
-          <FormattedMessage id="field.none" defaultMessage="None"/>
-        </option>
         {shippings.map(shipping => (
           <option key={shipping.uri} value={shipping.uri}>
             {shipping.name}
