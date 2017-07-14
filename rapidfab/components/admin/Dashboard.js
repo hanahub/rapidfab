@@ -64,13 +64,13 @@ class Dashboard extends Component {
         return (<tbody>{feature}</tbody>)
     }
     const UserTable = () => {
-      const user = users.map((user, index) => (
+      const user = users.map((user_detail, index) => (
           <tr key={index}>
             <td>
-              {user.name}
+              {user_detail.name}
             </td>
             <td>
-              { Array.isArray(user.emails) ? user.emails[0] : user.emails }
+              { Array.isArray(user_detail.emails) ? user_detail.emails[0] : user_detail.emails }
             </td>
             <td>
               {locations[0] ? locations[0].name : null}
@@ -79,7 +79,7 @@ class Dashboard extends Component {
               Manager
             </td>
             <td>
-              <ModifyUser user={user} locations={locations} bureau={this.props.bureau} {...this.props} />
+              <ModifyUser modifyUser={user_detail} locations={locations} bureau={this.props.bureau} {...this.props} />
             </td>
           </tr>
         ))
@@ -132,7 +132,7 @@ class Dashboard extends Component {
                   <BS.Table responsive striped bordered hover>
                     <thead>
                       <tr>
-                        <th>Username</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Location</th>
                         <th>Permissions</th>

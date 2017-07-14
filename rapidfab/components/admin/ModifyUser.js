@@ -15,7 +15,7 @@ class ModifyUser extends Component {
   onSubmit(event) {
     event.preventDefault();
     const bureau = this.props.bureau.uri;
-    const user = this.props.user.uri;
+    const user = this.props.modifyUser.uri;
     const {
       userEmail,
       userName,
@@ -25,12 +25,11 @@ class ModifyUser extends Component {
 
     const payload = {
       email: userEmail,
-      id: undefined,
       login: false,
       name: userName,
-      uri: undefined,
-      username: userName,
-      uuid: this.props.user.uuid,
+      uri: this.props.modifyUser.uri,
+      username: userEmail,
+      uuid: this.props.modifyUser.uuid,
       bureau: bureau,
     }
 
@@ -39,12 +38,12 @@ class ModifyUser extends Component {
   }
 
   deleteUser(){
-    const user = this.props.user.uri;
+    const user = this.props.modifyUser.uri;
     const payload = {
-
+      userURI: user,
+      bureau: this.props.bureau,
     }
     this.props.onDeleteUser(payload);
-    console.log('User deleted: ', user)
   }
 
   handleChange(event) {
@@ -61,6 +60,7 @@ class ModifyUser extends Component {
 
   render() {
     const { locations } = this.props;
+
     return (
       <div>
 
@@ -82,16 +82,16 @@ class ModifyUser extends Component {
                     type="text"
                     name="userEmail"
                     onChange={this.handleChange}
-                    defaultValue={this.props.user.emails[0]}
-                    required
+                    value={this.props.modifyUser.emails ? this.props.modifyUser.emails[0] : null}
+                    disabled
                   />
                   <br />
-                  <BS.ControlLabel>User Name:</BS.ControlLabel>
+                  <BS.ControlLabel>Name:</BS.ControlLabel>
                   <BS.FormControl
                     type="text"
                     name="userName"
                     onChange={this.handleChange}
-                    defaultValue={this.props.user.name}
+                    defaultValue={this.props.modifyUser.name}
                     required
                   />
                   <br />

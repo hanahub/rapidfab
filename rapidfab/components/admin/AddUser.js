@@ -30,7 +30,7 @@ class NewUser extends Component {
       login: false,
       name: userName,
       uri: undefined,
-      username: userName,
+      username: userEmail,
       uuid: undefined,
       bureau: bureau,
     }
@@ -79,7 +79,7 @@ class NewUser extends Component {
                     required
                   />
                   <br />
-                  <BS.ControlLabel>User Name:</BS.ControlLabel>
+                  <BS.ControlLabel>Name:</BS.ControlLabel>
                   <BS.FormControl
                     type="text"
                     name="userName"
