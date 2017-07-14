@@ -98,13 +98,13 @@ class ModifyUser extends Component {
                   <BS.ControlLabel>Role:</BS.ControlLabel>
                   <BS.FormControl componentClass="select">
                     <option>
-                      "Global User"
+                      Global User
                     </option>
                     <option>
-                      "Local User"
+                      Local User
                     </option>
                     <option>
-                      "Manager"
+                      Manager
                     </option>
                   </BS.FormControl>
                   <br />
