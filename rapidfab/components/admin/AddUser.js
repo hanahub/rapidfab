@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import * as BS                         from 'react-bootstrap'
 
-class NewUser extends Component {
+class AddUser extends Component {
   constructor(props) {
     super(props);
     this.state = { showModal: false };
@@ -125,4 +125,4 @@ class NewUser extends Component {
 }
 
 
-export default NewUser
+export default AddUser
