@@ -191,7 +191,7 @@ export default {
   "field.multiplier"                  : "マルチプライヤー",
   "field.optional"                    : "Optional",
   "field.order"                       : "注文",
-  "field.order_owner"                 : "Assign Owner",
+  "field.order_owner"                 : "Owner",
   "field.name"                        : "名前",
   "field.notes"                       : "注",
   "field.none"                        : "None",

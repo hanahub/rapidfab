@@ -196,7 +196,7 @@ export default {
   "field.notes"                       : "Notes",
   "field.none"                        : "None",
   "field.order"                       : "Order",
-  "field.order_owner"                 : "Assign Owner",
+  "field.order_owner"                 : "Owner",
   "field.optional"                    : "Optional",
   "field.packageSize"                 : "Package Size",
   "field.phone"                       : "Phone",
