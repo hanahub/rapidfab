@@ -6,6 +6,7 @@ export const RESOURCES = {
   ],
   pao: [
     'memberships',
+    'permissions',
     'groups',
     'sessions',
     'users'

@@ -40,6 +40,10 @@ const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onA
   return <div/>
 }
 
+function redirect() {
+  window.location = "/?nextPath=/&subdomain=rapidfab#/"
+}
+
 class App extends Component {
   componentWillMount() {
     this.props.onInitialize()
@@ -50,10 +54,12 @@ class App extends Component {
       routes,
       onNavigate,
       onChangeLocale,
+      onLogout,
       onAcceptTerms,
       url,
       i18n,
     } = this.props;
+
     return (
       <IntlProvider
         locale={i18n.locale}
@@ -62,9 +68,11 @@ class App extends Component {
         <SessionProvider {...session} onAcceptTerms={onAcceptTerms}>
           <Navbar
             onChangeLocale={onChangeLocale}
+            onLogout={onLogout}
             locale={i18n.locale}
             currentUser={session.currentUser}
             bureaus={session.bureaus}
+            session={session}
           />
           <Router
             routes={routes}
@@ -90,11 +98,15 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.I18n.change(currentLocale, newLocale))
       }
     },
+    onLogout: () => {
+      dispatch(Actions.Api.pao.sessions.delete('')).then(redirect)
+    },
     onInitialize: () => {
       dispatch(Actions.Api.pao.sessions.get('')).then(() => {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
         dispatch(Actions.Api.wyatt.bureau.list())
       })
+      dispatch(Actions.Api.pao.permissions.list())
       dispatch(Actions.Api.wyatt.bureau.list())
     },
     onAcceptTerms: user => {
@@ -110,12 +122,14 @@ function mapStateToProps(state) {
     url,
     i18n,
   } = state;
-  let currentUser = Selectors.getSession(state)
-  let bureaus = Selectors.getBureaus(state)
+  let currentUser = Selectors.getSession(state);
+  let permissions = Selectors.getPermissions(state);
+  let bureaus = Selectors.getBureaus(state);
   let fetching = !currentUser || state.ui.wyatt.bureau.list.fetching
 
   const session = {
     currentUser,
+    permissions,
     bureaus,
     fetching,
     errors  : _.concat(

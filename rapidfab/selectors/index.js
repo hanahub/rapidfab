@@ -11,6 +11,7 @@ export const getStateModels              = state => state.api.hoth.model
 export const getStateMemberships         = state => state.api.pao.memberships
 export const getStateSessions            = state => state.api.pao.sessions
 export const getStateUsers               = state => state.api.pao.users
+export const getStatePermissions         = state => state.api.pao.permissions
 export const getStateLocations           = state => state.api.wyatt.location
 export const getStateProcessStep         = state => state.api.wyatt['process-step']
 export const getStatePostProcessorTypes  = state => state.api.wyatt['post-processor-type']
@@ -116,6 +117,11 @@ export const getSession = createSelector(
     const sessionUuid = sessions[0]
     return resources[sessionUuid]
   }
+)
+
+export const getPermissions = createSelector(
+  [ getStatePermissions, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
 export const getGroups = createSelector(
