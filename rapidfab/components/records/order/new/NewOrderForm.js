@@ -20,6 +20,7 @@ import {
   ORDER_TYPE_MAPPING,
 } from 'rapidfab/mappings';
 
+import Feature from 'rapidfab/components/Feature';
 import LineItem from './LineItem';
 
 const fields = [
@@ -119,46 +120,48 @@ const NewOrderForm = ({
       <FormControlTextCareful {...fields['customer_email']}/>
     </FormRow>
 
-    <FormRow id="field.orderType" defaultMessage="Order Type">
-      <FormControl componentClass="select" {...fields['order_type']}>
-        { Object.keys(ORDER_TYPE_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_TYPE_MAPPING[type]}
-            </option>
-        ))}
-      </FormControl>
-    </FormRow>
+    <Feature featureName="eos-order-fields">
+      <FormRow id="field.orderType" defaultMessage="Order Type">
+        <FormControl componentClass="select" {...fields['order_type']}>
+          { Object.keys(ORDER_TYPE_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_TYPE_MAPPING[type]}
+              </option>
+          ))}
+        </FormControl>
+      </FormRow>
 
-    <FormRow id="field.sales_status" defaultMessage="Sales Status">
-      <FormControl componentClass="select" {...fields['sales_status']}>
-        { Object.keys(ORDER_SALES_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_SALES_MAPPING[type]}
-            </option>
-        ))}
-      </FormControl>
-    </FormRow>
+      <FormRow id="field.sales_status" defaultMessage="Sales Status">
+        <FormControl componentClass="select" {...fields['sales_status']}>
+          { Object.keys(ORDER_SALES_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_SALES_MAPPING[type]}
+              </option>
+          ))}
+        </FormControl>
+      </FormRow>
 
-    <FormRow id="field.sales_name" defaultMessage="Sales Representative Name">
-      <FormControlTextCareful {...fields['sales_representative_name']}/>
-    </FormRow>
+      <FormRow id="field.sales_name" defaultMessage="Sales Representative Name">
+        <FormControlTextCareful {...fields['sales_representative_name']}/>
+      </FormRow>
 
-    <FormRow id="field.channel_name" defaultMessage="Channel Representative Name">
-      <FormControlTextCareful {...fields['channel_representative_name']}/>
-    </FormRow>
+      <FormRow id="field.channel_name" defaultMessage="Channel Representative Name">
+        <FormControlTextCareful {...fields['channel_representative_name']}/>
+      </FormRow>
 
-    <FormRow id="field.region" defaultMessage="Region">
-      <FormControl componentClass="select" {...fields['region']}>
-        <option value="none">
-          <FormattedMessage id="field.none" defaultMessage="None"/>
-        </option>
-        { Object.keys(ORDER_REGION_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_REGION_MAPPING[type]}
-            </option>
-        ))}
-      </FormControl>
-    </FormRow>
+      <FormRow id="field.region" defaultMessage="Region">
+        <FormControl componentClass="select" {...fields['region']}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
+          { Object.keys(ORDER_REGION_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_REGION_MAPPING[type]}
+              </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
 
     <FormRow id="field.notes" defaultMessage="Notes">
       <FormControlTextArea {...fields.notes}/>
