@@ -4,9 +4,6 @@ import { connect }                       from 'react-redux'
 import * as Selectors                    from 'rapidfab/selectors'
 
 class Feature extends Component {
-  constructor(props){
-    super(props)
-  }
 
   componentWillMount() {
     const { props, props: { dispatch }} = this;
@@ -14,16 +11,16 @@ class Feature extends Component {
   }
 
   render() {
-    const { features } = this.props;
-    const DisplayFeature = ({ feature }) => {
-      const enabledFeature = _.map(_.filter(features, {name: this.props.featureName, enabled: true}), feature => (
-        <div>{this.props.children}</div>
-      ));
-      return (<div>{enabledFeature}</div>)
-    }
+    const { children, featureName, features } = this.props;
+    const isFeatureEnabled = features.find(feature => {
+      return feature.name === featureName && feature.enabled;
+    });
     return (
       <div>
-        <DisplayFeature />
+        { isFeatureEnabled ?
+            <div>{children}</div>
+            : null
+        }
       </div>
     );
   }

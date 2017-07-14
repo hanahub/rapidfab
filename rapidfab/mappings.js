@@ -26,3 +26,25 @@ export const RUN_STATUS_MAP = {
   "queued": <FormattedMessage id="status.queued" defaultMessage="Queued"/>,
   "error": <FormattedMessage id="status.error" defaultMessage="Error"/>,
 }
+
+export const ORDER_REGION_MAPPING = {
+  "north": <FormattedMessage id="order.north" defaultMessage="North"/>,
+  "east": <FormattedMessage id="order.east" defaultMessage="East"/>,
+  "south": <FormattedMessage id="order.south" defaultMessage="South"/>,
+  "west": <FormattedMessage id="order.west" defaultMessage="West"/>,
+};
+
+export const ORDER_SALES_MAPPING = {
+  "won": <FormattedMessage id="order.won" defaultMessage="Won"/>,
+  "lost": <FormattedMessage id="order.lost" defaultMessage="Lost"/>,
+  "outsourced": <FormattedMessage id="order.outsourced" defaultMessage="Outsourced"/>,
+  "dead": <FormattedMessage id="order.dead" defaultMessage="Dead"/>,
+  "pending": <FormattedMessage id="order.pending" defaultMessage="Pending"/>,
+};
+
+export const ORDER_TYPE_MAPPING = {
+  "standard": <FormattedMessage id="order.standard" defaultMessage="Standard"/>,
+  "benchmark": <FormattedMessage id="order.benchmark" defaultMessage="Benchmark"/>,
+  "timestudy": <FormattedMessage id="order.timestudy" defaultMessage="Timestudy"/>,
+};
+

@@ -10,17 +10,32 @@ import {
 import Actions from 'rapidfab/actions';
 import { getThirdPartyProviders, getShippings, getUsers } from 'rapidfab/selectors'
 import { Currencies } from 'rapidfab/constants';
-import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
+import {
+  ORDER_REGION_MAPPING,
+  ORDER_SALES_MAPPING,
+  ORDER_STATUS_MAP,
+  ORDER_TYPE_MAPPING,
+} from 'rapidfab/mappings';
 import {
   FormControlTextArea,
   FormControlTextCareful
 } from 'rapidfab/components/formTools';
 
+import Feature from 'rapidfab/components/Feature';
+
 const fields = [
+  'channel_representative_name',
   'currency',
+  'due_date',
+  'customer_email',
   'name',
+  'notes',
   'order_owner',
+  'order_type',
+  'region',
+  'sales_representative_name',
+  'sales_status',
   'shipping.name',
   'shipping.address',
   'shipping.tracking',
@@ -82,9 +97,12 @@ const EditOrderFormComponent = ({
       <FormControlTextCareful {...fields.shipping.name}/>
     </FormRow>
 
-    <FormRow id="field.order_owner" defaultMessage="Assign Owner">
+    <FormRow id="field.order_owner" defaultMessage="Owner">
       <FormControl componentClass="select" {...fields.order_owner}>
-        {_.map(users, user => (
+        <option value="none">
+          <FormattedMessage id="field.none" defaultMessage="None"/>
+        </option>
+        {users.map(user => (
           <option key={user.uuid} value={user.uri}>
             {user.name}
           </option>
@@ -131,6 +149,61 @@ const EditOrderFormComponent = ({
       </FormControl.Static>
     </FormRow>
 
+    <FormRow id="field.customer_email" defaultMessage="Customer Email">
+      <FormControlTextCareful {...fields['customer_email']}/>
+    </FormRow>
+
+    <Feature featureName="eos-order-fields">
+      <FormRow id="field.orderType" defaultMessage="Order Type">
+        <FormControl componentClass="select" {...fields['order_type']}>
+          { Object.keys(ORDER_TYPE_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_TYPE_MAPPING[type]}
+              </option>
+          ))}
+        </FormControl>
+      </FormRow>
+
+      <FormRow id="field.sales_status" defaultMessage="Sales Status">
+        <FormControl componentClass="select" {...fields['sales_status']}>
+          { Object.keys(ORDER_SALES_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_SALES_MAPPING[type]}
+              </option>
+          ))}
+        </FormControl>
+      </FormRow>
+
+      <FormRow id="field.sales_name" defaultMessage="Sales Representative Name">
+        <FormControlTextCareful {...fields['sales_representative_name']}/>
+      </FormRow>
+
+      <FormRow id="field.channel_name" defaultMessage="Channel Representative Name">
+        <FormControlTextCareful {...fields['channel_representative_name']}/>
+      </FormRow>
+
+      <FormRow id="field.region" defaultMessage="Region">
+        <FormControl componentClass="select" {...fields['region']}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None"/>
+          </option>
+          { Object.keys(ORDER_REGION_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_REGION_MAPPING[type]}
+              </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
+
+    <FormRow id="field.notes" defaultMessage="Notes">
+      <FormControlTextArea {...fields.notes}/>
+    </FormRow>
+
+    <FormRow id="field.due_date" defaultMessage="Due Date">
+      <input type="date" {...fields['due_date']} style={{color: "black"}}/>
+    </FormRow>
+
   </div>
 );
 
@@ -175,17 +248,32 @@ class EditOrderForm extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSubmit: payload => {
-      if (false === !!payload.shipping.name) delete payload.shipping.name
-      if (false === !!payload.shipping.address) delete payload.shipping.address
-      if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
+
+      Object.keys(payload).forEach(key => {
+        if (payload[key] === 'none') {
+          payload[key] = null;
+        }
+      });
+
+      if (payload['due_date']) {
+        const date = new Date(payload['due_date']);
+        payload['due_date'] = date.toISOString();
+      }
+
       dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload))
-        .then( () => window.location.hash = "#/plan/orders" )
     }
   }
 }
 
 const mapStateToProps = (state) => {
-  const initialValues = state.resources[state.routeUUID.uuid];
+  let initialValues = state.resources[state.routeUUID.uuid];
+
+  // convert ISO date to yyyy-mm-dd for html input
+  if (initialValues['due_date']) {
+    const date = new Date(initialValues['due_date']);
+    initialValues['due_date'] = date.toISOString().slice(0,10);
+  }
+
   const { created } = initialValues;
   const shippings = getShippings(state);
   const users = getUsers(state);

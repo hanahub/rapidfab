@@ -251,13 +251,38 @@ class NewOrder extends Component {
 
             const orderPayload = {
               bureau: bureau.uri,
-              name: orderForm.name.value,
+              'channel_representative_name': (
+                orderForm['channel_representative_name'].value
+              ),
               currency: orderForm.currency.value,
+              'due_date': (
+                orderForm['due_date'].value ?
+                  new Date(orderForm['due_date'].value).toISOString()
+                  : null
+              ),
+              'customer_email': orderForm['customer_email'].value,
               'line_items': lineItemUris,
+              name: orderForm.name.value,
+              notes: orderForm.notes.value,
+              'order_owner': orderForm['order_owner'].value,
+              'order_type': orderForm['order_type'].value,
+              region: orderForm.region.value,
+              'sales_representative_name': (
+                orderForm['sales_representative_name'].value
+              ),
+              'sales_status': orderForm['sales_status'].value,
               shipping: {
-                uri: orderForm.shipping.uri.value
+                address: orderForm.shipping.address.value,
+                name: orderForm.shipping.name.value,
+                tracking: orderForm.shipping.tracking.value,
+                uri: orderForm.shipping.uri.value,
               }
             };
+
+            Object.keys(orderPayload).forEach( key => {
+              if (orderPayload[key] == null || orderPayload[key] === 'none')
+                delete orderPayload[key]
+            });
 
             dispatch(Actions.Api.wyatt.order.post(orderPayload))
               .then(response => {
