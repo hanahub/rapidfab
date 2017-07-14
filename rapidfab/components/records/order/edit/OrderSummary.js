@@ -20,7 +20,8 @@ class OrderSummary extends Component {
     this.onDelete = this.onSubmit.bind(this);
   }
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     // redux-form v5 requires refs for remote form submission
     // this should be refactored out, either with redux-form v6 or with no redux-form
     this.refs.orderForm.submit();
