@@ -43,6 +43,8 @@ export default {
   "myProfile"                         : "My Profile",
   "logout"                            : "Logout",
   "home"                              : "Home",
+  "admin"                             : "Admin",
+  "impersonate"                       : "Impersonate",
 
   "models"                            : "Models",
 
