@@ -106,7 +106,7 @@ function mapDispatchToProps(dispatch) {
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT)
         dispatch(Actions.Api.wyatt.bureau.list())
       })
-      dispatch(Actions.Api.pao.permissions.list())
+      dispatch(Actions.Api.pao.permissions.list({ 'namespace': 'pao' }))
       dispatch(Actions.Api.wyatt.bureau.list())
     },
     onAcceptTerms: user => {
