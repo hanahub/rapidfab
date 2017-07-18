@@ -4,6 +4,8 @@ import * as BS                                from 'react-bootstrap'
 import { FormattedMessage }                   from 'react-intl';
 import Fa                                     from 'react-fontawesome';
 
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+
 const listBodyStyle = {
   height: 243,
   verflowY: "scroll",
@@ -43,8 +45,8 @@ const Item = ({ print, printer, selected, onSelect }) => (
         />
       </BS.Col>
       <BS.Col xs={3}>
-        <a href={`#/records/order/${print.order.uuid}`}>
-          {print.order.id}
+        <a href={`#/records/order/${extractUuid(print.order)}`}>
+          {extractUuid(print.order).slice(-6)}
         </a>
       </BS.Col>
       <BS.Col xs={3}>
