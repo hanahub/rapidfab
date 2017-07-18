@@ -7,11 +7,23 @@ import * as Selectors from 'rapidfab/selectors';
 
 import Event from './Event';
 
+const hiddenEvents = [
+  'bureau',
+  'model_permission',
+];
+
 const TraceabilityReport = ({ events }) => {
+  const visibleEvents = events.filter( event => {
+    const isVisibleEvent = !hiddenEvents.includes(event.key);
+    const isFullEvent = (
+      event.current_value !== null && event.previous_value !== null
+    );
+    return isVisibleEvent && isFullEvent;
+  });
   return (
     <Panel header="Traceability Report">
       <ListGroup fill>
-        { events.map(event => (
+        { visibleEvents.map(event => (
           <Event event={event} key={event.uuid}/>
         ))}
       </ListGroup>
