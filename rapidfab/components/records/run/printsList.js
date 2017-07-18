@@ -4,6 +4,8 @@ import * as BS                                    from 'react-bootstrap'
 import { FormattedMessage, FormattedDateTime }    from 'rapidfab/i18n'
 import Fa                                         from 'react-fontawesome'
 
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+
 const Header = ({ onActivate }) => (
   <BS.Row>
     <BS.Col xs={6}>
@@ -30,8 +32,8 @@ const PrintItem = ({ print, selected, onSelect }) => (
         />
       </BS.Col>
       <BS.Col xs={3}>
-        <a href={`#/records/order/${print.order.uuid}`}>
-          {print.order.id}
+        <a href={`#/records/order/${extractUuid(print.order)}`}>
+          {extractUuid(print.order).slice(-6)}
         </a>
       </BS.Col>
       <BS.Col xs={3}>
