@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Col, Form, Panel } from 'react-bootstrap';
 
+import Actions from 'rapidfab/actions';
+
 import EditOrderForm from './EditOrderForm';
 import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
@@ -17,7 +19,7 @@ class OrderSummary extends Component {
     super(props)
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.onDelete = this.onSubmit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   onSubmit(event) {
@@ -28,7 +30,7 @@ class OrderSummary extends Component {
   }
 
   onDelete() {
-    dispatch(Actions.Api.wyatt.order.delete(this.uuid))
+    this.props.dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
       .then( () => window.location.hash = "#/plan/orders" )
   }
 
