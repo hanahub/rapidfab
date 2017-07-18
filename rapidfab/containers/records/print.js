@@ -29,6 +29,10 @@ function mapDispatchToProps(dispatch) {
     onInitialize: props => {
       dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
       dispatch(Actions.Api.hoth.model.list());
+      dispatch(Actions.Api.wyatt.material.list());
+      dispatch(Actions.Api.wyatt.template.list());
+      dispatch(Actions.Api.wyatt.shipping.list());
+      dispatch(Actions.Api.hoth.model.list());
       dispatch(Actions.Api.pao.users.list({group: props.bureau.group}));
       const print = dispatch(Actions.Api.wyatt.print.get(props.uuid))
 
