@@ -60,6 +60,7 @@ export default {
   "button.reset"                      : "リセット",
   "button.save"                       : "保存",
   "button.upload"                     : "アップロード",
+  "button.exportDoc"                  : "Export Doc",
 
   "status.available"                  : "利用可能",
   "status.created"                    : "作成済み",

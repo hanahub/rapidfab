@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Panel, ListGroup} from 'react-bootstrap';
+import { Button, Panel, ListGroup} from 'react-bootstrap';
+import { FormattedMessage } from 'rapidfab/i18n';
 
 import * as Selectors from 'rapidfab/selectors';
 
@@ -12,7 +13,7 @@ const hiddenEvents = [
   'model_permission',
 ];
 
-const TraceabilityReport = ({ events }) => {
+const TraceabilityReport = ({ print, events, onExport }) => {
   const visibleEvents = events.filter( event => {
     const isVisibleEvent = !hiddenEvents.includes(event.key);
     const isFullEvent = (
@@ -22,6 +23,16 @@ const TraceabilityReport = ({ events }) => {
   });
   return (
     <Panel header="Traceability Report">
+      <Button
+        bsStyle="primary"
+        onClick={ () => {onExport(print)} }
+        className="pull-right"
+      >
+        <FormattedMessage
+          id="button.exportDoc"
+          defaultMessage="Export Doc"
+        />
+      </Button>
       <ListGroup fill>
         { visibleEvents.map(event => (
           <Event event={event} key={event.uuid}/>
