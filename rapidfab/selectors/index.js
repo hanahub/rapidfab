@@ -19,6 +19,7 @@ export const getStatePostProcessors      = state => state.api.wyatt['post-proces
 export const getStateManufacturers       = state => state.api.wyatt.manufacturer
 export const getStateShippings           = state => state.api.wyatt.shipping
 export const getStateTemplates           = state => state.api.wyatt.template
+export const getStateTraceabilityReport  = state => state.api.wyatt["traceability-report"]
 export const getStateConversions         = state => state.api.wyatt["currency-conversion"]
 
 export const getStateGroups              = state => state.api.pao.groups
@@ -184,6 +185,11 @@ export const getTemplates = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
+export const getTraceabilityReports = createSelector(
+  [ getStateTraceabilityReport, getStateResources ],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+)
+
 export const getConversions = createSelector(
   [ getStateConversions, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
@@ -243,6 +249,15 @@ export const getProcessSteps = createSelector(
   [ getStateProcessStep, getStateResources ],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
+
+export const getTraceabilityReportForPrint = createSelector(
+  [ getPredicate, getTraceabilityReports ],
+  (print, reports) => {
+    if(print) {
+      return _.find(reports, {print: print.uri});
+    }
+  }
+);
 
 export const getStepsForTemplate = createSelector(
   [ getPredicate, getStateProcessStep, getStateResources ],
