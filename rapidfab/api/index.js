@@ -33,6 +33,7 @@ export const RESOURCES = {
     'stock',
     'third-party',
     'template',
+    'traceability-report',
   ],
   nautilus: [
     'modeler',
