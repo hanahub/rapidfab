@@ -9,6 +9,7 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 import Uploading from 'rapidfab/components/Uploading';
 import EditOrder from 'rapidfab/components/records/order/edit/EditOrder';
 import GateKeeper from 'rapidfab/components/gatekeeper';
+import Error from 'rapidfab/components/error';
 
 class OrderContainer extends Component {
 
@@ -39,8 +40,11 @@ class OrderContainer extends Component {
     const loading = fetching || !orderResource;
 
     return (
-      <GateKeeper errors={apiErrors} loading={loading}>
-        <EditOrder />
+      <GateKeeper loading={loading}>
+        <div>
+          { apiErrors ?  <Error errors={apiErrors} /> : null }
+          <EditOrder />
+        </div>
       </GateKeeper>
     );
   }
@@ -54,11 +58,14 @@ function mapStateToProps(state, props) {
 
   const apiErrors = [
     ...Selectors.getResourceErrors(state, "pao.users"),
+    ...lineItem.get.errors,
+    ...lineItem.put.errors,
     ...lineItem.list.errors,
     ...lineItem.delete.errors,
     ...material.list.errors,
     ...model.list.errors,
     ...order.get.errors,
+    ...order.put.errors,
     ...order.delete.errors,
     ...run.list.errors,
   ];
