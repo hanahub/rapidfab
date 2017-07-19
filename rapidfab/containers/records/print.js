@@ -13,12 +13,18 @@ class PrintContainer extends Component {
     this.props.onInitialize(this.props);
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.report && !prevProps.report.content && this.props.report.content) {
+      window.open(this.props.report.content);
+    }
+  }
+
   render() {
     const { apiErrors, fetching, print, order, lineItem, model, models, events, users } = this.props;
     const loading = fetching || !print || !order || !lineItem || !model || !events || !users;
     return(
       <Gatekeeper errors={apiErrors} loading={loading}>
-        <PrintComponent print={print} order={order} lineItem={lineItem} model={model} models={models} events={events} users={users} />
+        <PrintComponent print={print} order={order} lineItem={lineItem} model={model} models={models} events={events} users={users} onExport={this.props.onExport} />
       </Gatekeeper>
     );
   }
@@ -70,6 +76,9 @@ function mapDispatchToProps(dispatch) {
           })
         });
     },
+    onExport: print => {
+      dispatch(Actions.Api.wyatt['traceability-report'].post({print: print.uri}));
+    },
   }
 }
 
@@ -83,6 +92,7 @@ function mapStateToProps(state, props) {
   const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
   const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
+  const report = Selectors.getTraceabilityReportForPrint(state, print);
 
   const order = print ? orders.find( order => order.uri === print.order) : null;
   const lineItem = print ? lineItems.find( lineItem => lineItem.uri === print.line_item) : null;
@@ -109,6 +119,7 @@ function mapStateToProps(state, props) {
     models,
     fetching,
     apiErrors,
+    report,
   }
 }
 

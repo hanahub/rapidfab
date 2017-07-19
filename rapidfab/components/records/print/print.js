@@ -339,9 +339,8 @@ const VolumeChanges = ({ volumeEvents }) => (
   </Accordion>
 );
 
-const PrintComponent = ({ print, order, lineItem, model, models, events, users }) => {
+const PrintComponent = ({ print, order, lineItem, model, models, events, users, onExport }) => {
   const breadcrumbs = [ 'prints', print.id ];
-
   const priceEvents = events.filter(event => event.key === 'amount');
   const statusEvents = events.filter(event => event.key === 'status' );
 
@@ -376,7 +375,7 @@ const PrintComponent = ({ print, order, lineItem, model, models, events, users }
       />
 
       <Feature featureName={'traceability-dev'}>
-        <TraceabilityReport events={events}/>
+        <TraceabilityReport print={print} events={events} onExport={onExport}/>
       </Feature>
 
       { priceEvents.length ?

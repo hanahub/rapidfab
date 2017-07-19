@@ -61,6 +61,7 @@ export default {
   "button.reset"                      : "Reset",
   "button.save"                       : "Save",
   "button.upload"                     : "Upload",
+  "button.exportDoc"                  : "Export Doc",
 
   "status.available"                  : "Available",
   "status.complete"                   : "Complete",
