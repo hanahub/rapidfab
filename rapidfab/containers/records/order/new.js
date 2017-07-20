@@ -9,7 +9,8 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import * as Selectors from 'rapidfab/selectors';
 
 import NewOrder from 'rapidfab/components/records/order/new/NewOrder';
-import Gatekeeper from 'rapidfab/components/gatekeeper.js'
+import Gatekeeper from 'rapidfab/components/gatekeeper.js';
+import FlashMessages from 'rapidfab/components/FlashMessages.js';
 
 class NewOrderContainer extends Component {
   componentDidMount() {
@@ -29,11 +30,14 @@ class NewOrderContainer extends Component {
   }
 
   render() {
-    const { apiErrors, fetching } = this.props;
+    const { fetching } = this.props;
 
     return (
-      <Gatekeeper errors={apiErrors} loading={fetching}>
-        <NewOrder {...this.props}/>
+      <Gatekeeper loading={fetching}>
+        <div>
+          <FlashMessages />
+          <NewOrder {...this.props}/>
+        </div>
       </Gatekeeper>
     );
   }
@@ -60,10 +64,6 @@ function mapDispatchToProps(dispatch, ownProps) {
     },
     onUnmount: () => {
       dispatch(Actions.UploadModel.clearState())
-      dispatch(Actions.UI.clearUIState([
-        "wyatt.order.post",
-        "wyatt.order.put",
-      ]))
     },
     onSubmit: payload => {
       if (false === !!payload.materials.support) delete payload.materials.support
@@ -104,20 +104,11 @@ function mapStateToProps(state, props) {
     state.ui.wyatt['third-party'].list.fetching ||
     state.ui.wyatt.template.list.fetching
 
-  const errors = _.concat(
-    material.list.errors || [],
-    order.post.errors || [],
-    state.ui.wyatt['third-party'].list.errors || [],
-    state.ui.wyatt.template.list.errors || [],
-    state.uploadModel.errors || [],
-  )
-
   const uploadModel = state.uploadModel
   const processingModel = state.resources[uploadModel.modelUuid]
 
   return {
     bureau             : Selectors.getBureau(state),
-    apiErrors          : errors,
     materials          : Selectors.getMaterials(state),
     model              : processingModel,
     providers          : Selectors.getThirdPartyProviders(state),
