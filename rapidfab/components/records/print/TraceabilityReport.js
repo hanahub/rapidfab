@@ -13,14 +13,23 @@ const hiddenEvents = [
   'model_permission',
 ];
 
-const TraceabilityReport = ({ print, events, onExport }) => {
-  const visibleEvents = events.filter( event => {
+const filterEvents = (events) => {
+  const eventCreationTime = events.map(event => event.created).sort()[0];
+  return events.filter( event => {
     const isVisibleEvent = !hiddenEvents.includes(event.key);
+    const isUpdateEvent = event.creation !== eventCreationTime;
     const isFullEvent = (
       event.current_value !== null && event.previous_value !== null
     );
-    return isVisibleEvent && isFullEvent;
+    const isRealEvent = (
+      event.current_value !== event.previous_value
+    );
+    return isVisibleEvent && isUpdateEvent && isFullEvent && isRealEvent;
   });
+};
+
+const TraceabilityReport = ({ print, events, onExport }) => {
+  const visibleEvents = filterEvents(events);
   return (
     <Panel header="Traceability Report">
       <Button
@@ -44,7 +53,8 @@ const TraceabilityReport = ({ print, events, onExport }) => {
 
 const mapStateToProps = (state) => {
   const print = state.resources[state.routeUUID.uuid];
-  return { events: Selectors.getEventsForPrint(state, print) };
+  const events = Selectors.getEventsForPrint(state, print);
+  return { events, print };
 };
 
 TraceabilityReport.propTypes = {
