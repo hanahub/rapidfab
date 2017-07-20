@@ -10,6 +10,7 @@ import Uploading from 'rapidfab/components/Uploading';
 import EditOrder from 'rapidfab/components/records/order/edit/EditOrder';
 import GateKeeper from 'rapidfab/components/gatekeeper';
 import Error from 'rapidfab/components/error';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 
 class OrderContainer extends Component {
 
@@ -36,13 +37,13 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { apiErrors, fetching, orderResource } = this.props;
+    const { fetching, orderResource } = this.props;
     const loading = fetching || !orderResource;
 
     return (
       <GateKeeper loading={loading}>
         <div>
-          { apiErrors ?  <Error errors={apiErrors} /> : null }
+          <FlashMessages />
           <EditOrder />
         </div>
       </GateKeeper>
@@ -55,20 +56,6 @@ function mapStateToProps(state, props) {
   const lineItem = state.ui.wyatt['line-item'];
   const { model } = state.ui.hoth
   const orderResource = Selectors.getRouteResource(state, props)
-
-  const apiErrors = [
-    ...Selectors.getResourceErrors(state, "pao.users"),
-    ...lineItem.get.errors,
-    ...lineItem.put.errors,
-    ...lineItem.list.errors,
-    ...lineItem.delete.errors,
-    ...material.list.errors,
-    ...model.list.errors,
-    ...order.get.errors,
-    ...order.put.errors,
-    ...order.delete.errors,
-    ...run.list.errors,
-  ];
 
   const fetching = (
     lineItem.list.fetching ||
@@ -83,7 +70,6 @@ function mapStateToProps(state, props) {
   );
 
   return {
-    apiErrors,
     fetching,
     orderResource,
     bureau : Selectors.getBureau(state),
