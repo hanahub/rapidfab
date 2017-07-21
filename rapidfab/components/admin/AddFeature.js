@@ -26,12 +26,13 @@ class NewFeature extends Component {
     const {
       featureName,
       featureDescription,
+      featureBureau,
     } = this.state;
 
     const payload = {
       name: featureName,
       description: featureDescription,
-      bureau: bureau,
+      bureau: featureBureau,
       user: user,
       enabled: this.state.toggleActive,
     }
@@ -88,6 +89,15 @@ class NewFeature extends Component {
                     placeholder="Enter description"
                     onChange={this.handleChange}
                     required
+                  />
+                  <br />
+                  <BS.ControlLabel>Bureau:</BS.ControlLabel>
+                  <BS.FormControl
+                    type="text"
+                    name="featureBureau"
+                    onChange={this.handleChange}
+                    placeholder="Enter a bureau"
+                    onChange={this.handleChange}
                   />
                   <br />
                   <BS.ControlLabel>Enabled: </BS.ControlLabel>

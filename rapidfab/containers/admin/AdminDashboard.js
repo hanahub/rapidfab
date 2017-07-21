@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: (props) => {
       dispatch(Actions.Api.wyatt.feature.list())
       dispatch(Actions.Api.wyatt.location.list())
-
+      dispatch(Actions.Api.pao.permissions.list({ 'namespace': 'wyatt' }))
       if(props.bureau.group){
         dispatch(Actions.Api.pao.users.list({ 'group': props.bureau.group }))
       }
