@@ -46,7 +46,7 @@ class Dashboard extends Component {
           <tr key={index}>
             <td>
               <span className="glyphicon glyphicon-file"></span>
-               {feature.name} - {feature.description}
+               {feature.name} - {feature.description} - {feature.bureau}
             </td>
             <td className="text-right text-nowrap">
               <Toggle
