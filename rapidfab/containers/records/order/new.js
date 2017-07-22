@@ -14,7 +14,7 @@ import FlashMessages from 'rapidfab/components/FlashMessages.js';
 
 class NewOrderContainer extends Component {
   componentDidMount() {
-    this.props.onInitialize(this.props.bureau.group)
+    this.props.onInitialize(this.props.bureau);
   }
 
   componentWillUnmount() {
@@ -45,13 +45,14 @@ class NewOrderContainer extends Component {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    onInitialize: (bureauGroup) => {
-      dispatch(Actions.Api.wyatt.material.list())
-      dispatch(Actions.Api.wyatt['third-party'].list())
-      dispatch(Actions.Api.wyatt.shipping.list())
-      dispatch(Actions.Api.wyatt.template.list())
-      if(bureauGroup){
-        dispatch(Actions.Api.pao.users.list({ 'group': bureauGroup }))
+    onInitialize: (bureau) => {
+      const { group, uri } = bureau;
+      dispatch(Actions.Api.wyatt.material.list({ bureau: uri }))
+      dispatch(Actions.Api.wyatt['third-party'].list({ bureau: uri }))
+      dispatch(Actions.Api.wyatt.shipping.list({ bureau: uri }))
+      dispatch(Actions.Api.wyatt.template.list({ bureau: uri }))
+      if(group){
+        dispatch(Actions.Api.pao.users.list({ 'group': group }))
       }
     },
     onSaveOrder: payload => {

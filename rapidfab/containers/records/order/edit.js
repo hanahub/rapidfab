@@ -15,7 +15,7 @@ import FlashMessages from 'rapidfab/components/FlashMessages';
 class OrderContainer extends Component {
 
   componentWillMount() {
-    const { props, props: { dispatch, route: { uuid }}} = this;
+    const { props, props: { bureau, dispatch, route: { uuid }}} = this;
 
     // Set route UUID in state
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
@@ -28,11 +28,11 @@ class OrderContainer extends Component {
 
     // Fetch resource options for input selections
     dispatch(Actions.Api.hoth.model.list());
-    dispatch(Actions.Api.wyatt.material.list());
-    dispatch(Actions.Api.wyatt['third-party'].list());
+    dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
     dispatch(Actions.Api.wyatt['post-processor-type'].list());
-    dispatch(Actions.Api.wyatt.template.list());
-    dispatch(Actions.Api.wyatt.shipping.list());
+    dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
     dispatch(Actions.Api.pao.users.list({ 'group': props.bureau.group }));
   }
 

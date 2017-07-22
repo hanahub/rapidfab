@@ -8,7 +8,7 @@ import Config                       from 'rapidfab/config'
 
 class ThirdPartyProvidersContainer extends Component {
   componentDidMount() {
-    this.props.onInitialize()
+    this.props.onInitialize(this.props.bureau);
   }
 
   render() {
@@ -18,8 +18,8 @@ class ThirdPartyProvidersContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: () => {
-      dispatch(Actions.Api.wyatt['third-party'].list())
+    onInitialize: (bureau) => {
+      dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
     }
   }
 }
@@ -28,6 +28,7 @@ function mapStateToProps(state) {
   const third_party_providers = state.ui.wyatt['third-party']
 
   return {
+    bureau    : Selectors.getBureau(state),
     providers : Selectors.getThirdPartyProviders(state),
     fetching  : third_party_providers.list.fetching,
     errors    : _.concat(third_party_providers.list.errors)

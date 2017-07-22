@@ -8,17 +8,12 @@ import * as Selectors           from 'rapidfab/selectors'
 
 class TemplatesContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize()
+    const { bureau, dispatch } = this.props;
+    dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
   }
 
   render() {
     return <TemplateComponent {...this.props}/>
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: () => dispatch(Actions.Api.wyatt.template.list()),
   }
 }
 
@@ -28,6 +23,7 @@ function mapStateToProps(state) {
   } = state.ui.wyatt
 
   return {
+    bureau        : Selectors.getBureau(state),
     locations     : Selectors.getLocations(state),
     templates     : Selectors.getTemplates(state),
     users         : Selectors.getUsers(state),
@@ -36,4 +32,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TemplatesContainer)
+export default connect(mapStateToProps)(TemplatesContainer)
