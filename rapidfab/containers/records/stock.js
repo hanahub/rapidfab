@@ -19,7 +19,8 @@ const fields = [
 
 class StockContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    const { bureau, uuid } = this.props;
+    this.props.onInitialize(bureau, uuid);
   }
 
   render() {
@@ -33,8 +34,8 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
-      dispatch(Actions.Api.wyatt.material.list())
+    onInitialize: (bureau, uuid) => {
+      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }))
       dispatch(Actions.Api.wyatt.location.list())
       if(uuid) dispatch(Actions.Api.wyatt.stock.get(uuid))
     },
@@ -55,6 +56,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
+    bureau          : Selectors.getBureau(state),
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : Selectors.getRouteResource(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.stock"),

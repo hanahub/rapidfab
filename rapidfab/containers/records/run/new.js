@@ -22,7 +22,8 @@ const Loading = ({  }) => (
 
 class RunContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    const { bureau, uuid } = this.props;
+    this.props.onInitialize(bureau, uuid);
   }
   componentWillUnmount() {
     this.props.onUnmount()
@@ -35,8 +36,8 @@ class RunContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
-      dispatch(Actions.Api.wyatt['line-item'].list())
+    onInitialize: (bureau, uuid) => {
+      dispatch(Actions.Api.wyatt['line-item'].list({ bureau: bureau.uri }))
         .then(response => {
           const lineItems = response.json.resources;
           const printableLineItems = lineItems.filter(lineItem => {
@@ -62,7 +63,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt["process-step"].list())
       dispatch(Actions.Api.wyatt['printer-type'].list())
       dispatch(Actions.Api.wyatt.printer.list())
-      dispatch(Actions.Api.wyatt.material.list())
+      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }))
       dispatch(Actions.Api.nautilus.modeler.list())
     },
     onSave: payload => dispatch(Actions.Api.wyatt.run.post(payload)).then(args => {
@@ -128,6 +129,7 @@ function mapStateToProps(state) {
     processStep.list.errors,
   )
 
+  const bureau = Selectors.getBureau(state);
   const lineItems = Selectors.getLineItemsForRunNew(state)
   //const orders = Selectors.getOrdersForRunNew(state)
   const prints = _.flatMap(lineItems, 'prints')
@@ -152,6 +154,7 @@ function mapStateToProps(state) {
   const page = pager.activePage - 1
 
   return {
+    bureau,
     apiErrors,
     fetching,
     loading     : (!lineItems.length || !printers.length) && fetching,

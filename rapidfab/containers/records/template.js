@@ -19,7 +19,8 @@ const fields = [
 
 class TemplateContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    const { bureau, uuid } = this.props;
+    this.props.onInitialize(bureau, uuid);
   }
 
   componentWillUnmount() {
@@ -37,10 +38,10 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
+    onInitialize: (bureau, uuid) => {
       dispatch(Actions.Api.wyatt['printer-type'].list())
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
-      dispatch(Actions.Api.wyatt.shipping.list())
+      dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }))
       if(uuid) {
         dispatch(Actions.Api.wyatt.template.get(uuid))
         dispatch(Actions.Api.wyatt["process-step"].list())
