@@ -20,7 +20,8 @@ const fields = [
 
 class PostProcessorTypeContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    const { bureau, uuid } = this.props;
+    this.props.onInitialize(bureau, uuid);
   }
 
   render() {
@@ -34,8 +35,8 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
-      dispatch(Actions.Api.wyatt.material.list())
+    onInitialize: (bureau, uuid) => {
+      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }))
       dispatch(Actions.Api.wyatt.manufacturer.list())
       if(uuid) {
         dispatch(Actions.Api.wyatt['post-processor-type'].get(uuid))
@@ -58,6 +59,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
+    bureau          : Selectors.getBureau(state),
     uuid            : Selectors.getRoute(state, props).uuid,
     initialValues   : Selectors.getInitialValuesBureau(state, props),
     submitting      : Selectors.getResourceFetching(state, "wyatt.post-processor-type"),

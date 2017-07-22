@@ -8,7 +8,7 @@ import * as Selectors           from 'rapidfab/selectors'
 
 class PostProcessorTypesContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize()
+    this.props.onInitialize(this.props.bureau)
   }
   render() {
     return <PostProcessorTypesComponent {...this.props}/>
@@ -17,9 +17,9 @@ class PostProcessorTypesContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: () => {
+    onInitialize: (bureau) => {
       dispatch(Actions.Api.wyatt.manufacturer.list())
-      dispatch(Actions.Api.wyatt.material.list())
+      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }))
       dispatch(Actions.Api.wyatt['post-processor-type'].list())
     }
   }
@@ -33,6 +33,7 @@ function mapStateToProps(state) {
   } = state.ui.wyatt;
 
   return {
+    bureau             : Selectors.getBureau(state),
     manufacturers      : Selectors.getManufacturers(state),
     materials          : Selectors.getMaterials(state),
     postProcessorTypes : Selectors.getPostProcessorTypes(state),
