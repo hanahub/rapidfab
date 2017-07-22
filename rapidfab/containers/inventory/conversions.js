@@ -8,7 +8,8 @@ import * as Selectors           from 'rapidfab/selectors'
 
 class ConversionsContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize()
+    const { bureau, dispatch } = this.props;
+    dispatch(Actions.Api.wyatt["currency-conversion"].list({ bureau: bureau.uri }));
   }
 
   render() {
@@ -16,16 +17,11 @@ class ConversionsContainer extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: () => dispatch(Actions.Api.wyatt["currency-conversion"].list()),
-  }
-}
-
 function mapStateToProps(state) {
   const conversion = state.ui.wyatt["currency-conversion"]
 
   return {
+    bureau        : Selectors.getBureau(state),
     locations     : Selectors.getLocations(state),
     conversions   : Selectors.getConversions(state),
     users         : Selectors.getUsers(state),
@@ -34,4 +30,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConversionsContainer)
+export default connect(mapStateToProps)(ConversionsContainer)

@@ -8,20 +8,13 @@ import * as Selectors           from 'rapidfab/selectors'
 
 class MaterialsContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize()
+    const { bureau, dispatch } = this.props;
+    dispatch(Actions.Api.wyatt.manufacturer.list())
+    dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
   }
 
   render() {
     return <MaterialsComponent {...this.props}/>
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: () => {
-      dispatch(Actions.Api.wyatt.manufacturer.list())
-      dispatch(Actions.Api.wyatt.material.list())
-    }
   }
 }
 
@@ -32,6 +25,7 @@ function mapStateToProps(state) {
   } = state.ui.wyatt
 
   return {
+    bureau        : Selectors.getBureau(state),
     materials     : Selectors.getMaterials(state),
     manufacturers : Selectors.getManufacturers(state),
     fetching      : material.list.fetching || manufacturer.list.fetching,
@@ -39,4 +33,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MaterialsContainer)
+export default connect(mapStateToProps)(MaterialsContainer)
