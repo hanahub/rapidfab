@@ -23,6 +23,8 @@ export default {
   "work.shipping"                     : "配送",
   "work.thirdParty"                   : "サードパーティー",
 
+  "help.link"                         : "Help",
+
   "inventory"                         : "在庫",
   "inventory.locations"               : "場所",
   "inventory.manageLocations"         : "場所の管理",
