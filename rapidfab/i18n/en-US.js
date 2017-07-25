@@ -23,6 +23,8 @@ export default {
   "work.shipping"                     : "Shipping",
   "work.thirdParty"                   : "Third party",
 
+  "help.link"                         : "Help",
+
   "inventory"                         : "Inventory",
   "inventory.locations"               : "Locations",
   "inventory.manageLocations"         : "Manage Locations",

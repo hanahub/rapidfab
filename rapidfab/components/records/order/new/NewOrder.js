@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
   Button,
@@ -8,6 +9,7 @@ import {
   Grid,
   Panel,
 } from 'react-bootstrap';
+import Fa from 'react-fontawesome';
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
@@ -24,6 +26,12 @@ const AddLineItemButton = ({ onAddLineItem }) => (
     <Button bsSize="small" onClick={() => onAddLineItem() }>
       Add Line Item
     </Button>
+  </div>
+);
+
+const HelpLink = () => (
+  <div className="pull-right">
+    <a href="https://authentise.com/orderuploadhelp"><FormattedMessage id="help.link" defaultMessage="Help"/> <Fa name="question-circle"/></a>
   </div>
 );
 
@@ -80,6 +88,7 @@ const NewOrderComponent = ({
       <Form horizontal onSubmit={onSubmit}>
 
         <SaveButton />
+        <HelpLink />
         <hr />
 
         <Panel header="Order">
