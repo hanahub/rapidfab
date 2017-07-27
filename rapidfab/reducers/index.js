@@ -9,7 +9,6 @@ import url                      from './url'
 import locationFilter           from './locationFilter'
 import orderLocation            from './orderLocation'
 import i18n                     from './i18n'
-import fakeData                 from './fakeData'
 import ui                       from './ui'
 import routeUUID                from './routeUUID'
 import api                      from './api'
@@ -24,7 +23,6 @@ const Reducer = combineReducers({
   locationFilter,
   orderLocation,
   uploadModel,
-  fakeData,
   resources,
   api,
   ui,
