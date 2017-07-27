@@ -3,8 +3,6 @@ import React, { Component, PropTypes }  from "react"
 import Actions                          from "rapidfab/actions"
 import { connect }                      from 'react-redux'
 import PrintQueuesComponent             from 'rapidfab/components/plan/printQueues'
-import FakeData                         from 'rapidfab/fakeData';
-
 
 const PrintQueuesContainer = props => (
   <PrintQueuesComponent {...props}/>
