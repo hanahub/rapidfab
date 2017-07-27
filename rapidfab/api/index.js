@@ -22,6 +22,7 @@ export const RESOURCES = {
     'material',
     'membership-bureau',
     'order',
+    'order-document',
     'post-processor-type',
     'post-processor',
     'process-step',

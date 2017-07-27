@@ -5,8 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { Col, Form, Panel } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
+import Feature from 'rapidfab/components/Feature';
 
 import EditOrderForm from './EditOrderForm';
+import OrderDocuments from './OrderDocuments';
 import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
 
@@ -49,6 +51,9 @@ class OrderSummary extends Component {
           </Col>
 
           <Col xs={12} md={5}>
+            <Feature featureName="order-documents">
+              <OrderDocuments />
+            </Feature>
             <OrderRuns />
           </Col>
 
