@@ -16,9 +16,9 @@ import { postForm } from 'rapidfab/api/makeApi';
 
 import Loading from 'rapidfab/components/Loading';
 
-const OrderDocument = ({download, onDelete, uuid}) => (
+const OrderDocument = ({download, name, onDelete, uuid}) => (
   <ListGroupItem>
-    <a href={download}>{ uuid }</a>
+    <a href={download}>{ name ? name : uuid }</a>
     <Button
       className="pull-right"
       bsStyle="danger"
@@ -69,10 +69,11 @@ class OrderDocuments extends React.Component {
   async uploadDocument() {
     const { dispatch, order } = this.props;
     const { upload } = this.state;
+    const { name } = upload;
     this.setState({ upload: null });
 
     const orderPostResponse = await dispatch(
-      Actions.Api.wyatt['order-document'].post({ order }));
+      Actions.Api.wyatt['order-document'].post({ name, order }));
 
     const uuid = extractUuid(orderPostResponse.headers.location);
     const documentResponse = await dispatch(
@@ -105,6 +106,7 @@ class OrderDocuments extends React.Component {
         { orderDocuments.map( orderDocument => (
           <OrderDocument
             download={orderDocument.content ? orderDocument.content : null }
+            name={orderDocument.name}
             onDelete={onDelete}
             key={orderDocument.uri}
             uuid={extractUuid(orderDocument.uri)}
