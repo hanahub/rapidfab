@@ -3,12 +3,12 @@ import PropTypes from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'react-bootstrap';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
-import OrderSummary from './OrderSummary';
-import LineItem from './LineItem';
 import AddLineItem from './AddLineItem';
+import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import LineItem from './LineItem';
+import OrderSummary from './OrderSummary';
 
-const LineItems = ({ lineItems }) => (
+const LineItems = ({ lineItems = [] }) => (
   <div>
     { lineItems.map(lineItem => {
         return (
@@ -23,7 +23,7 @@ const LineItems = ({ lineItems }) => (
   </div>
 );
 
-const EditOrder= ({ order }) => {
+const EditOrder = ({ order = {} }) => {
   const breadcrumbs = ["orders", order.id]
   const lineItems = order['line_items'];
   return(
@@ -36,7 +36,8 @@ const EditOrder= ({ order }) => {
   );
 }
 
+const mapStateToProps = state => (
+  { order: state.resources[state.routeUUID.uuid] }
+);
 
-const mapStateToProps = state => ({order: state.resources[state.routeUUID.uuid]});
-
-export default connect(mapStateToProps)(EditOrder)
+export default connect(mapStateToProps)(EditOrder);
