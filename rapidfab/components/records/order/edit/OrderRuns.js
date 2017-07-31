@@ -112,7 +112,7 @@ OrderRuns.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const order = state.resources[state.routeUUID.uuid];
+  const order = state.resources[state.routeUUID];
   const runs = getRunsForOrder(state, order);
 
   const isRunFetching = state.ui.wyatt.run.list.fetching;

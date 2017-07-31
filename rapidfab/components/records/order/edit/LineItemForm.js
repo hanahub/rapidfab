@@ -252,7 +252,7 @@ const mapStateToProps = (state, ownProps) => {
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const uuid = extractUuid(lineItem.uri);
-  const orderUuid = state.routeUUID.uuid;
+  const orderUuid = state.routeUUID;
 
   const initialValues = lineItem;
 

@@ -64,6 +64,6 @@ class OrderSummary extends Component {
   }
 }
 
-const mapStateToProps = state => ({ uuid: state.routeUUID.uuid });
+const mapStateToProps = state => ({ uuid: state.routeUUID });
 
 export default connect(mapStateToProps)(OrderSummary)

@@ -37,7 +37,7 @@ const EditOrder = ({ order = {} }) => {
 }
 
 const mapStateToProps = state => (
-  { order: state.resources[state.routeUUID.uuid] }
+  { order: state.resources[state.routeUUID] }
 );
 
 export default connect(mapStateToProps)(EditOrder);
