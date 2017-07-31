@@ -266,7 +266,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  let initialValues = state.resources[state.routeUUID.uuid];
+  let initialValues = state.resources[state.routeUUID];
 
   // convert ISO date to yyyy-mm-dd for html input
   if (initialValues['due_date']) {

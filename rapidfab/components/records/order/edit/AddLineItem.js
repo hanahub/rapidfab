@@ -329,7 +329,7 @@ const mapStateToProps = (state) => {
   const materials = Selectors.getMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
-  const order = state.resources[state.routeUUID.uuid];
+  const order = state.resources[state.routeUUID];
 
   const baseMaterials = materials.filter( material => (
     material.type === 'base'

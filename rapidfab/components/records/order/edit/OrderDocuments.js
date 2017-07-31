@@ -133,7 +133,7 @@ class OrderDocuments extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const orderResource = state.resources[state.routeUUID.uuid];
+  const orderResource = state.resources[state.routeUUID];
   const order = orderResource.uri;
   const orderDocumentUUIDs = orderResource['order_documents'].map( doc => {
     return extractUuid(doc);

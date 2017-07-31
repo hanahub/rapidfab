@@ -38,8 +38,8 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { order } = this.props;
-    const loading = !order;
+    const { order, routeUUID } = this.props;
+    const loading = !order || !routeUUID;
 
     return (
       <div>
@@ -57,10 +57,12 @@ class OrderContainer extends Component {
 function mapStateToProps(state, props) {
   const bureau = Selectors.getBureau(state);
   const order = Selectors.getRouteResource(state, props)
+  const { routeUUID } = state;
 
   return {
     bureau,
     order,
+    routeUUID,
   }
 }
 

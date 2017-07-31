@@ -264,7 +264,7 @@ function getSnapshotFromLineItem(lineItem, models) {
 const mapStateToProps = (state, ownProps) => {
   const { uri } = ownProps;
   const uuid = extractUuid(uri);
-  const order = state.resources[state.routeUUID.uuid];
+  const order = state.resources[state.routeUUID];
   const { currency } = order;
   const lineItem = state.resources[uuid];
   const prints = getPrintsForLineItem(state, lineItem);

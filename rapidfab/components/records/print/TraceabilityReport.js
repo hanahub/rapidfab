@@ -52,7 +52,7 @@ const TraceabilityReport = ({ print, events, onExport }) => {
 };
 
 const mapStateToProps = (state) => {
-  const print = state.resources[state.routeUUID.uuid];
+  const print = state.resources[state.routeUUID];
   const events = Selectors.getEventsForPrint(state, print);
   return { events, print };
 };
