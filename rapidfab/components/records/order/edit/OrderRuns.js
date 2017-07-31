@@ -11,6 +11,7 @@ import {
   Row,
 } from 'react-bootstrap';
 
+import Actions from 'rapidfab/actions';
 import { getRunsForOrder } from 'rapidfab/selectors';
 
 import Loading from 'rapidfab/components/Loading';
@@ -55,53 +56,70 @@ const RunItem = ({ run }) => (
   </ListGroupItem>
 );
 
-const OrderRuns = ({ runs = [], fetching = true }) => {
-  if ( fetching ) {
-    return (
-      <Panel header="Runs">
-        <Loading />
-      </Panel>
-    );
-  } else if (runs.length) {
-    return (
-      <Panel header={Header(runs)}>
-        <ListGroup fill>
-          <ListGroupItem key="header">
-            <Row>
-              <Col xs={6}>
-                ID
-              </Col>
-              <Col xs={6}>
-                Status
-              </Col>
-            </Row>
-          </ListGroupItem>
+class OrderRuns extends Component {
+  componentDidMount() {
+    const { dispatch, order } = this.props;
+    dispatch(Actions.Api.wyatt.run.list());
+    dispatch(Actions.Api.wyatt.print.list({'order': order.uri}));
+  }
 
-          { runs.map(run => <RunItem key={run.id} run={run} />) }
+  render() {
+    const { fetching, runs } = this.props;
+    if ( fetching ) {
+      return (
+        <Panel header="Runs">
+          <Loading />
+        </Panel>
+      );
+    } else if (runs.length) {
+      return (
+        <Panel header={Header(runs)}>
+          <ListGroup fill>
+            <ListGroupItem key="header">
+              <Row>
+                <Col xs={6}>
+                  ID
+                </Col>
+                <Col xs={6}>
+                  Status
+                </Col>
+              </Row>
+            </ListGroupItem>
 
-        </ListGroup>
-      </Panel>
-    );
-  } else {
-    return (
-      <Panel
-        header={
-          <FormattedMessage
-            id="record.noRuns"
-            defaultMessage="Runs - order not assigned to any runs yet"
-          />
-        }
-      />
-    );
+            { runs.map(run => <RunItem key={run.id} run={run} />) }
+
+          </ListGroup>
+        </Panel>
+      );
+    } else {
+      return (
+        <Panel
+          header={
+            <FormattedMessage
+              id="record.noRuns"
+              defaultMessage="Runs - order not assigned to any runs yet"
+            />
+          }
+        />
+      );
+    }
   }
 }
+
+OrderRuns.defaultProps = {
+  runs: [],
+  fetching: true,
+};
 
 const mapStateToProps = (state) => {
   const order = state.resources[state.routeUUID.uuid];
   const runs = getRunsForOrder(state, order);
-  const { fetching } = state.ui.wyatt.run.list;
 
-  return { fetching, runs };
+  const isRunFetching = state.ui.wyatt.run.list.fetching;
+  const isPrintFetching = state.ui.wyatt.print.list.fetching;
+  const fetching = isRunFetching || isPrintFetching;
+
+  return { fetching, order, runs };
 }
 
 export default connect(mapStateToProps)(OrderRuns)

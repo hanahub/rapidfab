@@ -6,15 +6,14 @@ import Actions from "rapidfab/actions"
 import * as Selectors from 'rapidfab/selectors'
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
 
-import Uploading from 'rapidfab/components/Uploading';
 import EditOrder from 'rapidfab/components/records/order/edit/EditOrder';
-import GateKeeper from 'rapidfab/components/gatekeeper';
 import Error from 'rapidfab/components/error';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 
 class OrderContainer extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     const { props, props: { bureau, dispatch, route: { uuid }}} = this;
 
     // Set route UUID in state
@@ -22,9 +21,11 @@ class OrderContainer extends Component {
 
     // Fetch order and related resources
     dispatch(Actions.Api.wyatt.order.get(uuid))
-    dispatch(Actions.Api.wyatt['line-item'].list({'order': props.order.uri}));
-    dispatch(Actions.Api.wyatt.print.list({'order': props.order.uri}));
-    dispatch(Actions.Api.wyatt.run.list());
+      .then( res => {
+        dispatch(Actions.Api.wyatt['line-item'].list(
+          { 'order': res.json.uri }
+        ));
+      })
 
     // Fetch resource options for input selections
     dispatch(Actions.Api.hoth.model.list());
@@ -37,43 +38,28 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { fetching, orderResource } = this.props;
-    const loading = fetching || !orderResource;
+    const { order } = this.props;
+    const loading = !order;
 
     return (
-      <GateKeeper loading={loading}>
-        <div>
-          <FlashMessages />
-          <EditOrder />
-        </div>
-      </GateKeeper>
+      <div>
+        { loading ? <Loading /> :
+            <div>
+              <FlashMessages />
+              <EditOrder />
+            </div>
+        }
+      </div>
     );
   }
 }
 
 function mapStateToProps(state, props) {
-  const { order, material, print, run } = state.ui.wyatt
-  const lineItem = state.ui.wyatt['line-item'];
-  const { model } = state.ui.hoth
-  const orderResource = Selectors.getRouteResource(state, props)
-
-  const fetching = (
-    lineItem.list.fetching ||
-    material.list.fetching ||
-    model.list.fetching ||
-    order.get.fetching ||
-    order.put.fetching ||
-    print.list.fetching ||
-    state.ui.wyatt['third-party'].list.fetching ||
-    state.ui.wyatt['post-processor-type'].list.fetching ||
-    state.ui.wyatt.template.list.fetching
-  );
+  const bureau = Selectors.getBureau(state);
+  const order = Selectors.getRouteResource(state, props)
 
   return {
-    fetching,
-    orderResource,
-    bureau : Selectors.getBureau(state),
-    model,
+    bureau,
     order,
   }
 }
