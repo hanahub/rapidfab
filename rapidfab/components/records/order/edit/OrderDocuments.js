@@ -96,7 +96,7 @@ class OrderDocuments extends React.Component {
     const { orderDocuments } = this.props;
 
     return (
-      <Panel bsStyle="info">
+      <Panel bsStyle="primary">
         <ListGroup fill>
           <ListGroupItem>
             <b>Order Documents</b>
