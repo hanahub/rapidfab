@@ -9,6 +9,7 @@ import Feature from 'rapidfab/components/Feature';
 
 import EditOrderForm from './EditOrderForm';
 import OrderDocuments from './OrderDocuments';
+import OrderEstimates from './OrderEstimates';
 import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
 
@@ -51,6 +52,7 @@ class OrderSummary extends Component {
           </Col>
 
           <Col xs={12} md={5}>
+            <OrderEstimates />
             <Feature featureName="order-documents">
               <OrderDocuments />
             </Feature>
