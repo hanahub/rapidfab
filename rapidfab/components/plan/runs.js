@@ -11,6 +11,7 @@ import Grid, {
   MappedColumn,
 } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
+import Locations from 'rapidfab/components/locations';
 
 const RunsGrid = ({ runs }) => (
   <Grid
@@ -39,15 +40,6 @@ const RunsGrid = ({ runs }) => (
   />
 )
 
-const Locations = ({ locationFilter, locations, handleOnChange }) => (
-  <BS.FormControl onChange={e => {handleOnChange(e.target.value)}} value={locationFilter} componentClass="select">
-    <option key="placeholder" value="" selected>All</option>
-    {_.map(locations, location => (
-      <option key={location.uri} value={location.uri}>{`${location.id} - ${location.name}`}</option>
-    ))}
-  </BS.FormControl>
-);
-
 const Runs = ({ locationFilter, locations, runs, fetching, apiErrors, handleOnChange }) => (
   <BS.Grid fluid>
     <BS.Row>
@@ -63,16 +55,14 @@ const Runs = ({ locationFilter, locations, runs, fetching, apiErrors, handleOnCh
       </BS.Col>
     </BS.Row>
     <BS.Row>
-      <BS.Col xs={6}>
-      </BS.Col>
-      <BS.Col xs={4}>
+      <BS.Col xs={8}>
         {locations.length > 1 ? <Locations
           locations={locations}
           handleOnChange={handleOnChange}
           locationFilter={locationFilter}
         /> : <div/>}
       </BS.Col>
-      <BS.Col xs={2}>
+      <BS.Col xs={4}>
         <BS.Button bsStyle="primary" bsSize="small" href="#/records/run" className="pull-right">
           <Fa name='plus'/> <FormattedMessage id="record.run.add" defaultMessage='Add Run'/>
         </BS.Button>
