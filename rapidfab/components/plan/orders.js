@@ -35,9 +35,7 @@ const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, 
     </BS.Row>
 
     <BS.Row>
-      <BS.Col xs={4}>
-      </BS.Col>
-      <BS.Col xs={4}>
+      <BS.Col xs={8}>
         {locations.length > 1 ? <Locations
           locations={locations}
           handleOnChange={handleOnChange}
