@@ -11,7 +11,11 @@ import {
 } from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
-import { getPrintsForLineItem, getModels } from 'rapidfab/selectors';
+import {
+  getPrintsForLineItem,
+  getProcessSteps,
+  getModels
+} from 'rapidfab/selectors';
 import {
   FormattedCost,
   FormattedDate,
@@ -32,7 +36,7 @@ const LineItemHeader = () => (
   <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
 );
 
-const ProcessStepsHeader = (prints) => {
+const PrintsHeader = (prints) => {
   const complete = prints.reduce( (total, print) => {
     return prints.status === 'complete' ? total + 1 : total;
   }, 0).toString();
@@ -40,7 +44,7 @@ const ProcessStepsHeader = (prints) => {
   return (
     <FormattedMessage
       id="record.printCompleteCount"
-      defaultMessage={`Process Steps - {complete} / {total} complete`}
+      defaultMessage={`Prints - {complete} / {total} complete`}
       values={{complete: complete, total: total}}
     />
   );
@@ -84,7 +88,7 @@ const PrintItem = ({ print }) => (
 );
 
 const Prints = ({ prints }) => (
-  <Panel header={ProcessStepsHeader(prints)} bsStyle="primary">
+  <Panel header={PrintsHeader(prints)} bsStyle="primary">
     <ListGroup fill>
 
       <ListGroupItem key="header">
@@ -267,7 +271,13 @@ const mapStateToProps = (state, ownProps) => {
   const order = state.resources[state.routeUUID];
   const { currency } = order;
   const lineItem = state.resources[uuid];
-  const prints = getPrintsForLineItem(state, lineItem);
+  const allPrints = getPrintsForLineItem(state, lineItem);
+  const printProcessSteps = getProcessSteps(state).filter(step => {
+    return step.process_type_uri.includes('printer-type');
+  });
+  const prints = allPrints.filter(print => {
+    return printProcessSteps.some(step => step.uri === print.process_step);
+  });
   const models = getModels(state);
   const snapshot = getSnapshotFromLineItem(lineItem, models);
 

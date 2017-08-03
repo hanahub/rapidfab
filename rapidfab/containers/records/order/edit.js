@@ -29,6 +29,7 @@ class OrderContainer extends Component {
 
     // Fetch resource options for input selections
     dispatch(Actions.Api.hoth.model.list());
+    dispatch(Actions.Api.wyatt['process-step'].list());
     dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
     dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
     dispatch(Actions.Api.wyatt['post-processor-type'].list());
