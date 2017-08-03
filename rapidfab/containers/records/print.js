@@ -24,7 +24,7 @@ class PrintContainer extends Component {
     const loading = fetching || !print || !order || !lineItem || !model || !events || !users;
     return(
       <Gatekeeper errors={apiErrors} loading={loading}>
-        <PrintComponent print={print} order={order} lineItem={lineItem} model={model} models={models} events={events} users={users} onExport={this.props.onExport} />
+        <PrintComponent {...this.props} />
       </Gatekeeper>
     );
   }
@@ -36,6 +36,7 @@ function mapDispatchToProps(dispatch) {
       const { bureau } = props;
       dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
       dispatch(Actions.Api.hoth.model.list());
+      dispatch(Actions.Api.wyatt.print.list());
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
@@ -99,6 +100,12 @@ function mapStateToProps(state, props) {
   const lineItem = print ? lineItems.find( lineItem => lineItem.uri === print.line_item) : null;
   const model = lineItem ? models.find( model => model.uri === lineItem.model) : null;
 
+  const copy = print ? print.copy : null;
+  const lineItemProcessSteps = lineItem ? Selectors.getPrintsForLineItem(state, lineItem) : [];
+  const processSteps =  lineItemProcessSteps.filter(step => {
+    return step.copy === copy;
+  });
+
   const fetching =
     state.ui.wyatt.print.get.fetching ||
     state.ui.wyatt.print.list.fetching ||
@@ -111,6 +118,7 @@ function mapStateToProps(state, props) {
   return {
     uuid,
     print,
+    processSteps,
     order,
     lineItem,
     users,

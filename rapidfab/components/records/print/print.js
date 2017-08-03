@@ -25,6 +25,7 @@ import Feature from 'rapidfab/components/Feature';
 import SaveButton from 'rapidfab/components/saveButton';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import TraceabilityReport from './TraceabilityReport';
+import ProcessSteps from './ProcessSteps';
 import {
   FormattedCost,
   FormattedDateTime,
@@ -32,7 +33,7 @@ import {
   FormattedVolume
 } from 'rapidfab/i18n';
 
-const PrintSummary = ({ print, order, lineItem, model , events }) => {
+const PrintSummary = ({ print, processSteps, order, lineItem, model , events }) => {
   const { status } = print;
   const { created } = lineItem;
   const { name, uuid } = order;
@@ -82,6 +83,8 @@ const PrintSummary = ({ print, order, lineItem, model , events }) => {
               />
             </ListGroupItem>
           </ListGroup>
+
+          <ProcessSteps processSteps={processSteps} />
         </Col>
       </Row>
     </Panel>
@@ -132,7 +135,7 @@ const PrintRecord = () => (
   </Panel>
 );
 
-const PrintComponent = ({ print, order, lineItem, model, models, events, users, onExport }) => {
+const PrintComponent = ({ print, processSteps, order, lineItem, model, models, events, users, onExport }) => {
   const breadcrumbs = [ 'prints', print.id ];
   const priceEvents = events.filter(event => event.key === 'amount');
   const statusEvents = events.filter(event => event.key === 'status' );
@@ -162,6 +165,7 @@ const PrintComponent = ({ print, order, lineItem, model, models, events, users, 
 
       <PrintSummary
         print={print}
+        processSteps={processSteps}
         order={order}
         lineItem={lineItem}
         model={model}
