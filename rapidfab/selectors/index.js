@@ -284,6 +284,33 @@ export const getPrints = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 )
 
+export const getPrintsWithNames = createSelector(
+  [ getPrints, getStateResources ],
+  ( prints, resources) => {
+    return prints.map(print => {
+      const order = resources[extractUuid(print.order)];
+      const lineItem = resources[extractUuid(print['line_item'])];
+      const model = lineItem ? resources[extractUuid(lineItem.model)] : null;
+      let name = extractUuid(print.uri);
+      if (model && order) {
+        const { quantity } = lineItem;
+        const { copy, process_step_position } = print;
+        name = `${order.name}[${model.name}] (${copy}/${quantity})`;
+      }
+      return Object.assign(
+        {},
+        print,
+        { name },
+      );
+    });
+  }
+);
+
+export const getPrintWithName = createSelector(
+  [ getPredicate, getPrintsWithNames ],
+  ( uri, prints) => prints.find( print => print.uri === uri)
+);
+
 export const getPrintsForOrder = createSelector(
   [ getPredicate, getStatePrints, getStateResources ],
   (order, uuids, resources) => {
