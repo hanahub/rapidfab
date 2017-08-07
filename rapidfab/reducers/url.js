@@ -1,19 +1,19 @@
-import _         from 'lodash';
+import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 
 const initialState = {
-  hash: window.location.hash
-}
+  hash: window.location.hash,
+};
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case Constants.HASH_CHANGE:
       return _.assign({}, state, {
-        hash: action.data.newHash
+        hash: action.data.newHash,
       });
     default:
-      return state
+      return state;
   }
 }
 
-export default reducer
+export default reducer;

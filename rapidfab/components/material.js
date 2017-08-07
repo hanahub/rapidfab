@@ -1,5 +1,5 @@
-import React, { Component }     from "react";
-import * as BS                  from 'react-bootstrap';
+import React, { Component } from 'react';
+import * as BS from 'react-bootstrap';
 
 export default class Manufacturers extends Component {
   render() {
@@ -7,7 +7,7 @@ export default class Manufacturers extends Component {
       <BS.Grid>
         <BS.Row>
           <BS.Col xs={12}>
-            <BS.Breadcrumb className='breadcrumbs'>
+            <BS.Breadcrumb className="breadcrumbs">
               <BS.Breadcrumb.Item href="/">
                 Home
               </BS.Breadcrumb.Item>
@@ -83,7 +83,7 @@ export default class Manufacturers extends Component {
           <BS.Col xs={6}>
             <BS.Row>
               <BS.Col xs={12}>
-                <BS.Image src='https://placehold.it/100x100' rounded/>
+                <BS.Image src="https://placehold.it/100x100" rounded />
               </BS.Col>
             </BS.Row>
             <BS.Row>

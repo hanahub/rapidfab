@@ -1,4 +1,4 @@
-import Constants  from 'rapidfab/constants';
+import Constants from 'rapidfab/constants';
 
 
 class EventStream {
@@ -14,10 +14,10 @@ class EventStream {
     this.index = 0;
     this.xhr = new XMLHttpRequest();
     this.xhr.withCredentials = true;
-    this.xhr.addEventListener('load',     this.onLoad.bind(this));
+    this.xhr.addEventListener('load', this.onLoad.bind(this));
     this.xhr.addEventListener('progress', this.onProgress.bind(this));
-    this.xhr.addEventListener('error',    this.onError.bind(this));
-    this.xhr.addEventListener('abort',    this.onAbort.bind(this));
+    this.xhr.addEventListener('error', this.onError.bind(this));
+    this.xhr.addEventListener('abort', this.onAbort.bind(this));
     this.xhr.open('GET', this.url);
     this.xhr.send();
   }
@@ -27,57 +27,55 @@ class EventStream {
   }
 
   onProgress(event) {
-    if(event.loaded <= 0) {
+    if (event.loaded <= 0) {
       return;
     }
     this.retry = 0;
     this.retryTimeout = null;
-    while(true) {
+    while (true) {
       try {
-        let chunkDelimiterIndex = event.target.responseText.indexOf('\n', this.index);
-        if(chunkDelimiterIndex == -1)
-          return;
-        let chunk = event.target.responseText.substr(this.index, chunkDelimiterIndex - this.index);
-        let data = JSON.parse(chunk);
+        const chunkDelimiterIndex = event.target.responseText.indexOf('\n', this.index);
+        if (chunkDelimiterIndex == -1) { return; }
+        const chunk = event.target.responseText.substr(this.index, chunkDelimiterIndex - this.index);
+        const data = JSON.parse(chunk);
         this.onEvent(data);
         this.index = this.index + chunk.length + 1;
-      } catch(e) {
-        console.error("Failed to handle eventbus progress", e);
+      } catch (e) {
+        console.error('Failed to handle eventbus progress', e);
         this.index = event.target.responseText.length;
       }
     }
   }
 
   onError(event) {
-    console.error("EventStream error", event, this.xhr);
+    console.error('EventStream error', event, this.xhr);
     this.handleDisconnect();
   }
 
   onAbort(event) {
-    console.log("EventStream aborted", event, this.xhr);
+    console.log('EventStream aborted', event, this.xhr);
   }
 
   handleDisconnect() {
-    if(!!this.retryTimeout) {
+    if (this.retryTimeout) {
       return;
     }
-    this.retry = this.retry + 1
-    let retryTime = Math.min((this.retry * (this.retry / 2.0)) * 100, 3000);
+    this.retry = this.retry + 1;
+    const retryTime = Math.min((this.retry * (this.retry / 2.0)) * 100, 3000);
     console.log(`Retrying connection to EventStream in ${retryTime}ms`);
     this.retryTimeout = setTimeout(() => {
       this.retryTimeout = null;
       this.createConnection();
     }, retryTime);
   }
-
 }
 
 function createAction(event) {
   return _.assign({}, event, {
-    type: Constants.EVENT_STREAM_MESSAGE
-  })
+    type: Constants.EVENT_STREAM_MESSAGE,
+  });
 }
 
 export function subscribe(dispatch, host) {
-  new EventStream(host, event => dispatch(createAction(event)))
+  new EventStream(host, event => dispatch(createAction(event)));
 }

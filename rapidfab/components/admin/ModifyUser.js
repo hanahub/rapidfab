@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import * as BS                         from 'react-bootstrap'
+import React, { Component, PropTypes } from 'react';
+import * as BS from 'react-bootstrap';
 
 class ModifyUser extends Component {
   constructor(props) {
@@ -30,24 +30,24 @@ class ModifyUser extends Component {
       uri: this.props.modifyUser.uri,
       username: userEmail,
       uuid: this.props.modifyUser.uuid,
-      bureau: bureau,
-    }
+      bureau,
+    };
 
     this.props.onSaveUser(payload);
     this.setState({ showModal: false });
   }
 
-  deleteUser(){
+  deleteUser() {
     const user = this.props.modifyUser.uri;
     const payload = {
       userURI: user,
       bureau: this.props.bureau,
-    }
+    };
     this.props.onDeleteUser(payload);
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value})
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   close() {
@@ -70,66 +70,66 @@ class ModifyUser extends Component {
         >
           Modify User
         </BS.Button>
-          <BS.Modal show={this.state.showModal} onHide={this.close}>
-            <BS.Form onSubmit={this.onSubmit}>
-              <BS.Modal.Header closeButton>
-                <BS.Modal.Title>Modify a user</BS.Modal.Title>
-              </BS.Modal.Header>
-              <BS.Modal.Body>
-                <BS.FormGroup controlId="formBasicText">
-                  <BS.ControlLabel>User Email:</BS.ControlLabel>
-                  <BS.FormControl
-                    type="text"
-                    name="userEmail"
-                    onChange={this.handleChange}
-                    value={this.props.modifyUser.emails ? this.props.modifyUser.emails[0] : null}
-                    disabled
-                  />
-                  <br />
-                  <BS.ControlLabel>Name:</BS.ControlLabel>
-                  <BS.FormControl
-                    type="text"
-                    name="userName"
-                    onChange={this.handleChange}
-                    defaultValue={this.props.modifyUser.name}
-                    required
-                  />
-                  <br />
-                  <BS.ControlLabel>Role:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select">
-                    <option>
+        <BS.Modal show={this.state.showModal} onHide={this.close}>
+          <BS.Form onSubmit={this.onSubmit}>
+            <BS.Modal.Header closeButton>
+              <BS.Modal.Title>Modify a user</BS.Modal.Title>
+            </BS.Modal.Header>
+            <BS.Modal.Body>
+              <BS.FormGroup controlId="formBasicText">
+                <BS.ControlLabel>User Email:</BS.ControlLabel>
+                <BS.FormControl
+                  type="text"
+                  name="userEmail"
+                  onChange={this.handleChange}
+                  value={this.props.modifyUser.emails ? this.props.modifyUser.emails[0] : null}
+                  disabled
+                />
+                <br />
+                <BS.ControlLabel>Name:</BS.ControlLabel>
+                <BS.FormControl
+                  type="text"
+                  name="userName"
+                  onChange={this.handleChange}
+                  defaultValue={this.props.modifyUser.name}
+                  required
+                />
+                <br />
+                <BS.ControlLabel>Role:</BS.ControlLabel>
+                <BS.FormControl componentClass="select">
+                  <option>
                       Global User
-                    </option>
-                    <option>
+                  </option>
+                  <option>
                       Local User
-                    </option>
-                    <option>
+                  </option>
+                  <option>
                       Manager
+                  </option>
+                </BS.FormControl>
+                <br />
+                <BS.ControlLabel>Location:</BS.ControlLabel>
+                <BS.FormControl componentClass="select">
+                  {_.map(locations, location => (
+                    <option key={location.uuid} value={location.uri}>
+                      {location.name}
                     </option>
-                  </BS.FormControl>
-                  <br />
-                  <BS.ControlLabel>Location:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select">
-                    {_.map(locations, location => (
-                      <option key={location.uuid} value={location.uri}>
-                        {location.name}
-                      </option>
-                      ))
-                    }
-                  </BS.FormControl>
-                </BS.FormGroup>
-              </BS.Modal.Body>
-              <BS.Modal.Footer>
-                <BS.Button onClick={this.close}>Cancel</BS.Button>
-                <BS.Button bsStyle="danger" onClick={this.deleteUser}>Delete </BS.Button>
-                <BS.Button bsStyle="warning" type="submit">Update </BS.Button>
-              </BS.Modal.Footer>
-             </BS.Form>
-          </BS.Modal>
+                  ))
+                  }
+                </BS.FormControl>
+              </BS.FormGroup>
+            </BS.Modal.Body>
+            <BS.Modal.Footer>
+              <BS.Button onClick={this.close}>Cancel</BS.Button>
+              <BS.Button bsStyle="danger" onClick={this.deleteUser}>Delete </BS.Button>
+              <BS.Button bsStyle="warning" type="submit">Update </BS.Button>
+            </BS.Modal.Footer>
+          </BS.Form>
+        </BS.Modal>
       </div>
-    )
+    );
   }
 }
 
 
-export default ModifyUser
+export default ModifyUser;

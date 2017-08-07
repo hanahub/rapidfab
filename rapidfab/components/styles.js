@@ -1,7 +1,7 @@
-import React                    from 'react'
-import * as BS                  from 'react-bootstrap'
+import React from 'react';
+import * as BS from 'react-bootstrap';
 import Grid, {
-} from 'rapidfab/components/grid'
+} from 'rapidfab/components/grid';
 
 const Home = ({}) => (
   <BS.Grid fluid>
@@ -20,6 +20,6 @@ const Home = ({}) => (
       </BS.Alert>
     </BS.Row>
   </BS.Grid>
-)
+);
 
-export default Home
+export default Home;

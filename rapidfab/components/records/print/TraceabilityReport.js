@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, Panel, ListGroup} from 'react-bootstrap';
+import { Button, Panel, ListGroup } from 'react-bootstrap';
 import { FormattedMessage } from 'rapidfab/i18n';
 
 import * as Selectors from 'rapidfab/selectors';
@@ -15,7 +15,7 @@ const hiddenEvents = [
 
 const filterEvents = (events) => {
   const eventCreationTime = events.map(event => event.created).sort()[0];
-  return events.filter( event => {
+  return events.filter((event) => {
     const isVisibleEvent = !hiddenEvents.includes(event.key);
     const isUpdateEvent = event.creation !== eventCreationTime;
     const isFullEvent = (
@@ -34,7 +34,7 @@ const TraceabilityReport = ({ print, events, onExport }) => {
     <Panel header="Traceability Report">
       <Button
         bsStyle="primary"
-        onClick={ () => {onExport(print)} }
+        onClick={() => { onExport(print); }}
         className="pull-right"
       >
         <FormattedMessage
@@ -44,7 +44,7 @@ const TraceabilityReport = ({ print, events, onExport }) => {
       </Button>
       <ListGroup fill>
         { visibleEvents.map(event => (
-          <Event event={event} key={event.uuid}/>
+          <Event event={event} key={event.uuid} />
         ))}
       </ListGroup>
     </Panel>
@@ -59,6 +59,6 @@ const mapStateToProps = (state) => {
 
 TraceabilityReport.propTypes = {
   events: PropTypes.array.isRequired,
-}
+};
 
-export default connect(mapStateToProps)(TraceabilityReport)
+export default connect(mapStateToProps)(TraceabilityReport);

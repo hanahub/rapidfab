@@ -1,11 +1,11 @@
-import React, { Component, PropTypes }    from "react"
-import { connect }                        from 'react-redux'
-import _                                  from "lodash"
-import Actions                            from "rapidfab/actions"
-import Config                             from 'rapidfab/config'
-import ManufacturerComponent              from 'rapidfab/components/records/manufacturer'
-import { reduxForm }                      from 'redux-form'
-import * as Selectors                     from 'rapidfab/selectors'
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import Actions from 'rapidfab/actions';
+import Config from 'rapidfab/config';
+import ManufacturerComponent from 'rapidfab/components/records/manufacturer';
+import { reduxForm } from 'redux-form';
+import * as Selectors from 'rapidfab/selectors';
 
 const fields = [
   'id',
@@ -18,56 +18,56 @@ const fields = [
   'support.phone',
   'address',
   'notes',
-  'bureau'
-]
+  'bureau',
+];
 
 class ManufacturerContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid)
+    this.props.onInitialize(this.props.uuid);
   }
 
   render() {
-    return <ManufacturerComponent {...this.props}/>
+    return <ManufacturerComponent {...this.props} />;
   }
 }
 
 function redirect() {
-  window.location.hash = "#/inventory/manufacturers"
+  window.location.hash = '#/inventory/manufacturers';
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
-      if(uuid) {
-        dispatch(Actions.Api.wyatt.manufacturer.get(uuid))
+    onInitialize: (uuid) => {
+      if (uuid) {
+        dispatch(Actions.Api.wyatt.manufacturer.get(uuid));
       }
     },
-    onSubmit: payload => {
-      if(payload.uuid) {
-        dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload)).then(redirect)
+    onSubmit: (payload) => {
+      if (payload.uuid) {
+        dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload)).then(redirect);
       } else {
-        dispatch(Actions.Api.wyatt.manufacturer.post(payload)).then(redirect)
+        dispatch(Actions.Api.wyatt.manufacturer.post(payload)).then(redirect);
       }
     },
-    onDelete: uuid => {
-      if(uuid) {
-        dispatch(Actions.Api.wyatt.manufacturer.delete(uuid)).then(redirect)
+    onDelete: (uuid) => {
+      if (uuid) {
+        dispatch(Actions.Api.wyatt.manufacturer.delete(uuid)).then(redirect);
       }
-    }
-  }
+    },
+  };
 }
 
 function mapStateToProps(state, props) {
   return {
-    uuid            : Selectors.getRoute(state, props).uuid,
-    initialValues   : Selectors.getRouteResource(state, props),
-    submitting      : Selectors.getResourceFetching(state, "wyatt.manufacturer"),
-    apiErrors       : Selectors.getResourceErrors(state, "wyatt.manufacturer"),
-    initialValues   : Selectors.getInitialValuesBureau(state, props),
-  }
+    uuid: Selectors.getRoute(state, props).uuid,
+    initialValues: Selectors.getRouteResource(state, props),
+    submitting: Selectors.getResourceFetching(state, 'wyatt.manufacturer'),
+    apiErrors: Selectors.getResourceErrors(state, 'wyatt.manufacturer'),
+    initialValues: Selectors.getInitialValuesBureau(state, props),
+  };
 }
 
 export default reduxForm({
   form: 'record.manufacturer',
-  fields
-}, mapStateToProps, mapDispatchToProps)(ManufacturerContainer)
+  fields,
+}, mapStateToProps, mapDispatchToProps)(ManufacturerContainer);

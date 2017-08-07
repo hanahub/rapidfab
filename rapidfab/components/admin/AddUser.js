@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react'
-import * as BS                         from 'react-bootstrap'
+import React, { Component, PropTypes } from 'react';
+import * as BS from 'react-bootstrap';
 
 class AddUser extends Component {
   constructor(props) {
@@ -32,14 +32,14 @@ class AddUser extends Component {
       uri: undefined,
       username: userEmail,
       uuid: undefined,
-      bureau: bureau,
-    }
+      bureau,
+    };
     this.props.onSaveUser(payload);
     this.setState({ showModal: false });
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value})
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   close() {
@@ -62,67 +62,67 @@ class AddUser extends Component {
         >
           Add User
         </BS.Button>
-          <BS.Modal show={this.state.showModal} onHide={this.close}>
-            <BS.Form onSubmit={this.onSubmit}>
-              <BS.Modal.Header closeButton>
-                <BS.Modal.Title>Add new user</BS.Modal.Title>
-              </BS.Modal.Header>
-              <BS.Modal.Body>
-                <BS.FormGroup controlId="formBasicText">
-                  <BS.ControlLabel>User Email:</BS.ControlLabel>
-                  <BS.FormControl
-                    type="text"
-                    name="userEmail"
-                    onChange={this.handleChange}
-                    placeholder="Enter user email"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <br />
-                  <BS.ControlLabel>Name:</BS.ControlLabel>
-                  <BS.FormControl
-                    type="text"
-                    name="userName"
-                    onChange={this.handleChange}
-                    placeholder="Enter user name"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <br />
-                  <BS.ControlLabel>Role:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select">
-                    <option>
+        <BS.Modal show={this.state.showModal} onHide={this.close}>
+          <BS.Form onSubmit={this.onSubmit}>
+            <BS.Modal.Header closeButton>
+              <BS.Modal.Title>Add new user</BS.Modal.Title>
+            </BS.Modal.Header>
+            <BS.Modal.Body>
+              <BS.FormGroup controlId="formBasicText">
+                <BS.ControlLabel>User Email:</BS.ControlLabel>
+                <BS.FormControl
+                  type="text"
+                  name="userEmail"
+                  onChange={this.handleChange}
+                  placeholder="Enter user email"
+                  onChange={this.handleChange}
+                  required
+                />
+                <br />
+                <BS.ControlLabel>Name:</BS.ControlLabel>
+                <BS.FormControl
+                  type="text"
+                  name="userName"
+                  onChange={this.handleChange}
+                  placeholder="Enter user name"
+                  onChange={this.handleChange}
+                  required
+                />
+                <br />
+                <BS.ControlLabel>Role:</BS.ControlLabel>
+                <BS.FormControl componentClass="select">
+                  <option>
                       Global User
-                    </option>
-                    <option>
+                  </option>
+                  <option>
                       Local User
-                    </option>
-                    <option>
+                  </option>
+                  <option>
                       Manager
+                  </option>
+                </BS.FormControl>
+                <br />
+                <BS.ControlLabel>Location:</BS.ControlLabel>
+                <BS.FormControl componentClass="select">
+                  {_.map(locations, location => (
+                    <option key={location.uuid} value={location.uri}>
+                      {location.name}
                     </option>
-                  </BS.FormControl>
-                  <br />
-                  <BS.ControlLabel>Location:</BS.ControlLabel>
-                  <BS.FormControl componentClass="select">
-                    {_.map(locations, location => (
-                      <option key={location.uuid} value={location.uri}>
-                        {location.name}
-                      </option>
-                      ))
-                    }
-                  </BS.FormControl>
-                </BS.FormGroup>
-              </BS.Modal.Body>
-              <BS.Modal.Footer>
-                <BS.Button onClick={this.close}>Cancel</BS.Button>
-                <BS.Button bsStyle="success" type="submit">Save </BS.Button>
-              </BS.Modal.Footer>
-             </BS.Form>
-          </BS.Modal>
+                  ))
+                  }
+                </BS.FormControl>
+              </BS.FormGroup>
+            </BS.Modal.Body>
+            <BS.Modal.Footer>
+              <BS.Button onClick={this.close}>Cancel</BS.Button>
+              <BS.Button bsStyle="success" type="submit">Save </BS.Button>
+            </BS.Modal.Footer>
+          </BS.Form>
+        </BS.Modal>
       </div>
-    )
+    );
   }
 }
 
 
-export default AddUser
+export default AddUser;

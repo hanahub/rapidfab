@@ -1,25 +1,25 @@
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.js');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-    browsers: [ process.env.BROWSER ? process.env.BROWSER : 'Chrome'],
+    browsers: [process.env.BROWSER ? process.env.BROWSER : 'Chrome'],
     captureTimeout: 60000,
     client: {
       captureConsole: false,
     },
     customLaunchers: {
-      'PhantomJS2_debug': {
+      PhantomJS2_debug: {
         base: 'PhantomJS2',
         options: {
           windowName: 'my-window',
           settings: {
-            webSecurityEnabled: false
-          }
+            webSecurityEnabled: false,
+          },
         },
         flags: ['--load-images=true'],
-        debug: true
-      }
+        debug: true,
+      },
     },
     frameworks: ['mocha', 'chai'],
     files: [
@@ -27,24 +27,24 @@ module.exports = function(config) {
       'tests/*.test.js',
       'tests/**/*.test.js',
     ],
-    junitReporter : {
-      outputDir: __dirname + '/test_results/',
+    junitReporter: {
+      outputDir: `${__dirname}/test_results/`,
       outputFile: 'test-results.xml',
     },
     mochaReporter: {
-      showDiff: true
+      showDiff: true,
     },
     phantomjs2Launcher: {
-      exitOnResourceError: true
+      exitOnResourceError: true,
     },
     preprocessors: {
-      'rapidfab/**/*.js'        : ['webpack', 'sourcemap'],
-      'tests/**/*.test.js'  : ['webpack', 'sourcemap'],
+      'rapidfab/**/*.js': ['webpack', 'sourcemap'],
+      'tests/**/*.test.js': ['webpack', 'sourcemap'],
     },
     reporters: ['mocha'],
     webpack: webpackConfig,
     webpackServer: {
-      noInfo: true // don't spam the console when running in karma
+      noInfo: true, // don't spam the console when running in karma
     },
     port: 9876,
     colors: true,

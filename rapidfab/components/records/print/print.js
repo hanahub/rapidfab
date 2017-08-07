@@ -30,10 +30,10 @@ import {
   FormattedCost,
   FormattedDateTime,
   FormattedMessage,
-  FormattedVolume
+  FormattedVolume,
 } from 'rapidfab/i18n';
 
-const PrintSummary = ({ print, processSteps, order, lineItem, model , events }) => {
+const PrintSummary = ({ print, processSteps, order, lineItem, model, events }) => {
   const { status } = print;
   const { created } = lineItem;
   const { name, uuid } = order;
@@ -79,7 +79,7 @@ const PrintSummary = ({ print, processSteps, order, lineItem, model , events }) 
                     defaultMessage="Created"
                   />
                 }
-                right={<FormattedDateTime value={created} /> }
+                right={<FormattedDateTime value={created} />}
               />
             </ListGroupItem>
           </ListGroup>
@@ -88,7 +88,7 @@ const PrintSummary = ({ print, processSteps, order, lineItem, model , events }) 
         </Col>
       </Row>
     </Panel>
-  )
+  );
 };
 
 const SpaceBetweenText = ({ left, right }) => (
@@ -109,24 +109,24 @@ const PrintRecord = () => (
 
         <FormGroup>
           <ControlLabel>
-            <FormattedMessage id={"field.uploadDocument"} defaultMessage={"Upload Document"}/>:
+            <FormattedMessage id={'field.uploadDocument'} defaultMessage={'Upload Document'} />:
           </ControlLabel>
-          <FormControl type="file" name="file"/>
+          <FormControl type="file" name="file" />
         </FormGroup>
 
         <FormGroup>
           <ControlLabel>
-            <FormattedMessage id={"field.notes"} defaultMessage={"Notes"}/>:
+            <FormattedMessage id={'field.notes'} defaultMessage={'Notes'} />:
           </ControlLabel>
-          <FormControl componentClass="textarea" name="notes"/>
+          <FormControl componentClass="textarea" name="notes" />
         </FormGroup>
 
         <FormGroup>
           <Radio inline value="success" >
-            <FormattedMessage id={"field.success"} defaultMessage={"Success"}/>
+            <FormattedMessage id={'field.success'} defaultMessage={'Success'} />
           </Radio>
           <Radio inline value="fail" >
-            <FormattedMessage id={"field.fail"} defaultMessage={"Fail"}/>
+            <FormattedMessage id={'field.fail'} defaultMessage={'Fail'} />
           </Radio>
         </FormGroup>
 
@@ -136,30 +136,26 @@ const PrintRecord = () => (
 );
 
 const PrintComponent = ({ print, processSteps, order, lineItem, model, models, events, users, onExport }) => {
-  const breadcrumbs = [ 'prints', print.id ];
+  const breadcrumbs = ['prints', print.id];
   const priceEvents = events.filter(event => event.key === 'amount');
-  const statusEvents = events.filter(event => event.key === 'status' );
+  const statusEvents = events.filter(event => event.key === 'status');
 
-  const modelEvents = events.filter(event => {
-    return event.key === 'model'
-  }).map(event => {
+  const modelEvents = events.filter(event => event.key === 'model').map((event) => {
     const model = models.find(model => model.uri === event.current_value);
     const user = users.find(user => user.uri === event.user);
-    return Object.assign({}, event, { model, user })
+    return Object.assign({}, event, { model, user });
   });
 
-  const volumeEvents = events.filter(event => {
-    return (
-      event.key === 'base_material_used' ||
+  const volumeEvents = events.filter(event => (
+    event.key === 'base_material_used' ||
       event.key === 'support_material_used'
-    );
-  });
+  ));
 
 
   return (
     <Grid fluid className="container">
 
-      <BreadcrumbNav breadcrumbs={breadcrumbs}/>
+      <BreadcrumbNav breadcrumbs={breadcrumbs} />
 
       <hr />
 
@@ -171,7 +167,7 @@ const PrintComponent = ({ print, processSteps, order, lineItem, model, models, e
         model={model}
       />
 
-      <TraceabilityReport onExport={onExport}/>
+      <TraceabilityReport onExport={onExport} />
 
     </Grid>
   );

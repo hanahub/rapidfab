@@ -1,42 +1,42 @@
-import _                from 'lodash';
-import Constants        from 'rapidfab/constants';
-import { RESOURCES }    from 'rapidfab/api'
+import _ from 'lodash';
+import Constants from 'rapidfab/constants';
+import { RESOURCES } from 'rapidfab/api';
 
 
 const initialMethodState = {
-  fetching    : false,
-  payload     : null,
-  uuid        : null,
-  filters     : null,
-  count       : 0,
-  errors      : [],
-}
+  fetching: false,
+  payload: null,
+  uuid: null,
+  filters: null,
+  count: 0,
+  errors: [],
+};
 
 export const initialState = _.reduce(RESOURCES, (result, hostResources, host) => {
-  result[host] = {}
-  for(let hostResource of hostResources) {
+  result[host] = {};
+  for (const hostResource of hostResources) {
     result[host][hostResource] = {
-      delete  : initialMethodState,
-      get     : initialMethodState,
-      list    : initialMethodState,
-      post    : initialMethodState,
-      put     : initialMethodState,
-    }
+      delete: initialMethodState,
+      get: initialMethodState,
+      list: initialMethodState,
+      post: initialMethodState,
+      put: initialMethodState,
+    };
   }
   return result;
-}, {})
+}, {});
 
 function reduceHost(state, action) {
   return _.assign({}, state, {
-    [action.api.resource]: reduceResource(state[action.api.resource], action)
-  })
+    [action.api.resource]: reduceResource(state[action.api.resource], action),
+  });
 }
 
 function reduceResource(state, action) {
-  let method = action.api.method.toLowerCase()
+  const method = action.api.method.toLowerCase();
   return _.assign({}, state, {
-    [method]: reduceMethod(state[method], action)
-  })
+    [method]: reduceMethod(state[method], action),
+  });
 }
 
 function reduceMethod(state, action) {
@@ -45,8 +45,8 @@ function reduceMethod(state, action) {
     payload = null,
     uuid = null,
     filters = null,
-    errors = []
-  } = action
+    errors = [],
+  } = action;
 
   switch (type) {
     case Constants.RESOURCE_POST_REQUEST:
@@ -55,13 +55,13 @@ function reduceMethod(state, action) {
     case Constants.RESOURCE_GET_REQUEST:
     case Constants.RESOURCE_DELETE_REQUEST:
       return {
-          fetching    : true,
-          payload,
-          uuid,
-          filters,
-          errors,
-          count       : state.count + 1,
-      }
+        fetching: true,
+        payload,
+        uuid,
+        filters,
+        errors,
+        count: state.count + 1,
+      };
     case Constants.RESOURCE_POST_SUCCESS:
     case Constants.RESOURCE_PUT_SUCCESS:
     case Constants.RESOURCE_LIST_SUCCESS:
@@ -73,15 +73,15 @@ function reduceMethod(state, action) {
     case Constants.RESOURCE_GET_FAILURE:
     case Constants.RESOURCE_DELETE_FAILURE:
       return {
-          fetching    : false,
-          payload,
-          uuid,
-          filters,
-          errors,
-          count       : state.count + 1,
-      }
+        fetching: false,
+        payload,
+        uuid,
+        filters,
+        errors,
+        count: state.count + 1,
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -103,31 +103,31 @@ function reducer(state = initialState, action) {
     case Constants.RESOURCE_GET_FAILURE:
     case Constants.RESOURCE_DELETE_FAILURE:
       return _.assign({}, state, {
-        [action.api.host]: reduceHost(state[action.api.host], action)
-      })
+        [action.api.host]: reduceHost(state[action.api.host], action),
+      });
     case Constants.CLEAR_UI_STATE:
-      //user passes in paths in the ui state to be reset, or nothing, and resets all ui state
+      // user passes in paths in the ui state to be reset, or nothing, and resets all ui state
       // read _.set docs for path format https://lodash.com/docs/4.16.4#set
-      let mask = {}
-      let tempState = _.assign({}, state)
+      const mask = {};
+      const tempState = _.assign({}, state);
 
-      if(action.paths.length > 0) {
-        action.paths.map(function(path) {
+      if (action.paths.length > 0) {
+        action.paths.map((path) => {
           // uses the provided path to get the initial values, and uses the same path to set a mask object
-          _.set(mask, path,  _.get(initialState, path))
+          _.set(mask, path, _.get(initialState, path));
 
-          //we must unset the path we're replacing, or the mask wont modify, because its empty
-          _.unset(tempState, path)
-        })
+          // we must unset the path we're replacing, or the mask wont modify, because its empty
+          _.unset(tempState, path);
+        });
 
         // deep applies the initial state paths to current state
-        return _.merge(tempState, mask)
+        return _.merge(tempState, mask);
       }
       // if they dont pass in paths, reset it all
-      return initialState
+      return initialState;
     default:
-      return state
+      return state;
   }
 }
 
-export default reducer
+export default reducer;

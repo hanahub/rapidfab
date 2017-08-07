@@ -15,3 +15,6 @@ bower_components
 
 # Test output
 test-results.xml
+
+# Eslint ouput
+.eslintcache

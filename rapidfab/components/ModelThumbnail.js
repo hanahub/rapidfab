@@ -18,8 +18,8 @@ const Itar = () => (
 const Loading = () => (
   <Panel>
     <div className="text-center">
-      <Fa name="spinner" spin/>
-      <span> </span>
+      <Fa name="spinner" spin />
+      <span />
       <FormattedMessage
         id="loading.thumbnail"
         defaultMessage="Loading Thumbnail..."
@@ -53,20 +53,20 @@ const Error = () => (
 const ModelThumbnail = ({ snapshot }) => {
   switch (snapshot) {
     case 'ERROR':
-      return <Error />
+      return <Error />;
     case 'ITAR':
-      return <Itar />
+      return <Itar />;
     case 'LOADING':
-      return <Loading />
+      return <Loading />;
     case 'NO_SNAPSHOT':
-      return <NoSnapshot />
+      return <NoSnapshot />;
     default:
-      return <Thumbnail src={snapshot} />
+      return <Thumbnail src={snapshot} />;
   }
 };
 
 ModelThumbnail.propTypes = {
-  snapshot: PropTypes.string
+  snapshot: PropTypes.string,
 };
 
 export default ModelThumbnail;

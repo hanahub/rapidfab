@@ -17,7 +17,7 @@ import * as Selectors from 'rapidfab/selectors';
 import Feature from 'rapidfab/components/Feature';
 
 const FileInput = ({ itar, onFileInputChange, value }) => {
-  if (itar) return <p>ITAR Model</p>
+  if (itar) return <p>ITAR Model</p>;
   return (
     <input
       name="model"
@@ -44,33 +44,33 @@ const LineItemComponent = ({
   <FormGroup controlId="uxModel">
     <fieldset>
       <Feature featureName={'itar'}>
-      <Col lg={2}>
-        <ControlLabel>
-          <span>ITAR Model</span>
-        </ControlLabel>
-        <Checkbox
-          name="itar"
-          checked={lineItem.itar}
-          onChange={onInputChange}
-        />
-      </Col>
+        <Col lg={2}>
+          <ControlLabel>
+            <span>ITAR Model</span>
+          </ControlLabel>
+          <Checkbox
+            name="itar"
+            checked={lineItem.itar}
+            onChange={onInputChange}
+          />
+        </Col>
       </Feature>
       { lineItem.itar ?
-          null :
-          <Col md={2}>
-            <ControlLabel>
-              <FormattedMessage id="field.file" defaultMessage='File'/>:
-            </ControlLabel>
-            <FileInput
-              itar={false}
-              value={lineItem.value}
-              onFileInputChange={onFileInputChange}
-            />
-          </Col>
+        null :
+        <Col md={2}>
+          <ControlLabel>
+            <FormattedMessage id="field.file" defaultMessage="File" />:
+          </ControlLabel>
+          <FileInput
+            itar={false}
+            value={lineItem.value}
+            onFileInputChange={onFileInputChange}
+          />
+        </Col>
       }
       <Col md={2}>
         <ControlLabel>
-          <FormattedMessage id="field.material" defaultMessage='Material'/>:
+          <FormattedMessage id="field.material" defaultMessage="Material" />:
         </ControlLabel>
         <FormControl
           name="baseMaterial"
@@ -80,10 +80,10 @@ const LineItemComponent = ({
           onChange={onInputChange}
         >
           { baseMaterials.map(material => (
-              <option key={material.uri} value={material.uri}>
-                {material.name}
-              </option>
-            ))
+            <option key={material.uri} value={material.uri}>
+              {material.name}
+            </option>
+          ))
           }
         </FormControl>
       </Col>
@@ -91,7 +91,7 @@ const LineItemComponent = ({
         <ControlLabel>
           <FormattedMessage
             id="field.supportMaterial"
-            defaultMessage='Support Material'
+            defaultMessage="Support Material"
           />:
         </ControlLabel>
         <FormControl
@@ -101,19 +101,19 @@ const LineItemComponent = ({
           onChange={onInputChange}
         >
           <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None"/>
+            <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
           { supportMaterials.map(material => (
-              <option key={material.uri} value={material.uri}>
-                {material.name}
-              </option>
-            ))
+            <option key={material.uri} value={material.uri}>
+              {material.name}
+            </option>
+          ))
           }
         </FormControl>
       </Col>
       <Col md={1}>
         <ControlLabel>
-          <FormattedMessage id="field.quantity" defaultMessage='Quantity'/>:
+          <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
         </ControlLabel>
         <FormControl
           name="quantity"
@@ -126,7 +126,7 @@ const LineItemComponent = ({
       </Col>
       <Col md={2}>
         <ControlLabel>
-          <FormattedMessage id="field.template" defaultMessage='Template'/>:
+          <FormattedMessage id="field.template" defaultMessage="Template" />:
         </ControlLabel>
         <FormControl
           name="template"
@@ -139,7 +139,7 @@ const LineItemComponent = ({
             <option key={template.uri} value={template.uri}>
               {template.name}
             </option>
-            ))
+          ))
           }
         </FormControl>
       </Col>
@@ -158,16 +158,16 @@ const LineItemComponent = ({
           onChange={onInputChange}
         >
           <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None"/>
+            <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { providers.map( provider => (
+          { providers.map(provider => (
             <option key={provider.uri} value={provider.uri}>
               {provider.name}
             </option>
           ))}
         </FormControl>
       </Col>
-      {/*<Col md={2}>
+      {/* <Col md={2}>
         <ControlLabel>
           <FormattedMessage id="field.notes" defaultMessage='Notes'/>:
         </ControlLabel>
@@ -178,14 +178,14 @@ const LineItemComponent = ({
           onChange={onInputChange}
           name="notes"
         />
-      </Col>*/}
+      </Col> */}
       <Col md={1}>
         <br />
-          <Button onClick={onDelete}>
-            <span>
-              <Fa name='minus'/>
-            </span>
-          </Button>
+        <Button onClick={onDelete}>
+          <span>
+            <Fa name="minus" />
+          </span>
+        </Button>
       </Col>
     </fieldset>
   </FormGroup>
@@ -193,7 +193,7 @@ const LineItemComponent = ({
 
 class LineItem extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.onDelete = this.onDelete.bind(this);
     this.onFileInputChange = this.onFileInputChange.bind(this);
@@ -274,6 +274,6 @@ const mapStateToProps = (state) => {
   const templates = Selectors.getTemplates(state);
 
   return { baseMaterials, providers, supportMaterials, templates };
-}
+};
 
-export default connect(mapStateToProps)(LineItem)
+export default connect(mapStateToProps)(LineItem);

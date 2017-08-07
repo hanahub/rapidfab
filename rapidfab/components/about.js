@@ -1,5 +1,5 @@
-import React, { Component }     from "react";
-import Version                  from "rapidfab/version";
+import React, { Component } from 'react';
+import Version from 'rapidfab/version';
 
 export default class About extends Component {
   render() {

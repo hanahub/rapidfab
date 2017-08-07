@@ -37,16 +37,16 @@ const VALUE_MAPPING = Object.assign(
 
 const REFERENCE_MAPPING = {
   'line-item': 'Line Item',
-  'order': 'Order',
+  order: 'Order',
 };
 
 const extractResourceType = (uri) => {
-  const pattern = PathToRegexp(`:protocol//:domain/:resource/:uuid/`);
+  const pattern = PathToRegexp(':protocol//:domain/:resource/:uuid/');
   const match = pattern.exec(uri);
   if (!match || !match.length || match.length !== 5) {
-    throw new Error(`Could not extract resource from uri: ${uri}`)
+    throw new Error(`Could not extract resource from uri: ${uri}`);
   }
-  return match[3]
+  return match[3];
 };
 
 const isResourceValue = (value) => {
@@ -54,72 +54,61 @@ const isResourceValue = (value) => {
   return uriPattern.test(value);
 };
 
-const EventName = ({name}) => {
-  if (EVENT_KEY_MAPPING[name])
-    return EVENT_KEY_MAPPING[name];
-  else
-    return <span>{name}</span>;
+const EventName = ({ name }) => {
+  if (EVENT_KEY_MAPPING[name]) { return EVENT_KEY_MAPPING[name]; }
+  return <span>{name}</span>;
 };
 
 const EventUser = connect(
   (state, ownProps) => {
-  const user = Selectors.getUsers(state).find(user => {
-    return user.uri === ownProps.userURI;
-  });
-  return { user };
-})( ({user}) => {
-  const href = user ? `#/records/user/${user.uuid}` : "";
+    const user = Selectors.getUsers(state).find(user => user.uri === ownProps.userURI);
+    return { user };
+  })(({ user }) => {
+  const href = user ? `#/records/user/${user.uuid}` : '';
   return <a href={href}> {user.name} </a>;
 });
 
 const ResourceValue = connect(
   (state, ownProps) => {
-  const resource = state.resources[extractUuid(ownProps.uri)];
-  return { resource };
-})( ({resource, uri}) => {
+    const resource = state.resources[extractUuid(ownProps.uri)];
+    return { resource };
+  })(({ resource, uri }) => {
   const uuid = extractUuid(uri);
   if (resource && resource.name) {
     const { name, snapshot_content } = resource;
-    if (snapshot_content)
-      return <a href={snapshot_content} target="_blank">{name}</a>;
+    if (snapshot_content) { return <a href={snapshot_content} target="_blank">{name}</a>; }
     const resourceType = extractResourceType(resource.uri);
     const href = `#/records/${resourceType}/${resource.uuid}`;
     return <a href={href}>{name}</a>;
   }
-  else {
-    return <span>{uri}</span>;
-  }
+  return <span>{uri}</span>;
 });
 
-const EventValue = ({value}) => {
-  if (!value)
-    return <span>None</span>;
-  else if (isResourceValue(value))
-    return <ResourceValue uri={value}/>;
-  else
-    return <span> {VALUE_MAPPING[value] ? VALUE_MAPPING[value] : value} </span>
+const EventValue = ({ value }) => {
+  if (!value) { return <span>None</span>; } else if (isResourceValue(value)) { return <ResourceValue uri={value} />; }
+  return <span> {VALUE_MAPPING[value] ? VALUE_MAPPING[value] : value} </span>;
 };
 
-const EventReference = ({reference}) => {
+const EventReference = ({ reference }) => {
   const resourceType = extractResourceType(reference);
   return <span> {REFERENCE_MAPPING[resourceType]} </span>;
 };
 
-const ExpandedContent = ({event}) => (
+const ExpandedContent = ({ event }) => (
   <Row>
-    <Col xs={1}/>
+    <Col xs={1} />
     <Col xs={8}>
       <span>to </span>
-      <EventValue value={event.current_value}/>
+      <EventValue value={event.current_value} />
       <span> from </span>
-      <EventValue value={event.previous_value}/>
+      <EventValue value={event.previous_value} />
     </Col>
     <Col xs={3} className="text-right">
-      <FormattedTime value={event.created}/>
-      <br/>
+      <FormattedTime value={event.created} />
+      <br />
       { event.user ?
-          <EventUser userURI={event.user}/>
-      : null }
+        <EventUser userURI={event.user} />
+        : null }
     </Col>
   </Row>
 );
@@ -128,7 +117,7 @@ class Event extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { collapsed: true }
+    this.state = { collapsed: true };
 
     this.toggleCollapsed = this.toggleCollapsed.bind(this);
   }
@@ -150,23 +139,23 @@ class Event extends Component {
               bsSize="xsmall"
               onClick={toggleCollapsed}
             >
-              <FontAwesome name={ collapsed ? "chevron-right" : "chevron-down"} />
+              <FontAwesome name={collapsed ? 'chevron-right' : 'chevron-down'} />
             </Button>
           </Col>
           <Col xs={8}>
-            <EventReference reference={event.reference}/>
-            {` `}
+            <EventReference reference={event.reference} />
+            {' '}
             <EventName name={event.key} />
             <span> change</span>
           </Col>
           <Col xs={3} className="text-right">
-            <FormattedDate value={event.created}/>
+            <FormattedDate value={event.created} />
           </Col>
         </Row>
-        { collapsed? null : <ExpandedContent {...this.props}/> }
+        { collapsed ? null : <ExpandedContent {...this.props} /> }
       </ListGroupItem>
     );
   }
 }
 
-export default Event
+export default Event;

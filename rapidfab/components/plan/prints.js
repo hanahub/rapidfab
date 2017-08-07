@@ -13,18 +13,18 @@ const PrintsGrid = ({ prints }) => (
   <Griddle
     data={prints}
     columns={[
-      "id",
-      "status",
+      'id',
+      'status',
     ]}
     columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage='Id'/>,
-      columnName: "id",
-      customComponent: IdColumn("print"),
-      locked: true
+      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+      columnName: 'id',
+      customComponent: IdColumn('print'),
+      locked: true,
     }, {
-      columnName: "status",
-      displayName: <FormattedMessage id="field.status" defaultMessage='Status'/>,
-      customComponent: MappedColumn("status", RUN_STATUS_MAP),
+      columnName: 'status',
+      displayName: <FormattedMessage id="field.status" defaultMessage="Status" />,
+      customComponent: MappedColumn('status', RUN_STATUS_MAP),
     }]}
     initialSort="id"
     initialSortAscending={false}
@@ -33,9 +33,9 @@ const PrintsGrid = ({ prints }) => (
 PrintsGrid.propTypes = { prints: PropTypes.array };
 
 const Prints = ({ prints, locations, locationFilter, onLocationChange }) => {
-  const breadcrumbs = ["prints"];
+  const breadcrumbs = ['prints'];
   return (
-    <Grid fluid className='container'>
+    <Grid fluid className="container">
 
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
       <Locations
@@ -59,4 +59,4 @@ Prints.propTypes = {
   handleOnChange: PropTypes.func,
 };
 
-export default Prints
+export default Prints;

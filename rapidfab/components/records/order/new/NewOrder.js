@@ -13,7 +13,7 @@ import Fa from 'react-fontawesome';
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers'
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
@@ -23,7 +23,7 @@ import LineItem from './LineItem';
 
 const AddLineItemButton = ({ onAddLineItem }) => (
   <div className="clearfix">
-    <Button bsSize="small" onClick={() => onAddLineItem() }>
+    <Button bsSize="small" onClick={() => onAddLineItem()}>
       Add Line Item
     </Button>
   </div>
@@ -31,7 +31,7 @@ const AddLineItemButton = ({ onAddLineItem }) => (
 
 const HelpLink = () => (
   <div className="pull-right">
-    <a href="https://authentise.com/orderuploadhelp"><FormattedMessage id="help.link" defaultMessage="Help"/> <Fa name="question-circle"/></a>
+    <a href="https://authentise.com/orderuploadhelp"><FormattedMessage id="help.link" defaultMessage="Help" /> <Fa name="question-circle" /></a>
   </div>
 );
 
@@ -57,19 +57,19 @@ const LineItems = ({
   lineItems,
 }) => (
   <div>
-    { lineItems.map( (lineItem, index) => (
-        <LineItem
-          key={index}
-          handleDeleteLineItem={handleDeleteLineItem}
-          handleLineItemModelChange={handleLineItemModelChange}
-          handleLineItemChange={handleLineItemChange}
-          index={index}
-          lineItem={lineItem}
-        />
-      ))
+    { lineItems.map((lineItem, index) => (
+      <LineItem
+        key={index}
+        handleDeleteLineItem={handleDeleteLineItem}
+        handleLineItemModelChange={handleLineItemModelChange}
+        handleLineItemChange={handleLineItemChange}
+        index={index}
+        lineItem={lineItem}
+      />
+    ))
     }
   </div>
-)
+);
 
 const NewOrderComponent = ({
   handleDeleteLineItem,
@@ -80,10 +80,10 @@ const NewOrderComponent = ({
   onSubmit,
 }) => {
   const breadcrumbs = ['orders', 'New Order'];
-  return(
+  return (
     <Grid fluid>
 
-      <BreadcrumbNav breadcrumbs={breadcrumbs}/>
+      <BreadcrumbNav breadcrumbs={breadcrumbs} />
 
       <Form horizontal onSubmit={onSubmit}>
 
@@ -114,11 +114,11 @@ const NewOrderComponent = ({
 
     </Grid>
   );
-}
+};
 
 class NewOrder extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       lineItems: [],
@@ -134,9 +134,7 @@ class NewOrder extends Component {
   handleDeleteLineItem(deletedLineItemIndex) {
     const { lineItems } = this.state;
 
-    const updatedLineItems = lineItems.filter( (lineItem, index) => {
-      return index !== deletedLineItemIndex;
-    });
+    const updatedLineItems = lineItems.filter((lineItem, index) => index !== deletedLineItemIndex);
 
     this.setState({ lineItems: updatedLineItems });
   }
@@ -145,9 +143,8 @@ class NewOrder extends Component {
     const { lineItems } = this.state;
     const { updatedLineItemIndex, model } = lineItemChange;
 
-    const updatedLineItems = lineItems.map( (lineItem, index) => {
-      if (index === updatedLineItemIndex)
-        return Object.assign({}, lineItem, { model: model} );
+    const updatedLineItems = lineItems.map((lineItem, index) => {
+      if (index === updatedLineItemIndex) { return Object.assign({}, lineItem, { model }); }
       return lineItem;
     });
 
@@ -159,9 +156,8 @@ class NewOrder extends Component {
     const { updatedLineItemIndex, name } = lineItemChange;
     const value = lineItemChange.value === 'none' ? null : lineItemChange.value;
 
-    const updatedLineItems = lineItems.map( (lineItem, index) => {
-      if (index === updatedLineItemIndex)
-        return Object.assign({}, lineItem, {[name]: value});
+    const updatedLineItems = lineItems.map((lineItem, index) => {
+      if (index === updatedLineItemIndex) { return Object.assign({}, lineItem, { [name]: value }); }
       return lineItem;
     });
 
@@ -197,33 +193,31 @@ class NewOrder extends Component {
 
     const { lineItems } = this.state;
 
-    const modelPosts = lineItems.map(lineItem => {
+    const modelPosts = lineItems.map((lineItem) => {
       const modelName = lineItem.itar ? 'na' : lineItem.model.name;
       return dispatch(Actions.Api.hoth.model.post(
-        { name: modelName, type: "stl", }
+        { name: modelName, type: 'stl' },
       ));
     });
     Promise.all(modelPosts)
-      .then( responses => {
-        const modelLocations = responses.map(response => {
+      .then((responses) => {
+        const modelLocations = responses.map((response) => {
           const { location, uploadLocation } = response.headers;
           return { location, uploadLocation };
         });
-        const updatedLineItems = lineItems.map((lineItem,  index) => {
-          return Object.assign(
-            {}, lineItem,
-            { modelLocation: modelLocations[index].location },
-            { uploadLocation: modelLocations[index].uploadLocation }
-          );
-        });
+        const updatedLineItems = lineItems.map((lineItem, index) => Object.assign(
+          {}, lineItem,
+          { modelLocation: modelLocations[index].location },
+          { uploadLocation: modelLocations[index].uploadLocation },
+        ));
 
-        updatedLineItems.forEach(lineItem => {
+        updatedLineItems.forEach((lineItem) => {
           const { model, uploadLocation } = lineItem;
-          dispatch(Actions.UploadModel.upload(uploadLocation, model))
+          dispatch(Actions.UploadModel.upload(uploadLocation, model));
         });
 
-          // Prepare the payload
-        const lineItemsPosts = updatedLineItems.map(lineItem => {
+        // Prepare the payload
+        const lineItemsPosts = updatedLineItems.map((lineItem) => {
           const {
             baseMaterial,
             itar,
@@ -243,62 +237,59 @@ class NewOrder extends Component {
             model: modelLocation,
             quantity: parseInt(quantity),
             template,
-            'third_party_provider': thirdPartyProvider,
+            third_party_provider: thirdPartyProvider,
           };
 
-          if (itar) delete payload.model
+          if (itar) delete payload.model;
           if (!payload.materials.support) delete payload.materials.support;
           if (!payload.thirdPartyProvider) delete payload.thirdPartyProvider;
 
-          return dispatch(Actions.Api.wyatt['line-item'].post(payload))
+          return dispatch(Actions.Api.wyatt['line-item'].post(payload));
         });
         Promise.all(lineItemsPosts)
-          .then(responses => {
-            const lineItemUris = responses.map(response => {
-              return response.payload.uri
-            });
+          .then((responses) => {
+            const lineItemUris = responses.map(response => response.payload.uri);
 
             const orderPayload = {
               bureau: bureau.uri,
-              'channel_representative_name': (
-                orderForm['channel_representative_name'].value
+              channel_representative_name: (
+                orderForm.channel_representative_name.value
               ),
               currency: orderForm.currency.value,
-              'due_date': (
-                orderForm['due_date'].value ?
-                  new Date(orderForm['due_date'].value).toISOString()
+              due_date: (
+                orderForm.due_date.value ?
+                  new Date(orderForm.due_date.value).toISOString()
                   : null
               ),
-              'customer_email': orderForm['customer_email'].value,
-              'line_items': lineItemUris,
+              customer_email: orderForm.customer_email.value,
+              line_items: lineItemUris,
               name: orderForm.name.value,
               notes: orderForm.notes.value,
-              'order_owner': orderForm['order_owner'].value,
-              'order_type': orderForm['order_type'].value,
+              order_owner: orderForm.order_owner.value,
+              order_type: orderForm.order_type.value,
               region: orderForm.region.value,
-              'sales_representative_name': (
-                orderForm['sales_representative_name'].value
+              sales_representative_name: (
+                orderForm.sales_representative_name.value
               ),
-              'sales_status': orderForm['sales_status'].value,
+              sales_status: orderForm.sales_status.value,
               shipping: {
                 address: orderForm.shipping.address.value,
                 name: orderForm.shipping.name.value,
                 tracking: orderForm.shipping.tracking.value,
                 uri: orderForm.shipping.uri.value,
-              }
+              },
             };
 
-            Object.keys(orderPayload).forEach( key => {
-              if (orderPayload[key] == null || orderPayload[key] === 'none')
-                delete orderPayload[key]
+            Object.keys(orderPayload).forEach((key) => {
+              if (orderPayload[key] == null || orderPayload[key] === 'none') { delete orderPayload[key]; }
             });
 
             dispatch(Actions.Api.wyatt.order.post(orderPayload))
-              .then(response => {
+              .then((response) => {
                 const orderUuid = extractUuid(response.payload.uri);
                 window.location = `/#/records/order/${orderUuid}`;
-              }).
-              catch(error => {
+              })
+              .catch((error) => {
               });
           });
       });
@@ -342,6 +333,6 @@ const mapStateToProps = (state) => {
     supportMaterials,
     templates,
   };
-}
+};
 
-export default connect(mapStateToProps)(NewOrder)
+export default connect(mapStateToProps)(NewOrder);

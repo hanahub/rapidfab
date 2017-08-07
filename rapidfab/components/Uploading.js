@@ -10,14 +10,14 @@ import {
 
 const statusStyleMapping = {
   'not-uploaded': 'primary',
-  processing: "info",
+  processing: 'info',
   processed: 'success',
 };
 
 const statusDisplayMapping = {
-  'not-uploaded': <FormattedMessage id="status.uploading" defaultMessage='Uploading'/>,
-  processing: <FormattedMessage id="status.processing" defaultMessage='Processing'/>,
-  processed: <FormattedMessage id="status.complete" defaultMessage='Complete'/>,
+  'not-uploaded': <FormattedMessage id="status.uploading" defaultMessage="Uploading" />,
+  processing: <FormattedMessage id="status.processing" defaultMessage="Processing" />,
+  processed: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
 };
 
 const Uploading = ({ status, percent }) => (
@@ -27,10 +27,10 @@ const Uploading = ({ status, percent }) => (
         striped
         bsStyle={statusStyleMapping[status]}
         now={percent}
-        active={status === "processing"}
+        active={status === 'processing'}
       />
     </Col>
-    <Col xsOffset={2} xs={8} style={{ textAlign: "center" }}>
+    <Col xsOffset={2} xs={8} style={{ textAlign: 'center' }}>
       <h4>{statusDisplayMapping[status]}</h4>
     </Col>
   </Row>
@@ -41,6 +41,6 @@ const mapStateToProps = (state) => {
   const { status } = state.resources[modelUuid];
 
   return { status, percent };
-}
+};
 
-export default connect(mapStateToProps)(Uploading)
+export default connect(mapStateToProps)(Uploading);

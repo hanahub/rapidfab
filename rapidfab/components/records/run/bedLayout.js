@@ -1,19 +1,19 @@
-import React, { PropTypes }                   from "react"
-import _                                      from "lodash"
-import * as BS                                from 'react-bootstrap'
-import { FormattedMessage }                   from 'react-intl';
-import Fa                                     from 'react-fontawesome';
+import React, { PropTypes } from 'react';
+import _ from 'lodash';
+import * as BS from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+import Fa from 'react-fontawesome';
 
 const layoutStyle = {
   height: 255,
-  overflow: "hidden",
-  position: "relative",
-  padding: 0
-}
+  overflow: 'hidden',
+  position: 'relative',
+  padding: 0,
+};
 
 const itemDefaultStyle = {
-  position: "absolute"
-}
+  position: 'absolute',
+};
 
 const staticProps = [{
   height: 100,
@@ -40,9 +40,9 @@ const staticProps = [{
   width: 100,
   top: 0,
   left: 270,
-}]
+}];
 
-const Header = ({  }) => (
+const Header = ({ }) => (
   <BS.Row>
     <BS.Col xs={6}>
       Bed Layout
@@ -50,33 +50,33 @@ const Header = ({  }) => (
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="info">
-          <Fa name='refresh'/>
+          <Fa name="refresh" />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
   </BS.Row>
-)
+);
 
 const Item = ({ print, index }) => {
   const {
-    order
-  } = print
+    order,
+  } = print;
   const {
-    model
-  } = order
-  const style = _.assign({}, itemDefaultStyle, staticProps[index])
-  const src = `//placehold.it/${style.width}/${style.height}`
+    model,
+  } = order;
+  const style = _.assign({}, itemDefaultStyle, staticProps[index]);
+  const src = `//placehold.it/${style.width}/${style.height}`;
   return (
     <BS.Image src={src} style={style} />
-  )
-}
+  );
+};
 
 const BedLayout = ({ prints, selected, onSelect }) => (
-  <BS.Panel header={<Header/>}>
+  <BS.Panel header={<Header />}>
     <div style={layoutStyle}>
       {_.map(_.values(prints), (print, index) => <Item print={print} index={index} />)}
     </div>
   </BS.Panel>
-)
+);
 
-export default BedLayout
+export default BedLayout;

@@ -1,9 +1,9 @@
-import _                        from "lodash"
-import React, { Component }     from "react"
-import Actions                  from 'rapidfab/actions'
-import { connect }              from 'react-redux'
-import ShippingsComponent   from 'rapidfab/components/inventory/shipping'
-import * as Selectors           from 'rapidfab/selectors'
+import _ from 'lodash';
+import React, { Component } from 'react';
+import Actions from 'rapidfab/actions';
+import { connect } from 'react-redux';
+import ShippingsComponent from 'rapidfab/components/inventory/shipping';
+import * as Selectors from 'rapidfab/selectors';
 
 
 class ShippingsContainer extends Component {
@@ -13,21 +13,21 @@ class ShippingsContainer extends Component {
   }
 
   render() {
-    return <ShippingsComponent {...this.props}/>
+    return <ShippingsComponent {...this.props} />;
   }
 }
 
 function mapStateToProps(state) {
-  const { shipping } = state.ui.wyatt
+  const { shipping } = state.ui.wyatt;
 
   return {
-    bureau        : Selectors.getBureau(state),
-    locations     : Selectors.getLocations(state),
-    shippings     : Selectors.getShippings(state),
-    users         : Selectors.getUsers(state),
-    fetching      : shipping.list.fetching,
-    apiErrors     : shipping.list.errors
-  }
+    bureau: Selectors.getBureau(state),
+    locations: Selectors.getLocations(state),
+    shippings: Selectors.getShippings(state),
+    users: Selectors.getUsers(state),
+    fetching: shipping.list.fetching,
+    apiErrors: shipping.list.errors,
+  };
 }
 
-export default connect(mapStateToProps)(ShippingsContainer)
+export default connect(mapStateToProps)(ShippingsContainer);

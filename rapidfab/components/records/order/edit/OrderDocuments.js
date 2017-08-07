@@ -6,7 +6,7 @@ import {
   Button,
   ListGroup,
   ListGroupItem,
-  Panel
+  Panel,
 } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
@@ -16,23 +16,23 @@ import { postForm } from 'rapidfab/api/makeApi';
 
 import Loading from 'rapidfab/components/Loading';
 
-const OrderDocument = ({download, name, onDelete, uuid}) => (
+const OrderDocument = ({ download, name, onDelete, uuid }) => (
   <ListGroupItem>
-    <a href={download}>{ name ? name : uuid }</a>
+    <a href={download}>{ name || uuid }</a>
     <Button
       className="pull-right"
       bsStyle="danger"
       bsSize="xsmall"
       onClick={() => onDelete(uuid)}
     >
-      <Fa name='times'/>
+      <Fa name="times" />
     </Button>
   </ListGroupItem>
 );
 
 class OrderDocuments extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = { upload: null };
 
@@ -43,13 +43,10 @@ class OrderDocuments extends React.Component {
 
   async componentDidMount() {
     try {
-    const { dispatch, orderDocumentUUIDs } = this.props;
-    const orderDocumentResponses = orderDocumentUUIDs.map( uuid => {
-      return dispatch(Actions.Api.wyatt['order-document'].get(uuid));
-    });
-    await Promise.all(orderDocumentResponses);
-    }
-    catch (e) {
+      const { dispatch, orderDocumentUUIDs } = this.props;
+      const orderDocumentResponses = orderDocumentUUIDs.map(uuid => dispatch(Actions.Api.wyatt['order-document'].get(uuid)));
+      await Promise.all(orderDocumentResponses);
+    } catch (e) {
     }
   }
 
@@ -79,7 +76,7 @@ class OrderDocuments extends React.Component {
     const documentResponse = await dispatch(
       Actions.Api.wyatt['order-document'].get(uuid));
 
-    const uploadLocation = documentResponse.json['upload_location'];
+    const uploadLocation = documentResponse.json.upload_location;
     const newDocument = documentResponse.json.uri;
     this.setState({ newDocument });
 
@@ -87,12 +84,11 @@ class OrderDocuments extends React.Component {
       Actions.UploadModel.upload(uploadLocation, upload));
     const orderResponse = await dispatch(
       Actions.Api.wyatt.order.get(extractUuid(order)));
-
   }
 
   render() {
     const { onChange, onDelete, uploadDocument } = this;
-    const { loading, upload} = this.state;
+    const { loading, upload } = this.state;
     const { orderDocuments } = this.props;
 
     return (
@@ -103,9 +99,9 @@ class OrderDocuments extends React.Component {
           </ListGroupItem>
         </ListGroup>
 
-        { orderDocuments.map( orderDocument => (
+        { orderDocuments.map(orderDocument => (
           <OrderDocument
-            download={orderDocument.content ? orderDocument.content : null }
+            download={orderDocument.content ? orderDocument.content : null}
             name={orderDocument.name}
             onDelete={onDelete}
             key={orderDocument.uri}
@@ -115,7 +111,7 @@ class OrderDocuments extends React.Component {
 
         <br />
 
-        <input type="file" onChange={onChange}/>
+        <input type="file" onChange={onChange} />
 
         <br />
 
@@ -135,14 +131,10 @@ class OrderDocuments extends React.Component {
 const mapStateToProps = (state) => {
   const orderResource = state.resources[state.routeUUID];
   const order = orderResource.uri;
-  const orderResourceDocuments = orderResource['order_documents'];
-  const orderDocumentUUIDs = orderResourceDocuments ? orderResourceDocuments.map( doc => {
-    return extractUuid(doc);
-  }) : [];
-  const orderDocuments = getOrderDocuments(state).filter( orderDocument => {
-    return orderDocument.order === order;
-  });
+  const orderResourceDocuments = orderResource.order_documents;
+  const orderDocumentUUIDs = orderResourceDocuments ? orderResourceDocuments.map(doc => extractUuid(doc)) : [];
+  const orderDocuments = getOrderDocuments(state).filter(orderDocument => orderDocument.order === order);
   return { orderDocuments, orderDocumentUUIDs, order };
 };
 
-export default connect(mapStateToProps)(OrderDocuments)
+export default connect(mapStateToProps)(OrderDocuments);

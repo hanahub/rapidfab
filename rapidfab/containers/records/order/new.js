@@ -18,14 +18,14 @@ class NewOrderContainer extends Component {
   }
 
   componentWillUnmount() {
-    this.props.onUnmount()
+    this.props.onUnmount();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { model, uploadModel } = this.props
-    const prevModel = prevProps.model
-    if(prevModel && prevModel.status !== "processed" && model && model.status === "processed") {
-      this.props.onSaveOrder(uploadModel.orderPayload)
+    const { model, uploadModel } = this.props;
+    const prevModel = prevProps.model;
+    if (prevModel && prevModel.status !== 'processed' && model && model.status === 'processed') {
+      this.props.onSaveOrder(uploadModel.orderPayload);
     }
   }
 
@@ -36,7 +36,7 @@ class NewOrderContainer extends Component {
       <Gatekeeper loading={fetching}>
         <div>
           <FlashMessages />
-          <NewOrder {...this.props}/>
+          <NewOrder {...this.props} />
         </div>
       </Gatekeeper>
     );
@@ -47,49 +47,49 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onInitialize: (bureau) => {
       const { group, uri } = bureau;
-      dispatch(Actions.Api.wyatt.material.list({ bureau: uri }))
-      dispatch(Actions.Api.wyatt['third-party'].list({ bureau: uri }))
-      dispatch(Actions.Api.wyatt.shipping.list({ bureau: uri }))
-      dispatch(Actions.Api.wyatt.template.list({ bureau: uri }))
-      if(group){
-        dispatch(Actions.Api.pao.users.list({ 'group': group }))
+      dispatch(Actions.Api.wyatt.material.list({ bureau: uri }));
+      dispatch(Actions.Api.wyatt['third-party'].list({ bureau: uri }));
+      dispatch(Actions.Api.wyatt.shipping.list({ bureau: uri }));
+      dispatch(Actions.Api.wyatt.template.list({ bureau: uri }));
+      if (group) {
+        dispatch(Actions.Api.pao.users.list({ group }));
       }
     },
-    onSaveOrder: payload => {
-      if(payload) {
-        dispatch(Actions.UploadModel.storePayload(null))
-        dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+    onSaveOrder: (payload) => {
+      if (payload) {
+        dispatch(Actions.UploadModel.storePayload(null));
+        dispatch(Actions.Api.wyatt.order.post(payload)).then((args) => {
           window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
-        })
+        });
       }
     },
     onUnmount: () => {
-      dispatch(Actions.UploadModel.clearState())
+      dispatch(Actions.UploadModel.clearState());
     },
-    onSubmit: payload => {
-      if (false === !!payload.materials.support) delete payload.materials.support
-      if (false === !!payload.shipping.name) delete payload.shipping.name
-      if (false === !!payload.shipping.address) delete payload.shipping.address
-      if (false === !!payload.shipping.tracking) delete payload.shipping.tracking
-      if (false === !!payload.third_party_provider) delete payload.third_party_provider
-      if (false === !!payload.post_processor_type) delete payload.post_processor_type
+    onSubmit: (payload) => {
+      if (!!payload.materials.support === false) delete payload.materials.support;
+      if (!!payload.shipping.name === false) delete payload.shipping.name;
+      if (!!payload.shipping.address === false) delete payload.shipping.address;
+      if (!!payload.shipping.tracking === false) delete payload.shipping.tracking;
+      if (!!payload.third_party_provider === false) delete payload.third_party_provider;
+      if (!!payload.post_processor_type === false) delete payload.post_processor_type;
 
       if (!payload.model) {
-        dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+        dispatch(Actions.Api.wyatt.order.post(payload)).then((args) => {
           window.location.hash = `#/records/order/${extractUuid(args.headers.location)}`;
-        })
+        });
       } else {
         dispatch(Actions.Api.hoth.model.post({
           name: payload.name,
-          type: "stl",
-        })).then(args => {
-          dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]))
-          payload.model = args.headers.location
-          dispatch(Actions.UploadModel.storePayload(payload))
-        })
+          type: 'stl',
+        })).then((args) => {
+          dispatch(Actions.UploadModel.upload(args.headers.uploadLocation, payload.model[0]));
+          payload.model = args.headers.location;
+          dispatch(Actions.UploadModel.storePayload(payload));
+        });
       }
-    }
-  }
+    },
+  };
 }
 
 function mapStateToProps(state, props) {
@@ -103,21 +103,21 @@ function mapStateToProps(state, props) {
     material.list.fetching ||
     order.post.fetching ||
     state.ui.wyatt['third-party'].list.fetching ||
-    state.ui.wyatt.template.list.fetching
+    state.ui.wyatt.template.list.fetching;
 
-  const uploadModel = state.uploadModel
-  const processingModel = state.resources[uploadModel.modelUuid]
+  const uploadModel = state.uploadModel;
+  const processingModel = state.resources[uploadModel.modelUuid];
 
   return {
-    bureau             : Selectors.getBureau(state),
-    materials          : Selectors.getMaterials(state),
-    model              : processingModel,
-    providers          : Selectors.getThirdPartyProviders(state),
-    shippings          : Selectors.getShippings(state),
-    templates          : Selectors.getTemplates(state),
+    bureau: Selectors.getBureau(state),
+    materials: Selectors.getMaterials(state),
+    model: processingModel,
+    providers: Selectors.getThirdPartyProviders(state),
+    shippings: Selectors.getShippings(state),
+    templates: Selectors.getTemplates(state),
     fetching,
     uploadModel,
-  }
+  };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewOrderContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(NewOrderContainer);

@@ -17,28 +17,26 @@ import { getRunsForOrder } from 'rapidfab/selectors';
 import Loading from 'rapidfab/components/Loading';
 
 const Header = (runs) => {
-  const complete = runs.reduce( (total, run) => {
-    return run.status == 'complete' ? total + 1 : total;
-  }, 0).toString();
-  const total = (!!runs ? runs.length : 0).toString();
+  const complete = runs.reduce((total, run) => (run.status == 'complete' ? total + 1 : total), 0).toString();
+  const total = (runs ? runs.length : 0).toString();
 
   return (
     <FormattedMessage
       id="record.runCompleteCount"
-      defaultMessage={`Runs - {complete} / {total} complete`}
-      values={{complete: complete, total: total}}
+      defaultMessage={'Runs - {complete} / {total} complete'}
+      values={{ complete, total }}
     />
-  )
-}
+  );
+};
 
 const statusMapping = {
-  created           : (<FormattedMessage id="status.created" defaultMessage="Created"/>),
-  calculating       : (<FormattedMessage id="status.calculating" defaultMessage="Calculating"/>),
-  calculated        : (<FormattedMessage id="status.calculated" defaultMessage="Calculated"/>),
-  queued            : (<FormattedMessage id="status.queued" defaultMessage="Queued"/>),
-  "in-progress"     : (<FormattedMessage id="status.inProgress" defaultMessage="In Progress"/>),
-  complete          : (<FormattedMessage id="status.complete" defaultMessage="Complete"/>),
-  error             : (<FormattedMessage id="status.error" defaultMessage="Error"/>),
+  created: (<FormattedMessage id="status.created" defaultMessage="Created" />),
+  calculating: (<FormattedMessage id="status.calculating" defaultMessage="Calculating" />),
+  calculated: (<FormattedMessage id="status.calculated" defaultMessage="Calculated" />),
+  queued: (<FormattedMessage id="status.queued" defaultMessage="Queued" />),
+  'in-progress': (<FormattedMessage id="status.inProgress" defaultMessage="In Progress" />),
+  complete: (<FormattedMessage id="status.complete" defaultMessage="Complete" />),
+  error: (<FormattedMessage id="status.error" defaultMessage="Error" />),
 };
 
 const RunItem = ({ run }) => (
@@ -46,7 +44,7 @@ const RunItem = ({ run }) => (
     <Row>
       <Col xs={6}>
         <a href={`#/records/run/${run.uuid}`}>
-          <abbr title={run.uuid} style={{ cursor: "pointer" }}>{run.id}</abbr>
+          <abbr title={run.uuid} style={{ cursor: 'pointer' }}>{run.id}</abbr>
         </a>
       </Col>
       <Col xs={6}>
@@ -60,12 +58,12 @@ class OrderRuns extends Component {
   componentDidMount() {
     const { dispatch, order } = this.props;
     dispatch(Actions.Api.wyatt.run.list());
-    dispatch(Actions.Api.wyatt.print.list({'order': order.uri}));
+    dispatch(Actions.Api.wyatt.print.list({ order: order.uri }));
   }
 
   render() {
     const { fetching, runs } = this.props;
-    if ( fetching ) {
+    if (fetching) {
       return (
         <Panel header="Runs">
           <Loading />
@@ -91,18 +89,17 @@ class OrderRuns extends Component {
           </ListGroup>
         </Panel>
       );
-    } else {
-      return (
-        <Panel
-          header={
-            <FormattedMessage
-              id="record.noRuns"
-              defaultMessage="Runs - order not assigned to any runs yet"
-            />
-          }
-        />
-      );
     }
+    return (
+      <Panel
+        header={
+          <FormattedMessage
+            id="record.noRuns"
+            defaultMessage="Runs - order not assigned to any runs yet"
+          />
+        }
+      />
+    );
   }
 }
 
@@ -120,6 +117,6 @@ const mapStateToProps = (state) => {
   const fetching = isRunFetching || isPrintFetching;
 
   return { fetching, order, runs };
-}
+};
 
-export default connect(mapStateToProps)(OrderRuns)
+export default connect(mapStateToProps)(OrderRuns);

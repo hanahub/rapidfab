@@ -1,18 +1,18 @@
-import React, { PropTypes, Component }        from 'react'
-import * as BS                                from 'react-bootstrap'
-import { MODELER_STATUS_MAP }                 from 'rapidfab/constants'
-import Locations                              from 'rapidfab/components/locations'
+import React, { PropTypes, Component } from 'react';
+import * as BS from 'react-bootstrap';
+import { MODELER_STATUS_MAP } from 'rapidfab/constants';
+import Locations from 'rapidfab/components/locations';
 
 
 const EVENT_COLOR_MAP = {
-  "calculating"     : "#e4d836",
-  "calculated"      : "#9f86ff",
-  "queued"          : "#9f86ff",
-  "printing"        : "#1ca8dd",
-  "post_processing" : "#e4d836",
-  "complete"        : "#1bc98e",
-  "error"           : "#e64759",
-}
+  calculating: '#e4d836',
+  calculated: '#9f86ff',
+  queued: '#9f86ff',
+  printing: '#1ca8dd',
+  post_processing: '#e4d836',
+  complete: '#1bc98e',
+  error: '#e64759',
+};
 
 class Queues extends Component {
   constructor(props) {
@@ -23,36 +23,32 @@ class Queues extends Component {
   }
 
   fetchResources(callback) {
-    let machines = _.map(this.props.machines, machine => {
-      let type = machine.printer_type ? "printer" : "post-processor"
+    const machines = _.map(this.props.machines, (machine) => {
+      const type = machine.printer_type ? 'printer' : 'post-processor';
       return {
         id: machine.uri,
         title: machine.name,
         url: `#/records/${type}/${machine.uuid}`,
         status: machine.status,
         type,
-      }
-    })
-    callback(machines)
+      };
+    });
+    callback(machines);
   }
 
   fetchEvents(start, end, timezone, callback) {
-    let events = _.map(this.props.runs, run => {
-      return {
-        id: run.uri,
-        resourceId: run.printer || run.post_processor,
-        title: run.id,
-        url: `#/records/run/${run.uuid}`,
-        start: run.actuals.start || run.estimates.start,
-        end: run.actuals.end || run.estimates.end,
-        backgroundColor: EVENT_COLOR_MAP[run.status],
-        borderColor: EVENT_COLOR_MAP[run.status],
-      }
-    })
-    events = _.filter(events, event => {
-      return event.start != null && event.end != null
-    })
-    callback(events)
+    let events = _.map(this.props.runs, run => ({
+      id: run.uri,
+      resourceId: run.printer || run.post_processor,
+      title: run.id,
+      url: `#/records/run/${run.uuid}`,
+      start: run.actuals.start || run.estimates.start,
+      end: run.actuals.end || run.estimates.end,
+      backgroundColor: EVENT_COLOR_MAP[run.status],
+      borderColor: EVENT_COLOR_MAP[run.status],
+    }));
+    events = _.filter(events, event => event.start != null && event.end != null);
+    callback(events);
   }
 
   componentDidMount() {
@@ -63,7 +59,7 @@ class Queues extends Component {
       header: {
         left: 'today prev,next',
         center: 'title',
-        right: 'timelineDay,timelineWeek'
+        right: 'timelineDay,timelineWeek',
       },
       defaultView: 'timelineDay',
       views: {
@@ -73,8 +69,8 @@ class Queues extends Component {
           slotDuration: '00:30',
           slotLabelFormat: [
             'MMMM DD',
-            'HH:mm'
-          ]
+            'HH:mm',
+          ],
         },
         timelineWeek: {
           type: 'timeline',
@@ -82,13 +78,13 @@ class Queues extends Component {
           slotDuration: '01:00',
           slotLabelFormat: [
             'MMMM DD',
-            'HH:mm'
-          ]
+            'HH:mm',
+          ],
         },
       },
-      timezone: "local",
-      maxTime: "23:59",
-      minTime: "00:00",
+      timezone: 'local',
+      maxTime: '23:59',
+      minTime: '00:00',
       navLinks: true,
       resourceAreaWidth: '20%',
       resourceLabelText: 'Machines',
@@ -96,33 +92,33 @@ class Queues extends Component {
       events: this.fetchEvents,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       resourceRender: (resourceObj, labelTds, bodyTds) => {
-        let cell = labelTds.find('.fc-cell-text')
-        cell.wrapInner(`<a href="${resourceObj.url}">`)
-        if(resourceObj.type === "printer") {
-          let status = MODELER_STATUS_MAP[resourceObj.status]
-          if(!status) {
-            status = MODELER_STATUS_MAP.unknown
-            console.error("Unknown status for printer", resourceObj.status)
+        const cell = labelTds.find('.fc-cell-text');
+        cell.wrapInner(`<a href="${resourceObj.url}">`);
+        if (resourceObj.type === 'printer') {
+          let status = MODELER_STATUS_MAP[resourceObj.status];
+          if (!status) {
+            status = MODELER_STATUS_MAP.unknown;
+            console.error('Unknown status for printer', resourceObj.status);
           }
-          cell.prepend(`<span class="dot ${status.status}" title="${status.message}" /> `)
+          cell.prepend(`<span class="dot ${status.status}" title="${status.message}" /> `);
         } else {
-          cell.prepend('<span class="fa fa-qrcode" /> ')
+          cell.prepend('<span class="fa fa-qrcode" /> ');
         }
       },
-    })
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.machines !== this.props.machines) {
-      jQuery('#scheduler').fullCalendar('refetchResources')
+    if (prevProps.machines !== this.props.machines) {
+      jQuery('#scheduler').fullCalendar('refetchResources');
     }
-    if(prevProps.runs !== this.props.runs) {
-      jQuery('#scheduler').fullCalendar('refetchEvents')
+    if (prevProps.runs !== this.props.runs) {
+      jQuery('#scheduler').fullCalendar('refetchEvents');
     }
   }
 
   componentWillUnmount() {
-    jQuery('#scheduler').fullCalendar('destroy')
+    jQuery('#scheduler').fullCalendar('destroy');
   }
 
   render() {
@@ -134,7 +130,7 @@ class Queues extends Component {
               locations={this.props.locations}
               handleOnChange={this.props.handleOnChange}
               locationFilter={this.props.locationFilter}
-            /> : <div/>}
+            /> : <div />}
           </BS.Col>
         </BS.Row>
         <div id="scheduler" />
@@ -143,4 +139,4 @@ class Queues extends Component {
   }
 }
 
-export default Queues
+export default Queues;

@@ -6,10 +6,10 @@ class ShowMaybe extends React.Component {
 
     return (
       <div>
-       { showIf ? children : null }
+        { showIf ? children : null }
       </div>
     );
   }
 }
 
-export default ShowMaybe
+export default ShowMaybe;
