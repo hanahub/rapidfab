@@ -135,9 +135,10 @@ class OrderDocuments extends React.Component {
 const mapStateToProps = (state) => {
   const orderResource = state.resources[state.routeUUID];
   const order = orderResource.uri;
-  const orderDocumentUUIDs = orderResource['order_documents'].map( doc => {
+  const orderResourceDocuments = orderResource['order_documents'];
+  const orderDocumentUUIDs = orderResourceDocuments ? orderResourceDocuments.map( doc => {
     return extractUuid(doc);
-  });
+  }) : [];
   const orderDocuments = getOrderDocuments(state).filter( orderDocument => {
     return orderDocument.order === order;
   });

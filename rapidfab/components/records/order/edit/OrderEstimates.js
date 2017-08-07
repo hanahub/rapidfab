@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import {
   Col,
   ListGroup,
@@ -106,17 +107,11 @@ const mapStateToProps = state => {
   const { resources, routeUUID } = state;
   const { currency, estimates } = resources[routeUUID];
 
-  const {
-    cost: {
-      amount,
-      shipping_amount
-    },
-    materials: {
-      base,
-      support
-    },
-    print_time
-  } = estimates;
+  const amount = _.get(estimates, 'cost.amount', null);
+  const shipping_amount = _.get(estimates, 'cost.shipping_amount', null);
+  const base = _.get(estimates, 'materials.base', null);
+  const support = _.get(estimates, 'support.base', null);
+  const print_time = _.get(estimates, 'print_time', null);
 
   return { amount, base, currency, print_time, shipping_amount, support };
 };
