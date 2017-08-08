@@ -84,6 +84,7 @@ export default {
   'status.processing': '処理中',
   'status.queued': 'キューに格納済み',
   'status.scheduled': 'スケジュール済み',
+  'status.shipping': 'Shipping',
   'status.uploading': 'アップロード中',
 
   'record.currency.add': '通貨の追加',
@@ -203,6 +204,7 @@ export default {
   'field.none': 'None',
   'field.prints': '印刷',
   'field.processingTime': '処理時間',
+  'field.operation': 'Operation',
   'field.packageSize': 'パッケージサイズ',
   'field.phone': '電話番号',
   'field.preview': 'プレビュー',
