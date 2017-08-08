@@ -3,7 +3,7 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
-import { RUN_STATUS_MAP } from 'rapidfab/mappings';
+import { RUN_OPERATION_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
 import Grid, {
   IdColumn,
   CapitalizeColumn,
@@ -18,6 +18,7 @@ const RunsGrid = ({ runs }) => (
     data={runs}
     columns={[
       'id',
+      'operation',
       'status',
       'created',
     ]}
@@ -26,6 +27,10 @@ const RunsGrid = ({ runs }) => (
       columnName: 'id',
       customComponent: IdColumn('run'),
       locked: true,
+    }, {
+      columnName: 'operation',
+      displayName: <FormattedMessage id="field.operation" defaultMessage="Operation" />,
+      customComponent: MappedColumn('operation', RUN_OPERATION_MAP),
     }, {
       columnName: 'status',
       displayName: <FormattedMessage id="field.status" defaultMessage="Status" />,
