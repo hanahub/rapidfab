@@ -12,7 +12,6 @@ import InventoryMaterials from 'rapidfab/containers/inventory/materials';
 import InventoryStocks from 'rapidfab/containers/inventory/stocks';
 import InventoryPostProcessors from 'rapidfab/containers/inventory/postProcessors';
 import InventoryPostProcessorTypes from 'rapidfab/containers/inventory/postProcessorTypes';
-import InventoryUsers from 'rapidfab/containers/inventory/users';
 import InventoryThirdPartyProviders from 'rapidfab/containers/inventory/thirdPartyProviders';
 import InventoryPrinters from 'rapidfab/containers/inventory/printers';
 import InventoryPrinterTypes from 'rapidfab/containers/inventory/printerTypes';
@@ -39,7 +38,6 @@ import PostProcessor from 'rapidfab/containers/records/postProcessor';
 import PostProcessorType from 'rapidfab/containers/records/postProcessorType';
 import Stock from 'rapidfab/containers/records/stock';
 import Template from 'rapidfab/containers/records/template';
-import User from 'rapidfab/containers/records/user';
 import RunEdit from 'rapidfab/containers/records/run/edit';
 import RunNew from 'rapidfab/containers/records/run/new';
 
@@ -61,7 +59,6 @@ const Routes = {
   '/inventory/conversions': InventoryConversions,
   '/inventory/post-processors': InventoryPostProcessors,
   '/inventory/post-processor-types': InventoryPostProcessorTypes,
-  '/inventory/users': InventoryUsers,
   '/inventory/third-party-providers': InventoryThirdPartyProviders,
   '/inventory/printers': InventoryPrinters,
   '/inventory/printer-types': InventoryPrinterTypes,
@@ -97,8 +94,6 @@ const Routes = {
   '/records/post-processor-type/:uuid': PostProcessorType,
   '/records/stock': Stock,
   '/records/stock/:uuid': Stock,
-  '/records/user': User,
-  '/records/user/:uuid': User,
   '/records/run': RunNew,
   '/records/run/:uuid': RunEdit,
   '/records/template/': Template,
