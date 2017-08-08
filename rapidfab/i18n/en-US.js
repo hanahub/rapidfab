@@ -85,6 +85,7 @@ export default {
   'status.printing': 'Printing',
   'status.queued': 'Queued',
   'status.scheduled': 'Scheduled',
+  'status.shipping': 'Shipping',
   'status.uploading': 'Uploading',
 
   'record.currency.add': 'Add Currency',
@@ -203,6 +204,7 @@ export default {
   'field.none': 'None',
   'field.order': 'Order',
   'field.order_owner': 'Owner',
+  'field.operation': 'Operation',
   'field.optional': 'Optional',
   'field.packageSize': 'Package Size',
   'field.phone': 'Phone',
