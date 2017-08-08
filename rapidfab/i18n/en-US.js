@@ -62,6 +62,7 @@ export default {
   'button.replace': 'Replace',
   'button.reset': 'Reset',
   'button.save': 'Save',
+  'button.saved': 'Saved',
   'button.upload': 'Upload',
   'button.exportDoc': 'Export Doc',
 

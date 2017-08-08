@@ -61,6 +61,7 @@ export default {
   'button.duplicate': 'Duplicate',
   'button.reset': 'リセット',
   'button.save': '保存',
+  'button.saved': 'Saved',
   'button.upload': 'アップロード',
   'button.exportDoc': 'Export Doc',
 
