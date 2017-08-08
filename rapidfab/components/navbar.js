@@ -130,9 +130,6 @@ class Navbar extends Component {
               <BS.MenuItem eventKey={3.11} href="#/inventory/third-party-providers">
                 <Fa name="map-marker" /> <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage="Third Party Providers" />
               </BS.MenuItem>
-              <BS.MenuItem eventKey={3.12} href="#/inventory/users">
-                <Fa name="users" /> <FormattedMessage id="inventory.users" defaultMessage="Users" />
-              </BS.MenuItem>
               <BS.MenuItem eventKey={3.13} href="#/inventory/shipping">
                 <Fa name="truck" /> <FormattedMessage id="work.shipping" defaultMessage="Shipping" />
               </BS.MenuItem>
