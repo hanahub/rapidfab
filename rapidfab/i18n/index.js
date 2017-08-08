@@ -4,8 +4,8 @@ import * as ReactIntl from 'react-intl';
 
 import enLocaleData from 'react-intl/locale-data/en';
 import jaLocaleData from 'react-intl/locale-data/ja';
-import enUSMessages from 'rapidfab/i18n/en-US.js';
-import jaMessages from 'rapidfab/i18n/ja.js';
+import enUSMessages from 'rapidfab/i18n/en-US';
+import jaMessages from 'rapidfab/i18n/ja';
 
 ReactIntl.addLocaleData(enLocaleData);
 ReactIntl.addLocaleData(jaLocaleData);
