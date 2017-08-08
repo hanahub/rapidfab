@@ -27,6 +27,12 @@ export const RUN_STATUS_MAP = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
+export const RUN_OPERATION_MAP = {
+  'post-processing': <FormattedMessage id="status.postProcessing" defaultMessage="Post Processing" />,
+  printing: <FormattedMessage id="status.printing" defaultMessage="Printing" />,
+  shipping: <FormattedMessage id="status.shipping" defaultMessage="Shipping" />,
+};
+
 export const ORDER_REGION_MAPPING = {
   north: <FormattedMessage id="order.north" defaultMessage="North" />,
   east: <FormattedMessage id="order.east" defaultMessage="East" />,
