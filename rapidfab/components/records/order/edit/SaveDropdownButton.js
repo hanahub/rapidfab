@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -51,5 +52,10 @@ const SaveDropdownButton = ({ onSubmit, onDelete }) => (
     </div>
   </ButtonToolbar>
 );
+
+SaveDropdownButton.propTypes = {
+  onSubmit: PropTypes.func,
+  onDelete: PropTypes.func,
+};
 
 export default SaveDropdownButton;
