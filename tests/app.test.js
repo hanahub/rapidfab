@@ -1,15 +1,15 @@
-var expect = require('expect'),
-    config = require('rapidfab/config');
+let expect = require('expect'),
+  config = require('rapidfab/config');
 
-describe('config', function(){
-  describe('#SENTRY_DSN', function(){
-    it('has a sentry dsn config', function(){
+describe('config', () => {
+  describe('#SENTRY_DSN', () => {
+    it('has a sentry dsn config', () => {
       expect(config.SENTRY_DSN).toEqual(null);
     });
   });
 
-  describe('#HOST', function(){
-    it('has a pao host config', function(){
+  describe('#HOST', () => {
+    it('has a pao host config', () => {
       expect(config.HOST.PAO).toBeA('string');
     });
   });

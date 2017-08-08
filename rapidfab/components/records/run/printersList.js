@@ -1,19 +1,19 @@
-import React, { PropTypes }                   from "react"
-import _                                      from "lodash"
-import * as BS                                from 'react-bootstrap'
-import { FormattedMessage, FormattedDateTime }    from 'rapidfab/i18n'
-import ModelerStatus                              from 'rapidfab/components/modelerStatus'
+import React, { PropTypes } from 'react';
+import _ from 'lodash';
+import * as BS from 'react-bootstrap';
+import { FormattedMessage, FormattedDateTime } from 'rapidfab/i18n';
+import ModelerStatus from 'rapidfab/components/modelerStatus';
 
 const listBodyStyle = {
   height: 150,
-  verflowY: "scroll",
-  overflowX: "hidden"
-}
+  verflowY: 'scroll',
+  overflowX: 'hidden',
+};
 
 const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
-  let modeler = _.find(modelers, ['uri', printer.modeler])
+  const modeler = _.find(modelers, ['uri', printer.modeler]);
   return (
-    <BS.ListGroupItem bsStyle={selected && selected.uri == printer.uri ? "info" : null} onClick={() => onSelect(printer)}>
+    <BS.ListGroupItem bsStyle={selected && selected.uri == printer.uri ? 'info' : null} onClick={() => onSelect(printer)}>
       <BS.Row>
         <BS.Col xs={3}>
           <a href={`#/records/printer/${printer.uuid}`}>
@@ -29,20 +29,20 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
           {`${printer.printer_type.build_volume.x}mm x ${printer.printer_type.build_volume.y}mm`}
         </BS.Col>
         <BS.Col xs={2}>
-          <span style={{ textTransform: "capitalize" }}>
+          <span style={{ textTransform: 'capitalize' }}>
             <ModelerStatus modeler={modeler} />
           </span>
         </BS.Col>
         <BS.Col xs={2}>
           {printer.leadTime ?
-            <FormattedDateTime value={printer.leadTime}/> :
-            (<em><FormattedMessage id="notAvailable" defaultMessage='N/A'/></em>)
+            <FormattedDateTime value={printer.leadTime} /> :
+            (<em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>)
           }
         </BS.Col>
       </BS.Row>
     </BS.ListGroupItem>
-  )
-}
+  );
+};
 
 const PrintersList = ({ printers, modelers, selected, onSelect }) => (
   <BS.Panel header="Printers">
@@ -79,10 +79,10 @@ const PrintersList = ({ printers, modelers, selected, onSelect }) => (
       </div>
     </BS.ListGroup>
   </BS.Panel>
-)
+);
 
 PrintersList.defaultProps = {
-  onSelect: () => true
-}
+  onSelect: () => true,
+};
 
-export default PrintersList
+export default PrintersList;

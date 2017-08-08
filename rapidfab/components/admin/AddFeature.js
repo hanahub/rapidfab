@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import * as BS                         from 'react-bootstrap'
-import Toggle                          from 'react-bootstrap-toggle'
+import React, { Component, PropTypes } from 'react';
+import * as BS from 'react-bootstrap';
+import Toggle from 'react-bootstrap-toggle';
 
 class NewFeature extends Component {
   constructor(props) {
@@ -33,16 +33,16 @@ class NewFeature extends Component {
       name: featureName,
       description: featureDescription,
       bureau: featureBureau,
-      user: user,
+      user,
       enabled: this.state.toggleActive,
-    }
+    };
     this.props.onSaveFeature(payload);
     this.setState({ showModal: false });
     this.setState({ toggleActive: false });
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value})
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   close() {
@@ -64,63 +64,63 @@ class NewFeature extends Component {
         >
           Add feature
         </BS.Button>
-          <BS.Modal show={this.state.showModal} onHide={this.close}>
-            <BS.Form onSubmit={this.onSubmit}>
-              <BS.Modal.Header closeButton>
-                <BS.Modal.Title>Add new feature</BS.Modal.Title>
-              </BS.Modal.Header>
-              <BS.Modal.Body>
-                <BS.FormGroup controlId="formBasicText">
-                  <BS.ControlLabel>Name:</BS.ControlLabel>
-                  <BS.FormControl
-                    type="text"
-                    name="featureName"
-                    onChange={this.handleChange}
-                    placeholder="Enter name"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <br />
-                  <BS.ControlLabel>Description:</BS.ControlLabel>
-                  <BS.FormControl
-                    componentClass="textarea"
-                    name="featureDescription"
-                    onChange={this.handleChange}
-                    placeholder="Enter description"
-                    onChange={this.handleChange}
-                    required
-                  />
-                  <br />
-                  <BS.ControlLabel>Bureau:</BS.ControlLabel>
-                  <BS.FormControl
-                    type="text"
-                    name="featureBureau"
-                    onChange={this.handleChange}
-                    placeholder="Enter a bureau"
-                    onChange={this.handleChange}
-                  />
-                  <br />
-                  <BS.ControlLabel>Enabled: </BS.ControlLabel>
-                  <Toggle
-                    onClick={this.onToggle}
-                    on={<div>ON</div>}
-                    off={<div>OFF</div>}
-                    size="sm"
-                    offstyle="primary"
-                    active={this.state.toggleActive}
-                  />
-                </BS.FormGroup>
-              </BS.Modal.Body>
-              <BS.Modal.Footer>
-                <BS.Button onClick={this.close}>Cancel</BS.Button>
-                <BS.Button bsStyle="success" type="submit">Save </BS.Button>
-              </BS.Modal.Footer>
-             </BS.Form>
-          </BS.Modal>
+        <BS.Modal show={this.state.showModal} onHide={this.close}>
+          <BS.Form onSubmit={this.onSubmit}>
+            <BS.Modal.Header closeButton>
+              <BS.Modal.Title>Add new feature</BS.Modal.Title>
+            </BS.Modal.Header>
+            <BS.Modal.Body>
+              <BS.FormGroup controlId="formBasicText">
+                <BS.ControlLabel>Name:</BS.ControlLabel>
+                <BS.FormControl
+                  type="text"
+                  name="featureName"
+                  onChange={this.handleChange}
+                  placeholder="Enter name"
+                  onChange={this.handleChange}
+                  required
+                />
+                <br />
+                <BS.ControlLabel>Description:</BS.ControlLabel>
+                <BS.FormControl
+                  componentClass="textarea"
+                  name="featureDescription"
+                  onChange={this.handleChange}
+                  placeholder="Enter description"
+                  onChange={this.handleChange}
+                  required
+                />
+                <br />
+                <BS.ControlLabel>Bureau:</BS.ControlLabel>
+                <BS.FormControl
+                  type="text"
+                  name="featureBureau"
+                  onChange={this.handleChange}
+                  placeholder="Enter a bureau"
+                  onChange={this.handleChange}
+                />
+                <br />
+                <BS.ControlLabel>Enabled: </BS.ControlLabel>
+                <Toggle
+                  onClick={this.onToggle}
+                  on={<div>ON</div>}
+                  off={<div>OFF</div>}
+                  size="sm"
+                  offstyle="primary"
+                  active={this.state.toggleActive}
+                />
+              </BS.FormGroup>
+            </BS.Modal.Body>
+            <BS.Modal.Footer>
+              <BS.Button onClick={this.close}>Cancel</BS.Button>
+              <BS.Button bsStyle="success" type="submit">Save </BS.Button>
+            </BS.Modal.Footer>
+          </BS.Form>
+        </BS.Modal>
       </div>
-    )
+    );
   }
 }
 
 
-export default NewFeature
+export default NewFeature;

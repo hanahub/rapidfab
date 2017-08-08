@@ -15,7 +15,7 @@ import {
   FormattedMessage,
   FormattedVolume,
 }
-from 'rapidfab/i18n';
+  from 'rapidfab/i18n';
 
 const OrderEstimates = ({
   amount = null,
@@ -40,13 +40,13 @@ const OrderEstimates = ({
           <Col xs={8}>
             <FormattedMessage
               id="estimates.printTime"
-              defaultMessage='Print Time'
+              defaultMessage="Print Time"
             />
           </Col>
           <Col xs={4}>
             { print_time ?
-              <FormattedDuration value={print_time}/>
-              : <FormattedMessage id="notAvailable" defaultMessage='N/A'/>
+              <FormattedDuration value={print_time} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
             }
           </Col>
         </Row>
@@ -57,13 +57,13 @@ const OrderEstimates = ({
           <Col xs={8}>
             <FormattedMessage
               id="estimates.materialUsed"
-              defaultMessage='Material Used'
+              defaultMessage="Material Used"
             />
           </Col>
           <Col xs={4}>
             { base ?
-              <FormattedVolume value={base}/>
-              : <FormattedMessage id="notAvailable" defaultMessage='N/A'/>
+              <FormattedVolume value={base} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
             }
           </Col>
         </Row>
@@ -74,13 +74,13 @@ const OrderEstimates = ({
           <Col xs={8}>
             <FormattedMessage
               id="estimates.supportUsed"
-              defaultMessage='Support Used'
+              defaultMessage="Support Used"
             />
           </Col>
           <Col xs={4}>
             { support ?
-              <FormattedVolume value={support}/>
-              : <FormattedMessage id="notAvailable" defaultMessage='N/A'/>
+              <FormattedVolume value={support} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
             }
           </Col>
         </Row>
@@ -89,12 +89,12 @@ const OrderEstimates = ({
       <ListGroupItem>
         <Row>
           <Col xs={8}>
-            <FormattedMessage id="estimates.cost" defaultMessage='Cost'/>
+            <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
           </Col>
           <Col xs={4}>
             { amount ?
               <FormattedCost currency={currency} value={amount} />
-              : <FormattedMessage id="notAvailable" defaultMessage='N/A'/>
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
             }
           </Col>
         </Row>
@@ -103,7 +103,7 @@ const OrderEstimates = ({
   </Panel>
 );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { resources, routeUUID } = state;
   const { currency, estimates } = resources[routeUUID];
 
@@ -116,4 +116,4 @@ const mapStateToProps = state => {
   return { amount, base, currency, print_time, shipping_amount, support };
 };
 
-export default connect(mapStateToProps)(OrderEstimates)
+export default connect(mapStateToProps)(OrderEstimates);

@@ -14,12 +14,12 @@ import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
 
 const PanelHeader = () => (
-  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary"/>
+  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />
 );
 
 class OrderSummary extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -34,7 +34,7 @@ class OrderSummary extends Component {
 
   onDelete() {
     this.props.dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
-      .then( () => window.location.hash = "#/plan/orders" )
+      .then(() => window.location.hash = '#/plan/orders');
   }
 
   render() {
@@ -48,7 +48,7 @@ class OrderSummary extends Component {
           <hr />
 
           <Col xs={12} md={7}>
-            <EditOrderForm ref="orderForm"/>
+            <EditOrderForm ref="orderForm" />
           </Col>
 
           <Col xs={12} md={5}>
@@ -68,4 +68,4 @@ class OrderSummary extends Component {
 
 const mapStateToProps = state => ({ uuid: state.routeUUID });
 
-export default connect(mapStateToProps)(OrderSummary)
+export default connect(mapStateToProps)(OrderSummary);

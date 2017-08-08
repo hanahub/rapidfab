@@ -1,6 +1,6 @@
-import _                        from "lodash";
-import React, { Component }     from "react";
-import * as BS                  from 'react-bootstrap';
+import _ from 'lodash';
+import React, { Component } from 'react';
+import * as BS from 'react-bootstrap';
 
 
 class FormModal extends Component {
@@ -39,23 +39,25 @@ class FormModal extends Component {
                   <BS.Button
                     onClick={this.handleDelete}
                     bsStyle="danger"
-                    block>
+                    block
+                  >
                     Delete
                   </BS.Button>
-                  ) : null}
-                </BS.Col>
-                <BS.Col xs={6}>
-                  <BS.Button
-                    bsStyle="success"
-                    type="submit"
-                    block>
+                ) : null}
+              </BS.Col>
+              <BS.Col xs={6}>
+                <BS.Button
+                  bsStyle="success"
+                  type="submit"
+                  block
+                >
                     Save
-                  </BS.Button>
-                </BS.Col>
-              </BS.Row>
-            </BS.Modal.Footer>
-          </BS.Modal>
-        </BS.Form>
+                </BS.Button>
+              </BS.Col>
+            </BS.Row>
+          </BS.Modal.Footer>
+        </BS.Modal>
+      </BS.Form>
     );
   }
 }
@@ -65,7 +67,7 @@ FormModal.propTypes = {
   onSave: React.PropTypes.func.isRequired,
   onDelete: React.PropTypes.func.isRequired,
   onClose: React.PropTypes.func.isRequired,
-  title: React.PropTypes.node.isRequired
-}
+  title: React.PropTypes.node.isRequired,
+};
 
-export default FormModal
+export default FormModal;

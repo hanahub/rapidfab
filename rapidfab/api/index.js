@@ -1,15 +1,15 @@
-import MakeApi  from './makeApi'
+import MakeApi from './makeApi';
 
 export const RESOURCES = {
   hoth: [
-    'model'
+    'model',
   ],
   pao: [
     'memberships',
     'permissions',
     'groups',
     'sessions',
-    'users'
+    'users',
   ],
   wyatt: [
     'bureau',
@@ -39,6 +39,6 @@ export const RESOURCES = {
   nautilus: [
     'modeler',
   ],
-}
+};
 
-export default MakeApi(RESOURCES)
+export default MakeApi(RESOURCES);

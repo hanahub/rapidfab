@@ -10,7 +10,7 @@ import {
 
 const SaveButtonTitle = () => (
   <span>
-    <Fa name='floppy-o'/> <FormattedMessage id="button.save" defaultMessage='Save'/>
+    <Fa name="floppy-o" /> <FormattedMessage id="button.save" defaultMessage="Save" />
   </span>
 );
 
@@ -27,8 +27,8 @@ const SaveButton = ({ onSubmit, onDelete }) => (
       eventKey={1}
       onClick={onDelete}
     >
-      <Fa name='ban'/>
-      <FormattedMessage id="button.delete" defaultMessage='Delete'/>
+      <Fa name="ban" />
+      <FormattedMessage id="button.delete" defaultMessage="Delete" />
     </MenuItem>
   </SplitButton>
 );

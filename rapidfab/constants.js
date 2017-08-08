@@ -1,7 +1,7 @@
 function make_constants(constants) {
-  let result = {};
-  for(let i = 0; i < constants.length; i++) {
-    let constant = constants[i];
+  const result = {};
+  for (let i = 0; i < constants.length; i++) {
+    const constant = constants[i];
     result[constant] = constant;
   }
   return result;
@@ -45,33 +45,33 @@ const Constants = [
   'SET_PAGE',
   'SET_ROUTE_UUID',
   'CLEAR_UI_STATE',
-]
+];
 
 export const Currencies = [
   'USD', 'GBP', 'JPY', 'EUR',
-]
+];
 
 export const MODELER_STATUS_MAP = {
   idle: {
-    status: "info",
-    message: "The modeler is idle",
+    status: 'info',
+    message: 'The modeler is idle',
   },
   offline: {
-    status: "warning",
-    message: "The modeler is offline",
+    status: 'warning',
+    message: 'The modeler is offline',
   },
   error: {
-    status: "danger",
-    message: "The modeler is in error",
+    status: 'danger',
+    message: 'The modeler is in error',
   },
   printing: {
-    status: "success",
-    message: "The modeler is printing",
+    status: 'success',
+    message: 'The modeler is printing',
   },
   unknown: {
-    status: "unknown",
-    message: "The modeler could not be found",
+    status: 'unknown',
+    message: 'The modeler could not be found',
   },
-}
+};
 
-export default make_constants(Constants)
+export default make_constants(Constants);

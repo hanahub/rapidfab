@@ -1,44 +1,44 @@
-import Actions      from "rapidfab/actions"
-import Constants    from 'rapidfab/constants';
-import { postForm } from "rapidfab/api/makeApi"
+import Actions from 'rapidfab/actions';
+import Constants from 'rapidfab/constants';
+import { postForm } from 'rapidfab/api/makeApi';
 
 function uploadProgress(percent) {
   return {
     type: Constants.UPLOAD_MODEL_PROGRESS,
-    percent: percent,
-  }
+    percent,
+  };
 }
 
 function uploadModel(uploadUrl) {
   return {
     type: Constants.UPLOAD_MODEL_REQUEST,
-    uploadUrl: uploadUrl,
-  }
+    uploadUrl,
+  };
 }
 
 export function storePayload(payload) {
   return {
     type: Constants.UPLOAD_MODEL_STORE_PAYLOAD,
     payload,
-  }
+  };
 }
 
 export function clearState(payload) {
   return {
     type: Constants.UPLOAD_MODEL_CLEAR,
-  }
+  };
 }
 
 export function upload(uploadUrl, model) {
-  return dispatch => {
-    dispatch(uploadModel(uploadUrl))
-    postForm(uploadUrl, {}, model, 'PUT', false, 'application/octet-stream', percent => dispatch(uploadProgress(percent)))
-  }
+  return (dispatch) => {
+    dispatch(uploadModel(uploadUrl));
+    postForm(uploadUrl, {}, model, 'PUT', false, 'application/octet-stream', percent => dispatch(uploadProgress(percent)));
+  };
 }
 
 export function addError(errors) {
   return {
     type: Constants.UPLOAD_MODEL_ADD_ERROR,
-    errors: errors,
-  }
+    errors,
+  };
 }

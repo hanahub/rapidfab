@@ -1,22 +1,22 @@
-import React, { PropTypes }                   from "react"
-import _                                      from "lodash"
-import * as BS                                from 'react-bootstrap'
-import { FormattedMessage }                   from 'react-intl';
-import Fa                                     from 'react-fontawesome';
+import React, { PropTypes } from 'react';
+import _ from 'lodash';
+import * as BS from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 const listBodyStyle = {
   height: 243,
-  verflowY: "scroll",
-  overflowX: "hidden"
-}
+  verflowY: 'scroll',
+  overflowX: 'hidden',
+};
 
 function printBedFill(printer, model) {
-  const modelArea = model.size.x * model.size.y
-  const bedArea = printer.printer_type.build_volume.x * printer.printer_type.build_volume.y
-  const percentage = _.round(modelArea / bedArea * 100, 2)
-  return `${percentage}%`
+  const modelArea = model.size.x * model.size.y;
+  const bedArea = printer.printer_type.build_volume.x * printer.printer_type.build_volume.y;
+  const percentage = _.round(modelArea / bedArea * 100, 2);
+  return `${percentage}%`;
 }
 
 const Header = ({ onDeactivate }) => (
@@ -27,12 +27,12 @@ const Header = ({ onDeactivate }) => (
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="danger" onClick={onDeactivate}>
-          <Fa name='times'/>
+          <Fa name="times" />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
   </BS.Row>
-)
+);
 
 const Item = ({ print, printer, selected, onSelect }) => (
   <BS.ListGroupItem>
@@ -57,15 +57,14 @@ const Item = ({ print, printer, selected, onSelect }) => (
       </BS.Col>
     </BS.Row>
   </BS.ListGroupItem>
-)
+);
 
 const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) => (
-  <BS.Panel header={<Header onDeactivate={onDeactivate}/>}>
+  <BS.Panel header={<Header onDeactivate={onDeactivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
-          <BS.Col xs={1}>
-          </BS.Col>
+          <BS.Col xs={1} />
           <BS.Col xs={3}>
             Order
           </BS.Col>
@@ -90,10 +89,10 @@ const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) => 
       </div>
     </BS.ListGroup>
   </BS.Panel>
-)
+);
 
 ActivePrints.defaultProps = {
-  onSelect: () => true
-}
+  onSelect: () => true,
+};
 
-export default ActivePrints
+export default ActivePrints;

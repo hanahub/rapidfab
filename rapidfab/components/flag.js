@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 import flags from 'images/famfamfam-flags.png';
 
 
 const Flag = ({ type }) => (
   <i className={`famfamfam-flag-${type}`} />
-)
+);
 
 Flag.propTypes = {
-  type: PropTypes.string.isRequired
-}
+  type: PropTypes.string.isRequired,
+};
 
-export default Flag
+export default Flag;

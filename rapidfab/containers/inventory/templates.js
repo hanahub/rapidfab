@@ -1,9 +1,9 @@
-import _                        from "lodash"
-import React, { Component }     from "react"
-import Actions                  from 'rapidfab/actions'
-import { connect }              from 'react-redux'
-import TemplateComponent        from 'rapidfab/components/inventory/templates'
-import * as Selectors           from 'rapidfab/selectors'
+import _ from 'lodash';
+import React, { Component } from 'react';
+import Actions from 'rapidfab/actions';
+import { connect } from 'react-redux';
+import TemplateComponent from 'rapidfab/components/inventory/templates';
+import * as Selectors from 'rapidfab/selectors';
 
 
 class TemplatesContainer extends Component {
@@ -13,23 +13,23 @@ class TemplatesContainer extends Component {
   }
 
   render() {
-    return <TemplateComponent {...this.props}/>
+    return <TemplateComponent {...this.props} />;
   }
 }
 
 function mapStateToProps(state) {
   const {
-    template
-  } = state.ui.wyatt
+    template,
+  } = state.ui.wyatt;
 
   return {
-    bureau        : Selectors.getBureau(state),
-    locations     : Selectors.getLocations(state),
-    templates     : Selectors.getTemplates(state),
-    users         : Selectors.getUsers(state),
-    fetching      : template.list.fetching,
-    apiErrors     : template.list.errors
-  }
+    bureau: Selectors.getBureau(state),
+    locations: Selectors.getLocations(state),
+    templates: Selectors.getTemplates(state),
+    users: Selectors.getUsers(state),
+    fetching: template.list.fetching,
+    apiErrors: template.list.errors,
+  };
 }
 
-export default connect(mapStateToProps)(TemplatesContainer)
+export default connect(mapStateToProps)(TemplatesContainer);

@@ -1,11 +1,11 @@
-import Constants from 'rapidfab/constants'
+import Constants from 'rapidfab/constants';
 
 function makePost(api, host, resource) {
   return payload => ({
     api: {
       resource,
       host,
-      method: "POST"
+      method: 'POST',
     },
     types: [
       Constants.RESOURCE_POST_REQUEST,
@@ -13,8 +13,8 @@ function makePost(api, host, resource) {
       Constants.RESOURCE_POST_FAILURE,
     ],
     callApi: () => api[host][resource].post(payload),
-    payload
-  })
+    payload,
+  });
 }
 
 function makePut(api, host, resource) {
@@ -22,7 +22,7 @@ function makePut(api, host, resource) {
     api: {
       resource,
       host,
-      method: "PUT"
+      method: 'PUT',
     },
     uuid,
     types: [
@@ -31,8 +31,8 @@ function makePut(api, host, resource) {
       Constants.RESOURCE_PUT_FAILURE,
     ],
     callApi: () => api[host][resource].put(uuid, payload),
-    payload
-  })
+    payload,
+  });
 }
 
 function makeList(api, host, resource) {
@@ -40,7 +40,7 @@ function makeList(api, host, resource) {
     api: {
       resource,
       host,
-      method: "LIST"
+      method: 'LIST',
     },
     filters,
     types: [
@@ -50,7 +50,7 @@ function makeList(api, host, resource) {
     ],
     shouldCallAPI: state => !state.ui[host][resource][method.toLowerCase()].count,
     callApi: () => api[host][resource].list(filters),
-  })
+  });
 }
 
 function makeGet(api, host, resource) {
@@ -58,7 +58,7 @@ function makeGet(api, host, resource) {
     api: {
       resource,
       host,
-      method: "GET"
+      method: 'GET',
     },
     uuid,
     types: [
@@ -67,8 +67,8 @@ function makeGet(api, host, resource) {
       Constants.RESOURCE_GET_FAILURE,
     ],
     shouldCallAPI: state => !state.resources[uuid],
-    callApi: () => api[host][resource].get(uuid)
-  })
+    callApi: () => api[host][resource].get(uuid),
+  });
 }
 
 function makeDelete(api, host, resource) {
@@ -76,7 +76,7 @@ function makeDelete(api, host, resource) {
     api: {
       resource,
       host,
-      method: "DELETE"
+      method: 'DELETE',
     },
     uuid,
     types: [
@@ -84,8 +84,8 @@ function makeDelete(api, host, resource) {
       Constants.RESOURCE_DELETE_SUCCESS,
       Constants.RESOURCE_DELETE_FAILURE,
     ],
-    callApi: () => api[host][resource].delete(uuid)
-  })
+    callApi: () => api[host][resource].delete(uuid),
+  });
 }
 
 function makeRemove(api, host, resource) {
@@ -93,26 +93,26 @@ function makeRemove(api, host, resource) {
     api: {
       resource,
       host,
-      method: "REMOVE"
+      method: 'REMOVE',
     },
     uuid,
-    type: Constants.RESOURCE_MANUAL_REMOVE
-  })
+    type: Constants.RESOURCE_MANUAL_REMOVE,
+  });
 }
 export function makeApiActions(api, resources) {
   return _.reduce(resources, (result, resources, host) => {
-    let hostActions = {}
-    for(let resource of resources) {
+    const hostActions = {};
+    for (const resource of resources) {
       hostActions[resource] = {
-        post      : makePost(api, host, resource),
-        list      : makeList(api, host, resource),
-        delete    : makeDelete(api, host, resource),
-        put       : makePut(api, host, resource),
-        get       : makeGet(api, host, resource),
-        remove    : makeRemove(api, host, resource)
-      }
+        post: makePost(api, host, resource),
+        list: makeList(api, host, resource),
+        delete: makeDelete(api, host, resource),
+        put: makePut(api, host, resource),
+        get: makeGet(api, host, resource),
+        remove: makeRemove(api, host, resource),
+      };
     }
-    result[host] = hostActions
+    result[host] = hostActions;
     return result;
   }, {});
 }

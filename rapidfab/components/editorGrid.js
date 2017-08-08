@@ -1,9 +1,9 @@
-import _                                from 'lodash';
-import React, { Component, PropTypes }  from 'react';
-import Griddle                          from 'griddle-react';
-import Grid                             from 'rapidfab/components/grid';
-import * as BS                          from 'react-bootstrap';
-import Fa                               from 'react-fontawesome';
+import _ from 'lodash';
+import React, { Component, PropTypes } from 'react';
+import Griddle from 'griddle-react';
+import Grid from 'rapidfab/components/grid';
+import * as BS from 'react-bootstrap';
+import Fa from 'react-fontawesome';
 
 
 class EditColumn extends Component {
@@ -20,7 +20,7 @@ class EditColumn extends Component {
   render() {
     return (
       <BS.Button bsStyle="success" bsSize="small" onClick={this.handleEdit}>
-        <Fa name='pencil'/>
+        <Fa name="pencil" />
       </BS.Button>
     );
   }
@@ -28,23 +28,23 @@ class EditColumn extends Component {
 
 const EditColumnHeader = ({ onAdd }) => (
   <BS.Button bsStyle="primary" bsSize="small" onClick={onAdd}>
-    <Fa name='plus'/>
+    <Fa name="plus" />
   </BS.Button>
-)
+);
 
 class EditorGrid extends Component {
   render() {
-    let columns = _.concat(this.props.columns, ["uri"]);
-    let columnMeta = _.concat(this.props.columnMeta, [{
+    const columns = _.concat(this.props.columns, ['uri']);
+    const columnMeta = _.concat(this.props.columnMeta, [{
       order: 999,
-      columnName: "uri",
+      columnName: 'uri',
       visible: true,
       locked: true,
       sortable: false,
       onEdit: this.props.onEdit,
       customComponent: EditColumn,
       customHeaderComponent: EditColumnHeader,
-      customHeaderComponentProps: { onAdd: this.props.onAdd }
+      customHeaderComponentProps: { onAdd: this.props.onAdd },
     }]);
     return (
       <Grid
@@ -59,18 +59,18 @@ class EditorGrid extends Component {
 EditorGrid.propTypes = {
   data: PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.object),
-    React.PropTypes.object
+    React.PropTypes.object,
   ]),
   columnMeta: React.PropTypes.arrayOf(React.PropTypes.object),
   columns: React.PropTypes.arrayOf(React.PropTypes.string),
   onAdd: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired
-}
+  onEdit: PropTypes.func.isRequired,
+};
 
 EditorGrid.defaultProps = {
   columns: [],
   columnMeta: [],
-  data: []
-}
+  data: [],
+};
 
-export default EditorGrid
+export default EditorGrid;
