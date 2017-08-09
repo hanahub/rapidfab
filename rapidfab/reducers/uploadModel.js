@@ -36,10 +36,10 @@ function reducer(state = initialState, action) {
       });
     case Constants.UPLOAD_MODEL_CLEAR:
       return initialState;
-    case Constants.UPLOAD_MODEL_ADD_ERROR:
+    case Constants.UPLOAD_MODEL_ADD_ERROR: {
       const errors = _.assign([], state.errors);
 
-      action.errors.map((error) => {
+      action.errors.forEach((error) => {
         if (!_.find(errors, error)) {
           errors.push(error);
         }
@@ -47,6 +47,7 @@ function reducer(state = initialState, action) {
       return _.assign({}, state, {
         errors,
       });
+    }
     default:
       return state;
   }

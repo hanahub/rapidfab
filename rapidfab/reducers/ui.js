@@ -13,31 +13,19 @@ const initialMethodState = {
 };
 
 export const initialState = _.reduce(RESOURCES, (result, hostResources, host) => {
-  result[host] = {};
-  for (const hostResource of hostResources) {
-    result[host][hostResource] = {
+  const newResult = result;
+  newResult[host] = {};
+  hostResources.forEach((hostResource) => {
+    newResult[host][hostResource] = {
       delete: initialMethodState,
       get: initialMethodState,
       list: initialMethodState,
       post: initialMethodState,
       put: initialMethodState,
     };
-  }
-  return result;
+  });
+  return newResult;
 }, {});
-
-function reduceHost(state, action) {
-  return _.assign({}, state, {
-    [action.api.resource]: reduceResource(state[action.api.resource], action),
-  });
-}
-
-function reduceResource(state, action) {
-  const method = action.api.method.toLowerCase();
-  return _.assign({}, state, {
-    [method]: reduceMethod(state[method], action),
-  });
-}
 
 function reduceMethod(state, action) {
   const {
@@ -85,6 +73,19 @@ function reduceMethod(state, action) {
   }
 }
 
+function reduceResource(state, action) {
+  const method = action.api.method.toLowerCase();
+  return _.assign({}, state, {
+    [method]: reduceMethod(state[method], action),
+  });
+}
+
+function reduceHost(state, action) {
+  return _.assign({}, state, {
+    [action.api.resource]: reduceResource(state[action.api.resource], action),
+  });
+}
+
 function reducer(state = initialState, action) {
   switch (action.type) {
     case Constants.RESOURCE_POST_REQUEST:
@@ -105,15 +106,16 @@ function reducer(state = initialState, action) {
       return _.assign({}, state, {
         [action.api.host]: reduceHost(state[action.api.host], action),
       });
-    case Constants.CLEAR_UI_STATE:
+    case Constants.CLEAR_UI_STATE: {
       // user passes in paths in the ui state to be reset, or nothing, and resets all ui state
       // read _.set docs for path format https://lodash.com/docs/4.16.4#set
       const mask = {};
       const tempState = _.assign({}, state);
 
       if (action.paths.length > 0) {
-        action.paths.map((path) => {
-          // uses the provided path to get the initial values, and uses the same path to set a mask object
+        action.paths.forEach((path) => {
+          // uses the provided path to get the initial values,
+          // and uses the same path to set a mask object
           _.set(mask, path, _.get(initialState, path));
 
           // we must unset the path we're replacing, or the mask wont modify, because its empty
@@ -125,6 +127,7 @@ function reducer(state = initialState, action) {
       }
       // if they dont pass in paths, reset it all
       return initialState;
+    }
     default:
       return state;
   }

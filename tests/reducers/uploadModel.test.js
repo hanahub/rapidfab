@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const Reducer = require('rapidfab/reducers/uploadModel');
-const Constants = require('rapidfab/constants');
 const Uuid = require('node-uuid');
 
 

@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
-const fs = require('fs');
 
 module.exports = Object.assign(webpackConfig, {
   devtool: 'source-map',

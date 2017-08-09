@@ -54,9 +54,10 @@ function reducer(state = {}, action) {
       return _.assign({}, state, {
         [record.uuid]: record,
       });
-    case Constants.RESOURCE_LIST_SUCCESS:
+    case Constants.RESOURCE_LIST_SUCCESS: {
       const records = _.map(action.json.resources, hydrateRecord);
       return _.assign({}, state, _.keyBy(records, 'uuid'));
+    }
     case Constants.RESOURCE_DELETE_SUCCESS:
     case Constants.RESOURCE_MANUAL_REMOVE:
       return _.assign({}, _.omit(state, action.uuid));
