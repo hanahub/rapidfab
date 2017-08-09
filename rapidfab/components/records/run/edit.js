@@ -104,7 +104,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
               <Fa name="list" /> <FormattedMessage id="plan.runs" defaultMessage="Runs" />
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
-              <Fa name="file-o" /> {fields.id.value}
+              <Fa name="file-o" /> {_.get(fields, 'id.value')}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
@@ -119,7 +119,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
         <BS.Col xs={6}>
           <BS.ButtonToolbar className="pull-right">
             <BS.SplitButton id="uxSaveDropdown" type="submit" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-              <BS.MenuItem eventKey={1} onClick={() => onDelete(fields.uuid.value)}>
+              <BS.MenuItem eventKey={1} onClick={() => onDelete(_.get(fields, 'uuid.value'))}>
                 <Fa name="ban" /> <FormattedMessage id="button.delete" defaultMessage="Delete" />
               </BS.MenuItem>
             </BS.SplitButton>
@@ -141,41 +141,41 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           <BS.Panel bsStyle="info">
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedStartTime" defaultMessage="Estimated Start Time" />}>
-                {fields.estimates.start.value ?
+                {_.get(fields, 'estimates.start.value') ?
                   <span>{Moment(fields.estimates.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.start.value).fromNow()}) </span> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedEndTime" defaultMessage="Estimated End Time" />}>
-                {fields.estimates.end.value ?
+                {_.get(fields, 'estimates.end.value') ?
                   <span>{Moment(fields.estimates.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.estimates.end.value).fromNow()}) </span> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPrintTime" defaultMessage="Estimated Print Time" />}>
-                {fields.estimates.time.print.value ?
+                {_.get(fields, 'estimates.time.print.value') ?
                   <TimeDisplay seconds={fields.estimates.time.print.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedPostProcessingTime" defaultMessage="Estimated Post Processing Time" />}>
-                {fields.estimates.time.post_processing.value ?
+                {_.get(fields, 'estimates.time.post_processing.value') ?
                   <TimeDisplay seconds={fields.estimates.time.post_processing.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedMaterialUsed" defaultMessage="Estimated Material Used" />}>
-                {fields.estimates.materials.base.value ?
+                {_.get(fields, 'estimates.materials.base.value') ?
                   <FormattedVolume value={fields.estimates.materials.base.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
               <BS.ListGroupItem header={<FormattedMessage id="field.estimatedSupportUsed" defaultMessage="Estimated Support Used" />}>
-                {fields.estimates.materials.support.value ?
+                {_.get(fields, 'estimates.materials.support.value') ?
                   <FormattedVolume value={fields.estimates.materials.support.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
@@ -186,41 +186,41 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           <BS.Panel bsStyle="success">
             <BS.ListGroup fill>
               <BS.ListGroupItem header={<FormattedMessage id="field.actualStartTime" defaultMessage="Actual Start Time" />}>
-                {fields.actuals.start.value ?
+                {_.get(fields, 'actuals.start.value') ?
                   <span>{Moment(fields.actuals.start.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.start.value).fromNow()}) </span> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualEndTime" defaultMessage="Actual End Time" />}>
-                {fields.actuals.end.value ?
+                {_.get(fields, 'actuals.end.value') ?
                   <span>{Moment(fields.actuals.end.value).format('MMMM DD YYYY, h:mm:ss a')} ({Moment(fields.actuals.end.value).fromNow()}) </span> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualPrintTime" defaultMessage="Actual Print Time" />}>
-                {fields.actuals.time.print.value ?
+                {_.get(fields, 'actuals.time.print.value') ?
                   <FormattedDuration value={fields.actuals.time.print.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualPostProcessingTime" defaultMessage="Actual Post Processing Time" />}>
-                {fields.actuals.time.post_processing.value ?
+                {_.get(fields, 'actuals.time.post_processing.value') ?
                   <FormattedDuration value={fields.actuals.time.post_processing.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
 
               <BS.ListGroupItem header={<FormattedMessage id="field.actualMaterialUsed" defaultMessage="Actual Material Used" />}>
-                {fields.actuals.materials.base.value ?
+                {_.get(fields, 'actuals.materials.base.value') ?
                   <FormattedVolume value={fields.actuals.materials.base.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
               </BS.ListGroupItem>
               <BS.ListGroupItem header={<FormattedMessage id="field.actualSupportUsed" defaultMessage="Actual Support Used" />}>
-                {fields.actuals.materials.support.value ?
+                {_.get(fields, 'actuals.materials.support.value') ?
                   <FormattedVolume value={fields.actuals.materials.support.value} /> :
                   <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
                 }
@@ -239,7 +239,7 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
 
           <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
             <BS.FormControl.Static>
-              {fields.created.value ?
+              {_.get(fields, 'created.value') ?
                 <FormattedDateTime value={fields.created.value} /> :
                 <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
               }
@@ -247,22 +247,22 @@ const EditRun = ({ fields, handleSubmit, downloadModel, onModelDownload, onDelet
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            { fields.model.value ?
+            { _.get(fields, 'model.value') ?
               <ModelDownloadField runUUID={fields.uuid.value} model={fields.model} onClick={onModelDownload} isDownloading={downloadModel.downloadingModel} /> :
               <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
             }
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
-            <LinkField uri={fields.printer.value} endpoint="printer" resources={printers} />
+            <LinkField uri={_.get(fields, 'printer.value')} endpoint="printer" resources={printers} />
           </FormRow>
 
           <FormRow id="field.printerType" defaultMessage="Printer Type">
-            <LinkField uri={fields.printer_type.value} endpoint="printer-type" resources={printerTypes} />
+            <LinkField uri={_.get(fields, 'printer_type.value')} endpoint="printer-type" resources={printerTypes} />
           </FormRow>
 
           <FormRow id="field.postProcessor" defaultMessage="Post-Processor">
-            <LinkField uri={fields.post_processor.value} endpoint="post-processor" resources={postProcessors} />
+            <LinkField uri={_.get(fields, 'post_processor.value')} endpoint="post-processor" resources={postProcessors} />
           </FormRow>
 
           <BS.Panel header={<FormattedMessage id="field.record" defaultMessage="Record" />}>
