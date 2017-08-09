@@ -37,6 +37,13 @@ const FormRow = ({ id, defaultMessage, children, controlId }) => (
   </BS.FormGroup>
 );
 
+FormRow.propTypes = {
+  children: PropTypes.node.isRequired,
+  controlId: PropTypes.string,
+  defaultMessage: PropTypes.string,
+  id: PropTypes.string,
+};
+
 const StatusField = ({ statuses, fields }) => {
   const restrictedStatuses = ['calculated', 'calculating', 'queued'];
   _.pull(restrictedStatuses, fields.status.value);
@@ -53,6 +60,11 @@ const StatusField = ({ statuses, fields }) => {
       </FormControlSelect>
     </FormRow>
   );
+};
+
+StatusField.propTypes = {
+  statuses: PropTypes.arrayOf(PropTypes.string),
+  fields: PropTypes.object,
 };
 
 const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
@@ -78,6 +90,13 @@ const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
   );
 };
 
+ModelDownloadField.propTypes = {
+  isDownloading: PropTypes.bool,
+  model: PropTypes.object,
+  onClick: PropTypes.func,
+  runUUID: PropTypes.string,
+};
+
 const LinkField = ({ uri, resources, endpoint }) => {
   if (!uri) {
     return (<BS.FormControl.Static> - </BS.FormControl.Static>);
@@ -99,6 +118,12 @@ const LinkField = ({ uri, resources, endpoint }) => {
   return (<Fa name="spinner" spin />);
 };
 
+LinkField.propTypes = {
+  endpoint: PropTypes.string,
+  resources: PropTypes.arrayOf(PropTypes.object),
+  uri: PropTypes.string,
+};
+
 const TimeDisplay = ({ seconds }) => {
   const convertedTime = Moment.duration(seconds, 'seconds');
   let displayTime = `${convertedTime.seconds()} s`;
@@ -114,6 +139,10 @@ const TimeDisplay = ({ seconds }) => {
   return (
     <span>{displayTime}</span>
   );
+};
+
+TimeDisplay.propTypes = {
+  seconds: PropTypes.number,
 };
 
 const EditRun = ({
@@ -501,5 +530,20 @@ const EditRun = ({
   </BS.Form>
 
 );
+
+EditRun.propTypes = {
+  apiErrors: PropTypes.array,
+  downloadModel: PropTypes.object,
+  fields: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  onDelete: PropTypes.func,
+  onModelDownload: PropTypes.func,
+  orders: PropTypes.arrayOf(PropTypes.object),
+  postProcessors: PropTypes.arrayOf(PropTypes.object),
+  prints: PropTypes.arrayOf(PropTypes.object),
+  printers: PropTypes.arrayOf(PropTypes.object),
+  printerTypes: PropTypes.arrayOf(PropTypes.object),
+  statuses: PropTypes.arrayOf(PropTypes.string),
+};
 
 export default EditRun;
