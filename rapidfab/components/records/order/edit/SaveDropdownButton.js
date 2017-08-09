@@ -1,7 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import { ButtonToolbar, SplitButton, MenuItem } from 'react-bootstrap';
+import {
+  ButtonToolbar,
+  MenuItem,
+  OverlayTrigger,
+  SplitButton,
+  Tooltip,
+} from 'react-bootstrap';
 
 const SaveButtonTitle = () => (
   <span>
@@ -9,30 +16,46 @@ const SaveButtonTitle = () => (
   </span>
 );
 
-const SaveDropdownButton = ({
-  onSubmit = () => {},
-  onDelete = () => {},
-}) => (
+const SaveTooltip = (
+  <Tooltip id="saved">
+    Saved
+  </Tooltip>
+);
+
+const SaveDropdownButton = ({ onSubmit, onDelete }) => (
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
-      <SplitButton
-        id="actions"
-        type="submit"
-        bsStyle="success"
-        bsSize="small"
-        title={<SaveButtonTitle />}
-        onClick={onSubmit}
+      <OverlayTrigger
+        delay={1000}
+        trigger="click"
+        placement="bottom"
+        overlay={SaveTooltip}
+        rootClose
       >
-        <MenuItem
-          eventKey={1}
-          onClick={onDelete}
+        <SplitButton
+          id="actions"
+          type="submit"
+          bsStyle="success"
+          bsSize="small"
+          title={<SaveButtonTitle />}
+          onClick={onSubmit}
         >
-          <Fa name="ban" />
-          <FormattedMessage id="button.delete" defaultMessage="Delete" />
-        </MenuItem>
-      </SplitButton>
+          <MenuItem
+            eventKey={1}
+            onClick={onDelete}
+          >
+            <Fa name="ban" />
+            <FormattedMessage id="button.delete" defaultMessage="Delete" />
+          </MenuItem>
+        </SplitButton>
+      </OverlayTrigger>
     </div>
   </ButtonToolbar>
 );
+
+SaveDropdownButton.propTypes = {
+  onSubmit: PropTypes.func,
+  onDelete: PropTypes.func,
+};
 
 export default SaveDropdownButton;
