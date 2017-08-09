@@ -1,5 +1,5 @@
-let expect = require('expect'),
-  config = require('rapidfab/config');
+const expect = require('expect');
+const config = require('rapidfab/config');
 
 describe('config', () => {
   describe('#SENTRY_DSN', () => {

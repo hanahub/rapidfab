@@ -42,7 +42,7 @@ export const getStateUploadModel = state => state.uploadModel;
 export const getStateLocationFilter = state => state.locationFilter.location;
 
 export const getResourceByUuid = createSelector(
-  [(state, uuid) => { uuid; }, getStateResources],
+  [getPredicate, getStateResources],
   (predicate, resources) => _.find(resources, predicate),
 );
 
@@ -113,7 +113,9 @@ export const getInitialValuesBureau = createSelector(
 export const getSession = createSelector(
   [getStateSessions, getStateResources],
   (sessions, resources) => {
-    if (sessions.length < 1) return;
+    if (sessions.length < 1) {
+      return null;
+    }
     const sessionUuid = sessions[0];
     return resources[sessionUuid];
   },
@@ -260,6 +262,7 @@ export const getTraceabilityReportForPrint = createSelector(
     if (print) {
       return _.find(reports, { print: print.uri });
     }
+    return null;
   },
 );
 
@@ -268,7 +271,7 @@ export const getStepsForTemplate = createSelector(
   (template, uuids, resources) => {
     const steps = _.reduce(uuids, (results, uuid) => {
       const step = resources[uuid];
-      if (step && template && step.template && template.uri && step.template == template.uri) {
+      if (step && template && step.template && template.uri && step.template === template.uri) {
         results.push(step);
       }
       return results;
@@ -291,7 +294,7 @@ export const getPrintsWithNames = createSelector(
     let name = extractUuid(print.uri);
     if (model && order) {
       const { quantity } = lineItem;
-      const { copy, process_step_position } = print;
+      const { copy } = print;
       name = `${order.name}[${model.name}] (${copy}/${quantity})`;
     }
     return Object.assign(
@@ -312,7 +315,7 @@ export const getPrintsForOrder = createSelector(
   (order, uuids, resources) => {
     const prints = _.reduce(uuids, (results, uuid) => {
       const print = resources[uuid];
-      if (print && order && print.order == order.uri) {
+      if (print && order && print.order === order.uri) {
         results.push(print);
       }
       return results;
@@ -341,10 +344,10 @@ export const getEvents = createSelector(
 );
 
 export const getEventsForPrint = createSelector(
-  [getPredicate, getPrints, getEvents, getStateResources],
-  (print, prints, events, resources) => {
+  [getPredicate, getPrints, getEvents],
+  (print, prints, events) => {
     if (print) {
-      const relevantPrints = _.filter(prints, p => print.line_item == p.line_item);
+      const relevantPrints = _.filter(prints, p => print.line_item === p.line_item);
 
       const uris = _.compact([
         print.order,
@@ -354,6 +357,7 @@ export const getEventsForPrint = createSelector(
 
       return _.filter(events, event => _.includes(uris, event.reference));
     }
+    return null;
   },
 );
 
@@ -389,7 +393,7 @@ export const getPrintsForRun = createSelector(
   [getPredicate, getStateResources, getPrints],
   (run, resources, prints) => {
     const runs = _.reduce(prints, (results, print) => {
-      if (run && (print.run == run.uri || print.post_processor_run == run.uri)) {
+      if (run && (print.run === run.uri || print.post_processor_run === run.uri)) {
         results.push(print);
       }
       return results;
@@ -446,7 +450,7 @@ export const getLineItemsForRunNew = createSelector(
         const supportMaterial = materials.find(material => (
           material.uri === lineItem.materials.support
         ));
-        const model = models.find(model => (
+        const lineItemModel = models.find(model => (
           model.uri === lineItem.model
         ));
         const lineItemPrints = prints.filter(print => (
@@ -455,7 +459,7 @@ export const getLineItemsForRunNew = createSelector(
 
         if (
           baseMaterial &&
-          model &&
+          lineItemModel &&
           lineItemPrints.length &&
           (lineItem.status === 'confirmed' || lineItem.status === 'printing')
         ) {
@@ -464,7 +468,7 @@ export const getLineItemsForRunNew = createSelector(
               base: baseMaterial,
               support: supportMaterial,
             },
-            model,
+            lineItemModel,
           });
           hydratedRecord.prints = lineItemPrints.map(print => (
             Object.assign({}, print, { lineItem: hydratedRecord })
@@ -487,8 +491,11 @@ export const getMachinesForQueues = createSelector(
   [getPrinters, getPostProcessors, getModelers],
   (printers, postProcessors, modelers) => _.map(_.concat(printers, postProcessors), (machine) => {
     const modeler = _.find(modelers, ['uri', machine.modeler]);
-    machine.status = modeler ? modeler.status : 'unknown';
-    return machine;
+    return Object.assign(
+      {},
+      machine,
+      { status: (modeler ? modeler.status : 'unknown') },
+    );
   }),
 );
 

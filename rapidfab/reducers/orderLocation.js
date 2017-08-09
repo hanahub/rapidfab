@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 
 export const initialState = {

@@ -22,7 +22,7 @@ export function hydrateRecord(record) {
 
 export function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
-    if (handlers.hasOwnProperty(action.type)) {
+    if (Object.prototype.hasOwnProperty.call(handlers, action.type)) {
       return handlers[action.type](state, action);
     }
     return state;
@@ -32,7 +32,7 @@ export function createReducer(initialState, handlers) {
 function makeGet(host, resource) {
   const typePrefix = `${host}_${resource}`.toUpperCase();
   return {
-    [`${typePrefix}_GET_REQUEST`](state, action) {
+    [`${typePrefix}_GET_REQUEST`](state) {
       return Object.assign({}, state, {
         uxFetching: true,
         uxErrors: [],
@@ -64,7 +64,7 @@ function makeGet(host, resource) {
 function makeList(host, resource) {
   const typePrefix = `${host}_${resource}`.toUpperCase();
   return {
-    [`${typePrefix}_LIST_REQUEST`](state, action) {
+    [`${typePrefix}_LIST_REQUEST`](state) {
       return Object.assign({}, state, {
         uxFetching: true,
         uxErrors: [],
@@ -95,7 +95,7 @@ function makeList(host, resource) {
 function makePut(host, resource) {
   const typePrefix = `${host}_${resource}`.toUpperCase();
   return {
-    [`${typePrefix}_PUT_REQUEST`](state, action) {
+    [`${typePrefix}_PUT_REQUEST`](state) {
       return Object.assign({}, state, {
         uxFetching: true,
         uxErrors: [],
@@ -127,7 +127,7 @@ function makePut(host, resource) {
 function makePost(host, resource) {
   const typePrefix = `${host}_${resource}`.toUpperCase();
   return {
-    [`${typePrefix}_POST_REQUEST`](state, action) {
+    [`${typePrefix}_POST_REQUEST`](state) {
       return Object.assign({}, state, {
         uxFetching: true,
         uxErrors: [],
@@ -162,7 +162,7 @@ function makePost(host, resource) {
 function makeDelete(host, resource) {
   const typePrefix = `${host}_${resource}`.toUpperCase();
   return {
-    [`${typePrefix}_DELETE_REQUEST`](state, action) {
+    [`${typePrefix}_DELETE_REQUEST`](state) {
       return Object.assign({}, state, {
         uxFetching: true,
         uxErrors: [],
@@ -196,16 +196,17 @@ export function makeApiReducers(resources) {
     uxFetching: false,
     uxErrors: [],
   };
-  return _.reduce(resources, (result, resources, host) => {
-    for (const resource of resources) {
-      result[resource] = createReducer(initialState, _.assign(
+  return _.reduce(resources, (result, resourceNames, host) => {
+    const newResult = result;
+    resourceNames.forEach((resource) => {
+      newResult[resource] = createReducer(initialState, _.assign(
         makeGet(host, resource),
         makeList(host, resource),
         makePost(host, resource),
         makePut(host, resource),
         makeDelete(host, resource),
       ));
-    }
-    return result;
+    });
+    return newResult;
   }, {});
 }

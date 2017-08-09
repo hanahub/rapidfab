@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const Reducer = require('rapidfab/reducers/api');
-const Constants = require('rapidfab/constants');
 const Uuid = require('node-uuid');
 const Api = require('rapidfab/api');
 
@@ -17,19 +16,13 @@ describe('api', () => {
       const action = {
         type: 'SOME_UNKNOWN_ACTION',
       };
-      const initialMethodState = {
-        fetching: false,
-        errors: [],
-        uuid: null,
-        filters: null,
-        payload: null,
-      };
       const expected = _.reduce(Api.RESOURCES, (result, resources, host) => {
-        result[host] = {};
+        const newResult = result;
+        newResult[host] = {};
         _.forEach(resources, (resource) => {
-          result[host][resource] = [];
+          newResult[host][resource] = [];
         });
-        return result;
+        return newResult;
       }, {});
       const results = Reducer.default(undefined, action);
       expect(results).to.eql(expected);

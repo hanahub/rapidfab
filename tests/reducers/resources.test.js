@@ -1,7 +1,5 @@
-const _ = require('lodash');
 const expect = require('expect');
 const Reducer = require('rapidfab/reducers/resources');
-const Constants = require('rapidfab/constants');
 const Uuid = require('node-uuid');
 
 describe('resources', () => {
