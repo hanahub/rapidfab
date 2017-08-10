@@ -450,7 +450,7 @@ export const getLineItemsForRunNew = createSelector(
         const supportMaterial = materials.find(material => (
           material.uri === lineItem.materials.support
         ));
-        const lineItemModel = models.find(model => (
+        const model = models.find(model => (
           model.uri === lineItem.model
         ));
         const lineItemPrints = prints.filter(print => (
@@ -459,7 +459,7 @@ export const getLineItemsForRunNew = createSelector(
 
         if (
           baseMaterial &&
-          lineItemModel &&
+          model &&
           lineItemPrints.length &&
           (lineItem.status === 'confirmed' || lineItem.status === 'printing')
         ) {
@@ -468,7 +468,7 @@ export const getLineItemsForRunNew = createSelector(
               base: baseMaterial,
               support: supportMaterial,
             },
-            lineItemModel,
+            model,
           });
           hydratedRecord.prints = lineItemPrints.map(print => (
             Object.assign({}, print, { lineItem: hydratedRecord })
