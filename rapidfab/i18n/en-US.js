@@ -165,6 +165,7 @@ export default {
   'field.contact': 'Contact',
   'field.cost': 'Cost',
   'field.costPerCC': 'Cost Per CC',
+  'field.costPerMinute': 'Cost Per Minute',
   'field.created': 'Created',
   'field.currency': 'Currency',
   'field.date': 'Date',

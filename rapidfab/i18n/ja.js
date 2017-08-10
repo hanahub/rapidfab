@@ -161,6 +161,7 @@ export default {
   'field.color': '色',
   'field.cost': '費用',
   'field.costPerCC': 'CC 単価',
+  'field.costPerMinute': 'Cost Per Minute',
   'field.currency': '通貨',
   'field.commercialContact': '商用のお問い合わせ',
   'field.commercialPhone': '商用電話',
