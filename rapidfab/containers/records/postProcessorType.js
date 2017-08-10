@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import PostProcessorTypeComponent from 'rapidfab/components/records/postProcessorType';
 import { reduxForm } from 'redux-form';
@@ -54,6 +55,12 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
+
+PostProcessorTypeContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  uuid: PropTypes.string.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state, props) {
   return {
