@@ -21,7 +21,6 @@ import {
   ORDER_TYPE_MAPPING,
 } from 'rapidfab/mappings';
 import {
-  FormattedMessage,
   FormattedDate,
   FormattedTime,
 } from 'rapidfab/i18n';
@@ -73,7 +72,6 @@ const ResourceValue = connect(
     const resource = state.resources[extractUuid(ownProps.uri)];
     return { resource };
   })(({ resource, uri }) => {
-  const uuid = extractUuid(uri);
   if (resource && resource.name) {
     const { name, snapshot_content } = resource;
     if (snapshot_content) { return <a href={snapshot_content} target="_blank">{name}</a>; }

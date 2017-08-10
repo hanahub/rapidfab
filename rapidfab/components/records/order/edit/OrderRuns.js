@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import {
   Col,

@@ -1,7 +1,5 @@
 import React from 'react';
 import * as BS from 'react-bootstrap';
-import Grid, {
-} from 'rapidfab/components/grid';
 
 const Home = ({}) => (
   <BS.Grid fluid>

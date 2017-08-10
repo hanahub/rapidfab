@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import { MODELER_STATUS_MAP } from 'rapidfab/constants';
 import Locations from 'rapidfab/components/locations';
@@ -91,7 +91,7 @@ class Queues extends Component {
       resources: this.fetchResources,
       events: this.fetchEvents,
       schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      resourceRender: (resourceObj, labelTds, bodyTds) => {
+      resourceRender: (resourceObj, labelTds) => {
         const cell = labelTds.find('.fc-cell-text');
         cell.wrapInner(`<a href="${resourceObj.url}">`);
         if (resourceObj.type === 'printer') {
@@ -108,7 +108,7 @@ class Queues extends Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.machines !== this.props.machines) {
       jQuery('#scheduler').fullCalendar('refetchResources');
     }

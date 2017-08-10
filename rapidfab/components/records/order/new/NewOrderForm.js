@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { reduxForm } from 'redux-form';
 import {
   FormControl,
@@ -7,9 +7,9 @@ import {
   ControlLabel,
 } from 'react-bootstrap';
 
-import { getThirdPartyProviders, getShippings, getUsers } from 'rapidfab/selectors';
+import { getShippings, getUsers } from 'rapidfab/selectors';
 import { Currencies } from 'rapidfab/constants';
-import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
+import { FormattedMessage } from 'rapidfab/i18n';
 import {
   FormControlTextArea,
   FormControlTextCareful }
@@ -21,7 +21,6 @@ import {
 } from 'rapidfab/mappings';
 
 import Feature from 'rapidfab/components/Feature';
-import LineItem from './LineItem';
 
 const fields = [
   'channel_representative_name',

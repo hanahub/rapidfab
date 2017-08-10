@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import {

@@ -30,13 +30,10 @@ function reduceResource(state, action) {
 function reduceMethod(state, action) {
   const {
     type,
-    api,
     uuid,
     json,
     headers,
   } = action;
-
-  const method = api.method.toLowerCase();
 
   switch (type) {
     case Constants.RESOURCE_POST_SUCCESS:

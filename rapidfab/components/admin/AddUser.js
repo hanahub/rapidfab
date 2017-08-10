@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 
 class AddUser extends Component {
@@ -16,12 +16,9 @@ class AddUser extends Component {
     event.preventDefault();
 
     const bureau = this.props.bureau.uri;
-    const user = this.props.user.uri;
     const {
       userEmail,
       userName,
-      userRole,
-      userLocation,
     } = this.state;
 
     const payload = {

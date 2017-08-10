@@ -1,8 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
-import Config from 'rapidfab/config';
 import PostProcessorTypeComponent from 'rapidfab/components/records/postProcessorType';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';

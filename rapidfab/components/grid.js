@@ -7,9 +7,7 @@ import {
   FormattedDate,
   FormattedDateTime,
   FormattedNumber,
-  FormattedMessage,
   FormattedVolume,
-  FormattedDuration,
 } from 'rapidfab/i18n';
 import StatusDot from 'rapidfab/components/statusDot';
 

@@ -10,8 +10,6 @@ import {
 import Grid, {
   IdColumn,
   MappedColumn,
-  NumberColumn,
-  ImageColumn,
   DateTimeColumn,
 } from 'rapidfab/components/grid';
 

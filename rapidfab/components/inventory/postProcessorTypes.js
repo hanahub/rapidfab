@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { FormattedMessage } from 'react-intl';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 
-const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers, materials }) => (
+const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) => (
   <Grid
     data={postProcessorTypes}
     columns={[

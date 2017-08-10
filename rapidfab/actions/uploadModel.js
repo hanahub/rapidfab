@@ -1,4 +1,3 @@
-import Actions from 'rapidfab/actions';
 import Constants from 'rapidfab/constants';
 import { postForm } from 'rapidfab/api/makeApi';
 
@@ -23,7 +22,7 @@ export function storePayload(payload) {
   };
 }
 
-export function clearState(payload) {
+export function clearState() {
   return {
     type: Constants.UPLOAD_MODEL_CLEAR,
   };

@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
-import Error from 'rapidfab/components/error';
-import Fa from 'react-fontawesome';
 import Toggle from 'react-bootstrap-toggle';
 import NewFeature from './AddFeature';
 import AddUser from './AddUser';
@@ -19,7 +17,7 @@ class Dashboard extends Component {
     this.handleSelect = this.handleSelect.bind(this);
   }
 
-  onToggle(updatedFeature, updatedFeatureIndex) {
+  onToggle(updatedFeature) {
     const feature = {
       uuid: updatedFeature.uuid,
       enabled: !updatedFeature.enabled,

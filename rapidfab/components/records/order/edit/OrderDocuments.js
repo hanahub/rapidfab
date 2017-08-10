@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Fa from 'react-fontawesome';
 import {
@@ -12,9 +11,6 @@ import {
 import Actions from 'rapidfab/actions';
 import { getOrderDocuments } from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
-import { postForm } from 'rapidfab/api/makeApi';
-
-import Loading from 'rapidfab/components/Loading';
 
 const OrderDocument = ({ download, name, onDelete, uuid }) => (
   <ListGroupItem>
@@ -57,10 +53,8 @@ class OrderDocuments extends React.Component {
 
   async onDelete(uuid) {
     const { dispatch, order } = this.props;
-    const documentResponse = await dispatch(
-      Actions.Api.wyatt['order-document'].delete(uuid));
-    const orderResponse = await dispatch(
-      Actions.Api.wyatt.order.get(extractUuid(order)));
+    await dispatch(Actions.Api.wyatt['order-document'].delete(uuid));
+    await dispatch(Actions.Api.wyatt.order.get(extractUuid(order)));
   }
 
   async uploadDocument() {
@@ -80,15 +74,13 @@ class OrderDocuments extends React.Component {
     const newDocument = documentResponse.json.uri;
     this.setState({ newDocument });
 
-    const uploadResponse = await dispatch(
-      Actions.UploadModel.upload(uploadLocation, upload));
-    const orderResponse = await dispatch(
-      Actions.Api.wyatt.order.get(extractUuid(order)));
+    await dispatch(Actions.UploadModel.upload(uploadLocation, upload));
+    await dispatch(Actions.Api.wyatt.order.get(extractUuid(order)));
   }
 
   render() {
     const { onChange, onDelete, uploadDocument } = this;
-    const { loading, upload } = this.state;
+    const { upload } = this.state;
     const { orderDocuments } = this.props;
 
     return (

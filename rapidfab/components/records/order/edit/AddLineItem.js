@@ -50,7 +50,6 @@ const AddLineItemPresentation = ({
   handleFileChange,
   handleInputChange,
   itar,
-  notes,
   onSubmit,
   providers,
   quantity,
@@ -205,7 +204,7 @@ class AddLineItem extends Component {
   constructor(props) {
     super(props);
 
-    const { baseMaterials, supportMaterials, templates } = props;
+    const { baseMaterials, templates } = props;
 
     const baseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
     const itar = false;
@@ -245,7 +244,6 @@ class AddLineItem extends Component {
       baseMaterial,
       itar,
       model,
-      notes,
       quantity,
       supportMaterial,
       template,

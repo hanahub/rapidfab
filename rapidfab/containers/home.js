@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import HomeComponent from 'rapidfab/components/home';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { getRunStatusChart } from 'rapidfab/selectors';
 import * as Selectors from 'rapidfab/selectors';
 

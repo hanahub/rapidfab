@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import RunComponent from 'rapidfab/components/records/run/new';
@@ -36,7 +36,7 @@ class RunContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (bureau, uuid) => {
+    onInitialize: (bureau) => {
       dispatch(Actions.Api.wyatt['line-item'].list({ bureau: bureau.uri }))
         .then((response) => {
           const lineItems = response.json.resources;

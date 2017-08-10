@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import { FormattedMessage, FormattedDateTime } from 'rapidfab/i18n';
+import { FormattedDateTime } from 'rapidfab/i18n';
 import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';

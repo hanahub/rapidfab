@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Version from 'rapidfab/version';
 
 export default class NotFound extends Component {
   render() {

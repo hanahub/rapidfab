@@ -1,11 +1,9 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
-import { connect } from 'react-redux';
 import RunsComponent from 'rapidfab/components/records/run/edit';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
-import Moment from 'moment';
 
 const fields = [
   'actuals.end',

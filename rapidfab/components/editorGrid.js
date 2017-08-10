@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
-import Griddle from 'griddle-react';
 import Grid from 'rapidfab/components/grid';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';

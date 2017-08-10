@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 
 class ModifyUser extends Component {
@@ -15,12 +15,9 @@ class ModifyUser extends Component {
   onSubmit(event) {
     event.preventDefault();
     const bureau = this.props.bureau.uri;
-    const user = this.props.modifyUser.uri;
     const {
       userEmail,
       userName,
-      userRole,
-      userLocation,
     } = this.state;
 
     const payload = {

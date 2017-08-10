@@ -4,7 +4,6 @@ import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import ThirdPartyProvidersComponent from 'rapidfab/components/inventory/thirdPartyProviders';
 import * as Selectors from 'rapidfab/selectors';
-import Config from 'rapidfab/config';
 
 class ThirdPartyProvidersContainer extends Component {
   componentDidMount() {

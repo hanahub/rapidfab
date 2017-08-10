@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
-import { getThirdPartyProviders, getShippings, getUsers } from 'rapidfab/selectors';
+import { getShippings, getUsers } from 'rapidfab/selectors';
 import { Currencies } from 'rapidfab/constants';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import {

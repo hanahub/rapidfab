@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import Fa from 'react-fontawesome';
 import { Grid } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
