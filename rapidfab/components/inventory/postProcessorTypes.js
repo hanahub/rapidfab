@@ -38,16 +38,29 @@ const Loading = () => (
   </div>
 );
 
-const PostProcessorTypes = ({ postProcessorTypes, fetching, apiErrors, manufacturers, materials }) => (
+const PostProcessorTypes = ({
+  postProcessorTypes,
+  fetching,
+  apiErrors,
+  manufacturers,
+  materials
+}) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+            <Fa name="list"/>
+            {' '}
+            <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
-            <Fa name="object-group" /> <FormattedMessage id="inventory.postProcessorTypes" defaultMessage="Post Processor Types" />
+            <Fa name="object-group"/>
+            {' '}
+            <FormattedMessage
+              id="inventory.postProcessorTypes"
+              defaultMessage="Post Processor Types"
+            />
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>

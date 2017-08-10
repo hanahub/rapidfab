@@ -75,7 +75,12 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
             <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/locations">
-            <Fa name="map-marker" /> <FormattedMessage id="inventory.locations" defaultMessage="Locations" />
+            <Fa name="map-marker"/>
+            {' '}
+            <FormattedMessage
+              id="inventory.locations"
+              defaultMessage="Locations"
+            />
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -83,8 +88,18 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/location" className="pull-right">
-          <Fa name="plus" /> <FormattedMessage id="record.location.add" defaultMessage="Add Location" />
+        <BS.Button
+          bsStyle="primary"
+          bsSize="small"
+          href="#/records/location"
+          className="pull-right"
+        >
+          <Fa name="plus"/>
+          {' '}
+          <FormattedMessage
+            id="record.location.add"
+            defaultMessage="Add Location"
+          />
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -99,7 +114,11 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading /> : <LocationsGrid locations={locations} users={users} />}
+        { fetching ?
+          <Loading />
+          :
+          <LocationsGrid locations={locations} users={users} />
+        }
       </BS.Col>
     </BS.Row>
 

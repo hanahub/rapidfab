@@ -62,10 +62,20 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+            <Fa name="list"/>
+            {' '}
+            <FormattedMessage
+              id="inventory"
+              defaultMessage="Inventory"
+            />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/materials">
-            <Fa name="object-group" /> <FormattedMessage id="inventory.materials" defaultMessage="Materials" />
+            <Fa name="object-group"/>
+            {' '}
+            <FormattedMessage
+              id="inventory.materials"
+              defaultMessage="Materials"
+            />
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -73,8 +83,18 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/material" className="pull-right">
-          <Fa name="plus" /> <FormattedMessage id="record.material.add" defaultMessage="Add Material" />
+        <BS.Button
+          bsStyle="primary"
+          bsSize="small"
+          href="#/records/material"
+          className="pull-right"
+        >
+          <Fa name="plus"/>
+          {' '}
+          <FormattedMessage
+            id="record.material.add"
+            defaultMessage="Add Material"
+          />
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -89,7 +109,14 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading /> : <MaterialsGrid materials={materials} manufacturers={manufacturers} />}
+        { fetching ?
+          <Loading />
+          :
+          <MaterialsGrid
+            materials={materials}
+            manufacturers={manufacturers}
+          />
+        }
       </BS.Col>
     </BS.Row>
 

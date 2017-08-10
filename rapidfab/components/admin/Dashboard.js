@@ -67,7 +67,10 @@ class Dashboard extends Component {
             {user_detail.name}
           </td>
           <td>
-            { Array.isArray(user_detail.emails) ? user_detail.emails[0] : user_detail.emails }
+            { Array.isArray(user_detail.emails) ?
+                user_detail.emails[0]
+                : user_detail.emails
+            }
           </td>
           <td>
             {locations[0] ? locations[0].name : null}
@@ -76,7 +79,12 @@ class Dashboard extends Component {
               Manager
           </td>
           <td>
-            <ModifyUser modifyUser={user_detail} locations={locations} bureau={this.props.bureau} {...this.props} />
+            <ModifyUser
+              modifyUser={user_detail}
+              locations={locations}
+              bureau={this.props.bureau}
+              {...this.props}
+            />
           </td>
         </tr>
       ));
@@ -87,7 +95,12 @@ class Dashboard extends Component {
       <BS.Grid fluid>
         <BS.PageHeader>Admin Dashboard</BS.PageHeader>
         <div>
-          <BS.Nav bsStyle="tabs" justified activeKey={this.state.selectedKey} onSelect={this.handleSelect}>
+          <BS.Nav
+            bsStyle="tabs"
+            justified
+            activeKey={this.state.selectedKey}
+            onSelect={this.handleSelect}
+          >
             {
               this.shouldShowAdminFeatures() ?
                 <BS.NavItem eventKey={1} href="/">Features</BS.NavItem> :
