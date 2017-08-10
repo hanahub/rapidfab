@@ -13,6 +13,7 @@ const fields = [
   'materials',
   'manufacturer',
   'bureau',
+  'cost',
 ];
 
 class PostProcessorTypeContainer extends Component {

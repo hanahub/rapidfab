@@ -64,6 +64,12 @@ const PostProcessorTypeForm = ({ fields, bureaus, handleSubmit, onDelete, manufa
             <BS.ControlLabel><FormattedMessage id="field.description" defaultMessage="Description" />:</BS.ControlLabel>
             <BS.FormControl name="description" type="text" {...fields.description} />
           </BS.FormGroup>
+          <BS.FormGroup controlId="uxCost">
+            <BS.ControlLabel>
+              <FormattedMessage id="field.costPerMinute" defaultMessage="Cost Per Minute" />:
+            </BS.ControlLabel>
+            <BS.FormControl name="cost" type="number" {...fields.cost} />
+          </BS.FormGroup>
           <BS.FormGroup controlId="uxMaterials">
             <BS.ControlLabel><FormattedMessage id="field.materials" defaultMessage="Materials" />:</BS.ControlLabel>
             <BS.FormControl componentClass="select" multiple required {...fields.materials}>
