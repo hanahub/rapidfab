@@ -41,8 +41,8 @@ export const StatusColumn = (field, records, mapping) => {
 
     if (record) {
       const status = mapping[record.status].status;
-      const message = mapping[record.status].message; // undefined if message isnt passed, this is fine
-
+      // undefined if message isnt passed, this is fine
+      const message = mapping[record.status].message;
       return <StatusDot status={status} message={message} />;
     }
     return <StatusDot status="unknown" message="Modeler not found" />;
@@ -51,7 +51,8 @@ export const StatusColumn = (field, records, mapping) => {
 
 export const MappedColumn = (field, mapping) =>
   // field: field to search for on rowdata e.g. "status"
-  // mapping: an object mapping with keys matching records, and values being i18n formatted messages.
+  // mapping: an object mapping with keys matching records,
+  // and values being i18n formatted messages.
   //     if no match is found in the mapping, throws an error.
   ({ rowData }) => {
     const message = mapping[rowData[field]];
@@ -105,7 +106,17 @@ export const ColorColumn = ({ data }) => (
   <div style={{ margin: '0 auto', width: 24, height: 24, backgroundColor: data }} />
 );
 
-const Grid = ({ data, columnMeta, rowMeta, columns, useFixedHeader, bodyHeight, showTableHeading, initialSort = null, initialSortAscending = true }) => (
+const Grid = ({
+  data,
+  columnMeta,
+  rowMeta,
+  columns,
+  useFixedHeader,
+  bodyHeight,
+  showTableHeading,
+  initialSort = null,
+  initialSortAscending = true
+}) => (
   <Griddle
     bodyHeight={bodyHeight}
     columns={columns}

@@ -11,7 +11,9 @@ class Feature extends Component {
 
   render() {
     const { children, featureName, features } = this.props;
-    const isFeatureEnabled = features.find(feature => feature.name === featureName && feature.enabled);
+    const isFeatureEnabled = features.find(feature => (
+      feature.name === featureName && feature.enabled
+    ));
     return (
       <div>
         { isFeatureEnabled ?

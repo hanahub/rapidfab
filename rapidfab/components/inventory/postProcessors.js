@@ -28,8 +28,17 @@ const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations }) =
       displayName: <FormattedMessage id="field.duration" defaultMessage="Duration" />,
     }, {
       columnName: 'post_processor_type',
-      customComponent: IdColumn('post-processor-type', 'post_processor_type', postProcessorTypes, 'name'),
-      displayName: <FormattedMessage id="field.postProcessorType" defaultMessage="Post Processor Type" />,
+      customComponent: IdColumn(
+        'post-processor-type',
+        'post_processor_type',
+        postProcessorTypes, 'name'
+      ),
+      displayName: (
+        <FormattedMessage
+          id="field.postProcessorType"
+          defaultMessage="Post Processor Type"
+        />
+      ),
     }, {
       columnName: 'location',
       customComponent: IdColumn('location', 'location', locations, 'name'),
@@ -44,16 +53,32 @@ const Loading = () => (
   </div>
 );
 
-const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetching, apiErrors }) => (
+const PostProcessors = ({
+  postProcessors,
+  locations,
+  postProcessorTypes,
+  fetching,
+  apiErrors
+}) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+            <Fa name="list"/>
+            {' '}
+            <FormattedMessage
+              id="inventory"
+              defaultMessage="Inventory"
+            />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processors">
-            <Fa name="object-ungroup" /> <FormattedMessage id="inventory.postProcessors" defaultMessage="Post Processors" />
+            <Fa name="object-ungroup"/>
+            {' '}
+            <FormattedMessage
+              id="inventory.postProcessors"
+              defaultMessage="Post Processors"
+            />
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -61,8 +86,18 @@ const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetchin
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/post-processor" className="pull-right">
-          <Fa name="plus" /> <FormattedMessage id="record.postProcessor.add" defaultMessage="Add Post Processor" />
+        <BS.Button
+          bsStyle="primary"
+          bsSize="small"
+          href="#/records/post-processor"
+          className="pull-right"
+        >
+          <Fa name="plus"/>
+          {' '}
+          <FormattedMessage
+            id="record.postProcessor.add"
+            defaultMessage="Add Post Processor"
+          />
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -77,7 +112,15 @@ const PostProcessors = ({ postProcessors, locations, postProcessorTypes, fetchin
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading /> : <PostProcessorsGrid postProcessors={postProcessors} locations={locations} postProcessorTypes={postProcessorTypes} />}
+        { fetching ?
+          <Loading />
+          :
+          <PostProcessorsGrid
+            postProcessors={postProcessors}
+            locations={locations}
+            postProcessorTypes={postProcessorTypes}
+          />
+        }
       </BS.Col>
     </BS.Row>
 

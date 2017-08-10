@@ -140,9 +140,9 @@ function mapStateToProps(state) {
     if (!print.process_step) {
       return;
     }
-    const step = _.find(processSteps, step => (print.process_step == step.uri));
+    const step = _.find(processSteps, step => (print.process_step === step.uri));
 
-    if (step && _.find(printerTypes, type => (type.uri == step.process_type_uri))) {
+    if (step && _.find(printerTypes, type => (type.uri === step.process_type_uri))) {
       return print;
     }
   });

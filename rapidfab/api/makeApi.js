@@ -102,7 +102,15 @@ function makeApi(hostResources) {
 }
 
 
-export const postForm = function (url, payload, files, method, withCredentials, contentType, progressCallback) {
+export const postForm = function (
+  url,
+  payload,
+  files,
+  method,
+  withCredentials,
+  contentType,
+  progressCallback
+) {
   method = method || 'POST';
 
   const promise = new Promise(((resolve, reject) => {

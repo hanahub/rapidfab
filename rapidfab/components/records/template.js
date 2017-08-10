@@ -156,7 +156,7 @@ class StepFormModal extends Component {
                 <BS.Radio
                   name="notes"
                   onChange={this.handleChange}
-                  checked={step.notes == 'optional'}
+                  checked={step.notes === 'optional'}
                   value="optional"
                   inline
                 >
@@ -165,7 +165,7 @@ class StepFormModal extends Component {
                 <BS.Radio
                   name="notes"
                   onChange={this.handleChange}
-                  checked={step.notes == 'required'}
+                  checked={step.notes === 'required'}
                   value="required"
                   inline
                 >
@@ -174,7 +174,7 @@ class StepFormModal extends Component {
                 <BS.Radio
                   name="notes"
                   onChange={this.handleChange}
-                  checked={step.notes == 'hidden'}
+                  checked={step.notes === 'hidden'}
                   value="hidden"
                   inline
                 >
@@ -349,7 +349,7 @@ class Template extends Component {
     // find deleted steps, save them for later
     const existingSteps = _.filter(steps, step => (_.has(step, 'uri')));
     const deletedSteps = _.compact(_.map(this.props.steps, (step) => {
-      if (!_.find(existingSteps, existingStep => (step.uri == existingStep.uri))) {
+      if (!_.find(existingSteps, existingStep => (step.uri === existingStep.uri))) {
         return step.uuid;
       }
     }));
@@ -359,7 +359,7 @@ class Template extends Component {
       if (!step.uri) {
         uris.push(this.props.submitStep(step).then(resp => resp.headers.location));
       } else {
-        const oldStep = _.find(this.props.steps, oldStep => (oldStep.uri == step.uri));
+        const oldStep = _.find(this.props.steps, oldStep => (oldStep.uri === step.uri));
 
         if (oldStep) {
           if (_.difference(_.values(step), _.values(oldStep)).length) {
@@ -420,14 +420,14 @@ class Template extends Component {
   moveRow(index, direction) {
     // first ignore anything thats already at the top going up
     // or at the bottom going down
-    if (index == 0 && direction == 'up') {
+    if (index === 0 && direction === 'up') {
       return;
-    } else if (this.state.steps.length - 1 == index && direction == 'down') {
+    } else if (this.state.steps.length - 1 === index && direction === 'down') {
       return;
     }
 
     const steps = _.cloneDeep(this.state.steps);
-    const newPosition = direction == 'up' ? index - 1 : index + 1;
+    const newPosition = direction === 'up' ? index - 1 : index + 1;
 
     const temp = steps[newPosition];
     steps[newPosition] = steps[index];

@@ -34,11 +34,21 @@ const ManufacturersGrid = ({ records }) => (
       displayName: <FormattedMessage id="field.address" defaultMessage="Address" />,
     }, {
       columnName: 'contact',
-      displayName: <FormattedMessage id="field.commercialContact" defaultMessage="Commercial Contact" />,
+      displayName: (
+        <FormattedMessage
+          id="field.commercialContact"
+          defaultMessage="Commercial Contact"
+        />
+      ),
       customComponent: ContactColumn,
     }, {
       columnName: 'support',
-      displayName: <FormattedMessage id="field.supportContact" defaultMessage="Support Contact" />,
+      displayName: (
+        <FormattedMessage
+          id="field.supportContact"
+          defaultMessage="Support Contact"
+        />
+      ),
       customComponent: ContactColumn,
     }]}
   />
@@ -56,10 +66,17 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+            <Fa name="list" />
+            {' '}
+            <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/manufacturers">
-            <Fa name="industry" /> <FormattedMessage id="inventory.manufacturers" defaultMessage="Manufacturers" />
+            <Fa name="industry"/>
+            {' '}
+            <FormattedMessage
+              id="inventory.manufacturers"
+              defaultMessage="Manufacturers"
+            />
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -67,8 +84,18 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/manufacturer" className="pull-right">
-          <Fa name="plus" /> <FormattedMessage id="record.manufacturer.add" defaultMessage="Add Manufacturer" />
+        <BS.Button
+          bsStyle="primary"
+          bsSize="small"
+          href="#/records/manufacturer"
+          className="pull-right"
+        >
+          <Fa name="plus"/>
+          {' '}
+          <FormattedMessage
+            id="record.manufacturer.add"
+            defaultMessage="Add Manufacturer"
+          />
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -83,7 +110,12 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading /> : <ManufacturersGrid records={manufacturers} />}
+        { fetching ?
+          <Loading />
+          :
+          <ManufacturersGrid records={manufacturers}
+          />
+        }
       </BS.Col>
     </BS.Row>
 

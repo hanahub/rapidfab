@@ -23,7 +23,7 @@ const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onA
     if (!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />;
     }
-    if (bureaus.length != 1) {
+    if (bureaus.length !== 1) {
       return (
         <BureauError bureaus={bureaus} />
       );

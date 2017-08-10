@@ -23,7 +23,10 @@ const BureauError = ({ bureaus }) => {
             {_.map(bureaus, bureau => (
               <p><strong>{bureau.name}</strong></p>
             ))}
-            <FormattedMessage id="bureauError.docsMessage" defaultMessage="You can find the docs for this process" />
+            <FormattedMessage
+              id="bureauError.docsMessage"
+              defaultMessage="You can find the docs for this process"
+            />
             <a href="http://docs.authentise.com/mes/index.html"> Here!</a>
           </BS.Col>
         </BS.Row>

@@ -58,7 +58,7 @@ function mapDispatchToProps(dispatch) {
           .then((response) => {
             if (response && response.json && response.json.resources && response.json.resources.length) {
               // for some reason we get back all memberships, not just for the user we are searching for
-              const membership = _.find(response.json.resources, resource => resource.user == payload.userURI);
+              const membership = _.find(response.json.resources, resource => resource.user === payload.userURI);
               const uuid = extractUuid(membership.uri);
               dispatch(Actions.Api.wyatt['membership-bureau'].delete(uuid)).then(() => {
                 dispatch(Actions.Api.pao.users.remove(extractUuid(membership.user)));

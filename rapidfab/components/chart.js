@@ -64,7 +64,11 @@ class Chart extends Component {
   componentDidUpdate() {
     const chart = this.state.chart;
     const data = this.props.data;
-    for (let index = 0; index < data.datasets.length && index < chart.data.datasets.length; ++index) {
+    for (
+      let index = 0;
+      index < data.datasets.length && index < chart.data.datasets.length;
+      ++index
+    ) {
       chart.data.datasets[index].data = data.datasets[index].data;
     }
     chart.data.labels = formatLabels(this.props.intl, data.labels);
