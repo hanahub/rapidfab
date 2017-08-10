@@ -1,7 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
 
 const layoutStyle = {
@@ -57,13 +56,7 @@ const Header = ({ }) => (
   </BS.Row>
 );
 
-const Item = ({ print, index }) => {
-  const {
-    order,
-  } = print;
-  const {
-    model,
-  } = order;
+const Item = ({ index }) => {
   const style = _.assign({}, itemDefaultStyle, staticProps[index]);
   const src = `//placehold.it/${style.width}/${style.height}`;
   return (
@@ -71,7 +64,7 @@ const Item = ({ print, index }) => {
   );
 };
 
-const BedLayout = ({ prints, selected, onSelect }) => (
+const BedLayout = ({ prints }) => (
   <BS.Panel header={<Header />}>
     <div style={layoutStyle}>
       {_.map(_.values(prints), (print, index) => <Item print={print} index={index} />)}

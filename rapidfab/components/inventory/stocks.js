@@ -1,18 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 import Grid, {
   IdColumn,
-  BooleanColumn,
   CapitalizeColumn,
-  ColorColumn,
   NumberColumn,
 } from 'rapidfab/components/grid';
 
 
-const StocksGrid = ({ stocks, materials, locations, apiErrors }) => (
+const StocksGrid = ({ stocks, materials, locations }) => (
   <Grid
     data={stocks}
     columns={[

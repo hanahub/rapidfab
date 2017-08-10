@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -12,7 +12,7 @@ const SaveButtonTitle = ({ }) => (
   </span>
 );
 
-const ConversionForm = ({ fields, bureaus, handleSubmit, load, submitting, onDelete, apiErrors }) => (
+const ConversionForm = ({ fields, bureaus, handleSubmit, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>

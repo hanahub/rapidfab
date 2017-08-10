@@ -1,12 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { FormattedMessage } from 'react-intl';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 
-export const ContactColumn = ({ data, rowData, metadata }) => {
+export const ContactColumn = ({ rowData, metadata }) => {
   if (!rowData.contact) {
     return <span><FormattedMessage id="notAvailable" defaultMessage="N/A" /></span>;
   }
@@ -20,7 +19,7 @@ export const ContactColumn = ({ data, rowData, metadata }) => {
   return <span>{record.username}</span>;
 };
 
-export const PhoneColumn = ({ data, rowData, metadata }) => {
+export const PhoneColumn = ({ rowData }) => {
   if (!rowData.phone) {
     return <span><FormattedMessage id="notAvailable" defaultMessage="N/A" /></span>;
   }

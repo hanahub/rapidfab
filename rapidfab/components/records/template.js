@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
-import { FormControlTextCareful } from 'rapidfab/components/formTools';
 
 const styles = {
   positionHeader: {
@@ -85,7 +84,6 @@ class StepFormModal extends Component {
     super(props);
 
     // The modal gets mounted and unmounted on open and close, thus we populate every time we open
-    const data = props.data || {};
     this.state = {
       step: {
         notes: 'optional',
@@ -288,7 +286,7 @@ class Template extends Component {
     this.addStep = this.addStep.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     if (!this.state.haveReceivedProps && !this.props.fetching) {
       const template = this.props.template || {};
       this.setState({
@@ -374,7 +372,6 @@ class Template extends Component {
     });
     Promise.all(uris).then((uris) => {
       const payload = _.cloneDeep(this.state.template);
-      const bureau = this.props.bureau;
       payload.bureau = payload.bureau ? payload.bureau : this.props.bureau.uri;
       payload.description = payload.description ? payload.description : '';
       payload.process_steps = uris;

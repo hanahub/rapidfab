@@ -4,7 +4,6 @@ import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import LocationsComponent from 'rapidfab/components/inventory/locations';
 import * as Selectors from 'rapidfab/selectors';
-import Config from 'rapidfab/config';
 
 class LocationsContainer extends Component {
   componentDidMount() {

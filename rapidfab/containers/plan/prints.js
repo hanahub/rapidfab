@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';

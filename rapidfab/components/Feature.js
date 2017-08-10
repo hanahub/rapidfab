@@ -5,7 +5,7 @@ import * as Selectors from 'rapidfab/selectors';
 
 class Feature extends Component {
   componentWillMount() {
-    const { props, props: { dispatch } } = this;
+    const { dispatch } = this.props;
     dispatch(Actions.Api.wyatt.feature.list());
   }
 

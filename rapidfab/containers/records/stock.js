@@ -1,6 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import StockComponent from 'rapidfab/components/records/stock';
 import { reduxForm } from 'redux-form';

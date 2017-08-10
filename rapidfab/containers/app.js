@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import Config from 'rapidfab/config';
 import { connect } from 'react-redux';
@@ -9,7 +9,6 @@ import Router from 'rapidfab/components/router';
 
 import { IntlProvider } from 'react-intl';
 import BureauError from 'rapidfab/components/bureauError';
-import i18n from 'rapidfab/i18n';
 import * as Selectors from 'rapidfab/selectors';
 import Tos from 'rapidfab/components/tos';
 

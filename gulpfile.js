@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const minimist = require('minimist');
 const parallelize = require('concurrent-transform');
-const path = require('path');
 const awspublish = require('gulp-awspublish');
 const cloudfront = require('gulp-cloudfront');
 const rename = require('gulp-rename');

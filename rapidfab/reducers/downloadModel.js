@@ -1,6 +1,4 @@
-import _ from 'lodash';
 import Constants from 'rapidfab/constants';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 export const initialState = {
   downloadingModel: false,

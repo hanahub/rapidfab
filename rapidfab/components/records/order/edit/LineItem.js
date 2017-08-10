@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import Fa from 'react-fontawesome';
 import {
   Col,
   ListGroup,
   ListGroupItem,
   Panel,
   Row,
-  Thumbnail,
 } from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
@@ -18,15 +16,10 @@ import {
 } from 'rapidfab/selectors';
 import {
   FormattedCost,
-  FormattedDate,
   FormattedDuration,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
-import {
-  FormControlTextArea,
-  FormControlTextCareful,
-} from 'rapidfab/components/formTools';
 
 import LineItemForm from './LineItemForm';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail.js';
@@ -37,7 +30,9 @@ const LineItemHeader = () => (
 );
 
 const PrintsHeader = (prints) => {
-  const complete = prints.reduce((total, print) => (prints.status === 'complete' ? total + 1 : total), 0).toString();
+  const complete = prints.reduce((total, print) => (
+    print.status === 'complete' ? total + 1 : total
+  ), 0).toString();
   const total = (prints ? prints.length : 0).toString();
   return (
     <FormattedMessage
@@ -243,7 +238,7 @@ function getSnapshotFromLineItem(lineItem, models) {
 
   if (!model) { return 'ERROR'; }
 
-  const { snapshot_content, status } = model;
+  const { snapshot_content } = model;
 
   // the default must return 'loading' due to imperfect information from the
   // event stream. E.g: The UI can receive a model that is 'processed' but

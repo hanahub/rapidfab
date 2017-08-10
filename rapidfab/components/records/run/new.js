@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 import PrintersList from './printersList';
 import PrintsList from './printsList';
 import ActivePrints from './activePrints';
-import BedLayout from './bedLayout';
 import Error from 'rapidfab/components/error';
 
 
@@ -30,7 +29,7 @@ class Runs extends Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps() {
     let selectedPrinter = this.state.selectedPrinter;
     if (selectedPrinter && !this.props.printers[selectedPrinter.uuid]) {
       selectedPrinter = _.head(_.values(this.props.printers));
@@ -100,7 +99,6 @@ class Runs extends Component {
   render() {
     const {
       printers,
-      lineItems,
       apiErrors,
       fetching,
       prints,

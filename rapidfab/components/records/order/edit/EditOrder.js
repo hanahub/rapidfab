@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'react-bootstrap';
 

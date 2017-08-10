@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -6,19 +6,13 @@ import Error from 'rapidfab/components/error';
 import Locations from 'rapidfab/components/locations';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import Grid, {
-  BooleanColumn,
-  CapitalizeColumn,
   DateTimeColumn,
   IdColumn,
-  ImageColumn,
-  NumberColumn,
   MappedColumn,
-  StatusColumn,
-  VolumeColumn,
 } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 
-const Orders = ({ orders, materials, locations, locationFilter, handleOnChange, fetching, apiErrors }) => (
+const Orders = ({ orders, locations, locationFilter, handleOnChange, fetching, apiErrors }) => (
   <BS.Grid fluid>
 
     <BS.Row>

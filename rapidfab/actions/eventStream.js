@@ -22,7 +22,7 @@ class EventStream {
     this.xhr.send();
   }
 
-  onLoad(event) {
+  onLoad() {
     this.handleDisconnect();
   }
 

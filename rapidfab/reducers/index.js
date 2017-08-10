@@ -1,6 +1,4 @@
-import _ from 'lodash';
 import { combineReducers } from 'redux';
-import { RESOURCES } from 'rapidfab/api';
 import { reducer as formReducer } from 'redux-form';
 
 import downloadModel from './downloadModel';

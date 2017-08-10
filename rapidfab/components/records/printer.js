@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +11,7 @@ const SaveButtonTitle = ({ }) => (
   </span>
 );
 
-const PrinterForm = ({ fields, handleSubmit, load, submitting, onDelete, printerTypes, locations, apiErrors }) => (
+const PrinterForm = ({ fields, handleSubmit, onDelete, printerTypes, locations, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>

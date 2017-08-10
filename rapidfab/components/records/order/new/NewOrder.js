@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
@@ -289,8 +288,6 @@ class NewOrder extends Component {
                 const orderUuid = extractUuid(response.payload.uri);
                 window.location = `/#/records/order/${orderUuid}`;
               })
-              .catch((error) => {
-              });
           });
       });
   }

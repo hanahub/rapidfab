@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import Fa from 'react-fontawesome';
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import ChartJS from 'chart.js';

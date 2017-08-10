@@ -1,4 +1,3 @@
-import Actions from 'rapidfab/actions';
 import Constants from 'rapidfab/constants';
 
 export function clearUIState(paths = []) {

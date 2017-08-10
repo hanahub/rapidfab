@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import EditOrder from 'rapidfab/components/records/order/edit/EditOrder';
-import Error from 'rapidfab/components/error';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
 

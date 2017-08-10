@@ -22,7 +22,6 @@ const OrderEstimates = ({
   base = null,
   currency = 'USD',
   print_time = null,
-  shipping_amount = null,
   support = null,
 }) => (
   <Panel bsStyle="info">

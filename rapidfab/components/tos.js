@@ -1,5 +1,4 @@
-import React, { Component, PropTypes } from 'react';
-import Actions from 'rapidfab/actions';
+import React, { Component } from 'react';
 import Config from 'rapidfab/config';
 
 import Fa from 'react-fontawesome';
@@ -38,14 +37,8 @@ class Tos extends Component {
   }
 
   render() {
-    const {
-      user,
-      onAcceptTerms,
-    } = this.props;
 
-    const {
-      fetching,
-    } = this.state;
+    const { fetching } = this.state;
 
     return (
       <BS.Grid>

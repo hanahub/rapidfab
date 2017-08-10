@@ -9,7 +9,9 @@ import {
 } from 'react-bootstrap';
 
 const ProcessStepHeader = (processSteps) => {
-  const complete = processSteps.reduce((total, print) => (processSteps.status === 'complete' ? total + 1 : total), 0).toString();
+  const complete = processSteps.reduce((total, step) => (
+    step.status === 'complete' ? total + 1 : total
+  ), 0).toString();
   const total = (processSteps ? processSteps.length : 0).toString();
   return (
     <FormattedMessage

@@ -2,7 +2,6 @@ import React from 'react';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import {
-  ButtonToolbar,
   SplitButton,
   MenuItem,
 } from 'react-bootstrap';

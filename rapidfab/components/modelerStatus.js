@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import * as BS from 'react-bootstrap';
+import React from 'react';
 import StatusDot from 'rapidfab/components/statusDot';
 
 const ModelerStatus = ({ modeler }) => {

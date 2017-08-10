@@ -20,7 +20,7 @@ class PrintContainer extends Component {
   }
 
   render() {
-    const { apiErrors, fetching, print, order, lineItem, model, models, events, users } = this.props;
+    const { apiErrors, fetching, print, order, lineItem, model, events, users } = this.props;
     const loading = fetching || !print || !order || !lineItem || !model || !events || !users;
     return (
       <Gatekeeper errors={apiErrors} loading={loading}>

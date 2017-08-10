@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
@@ -21,7 +21,6 @@ class NewFeature extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const bureau = this.props.bureau.uri;
     const user = this.props.user.uri;
     const {
       featureName,

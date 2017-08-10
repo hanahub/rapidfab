@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
 import Actions from 'rapidfab/actions';
-import Config from 'rapidfab/config';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import * as Selectors from 'rapidfab/selectors';
 
@@ -21,7 +19,7 @@ class NewOrderContainer extends Component {
     this.props.onUnmount();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { model, uploadModel } = this.props;
     const prevModel = prevProps.model;
     if (prevModel && prevModel.status !== 'processed' && model && model.status === 'processed') {
@@ -43,7 +41,7 @@ class NewOrderContainer extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch) {
   return {
     onInitialize: (bureau) => {
       const { group, uri } = bureau;
@@ -92,10 +90,9 @@ function mapDispatchToProps(dispatch, ownProps) {
   };
 }
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   const {
     material,
-    model,
     order,
   } = state.ui.wyatt;
 
