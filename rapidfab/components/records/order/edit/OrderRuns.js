@@ -15,7 +15,7 @@ import { getRunsForOrder } from 'rapidfab/selectors';
 import Loading from 'rapidfab/components/Loading';
 
 const Header = (runs) => {
-  const complete = runs.reduce((total, run) => (run.status == 'complete' ? total + 1 : total), 0).toString();
+  const complete = runs.reduce((total, run) => (run.status === 'complete' ? total + 1 : total), 0).toString();
   const total = (runs ? runs.length : 0).toString();
 
   return (

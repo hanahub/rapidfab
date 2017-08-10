@@ -40,7 +40,7 @@ function mapStateToProps(state) {
   let locationFilter = Selectors.getLocationFilter(state);
   let filteredOrders = null;
   if (locationFilter) {
-    if (locationFilter == 'unassigned') { locationFilter = null; }
+    if (locationFilter === 'unassigned') { locationFilter = null; }
     let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location', locationFilter]);
     if (ordersForMyLocation.length > 0) {
       ordersForMyLocation = ordersForMyLocation[0].orders;

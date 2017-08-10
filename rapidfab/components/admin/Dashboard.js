@@ -98,7 +98,7 @@ class Dashboard extends Component {
 
           <BS.Nav activeKey={this.state.selectedKey} style={{ 'border-left': '1px solid #ddd', 'border-bottom': '1px solid #ddd', 'border-right': '1px solid #ddd' }}>
             <br />
-            {this.state.selectedKey == 1 ? (
+            {this.state.selectedKey === 1 ? (
               <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
                 <div>
                   <div className="container">

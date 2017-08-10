@@ -35,7 +35,7 @@ class EventStream {
     while (true) {
       try {
         const chunkDelimiterIndex = event.target.responseText.indexOf('\n', this.index);
-        if (chunkDelimiterIndex == -1) { return; }
+        if (chunkDelimiterIndex === -1) { return; }
         const chunk = event.target.responseText.substr(this.index, chunkDelimiterIndex - this.index);
         const data = JSON.parse(chunk);
         this.onEvent(data);
