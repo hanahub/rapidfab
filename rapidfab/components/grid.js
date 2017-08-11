@@ -6,6 +6,7 @@ import Griddle from 'griddle-react';
 import {
   FormattedDate,
   FormattedDateTime,
+  FormattedMessage,
   FormattedNumber,
   FormattedVolume,
 } from 'rapidfab/i18n';
@@ -58,7 +59,7 @@ export const MappedColumn = (field, mapping) =>
     const message = mapping[rowData[field]];
 
     if (!message) {
-      throw new Error(`no mapping for ${rowData[field]} found`);
+      return <FormattedMessage id="notAvailable" defaultMessage="N/A" />
     }
     return message;
   };
