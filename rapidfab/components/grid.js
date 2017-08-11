@@ -1,12 +1,15 @@
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { Image } from 'react-bootstrap';
 import Griddle from 'griddle-react';
 import {
   FormattedDate,
   FormattedDateTime,
+  FormattedMessage,
   FormattedNumber,
+  FormattedTime,
   FormattedVolume,
 } from 'rapidfab/i18n';
 import StatusDot from 'rapidfab/components/statusDot';
@@ -58,7 +61,7 @@ export const MappedColumn = (field, mapping) =>
     const message = mapping[rowData[field]];
 
     if (!message) {
-      throw new Error(`no mapping for ${rowData[field]} found`);
+      return <FormattedMessage id="notAvailable" defaultMessage="N/A" />;
     }
     return message;
   };
@@ -115,7 +118,7 @@ const Grid = ({
   bodyHeight,
   showTableHeading,
   initialSort = null,
-  initialSortAscending = true
+  initialSortAscending = true,
 }) => (
   <Griddle
     bodyHeight={bodyHeight}
