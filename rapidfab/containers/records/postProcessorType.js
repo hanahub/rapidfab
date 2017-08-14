@@ -15,6 +15,7 @@ const fields = [
   'manufacturer',
   'bureau',
   'cost',
+  'duration',
 ];
 
 class PostProcessorTypeContainer extends Component {
