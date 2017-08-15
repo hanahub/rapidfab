@@ -4,10 +4,11 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
+import Error from 'rapidfab/components/error';
+
 import PrintersList from './printersList';
 import PrintsList from './printsList';
 import ActivePrints from './activePrints';
-import Error from 'rapidfab/components/error';
 
 class Runs extends Component {
   constructor(props) {

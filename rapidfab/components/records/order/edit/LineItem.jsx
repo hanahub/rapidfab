@@ -14,6 +14,9 @@ import {
   getProcessSteps,
   getModels,
 } from 'rapidfab/selectors';
+
+import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
+import Loading from 'rapidfab/components/Loading';
 import {
   FormattedCost,
   FormattedDuration,
@@ -22,8 +25,6 @@ import {
 } from 'rapidfab/i18n';
 
 import LineItemForm from './LineItemForm';
-import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
-import Loading from 'rapidfab/components/Loading';
 
 const LineItemHeader = () => (
   <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
