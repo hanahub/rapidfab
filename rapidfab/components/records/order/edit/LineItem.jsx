@@ -22,7 +22,7 @@ import {
 } from 'rapidfab/i18n';
 
 import LineItemForm from './LineItemForm';
-import ModelThumbnail from 'rapidfab/components/ModelThumbnail.js';
+import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import Loading from 'rapidfab/components/Loading';
 
 const LineItemHeader = () => (

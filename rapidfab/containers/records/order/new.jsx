@@ -7,8 +7,8 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import * as Selectors from 'rapidfab/selectors';
 
 import NewOrder from 'rapidfab/components/records/order/new/NewOrder';
-import Gatekeeper from 'rapidfab/components/gatekeeper.js';
-import FlashMessages from 'rapidfab/components/FlashMessages.js';
+import Gatekeeper from 'rapidfab/components/gatekeeper';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 
 class NewOrderContainer extends Component {
   componentDidMount() {
