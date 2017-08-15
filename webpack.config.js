@@ -57,7 +57,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loaders: ['react-hot', 'babel?presets[]=env&plugins[]=transform-runtime'],
         exclude: /(node_modules|bower_components)/,
       },
@@ -87,6 +87,6 @@ module.exports = {
       images: `${__dirname}/rapidfab/images`,
       tests: `${__dirname}/tests`,
     },
-    extensions: ['', '.js', '.less', '.png', '.jpg'],
+    extensions: ['', '.js', '.jsx', '.less', '.png', '.jpg'],
   },
 };
