@@ -11,14 +11,13 @@ import {
 
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
-import { EVENT_KEY_MAPPING } from 'rapidfab/mappings';
-
 import {
+  EVENT_KEY_MAPPING,
   ORDER_STATUS_MAP,
-  RUN_STATUS_MAP,
   ORDER_REGION_MAPPING,
   ORDER_SALES_MAPPING,
   ORDER_TYPE_MAPPING,
+  RUN_STATUS_MAP,
 } from 'rapidfab/mappings';
 import {
   FormattedDate,

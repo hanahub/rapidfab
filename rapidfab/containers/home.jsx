@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import HomeComponent from 'rapidfab/components/home';
-import { getRunStatusChart } from 'rapidfab/selectors';
 import * as Selectors from 'rapidfab/selectors';
 
 class HomeContainer extends Component {
@@ -52,7 +51,7 @@ function mapStateToProps(state) {
       filteredOrders = [];
     }
     filteredRuns = _.filter(runs, ['location', state.locationFilter.location]);
-    filteredRuns = getRunStatusChart(filteredRuns);
+    filteredRuns = Selectors.getRunStatusChart(filteredRuns);
   }
   return {
     fetching: order.list.fetching || run.list.fetching || location.list.fetching || orderLocation.fetching,
