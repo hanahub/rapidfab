@@ -18,3 +18,4 @@ test-results.xml
 
 # Eslint ouput
 .eslintcache
+.eslintoutput.js

@@ -12,9 +12,10 @@ import {
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
-import SaveDropdownButton from './SaveDropdownButton';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
+
+import SaveDropdownButton from './SaveDropdownButton';
 
 const fields = [
   'model',

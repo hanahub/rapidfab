@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
-import NewFeature from './AddFeature';
-import AddUser from './AddUser';
-import ModifyUser from './ModifyUser';
+
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
 
+import NewFeature from './AddFeature';
+import AddUser from './AddUser';
+import ModifyUser from './ModifyUser';
 
 class Dashboard extends Component {
   constructor(props) {

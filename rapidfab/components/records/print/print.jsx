@@ -11,14 +11,12 @@ import {
 
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
+import { FormattedDateTime, FormattedMessage, } from 'rapidfab/i18n';
+
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import TraceabilityReport from './TraceabilityReport';
 import ProcessSteps from './ProcessSteps';
-import {
-  FormattedDateTime,
-  FormattedMessage,
-} from 'rapidfab/i18n';
 
 const PrintSummary = ({ print, processSteps, order, lineItem, model }) => {
   const { status } = print;

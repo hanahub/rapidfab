@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'react-bootstrap';
 
-import AddLineItem from './AddLineItem';
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+
+import AddLineItem from './AddLineItem';
 import LineItem from './LineItem';
 import OrderSummary from './OrderSummary';
 
