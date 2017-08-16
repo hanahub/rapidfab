@@ -11,7 +11,7 @@ import {
 
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-import { FormattedDateTime, FormattedMessage, } from 'rapidfab/i18n';
+import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';

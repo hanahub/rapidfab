@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StyleComponent from 'rapidfab/components/styles';
 
-const StyleContainer = (props) => (
+const StyleContainer = props => (
   <StyleComponent {...props} />
 );
 

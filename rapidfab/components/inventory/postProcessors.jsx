@@ -31,7 +31,7 @@ const PostProcessorsGrid = ({ postProcessors, postProcessorTypes, locations }) =
       customComponent: IdColumn(
         'post-processor-type',
         'post_processor_type',
-        postProcessorTypes, 'name'
+        postProcessorTypes, 'name',
       ),
       displayName: (
         <FormattedMessage
@@ -58,14 +58,14 @@ const PostProcessors = ({
   locations,
   postProcessorTypes,
   fetching,
-  apiErrors
+  apiErrors,
 }) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list"/>
+            <Fa name="list" />
             {' '}
             <FormattedMessage
               id="inventory"
@@ -73,7 +73,7 @@ const PostProcessors = ({
             />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processors">
-            <Fa name="object-ungroup"/>
+            <Fa name="object-ungroup" />
             {' '}
             <FormattedMessage
               id="inventory.postProcessors"
@@ -92,7 +92,7 @@ const PostProcessors = ({
           href="#/records/post-processor"
           className="pull-right"
         >
-          <Fa name="plus"/>
+          <Fa name="plus" />
           {' '}
           <FormattedMessage
             id="record.postProcessor.add"

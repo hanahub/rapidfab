@@ -43,19 +43,19 @@ const PostProcessorTypes = ({
   fetching,
   apiErrors,
   manufacturers,
-  materials
+  materials,
 }) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list"/>
+            <Fa name="list" />
             {' '}
             <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
-            <Fa name="object-group"/>
+            <Fa name="object-group" />
             {' '}
             <FormattedMessage
               id="inventory.postProcessorTypes"
@@ -74,7 +74,7 @@ const PostProcessorTypes = ({
           href="#/records/post-processor-type"
           className="pull-right"
         >
-          <Fa name="plus"/>
+          <Fa name="plus" />
           {' '}
           <FormattedMessage
             id="record.postProcessorType.add"

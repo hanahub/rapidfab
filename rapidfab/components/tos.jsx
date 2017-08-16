@@ -37,7 +37,6 @@ class Tos extends Component {
   }
 
   render() {
-
     const { fetching } = this.state;
 
     return (

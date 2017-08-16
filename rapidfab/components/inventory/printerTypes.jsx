@@ -48,12 +48,12 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list"/>
+            <Fa name="list" />
             {' '}
             <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/printer-types">
-            <Fa name="print"/>
+            <Fa name="print" />
             {' '}
             <FormattedMessage
               id="inventory.printerTypes"
@@ -72,7 +72,7 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
           href="#/records/printer-type"
           className="pull-right"
         >
-          <Fa name="plus"/>
+          <Fa name="plus" />
           {' '}
           <FormattedMessage
             id="record.printerType.add"
