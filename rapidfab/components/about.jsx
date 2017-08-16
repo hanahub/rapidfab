@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Version from 'rapidfab/version';
 
 const About = () => (
