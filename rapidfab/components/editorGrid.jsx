@@ -31,29 +31,27 @@ const EditColumnHeader = ({ onAdd }) => (
   </BS.Button>
 );
 
-class EditorGrid extends Component {
-  render() {
-    const columns = _.concat(this.props.columns, ['uri']);
-    const columnMeta = _.concat(this.props.columnMeta, [{
-      order: 999,
-      columnName: 'uri',
-      visible: true,
-      locked: true,
-      sortable: false,
-      onEdit: this.props.onEdit,
-      customComponent: EditColumn,
-      customHeaderComponent: EditColumnHeader,
-      customHeaderComponentProps: { onAdd: this.props.onAdd },
-    }]);
-    return (
-      <Grid
-        data={_.values(this.props.data)}
-        columns={columns}
-        columnMeta={columnMeta}
-      />
-    );
-  }
-}
+const EditorGrid = () => {
+  const columns = _.concat(this.props.columns, ['uri']);
+  const columnMeta = _.concat(this.props.columnMeta, [{
+    order: 999,
+    columnName: 'uri',
+    visible: true,
+    locked: true,
+    sortable: false,
+    onEdit: this.props.onEdit,
+    customComponent: EditColumn,
+    customHeaderComponent: EditColumnHeader,
+    customHeaderComponentProps: { onAdd: this.props.onAdd },
+  }]);
+  return (
+    <Grid
+      data={_.values(this.props.data)}
+      columns={columns}
+      columnMeta={columnMeta}
+    />
+  );
+};
 
 EditorGrid.propTypes = {
   data: PropTypes.oneOfType([

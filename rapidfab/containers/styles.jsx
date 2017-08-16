@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import StyleComponent from 'rapidfab/components/styles';
 
-class StyleContainer extends Component {
-  render() {
-    return <StyleComponent {...this.props} />;
-  }
-}
+const StyleContainer = (props) => (
+  <StyleComponent {...props} />
+);
 
 export default StyleContainer;
