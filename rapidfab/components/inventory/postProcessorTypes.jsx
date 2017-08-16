@@ -68,8 +68,18 @@ const PostProcessorTypes = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/post-processor-type" className="pull-right">
-          <Fa name="plus" /> <FormattedMessage id="record.postProcessorType.add" defaultMessage="Add Post Processor Type" />
+        <BS.Button
+          bsStyle="primary"
+          bsSize="small"
+          href="#/records/post-processor-type"
+          className="pull-right"
+        >
+          <Fa name="plus"/>
+          {' '}
+          <FormattedMessage
+            id="record.postProcessorType.add"
+            defaultMessage="Add Post Processor Type"
+          />
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -84,7 +94,15 @@ const PostProcessorTypes = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading /> : <PostProcessorTypesGrid postProcessorTypes={postProcessorTypes} manufacturers={manufacturers} materials={materials} />}
+        { fetching ?
+          <Loading />
+          :
+          <PostProcessorTypesGrid
+            postProcessorTypes={postProcessorTypes}
+            manufacturers={manufacturers}
+            materials={materials}
+          />
+        }
       </BS.Col>
     </BS.Row>
 
