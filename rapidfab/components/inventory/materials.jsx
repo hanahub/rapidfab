@@ -62,7 +62,7 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list"/>
+            <Fa name="list" />
             {' '}
             <FormattedMessage
               id="inventory"
@@ -70,7 +70,7 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
             />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/materials">
-            <Fa name="object-group"/>
+            <Fa name="object-group" />
             {' '}
             <FormattedMessage
               id="inventory.materials"
@@ -89,7 +89,7 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
           href="#/records/material"
           className="pull-right"
         >
-          <Fa name="plus"/>
+          <Fa name="plus" />
           {' '}
           <FormattedMessage
             id="record.material.add"

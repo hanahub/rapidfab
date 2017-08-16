@@ -69,8 +69,8 @@ class Dashboard extends Component {
           </td>
           <td>
             { Array.isArray(user_detail.emails) ?
-                user_detail.emails[0]
-                : user_detail.emails
+              user_detail.emails[0]
+              : user_detail.emails
             }
           </td>
           <td>

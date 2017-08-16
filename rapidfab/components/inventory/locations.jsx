@@ -75,7 +75,7 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
             <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/locations">
-            <Fa name="map-marker"/>
+            <Fa name="map-marker" />
             {' '}
             <FormattedMessage
               id="inventory.locations"
@@ -94,7 +94,7 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
           href="#/records/location"
           className="pull-right"
         >
-          <Fa name="plus"/>
+          <Fa name="plus" />
           {' '}
           <FormattedMessage
             id="record.location.add"

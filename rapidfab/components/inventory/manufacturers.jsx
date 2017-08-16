@@ -71,7 +71,7 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
             <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/manufacturers">
-            <Fa name="industry"/>
+            <Fa name="industry" />
             {' '}
             <FormattedMessage
               id="inventory.manufacturers"
@@ -90,7 +90,7 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
           href="#/records/manufacturer"
           className="pull-right"
         >
-          <Fa name="plus"/>
+          <Fa name="plus" />
           {' '}
           <FormattedMessage
             id="record.manufacturer.add"
@@ -113,8 +113,7 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
         { fetching ?
           <Loading />
           :
-          <ManufacturersGrid records={manufacturers}
-          />
+          <ManufacturersGrid records={manufacturers} />
         }
       </BS.Col>
     </BS.Row>

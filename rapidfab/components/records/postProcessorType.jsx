@@ -110,7 +110,7 @@ const PostProcessorTypeForm = ({
             <BS.ControlLabel>
               <FormattedMessage id="field.costPerMinute" defaultMessage="Cost Per Minute" />:
             </BS.ControlLabel>
-            <BS.FormControl name="cost" type="number" {...fields.cost} required/>
+            <BS.FormControl name="cost" type="number" {...fields.cost} required />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDuration">
             <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>

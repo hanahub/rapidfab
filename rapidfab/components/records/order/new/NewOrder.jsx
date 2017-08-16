@@ -287,7 +287,7 @@ class NewOrder extends Component {
               .then((response) => {
                 const orderUuid = extractUuid(response.payload.uri);
                 window.location = `/#/records/order/${orderUuid}`;
-              })
+              });
           });
       });
   }
