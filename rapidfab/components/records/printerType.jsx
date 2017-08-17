@@ -108,7 +108,7 @@ const PrinterTypeForm = ({
             <BS.ControlLabel>
               <FormattedMessage
                 id="field.buildVolumeX"
-                defaultMessage="Build Volume X"
+                defaultMessage="Build Volume X in Millimeters"
               />:
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.build_volume.x} />
@@ -117,7 +117,7 @@ const PrinterTypeForm = ({
             <BS.ControlLabel>
               <FormattedMessage
                 id="field.buildVolumeY"
-                defaultMessage="Build Volume Y"
+                defaultMessage="Build Volume Y in Millimeters"
               />:
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.build_volume.y} />
@@ -126,7 +126,7 @@ const PrinterTypeForm = ({
             <BS.ControlLabel>
               <FormattedMessage
                 id="field.buildVolumeZ"
-                defaultMessage="Build Volume Z"
+                defaultMessage="Build Volume Z in Millimeters"
               />:
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.build_volume.z} />
