@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import RunsComponent from 'rapidfab/components/plan/runs';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class RunsContainer extends Component {
   componentDidMount() {
     this.props.onInitialize();
@@ -22,17 +21,14 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.run.list());
       dispatch(Actions.Api.wyatt.location.list());
     },
-    handleOnChange: (location) => {
+    handleOnChange: location => {
       dispatch(Actions.LocationFilter.setLocation(location));
     },
   };
 }
 
 function mapStateToProps(state) {
-  const {
-    run,
-    location,
-  } = state.ui.wyatt;
+  const { run, location } = state.ui.wyatt;
   const runs = Selectors.getRuns(state);
   const locationFilter = Selectors.getLocationFilter(state);
   let filteredRuns = null;

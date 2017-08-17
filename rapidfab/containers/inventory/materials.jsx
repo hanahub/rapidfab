@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import MaterialsComponent from 'rapidfab/components/inventory/materials';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class MaterialsContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;
@@ -19,10 +18,7 @@ class MaterialsContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const {
-    material,
-    manufacturer,
-  } = state.ui.wyatt;
+  const { material, manufacturer } = state.ui.wyatt;
 
   return {
     bureau: Selectors.getBureau(state),

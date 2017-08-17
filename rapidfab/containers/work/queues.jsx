@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import QueuesComponent from 'rapidfab/components/work/queues';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class QueuesContainer extends Component {
   componentWillMount() {
     this.props.onInitialize();
@@ -18,7 +17,7 @@ class QueuesContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleOnChange: (location) => {
+    handleOnChange: location => {
       dispatch(Actions.LocationFilter.setLocation(location));
     },
     onInitialize: () => {
@@ -34,11 +33,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const postProcessor = state.ui.wyatt['post-processor'];
-  const {
-    printer,
-    location,
-    run,
-  } = state.ui.wyatt;
+  const { printer, location, run } = state.ui.wyatt;
   const runs = Selectors.getRuns(state);
   const machines = Selectors.getMachinesForQueues(state);
   const locationFilter = Selectors.getLocationFilter(state);
@@ -56,8 +51,17 @@ function mapStateToProps(state) {
     runs: filteredRuns || runs,
     locations: Selectors.getLocations(state),
     locationFilter,
-    fetching: run.list.fetching || printer.list.fetching || postProcessor.list.fetching || location.list.fetching,
-    apiErrors: _.concat(run.list.errors, postProcessor.list.errors, printer.list.errors, location.list.errors),
+    fetching:
+      run.list.fetching ||
+      printer.list.fetching ||
+      postProcessor.list.fetching ||
+      location.list.fetching,
+    apiErrors: _.concat(
+      run.list.errors,
+      postProcessor.list.errors,
+      printer.list.errors,
+      location.list.errors
+    ),
   };
 }
 

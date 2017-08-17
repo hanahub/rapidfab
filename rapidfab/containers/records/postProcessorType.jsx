@@ -42,16 +42,22 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.wyatt['post-processor-type'].get(uuid));
       }
     },
-    onSubmit: (payload) => {
+    onSubmit: payload => {
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt['post-processor-type'].put(payload.uuid, payload)).then(redirect);
+        dispatch(
+          Actions.Api.wyatt['post-processor-type'].put(payload.uuid, payload)
+        ).then(redirect);
       } else {
-        dispatch(Actions.Api.wyatt['post-processor-type'].post(payload)).then(redirect);
+        dispatch(Actions.Api.wyatt['post-processor-type'].post(payload)).then(
+          redirect
+        );
       }
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
-        dispatch(Actions.Api.wyatt['post-processor-type'].delete(uuid)).then(redirect);
+        dispatch(Actions.Api.wyatt['post-processor-type'].delete(uuid)).then(
+          redirect
+        );
       }
     },
   };
@@ -68,14 +74,21 @@ function mapStateToProps(state, props) {
     bureau: Selectors.getBureau(state),
     uuid: Selectors.getRoute(state, props).uuid,
     initialValues: Selectors.getInitialValuesBureau(state, props),
-    submitting: Selectors.getResourceFetching(state, 'wyatt.post-processor-type'),
+    submitting: Selectors.getResourceFetching(
+      state,
+      'wyatt.post-processor-type'
+    ),
     apiErrors: Selectors.getResourceErrors(state, 'wyatt.post-processor-type'),
     materials: Selectors.getMaterials(state),
     manufacturers: Selectors.getManufacturers(state),
   };
 }
 
-export default reduxForm({
-  form: 'record.postProcessorType',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(PostProcessorTypeContainer);
+export default reduxForm(
+  {
+    form: 'record.postProcessorType',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(PostProcessorTypeContainer);

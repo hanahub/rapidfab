@@ -41,17 +41,16 @@ const PrintSummary = ({ print, processSteps, order, lineItem, model }) => {
                   </span>
                 </div>
                 <div className="pull-right">
-                  <a href={`#/records/order/${uuid}`}>{name}</a>
+                  <a href={`#/records/order/${uuid}`}>
+                    {name}
+                  </a>
                 </div>
               </div>
             </ListGroupItem>
             <ListGroupItem>
               <SpaceBetweenText
                 left={
-                  <FormattedMessage
-                    id="field.status"
-                    defaultMessage="Status"
-                  />
+                  <FormattedMessage id="field.status" defaultMessage="Status" />
                 }
                 right={RUN_STATUS_MAP[status]}
               />
@@ -76,7 +75,7 @@ const PrintSummary = ({ print, processSteps, order, lineItem, model }) => {
   );
 };
 
-const SpaceBetweenText = ({ left, right }) => (
+const SpaceBetweenText = ({ left, right }) =>
   <div className="clearfix">
     <div className="pull-left">
       {left}
@@ -84,15 +83,20 @@ const SpaceBetweenText = ({ left, right }) => (
     <div className="pull-right">
       {right}
     </div>
-  </div>
-);
+  </div>;
 
-const PrintComponent = ({ print, processSteps, order, lineItem, model, onExport }) => {
+const PrintComponent = ({
+  print,
+  processSteps,
+  order,
+  lineItem,
+  model,
+  onExport,
+}) => {
   const breadcrumbs = ['prints', print.id];
 
   return (
     <Grid fluid className="container">
-
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
 
       <hr />
@@ -106,7 +110,6 @@ const PrintComponent = ({ print, processSteps, order, lineItem, model, onExport 
       />
 
       <TraceabilityReport onExport={onExport} />
-
     </Grid>
   );
 };

@@ -36,7 +36,7 @@ const statusOptionsMap = {
   shipping: ['cancelled', 'complete'],
 };
 
-const FormRow = ({ id, defaultMessage, children }) => (
+const FormRow = ({ id, defaultMessage, children }) =>
   <FormGroup>
     <Col xs={3}>
       <ControlLabel>
@@ -46,8 +46,7 @@ const FormRow = ({ id, defaultMessage, children }) => (
     <Col xs={9}>
       {children}
     </Col>
-  </FormGroup>
-);
+  </FormGroup>;
 
 const ModelSelect = ({ models, modelsIsFetching, field }) => {
   if (modelsIsFetching) {
@@ -62,12 +61,11 @@ const ModelSelect = ({ models, modelsIsFetching, field }) => {
   }
   return (
     <FormControl componentClass="select" required {...field}>
-      { models.map(model => (
+      {models.map(model =>
         <option key={model.uri} value={model.uri}>
           {model.name}
         </option>
-      ))
-      }
+      )}
     </FormControl>
   );
 };
@@ -76,7 +74,7 @@ const Printable = ({ models, uri, itar }) => {
   const model = models.find(model => model.uri === uri);
   let printable = true;
 
-  if ((model && model.analyses && !model.analyses.manifold)) {
+  if (model && model.analyses && !model.analyses.manifold) {
     printable = false;
   }
 
@@ -131,40 +129,44 @@ const LineItemFormComponent = ({
           <option value={initialStatus}>
             {ORDER_STATUS_MAP[initialStatus]}
           </option>
-          { statusOptions ?
-            statusOptions.map(status => (
-              <option key={status} value={status}>
-                {ORDER_STATUS_MAP[status]}
-              </option>
-            ))
-            : null
-          }
+          {statusOptions
+            ? statusOptions.map(status =>
+                <option key={status} value={status}>
+                  {ORDER_STATUS_MAP[status]}
+                </option>
+              )
+            : null}
         </FormControl>
       </FormRow>
 
-      { lineItem.itar ?
-        null
+      {lineItem.itar
+        ? null
         : <FormRow id="field.model" defaultMessage="Model">
-          <ModelSelect
-            models={models}
-            modelsIsFetching={modelsIsFetching}
-            field={fields.model}
-          />
-        </FormRow>
-      }
+            <ModelSelect
+              models={models}
+              modelsIsFetching={modelsIsFetching}
+              field={fields.model}
+            />
+          </FormRow>}
 
       <FormRow id="field.quantity" defaultMessage="Quantity">
         <FormControl type="number" required {...fields.quantity} />
       </FormRow>
 
       <FormRow id="field.baseMaterial" defaultMessage="Base Material">
-        <FormControl componentClass="select" required {...fields.materials.base}>
-          <option value="" disabled>Select a Material</option>
-          {_.map(_.filter(materials, { type: 'base' }), material => (
+        <FormControl
+          componentClass="select"
+          required
+          {...fields.materials.base}
+        >
+          <option value="" disabled>
+            Select a Material
+          </option>
+          {_.map(_.filter(materials, { type: 'base' }), material =>
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
@@ -173,34 +175,37 @@ const LineItemFormComponent = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {_.map(_.filter(materials, { type: 'support' }), material => (
+          {_.map(_.filter(materials, { type: 'support' }), material =>
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
       <FormRow id="field.template" defaultMessage="Select a template">
         <FormControl componentClass="select" {...fields.template}>
-          { templates.map(template => (
+          {templates.map(template =>
             <option key={template.uri} value={template.uri}>
               {template.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
-      <FormRow id="field.thirdPartyProvider" defaultMessage="Third-Party Provider">
+      <FormRow
+        id="field.thirdPartyProvider"
+        defaultMessage="Third-Party Provider"
+      >
         <FormControl componentClass="select" {...fields.third_party_provider}>
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { providers.map(provider => (
+          {providers.map(provider =>
             <option key={provider.uri} value={provider.uri}>
               {provider.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
     </Form>
@@ -226,15 +231,16 @@ class LineItemForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (payload) => {
+  onSubmit: payload => {
     if (!payload.materials.support) delete payload.materials.support;
     if (!payload.third_party_provider) delete payload.third_party_provider;
 
     dispatch(Actions.Api.wyatt['line-item'].put(payload.uuid, payload));
   },
   onDelete: (uuid, orderUuid) => {
-    dispatch(Actions.Api.wyatt['line-item'].delete(uuid))
-      .then(() => dispatch(Actions.Api.wyatt.order.get(orderUuid)));
+    dispatch(Actions.Api.wyatt['line-item'].delete(uuid)).then(() =>
+      dispatch(Actions.Api.wyatt.order.get(orderUuid))
+    );
   },
 });
 
@@ -264,7 +270,11 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default reduxForm({
-  form: 'record.lineItem',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(LineItemForm);
+export default reduxForm(
+  {
+    form: 'record.lineItem',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(LineItemForm);

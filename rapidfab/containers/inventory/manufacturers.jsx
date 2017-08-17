@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import ManufacturersComponent from 'rapidfab/components/inventory/manufacturers';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class ManufacturersContainer extends Component {
   componentWillMount() {
     this.props.onInitialize();
@@ -22,9 +21,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const {
-    manufacturer,
-  } = state.ui.wyatt;
+  const { manufacturer } = state.ui.wyatt;
 
   return {
     locations: Selectors.getLocations(state),
@@ -35,4 +32,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManufacturersContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ManufacturersContainer
+);

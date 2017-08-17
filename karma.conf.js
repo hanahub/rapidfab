@@ -1,6 +1,6 @@
 const webpackConfig = require('./webpack.config.js');
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     browsers: [process.env.BROWSER ? process.env.BROWSER : 'Chrome'],
     captureTimeout: 60000,

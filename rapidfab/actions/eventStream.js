@@ -33,10 +33,16 @@ class EventStream {
     this.retryTimeout = null;
     while (true) {
       try {
-        const chunkDelimiterIndex = event.target.responseText.indexOf('\n', this.index);
-        if (chunkDelimiterIndex === -1) { return; }
+        const chunkDelimiterIndex = event.target.responseText.indexOf(
+          '\n',
+          this.index
+        );
+        if (chunkDelimiterIndex === -1) {
+          return;
+        }
         const chunk = event.target.responseText.substr(
-          this.index, chunkDelimiterIndex - this.index
+          this.index,
+          chunkDelimiterIndex - this.index
         );
         const data = JSON.parse(chunk);
         this.onEvent(data);
@@ -62,7 +68,7 @@ class EventStream {
       return;
     }
     this.retry = this.retry + 1;
-    const retryTime = Math.min((this.retry * (this.retry / 2.0)) * 100, 3000);
+    const retryTime = Math.min(this.retry * (this.retry / 2.0) * 100, 3000);
     console.log(`Retrying connection to EventStream in ${retryTime}ms`);
     this.retryTimeout = setTimeout(() => {
       this.retryTimeout = null;

@@ -13,7 +13,10 @@ const listBodyStyle = {
 const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
   const modeler = _.find(modelers, ['uri', printer.modeler]);
   return (
-    <BS.ListGroupItem bsStyle={selected && selected.uri === printer.uri ? 'info' : null} onClick={() => onSelect(printer)}>
+    <BS.ListGroupItem
+      bsStyle={selected && selected.uri === printer.uri ? 'info' : null}
+      onClick={() => onSelect(printer)}
+    >
       <BS.Row>
         <BS.Col xs={3}>
           <a href={`#/records/printer/${printer.uuid}`}>
@@ -26,7 +29,8 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
           </a>
         </BS.Col>
         <BS.Col xs={2}>
-          {`${printer.printer_type.build_volume.x}mm x ${printer.printer_type.build_volume.y}mm`}
+          {`${printer.printer_type.build_volume.x}mm x ${printer.printer_type
+            .build_volume.y}mm`}
         </BS.Col>
         <BS.Col xs={2}>
           <span style={{ textTransform: 'capitalize' }}>
@@ -34,40 +38,31 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
           </span>
         </BS.Col>
         <BS.Col xs={2}>
-          {printer.leadTime ?
-            <FormattedDateTime value={printer.leadTime} /> :
-            (<em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>)
-          }
+          {printer.leadTime
+            ? <FormattedDateTime value={printer.leadTime} />
+            : <em>
+                <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+              </em>}
         </BS.Col>
       </BS.Row>
     </BS.ListGroupItem>
   );
 };
 
-const PrintersList = ({ printers, modelers, selected, onSelect }) => (
+const PrintersList = ({ printers, modelers, selected, onSelect }) =>
   <BS.Panel header="Printers">
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
-          <BS.Col xs={3}>
-            Printer
-          </BS.Col>
-          <BS.Col xs={3}>
-            Type
-          </BS.Col>
-          <BS.Col xs={2}>
-            Bed Volume
-          </BS.Col>
-          <BS.Col xs={2}>
-            Status
-          </BS.Col>
-          <BS.Col xs={2}>
-            Lead Time
-          </BS.Col>
+          <BS.Col xs={3}>Printer</BS.Col>
+          <BS.Col xs={3}>Type</BS.Col>
+          <BS.Col xs={2}>Bed Volume</BS.Col>
+          <BS.Col xs={2}>Status</BS.Col>
+          <BS.Col xs={2}>Lead Time</BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
       <div style={listBodyStyle}>
-        {_.map(printers, printer => (
+        {_.map(printers, printer =>
           <PrinterItem
             key={printer.uuid}
             selected={selected}
@@ -75,11 +70,10 @@ const PrintersList = ({ printers, modelers, selected, onSelect }) => (
             modelers={modelers}
             onSelect={onSelect}
           />
-        ))}
+        )}
       </div>
     </BS.ListGroup>
-  </BS.Panel>
-);
+  </BS.Panel>;
 
 PrintersList.defaultProps = {
   onSelect: () => true,

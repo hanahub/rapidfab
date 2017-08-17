@@ -1,20 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Fa from 'react-fontawesome';
-import {
-  Button,
-  ListGroup,
-  ListGroupItem,
-  Panel,
-} from 'react-bootstrap';
+import { Button, ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
 import { getOrderDocuments } from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-const OrderDocument = ({ download, name, onDelete, uuid }) => (
+const OrderDocument = ({ download, name, onDelete, uuid }) =>
   <ListGroupItem>
-    <a href={download}>{ name || uuid }</a>
+    <a href={download}>
+      {name || uuid}
+    </a>
     <Button
       className="pull-right"
       bsStyle="danger"
@@ -23,8 +20,7 @@ const OrderDocument = ({ download, name, onDelete, uuid }) => (
     >
       <Fa name="times" />
     </Button>
-  </ListGroupItem>
-);
+  </ListGroupItem>;
 
 class OrderDocuments extends React.Component {
   constructor(props) {
@@ -40,10 +36,11 @@ class OrderDocuments extends React.Component {
   async componentDidMount() {
     try {
       const { dispatch, orderDocumentUUIDs } = this.props;
-      const orderDocumentResponses = orderDocumentUUIDs.map(uuid => dispatch(Actions.Api.wyatt['order-document'].get(uuid)));
+      const orderDocumentResponses = orderDocumentUUIDs.map(uuid =>
+        dispatch(Actions.Api.wyatt['order-document'].get(uuid))
+      );
       await Promise.all(orderDocumentResponses);
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   onChange(event) {
@@ -64,11 +61,13 @@ class OrderDocuments extends React.Component {
     this.setState({ upload: null });
 
     const orderPostResponse = await dispatch(
-      Actions.Api.wyatt['order-document'].post({ name, order }));
+      Actions.Api.wyatt['order-document'].post({ name, order })
+    );
 
     const uuid = extractUuid(orderPostResponse.headers.location);
     const documentResponse = await dispatch(
-      Actions.Api.wyatt['order-document'].get(uuid));
+      Actions.Api.wyatt['order-document'].get(uuid)
+    );
 
     const uploadLocation = documentResponse.json.upload_location;
     const newDocument = documentResponse.json.uri;
@@ -91,7 +90,7 @@ class OrderDocuments extends React.Component {
           </ListGroupItem>
         </ListGroup>
 
-        { orderDocuments.map(orderDocument => (
+        {orderDocuments.map(orderDocument =>
           <OrderDocument
             download={orderDocument.content ? orderDocument.content : null}
             name={orderDocument.name}
@@ -99,7 +98,7 @@ class OrderDocuments extends React.Component {
             key={orderDocument.uri}
             uuid={extractUuid(orderDocument.uri)}
           />
-        ))}
+        )}
 
         <br />
 
@@ -107,25 +106,24 @@ class OrderDocuments extends React.Component {
 
         <br />
 
-        <Button
-          bsStyle="primary"
-          disabled={!upload}
-          onClick={uploadDocument}
-        >
+        <Button bsStyle="primary" disabled={!upload} onClick={uploadDocument}>
           Upload
         </Button>
-
       </Panel>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const orderResource = state.resources[state.routeUUID];
   const order = orderResource.uri;
   const orderResourceDocuments = orderResource.order_documents;
-  const orderDocumentUUIDs = orderResourceDocuments ? orderResourceDocuments.map(doc => extractUuid(doc)) : [];
-  const orderDocuments = getOrderDocuments(state).filter(orderDocument => orderDocument.order === order);
+  const orderDocumentUUIDs = orderResourceDocuments
+    ? orderResourceDocuments.map(doc => extractUuid(doc))
+    : [];
+  const orderDocuments = getOrderDocuments(state).filter(
+    orderDocument => orderDocument.order === order
+  );
   return { orderDocuments, orderDocumentUUIDs, order };
 };
 

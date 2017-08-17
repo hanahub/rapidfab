@@ -4,7 +4,6 @@ import Grid from 'rapidfab/components/grid';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
-
 class EditColumn extends Component {
   constructor(props) {
     super(props);
@@ -25,25 +24,26 @@ class EditColumn extends Component {
   }
 }
 
-const EditColumnHeader = ({ onAdd }) => (
+const EditColumnHeader = ({ onAdd }) =>
   <BS.Button bsStyle="primary" bsSize="small" onClick={onAdd}>
     <Fa name="plus" />
-  </BS.Button>
-);
+  </BS.Button>;
 
 const EditorGrid = () => {
   const columns = _.concat(this.props.columns, ['uri']);
-  const columnMeta = _.concat(this.props.columnMeta, [{
-    order: 999,
-    columnName: 'uri',
-    visible: true,
-    locked: true,
-    sortable: false,
-    onEdit: this.props.onEdit,
-    customComponent: EditColumn,
-    customHeaderComponent: EditColumnHeader,
-    customHeaderComponentProps: { onAdd: this.props.onAdd },
-  }]);
+  const columnMeta = _.concat(this.props.columnMeta, [
+    {
+      order: 999,
+      columnName: 'uri',
+      visible: true,
+      locked: true,
+      sortable: false,
+      onEdit: this.props.onEdit,
+      customComponent: EditColumn,
+      customHeaderComponent: EditColumnHeader,
+      customHeaderComponentProps: { onAdd: this.props.onAdd },
+    },
+  ]);
   return (
     <Grid
       data={_.values(this.props.data)}

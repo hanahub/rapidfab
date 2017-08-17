@@ -14,11 +14,13 @@ class FlashMessages extends Component {
     const { errors } = this.props;
     return (
       <div>
-        { errors.map((error, index) => (
+        {errors.map((error, index) =>
           <Alert bsStyle="danger" className="error-alert" key={index}>
-            <p>{error.title}</p>
+            <p>
+              {error.title}
+            </p>
           </Alert>
-        ))}
+        )}
       </div>
     );
   }
@@ -27,7 +29,7 @@ class FlashMessages extends Component {
 FlashMessages.defaultProps = { errors: [] };
 FlashMessages.propTypes = { errors: PropTypes.array };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   let errors = [];
   for (const service in state.ui) {
     for (const resource in state.ui[service]) {

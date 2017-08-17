@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import PrintersComponent from 'rapidfab/components/inventory/printers';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class PrintersContainer extends Component {
   componentWillMount() {
     this.props.onInitialize();
@@ -29,9 +28,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const printerType = state.ui.wyatt['printer-type'];
-  const {
-    printer,
-  } = state.ui.wyatt;
+  const { printer } = state.ui.wyatt;
 
   return {
     printers: Selectors.getPrinters(state),

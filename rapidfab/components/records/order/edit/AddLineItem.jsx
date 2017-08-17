@@ -20,14 +20,10 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import Feature from 'rapidfab/components/Feature';
 
-const PanelHeader = () => (
-  <FormattedMessage
-    id="record.lineItem.add"
-    defaultMessage="Add Line Item"
-  />
-);
+const PanelHeader = () =>
+  <FormattedMessage id="record.lineItem.add" defaultMessage="Add Line Item" />;
 
-const ModelInput = ({ handleFileChange }) => (
+const ModelInput = ({ handleFileChange }) =>
   <Col lg={2}>
     <FormGroup>
       <ControlLabel>
@@ -41,8 +37,7 @@ const ModelInput = ({ handleFileChange }) => (
         onChange={handleFileChange}
       />
     </FormGroup>
-  </Col>
-);
+  </Col>;
 
 const AddLineItemPresentation = ({
   baseMaterial,
@@ -58,7 +53,7 @@ const AddLineItemPresentation = ({
   template,
   templates,
   thirdPartyProvider,
-}) => (
+}) =>
   <Panel header={<PanelHeader />}>
     <Form onSubmit={onSubmit}>
       <Feature featureName={'itar'}>
@@ -66,14 +61,10 @@ const AddLineItemPresentation = ({
           <ControlLabel>
             <FormattedMessage id="record.itar" defaultMessage="ITAR Model" />
           </ControlLabel>
-          <Checkbox
-            name="itar"
-            checked={itar}
-            onChange={handleInputChange}
-          />
+          <Checkbox name="itar" checked={itar} onChange={handleInputChange} />
         </Col>
       </Feature>
-      { itar ? null : <ModelInput handleFileChange={handleFileChange} /> }
+      {itar ? null : <ModelInput handleFileChange={handleFileChange} />}
       <Col lg={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage="Material" />:
@@ -85,11 +76,11 @@ const AddLineItemPresentation = ({
           value={baseMaterial}
           required
         >
-          {baseMaterials.map(material => (
+          {baseMaterials.map(material =>
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </Col>
       <Col lg={2}>
@@ -108,11 +99,11 @@ const AddLineItemPresentation = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {supportMaterials.map(material => (
+          {supportMaterials.map(material =>
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </Col>
       <Col lg={1}>
@@ -139,11 +130,11 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
           value={template}
         >
-          {templates.map(template => (
+          {templates.map(template =>
             <option key={template.uri} value={template.uri}>
               {template.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </Col>
       <Col lg={2}>
@@ -162,11 +153,11 @@ const AddLineItemPresentation = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { providers.map(provider => (
+          {providers.map(provider =>
             <option key={provider.uri} value={provider.uri}>
               {provider.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </Col>
       {/*
@@ -192,13 +183,13 @@ const AddLineItemPresentation = ({
             bsStyle="success"
             className="pull-right"
             style={{ marginTop: '2rem' }}
-          > Add
+          >
+            {' '}Add
           </Button>
         </ButtonToolbar>
       </Col>
     </Form>
-  </Panel>
-);
+  </Panel>;
 
 class AddLineItem extends Component {
   constructor(props) {
@@ -268,8 +259,29 @@ class AddLineItem extends Component {
     if (!payload.third_party_provider) delete payload.third_party_provider;
 
     if (itar) {
-      dispatch(Actions.Api.wyatt['line-item'].post(payload))
-        .then((response) => {
+      dispatch(Actions.Api.wyatt['line-item'].post(payload)).then(response => {
+        const newLineItem = response.headers.location;
+        const payload = {
+          line_items: [...order.line_items, newLineItem],
+        };
+        const uuid = extractUuid(order.uri);
+
+        return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+      });
+    } else {
+      dispatch(
+        Actions.Api.hoth.model.post({ name: model.name, type: 'stl' })
+      ).then(args => {
+        const { location, uploadLocation } = args.headers;
+
+        // Post model to hoth
+        dispatch(Actions.UploadModel.upload(uploadLocation, model));
+
+        // Post line-item to wyatt
+        payload.model = location;
+        dispatch(
+          Actions.Api.wyatt['line-item'].post(payload)
+        ).then(response => {
           const newLineItem = response.headers.location;
           const payload = {
             line_items: [...order.line_items, newLineItem],
@@ -278,27 +290,7 @@ class AddLineItem extends Component {
 
           return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
         });
-    } else {
-      dispatch(Actions.Api.hoth.model.post({ name: model.name, type: 'stl' }))
-        .then((args) => {
-          const { location, uploadLocation } = args.headers;
-
-          // Post model to hoth
-          dispatch(Actions.UploadModel.upload(uploadLocation, model));
-
-          // Post line-item to wyatt
-          payload.model = location;
-          dispatch(Actions.Api.wyatt['line-item'].post(payload))
-            .then((response) => {
-              const newLineItem = response.headers.location;
-              const payload = {
-                line_items: [...order.line_items, newLineItem],
-              };
-              const uuid = extractUuid(order.uri);
-
-              return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
-            });
-        });
+      });
     }
   }
 
@@ -322,19 +314,17 @@ class AddLineItem extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const bureau = Selectors.getBureau(state);
   const materials = Selectors.getMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const order = state.resources[state.routeUUID];
 
-  const baseMaterials = materials.filter(material => (
-    material.type === 'base'
-  ));
-  const supportMaterials = materials.filter(material => (
-    material.type === 'support'
-  ));
+  const baseMaterials = materials.filter(material => material.type === 'base');
+  const supportMaterials = materials.filter(
+    material => material.type === 'support'
+  );
 
   return {
     baseMaterials,

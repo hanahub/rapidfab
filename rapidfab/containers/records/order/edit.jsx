@@ -17,12 +17,9 @@ class OrderContainer extends Component {
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
 
     // Fetch order and related resources
-    dispatch(Actions.Api.wyatt.order.get(uuid))
-      .then((res) => {
-        dispatch(Actions.Api.wyatt['line-item'].list(
-          { order: res.json.uri },
-        ));
-      });
+    dispatch(Actions.Api.wyatt.order.get(uuid)).then(res => {
+      dispatch(Actions.Api.wyatt['line-item'].list({ order: res.json.uri }));
+    });
 
     // Fetch resource options for input selections
     dispatch(Actions.Api.hoth.model.list());
@@ -41,12 +38,12 @@ class OrderContainer extends Component {
 
     return (
       <div>
-        { loading ? <Loading /> :
-        <div>
-            <FlashMessages />
-            <EditOrder />
-          </div>
-        }
+        {loading
+          ? <Loading />
+          : <div>
+              <FlashMessages />
+              <EditOrder />
+            </div>}
       </div>
     );
   }

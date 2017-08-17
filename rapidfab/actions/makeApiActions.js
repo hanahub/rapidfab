@@ -48,7 +48,8 @@ function makeList(api, host, resource) {
       Constants.RESOURCE_LIST_SUCCESS,
       Constants.RESOURCE_LIST_FAILURE,
     ],
-    shouldCallAPI: state => !state.ui[host][resource][method.toLowerCase()].count,
+    shouldCallAPI: state =>
+      !state.ui[host][resource][method.toLowerCase()].count,
     callApi: () => api[host][resource].list(filters),
   });
 }
@@ -100,19 +101,23 @@ function makeRemove(api, host, resource) {
   });
 }
 export function makeApiActions(api, resources) {
-  return _.reduce(resources, (result, resources, host) => {
-    const hostActions = {};
-    for (const resource of resources) {
-      hostActions[resource] = {
-        post: makePost(api, host, resource),
-        list: makeList(api, host, resource),
-        delete: makeDelete(api, host, resource),
-        put: makePut(api, host, resource),
-        get: makeGet(api, host, resource),
-        remove: makeRemove(api, host, resource),
-      };
-    }
-    result[host] = hostActions;
-    return result;
-  }, {});
+  return _.reduce(
+    resources,
+    (result, resources, host) => {
+      const hostActions = {};
+      for (const resource of resources) {
+        hostActions[resource] = {
+          post: makePost(api, host, resource),
+          list: makeList(api, host, resource),
+          delete: makeDelete(api, host, resource),
+          put: makePut(api, host, resource),
+          get: makeGet(api, host, resource),
+          remove: makeRemove(api, host, resource),
+        };
+      }
+      result[host] = hostActions;
+      return result;
+    },
+    {}
+  );
 }

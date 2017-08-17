@@ -72,10 +72,15 @@ function makeList(host, resource) {
     },
     [`${typePrefix}_LIST_SUCCESS`](state, action) {
       const records = _.map(action.json.resources, hydrateRecord);
-      return Object.assign({}, state, {
-        uxFetching: false,
-        uxErrors: [],
-      }, _.keyBy(records, 'uuid'));
+      return Object.assign(
+        {},
+        state,
+        {
+          uxFetching: false,
+          uxErrors: [],
+        },
+        _.keyBy(records, 'uuid')
+      );
     },
     [`${typePrefix}_LIST_FAILURE`](state, action) {
       let uxErrors = [];
@@ -134,10 +139,12 @@ function makePost(host, resource) {
       });
     },
     [`${typePrefix}_POST_SUCCESS`](state, action) {
-      const record = hydrateRecord(Object.assign(action.payload, {
-        uri: action.headers.location,
-        uploadUri: action.headers['X-Upload-Location'],
-      }));
+      const record = hydrateRecord(
+        Object.assign(action.payload, {
+          uri: action.headers.location,
+          uploadUri: action.headers['X-Upload-Location'],
+        })
+      );
       return Object.assign({}, state, {
         [record.uuid]: record,
         uxFetching: false,
@@ -196,17 +203,24 @@ export function makeApiReducers(resources) {
     uxFetching: false,
     uxErrors: [],
   };
-  return _.reduce(resources, (result, resourceNames, host) => {
-    const newResult = result;
-    resourceNames.forEach((resource) => {
-      newResult[resource] = createReducer(initialState, _.assign(
-        makeGet(host, resource),
-        makeList(host, resource),
-        makePost(host, resource),
-        makePut(host, resource),
-        makeDelete(host, resource),
-      ));
-    });
-    return newResult;
-  }, {});
+  return _.reduce(
+    resources,
+    (result, resourceNames, host) => {
+      const newResult = result;
+      resourceNames.forEach(resource => {
+        newResult[resource] = createReducer(
+          initialState,
+          _.assign(
+            makeGet(host, resource),
+            makeList(host, resource),
+            makePost(host, resource),
+            makePut(host, resource),
+            makeDelete(host, resource)
+          )
+        );
+      });
+      return newResult;
+    },
+    {}
+  );
 }

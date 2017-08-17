@@ -5,7 +5,11 @@ import Error from './error';
 import Loading from './Loading';
 
 const Gatekeeper = ({ errors = [], loading = false, children }) => {
-  if (errors.length) { return <Error errors={errors} />; } else if (loading) { return <Loading />; }
+  if (errors.length) {
+    return <Error errors={errors} />;
+  } else if (loading) {
+    return <Loading />;
+  }
   return children;
 };
 

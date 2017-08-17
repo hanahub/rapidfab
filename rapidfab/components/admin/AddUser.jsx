@@ -16,10 +16,7 @@ class AddUser extends Component {
     event.preventDefault();
 
     const bureau = this.props.bureau.uri;
-    const {
-      userEmail,
-      userName,
-    } = this.state;
+    const { userEmail, userName } = this.state;
 
     const payload = {
       email: userEmail,
@@ -51,12 +48,7 @@ class AddUser extends Component {
     const { locations } = this.props;
     return (
       <div>
-
-        <BS.Button
-          bsStyle="success"
-          bsSize="medium"
-          onClick={this.open}
-        >
+        <BS.Button bsStyle="success" bsSize="medium" onClick={this.open}>
           Add User
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>
@@ -88,31 +80,26 @@ class AddUser extends Component {
                 <br />
                 <BS.ControlLabel>Role:</BS.ControlLabel>
                 <BS.FormControl componentClass="select">
-                  <option>
-                      Global User
-                  </option>
-                  <option>
-                      Local User
-                  </option>
-                  <option>
-                      Manager
-                  </option>
+                  <option>Global User</option>
+                  <option>Local User</option>
+                  <option>Manager</option>
                 </BS.FormControl>
                 <br />
                 <BS.ControlLabel>Location:</BS.ControlLabel>
                 <BS.FormControl componentClass="select">
-                  {_.map(locations, location => (
+                  {_.map(locations, location =>
                     <option key={location.uuid} value={location.uri}>
                       {location.name}
                     </option>
-                  ))
-                  }
+                  )}
                 </BS.FormControl>
               </BS.FormGroup>
             </BS.Modal.Body>
             <BS.Modal.Footer>
               <BS.Button onClick={this.close}>Cancel</BS.Button>
-              <BS.Button bsStyle="success" type="submit">Save </BS.Button>
+              <BS.Button bsStyle="success" type="submit">
+                Save{' '}
+              </BS.Button>
             </BS.Modal.Footer>
           </BS.Form>
         </BS.Modal>
@@ -120,6 +107,5 @@ class AddUser extends Component {
     );
   }
 }
-
 
 export default AddUser;

@@ -15,10 +15,7 @@ class ModifyUser extends Component {
   onSubmit(event) {
     event.preventDefault();
     const bureau = this.props.bureau.uri;
-    const {
-      userEmail,
-      userName,
-    } = this.state;
+    const { userEmail, userName } = this.state;
 
     const payload = {
       email: userEmail,
@@ -60,11 +57,7 @@ class ModifyUser extends Component {
 
     return (
       <div>
-
-        <BS.Button
-          bsSize="small"
-          onClick={this.open}
-        >
+        <BS.Button bsSize="small" onClick={this.open}>
           Modify User
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>
@@ -79,7 +72,11 @@ class ModifyUser extends Component {
                   type="text"
                   name="userEmail"
                   onChange={this.handleChange}
-                  value={this.props.modifyUser.emails ? this.props.modifyUser.emails[0] : null}
+                  value={
+                    this.props.modifyUser.emails
+                      ? this.props.modifyUser.emails[0]
+                      : null
+                  }
                   disabled
                 />
                 <br />
@@ -94,32 +91,29 @@ class ModifyUser extends Component {
                 <br />
                 <BS.ControlLabel>Role:</BS.ControlLabel>
                 <BS.FormControl componentClass="select">
-                  <option>
-                      Global User
-                  </option>
-                  <option>
-                      Local User
-                  </option>
-                  <option>
-                      Manager
-                  </option>
+                  <option>Global User</option>
+                  <option>Local User</option>
+                  <option>Manager</option>
                 </BS.FormControl>
                 <br />
                 <BS.ControlLabel>Location:</BS.ControlLabel>
                 <BS.FormControl componentClass="select">
-                  {_.map(locations, location => (
+                  {_.map(locations, location =>
                     <option key={location.uuid} value={location.uri}>
                       {location.name}
                     </option>
-                  ))
-                  }
+                  )}
                 </BS.FormControl>
               </BS.FormGroup>
             </BS.Modal.Body>
             <BS.Modal.Footer>
               <BS.Button onClick={this.close}>Cancel</BS.Button>
-              <BS.Button bsStyle="danger" onClick={this.deleteUser}>Delete </BS.Button>
-              <BS.Button bsStyle="warning" type="submit">Update </BS.Button>
+              <BS.Button bsStyle="danger" onClick={this.deleteUser}>
+                Delete{' '}
+              </BS.Button>
+              <BS.Button bsStyle="warning" type="submit">
+                Update{' '}
+              </BS.Button>
             </BS.Modal.Footer>
           </BS.Form>
         </BS.Modal>
@@ -127,6 +121,5 @@ class ModifyUser extends Component {
     );
   }
 }
-
 
 export default ModifyUser;

@@ -23,13 +23,13 @@ const styles = {
   },
 };
 
-const SaveButtonTitle = () => (
+const SaveButtonTitle = () =>
   <span>
-    <Fa name="floppy-o" /> <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>
-);
+    <Fa name="floppy-o" />{' '}
+    <FormattedMessage id="button.save" defaultMessage="Save" />
+  </span>;
 
-const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
+const OverwriteWarningModal = ({ show, close, duplicate, submit }) =>
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
       <BS.Modal.Title>
@@ -56,17 +56,16 @@ const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
         <FormattedMessage id="button.replace" defaultMessage="Replace" />
       </BS.Button>
     </BS.Modal.Footer>
-  </BS.Modal>
-);
+  </BS.Modal>;
 
-const DeleteWarningModal = ({ show, close, name, id, submit }) => (
+const DeleteWarningModal = ({ show, close, name, id, submit }) =>
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
       <FormattedMessage
         id="message.deletePrompt"
         defaultMessage="Are you sure you want to delete"
       />
-      { ` ${name}?` }
+      {` ${name}?`}
     </BS.Modal.Header>
     <BS.Modal.Footer>
       <BS.Button onClick={close}>
@@ -76,8 +75,7 @@ const DeleteWarningModal = ({ show, close, name, id, submit }) => (
         <FormattedMessage id="button.delete" defaultMessage="Delete" />
       </BS.Button>
     </BS.Modal.Footer>
-  </BS.Modal>
-);
+  </BS.Modal>;
 
 class StepFormModal extends Component {
   constructor(props) {
@@ -137,15 +135,26 @@ class StepFormModal extends Component {
           <BS.Modal.Body>
             <BS.FormGroup controlId="formControlsSelect">
               <BS.ControlLabel>
-                <FormattedMessage id="field.processType" defaultMessage="Process Type" />
+                <FormattedMessage
+                  id="field.processType"
+                  defaultMessage="Process Type"
+                />
               </BS.ControlLabel>
-              <BS.FormControl componentClass="select" name="process_type_uri" onChange={this.handleChange} value={step.process_type_uri} required>
+              <BS.FormControl
+                componentClass="select"
+                name="process_type_uri"
+                onChange={this.handleChange}
+                value={step.process_type_uri}
+                required
+              >
                 <option value="" selected disabled>
-                    Select a Process Step
+                  Select a Process Step
                 </option>
-                {processTypes.map(processType => (
-                  <option value={processType.uri} key={processType.uri}>{processType.name}</option>
-                ))}
+                {processTypes.map(processType =>
+                  <option value={processType.uri} key={processType.uri}>
+                    {processType.name}
+                  </option>
+                )}
               </BS.FormControl>
             </BS.FormGroup>
             <BS.FormGroup className="clearfix" name="notes">
@@ -160,7 +169,10 @@ class StepFormModal extends Component {
                   value="optional"
                   inline
                 >
-                  <FormattedMessage id="field.optional" defaultMessage="Optional" />
+                  <FormattedMessage
+                    id="field.optional"
+                    defaultMessage="Optional"
+                  />
                 </BS.Radio>
                 <BS.Radio
                   name="notes"
@@ -169,7 +181,10 @@ class StepFormModal extends Component {
                   value="required"
                   inline
                 >
-                  <FormattedMessage id="field.required" defaultMessage="Required" />
+                  <FormattedMessage
+                    id="field.required"
+                    defaultMessage="Required"
+                  />
                 </BS.Radio>
                 <BS.Radio
                   name="notes"
@@ -250,10 +265,9 @@ class StepFormModal extends Component {
               <FormattedMessage id="button.cancel" defaultMessage="Cancel" />
             </BS.Button>
             <BS.Button type="submit" bsStyle="success">
-              {data ?
-                <FormattedMessage id="button.save" defaultMessage="Save" />
-                : <FormattedMessage id="button.add" defaultMessage="Add" />
-              }
+              {data
+                ? <FormattedMessage id="button.save" defaultMessage="Save" />
+                : <FormattedMessage id="button.add" defaultMessage="Add" />}
             </BS.Button>
           </BS.Modal.Footer>
         </form>
@@ -278,7 +292,9 @@ class Template extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.shouldOpenOverwriteWarning = this.shouldOpenOverwriteWarning.bind(this);
+    this.shouldOpenOverwriteWarning = this.shouldOpenOverwriteWarning.bind(
+      this
+    );
     this.onSave = this.onSave.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onDuplicate = this.onDuplicate.bind(this);
@@ -304,9 +320,8 @@ class Template extends Component {
     this.setState({ template });
   }
 
-
   openModal(modalState, stepIndex) {
-    if (typeof (stepIndex) === 'number') {
+    if (typeof stepIndex === 'number') {
       this.setState({
         [modalState]: true,
         alteredStepIndex: stepIndex,
@@ -338,28 +353,43 @@ class Template extends Component {
 
   onSave(event) {
     event.preventDefault();
-    if (this.shouldOpenOverwriteWarning()) { this.openModal('showOverwriteWarning'); } else { this.onSubmit(); }
+    if (this.shouldOpenOverwriteWarning()) {
+      this.openModal('showOverwriteWarning');
+    } else {
+      this.onSubmit();
+    }
   }
 
   onSubmit() {
-    if (this.state.showOverwriteWarning) { this.closeModal('showOverwiteWarning'); }
+    if (this.state.showOverwriteWarning) {
+      this.closeModal('showOverwiteWarning');
+    }
 
     const steps = _.clone(this.state.steps);
 
     // find deleted steps, save them for later
-    const existingSteps = _.filter(steps, step => (_.has(step, 'uri')));
-    const deletedSteps = _.compact(_.map(this.props.steps, (step) => {
-      if (!_.find(existingSteps, existingStep => (step.uri === existingStep.uri))) {
-        return step.uuid;
-      }
-    }));
+    const existingSteps = _.filter(steps, step => _.has(step, 'uri'));
+    const deletedSteps = _.compact(
+      _.map(this.props.steps, step => {
+        if (
+          !_.find(existingSteps, existingStep => step.uri === existingStep.uri)
+        ) {
+          return step.uuid;
+        }
+      })
+    );
 
     const uris = [];
-    _.map(steps, (step) => {
+    _.map(steps, step => {
       if (!step.uri) {
-        uris.push(this.props.submitStep(step).then(resp => resp.headers.location));
+        uris.push(
+          this.props.submitStep(step).then(resp => resp.headers.location)
+        );
       } else {
-        const oldStep = _.find(this.props.steps, oldStep => (oldStep.uri === step.uri));
+        const oldStep = _.find(
+          this.props.steps,
+          oldStep => oldStep.uri === step.uri
+        );
 
         if (oldStep) {
           if (_.difference(_.values(step), _.values(oldStep)).length) {
@@ -370,7 +400,7 @@ class Template extends Component {
         }
       }
     });
-    Promise.all(uris).then((uris) => {
+    Promise.all(uris).then(uris => {
       const payload = _.cloneDeep(this.state.template);
       payload.bureau = payload.bureau ? payload.bureau : this.props.bureau.uri;
       payload.description = payload.description ? payload.description : '';
@@ -381,7 +411,9 @@ class Template extends Component {
   }
 
   onDuplicate() {
-    if (this.state.showOverwriteWarning) { this.closeModal('showOverwriteWarning'); }
+    if (this.state.showOverwriteWarning) {
+      this.closeModal('showOverwriteWarning');
+    }
 
     const { value: name, initialValue: initialName } = this.props.fields.name;
     const duplicateName = name === initialName ? `${name} copy` : name;
@@ -408,8 +440,12 @@ class Template extends Component {
       steps.push(payload);
     } else {
       const step = steps[index];
-      if (step.uri) { payload.uri = step.uri; }
-      if (step.uuid) { payload.uuid = step.uuid; }
+      if (step.uri) {
+        payload.uri = step.uri;
+      }
+      if (step.uuid) {
+        payload.uuid = step.uuid;
+      }
 
       steps[index] = payload;
     }
@@ -444,22 +480,38 @@ class Template extends Component {
   }
 
   render() {
-    const Arrows = ({ index }) => (
+    const Arrows = ({ index }) =>
       <div>
-        <div onClick={() => { this.moveRow(index, 'down'); }} style={_.assign({}, styles.centerIcons, styles.splitDivs)}>
+        <div
+          onClick={() => {
+            this.moveRow(index, 'down');
+          }}
+          style={_.assign({}, styles.centerIcons, styles.splitDivs)}
+        >
           <Fa name="angle-down" size="2x" />
         </div>
-        <div onClick={() => { this.moveRow(index, 'up'); }} style={_.assign({}, styles.centerIcons, styles.splitDivs)}>
+        <div
+          onClick={() => {
+            this.moveRow(index, 'up');
+          }}
+          style={_.assign({}, styles.centerIcons, styles.splitDivs)}
+        >
           <Fa name="angle-up" size="2x" />
         </div>
-      </div>
-    );
+      </div>;
 
     const Rows = () => {
-      const rows = _.map(this.state.steps, (step, index) => (
+      const rows = _.map(this.state.steps, (step, index) =>
         <tr key={index}>
-          <td><Arrows index={index} /></td>
-          <td>{_.find(this.props.processTypes, { uri: step.process_type_uri }).name}</td>
+          <td>
+            <Arrows index={index} />
+          </td>
+          <td>
+            {
+              _.find(this.props.processTypes, { uri: step.process_type_uri })
+                .name
+            }
+          </td>
           <td style={styles.centerIcons}>
             <div onClick={() => this.openModal('showStepForm', index)}>
               <Fa name="edit" />
@@ -471,12 +523,23 @@ class Template extends Component {
             </div>
           </td>
         </tr>
-      ));
+      );
 
-      return (<tbody>{rows}</tbody>);
+      return (
+        <tbody>
+          {rows}
+        </tbody>
+      );
     };
 
-    const { template, steps, alteredStepIndex, showStepForm, showOverwriteWarning, showDeleteWarning } = this.state;
+    const {
+      template,
+      steps,
+      alteredStepIndex,
+      showStepForm,
+      showOverwriteWarning,
+      showDeleteWarning,
+    } = this.state;
     const { values, processTypes, apiErrors } = this.props;
 
     return (
@@ -485,13 +548,23 @@ class Template extends Component {
           <BS.Col xs={12}>
             <BS.Breadcrumb>
               <BS.Breadcrumb.Item active>
-                <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+                <Fa name="list" />{' '}
+                <FormattedMessage id="inventory" defaultMessage="Inventory" />
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/inventory/templates">
-                <Fa name="list-ol" /> <FormattedMessage id="inventory.templates" defaultMessage="Templates" />
+                <Fa name="list-ol" />{' '}
+                <FormattedMessage
+                  id="inventory.templates"
+                  defaultMessage="Templates"
+                />
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item>
-                <Fa name="list-ol" /> {this.props.fields.id.value || <FormattedMessage id="record.template.new" defaultMessage="New Template" />}
+                <Fa name="list-ol" />{' '}
+                {this.props.fields.id.value ||
+                  <FormattedMessage
+                    id="record.template.new"
+                    defaultMessage="New Template"
+                  />}
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
@@ -501,17 +574,44 @@ class Template extends Component {
           <BS.Row>
             <BS.Col xs={6}>
               <BS.Button href="#/inventory/templates" bsSize="small">
-                <Fa name="arrow-left" /> <FormattedMessage id="inventory.templates" defaultMessage="Templates" />
+                <Fa name="arrow-left" />{' '}
+                <FormattedMessage
+                  id="inventory.templates"
+                  defaultMessage="Templates"
+                />
               </BS.Button>
             </BS.Col>
             <BS.Col xs={6}>
               <BS.ButtonToolbar className="pull-right">
-                <BS.SplitButton type="submit" id="uxSaveDropdown" bsStyle="success" bsSize="small" title={<SaveButtonTitle />} pullRight>
-                  <BS.MenuItem eventKey={1} onClick={() => this.openModal('showDeleteWarning')} disabled={!this.props.fields.id.value}>
-                    <Fa name="ban" /> <FormattedMessage id="button.delete" defaultMessage="Delete" />
+                <BS.SplitButton
+                  type="submit"
+                  id="uxSaveDropdown"
+                  bsStyle="success"
+                  bsSize="small"
+                  title={<SaveButtonTitle />}
+                  pullRight
+                >
+                  <BS.MenuItem
+                    eventKey={1}
+                    onClick={() => this.openModal('showDeleteWarning')}
+                    disabled={!this.props.fields.id.value}
+                  >
+                    <Fa name="ban" />{' '}
+                    <FormattedMessage
+                      id="button.delete"
+                      defaultMessage="Delete"
+                    />
                   </BS.MenuItem>
-                  <BS.MenuItem eventKey={2} onClick={() => this.onDuplicate()} disabled={!this.props.fields.id.value}>
-                    <Fa name="clone" /> <FormattedMessage id="button.duplicate" defaultMessage="Duplicate" />
+                  <BS.MenuItem
+                    eventKey={2}
+                    onClick={() => this.onDuplicate()}
+                    disabled={!this.props.fields.id.value}
+                  >
+                    <Fa name="clone" />{' '}
+                    <FormattedMessage
+                      id="button.duplicate"
+                      defaultMessage="Duplicate"
+                    />
                   </BS.MenuItem>
                 </BS.SplitButton>
               </BS.ButtonToolbar>
@@ -532,9 +632,18 @@ class Template extends Component {
                 <BS.Col xs={12} sm={8} smOffset={2} lg={6} lgOffset={3}>
                   <BS.FormGroup>
                     <BS.ControlLabel>
-                      <FormattedMessage id="field.templateName" defaultMessage="Template Name" />
+                      <FormattedMessage
+                        id="field.templateName"
+                        defaultMessage="Template Name"
+                      />
                     </BS.ControlLabel>
-                    <BS.FormControl type="text" name="name" required onChange={this.handleChange} value={template.name} />
+                    <BS.FormControl
+                      type="text"
+                      name="name"
+                      required
+                      onChange={this.handleChange}
+                      value={template.name}
+                    />
                   </BS.FormGroup>
                 </BS.Col>
               </BS.Row>
@@ -557,7 +666,10 @@ class Template extends Component {
                     className="pull-right"
                     onClick={() => this.openModal('showStepForm')}
                   >
-                    <FormattedMessage id="button.addStep" defaultMessage="Add Step" />
+                    <FormattedMessage
+                      id="button.addStep"
+                      defaultMessage="Add Step"
+                    />
                   </BS.Button>
                 </BS.Col>
               </BS.Row>

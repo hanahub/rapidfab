@@ -29,9 +29,17 @@ export function clearState() {
 }
 
 export function upload(uploadUrl, model) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(uploadModel(uploadUrl));
-    postForm(uploadUrl, {}, model, 'PUT', false, 'application/octet-stream', percent => dispatch(uploadProgress(percent)));
+    postForm(
+      uploadUrl,
+      {},
+      model,
+      'PUT',
+      false,
+      'application/octet-stream',
+      percent => dispatch(uploadProgress(percent))
+    );
   };
 }
 

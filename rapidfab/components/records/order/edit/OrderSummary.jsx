@@ -12,9 +12,8 @@ import OrderEstimates from './OrderEstimates';
 import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
 
-const PanelHeader = () => (
-  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />
-);
+const PanelHeader = () =>
+  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />;
 
 class OrderSummary extends Component {
   constructor(props) {
@@ -32,17 +31,16 @@ class OrderSummary extends Component {
   }
 
   onDelete() {
-    this.props.dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
-      .then(() => window.location.hash = '#/plan/orders');
+    this.props
+      .dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
+      .then(() => (window.location.hash = '#/plan/orders'));
   }
 
   render() {
     const { onSubmit, onDelete } = this;
     return (
       <Panel header={<PanelHeader />}>
-
         <Form horizontal onSubmit={onSubmit}>
-
           <SaveDropdownButton onDelete={onDelete} />
           <hr />
 
@@ -57,9 +55,7 @@ class OrderSummary extends Component {
             </Feature>
             <OrderRuns />
           </Col>
-
         </Form>
-
       </Panel>
     );
   }

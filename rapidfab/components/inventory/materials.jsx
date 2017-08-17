@@ -10,8 +10,7 @@ import Grid, {
   ColorColumn,
 } from 'rapidfab/components/grid';
 
-
-const MaterialsGrid = ({ materials, manufacturers }) => (
+const MaterialsGrid = ({ materials, manufacturers }) =>
   <Grid
     data={materials}
     columns={[
@@ -22,56 +21,73 @@ const MaterialsGrid = ({ materials, manufacturers }) => (
       'manufacturer',
       'third_party_fulfillment',
     ]}
-    columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-      columnName: 'id',
-      customComponent: IdColumn('material'),
-      locked: true,
-    }, {
-      columnName: 'name',
-      displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-    }, {
-      columnName: 'type',
-      customComponent: CapitalizeColumn,
-      displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
-    }, {
-      columnName: 'manufacturer',
-      customComponent: IdColumn('manufacturer', 'manufacturer', manufacturers, 'name'),
-      displayName: <FormattedMessage id="field.manufacturer" defaultMessage="Manufacturer" />,
-    }, {
-      columnName: 'color',
-      customComponent: ColorColumn,
-      displayName: <FormattedMessage id="field.color" defaultMessage="Color" />,
-    }, {
-      columnName: 'third_party_fulfillment',
-      customComponent: BooleanColumn,
-      displayName: <FormattedMessage id="field.thirdParty" defaultMessage="Third Party" />,
-    }]}
-  />
-);
+    columnMeta={[
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('material'),
+        locked: true,
+      },
+      {
+        columnName: 'name',
+        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+      },
+      {
+        columnName: 'type',
+        customComponent: CapitalizeColumn,
+        displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
+      },
+      {
+        columnName: 'manufacturer',
+        customComponent: IdColumn(
+          'manufacturer',
+          'manufacturer',
+          manufacturers,
+          'name'
+        ),
+        displayName: (
+          <FormattedMessage
+            id="field.manufacturer"
+            defaultMessage="Manufacturer"
+          />
+        ),
+      },
+      {
+        columnName: 'color',
+        customComponent: ColorColumn,
+        displayName: (
+          <FormattedMessage id="field.color" defaultMessage="Color" />
+        ),
+      },
+      {
+        columnName: 'third_party_fulfillment',
+        customComponent: BooleanColumn,
+        displayName: (
+          <FormattedMessage
+            id="field.thirdParty"
+            defaultMessage="Third Party"
+          />
+        ),
+      },
+    ]}
+  />;
 
-const Loading = () => (
+const Loading = () =>
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>
-);
+  </div>;
 
-const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
+const Materials = ({ materials, manufacturers, fetching, apiErrors }) =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" />
-            {' '}
-            <FormattedMessage
-              id="inventory"
-              defaultMessage="Inventory"
-            />
+            <Fa name="list" />{' '}
+            <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/materials">
-            <Fa name="object-group" />
-            {' '}
+            <Fa name="object-group" />{' '}
             <FormattedMessage
               id="inventory.materials"
               defaultMessage="Materials"
@@ -89,8 +105,7 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
           href="#/records/material"
           className="pull-right"
         >
-          <Fa name="plus" />
-          {' '}
+          <Fa name="plus" />{' '}
           <FormattedMessage
             id="record.material.add"
             defaultMessage="Add Material"
@@ -109,18 +124,14 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        { fetching ?
-          <Loading />
-          :
-          <MaterialsGrid
-            materials={materials}
-            manufacturers={manufacturers}
-          />
-        }
+        {fetching
+          ? <Loading />
+          : <MaterialsGrid
+              materials={materials}
+              manufacturers={manufacturers}
+            />}
       </BS.Col>
     </BS.Row>
-
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default Materials;

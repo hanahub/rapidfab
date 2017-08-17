@@ -1,17 +1,13 @@
 import React from 'react';
 import * as BS from 'react-bootstrap';
 
-const Manufacturers = () => (
+const Manufacturers = () =>
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb className="breadcrumbs">
-          <BS.Breadcrumb.Item href="/">
-            Home
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="/#/materials">
-            Materials
-          </BS.Breadcrumb.Item>
+          <BS.Breadcrumb.Item href="/">Home</BS.Breadcrumb.Item>
+          <BS.Breadcrumb.Item href="/#/materials">Materials</BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
     </BS.Row>
@@ -74,7 +70,9 @@ const Manufacturers = () => (
         </BS.Table>
         <BS.Row>
           <BS.Col xs={12}>
-            <BS.Button bsStyle="primary" bsSize="small" block>Add new material</BS.Button>
+            <BS.Button bsStyle="primary" bsSize="small" block>
+              Add new material
+            </BS.Button>
           </BS.Col>
         </BS.Row>
       </BS.Col>
@@ -89,33 +87,23 @@ const Manufacturers = () => (
             <BS.Form>
               <BS.FormGroup>
                 <BS.ControlLabel>Material:</BS.ControlLabel>
-                <BS.FormControl.Static>
-                  Name
-                </BS.FormControl.Static>
+                <BS.FormControl.Static>Name</BS.FormControl.Static>
               </BS.FormGroup>
               <BS.FormGroup>
                 <BS.ControlLabel>Type:</BS.ControlLabel>
-                <BS.FormControl.Static>
-                  Support
-                </BS.FormControl.Static>
+                <BS.FormControl.Static>Support</BS.FormControl.Static>
               </BS.FormGroup>
               <BS.FormGroup>
                 <BS.ControlLabel>Color:</BS.ControlLabel>
-                <BS.FormControl.Static>
-                  None
-                </BS.FormControl.Static>
+                <BS.FormControl.Static>None</BS.FormControl.Static>
               </BS.FormGroup>
               <BS.FormGroup>
                 <BS.ControlLabel>Manufacturer:</BS.ControlLabel>
-                <BS.FormControl.Static>
-                  Manufccc
-                </BS.FormControl.Static>
+                <BS.FormControl.Static>Manufccc</BS.FormControl.Static>
               </BS.FormGroup>
               <BS.FormGroup>
                 <BS.ControlLabel>Package:</BS.ControlLabel>
-                <BS.FormControl.Static>
-                  222 g
-                </BS.FormControl.Static>
+                <BS.FormControl.Static>222 g</BS.FormControl.Static>
               </BS.FormGroup>
               <BS.FormGroup controlId="formControlsSelect">
                 <BS.ControlLabel>Location:</BS.ControlLabel>
@@ -129,15 +117,18 @@ const Manufacturers = () => (
         </BS.Row>
         <BS.Row>
           <BS.Col xs={6}>
-            <BS.Button bsStyle="danger" bsSize="medium" block>Delete</BS.Button>
+            <BS.Button bsStyle="danger" bsSize="medium" block>
+              Delete
+            </BS.Button>
           </BS.Col>
           <BS.Col xs={6}>
-            <BS.Button bsStyle="success" bsSize="medium" block>Save</BS.Button>
+            <BS.Button bsStyle="success" bsSize="medium" block>
+              Save
+            </BS.Button>
           </BS.Col>
         </BS.Row>
       </BS.Col>
     </BS.Row>
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default Manufacturers;

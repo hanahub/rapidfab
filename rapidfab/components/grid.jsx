@@ -14,7 +14,6 @@ import {
 } from 'rapidfab/i18n';
 import StatusDot from 'rapidfab/components/statusDot';
 
-
 export const IdColumn = (resource, field, records, property = 'id') => {
   const recordsByUri = _.keyBy(records, 'uri');
   return ({ rowData }) => {
@@ -66,48 +65,35 @@ export const MappedColumn = (field, mapping) =>
     return message;
   };
 
+export const DateTimeColumn = ({ data }) => <FormattedDateTime value={data} />;
 
-export const DateTimeColumn = ({ data }) => (
-  <FormattedDateTime value={data} />
-);
+export const TimeColumn = ({ data }) => <FormattedTime value={data} />;
 
-export const TimeColumn = ({ data }) => (
-  <FormattedTime value={data} />
-);
+export const DateColumn = ({ data }) => <FormattedDate value={data} />;
 
-export const DateColumn = ({ data }) => (
-  <FormattedDate value={data} />
-);
-
-export const ImageColumn = ({ data }) => (
+export const ImageColumn = ({ data }) =>
   <div style={{ textAlign: 'center' }}>
     <Image src={data} width={24} rouned />
-  </div>
-);
+  </div>;
 
-export const CapitalizeColumn = ({ data }) => (
+export const CapitalizeColumn = ({ data }) =>
   <span style={{ textTransform: 'capitalize' }}>
     {data}
-  </span>
-);
+  </span>;
 
-export const BooleanColumn = ({ data }) => (
+export const BooleanColumn = ({ data }) =>
   <div style={{ textAlign: 'center' }}>
     <Fa name={data ? 'check-square-o' : 'square-o'} />
-  </div>
-);
+  </div>;
 
-export const NumberColumn = ({ data }) => (
-  <FormattedNumber value={data} />
-);
+export const NumberColumn = ({ data }) => <FormattedNumber value={data} />;
 
-export const VolumeColumn = ({ data }) => (
-  <FormattedVolume value={data} />
-);
+export const VolumeColumn = ({ data }) => <FormattedVolume value={data} />;
 
-export const ColorColumn = ({ data }) => (
-  <div style={{ margin: '0 auto', width: 24, height: 24, backgroundColor: data }} />
-);
+export const ColorColumn = ({ data }) =>
+  <div
+    style={{ margin: '0 auto', width: 24, height: 24, backgroundColor: data }}
+  />;
 
 const Grid = ({
   data,
@@ -119,7 +105,7 @@ const Grid = ({
   showTableHeading,
   initialSort = null,
   initialSortAscending = true,
-}) => (
+}) =>
   <Griddle
     bodyHeight={bodyHeight}
     columns={columns}
@@ -136,8 +122,7 @@ const Grid = ({
     tableClassName="table table-bordered table-hover"
     useGriddleStyles={false}
     useFixedHeader={!!useFixedHeader}
-  />
-);
+  />;
 
 Grid.propTypes = {
   data: PropTypes.oneOfType([

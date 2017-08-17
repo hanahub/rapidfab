@@ -35,27 +35,29 @@ function redirect() {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: (uuid, bureau) => {
-      dispatch(Actions.Api.pao.users.list({
-        group: bureau.group,
-      }));
+      dispatch(
+        Actions.Api.pao.users.list({
+          group: bureau.group,
+        })
+      );
       if (uuid) {
         dispatch(Actions.Api.wyatt.location.get(uuid));
       }
     },
-    onSubmit: (payload) => {
+    onSubmit: payload => {
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt.location.put(payload.uuid, payload)).then(redirect);
+        dispatch(Actions.Api.wyatt.location.put(payload.uuid, payload)).then(
+          redirect
+        );
       } else {
         dispatch(Actions.Api.wyatt.location.post(payload)).then(redirect);
       }
     },
     onUnmount: () => {
       // get rid of pesky lingering errors
-      dispatch(Actions.UI.clearUIState([
-        'wyatt.location',
-      ]));
+      dispatch(Actions.UI.clearUIState(['wyatt.location']));
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt.location.delete(uuid)).then(redirect);
       }
@@ -74,7 +76,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm({
-  form: 'record.location',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(LocationContainer);
+export default reduxForm(
+  {
+    form: 'record.location',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(LocationContainer);

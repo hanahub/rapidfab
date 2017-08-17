@@ -14,17 +14,15 @@ import {
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
-import {
-  FormControlSelect,
-} from 'rapidfab/components/formTools';
+import { FormControlSelect } from 'rapidfab/components/formTools';
 
-const SaveButtonTitle = () => (
+const SaveButtonTitle = () =>
   <span>
-    <Fa name="floppy-o" /> <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>
-);
+    <Fa name="floppy-o" />{' '}
+    <FormattedMessage id="button.save" defaultMessage="Save" />
+  </span>;
 
-const FormRow = ({ id, defaultMessage, children, controlId }) => (
+const FormRow = ({ id, defaultMessage, children, controlId }) =>
   <BS.FormGroup controlId={controlId}>
     <BS.Col xs={3}>
       <BS.ControlLabel>
@@ -32,10 +30,9 @@ const FormRow = ({ id, defaultMessage, children, controlId }) => (
       </BS.ControlLabel>
     </BS.Col>
     <BS.Col xs={9}>
-      { children }
+      {children}
     </BS.Col>
-  </BS.FormGroup>
-);
+  </BS.FormGroup>;
 
 FormRow.propTypes = {
   children: PropTypes.node.isRequired,
@@ -51,12 +48,14 @@ const StatusField = ({ statuses, fields }) => {
   return (
     <FormRow id="field.status" defaultMessage="Status">
       <FormControlSelect {...fields.status}>
-        <option value="" disabled>Select a Status</option>
-        {statuses.map(status => (
+        <option value="" disabled>
+          Select a Status
+        </option>
+        {statuses.map(status =>
           <option key={status} value={status}>
             {RUN_STATUS_MAP[status]}
           </option>
-        ))}
+        )}
       </FormControlSelect>
     </FormRow>
   );
@@ -69,7 +68,7 @@ StatusField.propTypes = {
 
 const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
   if (!model) {
-    return (<BS.FormControl.Static> - </BS.FormControl.Static>);
+    return <BS.FormControl.Static> - </BS.FormControl.Static>;
   }
   if (isDownloading) {
     return (
@@ -99,7 +98,7 @@ ModelDownloadField.propTypes = {
 
 const LinkField = ({ uri, resources, endpoint }) => {
   if (!uri) {
-    return (<BS.FormControl.Static> - </BS.FormControl.Static>);
+    return <BS.FormControl.Static> - </BS.FormControl.Static>;
   }
 
   const record = _.find(resources, { uri });
@@ -115,7 +114,7 @@ const LinkField = ({ uri, resources, endpoint }) => {
       </BS.FormControl.Static>
     );
   }
-  return (<Fa name="spinner" spin />);
+  return <Fa name="spinner" spin />;
 };
 
 LinkField.propTypes = {
@@ -137,7 +136,9 @@ const TimeDisplay = ({ seconds }) => {
     }
   }
   return (
-    <span>{displayTime}</span>
+    <span>
+      {displayTime}
+    </span>
   );
 };
 
@@ -158,17 +159,19 @@ const EditRun = ({
   printers,
   printerTypes,
   statuses,
-}) => (
+}) =>
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
             <BS.Breadcrumb.Item active>
-              <Fa name="road" /> <FormattedMessage id="plan" defaultMessage="Plan" />
+              <Fa name="road" />{' '}
+              <FormattedMessage id="plan" defaultMessage="Plan" />
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/plan/runs">
-              <Fa name="list" /> <FormattedMessage id="plan.runs" defaultMessage="Runs" />
+              <Fa name="list" />{' '}
+              <FormattedMessage id="plan.runs" defaultMessage="Runs" />
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
               <Fa name="file-o" /> {_.get(fields, 'id.value')}
@@ -180,7 +183,8 @@ const EditRun = ({
       <BS.Row>
         <BS.Col xs={6}>
           <BS.Button href="#/plan/runs" bsSize="small">
-            <Fa name="arrow-left" /> <FormattedMessage id="plan.runs" defaultMessage="Runs" />
+            <Fa name="arrow-left" />{' '}
+            <FormattedMessage id="plan.runs" defaultMessage="Runs" />
           </BS.Button>
         </BS.Col>
         <BS.Col xs={6}>
@@ -193,8 +197,12 @@ const EditRun = ({
               title={<SaveButtonTitle />}
               pullRight
             >
-              <BS.MenuItem eventKey={1} onClick={() => onDelete(_.get(fields, 'uuid.value'))}>
-                <Fa name="ban" /> <FormattedMessage id="button.delete" defaultMessage="Delete" />
+              <BS.MenuItem
+                eventKey={1}
+                onClick={() => onDelete(_.get(fields, 'uuid.value'))}
+              >
+                <Fa name="ban" />{' '}
+                <FormattedMessage id="button.delete" defaultMessage="Delete" />
               </BS.MenuItem>
             </BS.SplitButton>
           </BS.ButtonToolbar>
@@ -210,7 +218,6 @@ const EditRun = ({
       </BS.Row>
 
       <BS.Row>
-
         <BS.Col xs={12} sm={4}>
           <BS.Panel bsStyle="info">
             <BS.ListGroup fill>
@@ -222,17 +229,19 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'estimates.start.value') ?
-                  <span>
-                    {Moment(fields.estimates.start.value).format('MMMM DD YYYY, h:mm:ss a')}
-                    {' '}
-                    {Moment(fields.estimates.start.value).fromNow()}
-                  </span>
-                  :
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                }
+                {_.get(fields, 'estimates.start.value')
+                  ? <span>
+                      {Moment(fields.estimates.start.value).format(
+                        'MMMM DD YYYY, h:mm:ss a'
+                      )}{' '}
+                      {Moment(fields.estimates.start.value).fromNow()}
+                    </span>
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -243,17 +252,19 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'estimates.end.value') ?
-                  <span>
-                    {Moment(fields.estimates.end.value).format('MMMM DD YYYY, h:mm:ss a')}
-                    {' '}
-                    {Moment(fields.estimates.end.value).fromNow()}
-                  </span>
-                  :
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                }
+                {_.get(fields, 'estimates.end.value')
+                  ? <span>
+                      {Moment(fields.estimates.end.value).format(
+                        'MMMM DD YYYY, h:mm:ss a'
+                      )}{' '}
+                      {Moment(fields.estimates.end.value).fromNow()}
+                    </span>
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -264,10 +275,14 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'estimates.time.print.value') ?
-                  <TimeDisplay seconds={fields.estimates.time.print.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'estimates.time.print.value')
+                  ? <TimeDisplay seconds={fields.estimates.time.print.value} />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -278,10 +293,16 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'estimates.time.post_processing.value') ?
-                  <TimeDisplay seconds={fields.estimates.time.post_processing.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'estimates.time.post_processing.value')
+                  ? <TimeDisplay
+                      seconds={fields.estimates.time.post_processing.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -292,10 +313,16 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'estimates.materials.base.value') ?
-                  <FormattedVolume value={fields.estimates.materials.base.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'estimates.materials.base.value')
+                  ? <FormattedVolume
+                      value={fields.estimates.materials.base.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
               <BS.ListGroupItem
                 header={
@@ -305,10 +332,16 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'estimates.materials.support.value') ?
-                  <FormattedVolume value={fields.estimates.materials.support.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'estimates.materials.support.value')
+                  ? <FormattedVolume
+                      value={fields.estimates.materials.support.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
             </BS.ListGroup>
           </BS.Panel>
@@ -323,16 +356,19 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'actuals.start.value') ?
-                  <span>
-                    {Moment(fields.actuals.start.value).format('MMMM DD YYYY, h:mm:ss a')}
-                    ({Moment(fields.actuals.start.value).fromNow()})
-                  </span>
-                  :
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                }
+                {_.get(fields, 'actuals.start.value')
+                  ? <span>
+                      {Moment(fields.actuals.start.value).format(
+                        'MMMM DD YYYY, h:mm:ss a'
+                      )}
+                      ({Moment(fields.actuals.start.value).fromNow()})
+                    </span>
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -343,17 +379,19 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'actuals.end.value') ?
-                  <span>
-                    {Moment(fields.actuals.end.value).format('MMMM DD YYYY, h:mm:ss a')}
-                    {' '}
-                    {Moment(fields.actuals.end.value).fromNow()}
-                  </span>
-                  :
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                }
+                {_.get(fields, 'actuals.end.value')
+                  ? <span>
+                      {Moment(fields.actuals.end.value).format(
+                        'MMMM DD YYYY, h:mm:ss a'
+                      )}{' '}
+                      {Moment(fields.actuals.end.value).fromNow()}
+                    </span>
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -364,10 +402,16 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'actuals.time.print.value') ?
-                  <FormattedDuration value={fields.actuals.time.print.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'actuals.time.print.value')
+                  ? <FormattedDuration
+                      value={fields.actuals.time.print.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -378,10 +422,16 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'actuals.time.post_processing.value') ?
-                  <FormattedDuration value={fields.actuals.time.post_processing.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'actuals.time.post_processing.value')
+                  ? <FormattedDuration
+                      value={fields.actuals.time.post_processing.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
 
               <BS.ListGroupItem
@@ -392,10 +442,16 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'actuals.materials.base.value') ?
-                  <FormattedVolume value={fields.actuals.materials.base.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'actuals.materials.base.value')
+                  ? <FormattedVolume
+                      value={fields.actuals.materials.base.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
               <BS.ListGroupItem
                 header={
@@ -405,59 +461,86 @@ const EditRun = ({
                   />
                 }
               >
-                {_.get(fields, 'actuals.materials.support.value') ?
-                  <FormattedVolume value={fields.actuals.materials.support.value} /> :
-                  <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-                }
+                {_.get(fields, 'actuals.materials.support.value')
+                  ? <FormattedVolume
+                      value={fields.actuals.materials.support.value}
+                    />
+                  : <em>
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    </em>}
               </BS.ListGroupItem>
             </BS.ListGroup>
           </BS.Panel>
-
         </BS.Col>
 
         <BS.Col xs={12} sm={8}>
           <FormRow id="field.id" defaultMessage="ID">
-            <BS.FormControl.Static>{fields.id.value}</BS.FormControl.Static>
+            <BS.FormControl.Static>
+              {fields.id.value}
+            </BS.FormControl.Static>
           </FormRow>
 
           <StatusField statuses={statuses} fields={fields} />
 
-          <FormRow controlId="uxCreated" id="field.created" defaultMessage="Created">
+          <FormRow
+            controlId="uxCreated"
+            id="field.created"
+            defaultMessage="Created"
+          >
             <BS.FormControl.Static>
-              {_.get(fields, 'created.value') ?
-                <FormattedDateTime value={fields.created.value} /> :
-                <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-              }
+              {_.get(fields, 'created.value')
+                ? <FormattedDateTime value={fields.created.value} />
+                : <em>
+                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                  </em>}
             </BS.FormControl.Static>
           </FormRow>
 
           <FormRow id="field.model" defaultMessage="Model">
-            { _.get(fields, 'model.value') ?
-              <ModelDownloadField
-                runUUID={fields.uuid.value}
-                model={fields.model}
-                onClick={onModelDownload}
-                isDownloading={downloadModel.downloadingModel}
-              /> :
-              <em>
-                <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-              </em>
-            }
+            {_.get(fields, 'model.value')
+              ? <ModelDownloadField
+                  runUUID={fields.uuid.value}
+                  model={fields.model}
+                  onClick={onModelDownload}
+                  isDownloading={downloadModel.downloadingModel}
+                />
+              : <em>
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                </em>}
           </FormRow>
 
           <FormRow id="field.printer" defaultMessage="Printer">
-            <LinkField uri={_.get(fields, 'printer.value')} endpoint="printer" resources={printers} />
+            <LinkField
+              uri={_.get(fields, 'printer.value')}
+              endpoint="printer"
+              resources={printers}
+            />
           </FormRow>
 
           <FormRow id="field.printerType" defaultMessage="Printer Type">
-            <LinkField uri={_.get(fields, 'printer_type.value')} endpoint="printer-type" resources={printerTypes} />
+            <LinkField
+              uri={_.get(fields, 'printer_type.value')}
+              endpoint="printer-type"
+              resources={printerTypes}
+            />
           </FormRow>
 
           <FormRow id="field.postProcessor" defaultMessage="Post-Processor">
-            <LinkField uri={_.get(fields, 'post_processor.value')} endpoint="post-processor" resources={postProcessors} />
+            <LinkField
+              uri={_.get(fields, 'post_processor.value')}
+              endpoint="post-processor"
+              resources={postProcessors}
+            />
           </FormRow>
 
-          <BS.Panel header={<FormattedMessage id="field.record" defaultMessage="Record" />}>
+          <BS.Panel
+            header={
+              <FormattedMessage id="field.record" defaultMessage="Record" />
+            }
+          >
             <BS.Row>
               <BS.Col xs={10} xsOffset={1} md={8} lg={6}>
                 {/* Upload Document pending backend implementation:
@@ -502,34 +585,37 @@ const EditRun = ({
             </BS.Row>
           </BS.Panel>
 
-          <BS.Panel header={<FormattedMessage id="field.prints" defaultMessage="Prints" />}>
+          <BS.Panel
+            header={
+              <FormattedMessage id="field.prints" defaultMessage="Prints" />
+            }
+          >
             <Grid
               data={prints}
-              columns={[
-                'id',
-                'order',
+              columns={['id', 'order']}
+              columnMeta={[
+                {
+                  displayName: (
+                    <FormattedMessage id="field.id" defaultMessage="ID" />
+                  ),
+                  columnName: 'id',
+                  customComponent: IdColumn('print'),
+                  locked: true,
+                },
+                {
+                  displayName: (
+                    <FormattedMessage id="field.order" defaultMessage="Order" />
+                  ),
+                  columnName: 'order',
+                  customComponent: IdColumn('order', 'order', orders, 'name'),
+                },
               ]}
-              columnMeta={[{
-                displayName: <FormattedMessage id="field.id" defaultMessage="ID" />,
-                columnName: 'id',
-                customComponent: IdColumn('print'),
-                locked: true,
-              }, {
-                displayName: <FormattedMessage id="field.order" defaultMessage="Order" />,
-                columnName: 'order',
-                customComponent: IdColumn('order', 'order', orders, 'name'),
-              }]}
             />
           </BS.Panel>
-
         </BS.Col>
-
-
       </BS.Row>
     </BS.Grid>
-  </BS.Form>
-
-);
+  </BS.Form>;
 
 EditRun.propTypes = {
   apiErrors: PropTypes.array,

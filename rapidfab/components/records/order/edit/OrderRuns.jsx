@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Panel,
-  Row,
-} from 'react-bootstrap';
+import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
 import { getRunsForOrder } from 'rapidfab/selectors';
 
 import Loading from 'rapidfab/components/Loading';
 
-const Header = (runs) => {
-  const complete = runs.reduce((total, run) => (run.status === 'complete' ? total + 1 : total), 0).toString();
+const Header = runs => {
+  const complete = runs
+    .reduce((total, run) => (run.status === 'complete' ? total + 1 : total), 0)
+    .toString();
   const total = (runs ? runs.length : 0).toString();
 
   return (
@@ -28,29 +24,36 @@ const Header = (runs) => {
 };
 
 const statusMapping = {
-  created: (<FormattedMessage id="status.created" defaultMessage="Created" />),
-  calculating: (<FormattedMessage id="status.calculating" defaultMessage="Calculating" />),
-  calculated: (<FormattedMessage id="status.calculated" defaultMessage="Calculated" />),
-  queued: (<FormattedMessage id="status.queued" defaultMessage="Queued" />),
-  'in-progress': (<FormattedMessage id="status.inProgress" defaultMessage="In Progress" />),
-  complete: (<FormattedMessage id="status.complete" defaultMessage="Complete" />),
-  error: (<FormattedMessage id="status.error" defaultMessage="Error" />),
+  created: <FormattedMessage id="status.created" defaultMessage="Created" />,
+  calculating: (
+    <FormattedMessage id="status.calculating" defaultMessage="Calculating" />
+  ),
+  calculated: (
+    <FormattedMessage id="status.calculated" defaultMessage="Calculated" />
+  ),
+  queued: <FormattedMessage id="status.queued" defaultMessage="Queued" />,
+  'in-progress': (
+    <FormattedMessage id="status.inProgress" defaultMessage="In Progress" />
+  ),
+  complete: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
+  error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const RunItem = ({ run }) => (
+const RunItem = ({ run }) =>
   <ListGroupItem>
     <Row>
       <Col xs={6}>
         <a href={`#/records/run/${run.uuid}`}>
-          <abbr title={run.uuid} style={{ cursor: 'pointer' }}>{run.id}</abbr>
+          <abbr title={run.uuid} style={{ cursor: 'pointer' }}>
+            {run.id}
+          </abbr>
         </a>
       </Col>
       <Col xs={6}>
         {statusMapping[run.status]}
       </Col>
     </Row>
-  </ListGroupItem>
-);
+  </ListGroupItem>;
 
 class OrderRuns extends Component {
   componentDidMount() {
@@ -73,17 +76,12 @@ class OrderRuns extends Component {
           <ListGroup fill>
             <ListGroupItem key="header">
               <Row>
-                <Col xs={6}>
-                  ID
-                </Col>
-                <Col xs={6}>
-                  Status
-                </Col>
+                <Col xs={6}>ID</Col>
+                <Col xs={6}>Status</Col>
               </Row>
             </ListGroupItem>
 
-            { runs.map(run => <RunItem key={run.id} run={run} />) }
-
+            {runs.map(run => <RunItem key={run.id} run={run} />)}
           </ListGroup>
         </Panel>
       );
@@ -106,7 +104,7 @@ OrderRuns.defaultProps = {
   fetching: true,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const order = state.resources[state.routeUUID];
   const runs = getRunsForOrder(state, order);
 

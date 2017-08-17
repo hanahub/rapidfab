@@ -37,14 +37,16 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.location.list());
       if (uuid) dispatch(Actions.Api.wyatt.stock.get(uuid));
     },
-    onSubmit: (payload) => {
+    onSubmit: payload => {
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt.stock.put(payload.uuid, payload)).then(redirect);
+        dispatch(Actions.Api.wyatt.stock.put(payload.uuid, payload)).then(
+          redirect
+        );
       } else {
         dispatch(Actions.Api.wyatt.stock.post(payload)).then(redirect);
       }
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt.stock.delete(uuid)).then(redirect);
       }
@@ -64,7 +66,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm({
-  form: 'record.stock',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(StockContainer);
+export default reduxForm(
+  {
+    form: 'record.stock',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(StockContainer);

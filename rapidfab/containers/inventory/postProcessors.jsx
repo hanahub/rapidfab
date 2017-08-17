@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import PostProcessorsComponent from 'rapidfab/components/inventory/postProcessors';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class PostProcessorsContainer extends Component {
   componentDidMount() {
     this.props.onInitialize();
@@ -28,17 +27,24 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const postProcessor = state.ui.wyatt['post-processor'];
   const postProcessorType = state.ui.wyatt['post-processor-type'];
-  const {
-    location,
-  } = state.ui.wyatt;
+  const { location } = state.ui.wyatt;
 
   return {
     postProcessors: Selectors.getPostProcessors(state),
     postProcessorTypes: Selectors.getPostProcessorTypes(state),
     locations: Selectors.getLocations(state),
-    fetching: location.list.fetching || postProcessorType.list.fetching || postProcessor.list.fetching,
-    apiErrors: _.concat(location.list.errors, postProcessorType.list.errors, postProcessor.list.errors),
+    fetching:
+      location.list.fetching ||
+      postProcessorType.list.fetching ||
+      postProcessor.list.fetching,
+    apiErrors: _.concat(
+      location.list.errors,
+      postProcessorType.list.errors,
+      postProcessor.list.errors
+    ),
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostProcessorsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  PostProcessorsContainer
+);

@@ -1,11 +1,12 @@
 import React from 'react';
 import Version from 'rapidfab/version';
 
-const About = () => (
+const About = () =>
   <dl>
     <dt>Version:</dt>
-    <dd>{Version}</dd>
-  </dl>
-);
+    <dd>
+      {Version}
+    </dd>
+  </dl>;
 
 export default About;

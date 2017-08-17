@@ -34,19 +34,21 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (uuid) => {
+    onInitialize: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt.manufacturer.get(uuid));
       }
     },
-    onSubmit: (payload) => {
+    onSubmit: payload => {
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt.manufacturer.put(payload.uuid, payload)).then(redirect);
+        dispatch(
+          Actions.Api.wyatt.manufacturer.put(payload.uuid, payload)
+        ).then(redirect);
       } else {
         dispatch(Actions.Api.wyatt.manufacturer.post(payload)).then(redirect);
       }
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt.manufacturer.delete(uuid)).then(redirect);
       }
@@ -64,7 +66,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm({
-  form: 'record.manufacturer',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(ManufacturerContainer);
+export default reduxForm(
+  {
+    form: 'record.manufacturer',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(ManufacturerContainer);

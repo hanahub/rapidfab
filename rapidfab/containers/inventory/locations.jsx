@@ -17,23 +17,21 @@ class LocationsContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (bureau) => {
-      dispatch(Actions.Api.pao.users.list({
-        group: bureau.GROUP,
-      }));
+    onInitialize: bureau => {
+      dispatch(
+        Actions.Api.pao.users.list({
+          group: bureau.GROUP,
+        })
+      );
       dispatch(Actions.Api.wyatt.location.list());
     },
   };
 }
 
 function mapStateToProps(state) {
-  const {
-    location,
-  } = state.ui.wyatt;
+  const { location } = state.ui.wyatt;
 
-  const {
-    users,
-  } = state.ui.pao;
+  const { users } = state.ui.pao;
 
   return {
     locations: Selectors.getLocations(state),

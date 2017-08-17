@@ -1,7 +1,7 @@
 module.exports = {
   has(namespace, right, state) {
     const foundPermission = [];
-    state.permissions.forEach((permission) => {
+    state.permissions.forEach(permission => {
       if (permission.namespace === namespace && permission.right === right) {
         foundPermission.push(permission);
       }

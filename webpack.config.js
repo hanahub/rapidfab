@@ -44,7 +44,9 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        BUILD_VERSION: JSON.stringify(process.env.BUILD_VERSION || 'development'),
+        BUILD_VERSION: JSON.stringify(
+          process.env.BUILD_VERSION || 'development'
+        ),
       },
     }),
     new webpack.ProvidePlugin({
@@ -58,7 +60,10 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel?presets[]=env&plugins[]=transform-runtime'],
+        loaders: [
+          'react-hot',
+          'babel?presets[]=env&plugins[]=transform-runtime',
+        ],
         exclude: /(node_modules|bower_components)/,
       },
       {
@@ -73,11 +78,23 @@ module.exports = {
       },
       { test: /\.png$/, loader: 'url-loader?mimetype=image/png' },
       { test: /\.jpg$/, loader: 'url-loader?mimetype=image/jpg' },
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/font-woff' },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/font-woff' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=application/octet-stream' },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=application/font-woff',
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=application/font-woff',
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=application/octet-stream',
+      },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&minetype=image/svg+xml' },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=image/svg+xml',
+      },
       { test: /\.otf$/, loader: 'file-loader?prefix=font/' },
     ],
   },

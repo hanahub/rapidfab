@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 
-
 class FormModal extends Component {
   constructor(props) {
     super(props);
@@ -34,23 +33,19 @@ class FormModal extends Component {
           <BS.Modal.Footer>
             <BS.Row>
               <BS.Col xs={6}>
-                {data ? (
-                  <BS.Button
-                    onClick={this.handleDelete}
-                    bsStyle="danger"
-                    block
-                  >
-                    Delete
-                  </BS.Button>
-                ) : null}
+                {data
+                  ? <BS.Button
+                      onClick={this.handleDelete}
+                      bsStyle="danger"
+                      block
+                    >
+                      Delete
+                    </BS.Button>
+                  : null}
               </BS.Col>
               <BS.Col xs={6}>
-                <BS.Button
-                  bsStyle="success"
-                  type="submit"
-                  block
-                >
-                    Save
+                <BS.Button bsStyle="success" type="submit" block>
+                  Save
                 </BS.Button>
               </BS.Col>
             </BS.Row>

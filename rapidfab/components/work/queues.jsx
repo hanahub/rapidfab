@@ -3,7 +3,6 @@ import * as BS from 'react-bootstrap';
 import { MODELER_STATUS_MAP } from 'rapidfab/constants';
 import Locations from 'rapidfab/components/locations';
 
-
 const EVENT_COLOR_MAP = {
   calculating: '#e4d836',
   calculated: '#9f86ff',
@@ -23,7 +22,7 @@ class Queues extends Component {
   }
 
   fetchResources(callback) {
-    const machines = _.map(this.props.machines, (machine) => {
+    const machines = _.map(this.props.machines, machine => {
       const type = machine.printer_type ? 'printer' : 'post-processor';
       return {
         id: machine.uri,
@@ -47,7 +46,10 @@ class Queues extends Component {
       backgroundColor: EVENT_COLOR_MAP[run.status],
       borderColor: EVENT_COLOR_MAP[run.status],
     }));
-    events = _.filter(events, event => event.start != null && event.end != null);
+    events = _.filter(
+      events,
+      event => event.start != null && event.end != null
+    );
     callback(events);
   }
 
@@ -67,19 +69,13 @@ class Queues extends Component {
           type: 'timeline',
           buttonText: 'Day',
           slotDuration: '00:30',
-          slotLabelFormat: [
-            'MMMM DD',
-            'HH:mm',
-          ],
+          slotLabelFormat: ['MMMM DD', 'HH:mm'],
         },
         timelineWeek: {
           type: 'timeline',
           buttonText: 'Week',
           slotDuration: '01:00',
-          slotLabelFormat: [
-            'MMMM DD',
-            'HH:mm',
-          ],
+          slotLabelFormat: ['MMMM DD', 'HH:mm'],
         },
       },
       timezone: 'local',
@@ -100,7 +96,9 @@ class Queues extends Component {
             status = MODELER_STATUS_MAP.unknown;
             console.error('Unknown status for printer', resourceObj.status);
           }
-          cell.prepend(`<span class="dot ${status.status}" title="${status.message}" /> `);
+          cell.prepend(
+            `<span class="dot ${status.status}" title="${status.message}" /> `
+          );
         } else {
           cell.prepend('<span class="fa fa-qrcode" /> ');
         }
@@ -126,11 +124,13 @@ class Queues extends Component {
       <div>
         <BS.Row>
           <BS.Col xs={4}>
-            {this.props.locations.length > 1 ? <Locations
-              locations={this.props.locations}
-              handleOnChange={this.props.handleOnChange}
-              locationFilter={this.props.locationFilter}
-            /> : <div />}
+            {this.props.locations.length > 1
+              ? <Locations
+                  locations={this.props.locations}
+                  handleOnChange={this.props.handleOnChange}
+                  locationFilter={this.props.locationFilter}
+                />
+              : <div />}
           </BS.Col>
         </BS.Row>
         <div id="scheduler" />

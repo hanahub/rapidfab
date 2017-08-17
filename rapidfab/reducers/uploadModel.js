@@ -39,7 +39,7 @@ function reducer(state = initialState, action) {
     case Constants.UPLOAD_MODEL_ADD_ERROR: {
       const errors = _.assign([], state.errors);
 
-      action.errors.forEach((error) => {
+      action.errors.forEach(error => {
         if (!_.find(errors, error)) {
           errors.push(error);
         }

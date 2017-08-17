@@ -46,7 +46,10 @@ class Runs extends Component {
   handleSelectPrint(print) {
     if (_.find(this.state.selectedPrints, ['uri', print.uri])) {
       this.setState({
-        selectedPrints: _.filter(this.state.selectedPrints, selectedPrint => selectedPrint.uri !== print.uri),
+        selectedPrints: _.filter(
+          this.state.selectedPrints,
+          selectedPrint => selectedPrint.uri !== print.uri
+        ),
       });
     } else {
       this.setState({
@@ -58,34 +61,46 @@ class Runs extends Component {
   handleSelectActivePrint(print) {
     if (_.find(this.state.activePrintsSelected, ['uri', print.uri])) {
       this.setState({
-        activePrintsSelected: _.filter(this.state.activePrintsSelected, activePrintSelected => activePrintSelected.uri !== print.uri),
+        activePrintsSelected: _.filter(
+          this.state.activePrintsSelected,
+          activePrintSelected => activePrintSelected.uri !== print.uri
+        ),
       });
     } else {
       this.setState({
-        activePrintsSelected: _.unionBy(this.state.activePrintsSelected, [print], 'uri'),
+        activePrintsSelected: _.unionBy(
+          this.state.activePrintsSelected,
+          [print],
+          'uri'
+        ),
       });
     }
   }
 
   handleActivatePrints() {
     this.setState({
-      activePrints: _.unionBy(this.state.activePrints, this.state.selectedPrints, 'uri'),
+      activePrints: _.unionBy(
+        this.state.activePrints,
+        this.state.selectedPrints,
+        'uri'
+      ),
       selectedPrints: [],
     });
   }
 
   handleDeactivatePrints() {
     this.setState({
-      activePrints: _.differenceBy(this.state.activePrints, this.state.activePrintsSelected, 'uri'),
+      activePrints: _.differenceBy(
+        this.state.activePrints,
+        this.state.activePrintsSelected,
+        'uri'
+      ),
       activePrintsSelected: [],
     });
   }
 
   handleSave() {
-    const {
-      selectedPrinter,
-      activePrints,
-    } = this.state;
+    const { selectedPrinter, activePrints } = this.state;
 
     if (activePrints.length) {
       this.props.onSave({
@@ -97,13 +112,7 @@ class Runs extends Component {
   }
 
   render() {
-    const {
-      printers,
-      apiErrors,
-      fetching,
-      prints,
-      pager,
-    } = this.props;
+    const { printers, apiErrors, fetching, prints, pager } = this.props;
 
     const {
       selectedPrinter,
@@ -120,13 +129,19 @@ class Runs extends Component {
           <BS.Col xs={12}>
             <BS.Breadcrumb>
               <BS.Breadcrumb.Item active>
-                <Fa name="road" /> <FormattedMessage id="plan" defaultMessage="Plan" />
+                <Fa name="road" />{' '}
+                <FormattedMessage id="plan" defaultMessage="Plan" />
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item href="#/plan/runs">
-                <Fa name="list" /> <FormattedMessage id="plan.runs" defaultMessage="Runs" />
+                <Fa name="list" />{' '}
+                <FormattedMessage id="plan.runs" defaultMessage="Runs" />
               </BS.Breadcrumb.Item>
               <BS.Breadcrumb.Item>
-                <Fa name="file-o" /> <FormattedMessage id="record.run.new" defaultMessage="New Run" />
+                <Fa name="file-o" />{' '}
+                <FormattedMessage
+                  id="record.run.new"
+                  defaultMessage="New Run"
+                />
               </BS.Breadcrumb.Item>
             </BS.Breadcrumb>
           </BS.Col>
@@ -135,13 +150,20 @@ class Runs extends Component {
         <BS.Row>
           <BS.Col xs={6}>
             <BS.Button href="#/plan/runs" bsSize="small">
-              <Fa name="arrow-left" /> <FormattedMessage id="plan.runs" defaultMessage="Runs" />
+              <Fa name="arrow-left" />{' '}
+              <FormattedMessage id="plan.runs" defaultMessage="Runs" />
             </BS.Button>
           </BS.Col>
           <BS.Col xs={6}>
             <BS.ButtonToolbar className="pull-right">
-              <BS.Button bsSize="small" onClick={this.handleSave} disabled={!activePrints.length} bsStyle="primary">
-                <Fa name="floppy-o" /> <FormattedMessage id="button.save" defaultMessage="Save" />
+              <BS.Button
+                bsSize="small"
+                onClick={this.handleSave}
+                disabled={!activePrints.length}
+                bsStyle="primary"
+              >
+                <Fa name="floppy-o" />{' '}
+                <FormattedMessage id="button.save" defaultMessage="Save" />
               </BS.Button>
             </BS.ButtonToolbar>
           </BS.Col>
@@ -204,7 +226,6 @@ class Runs extends Component {
             </BS.Row>
           );
         })()}
-
       </BS.Grid>
     );
   }

@@ -12,7 +12,6 @@ import * as UI from './ui';
 import * as Pager from './pager';
 import * as RouteUUID from './routeUUID';
 
-
 const Actions = {
   Api: makeApiActions(Api, RESOURCES),
   DownloadModel,

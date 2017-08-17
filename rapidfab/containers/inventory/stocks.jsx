@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import StocksComponent from 'rapidfab/components/inventory/stocks';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class StocksContainer extends Component {
   componentWillMount() {
     this.props.onInitialize(this.props.bureau);
@@ -18,7 +17,7 @@ class StocksContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (bureau) => {
+    onInitialize: bureau => {
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.Api.wyatt.stock.list());
@@ -27,19 +26,20 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const {
-    material,
-    location,
-    stock,
-  } = state.ui.wyatt;
+  const { material, location, stock } = state.ui.wyatt;
 
   return {
     bureau: Selectors.getBureau(state),
     materials: Selectors.getMaterials(state),
     locations: Selectors.getLocations(state),
     stocks: Selectors.getStocks(state),
-    fetching: material.list.fetching || location.list.fetching || stock.list.fetching,
-    apiErrors: _.concat(material.list.errors, location.list.errors, stock.list.errors),
+    fetching:
+      material.list.fetching || location.list.fetching || stock.list.fetching,
+    apiErrors: _.concat(
+      material.list.errors,
+      location.list.errors,
+      stock.list.errors
+    ),
   };
 }
 

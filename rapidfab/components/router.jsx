@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import PathToRegexp from 'path-to-regexp';
 import NotFound from 'rapidfab/components/404';
 
-
 class Router extends Component {
   componentWillMount() {
-    window.onhashchange = (event) => {
+    window.onhashchange = event => {
       if (!event) return;
       this.props.onNavigate(this.props.hash, window.location.hash);
     };
@@ -31,7 +30,12 @@ class Router extends Component {
       const match = pattern.exec(hash);
       if (match) {
         if (toRender) {
-          console.warn('Matched more than one route. First route was', toRender.path, ' this match is ', path);
+          console.warn(
+            'Matched more than one route. First route was',
+            toRender.path,
+            ' this match is ',
+            path
+          );
         }
         const route = {};
         for (let i = 0; i < keys.length; i++) {

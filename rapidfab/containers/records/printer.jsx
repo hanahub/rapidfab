@@ -30,22 +30,24 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (uuid) => {
+    onInitialize: uuid => {
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.Api.wyatt['printer-type'].list());
       if (uuid) {
         dispatch(Actions.Api.wyatt.printer.get(uuid));
       }
     },
-    onSubmit: (payload) => {
+    onSubmit: payload => {
       if (!payload.modeler) payload.modeler = '';
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt.printer.put(payload.uuid, payload)).then(redirect);
+        dispatch(Actions.Api.wyatt.printer.put(payload.uuid, payload)).then(
+          redirect
+        );
       } else {
         dispatch(Actions.Api.wyatt.printer.post(payload)).then(redirect);
       }
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt.printer.delete(uuid)).then(redirect);
       }
@@ -64,7 +66,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm({
-  form: 'record.printer',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(PrinterContainer);
+export default reduxForm(
+  {
+    form: 'record.printer',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(PrinterContainer);

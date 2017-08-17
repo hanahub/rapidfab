@@ -41,16 +41,16 @@ function reducer(state = {}, action) {
         [record.uuid]: record,
       });
     case Constants.RESOURCE_PUT_SUCCESS:
-      record = hydrateRecord(
-        _.assign({}, state[action.uuid], action.payload),
-      );
+      record = hydrateRecord(_.assign({}, state[action.uuid], action.payload));
       return _.assign({}, state, {
         [record.uuid]: record,
       });
     case Constants.RESOURCE_POST_SUCCESS:
-      record = hydrateRecord(_.assign(action.payload, {
-        uri: action.headers.location,
-      }));
+      record = hydrateRecord(
+        _.assign(action.payload, {
+          uri: action.headers.location,
+        })
+      );
       return _.assign({}, state, {
         [record.uuid]: record,
       });

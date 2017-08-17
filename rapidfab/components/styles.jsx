@@ -1,7 +1,7 @@
 import React from 'react';
 import * as BS from 'react-bootstrap';
 
-const Home = () => (
+const Home = () =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Alert bsStyle="success">
@@ -17,7 +17,6 @@ const Home = () => (
         <p>This is a test error. It is only a test</p>
       </BS.Alert>
     </BS.Row>
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default Home;

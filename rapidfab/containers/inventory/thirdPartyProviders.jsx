@@ -17,7 +17,7 @@ class ThirdPartyProvidersContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (bureau) => {
+    onInitialize: bureau => {
       dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
     },
   };
@@ -34,4 +34,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThirdPartyProvidersContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  ThirdPartyProvidersContainer
+);
