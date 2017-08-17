@@ -4,13 +4,33 @@ import { Breadcrumb } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
 
-const spacing = { marginRight: '1rem' };
+const spacing = { marginRight: '0.5rem' };
 
 const breadcrumbMap = {
+  printerTypes: {
+    href: '#/inventory/printer-types',
+    icon: 'print',
+    message: (
+      <FormattedMessage
+        id="inventory.printerTypes"
+        defaultMessage="inventory.printerTypes"
+      />
+    ),
+  },
   prints: {
     href: '#/plan/prints',
     icon: 'list',
     message: <FormattedMessage id="plan.prints" defaultMessage="Prints" />,
+  },
+  newPrinterType: {
+    href: '#/records/printer-type',
+    icon: 'print',
+    message: (
+      <FormattedMessage
+        id="record.printerType.new"
+        defaultMessage="New Printer Type"
+      />
+    ),
   },
   orders: {
     href: '#/plan/orders',
@@ -40,6 +60,7 @@ const BreadcrumbLink = ({ crumb, active }) => {
     </Breadcrumb.Item>
   );
 };
+
 BreadcrumbLink.propTypes = { crumb: PropTypes.string };
 
 const BreadcrumbNav = ({ breadcrumbs }) =>
@@ -53,6 +74,7 @@ const BreadcrumbNav = ({ breadcrumbs }) =>
       />
     )}
   </Breadcrumb>;
+
 BreadcrumbNav.propTypes = { breadcrumbs: PropTypes.arrayOf(PropTypes.string) };
 
 export default BreadcrumbNav;

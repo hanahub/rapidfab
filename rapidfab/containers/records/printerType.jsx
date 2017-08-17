@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import PrinterTypeComponent from 'rapidfab/components/records/printerType';
 import { reduxForm } from 'redux-form';
@@ -36,7 +37,7 @@ function redirect() {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: (bureau, uuid) => {
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.manufacturer.list());
       if (uuid) {
         dispatch(Actions.Api.wyatt['printer-type'].get(uuid));
@@ -63,15 +64,19 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
-    bureau: Selectors.getBureau(state),
-    uuid: Selectors.getRoute(state, props).uuid,
-    initialValues: Selectors.getInitialValuesBureau(state, props),
-    submitting: Selectors.getResourceFetching(state, 'wyatt.printer-type'),
-    apiErrors: Selectors.getResourceErrors(state, 'wyatt.printer-type'),
+    bureau: Selectors.getBureauUri(state),
     manufacturers: Selectors.getManufacturers(state),
     materials: Selectors.getMaterials(state),
+    initialValues: Selectors.getInitialValuesBureau(state, props),
+    uuid: Selectors.getRoute(state, props).uuid,
   };
 }
+
+PrinterTypeContainer.propTypes = {
+  bureau: PropTypes.string.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
 
 export default reduxForm(
   {
