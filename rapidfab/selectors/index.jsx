@@ -108,6 +108,8 @@ export const getBureau = createSelector(
   }
 );
 
+export const getBureauUri = createSelector([getBureau], bureau => bureau.uri);
+
 export const getFeatures = createSelector(
   [getStateFeatures, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
