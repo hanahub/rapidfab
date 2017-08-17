@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 
-const SaveButtonTitle = ({}) =>
+const SaveButtonTitle = () =>
   <span>
     <Fa name="floppy-o" />{' '}
     <FormattedMessage id="button.save" defaultMessage="Save" />
@@ -146,7 +147,7 @@ const PrinterTypeForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Manufacturer
               </option>
-              {_.map(manufacturers, manufacturer =>
+              {manufacturers.map(manufacturer =>
                 <option
                   key={manufacturer.uri}
                   value={manufacturer.uri}
@@ -167,7 +168,7 @@ const PrinterTypeForm = ({
               required
               {...fields.materials}
             >
-              {_.map(materials, material =>
+              {materials.map(material =>
                 <option
                   key={material.uri}
                   value={material.uri}
@@ -179,5 +180,14 @@ const PrinterTypeForm = ({
       </BS.Row>
     </BS.Grid>
   </form>;
+
+PrinterTypeForm.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.obj),
+  fields: PropTypes.object,
+  handleSubmit: PropTypes.func,
+  manufacturers: PropTypes.arrayOf(PropTypes.obj),
+  materials: PropTypes.arrayOf(PropTypes.obj),
+  onDelete: PropTypes.func,
+};
 
 export default PrinterTypeForm;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import PrinterTypeComponent from 'rapidfab/components/records/printerType';
 import { reduxForm } from 'redux-form';
@@ -72,6 +73,12 @@ function mapStateToProps(state, props) {
     materials: Selectors.getMaterials(state),
   };
 }
+
+PrinterTypeContainer.propTypes = {
+  bureau: PropTypes.obj.isRequired,
+  uuid: PropTypes.string.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 export default reduxForm(
   {
