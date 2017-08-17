@@ -47,9 +47,7 @@ const Constants = [
   'CLEAR_UI_STATE',
 ];
 
-export const Currencies = [
-  'USD', 'GBP', 'JPY', 'EUR',
-];
+export const Currencies = ['USD', 'GBP', 'JPY', 'EUR'];
 
 export const MODELER_STATUS_MAP = {
   idle: {

@@ -7,12 +7,10 @@ import * as BS from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import Logo from 'rapidfab/images/logo.png';
 
-
-const TosLink = ({ }) => (
+const TosLink = ({}) =>
   <a href={Config.TOS_URL} target="_blank">
     <FormattedMessage id="tos" defaultMessage="Terms of Service" />
-  </a>
-);
+  </a>;
 
 class Tos extends Component {
   constructor(props) {
@@ -45,7 +43,9 @@ class Tos extends Component {
           <BS.Col xs={12}>
             <BS.Jumbotron style={{ textAlign: 'center' }}>
               <BS.Image src={Logo} />
-              <h2 style={{ marginTop: '40px' }}><FormattedMessage id="tos" defaultMessage="Terms of Service" /></h2>
+              <h2 style={{ marginTop: '40px' }}>
+                <FormattedMessage id="tos" defaultMessage="Terms of Service" />
+              </h2>
               <p>
                 <FormattedMessage
                   id="tosDescription"
@@ -53,8 +53,18 @@ class Tos extends Component {
                   values={{ tosLink: <TosLink /> }}
                 />
               </p>
-              <BS.Button bsSize="small" bsStyle="primary" onClick={this.handleAgree} style={{ marginTop: '20px' }} disabled={fetching}>
-                <Fa name={fetching ? 'spinner' : 'thumbs-up'} spin={fetching} /> <FormattedMessage id="button.agree" defaultMessage="Agree" />
+              <BS.Button
+                bsSize="small"
+                bsStyle="primary"
+                onClick={this.handleAgree}
+                style={{ marginTop: '20px' }}
+                disabled={fetching}
+              >
+                <Fa
+                  name={fetching ? 'spinner' : 'thumbs-up'}
+                  spin={fetching}
+                />{' '}
+                <FormattedMessage id="button.agree" defaultMessage="Agree" />
               </BS.Button>
             </BS.Jumbotron>
           </BS.Col>

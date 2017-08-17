@@ -1,17 +1,14 @@
 import React from 'react';
 import { FormattedMessage } from 'rapidfab/i18n';
-import {
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Panel,
-  Row,
-} from 'react-bootstrap';
+import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
-const ProcessStepHeader = (processSteps) => {
-  const complete = processSteps.reduce((total, step) => (
-    step.status === 'complete' ? total + 1 : total
-  ), 0).toString();
+const ProcessStepHeader = processSteps => {
+  const complete = processSteps
+    .reduce(
+      (total, step) => (step.status === 'complete' ? total + 1 : total),
+      0
+    )
+    .toString();
   const total = (processSteps ? processSteps.length : 0).toString();
   return (
     <FormattedMessage
@@ -23,30 +20,22 @@ const ProcessStepHeader = (processSteps) => {
 };
 
 const statusMapping = {
-  created: (
-    <FormattedMessage id="status.created" defaultMessage="Created" />
-  ),
+  created: <FormattedMessage id="status.created" defaultMessage="Created" />,
   calculating: (
     <FormattedMessage id="status.calculating" defaultMessage="Calculating" />
   ),
   calculated: (
     <FormattedMessage id="status.calculated" defaultMessage="Calculated" />
   ),
-  queued: (
-    <FormattedMessage id="status.queued" defaultMessage="Queued" />
-  ),
+  queued: <FormattedMessage id="status.queued" defaultMessage="Queued" />,
   'in-progress': (
     <FormattedMessage id="status.in_progress" defaultMessage="In Progress" />
   ),
-  complete: (
-    <FormattedMessage id="status.complete" defaultMessage="Complete" />
-  ),
-  error: (
-    <FormattedMessage id="status.error" defaultMessage="Error" />
-  ),
+  complete: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
+  error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const ProcessStep = ({ step }) => (
+const ProcessStep = ({ step }) =>
   <ListGroupItem>
     <Row>
       <Col xs={6}>
@@ -56,28 +45,28 @@ const ProcessStep = ({ step }) => (
         {statusMapping[step.status]}
       </Col>
     </Row>
-  </ListGroupItem>
-);
+  </ListGroupItem>;
 
-const ProcessSteps = ({ processSteps = [] }) => (
+const ProcessSteps = ({ processSteps = [] }) =>
   <Panel header={ProcessStepHeader(processSteps)} bsStyle="primary">
     <ListGroup fill>
-
       <ListGroupItem key="header">
         <Row>
           <Col xs={6}>
-            <b><FormattedMessage id="field.id" defaultMessage="ID" /></b>
+            <b>
+              <FormattedMessage id="field.id" defaultMessage="ID" />
+            </b>
           </Col>
           <Col xs={6}>
-            <b><FormattedMessage id="field.status" defaultMessage="Status" /></b>
+            <b>
+              <FormattedMessage id="field.status" defaultMessage="Status" />
+            </b>
           </Col>
         </Row>
       </ListGroupItem>
 
-      { processSteps.map(step => <ProcessStep key={step.id} step={step} />) }
-
+      {processSteps.map(step => <ProcessStep key={step.id} step={step} />)}
     </ListGroup>
-  </Panel>
-);
+  </Panel>;
 
 export default ProcessSteps;

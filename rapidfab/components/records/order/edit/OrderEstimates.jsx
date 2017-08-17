@@ -1,21 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import {
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Panel,
-  Row,
-} from 'react-bootstrap';
+import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import {
   FormattedCost,
   FormattedDuration,
   FormattedMessage,
   FormattedVolume,
-}
-  from 'rapidfab/i18n';
+} from 'rapidfab/i18n';
 
 const OrderEstimates = ({
   amount = null,
@@ -23,7 +16,7 @@ const OrderEstimates = ({
   currency = 'USD',
   print_time = null,
   support = null,
-}) => (
+}) =>
   <Panel bsStyle="info">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -43,10 +36,9 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            { print_time ?
-              <FormattedDuration value={print_time} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-            }
+            {print_time
+              ? <FormattedDuration value={print_time} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
           </Col>
         </Row>
       </ListGroupItem>
@@ -60,10 +52,9 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            { base ?
-              <FormattedVolume value={base} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-            }
+            {base
+              ? <FormattedVolume value={base} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
           </Col>
         </Row>
       </ListGroupItem>
@@ -77,10 +68,9 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            { support ?
-              <FormattedVolume value={support} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-            }
+            {support
+              ? <FormattedVolume value={support} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
           </Col>
         </Row>
       </ListGroupItem>
@@ -91,18 +81,16 @@ const OrderEstimates = ({
             <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
           </Col>
           <Col xs={4}>
-            { amount ?
-              <FormattedCost currency={currency} value={amount} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-            }
+            {amount
+              ? <FormattedCost currency={currency} value={amount} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
           </Col>
         </Row>
       </ListGroupItem>
     </ListGroup>
-  </Panel>
-);
+  </Panel>;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { resources, routeUUID } = state;
   const { currency, estimates } = resources[routeUUID];
 

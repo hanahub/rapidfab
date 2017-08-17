@@ -48,30 +48,35 @@ function mapDispatchToProps(dispatch) {
     onSave: (payload, deletedSteps) => {
       let templatePromise = null;
       if (payload.uuid) {
-        templatePromise = dispatch(Actions.Api.wyatt.template.put(payload.uuid, payload));
+        templatePromise = dispatch(
+          Actions.Api.wyatt.template.put(payload.uuid, payload)
+        );
       } else {
         templatePromise = dispatch(Actions.Api.wyatt.template.post(payload));
       }
       Promise.all([templatePromise]).then(() => {
-        const deletePromises = _.map(deletedSteps, uuid => dispatch(Actions.Api.wyatt['process-step'].delete(uuid)));
+        const deletePromises = _.map(deletedSteps, uuid =>
+          dispatch(Actions.Api.wyatt['process-step'].delete(uuid))
+        );
         Promise.all(deletePromises).then(redirect);
       });
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt.template.delete(uuid)).then(redirect);
       }
     },
-    onDuplicate: (templateCopy) => {
+    onDuplicate: templateCopy => {
       const { bureau, name, steps } = templateCopy;
-      const stepCopies = steps.map((step) => {
+      const stepCopies = steps.map(step => {
         const step_data = _.omit(step, ['step_position', 'template']);
-        return new Promise((resolve) => {
-          dispatch(Actions.Api.wyatt['process-step'].post(step_data))
-            .then(response => resolve(response.payload.uri));
+        return new Promise(resolve => {
+          dispatch(
+            Actions.Api.wyatt['process-step'].post(step_data)
+          ).then(response => resolve(response.payload.uri));
         });
       });
-      Promise.all(stepCopies).then((process_steps) => {
+      Promise.all(stepCopies).then(process_steps => {
         const payload = {
           bureau,
           name,
@@ -80,17 +85,17 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect);
       });
     },
-    submitStep: (payload) => {
+    submitStep: payload => {
       if (payload.uuid) {
-        return dispatch(Actions.Api.wyatt['process-step'].put(payload.uuid, payload));
+        return dispatch(
+          Actions.Api.wyatt['process-step'].put(payload.uuid, payload)
+        );
       }
       return dispatch(Actions.Api.wyatt['process-step'].post(payload));
     },
     onUnmount: () => {
       // get rid of pesky lingering errors
-      dispatch(Actions.UI.clearUIState([
-        'wyatt.location',
-      ]));
+      dispatch(Actions.UI.clearUIState(['wyatt.location']));
     },
   };
 }
@@ -101,7 +106,7 @@ function mapStateToProps(state, props) {
   const processTypes = _.concat(
     Selectors.getPrinterTypes(state),
     Selectors.getPostProcessorTypes(state),
-    Selectors.getShippings(state),
+    Selectors.getShippings(state)
   );
 
   const fetching =
@@ -121,7 +126,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm({
-  form: 'record.template',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(TemplateContainer);
+export default reduxForm(
+  {
+    form: 'record.template',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(TemplateContainer);

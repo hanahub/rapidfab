@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import {
-  FormControl,
-  FormGroup,
-  Col,
-  ControlLabel,
-} from 'react-bootstrap';
+import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
 import { getShippings, getUsers } from 'rapidfab/selectors';
@@ -52,7 +47,7 @@ const statusOptionsMap = {
   shipping: ['cancelled', 'complete'],
 };
 
-const FormRow = ({ id, defaultMessage, children }) => (
+const FormRow = ({ id, defaultMessage, children }) =>
   <FormGroup>
     <Col xs={3}>
       <ControlLabel>
@@ -62,8 +57,7 @@ const FormRow = ({ id, defaultMessage, children }) => (
     <Col xs={9}>
       {children}
     </Col>
-  </FormGroup>
-);
+  </FormGroup>;
 
 const EditOrderFormComponent = ({
   created,
@@ -71,9 +65,8 @@ const EditOrderFormComponent = ({
   shippings,
   users,
   statusOptions,
-}) => (
+}) =>
   <div>
-
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name} />
     </FormRow>
@@ -83,13 +76,13 @@ const EditOrderFormComponent = ({
         <option value={fields.status.initialValue}>
           {ORDER_STATUS_MAP[fields.status.initialValue]}
         </option>
-        { statusOptions ?
-          statusOptions.map(status =>
-            (<option key={status} value={status}>
-              {ORDER_STATUS_MAP[status]}
-            </option>),
-          ) : null
-        }
+        {statusOptions
+          ? statusOptions.map(status =>
+              <option key={status} value={status}>
+                {ORDER_STATUS_MAP[status]}
+              </option>
+            )
+          : null}
       </FormControl>
     </FormRow>
 
@@ -102,12 +95,11 @@ const EditOrderFormComponent = ({
         <option value="none">
           <FormattedMessage id="field.none" defaultMessage="None" />
         </option>
-        {users.map(user => (
+        {users.map(user =>
           <option key={user.uuid} value={user.uri}>
             {user.name}
           </option>
-        ))
-        }
+        )}
       </FormControl>
     </FormRow>
 
@@ -119,33 +111,33 @@ const EditOrderFormComponent = ({
       <FormControlTextCareful {...fields.shipping.tracking} />
     </FormRow>
 
-
     <FormRow id="field.shippingType" defaultMessage="Shipping Type">
       <FormControl componentClass="select" {...fields.shipping.uri}>
-        {_.map(shippings, shipping => (
+        {_.map(shippings, shipping =>
           <option key={shipping.uri} value={shipping.uri}>
             {shipping.name}
           </option>
-        ))}
+        )}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.currency" defaultMessage="Currency">
       <FormControl componentClass="select" {...fields.currency}>
-        {_.map(Currencies, currency => (
+        {_.map(Currencies, currency =>
           <option key={currency} value={currency}>
             {currency}
           </option>
-        ))}
+        )}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.created" defaultMessage="Created">
       <FormControl.Static>
-        {created ?
-          <FormattedDateTime value={created} />
-          : <em><FormattedMessage id="notAvailable" defaultMessage="N/A" /></em>
-        }
+        {created
+          ? <FormattedDateTime value={created} />
+          : <em>
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            </em>}
       </FormControl.Static>
     </FormRow>
 
@@ -156,21 +148,21 @@ const EditOrderFormComponent = ({
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
-          { Object.keys(ORDER_TYPE_MAPPING).map(type => (
+          {Object.keys(ORDER_TYPE_MAPPING).map(type =>
             <option key={type} value={type}>
               {ORDER_TYPE_MAPPING[type]}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
       <FormRow id="field.sales_status" defaultMessage="Sales Status">
         <FormControl componentClass="select" {...fields.sales_status}>
-          { Object.keys(ORDER_SALES_MAPPING).map(type => (
+          {Object.keys(ORDER_SALES_MAPPING).map(type =>
             <option key={type} value={type}>
               {ORDER_SALES_MAPPING[type]}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
@@ -178,7 +170,10 @@ const EditOrderFormComponent = ({
         <FormControlTextCareful {...fields.sales_representative_name} />
       </FormRow>
 
-      <FormRow id="field.channel_name" defaultMessage="Channel Representative Name">
+      <FormRow
+        id="field.channel_name"
+        defaultMessage="Channel Representative Name"
+      >
         <FormControlTextCareful {...fields.channel_representative_name} />
       </FormRow>
 
@@ -187,11 +182,11 @@ const EditOrderFormComponent = ({
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { Object.keys(ORDER_REGION_MAPPING).map(type => (
+          {Object.keys(ORDER_REGION_MAPPING).map(type =>
             <option key={type} value={type}>
               {ORDER_REGION_MAPPING[type]}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
     </Feature>
@@ -203,9 +198,7 @@ const EditOrderFormComponent = ({
     <FormRow id="field.due_date" defaultMessage="Due Date">
       <input type="date" {...fields.due_date} style={{ color: 'black' }} />
     </FormRow>
-
-  </div>
-);
+  </div>;
 
 class EditOrderForm extends Component {
   constructor(props) {
@@ -226,12 +219,7 @@ class EditOrderForm extends Component {
   render() {
     const { statusOptions } = this.state;
 
-    const {
-      created,
-      fields,
-      shippings,
-      users,
-    } = this.props;
+    const { created, fields, shippings, users } = this.props;
 
     return (
       <EditOrderFormComponent
@@ -246,8 +234,8 @@ class EditOrderForm extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: (payload) => {
-    Object.keys(payload).forEach((key) => {
+  onSubmit: payload => {
+    Object.keys(payload).forEach(key => {
       if (payload[key] === 'none') {
         payload[key] = null;
       }
@@ -262,7 +250,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const initialValues = state.resources[state.routeUUID];
 
   // convert ISO date to yyyy-mm-dd for html input
@@ -278,7 +266,11 @@ const mapStateToProps = (state) => {
   return { initialValues, created, shippings, users };
 };
 
-export default reduxForm({
-  form: 'record.editForm',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(EditOrderForm);
+export default reduxForm(
+  {
+    form: 'record.editForm',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(EditOrderForm);

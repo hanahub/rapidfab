@@ -20,15 +20,14 @@ if (Config.SENTRY_DSN) {
   console.log('Raven integration installed');
 }
 
-const App = ({ store }) => (
+const App = ({ store }) =>
   <Provider store={store}>
     <AppContainer />
-  </Provider>
-);
+  </Provider>;
 
 ReactDOM.render(
   <App store={initializeStore()} />,
-  document.getElementById('app'),
+  document.getElementById('app')
 );
 
 export default App;

@@ -14,14 +14,28 @@ class PrintContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.report && !prevProps.report.content && this.props.report.content) {
+    if (
+      prevProps.report &&
+      !prevProps.report.content &&
+      this.props.report.content
+    ) {
       window.open(this.props.report.content);
     }
   }
 
   render() {
-    const { apiErrors, fetching, print, order, lineItem, model, events, users } = this.props;
-    const loading = fetching || !print || !order || !lineItem || !model || !events || !users;
+    const {
+      apiErrors,
+      fetching,
+      print,
+      order,
+      lineItem,
+      model,
+      events,
+      users,
+    } = this.props;
+    const loading =
+      fetching || !print || !order || !lineItem || !model || !events || !users;
     return (
       <Gatekeeper errors={apiErrors} loading={loading}>
         <PrintComponent {...this.props} />
@@ -32,7 +46,7 @@ class PrintContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (props) => {
+    onInitialize: props => {
       const { bureau } = props;
       dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
       dispatch(Actions.Api.hoth.model.list());
@@ -45,37 +59,50 @@ function mapDispatchToProps(dispatch) {
 
       // GET model
       print
-        .then(response => dispatch(Actions.Api.wyatt['line-item'].get(extractUuid(response.json.line_item))))
-        .then((response) => {
-          dispatch(Actions.Api.hoth.model.get(extractUuid(response.json.model)));
+        .then(response =>
+          dispatch(
+            Actions.Api.wyatt['line-item'].get(
+              extractUuid(response.json.line_item)
+            )
+          )
+        )
+        .then(response => {
+          dispatch(
+            Actions.Api.hoth.model.get(extractUuid(response.json.model))
+          );
         });
 
       // GET order
-      print
-        .then((response) => {
-          dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)));
-        });
+      print.then(response => {
+        dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)));
+      });
 
       // GET all related prints
-      const prints = print
-        .then(response => dispatch(Actions.Api.wyatt.print.list({ line_item: response.json.line_item })));
+      const prints = print.then(response =>
+        dispatch(
+          Actions.Api.wyatt.print.list({ line_item: response.json.line_item })
+        )
+      );
 
       // LIST events based on collected uris
-      Promise.all([print, prints])
-        .then((promises) => {
-          const uris = [
-            promises[0].json.line_item,
-            promises[0].json.order,
-            ..._.compact(promises[1].json.resources.map(resource => resource.run)),
-          ];
+      Promise.all([print, prints]).then(promises => {
+        const uris = [
+          promises[0].json.line_item,
+          promises[0].json.order,
+          ..._.compact(
+            promises[1].json.resources.map(resource => resource.run)
+          ),
+        ];
 
-          _.chunk(uris, 10).map((chunk) => {
-            dispatch(Actions.Api.wyatt.event.list({ reference: uris }));
-          });
+        _.chunk(uris, 10).map(chunk => {
+          dispatch(Actions.Api.wyatt.event.list({ reference: uris }));
         });
+      });
     },
-    onExport: (print) => {
-      dispatch(Actions.Api.wyatt['traceability-report'].post({ print: print.uri }));
+    onExport: print => {
+      dispatch(
+        Actions.Api.wyatt['traceability-report'].post({ print: print.uri })
+      );
     },
   };
 }
@@ -93,11 +120,17 @@ function mapStateToProps(state, props) {
   const report = Selectors.getTraceabilityReportForPrint(state, print);
 
   const order = print ? orders.find(order => order.uri === print.order) : null;
-  const lineItem = print ? lineItems.find(lineItem => lineItem.uri === print.line_item) : null;
-  const model = lineItem ? models.find(model => model.uri === lineItem.model) : null;
+  const lineItem = print
+    ? lineItems.find(lineItem => lineItem.uri === print.line_item)
+    : null;
+  const model = lineItem
+    ? models.find(model => model.uri === lineItem.model)
+    : null;
 
   const copy = print ? print.copy : null;
-  const lineItemProcessSteps = lineItem ? Selectors.getPrintsForLineItem(state, lineItem) : [];
+  const lineItemProcessSteps = lineItem
+    ? Selectors.getPrintsForLineItem(state, lineItem)
+    : [];
   const processSteps = lineItemProcessSteps.filter(step => step.copy === copy);
 
   const fetching =

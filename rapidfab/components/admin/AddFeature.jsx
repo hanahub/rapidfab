@@ -22,11 +22,7 @@ class NewFeature extends Component {
   onSubmit(event) {
     event.preventDefault();
     const user = this.props.user.uri;
-    const {
-      featureName,
-      featureDescription,
-      featureBureau,
-    } = this.state;
+    const { featureName, featureDescription, featureBureau } = this.state;
 
     const payload = {
       name: featureName,
@@ -55,12 +51,7 @@ class NewFeature extends Component {
   render() {
     return (
       <div>
-
-        <BS.Button
-          bsStyle="success"
-          bsSize="medium"
-          onClick={this.open}
-        >
+        <BS.Button bsStyle="success" bsSize="medium" onClick={this.open}>
           Add feature
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>
@@ -112,7 +103,9 @@ class NewFeature extends Component {
             </BS.Modal.Body>
             <BS.Modal.Footer>
               <BS.Button onClick={this.close}>Cancel</BS.Button>
-              <BS.Button bsStyle="success" type="submit">Save </BS.Button>
+              <BS.Button bsStyle="success" type="submit">
+                Save{' '}
+              </BS.Button>
             </BS.Modal.Footer>
           </BS.Form>
         </BS.Modal>
@@ -120,6 +113,5 @@ class NewFeature extends Component {
     );
   }
 }
-
 
 export default NewFeature;

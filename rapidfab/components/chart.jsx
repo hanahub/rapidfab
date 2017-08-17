@@ -16,7 +16,8 @@ export const SeriesStyle = {
 export const SeriesStyles = _.toArray(SeriesStyle);
 
 ChartJS.defaults.global.defaultFontColor = '#fff';
-ChartJS.defaults.global.defaultFontFamily = 'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif';
+ChartJS.defaults.global.defaultFontFamily =
+  'Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif';
 
 function formatLabel(intl, label) {
   if (typeof label !== 'object') return label;
@@ -31,16 +32,19 @@ class Chart extends Component {
   componentDidMount() {
     const datasets = _.map(this.props.data.datasets, (dataset, index) => {
       const style = SeriesStyles[index];
-      return _.assign({
-        borderColor: style.color,
-        hoverBorderColor: style.hover,
-        backgroundColor: style.color,
-        hoverBackgroundColor: style.hover,
-        pointHoverColor: style.hover,
-        pointBackgroundColor: style.color,
-        borderWidth: this.props.type === 'line' ? 2 : 0,
-        fill: false,
-      }, dataset);
+      return _.assign(
+        {
+          borderColor: style.color,
+          hoverBorderColor: style.hover,
+          backgroundColor: style.color,
+          hoverBackgroundColor: style.hover,
+          pointHoverColor: style.hover,
+          pointBackgroundColor: style.color,
+          borderWidth: this.props.type === 'line' ? 2 : 0,
+          fill: false,
+        },
+        dataset
+      );
     });
     const chart = new ChartJS(this.refs.chart, {
       type: this.props.type,
@@ -48,15 +52,20 @@ class Chart extends Component {
         labels: formatLabels(this.props.intl, this.props.data.labels),
         datasets,
       }),
-      options: _.merge({
-        hover: { mode: 'single' },
-        legend: { display: false },
-        scales: {
-          yAxes: [{
-            ticks: { min: 0 },
-          }],
+      options: _.merge(
+        {
+          hover: { mode: 'single' },
+          legend: { display: false },
+          scales: {
+            yAxes: [
+              {
+                ticks: { min: 0 },
+              },
+            ],
+          },
         },
-      }, this.props.options),
+        this.props.options
+      ),
     });
     this.setState({ chart });
   }

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import ShippingsComponent from 'rapidfab/components/inventory/shipping';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class ShippingsContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;

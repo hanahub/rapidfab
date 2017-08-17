@@ -16,42 +16,35 @@ export const FormattedPlural = ReactIntl.FormattedPlural;
 export const FormattedMessage = ReactIntl.FormattedMessage;
 export const FormattedNumber = ReactIntl.FormattedNumber;
 
-export const FormattedDateTime = ({ value }) => (
+export const FormattedDateTime = ({ value }) =>
   <span>
     <FormattedDate value={value} /> <FormattedTime value={value} />
-  </span>
-);
+  </span>;
 
 FormattedDateTime.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
 
-export const FormattedVolume = ({ value }) => (
+export const FormattedVolume = ({ value }) =>
   <span>
     <FormattedNumber value={value} /> cm<sup>3</sup>
-  </span>
-);
+  </span>;
 
 FormattedVolume.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export const FormattedDuration = ({ value }) => (
+export const FormattedDuration = ({ value }) =>
   <span>
     <FormattedNumber value={value} /> <abbr title="Seconds">s</abbr>
-  </span>
-);
+  </span>;
 
 FormattedDuration.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export const FormattedCost = ({ currency, value }) => (
-  <FormattedNumber style="currency" currency={currency} value={value} />
-);
+export const FormattedCost = ({ currency, value }) =>
+  <FormattedNumber style="currency" currency={currency} value={value} />;
 
 FormattedCost.propTypes = {
   value: PropTypes.number.isRequired,

@@ -113,7 +113,8 @@ export default {
   'record.postProcessorType.new': '新規ポストプロセッサタイプ',
   'record.postProcessorType.add': 'ポストプロセッサタイプの追加',
   'record.printCompleteCount': 'Prints - {complete} / {total} complete',
-  'record.processStepCompleteCount': 'Process Steps - {complete} / {total} が完了しました',
+  'record.processStepCompleteCount':
+    'Process Steps - {complete} / {total} が完了しました',
   'record.printer.add': 'プリンターの追加',
   'record.printer.new': 'New Printer',
   'record.printerType.add': 'プリンタータイプの追加',
@@ -249,12 +250,16 @@ export default {
   'field.uploadDocument': 'Upload Document',
   'field.volume': '容量',
 
-  'message.overwriteWarning': 'Saving over an existing template could affect other orders.',
-  'message.overwritePrompt': 'Do you want to replace the existing template or duplicate a new one?',
+  'message.overwriteWarning':
+    'Saving over an existing template could affect other orders.',
+  'message.overwritePrompt':
+    'Do you want to replace the existing template or duplicate a new one?',
   'message.deletePrompt': 'Are you sure you want to delete',
 
-  'bureauError.multiple': 'You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ',
-  'bureauError.empty': 'You are not assigned to any Bureaus. A Bureau is required to use MES. ',
+  'bureauError.multiple':
+    'You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ',
+  'bureauError.empty':
+    'You are not assigned to any Bureaus. A Bureau is required to use MES. ',
   'bureauError.docsMessage': 'You can find the docs for this process ',
 
   tos: 'Terms of Service',

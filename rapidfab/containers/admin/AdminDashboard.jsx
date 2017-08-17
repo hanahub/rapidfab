@@ -20,7 +20,7 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (props) => {
+    onInitialize: props => {
       dispatch(Actions.Api.wyatt.feature.list());
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.Api.pao.permissions.list({ namespace: 'wyatt' }));
@@ -31,46 +31,66 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.pao.users.get(props.user.uuid));
       }
     },
-    onSaveFeature: (payload) => {
+    onSaveFeature: payload => {
       if (payload) {
         dispatch(Actions.Api.wyatt.feature.post(payload));
       }
     },
-    onSaveUser: (payload) => {
+    onSaveUser: payload => {
       const bureau = payload.bureau;
       delete payload.bureau;
       if (payload.uuid) {
         dispatch(Actions.Api.pao.users.put(payload.uuid, payload));
         redirect();
       } else {
-        dispatch(Actions.Api.pao.users.post(payload)).then((args) => {
-          dispatch(Actions.Api.wyatt['membership-bureau'].post({
-            user: args.headers.location,
-            bureau,
-          }));
+        dispatch(Actions.Api.pao.users.post(payload)).then(args => {
+          dispatch(
+            Actions.Api.wyatt['membership-bureau'].post({
+              user: args.headers.location,
+              bureau,
+            })
+          );
         });
         redirect();
       }
     },
-    onDeleteUser: (payload) => {
+    onDeleteUser: payload => {
       if (payload) {
-        dispatch(Actions.Api.wyatt['membership-bureau'].list({ user: payload.userURI, bureau: payload.bureau.uri }))
-          .then((response) => {
-            if (response && response.json && response.json.resources && response.json.resources.length) {
-              // for some reason we get back all memberships, not just for the user we are searching for
-              const membership = _.find(response.json.resources, resource => resource.user === payload.userURI);
-              const uuid = extractUuid(membership.uri);
-              dispatch(Actions.Api.wyatt['membership-bureau'].delete(uuid)).then(() => {
-                dispatch(Actions.Api.pao.users.remove(extractUuid(membership.user)));
-                redirect();
-              });
-            } else {
-              console.error('This is the wrong bureau. Make sure you impersonate the manager of the bureau!');
-            }
-          });
+        dispatch(
+          Actions.Api.wyatt['membership-bureau'].list({
+            user: payload.userURI,
+            bureau: payload.bureau.uri,
+          })
+        ).then(response => {
+          if (
+            response &&
+            response.json &&
+            response.json.resources &&
+            response.json.resources.length
+          ) {
+            // for some reason we get back all memberships, not just for the user we are searching for
+            const membership = _.find(
+              response.json.resources,
+              resource => resource.user === payload.userURI
+            );
+            const uuid = extractUuid(membership.uri);
+            dispatch(
+              Actions.Api.wyatt['membership-bureau'].delete(uuid)
+            ).then(() => {
+              dispatch(
+                Actions.Api.pao.users.remove(extractUuid(membership.user))
+              );
+              redirect();
+            });
+          } else {
+            console.error(
+              'This is the wrong bureau. Make sure you impersonate the manager of the bureau!'
+            );
+          }
+        });
       }
     },
-    updateFeature: (payload) => {
+    updateFeature: payload => {
       if (payload) {
         dispatch(Actions.Api.wyatt.feature.put(payload.uuid, payload));
       }

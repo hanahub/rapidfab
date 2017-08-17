@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import ConversionsComponent from 'rapidfab/components/inventory/conversions';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class ConversionsContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;
-    dispatch(Actions.Api.wyatt['currency-conversion'].list({ bureau: bureau.uri }));
+    dispatch(
+      Actions.Api.wyatt['currency-conversion'].list({ bureau: bureau.uri })
+    );
   }
 
   render() {

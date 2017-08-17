@@ -14,8 +14,10 @@ const knownOptions = {
 const options = minimist(process.argv.slice(2), knownOptions);
 
 function _getAWSPublisher() {
-  if (!options.region) throw new Error('A target region is required to publish.');
-  if (!options.bucket) throw new Error('A target bucket is required to publish.');
+  if (!options.region)
+    throw new Error('A target region is required to publish.');
+  if (!options.bucket)
+    throw new Error('A target bucket is required to publish.');
 
   const aws = {
     region: options.region,
@@ -29,15 +31,21 @@ function _getAWSPublisher() {
 gulp.task('default', ['publish']);
 gulp.task('publish', ['publish:assets', 'publish:index']);
 
-gulp.task('rename:index', () => gulp.src(['dist/index.*.html'])
-  .pipe(rename((path) => {
-    path.basename = 'index';
-  }))
-  .pipe(gulp.dest('./dist')));
+gulp.task('rename:index', () =>
+  gulp
+    .src(['dist/index.*.html'])
+    .pipe(
+      rename(path => {
+        path.basename = 'index';
+      })
+    )
+    .pipe(gulp.dest('./dist'))
+);
 gulp.task('publish:index', ['rename:index'], () => {
   const publisher = _getAWSPublisher();
   const headers = { 'Cache-Control': 'max-age=1, no-transform, public' };
-  return gulp.src(['dist/index.html'])
+  return gulp
+    .src(['dist/index.html'])
     .pipe(awspublish.gzip())
     .pipe(publisher.publish(headers), 10)
     .pipe(publisher.cache())
@@ -54,7 +62,8 @@ gulp.task('publish:assets', () => {
     patternIndex: new RegExp(`index.${process.env.BUILD_VERSION}.html`, 'gi'),
   };
 
-  return gulp.src(['dist/**'])
+  return gulp
+    .src(['dist/**'])
     .pipe(awspublish.gzip())
     .pipe(parallelize(publisher.publish(headers), 10))
     .pipe(publisher.cache())

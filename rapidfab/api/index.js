@@ -1,16 +1,8 @@
 import MakeApi from './makeApi';
 
 export const RESOURCES = {
-  hoth: [
-    'model',
-  ],
-  pao: [
-    'memberships',
-    'permissions',
-    'groups',
-    'sessions',
-    'users',
-  ],
+  hoth: ['model'],
+  pao: ['memberships', 'permissions', 'groups', 'sessions', 'users'],
   wyatt: [
     'bureau',
     'currency-conversion',
@@ -36,9 +28,7 @@ export const RESOURCES = {
     'template',
     'traceability-report',
   ],
-  nautilus: [
-    'modeler',
-  ],
+  nautilus: ['modeler'],
 };
 
 export default MakeApi(RESOURCES);

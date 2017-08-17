@@ -12,11 +12,18 @@ import BureauError from 'rapidfab/components/bureauError';
 import * as Selectors from 'rapidfab/selectors';
 import Tos from 'rapidfab/components/tos';
 
-
-const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onAcceptTerms }) => {
+const SessionProvider = ({
+  bureaus,
+  children,
+  currentUser,
+  fetching,
+  errors,
+  onAcceptTerms,
+}) => {
   if (!currentUser && errors.length) {
     const next = window.location.hash.substr(1);
-    window.location = `${Config.HOST.SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`;
+    window.location = `${Config.HOST
+      .SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`;
   }
 
   if (currentUser && !fetching) {
@@ -24,9 +31,7 @@ const SessionProvider = ({ bureaus, children, currentUser, fetching, errors, onA
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />;
     }
     if (bureaus.length !== 1) {
-      return (
-        <BureauError bureaus={bureaus} />
-      );
+      return <BureauError bureaus={bureaus} />;
     }
 
     return (
@@ -60,10 +65,7 @@ class App extends Component {
     } = this.props;
 
     return (
-      <IntlProvider
-        locale={i18n.locale}
-        messages={i18n.messages}
-      >
+      <IntlProvider locale={i18n.locale} messages={i18n.messages}>
         <SessionProvider {...session} onAcceptTerms={onAcceptTerms}>
           <Navbar
             onChangeLocale={onChangeLocale}
@@ -73,17 +75,12 @@ class App extends Component {
             bureaus={session.bureaus}
             session={session}
           />
-          <Router
-            routes={routes}
-            onNavigate={onNavigate}
-            hash={url.hash}
-          />
+          <Router routes={routes} onNavigate={onNavigate} hash={url.hash} />
         </SessionProvider>
       </IntlProvider>
     );
   }
 }
-
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -108,7 +105,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.pao.permissions.list({ namespace: 'pao' }));
       dispatch(Actions.Api.wyatt.bureau.list());
     },
-    onAcceptTerms: (user) => {
+    onAcceptTerms: user => {
       dispatch(Actions.Api.pao.users.put(user.uuid, { tos: true })).then(() => {
         dispatch(Actions.Api.pao.sessions.get(''));
       });
@@ -117,10 +114,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const {
-    url,
-    i18n,
-  } = state;
+  const { url, i18n } = state;
   const currentUser = Selectors.getSession(state);
   const permissions = Selectors.getPermissions(state);
   const bureaus = Selectors.getBureaus(state);
@@ -133,7 +127,7 @@ function mapStateToProps(state) {
     fetching,
     errors: _.concat(
       state.ui.pao.sessions.get.errors,
-      state.ui.wyatt.bureau.list.errors,
+      state.ui.wyatt.bureau.list.errors
     ),
   };
   return {

@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Col,
-  ProgressBar,
-  Row,
-} from 'react-bootstrap';
-
+import { Col, ProgressBar, Row } from 'react-bootstrap';
 
 const statusStyleMapping = {
   'not-uploaded': 'primary',
@@ -15,12 +10,18 @@ const statusStyleMapping = {
 };
 
 const statusDisplayMapping = {
-  'not-uploaded': <FormattedMessage id="status.uploading" defaultMessage="Uploading" />,
-  processing: <FormattedMessage id="status.processing" defaultMessage="Processing" />,
-  processed: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
+  'not-uploaded': (
+    <FormattedMessage id="status.uploading" defaultMessage="Uploading" />
+  ),
+  processing: (
+    <FormattedMessage id="status.processing" defaultMessage="Processing" />
+  ),
+  processed: (
+    <FormattedMessage id="status.complete" defaultMessage="Complete" />
+  ),
 };
 
-const Uploading = ({ status, percent }) => (
+const Uploading = ({ status, percent }) =>
   <Row>
     <Col xsOffset={2} xs={8}>
       <ProgressBar
@@ -31,12 +32,13 @@ const Uploading = ({ status, percent }) => (
       />
     </Col>
     <Col xsOffset={2} xs={8} style={{ textAlign: 'center' }}>
-      <h4>{statusDisplayMapping[status]}</h4>
+      <h4>
+        {statusDisplayMapping[status]}
+      </h4>
     </Col>
-  </Row>
-);
+  </Row>;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { modelUuid, percent } = state.uploadModel;
   const { status } = state.resources[modelUuid];
 

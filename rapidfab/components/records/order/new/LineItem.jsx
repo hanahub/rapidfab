@@ -39,7 +39,7 @@ const LineItemComponent = ({
   providers,
   supportMaterials,
   templates,
-}) => (
+}) =>
   <FormGroup controlId="uxModel">
     <fieldset>
       <Feature featureName={'itar'}>
@@ -54,19 +54,18 @@ const LineItemComponent = ({
           />
         </Col>
       </Feature>
-      { lineItem.itar ?
-        null :
-        <Col md={2}>
-          <ControlLabel>
-            <FormattedMessage id="field.file" defaultMessage="File" />:
-          </ControlLabel>
-          <FileInput
-            itar={false}
-            value={lineItem.value}
-            onFileInputChange={onFileInputChange}
-          />
-        </Col>
-      }
+      {lineItem.itar
+        ? null
+        : <Col md={2}>
+            <ControlLabel>
+              <FormattedMessage id="field.file" defaultMessage="File" />:
+            </ControlLabel>
+            <FileInput
+              itar={false}
+              value={lineItem.value}
+              onFileInputChange={onFileInputChange}
+            />
+          </Col>}
       <Col md={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage="Material" />:
@@ -78,12 +77,11 @@ const LineItemComponent = ({
           value={lineItem.baseMaterial}
           onChange={onInputChange}
         >
-          { baseMaterials.map(material => (
+          {baseMaterials.map(material =>
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          ))
-          }
+          )}
         </FormControl>
       </Col>
       <Col md={2}>
@@ -102,12 +100,11 @@ const LineItemComponent = ({
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { supportMaterials.map(material => (
+          {supportMaterials.map(material =>
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          ))
-          }
+          )}
         </FormControl>
       </Col>
       <Col md={1}>
@@ -134,12 +131,11 @@ const LineItemComponent = ({
           value={lineItem.template}
           onChange={onInputChange}
         >
-          { templates.map(template => (
+          {templates.map(template =>
             <option key={template.uri} value={template.uri}>
               {template.name}
             </option>
-          ))
-          }
+          )}
         </FormControl>
       </Col>
       <Col md={2}>
@@ -159,11 +155,11 @@ const LineItemComponent = ({
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { providers.map(provider => (
+          {providers.map(provider =>
             <option key={provider.uri} value={provider.uri}>
               {provider.name}
             </option>
-          ))}
+          )}
         </FormControl>
       </Col>
       {/* <Col md={2}>
@@ -187,8 +183,7 @@ const LineItemComponent = ({
         </Button>
       </Col>
     </fieldset>
-  </FormGroup>
-);
+  </FormGroup>;
 
 class LineItem extends Component {
   constructor(props) {
@@ -232,11 +227,7 @@ class LineItem extends Component {
   }
 
   render() {
-    const {
-      onDelete,
-      onFileInputChange,
-      onInputChange,
-    } = this;
+    const { onDelete, onFileInputChange, onInputChange } = this;
     const {
       baseMaterials,
       lineItem,
@@ -260,15 +251,13 @@ class LineItem extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const materials = Selectors.getMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
-  const baseMaterials = materials.filter(material => (
-    material.type === 'base'
-  ));
-  const supportMaterials = materials.filter(material => (
-    material.type === 'support'
-  ));
+  const baseMaterials = materials.filter(material => material.type === 'base');
+  const supportMaterials = materials.filter(
+    material => material.type === 'support'
+  );
 
   const templates = Selectors.getTemplates(state);
 

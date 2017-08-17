@@ -1,12 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Panel,
-  Row,
-} from 'react-bootstrap';
+import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import {
@@ -26,14 +20,16 @@ import {
 
 import LineItemForm from './LineItemForm';
 
-const LineItemHeader = () => (
-  <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
-);
+const LineItemHeader = () =>
+  <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />;
 
-const PrintsHeader = (prints) => {
-  const complete = prints.reduce((total, print) => (
-    print.status === 'complete' ? total + 1 : total
-  ), 0).toString();
+const PrintsHeader = prints => {
+  const complete = prints
+    .reduce(
+      (total, print) => (print.status === 'complete' ? total + 1 : total),
+      0
+    )
+    .toString();
   const total = (prints ? prints.length : 0).toString();
   return (
     <FormattedMessage
@@ -45,64 +41,58 @@ const PrintsHeader = (prints) => {
 };
 
 const statusMapping = {
-  created: (
-    <FormattedMessage id="status.created" defaultMessage="Created" />
-  ),
+  created: <FormattedMessage id="status.created" defaultMessage="Created" />,
   calculating: (
     <FormattedMessage id="status.calculating" defaultMessage="Calculating" />
   ),
   calculated: (
     <FormattedMessage id="status.calculated" defaultMessage="Calculated" />
   ),
-  queued: (
-    <FormattedMessage id="status.queued" defaultMessage="Queued" />
-  ),
+  queued: <FormattedMessage id="status.queued" defaultMessage="Queued" />,
   'in-progress': (
     <FormattedMessage id="status.in_progress" defaultMessage="In Progress" />
   ),
-  complete: (
-    <FormattedMessage id="status.complete" defaultMessage="Complete" />
-  ),
-  error: (
-    <FormattedMessage id="status.error" defaultMessage="Error" />
-  ),
+  complete: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
+  error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const PrintItem = ({ print }) => (
+const PrintItem = ({ print }) =>
   <ListGroupItem>
     <Row>
       <Col xs={6}>
-        <a href={`/#/records/print/${print.uuid}`}>{print.id}</a>
+        <a href={`/#/records/print/${print.uuid}`}>
+          {print.id}
+        </a>
       </Col>
       <Col xs={6}>
         {statusMapping[print.status]}
       </Col>
     </Row>
-  </ListGroupItem>
-);
+  </ListGroupItem>;
 
-const Prints = ({ prints }) => (
+const Prints = ({ prints }) =>
   <Panel header={PrintsHeader(prints)} bsStyle="primary">
     <ListGroup fill>
-
       <ListGroupItem key="header">
         <Row>
           <Col xs={6}>
-            <b><FormattedMessage id="field.id" defaultMessage="ID" /></b>
+            <b>
+              <FormattedMessage id="field.id" defaultMessage="ID" />
+            </b>
           </Col>
           <Col xs={6}>
-            <b><FormattedMessage id="field.status" defaultMessage="Status" /></b>
+            <b>
+              <FormattedMessage id="field.status" defaultMessage="Status" />
+            </b>
           </Col>
         </Row>
       </ListGroupItem>
 
-      { prints.map(print => <PrintItem key={print.id} print={print} />) }
-
+      {prints.map(print => <PrintItem key={print.id} print={print} />)}
     </ListGroup>
-  </Panel>
-);
+  </Panel>;
 
-const Estimates = ({ estimates, currency }) => (
+const Estimates = ({ estimates, currency }) =>
   <Panel bsStyle="info">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -114,87 +104,97 @@ const Estimates = ({ estimates, currency }) => (
         </b>
       </ListGroupItem>
 
-      { estimates ?
-        <div>
-          <ListGroupItem>
-            <Row>
-              <Col xs={8}>
-                <FormattedMessage
-                  id="estimates.printTime"
-                  defaultMessage="Print Time"
-                />
-              </Col>
-              <Col xs={4}>
-                {estimates.print_time ?
-                  <FormattedDuration value={estimates.print_time} />
-                  : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                }
-              </Col>
-            </Row>
-          </ListGroupItem>
+      {estimates
+        ? <div>
+            <ListGroupItem>
+              <Row>
+                <Col xs={8}>
+                  <FormattedMessage
+                    id="estimates.printTime"
+                    defaultMessage="Print Time"
+                  />
+                </Col>
+                <Col xs={4}>
+                  {estimates.print_time
+                    ? <FormattedDuration value={estimates.print_time} />
+                    : <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />}
+                </Col>
+              </Row>
+            </ListGroupItem>
 
-          <ListGroupItem>
-            <Row>
-              <Col xs={8}>
-                <FormattedMessage
-                  id="estimates.materialUsed"
-                  defaultMessage="Material Used"
-                />
-              </Col>
-              <Col xs={4}>
-                {estimates.materials.base ?
-                  <FormattedVolume value={estimates.materials.base} />
-                  : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                }
-              </Col>
-            </Row>
-          </ListGroupItem>
+            <ListGroupItem>
+              <Row>
+                <Col xs={8}>
+                  <FormattedMessage
+                    id="estimates.materialUsed"
+                    defaultMessage="Material Used"
+                  />
+                </Col>
+                <Col xs={4}>
+                  {estimates.materials.base
+                    ? <FormattedVolume value={estimates.materials.base} />
+                    : <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />}
+                </Col>
+              </Row>
+            </ListGroupItem>
 
-          <ListGroupItem>
-            <Row>
-              <Col xs={8}>
-                <FormattedMessage
-                  id="estimates.supportUsed"
-                  defaultMessage="Support Used"
-                />
-              </Col>
-              <Col xs={4}>
-                {estimates.materials.support ?
-                  <FormattedVolume value={estimates.materials.support} />
-                  : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                }
-              </Col>
-            </Row>
-          </ListGroupItem>
+            <ListGroupItem>
+              <Row>
+                <Col xs={8}>
+                  <FormattedMessage
+                    id="estimates.supportUsed"
+                    defaultMessage="Support Used"
+                  />
+                </Col>
+                <Col xs={4}>
+                  {estimates.materials.support
+                    ? <FormattedVolume value={estimates.materials.support} />
+                    : <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />}
+                </Col>
+              </Row>
+            </ListGroupItem>
 
-          <ListGroupItem>
-            <Row>
-              <Col xs={8}>
-                <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
-              </Col>
-              <Col xs={4}>
-                {estimates.amount ?
-                  <FormattedCost currency={currency} value={estimates.amount} />
-                  : <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                }
-              </Col>
-            </Row>
-          </ListGroupItem>
-        </div>
-        : <Loading />
-      }
+            <ListGroupItem>
+              <Row>
+                <Col xs={8}>
+                  <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
+                </Col>
+                <Col xs={4}>
+                  {estimates.amount
+                    ? <FormattedCost
+                        currency={currency}
+                        value={estimates.amount}
+                      />
+                    : <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />}
+                </Col>
+              </Row>
+            </ListGroupItem>
+          </div>
+        : <Loading />}
     </ListGroup>
-  </Panel>
-);
+  </Panel>;
 
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
   // Check if lineItem is stale data from order
-  if (!lineItem) { return null; }
+  if (!lineItem) {
+    return null;
+  }
   const { estimates, itar } = lineItem;
 
   return (
     <Panel header={<LineItemHeader />}>
-
       <Col xs={12} sm={4}>
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
@@ -202,15 +202,13 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
           </Col>
         </Row>
 
-        { itar ?
-          null :
-          <Row>
-            <Col xs={12} lg={10} lgOffset={1}>
-              <Estimates estimates={estimates} currency={currency} />
-            </Col>
-          </Row>
-        }
-
+        {itar
+          ? null
+          : <Row>
+              <Col xs={12} lg={10} lgOffset={1}>
+                <Estimates estimates={estimates} currency={currency} />
+              </Col>
+            </Row>}
       </Col>
 
       <Col xs={12} sm={8}>
@@ -226,18 +224,23 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
           </Col>
         </Row>
       </Col>
-
     </Panel>
   );
 };
 
 function getSnapshotFromLineItem(lineItem, models) {
-  if (!lineItem || models.length === 0) { return 'LOADING'; }
-  if (lineItem.itar) { return 'ITAR'; }
+  if (!lineItem || models.length === 0) {
+    return 'LOADING';
+  }
+  if (lineItem.itar) {
+    return 'ITAR';
+  }
 
   const model = models.find(model => model.uri === lineItem.model);
 
-  if (!model) { return 'ERROR'; }
+  if (!model) {
+    return 'ERROR';
+  }
 
   const { snapshot_content } = model;
 
@@ -245,10 +248,13 @@ function getSnapshotFromLineItem(lineItem, models) {
   // event stream. E.g: The UI can receive a model that is 'processed' but
   // without a snapshot
 
-  if (snapshot_content) { return snapshot_content; } else if (lineItem.status === 'error') { return 'ERROR'; }
+  if (snapshot_content) {
+    return snapshot_content;
+  } else if (lineItem.status === 'error') {
+    return 'ERROR';
+  }
   return 'LOADING';
 }
-
 
 const mapStateToProps = (state, ownProps) => {
   const { uri } = ownProps;
@@ -257,8 +263,12 @@ const mapStateToProps = (state, ownProps) => {
   const { currency } = order;
   const lineItem = state.resources[uuid];
   const allPrints = getPrintsForLineItem(state, lineItem);
-  const printProcessSteps = getProcessSteps(state).filter(step => step.process_type_uri.includes('printer-type'));
-  const prints = allPrints.filter(print => printProcessSteps.some(step => step.uri === print.process_step));
+  const printProcessSteps = getProcessSteps(state).filter(step =>
+    step.process_type_uri.includes('printer-type')
+  );
+  const prints = allPrints.filter(print =>
+    printProcessSteps.some(step => step.uri === print.process_step)
+  );
   const models = getModels(state);
   const snapshot = getSnapshotFromLineItem(lineItem, models);
 

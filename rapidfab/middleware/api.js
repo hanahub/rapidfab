@@ -8,7 +8,7 @@ function jsonTryParse(text) {
 }
 
 function apiMiddleware({ dispatch, getState }) {
-  return next => (action) => {
+  return next => action => {
     const {
       api,
       types,
@@ -26,7 +26,7 @@ function apiMiddleware({ dispatch, getState }) {
     if (
       !Array.isArray(types) ||
       types.length !== 3 ||
-        !types.every(type => typeof type === 'string')
+      !types.every(type => typeof type === 'string')
     ) {
       throw new Error('Expected an array of three string types.');
     }
@@ -49,7 +49,7 @@ function apiMiddleware({ dispatch, getState }) {
       type: requestType,
     });
 
-    const handleError = (errors) => {
+    const handleError = errors => {
       if (typeof errors === 'object' && errors.message) {
         errors = [{ code: 'api-error', title: errors.message }];
       }
@@ -63,37 +63,44 @@ function apiMiddleware({ dispatch, getState }) {
       });
     };
 
-    const handleResponse = response => response.text().then((text) => {
-      const json = jsonTryParse(text);
-      if (response.status >= 400) {
-        const error = new Error(`Error calling API on ${failureType} response status ${response.status}`, args);
-        if (json && json.errors && json.errors.length) {
-          handleError(json.errors);
-        } else {
-          handleError(error);
+    const handleResponse = response =>
+      response.text().then(text => {
+        const json = jsonTryParse(text);
+        if (response.status >= 400) {
+          const error = new Error(
+            `Error calling API on ${failureType} response status ${response.status}`,
+            args
+          );
+          if (json && json.errors && json.errors.length) {
+            handleError(json.errors);
+          } else {
+            handleError(error);
+          }
+          throw error;
         }
-        throw error;
-      }
-      if (text && !json) {
-        const error = new Error('Could not parse response', text);
-        handleError(error);
-        throw error;
-      }
-      let args = Object.assign({}, {
-        api,
-        uuid,
-        filters,
-        payload,
-        json,
-        headers: {
-          location: response.headers.get('Location'),
-          uploadLocation: response.headers.get('X-Upload-Location'),
-        },
-        type: successType,
+        if (text && !json) {
+          const error = new Error('Could not parse response', text);
+          handleError(error);
+          throw error;
+        }
+        let args = Object.assign(
+          {},
+          {
+            api,
+            uuid,
+            filters,
+            payload,
+            json,
+            headers: {
+              location: response.headers.get('Location'),
+              uploadLocation: response.headers.get('X-Upload-Location'),
+            },
+            type: successType,
+          }
+        );
+        dispatch(args);
+        return args;
       });
-      dispatch(args);
-      return args;
-    });
 
     return callApi().then(handleResponse, handleError);
   };

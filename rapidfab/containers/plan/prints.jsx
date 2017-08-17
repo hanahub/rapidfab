@@ -13,7 +13,13 @@ class PrintsContainer extends Component {
   }
 
   render() {
-    const { prints, locations, fetching, apiErrors, handleOnChange } = this.props;
+    const {
+      prints,
+      locations,
+      fetching,
+      apiErrors,
+      handleOnChange,
+    } = this.props;
     return (
       <Gatekeeper errors={apiErrors} loading={fetching}>
         <PrintsComponent
@@ -33,23 +39,28 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['process-step'].list());
       dispatch(Actions.Api.wyatt.location.list());
     },
-    handleOnChange: (location) => {
+    handleOnChange: location => {
       dispatch(Actions.LocationFilter.setLocation(location));
     },
   };
 }
 
 function mapStateToProps(state) {
-  const {
-    print,
-    location,
-  } = state.ui.wyatt;
+  const { print, location } = state.ui.wyatt;
   const allPrints = Selectors.getPrints(state);
-  const printProcessSteps = Selectors.getProcessSteps(state).filter(step => step.process_type_uri.includes('printer-type'));
-  const prints = allPrints.filter(print => printProcessSteps.some(step => step.uri === print.process_step));
+  const printProcessSteps = Selectors.getProcessSteps(state).filter(step =>
+    step.process_type_uri.includes('printer-type')
+  );
+  const prints = allPrints.filter(print =>
+    printProcessSteps.some(step => step.uri === print.process_step)
+  );
   const locationFilter = Selectors.getLocationFilter(state);
   let filteredPrints = null;
-  if (locationFilter) { filteredPrints = prints.filter(print => print.location === state.locationFilter.location); }
+  if (locationFilter) {
+    filteredPrints = prints.filter(
+      print => print.location === state.locationFilter.location
+    );
+  }
 
   return {
     prints: filteredPrints || prints,

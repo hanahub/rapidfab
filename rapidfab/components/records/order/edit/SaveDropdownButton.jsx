@@ -10,19 +10,15 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 
-const SaveButtonTitle = () => (
+const SaveButtonTitle = () =>
   <span>
-    <Fa name="floppy-o" /> <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>
-);
+    <Fa name="floppy-o" />{' '}
+    <FormattedMessage id="button.save" defaultMessage="Save" />
+  </span>;
 
-const SaveTooltip = (
-  <Tooltip id="saved">
-    Saved
-  </Tooltip>
-);
+const SaveTooltip = <Tooltip id="saved">Saved</Tooltip>;
 
-const SaveDropdownButton = ({ onSubmit, onDelete }) => (
+const SaveDropdownButton = ({ onSubmit, onDelete }) =>
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
       <OverlayTrigger
@@ -40,18 +36,14 @@ const SaveDropdownButton = ({ onSubmit, onDelete }) => (
           title={<SaveButtonTitle />}
           onClick={onSubmit}
         >
-          <MenuItem
-            eventKey={1}
-            onClick={onDelete}
-          >
+          <MenuItem eventKey={1} onClick={onDelete}>
             <Fa name="ban" />
             <FormattedMessage id="button.delete" defaultMessage="Delete" />
           </MenuItem>
         </SplitButton>
       </OverlayTrigger>
     </div>
-  </ButtonToolbar>
-);
+  </ButtonToolbar>;
 
 SaveDropdownButton.propTypes = {
   onSubmit: PropTypes.func,

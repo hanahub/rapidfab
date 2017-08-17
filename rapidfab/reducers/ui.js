@@ -2,7 +2,6 @@ import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 import { RESOURCES } from 'rapidfab/api';
 
-
 const initialMethodState = {
   fetching: false,
   payload: null,
@@ -12,20 +11,24 @@ const initialMethodState = {
   errors: [],
 };
 
-export const initialState = _.reduce(RESOURCES, (result, hostResources, host) => {
-  const newResult = result;
-  newResult[host] = {};
-  hostResources.forEach((hostResource) => {
-    newResult[host][hostResource] = {
-      delete: initialMethodState,
-      get: initialMethodState,
-      list: initialMethodState,
-      post: initialMethodState,
-      put: initialMethodState,
-    };
-  });
-  return newResult;
-}, {});
+export const initialState = _.reduce(
+  RESOURCES,
+  (result, hostResources, host) => {
+    const newResult = result;
+    newResult[host] = {};
+    hostResources.forEach(hostResource => {
+      newResult[host][hostResource] = {
+        delete: initialMethodState,
+        get: initialMethodState,
+        list: initialMethodState,
+        post: initialMethodState,
+        put: initialMethodState,
+      };
+    });
+    return newResult;
+  },
+  {}
+);
 
 function reduceMethod(state, action) {
   const {
@@ -113,7 +116,7 @@ function reducer(state = initialState, action) {
       const tempState = _.assign({}, state);
 
       if (action.paths.length > 0) {
-        action.paths.forEach((path) => {
+        action.paths.forEach(path => {
           // uses the provided path to get the initial values,
           // and uses the same path to set a mask object
           _.set(mask, path, _.get(initialState, path));

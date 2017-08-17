@@ -5,42 +5,41 @@ import { FormattedMessage } from 'react-intl';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 
-const TemplateGrid = ({ records }) => (
+const TemplateGrid = ({ records }) =>
   <Grid
     data={records}
-    columns={[
-      'id',
-      'name',
+    columns={['id', 'name']}
+    columnMeta={[
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('template'),
+        locked: true,
+      },
+      {
+        columnName: 'name',
+        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+      },
     ]}
-    columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-      columnName: 'id',
-      customComponent: IdColumn('template'),
-      locked: true,
-    }, {
-      columnName: 'name',
-      displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-    },
-    ]}
-  />
-);
+  />;
 
-const Loading = () => (
+const Loading = () =>
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>
-);
+  </div>;
 
-const Templates = ({ templates, fetching, apiErrors }) => (
+const Templates = ({ templates, fetching, apiErrors }) =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+            <Fa name="list" />{' '}
+            <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/templates">
-            <Fa name="list-ol" /> <FormattedMessage id="record.template" defaultMessage="Templates" />
+            <Fa name="list-ol" />{' '}
+            <FormattedMessage id="record.template" defaultMessage="Templates" />
           </BS.Breadcrumb.Item>
         </BS.Breadcrumb>
       </BS.Col>
@@ -48,8 +47,17 @@ const Templates = ({ templates, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        <BS.Button bsStyle="primary" bsSize="small" href="#/records/template" className="pull-right">
-          <Fa name="plus" /> <FormattedMessage id="record.template.add" defaultMessage="Add Template" />
+        <BS.Button
+          bsStyle="primary"
+          bsSize="small"
+          href="#/records/template"
+          className="pull-right"
+        >
+          <Fa name="plus" />{' '}
+          <FormattedMessage
+            id="record.template.add"
+            defaultMessage="Add Template"
+          />
         </BS.Button>
       </BS.Col>
     </BS.Row>
@@ -63,12 +71,18 @@ const Templates = ({ templates, fetching, apiErrors }) => (
     </BS.Row>
 
     <BS.Row>
-      <BS.Col xs={12} sm={10} smOffset={1} md={8} mdOffset={2} lg={6} lgOffset={3}>
+      <BS.Col
+        xs={12}
+        sm={10}
+        smOffset={1}
+        md={8}
+        mdOffset={2}
+        lg={6}
+        lgOffset={3}
+      >
         {fetching ? <Loading /> : <TemplateGrid records={templates} />}
       </BS.Col>
     </BS.Row>
-
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default Templates;

@@ -16,20 +16,22 @@ function orderLocationSuccess(payload) {
 }
 
 export function getOrderLocations() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(orderLocationRequest());
-    doGet(`${Config.HOST.WYATT}/order-location/`).then((response) => {
-      response.text().then((text) => {
-        try {
-          const json = JSON.parse(text);
-          dispatch(orderLocationSuccess(json.resources));
-        } catch (e) {
-          dispatch(addError(e));
-        }
+    doGet(`${Config.HOST.WYATT}/order-location/`)
+      .then(response => {
+        response.text().then(text => {
+          try {
+            const json = JSON.parse(text);
+            dispatch(orderLocationSuccess(json.resources));
+          } catch (e) {
+            dispatch(addError(e));
+          }
+        });
+      })
+      .catch(error => {
+        dispatch(addError(error));
       });
-    }).catch((error) => {
-      dispatch(addError(error));
-    });
   };
 }
 

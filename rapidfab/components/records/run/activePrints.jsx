@@ -13,16 +13,15 @@ const listBodyStyle = {
 
 function printBedFill(printer, model) {
   const modelArea = model.size.x * model.size.y;
-  const bedArea = printer.printer_type.build_volume.x * printer.printer_type.build_volume.y;
+  const bedArea =
+    printer.printer_type.build_volume.x * printer.printer_type.build_volume.y;
   const percentage = _.round(modelArea / bedArea * 100, 2);
   return `${percentage}%`;
 }
 
-const Header = ({ onDeactivate }) => (
+const Header = ({ onDeactivate }) =>
   <BS.Row>
-    <BS.Col xs={6}>
-      Active Prints
-    </BS.Col>
+    <BS.Col xs={6}>Active Prints</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="danger" onClick={onDeactivate}>
@@ -30,10 +29,9 @@ const Header = ({ onDeactivate }) => (
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
-  </BS.Row>
-);
+  </BS.Row>;
 
-const Item = ({ print, printer, selected, onSelect }) => (
+const Item = ({ print, printer, selected, onSelect }) =>
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -49,34 +47,30 @@ const Item = ({ print, printer, selected, onSelect }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        {`${_.round(print.lineItem.model.size.x, 2)} x ${_.round(print.lineItem.model.size.y, 2)}`}
+        {`${_.round(print.lineItem.model.size.x, 2)} x ${_.round(
+          print.lineItem.model.size.y,
+          2
+        )}`}
       </BS.Col>
       <BS.Col xs={3}>
         {printBedFill(printer, print.lineItem.model)}
       </BS.Col>
     </BS.Row>
-  </BS.ListGroupItem>
-);
+  </BS.ListGroupItem>;
 
-const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) => (
+const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) =>
   <BS.Panel header={<Header onDeactivate={onDeactivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
           <BS.Col xs={1} />
-          <BS.Col xs={3}>
-            Order
-          </BS.Col>
-          <BS.Col xs={3}>
-            Size
-          </BS.Col>
-          <BS.Col xs={3}>
-            Bed Fill
-          </BS.Col>
+          <BS.Col xs={3}>Order</BS.Col>
+          <BS.Col xs={3}>Size</BS.Col>
+          <BS.Col xs={3}>Bed Fill</BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
       <div style={listBodyStyle}>
-        {_.map(prints, print => (
+        {_.map(prints, print =>
           <Item
             key={print.uuid}
             selected={!!_.find(selected, ['uri', print.uri])}
@@ -84,11 +78,10 @@ const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) => 
             onSelect={onSelect}
             printer={printer}
           />
-        ))}
+        )}
       </div>
     </BS.ListGroup>
-  </BS.Panel>
-);
+  </BS.Panel>;
 
 ActivePrints.defaultProps = {
   onSelect: () => true,

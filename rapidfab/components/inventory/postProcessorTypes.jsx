@@ -5,38 +5,52 @@ import { FormattedMessage } from 'react-intl';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 
-const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) => (
+const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) =>
   <Grid
     data={postProcessorTypes}
-    columns={[
-      'id',
-      'name',
-      'manufacturer',
+    columns={['id', 'name', 'manufacturer']}
+    columnMeta={[
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('post-processor-type'),
+        locked: true,
+      },
+      {
+        columnName: 'name',
+        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+      },
+      {
+        columnName: 'description',
+        displayName: (
+          <FormattedMessage
+            id="field.description"
+            defaultMessage="Description"
+          />
+        ),
+      },
+      {
+        columnName: 'manufacturer',
+        customComponent: IdColumn(
+          'manufacturer',
+          'manufacturer',
+          manufacturers,
+          'name'
+        ),
+        displayName: (
+          <FormattedMessage
+            id="field.manufacturer"
+            defaultMessage="Manufacturer"
+          />
+        ),
+      },
     ]}
-    columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-      columnName: 'id',
-      customComponent: IdColumn('post-processor-type'),
-      locked: true,
-    }, {
-      columnName: 'name',
-      displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-    }, {
-      columnName: 'description',
-      displayName: <FormattedMessage id="field.description" defaultMessage="Description" />,
-    }, {
-      columnName: 'manufacturer',
-      customComponent: IdColumn('manufacturer', 'manufacturer', manufacturers, 'name'),
-      displayName: <FormattedMessage id="field.manufacturer" defaultMessage="Manufacturer" />,
-    }]}
-  />
-);
+  />;
 
-const Loading = () => (
+const Loading = () =>
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>
-);
+  </div>;
 
 const PostProcessorTypes = ({
   postProcessorTypes,
@@ -44,19 +58,17 @@ const PostProcessorTypes = ({
   apiErrors,
   manufacturers,
   materials,
-}) => (
+}) =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" />
-            {' '}
+            <Fa name="list" />{' '}
             <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
-            <Fa name="object-group" />
-            {' '}
+            <Fa name="object-group" />{' '}
             <FormattedMessage
               id="inventory.postProcessorTypes"
               defaultMessage="Post Processor Types"
@@ -74,8 +86,7 @@ const PostProcessorTypes = ({
           href="#/records/post-processor-type"
           className="pull-right"
         >
-          <Fa name="plus" />
-          {' '}
+          <Fa name="plus" />{' '}
           <FormattedMessage
             id="record.postProcessorType.add"
             defaultMessage="Add Post Processor Type"
@@ -94,19 +105,15 @@ const PostProcessorTypes = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        { fetching ?
-          <Loading />
-          :
-          <PostProcessorTypesGrid
-            postProcessorTypes={postProcessorTypes}
-            manufacturers={manufacturers}
-            materials={materials}
-          />
-        }
+        {fetching
+          ? <Loading />
+          : <PostProcessorTypesGrid
+              postProcessorTypes={postProcessorTypes}
+              manufacturers={manufacturers}
+              materials={materials}
+            />}
       </BS.Col>
     </BS.Row>
-
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default PostProcessorTypes;

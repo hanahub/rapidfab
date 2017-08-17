@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import TemplateComponent from 'rapidfab/components/inventory/templates';
 import * as Selectors from 'rapidfab/selectors';
 
-
 class TemplatesContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;
@@ -17,9 +16,7 @@ class TemplatesContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  const {
-    template,
-  } = state.ui.wyatt;
+  const { template } = state.ui.wyatt;
 
   return {
     bureau: Selectors.getBureau(state),

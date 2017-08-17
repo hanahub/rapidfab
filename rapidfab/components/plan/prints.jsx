@@ -8,34 +8,34 @@ import Griddle, { IdColumn, MappedColumn } from 'rapidfab/components/grid';
 import Locations from 'rapidfab/components/locations';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-const PrintsGrid = ({ prints }) => (
+const PrintsGrid = ({ prints }) =>
   <Griddle
     data={prints}
-    columns={[
-      'id',
-      'status',
+    columns={['id', 'status']}
+    columnMeta={[
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('print'),
+        locked: true,
+      },
+      {
+        columnName: 'status',
+        displayName: (
+          <FormattedMessage id="field.status" defaultMessage="Status" />
+        ),
+        customComponent: MappedColumn('status', RUN_STATUS_MAP),
+      },
     ]}
-    columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-      columnName: 'id',
-      customComponent: IdColumn('print'),
-      locked: true,
-    }, {
-      columnName: 'status',
-      displayName: <FormattedMessage id="field.status" defaultMessage="Status" />,
-      customComponent: MappedColumn('status', RUN_STATUS_MAP),
-    }]}
     initialSort="id"
     initialSortAscending={false}
-  />
-);
+  />;
 PrintsGrid.propTypes = { prints: PropTypes.array };
 
 const Prints = ({ prints, locations, locationFilter, onLocationChange }) => {
   const breadcrumbs = ['prints'];
   return (
     <Grid fluid className="container">
-
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
       <Locations
         locations={locations}
@@ -44,7 +44,6 @@ const Prints = ({ prints, locations, locationFilter, onLocationChange }) => {
       />
       <hr />
       <PrintsGrid prints={prints} />
-
     </Grid>
   );
 };

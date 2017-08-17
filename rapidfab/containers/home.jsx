@@ -13,7 +13,6 @@ class HomeContainer extends Component {
   }
 }
 
-
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: () => {
@@ -22,18 +21,14 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.OrderLocation.getOrderLocations());
     },
-    handleOnChange: (location) => {
+    handleOnChange: location => {
       dispatch(Actions.LocationFilter.setLocation(location));
     },
   };
 }
 
 function mapStateToProps(state) {
-  const {
-    run,
-    order,
-    location,
-  } = state.ui.wyatt;
+  const { run, order, location } = state.ui.wyatt;
   const orderLocation = Selectors.getOrderLocations(state);
   const orders = Selectors.getOrders(state);
   const runs = Selectors.getRuns(state);
@@ -41,11 +36,19 @@ function mapStateToProps(state) {
   let filteredRuns = null;
   let filteredOrders = null;
   if (locationFilter) {
-    if (locationFilter === 'unassigned') { locationFilter = null; }
-    let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, ['location', locationFilter]);
+    if (locationFilter === 'unassigned') {
+      locationFilter = null;
+    }
+    let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, [
+      'location',
+      locationFilter,
+    ]);
     if (ordersForMyLocation.length > 0) {
       ordersForMyLocation = ordersForMyLocation[0].orders;
-      filteredOrders = _.filter(orders, order => _.indexOf(ordersForMyLocation, order.uri) >= 0);
+      filteredOrders = _.filter(
+        orders,
+        order => _.indexOf(ordersForMyLocation, order.uri) >= 0
+      );
       filteredOrders = _.slice(filteredOrders, 0, 10);
     } else {
       filteredOrders = [];
@@ -54,8 +57,17 @@ function mapStateToProps(state) {
     filteredRuns = Selectors.getRunStatusChart(filteredRuns);
   }
   return {
-    fetching: order.list.fetching || run.list.fetching || location.list.fetching || orderLocation.fetching,
-    apiErrors: _.concat(order.list.errors, run.list.errors, location.list.errors, orderLocation.errors),
+    fetching:
+      order.list.fetching ||
+      run.list.fetching ||
+      location.list.fetching ||
+      orderLocation.fetching,
+    apiErrors: _.concat(
+      order.list.errors,
+      run.list.errors,
+      location.list.errors,
+      orderLocation.errors
+    ),
     locationFilter,
     locations: Selectors.getLocations(state),
     data: {

@@ -1,6 +1,5 @@
 import Constants from 'rapidfab/constants';
 
-
 export function storeLocation(location) {
   return {
     type: Constants.STORE_LOCATION,
@@ -9,7 +8,7 @@ export function storeLocation(location) {
 }
 
 export function setLocation(location) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch(storeLocation(location));
   };
 }

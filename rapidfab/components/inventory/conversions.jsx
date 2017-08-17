@@ -2,59 +2,56 @@ import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Grid, {
-  IdColumn,
-  CapitalizeColumn,
-} from 'rapidfab/components/grid';
+import Grid, { IdColumn, CapitalizeColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 
-
-const ConversionsGrid = ({ records }) => (
+const ConversionsGrid = ({ records }) =>
   <Grid
     data={records}
-    columns={[
-      'id',
-      'currency',
-      'value',
+    columns={['id', 'currency', 'value']}
+    columnMeta={[
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('conversion'),
+        locked: true,
+      },
+      {
+        columnName: 'name',
+        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+      },
+      {
+        columnName: 'region',
+        customComponent: CapitalizeColumn,
+        displayName: (
+          <FormattedMessage id="field.region" defaultMessage="Region" />
+        ),
+      },
+      {
+        columnName: 'value',
+        displayName: (
+          <FormattedMessage id="field.multiplier" defaultMessage="Multiplier" />
+        ),
+      },
     ]}
-    columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-      columnName: 'id',
-      customComponent: IdColumn('conversion'),
-      locked: true,
-    }, {
-      columnName: 'name',
-      displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-    }, {
-      columnName: 'region',
-      customComponent: CapitalizeColumn,
-      displayName: <FormattedMessage id="field.region" defaultMessage="Region" />,
-    }, {
-      columnName: 'value',
-      displayName: <FormattedMessage id="field.multiplier" defaultMessage="Multiplier" />,
-    }]}
-  />
-);
+  />;
 
-const Loading = () => (
+const Loading = () =>
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>
-);
+  </div>;
 
-const Conversions = ({ conversions, fetching, apiErrors }) => (
+const Conversions = ({ conversions, fetching, apiErrors }) =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" />
-            {' '}
+            <Fa name="list" />{' '}
             <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/conversions">
-            <Fa name="exchange" />
-            {' '}
+            <Fa name="exchange" />{' '}
             <FormattedMessage
               id="inventory.currencies"
               defaultMessage="Currencies"
@@ -72,8 +69,7 @@ const Conversions = ({ conversions, fetching, apiErrors }) => (
           href="#/records/conversion"
           className="pull-right"
         >
-          <Fa name="plus" />
-          {' '}
+          <Fa name="plus" />{' '}
           <FormattedMessage
             id="record.currency.add"
             defaultMessage="Add Currency"
@@ -95,8 +91,6 @@ const Conversions = ({ conversions, fetching, apiErrors }) => (
         {fetching ? <Loading /> : <ConversionsGrid records={conversions} />}
       </BS.Col>
     </BS.Row>
-
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default Conversions;

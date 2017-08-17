@@ -4,14 +4,7 @@ import ThirdPartyProviderComponent from 'rapidfab/components/records/thirdPartyP
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 
-const fields = [
-  'id',
-  'uri',
-  'uuid',
-  'name',
-  'description',
-  'bureau',
-];
+const fields = ['id', 'uri', 'uuid', 'name', 'description', 'bureau'];
 
 class ThirdPartyProviderContainer extends Component {
   componentWillMount() {
@@ -29,19 +22,21 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (uuid) => {
+    onInitialize: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt['third-party'].get(uuid));
       }
     },
-    onSubmit: (payload) => {
+    onSubmit: payload => {
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt['third-party'].put(payload.uuid, payload)).then(redirect);
+        dispatch(
+          Actions.Api.wyatt['third-party'].put(payload.uuid, payload)
+        ).then(redirect);
       } else {
         dispatch(Actions.Api.wyatt['third-party'].post(payload)).then(redirect);
       }
     },
-    onDelete: (uuid) => {
+    onDelete: uuid => {
       if (uuid) {
         dispatch(Actions.Api.wyatt['third-party'].delete(uuid)).then(redirect);
       }
@@ -58,7 +53,11 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm({
-  form: 'record.third_party_provider',
-  fields,
-}, mapStateToProps, mapDispatchToProps)(ThirdPartyProviderContainer);
+export default reduxForm(
+  {
+    form: 'record.third_party_provider',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps
+)(ThirdPartyProviderContainer);

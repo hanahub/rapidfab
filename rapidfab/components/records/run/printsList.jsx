@@ -6,11 +6,9 @@ import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-const Header = ({ onActivate }) => (
+const Header = ({ onActivate }) =>
   <BS.Row>
-    <BS.Col xs={6}>
-      Pending Prints
-    </BS.Col>
+    <BS.Col xs={6}>Pending Prints</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="primary" onClick={onActivate}>
@@ -18,10 +16,9 @@ const Header = ({ onActivate }) => (
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
-  </BS.Row>
-);
+  </BS.Row>;
 
-const PrintItem = ({ print, selected, onSelect }) => (
+const PrintItem = ({ print, selected, onSelect }) =>
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -45,34 +42,34 @@ const PrintItem = ({ print, selected, onSelect }) => (
         <FormattedDateTime value={print.lineItem.created} />
       </BS.Col>
     </BS.Row>
-  </BS.ListGroupItem>
-);
+  </BS.ListGroupItem>;
 
-const PrintsList = ({ prints, pager, selected, onSelect, onActivate, onPageChange }) => (
+const PrintsList = ({
+  prints,
+  pager,
+  selected,
+  onSelect,
+  onActivate,
+  onPageChange,
+}) =>
   <BS.Panel header={<Header onActivate={onActivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>
           <BS.Col xs={1} />
-          <BS.Col xs={3}>
-            Order
-          </BS.Col>
-          <BS.Col xs={3}>
-            Material
-          </BS.Col>
-          <BS.Col xs={3}>
-            Created
-          </BS.Col>
+          <BS.Col xs={3}>Order</BS.Col>
+          <BS.Col xs={3}>Material</BS.Col>
+          <BS.Col xs={3}>Created</BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
-      {_.map(prints, print => (
+      {_.map(prints, print =>
         <PrintItem
           key={print.uuid}
           selected={!!_.find(selected, ['uri', print.uri])}
           print={print}
           onSelect={onSelect}
         />
-      ))}
+      )}
       <div style={{ textAlign: 'center' }}>
         <BS.Pagination
           prev
@@ -84,8 +81,7 @@ const PrintsList = ({ prints, pager, selected, onSelect, onActivate, onPageChang
         />
       </div>
     </BS.ListGroup>
-  </BS.Panel>
-);
+  </BS.Panel>;
 
 PrintsList.defaultProps = {
   onSelect: () => true,

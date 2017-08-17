@@ -49,7 +49,7 @@ class RunsContainer extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (props) => {
+    onInitialize: props => {
       dispatch(Actions.Api.wyatt.run.get(props.route.uuid));
       dispatch(Actions.Api.wyatt.print.list());
       dispatch(Actions.Api.wyatt.order.list());
@@ -57,29 +57,28 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['printer-type'].list());
       dispatch(Actions.Api.wyatt.printer.list());
     },
-    onDelete: uuid => dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
-      () => window.location.hash = '#/plan/runs',
-    ),
+    onDelete: uuid =>
+      dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
+        () => (window.location.hash = '#/plan/runs')
+      ),
     onModelDownload: (runUUID, modelURI) => {
-      dispatch(Actions.DownloadModel.fetchModel(modelURI)).then((response) => {
-        dispatch(Actions.DownloadModel.downloadContent(`${runUUID}.stl`, response.json.content));
+      dispatch(Actions.DownloadModel.fetchModel(modelURI)).then(response => {
+        dispatch(
+          Actions.DownloadModel.downloadContent(
+            `${runUUID}.stl`,
+            response.json.content
+          )
+        );
       });
     },
     onUnmount: () => {
-      dispatch(Actions.UI.clearUIState([
-        'wyatt.run.post',
-        'wyatt.run.put',
-      ]));
+      dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
     },
   };
 }
 
 function mapStateToProps(state, props) {
-  const {
-    print,
-    order,
-    run,
-  } = state.ui.wyatt;
+  const { print, order, run } = state.ui.wyatt;
 
   const downloadModel = state.downloadModel;
   const runResource = Selectors.getRouteResource(state, props);
@@ -89,7 +88,9 @@ function mapStateToProps(state, props) {
   const printerTypes = Selectors.getPrinterTypes(state);
   const printers = Selectors.getPrinters(state);
 
-  const initialStatus = state.form['record.run'] ? state.form['record.run'].status.initial : null;
+  const initialStatus = state.form['record.run']
+    ? state.form['record.run'].status.initial
+    : null;
 
   return {
     apiErrors: _.concat(
@@ -98,7 +99,7 @@ function mapStateToProps(state, props) {
       run.get.errors,
       run.put.errors,
       run.delete.errors,
-      downloadModel.errors,
+      downloadModel.errors
     ),
     downloadModel,
     initialValues: runResource,
@@ -123,20 +124,28 @@ function mapStateToProps(state, props) {
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
   const props = Object.assign(stateProps, dispatchProps, ownProps);
-  props.onSubmit = (run) => {
+  props.onSubmit = run => {
     const payload = {
       notes: run.notes,
       success: run.success === 'success',
       status: run.status,
     };
-    if (props.initialStatus === run.status) { delete payload.status; }
-    props.dispatch(Actions.Api.wyatt.run.put(run.uuid, payload))
-      .then(() => window.location.hash = '#/plan/runs');
+    if (props.initialStatus === run.status) {
+      delete payload.status;
+    }
+    props
+      .dispatch(Actions.Api.wyatt.run.put(run.uuid, payload))
+      .then(() => (window.location.hash = '#/plan/runs'));
   };
   return props;
 }
 
-export default reduxForm({
-  form: 'record.run',
-  fields,
-}, mapStateToProps, mapDispatchToProps, mergeProps)(RunsContainer);
+export default reduxForm(
+  {
+    form: 'record.run',
+    fields,
+  },
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)(RunsContainer);

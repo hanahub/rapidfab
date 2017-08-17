@@ -1,19 +1,14 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
-import {
-  FormControl,
-  FormGroup,
-  Col,
-  ControlLabel,
-} from 'react-bootstrap';
+import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 
 import { getShippings, getUsers } from 'rapidfab/selectors';
 import { Currencies } from 'rapidfab/constants';
 import { FormattedMessage } from 'rapidfab/i18n';
 import {
   FormControlTextArea,
-  FormControlTextCareful }
-  from 'rapidfab/components/formTools';
+  FormControlTextCareful,
+} from 'rapidfab/components/formTools';
 import {
   ORDER_REGION_MAPPING,
   ORDER_SALES_MAPPING,
@@ -40,7 +35,7 @@ const fields = [
   'shipping.uri',
 ];
 
-const FormRow = ({ id, defaultMessage, children }) => (
+const FormRow = ({ id, defaultMessage, children }) =>
   <FormGroup>
     <Col xs={3}>
       <ControlLabel>
@@ -50,16 +45,10 @@ const FormRow = ({ id, defaultMessage, children }) => (
     <Col xs={9}>
       {children}
     </Col>
-  </FormGroup>
-);
+  </FormGroup>;
 
-const NewOrderForm = ({
-  fields,
-  shippings,
-  users,
-}) => (
+const NewOrderForm = ({ fields, shippings, users }) =>
   <div>
-
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name} />
     </FormRow>
@@ -69,12 +58,11 @@ const NewOrderForm = ({
         <option value="none">
           <FormattedMessage id="field.none" defaultMessage="None" />
         </option>
-        {users.map(user => (
+        {users.map(user =>
           <option key={user.uuid} value={user.uri}>
             {user.name}
           </option>
-        ))
-        }
+        )}
       </FormControl>
     </FormRow>
 
@@ -92,23 +80,21 @@ const NewOrderForm = ({
 
     <FormRow id="field.shippingType" defaultMessage="Shipping Type">
       <FormControl componentClass="select" {...fields.shipping.uri}>
-        {shippings.map(shipping => (
+        {shippings.map(shipping =>
           <option key={shipping.uri} value={shipping.uri}>
             {shipping.name}
           </option>
-        ))
-        }
+        )}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.currency" defaultMessage="Currency">
       <FormControl componentClass="select" {...fields.currency}>
-        {Currencies.map(currency => (
+        {Currencies.map(currency =>
           <option key={currency} value={currency}>
             {currency}
           </option>
-        ))
-        }
+        )}
       </FormControl>
     </FormRow>
 
@@ -119,21 +105,21 @@ const NewOrderForm = ({
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
-          { Object.keys(ORDER_TYPE_MAPPING).map(type => (
+          {Object.keys(ORDER_TYPE_MAPPING).map(type =>
             <option key={type} value={type}>
               {ORDER_TYPE_MAPPING[type]}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
       <FormRow id="field.sales_status" defaultMessage="Sales Status">
         <FormControl componentClass="select" {...fields.sales_status}>
-          { Object.keys(ORDER_SALES_MAPPING).map(type => (
+          {Object.keys(ORDER_SALES_MAPPING).map(type =>
             <option key={type} value={type}>
               {ORDER_SALES_MAPPING[type]}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
 
@@ -141,7 +127,10 @@ const NewOrderForm = ({
         <FormControlTextCareful {...fields.sales_representative_name} />
       </FormRow>
 
-      <FormRow id="field.channel_name" defaultMessage="Channel Representative Name">
+      <FormRow
+        id="field.channel_name"
+        defaultMessage="Channel Representative Name"
+      >
         <FormControlTextCareful {...fields.channel_representative_name} />
       </FormRow>
 
@@ -150,11 +139,11 @@ const NewOrderForm = ({
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          { Object.keys(ORDER_REGION_MAPPING).map(type => (
+          {Object.keys(ORDER_REGION_MAPPING).map(type =>
             <option key={type} value={type}>
               {ORDER_REGION_MAPPING[type]}
             </option>
-          ))}
+          )}
         </FormControl>
       </FormRow>
     </Feature>
@@ -166,11 +155,9 @@ const NewOrderForm = ({
     <FormRow id="field.due_date" defaultMessage="Due Date">
       <input type="date" {...fields.due_date} style={{ color: 'black' }} />
     </FormRow>
+  </div>;
 
-  </div>
-);
-
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const shippings = getShippings(state);
   const users = getUsers(state);
 
@@ -186,13 +173,15 @@ const mapStateToProps = (state) => {
     shipping: {
       uri: initialShipping,
     },
-
   };
 
   return { initialValues, shippings, users };
 };
 
-export default reduxForm({
-  form: 'record.order',
-  fields,
-}, mapStateToProps)(NewOrderForm);
+export default reduxForm(
+  {
+    form: 'record.order',
+    fields,
+  },
+  mapStateToProps
+)(NewOrderForm);

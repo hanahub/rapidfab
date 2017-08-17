@@ -1,10 +1,9 @@
 import React from 'react';
 import Fa from 'react-fontawesome';
 
-const Loading = () => (
+const Loading = () =>
   <div className="text-center">
     <Fa name="spinner" spin size="2x" />
-  </div>
-);
+  </div>;
 
 export default Loading;

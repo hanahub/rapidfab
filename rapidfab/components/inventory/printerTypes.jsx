@@ -3,58 +3,61 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
-import Grid, {
-  IdColumn,
-} from 'rapidfab/components/grid';
+import Grid, { IdColumn } from 'rapidfab/components/grid';
 
-
-const PrinterTypesGrid = ({ printerTypes, manufacturers }) => (
+const PrinterTypesGrid = ({ printerTypes, manufacturers }) =>
   <Grid
     data={printerTypes}
-    columns={[
-      'id',
-      'name',
-      'type',
-      'manufacturer',
+    columns={['id', 'name', 'type', 'manufacturer']}
+    columnMeta={[
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('printer-type'),
+        locked: true,
+      },
+      {
+        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+        columnName: 'name',
+      },
+      {
+        displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
+        columnName: 'type',
+      },
+      {
+        displayName: (
+          <FormattedMessage
+            id="field.manufacturer"
+            defaultMessage="Manufacturer"
+          />
+        ),
+        columnName: 'manufacturer',
+        customComponent: IdColumn(
+          'manufacturer',
+          'manufacturer',
+          manufacturers,
+          'name'
+        ),
+      },
     ]}
-    columnMeta={[{
-      displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-      columnName: 'id',
-      customComponent: IdColumn('printer-type'),
-      locked: true,
-    }, {
-      displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      columnName: 'name',
-    }, {
-      displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
-      columnName: 'type',
-    }, {
-      displayName: <FormattedMessage id="field.manufacturer" defaultMessage="Manufacturer" />,
-      columnName: 'manufacturer',
-      customComponent: IdColumn('manufacturer', 'manufacturer', manufacturers, 'name'),
-    }]}
-  />
-);
+  />;
 
-const Loading = () => (
+const Loading = () =>
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>
-);
+  </div>;
 
-const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
+const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={12}>
         <BS.Breadcrumb>
           <BS.Breadcrumb.Item active>
-            <Fa name="list" />
-            {' '}
+            <Fa name="list" />{' '}
             <FormattedMessage id="inventory" defaultMessage="Inventory" />
           </BS.Breadcrumb.Item>
           <BS.Breadcrumb.Item href="#/inventory/printer-types">
-            <Fa name="print" />
-            {' '}
+            <Fa name="print" />{' '}
             <FormattedMessage
               id="inventory.printerTypes"
               defaultMessage="Printer Types"
@@ -72,8 +75,7 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
           href="#/records/printer-type"
           className="pull-right"
         >
-          <Fa name="plus" />
-          {' '}
+          <Fa name="plus" />{' '}
           <FormattedMessage
             id="record.printerType.add"
             defaultMessage="Add Printer Type"
@@ -92,18 +94,14 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
 
     <BS.Row>
       <BS.Col xs={12}>
-        { fetching ?
-          <Loading />
-          :
-          <PrinterTypesGrid
-            printerTypes={printerTypes}
-            manufacturers={manufacturers}
-          />
-        }
+        {fetching
+          ? <Loading />
+          : <PrinterTypesGrid
+              printerTypes={printerTypes}
+              manufacturers={manufacturers}
+            />}
       </BS.Col>
     </BS.Row>
-
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default PrinterTypes;

@@ -5,11 +5,11 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 
-const SaveButtonTitle = () => (
+const SaveButtonTitle = () =>
   <span>
-    <Fa name="floppy-o" /> <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>
-);
+    <Fa name="floppy-o" />{' '}
+    <FormattedMessage id="button.save" defaultMessage="Save" />
+  </span>;
 
 const PostProcessorTypeForm = ({
   fields,
@@ -19,18 +19,18 @@ const PostProcessorTypeForm = ({
   manufacturers,
   materials,
   apiErrors,
-}) => (
+}) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BS.Row>
         <BS.Col xs={12}>
           <BS.Breadcrumb>
             <BS.Breadcrumb.Item active>
-              <Fa name="list" /> <FormattedMessage id="inventory" defaultMessage="Inventory" />
+              <Fa name="list" />{' '}
+              <FormattedMessage id="inventory" defaultMessage="Inventory" />
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
-              <Fa name="object-group" />
-              {' '}
+              <Fa name="object-group" />{' '}
               <FormattedMessage
                 id="inventory.postProcessorTypes"
                 defaultMessage="Post Processor Types"
@@ -38,12 +38,11 @@ const PostProcessorTypeForm = ({
             </BS.Breadcrumb.Item>
             <BS.Breadcrumb.Item>
               <Fa name="object-group" />
-              { fields.id.value ||
+              {fields.id.value ||
                 <FormattedMessage
                   id="record.postProcessorType.new"
                   defaultMessage="New Post Processor Type"
-                />
-              }
+                />}
             </BS.Breadcrumb.Item>
           </BS.Breadcrumb>
         </BS.Col>
@@ -52,8 +51,7 @@ const PostProcessorTypeForm = ({
       <BS.Row>
         <BS.Col xs={6}>
           <BS.Button href="#/inventory/post-processor-types" bsSize="small">
-            <Fa name="arrow-left" />
-            {' '}
+            <Fa name="arrow-left" />{' '}
             <FormattedMessage
               id="inventory.postProcessorTypes"
               defaultMessage="Post Processor Types"
@@ -75,8 +73,7 @@ const PostProcessorTypeForm = ({
                 onClick={() => onDelete(fields.uuid.value)}
                 disabled={!fields.id.value}
               >
-                <Fa name="ban" />
-                {' '}
+                <Fa name="ban" />{' '}
                 <FormattedMessage id="button.delete" defaultMessage="Delete" />
               </BS.MenuItem>
             </BS.SplitButton>
@@ -102,33 +99,66 @@ const PostProcessorTypeForm = ({
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDescription">
             <BS.ControlLabel>
-              <FormattedMessage id="field.description" defaultMessage="Description" />:
+              <FormattedMessage
+                id="field.description"
+                defaultMessage="Description"
+              />:
             </BS.ControlLabel>
-            <BS.FormControl name="description" type="text" {...fields.description} />
+            <BS.FormControl
+              name="description"
+              type="text"
+              {...fields.description}
+            />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxCost">
             <BS.ControlLabel>
-              <FormattedMessage id="field.costPerMinute" defaultMessage="Cost Per Minute" />:
+              <FormattedMessage
+                id="field.costPerMinute"
+                defaultMessage="Cost Per Minute"
+              />:
             </BS.ControlLabel>
-            <BS.FormControl name="cost" type="number" {...fields.cost} required />
+            <BS.FormControl
+              name="cost"
+              type="number"
+              {...fields.cost}
+              required
+            />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDuration">
             <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
-            <BS.FormControl name="duration" type="number" required {...fields.duration} />
+            <BS.FormControl
+              name="duration"
+              type="number"
+              required
+              {...fields.duration}
+            />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxMaterials">
             <BS.ControlLabel>
-              <FormattedMessage id="field.materials" defaultMessage="Materials" />:
+              <FormattedMessage
+                id="field.materials"
+                defaultMessage="Materials"
+              />:
             </BS.ControlLabel>
-            <BS.FormControl componentClass="select" multiple required {...fields.materials}>
-              { materials.map(material => (
-                <option key={material.uri} value={material.uri}>{material.name}</option>
-              ))}
+            <BS.FormControl
+              componentClass="select"
+              multiple
+              required
+              {...fields.materials}
+            >
+              {materials.map(material =>
+                <option key={material.uri} value={material.uri}>
+                  {material.name}
+                </option>
+              )}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel>
-              <FormattedMessage id="field.manufacturer" defaultMessage="Manufacturer" />:
+              <FormattedMessage
+                id="field.manufacturer"
+                defaultMessage="Manufacturer"
+              />:
             </BS.ControlLabel>
             <BS.FormControl
               componentClass="select"
@@ -139,18 +169,17 @@ const PostProcessorTypeForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Manufacturer
               </option>
-              { manufacturers.map(manufacturer => (
+              {manufacturers.map(manufacturer =>
                 <option key={manufacturer.uri} value={manufacturer.uri}>
                   {manufacturer.name}
                 </option>
-              ))}
+              )}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>
-);
+  </form>;
 
 PostProcessorTypeForm.propTypes = {
   fields: PropTypes.object,

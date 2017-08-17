@@ -4,9 +4,7 @@ import Locations from 'rapidfab/components/locations';
 import * as BS from 'react-bootstrap';
 import Error from 'rapidfab/components/error';
 import Fa from 'react-fontawesome';
-import {
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Grid, {
   IdColumn,
   MappedColumn,
@@ -20,91 +18,117 @@ const panelBodyStyle = {
   overflow: 'scroll',
 };
 
-const LastTenOrders = ({ data }) => (
+const LastTenOrders = ({ data }) =>
   <BS.Panel header="Orders">
     <div style={panelBodyStyle} fill>
       <Grid
         data={data}
-        columns={[
-          'id',
-          'name',
-          'status',
-          'created',
+        columns={['id', 'name', 'status', 'created']}
+        columnMeta={[
+          {
+            displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+            columnName: 'id',
+            customComponent: IdColumn('order'),
+            locked: true,
+          },
+          {
+            columnName: 'name',
+            displayName: (
+              <FormattedMessage id="field.name" defaultMessage="Name" />
+            ),
+          },
+          {
+            customComponent: MappedColumn('status', ORDER_STATUS_MAP),
+            columnName: 'status',
+            displayName: (
+              <FormattedMessage id="field.status" defaultMessage="Status" />
+            ),
+          },
+          {
+            customComponent: DateTimeColumn,
+            columnName: 'created',
+            displayName: (
+              <FormattedMessage id="field.created" defaultMessage="Created" />
+            ),
+          },
         ]}
-        columnMeta={[{
-          displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-          columnName: 'id',
-          customComponent: IdColumn('order'),
-          locked: true,
-        }, {
-          columnName: 'name',
-          displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-        }, {
-          customComponent: MappedColumn('status', ORDER_STATUS_MAP),
-          columnName: 'status',
-          displayName: <FormattedMessage id="field.status" defaultMessage="Status" />,
-        }, {
-          customComponent: DateTimeColumn,
-          columnName: 'created',
-          displayName: <FormattedMessage id="field.created" defaultMessage="Created" />,
-        }]}
       />
     </div>
-  </BS.Panel>
-);
+  </BS.Panel>;
 
 const RunsByStatusChart = ({ data }) => {
-  const datasets = [{
-    label: 'Status',
-    backgroundColor: [
-      SeriesStyle.Warning.color,
-      SeriesStyle.Info.color,
-      SeriesStyle.Default.color,
-      SeriesStyle.Danger.color,
-      SeriesStyle.Success.color,
-    ],
-    hoverBackgroundColor: [
-      SeriesStyle.Warning.hover,
-      SeriesStyle.Info.hover,
-      SeriesStyle.Default.hover,
-      SeriesStyle.Danger.hover,
-      SeriesStyle.Success.hover,
-    ],
-    data,
-  }];
-  return (<Chart
-    title="Run Status"
-    type="bar"
-    data={{
-      labels: [
-        <FormattedMessage id="status.pending" defaultMessage="Pending" />,
-        <FormattedMessage id="status.queued" defaultMessage="Queued" />,
-        <FormattedMessage id="status.inProgress" defaultMessage="In Progress" />,
-        <FormattedMessage id="status.error" defaultMessage="Error" />,
-        <FormattedMessage id="status.complete" defaultMessage="Complete" />,
+  const datasets = [
+    {
+      label: 'Status',
+      backgroundColor: [
+        SeriesStyle.Warning.color,
+        SeriesStyle.Info.color,
+        SeriesStyle.Default.color,
+        SeriesStyle.Danger.color,
+        SeriesStyle.Success.color,
       ],
-      datasets,
-    }}
-  />);
+      hoverBackgroundColor: [
+        SeriesStyle.Warning.hover,
+        SeriesStyle.Info.hover,
+        SeriesStyle.Default.hover,
+        SeriesStyle.Danger.hover,
+        SeriesStyle.Success.hover,
+      ],
+      data,
+    },
+  ];
+  return (
+    <Chart
+      title="Run Status"
+      type="bar"
+      data={{
+        labels: [
+          <FormattedMessage id="status.pending" defaultMessage="Pending" />,
+          <FormattedMessage id="status.queued" defaultMessage="Queued" />,
+          <FormattedMessage
+            id="status.inProgress"
+            defaultMessage="In Progress"
+          />,
+          <FormattedMessage id="status.error" defaultMessage="Error" />,
+          <FormattedMessage id="status.complete" defaultMessage="Complete" />,
+        ],
+        datasets,
+      }}
+    />
+  );
 };
 
-const Home = ({ fetching, apiErrors, data, locationFilter, locations, handleOnChange }) => (
+const Home = ({
+  fetching,
+  apiErrors,
+  data,
+  locationFilter,
+  locations,
+  handleOnChange,
+}) =>
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={8}>
-        {locations.length > 1 ? <Locations
-          locations={locations}
-          handleOnChange={handleOnChange}
-          locationFilter={locationFilter}
-        /> : <div />}
+        {locations.length > 1
+          ? <Locations
+              locations={locations}
+              handleOnChange={handleOnChange}
+              locationFilter={locationFilter}
+            />
+          : <div />}
       </BS.Col>
       <BS.Col xs={4}>
         <BS.ButtonToolbar className="pull-right">
           <BS.Button bsStyle="primary" bsSize="small" href="#/records/order">
-            <Fa name="list" /> <FormattedMessage id="record.order.add" defaultMessage="Add Order" />
+            <Fa name="list" />{' '}
+            <FormattedMessage
+              id="record.order.add"
+              defaultMessage="Add Order"
+            />
           </BS.Button>
           <BS.Button bsStyle="primary" bsSize="small" href="#/records/run">
-            <Fa name="files-o" /> <FormattedMessage id="record.run.add" defaultMessage="Add Run" />
+            <Fa name="files-o" />{' '}
+            <FormattedMessage id="record.run.add" defaultMessage="Add Run" />
           </BS.Button>
         </BS.ButtonToolbar>
       </BS.Col>
@@ -141,7 +165,6 @@ const Home = ({ fetching, apiErrors, data, locationFilter, locations, handleOnCh
         </BS.Row>
       );
     })()}
-  </BS.Grid>
-);
+  </BS.Grid>;
 
 export default Home;
