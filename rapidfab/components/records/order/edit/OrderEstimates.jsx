@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
@@ -11,11 +12,13 @@ import {
 } from 'rapidfab/i18n';
 
 const OrderEstimates = ({
-  amount = null,
-  base = null,
-  currency = 'USD',
-  print_time = null,
-  support = null,
+  amount,
+  base,
+  currency,
+  postProcessing,
+  printTime,
+  shippingAmount,
+  support,
 }) =>
   <Panel bsStyle="info">
     <ListGroup fill>
@@ -36,8 +39,8 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {print_time
-              ? <FormattedDuration value={print_time} />
+            {printTime
+              ? <FormattedDuration value={printTime} />
               : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
           </Col>
         </Row>
@@ -78,7 +81,42 @@ const OrderEstimates = ({
       <ListGroupItem>
         <Row>
           <Col xs={8}>
-            <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
+            <FormattedMessage
+              id="estimates.postProcessingCost"
+              defaultMessage="Post Processing Cost"
+            />
+          </Col>
+          <Col xs={4}>
+            {postProcessing
+              ? <FormattedCost currency={currency} value={postProcessing} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+          </Col>
+        </Row>
+      </ListGroupItem>
+
+      <ListGroupItem>
+        <Row>
+          <Col xs={8}>
+            <FormattedMessage
+              id="estimates.shippingCost"
+              defaultMessage="Shipping Cost"
+            />
+          </Col>
+          <Col xs={4}>
+            {shippingAmount
+              ? <FormattedCost currency={currency} value={shippingAmount} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+          </Col>
+        </Row>
+      </ListGroupItem>
+
+      <ListGroupItem>
+        <Row>
+          <Col xs={8}>
+            <FormattedMessage
+              id="estimates.printingCost"
+              defaultMessage="Printing Cost"
+            />
           </Col>
           <Col xs={4}>
             {amount
@@ -95,12 +133,41 @@ const mapStateToProps = state => {
   const { currency, estimates } = resources[routeUUID];
 
   const amount = _.get(estimates, 'cost.amount', null);
-  const shipping_amount = _.get(estimates, 'cost.shipping_amount', null);
   const base = _.get(estimates, 'materials.base', null);
+  const postProcessing = _.get(estimates, 'cost.post_processing', null);
+  const printTime = _.get(estimates, 'print_time', null);
+  const shippingAmount = _.get(estimates, 'cost.shipping_amount', null);
   const support = _.get(estimates, 'support.base', null);
-  const print_time = _.get(estimates, 'print_time', null);
 
-  return { amount, base, currency, print_time, shipping_amount, support };
+  return {
+    amount,
+    base,
+    currency,
+    postProcessing,
+    printTime,
+    shippingAmount,
+    support,
+  };
+};
+
+OrderEstimates.defaultProps = {
+  amount: null,
+  base: null,
+  currency: 'USD',
+  postProcessing: null,
+  printTime: null,
+  shippingAmount: null,
+  support: null,
+};
+
+OrderEstimates.propTypes = {
+  amount: PropTypes.number,
+  base: PropTypes.number,
+  currency: PropTypes.string,
+  postProcessing: PropTypes.number,
+  printTime: PropTypes.number,
+  shippingAmount: PropTypes.number,
+  support: PropTypes.number,
 };
 
 export default connect(mapStateToProps)(OrderEstimates);
