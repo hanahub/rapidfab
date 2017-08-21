@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
@@ -56,19 +57,25 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const PrintItem = ({ print }) =>
+const PrintItem = ({ id, uuid, status }) =>
   <ListGroupItem>
     <Row>
       <Col xs={6}>
-        <a href={`/#/records/print/${print.uuid}`}>
-          {print.id}
+        <a href={`/#/records/print/${uuid}`}>
+          {id}
         </a>
       </Col>
       <Col xs={6}>
-        {statusMapping[print.status]}
+        {statusMapping[status]}
       </Col>
     </Row>
   </ListGroupItem>;
+
+PrintItem.propTypes = {
+  id: PropTypes.string,
+  uuid: PropTypes.string,
+  status: PropTypes.string,
+};
 
 const Prints = ({ prints }) =>
   <Panel header={PrintsHeader(prints)} bsStyle="primary">
@@ -88,9 +95,20 @@ const Prints = ({ prints }) =>
         </Row>
       </ListGroupItem>
 
-      {prints.map(print => <PrintItem key={print.id} print={print} />)}
+      {prints.map(print =>
+        <PrintItem
+          id={print.id}
+          key={print.id}
+          status={print.status}
+          uuid={print.uuid}
+        />
+      )}
     </ListGroup>
   </Panel>;
+
+Prints.propTypes = {
+  prints: PropTypes.arrayOf(PropTypes.object),
+};
 
 const Estimates = ({ estimates, currency }) =>
   <Panel bsStyle="info">
@@ -211,6 +229,19 @@ const Estimates = ({ estimates, currency }) =>
     </ListGroup>
   </Panel>;
 
+Estimates.propTypes = {
+  currency: PropTypes.string,
+  estimates: PropTypes.shape({
+    print_time: PropTypes.number,
+    amount: PropTypes.number,
+    post_processing_cost: PropTypes.number,
+    materials: PropTypes.shape({
+      support: PropTypes.number,
+      base: PropTypes.number,
+    }),
+  }),
+};
+
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
   // Check if lineItem is stale data from order
   if (!lineItem) {
@@ -253,7 +284,7 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
   );
 };
 
-function getSnapshotFromLineItem(lineItem, models) {
+const getSnapshotFromLineItem = (lineItem, models) => {
   if (!lineItem || models.length === 0) {
     return 'LOADING';
   }
@@ -261,25 +292,25 @@ function getSnapshotFromLineItem(lineItem, models) {
     return 'ITAR';
   }
 
-  const model = models.find(model => model.uri === lineItem.model);
+  const lineItemModel = models.find(model => model.uri === lineItem.model);
 
-  if (!model) {
+  if (!lineItemModel) {
     return 'ERROR';
   }
 
-  const { snapshot_content } = model;
+  const snapshotContent = lineItemModel.snapshot_content;
 
   // the default must return 'loading' due to imperfect information from the
   // event stream. E.g: The UI can receive a model that is 'processed' but
   // without a snapshot
 
-  if (snapshot_content) {
-    return snapshot_content;
+  if (snapshotContent) {
+    return snapshotContent;
   } else if (lineItem.status === 'error') {
     return 'ERROR';
   }
   return 'LOADING';
-}
+};
 
 const mapStateToProps = (state, ownProps) => {
   const { uri } = ownProps;
@@ -298,6 +329,13 @@ const mapStateToProps = (state, ownProps) => {
   const snapshot = getSnapshotFromLineItem(lineItem, models);
 
   return { currency, lineItem, prints, snapshot };
+};
+
+LineItem.propTypes = {
+  currency: PropTypes.string,
+  lineItem: PropTypes.object,
+  prints: PropTypes.arrayOf(PropTypes.object),
+  snapshot: PropTypes.string,
 };
 
 export default connect(mapStateToProps)(LineItem);
