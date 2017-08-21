@@ -14,7 +14,9 @@ const OrderEstimates = ({
   amount = null,
   base = null,
   currency = 'USD',
-  print_time = null,
+  postProcessing = null,
+  printTime = null,
+  shippingAmount = null,
   support = null,
 }) =>
   <Panel bsStyle="info">
@@ -36,8 +38,8 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {print_time
-              ? <FormattedDuration value={print_time} />
+            {printTime
+              ? <FormattedDuration value={printTime} />
               : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
           </Col>
         </Row>
@@ -78,7 +80,42 @@ const OrderEstimates = ({
       <ListGroupItem>
         <Row>
           <Col xs={8}>
-            <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
+            <FormattedMessage
+              id="estimates.postProcessingCost"
+              defaultMessage="Post Processing Cost"
+            />
+          </Col>
+          <Col xs={4}>
+            {postProcessing
+              ? <FormattedCost currency={currency} value={postProcessing} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+          </Col>
+        </Row>
+      </ListGroupItem>
+
+      <ListGroupItem>
+        <Row>
+          <Col xs={8}>
+            <FormattedMessage
+              id="estimates.shippingCost"
+              defaultMessage="Shipping Cost"
+            />
+          </Col>
+          <Col xs={4}>
+            {shippingAmount
+              ? <FormattedCost currency={currency} value={shippingAmount} />
+              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+          </Col>
+        </Row>
+      </ListGroupItem>
+
+      <ListGroupItem>
+        <Row>
+          <Col xs={8}>
+            <FormattedMessage
+              id="estimates.printingCost"
+              defaultMessage="Printing Cost"
+            />
           </Col>
           <Col xs={4}>
             {amount
@@ -95,12 +132,21 @@ const mapStateToProps = state => {
   const { currency, estimates } = resources[routeUUID];
 
   const amount = _.get(estimates, 'cost.amount', null);
-  const shipping_amount = _.get(estimates, 'cost.shipping_amount', null);
+  const postProcessing = _.get(estimates, 'cost.post_processing', null);
+  const shippingAmount = _.get(estimates, 'cost.shipping_amount', null);
   const base = _.get(estimates, 'materials.base', null);
   const support = _.get(estimates, 'support.base', null);
-  const print_time = _.get(estimates, 'print_time', null);
+  const printTime = _.get(estimates, 'print_time', null);
 
-  return { amount, base, currency, print_time, shipping_amount, support };
+  return {
+    amount,
+    base,
+    currency,
+    postProcessing,
+    printTime,
+    shippingAmount,
+    support,
+  };
 };
 
 export default connect(mapStateToProps)(OrderEstimates);
