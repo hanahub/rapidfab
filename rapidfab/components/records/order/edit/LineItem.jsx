@@ -166,7 +166,32 @@ const Estimates = ({ estimates, currency }) =>
             <ListGroupItem>
               <Row>
                 <Col xs={8}>
-                  <FormattedMessage id="estimates.cost" defaultMessage="Cost" />
+                  <FormattedMessage
+                    id="estimates.postProcessingCost"
+                    defaultMessage="Post Processing Cost"
+                  />
+                </Col>
+                <Col xs={4}>
+                  {estimates.post_processing_cost
+                    ? <FormattedCost
+                        currency={currency}
+                        value={estimates.post_processing_cost}
+                      />
+                    : <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />}
+                </Col>
+              </Row>
+            </ListGroupItem>
+
+            <ListGroupItem>
+              <Row>
+                <Col xs={8}>
+                  <FormattedMessage
+                    id="estimates.printingCost"
+                    defaultMessage="Printing Cost"
+                  />
                 </Col>
                 <Col xs={4}>
                   {estimates.amount
