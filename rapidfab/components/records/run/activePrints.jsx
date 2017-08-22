@@ -58,7 +58,14 @@ const Item = ({ print, printer, selected, onSelect, orderNamesMap }) =>
     </BS.Row>
   </BS.ListGroupItem>;
 
-const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate, orderNamesMap }) =>
+const ActivePrints = ({
+  prints,
+  printer,
+  selected,
+  onSelect,
+  onDeactivate,
+  orderNamesMap,
+}) =>
   <BS.Panel header={<Header onDeactivate={onDeactivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
