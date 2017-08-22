@@ -83,7 +83,7 @@ const RunsByStatusChart = ({ data }) => {
       type="bar"
       data={{
         labels: [
-          <FormattedMessage id="status.pending" defaultMessage="Pending" />,
+          <FormattedMessage id="status.calculating" defaultMessage="Calculating" />,
           <FormattedMessage id="status.queued" defaultMessage="Queued" />,
           <FormattedMessage
             id="status.inProgress"
