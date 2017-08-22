@@ -19,25 +19,10 @@ import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import Feature from 'rapidfab/components/Feature';
+import ModelInput from './ModelInput';
 
 const PanelHeader = () =>
   <FormattedMessage id="record.lineItem.add" defaultMessage="Add Line Item" />;
-
-const ModelInput = ({ handleFileChange }) =>
-  <Col lg={2}>
-    <FormGroup>
-      <ControlLabel>
-        <FormattedMessage id="field.model" defaultMessage="Model" />:
-      </ControlLabel>
-      <FormControl
-        name="model"
-        type="file"
-        accept=".stl"
-        required
-        onChange={handleFileChange}
-      />
-    </FormGroup>
-  </Col>;
 
 const AddLineItemPresentation = ({
   baseMaterial,
