@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
@@ -112,7 +113,14 @@ class Runs extends Component {
   }
 
   render() {
-    const { printers, apiErrors, fetching, prints, pager } = this.props;
+    const {
+      printers,
+      apiErrors,
+      fetching,
+      prints,
+      pager,
+      orderNamesMap,
+    } = this.props;
 
     const {
       selectedPrinter,
@@ -199,6 +207,7 @@ class Runs extends Component {
                   onActivate={this.handleActivatePrints}
                   pager={pager}
                   onPageChange={this.props.onPageChange}
+                  orderNamesMap={orderNamesMap}
                 />
               </BS.Col>
               <BS.Col xs={9}>
@@ -219,6 +228,7 @@ class Runs extends Component {
                       selected={activePrintsSelected}
                       onSelect={this.handleSelectActivePrint}
                       onDeactivate={this.handleDeactivatePrints}
+                      orderNamesMap={orderNamesMap}
                     />
                   </BS.Col>
                 </BS.Row>
@@ -230,5 +240,16 @@ class Runs extends Component {
     );
   }
 }
+
+Runs.propTypes = {
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSave: PropTypes.func.isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  pager: PropTypes.object.isRequired,
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+};
 
 export default Runs;

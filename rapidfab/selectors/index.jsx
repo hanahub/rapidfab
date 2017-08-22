@@ -227,6 +227,13 @@ export const getOrders = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getOrderNamesByURI = createSelector([getOrders], orders =>
+  orders.reduce(
+    (nameMap, order) => Object.assign({}, nameMap, { [order.uri]: order.name }),
+    {}
+  )
+);
+
 export const getOrderDocuments = createSelector(
   [getStateOrderDocuments, getStateResources],
   (uuids, resources) => uuids.map(uuid => resources[uuid])

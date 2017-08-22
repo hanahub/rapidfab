@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import RunComponent from 'rapidfab/components/records/run/new';
@@ -10,7 +11,7 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 const printsPerPage = 10;
 
-const Loading = ({}) =>
+const Loading = () =>
   <BS.Row>
     <BS.Col xs={12}>
       <div style={{ textAlign: 'center' }}>
@@ -36,6 +37,7 @@ class RunContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
+      dispatch(Actions.Api.wyatt.order.list({}));
       dispatch(
         Actions.Api.wyatt['line-item'].list({ bureau: bureau.uri })
       ).then(response => {
@@ -45,10 +47,10 @@ function mapDispatchToProps(dispatch) {
           return status === 'confirmed' || status === 'printing';
         });
 
-        for (const lineItems of _.chunk(printableLineItems, 15)) {
-          const lineItemURIs = lineItems.map(lineItem => lineItem.uri);
-          const lineItemModels = lineItems.map(lineItem => lineItem.model);
-          // remove null models from ITAR lineItems
+        _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
+          const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
+          const lineItemModels = lineItemChunk.map(lineItem => lineItem.model);
+          // remove null values
           const filteredModels = lineItemModels.filter(model => model);
 
           dispatch(
@@ -62,7 +64,7 @@ function mapDispatchToProps(dispatch) {
               uri: filteredModels,
             })
           );
-        }
+        });
       });
       dispatch(Actions.Api.wyatt['process-step'].list());
       dispatch(Actions.Api.wyatt['printer-type'].list());
@@ -71,15 +73,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.nautilus.modeler.list());
     },
     onSave: payload =>
-      dispatch(Actions.Api.wyatt.run.post(payload))
-        .then(args => {
-          window.location.hash = `#/records/run/${extractUuid(
-            args.headers.location
-          )}`;
-        })
-        .catch(error => {
-          console.error('Failed to POST run', error);
-        }),
+      dispatch(Actions.Api.wyatt.run.post(payload)).then(args => {
+        window.location.hash = `#/records/run/${extractUuid(
+          args.headers.location
+        )}`;
+      }),
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
@@ -97,7 +95,7 @@ function mapStateToProps(state) {
   const processStep = state.ui.wyatt['process-step'];
   const lineItem = state.ui.wyatt['line-item'];
 
-  const { material, print, printer, run } = state.ui.wyatt;
+  const { material, print, printer, run, order } = state.ui.wyatt;
 
   const { model } = state.ui.hoth;
 
@@ -112,9 +110,11 @@ function mapStateToProps(state) {
     modeler.list.fetching ||
     run.post.fetching ||
     printerType.list.fetching ||
-    processStep.list.fetching;
+    processStep.list.fetching ||
+    order.list.fetching;
 
   const apiErrors = _.concat(
+    order.list.errors,
     material.list.errors,
     lineItem.list.errors,
     print.list.errors,
@@ -128,23 +128,21 @@ function mapStateToProps(state) {
 
   const bureau = Selectors.getBureau(state);
   const lineItems = Selectors.getLineItemsForRunNew(state);
-  // const orders = Selectors.getOrdersForRunNew(state)
   const prints = _.flatMap(lineItems, 'prints');
   const processSteps = Selectors.getProcessSteps(state);
   const printerTypes = Selectors.getPrinterTypes(state);
+  const orderNamesMap = Selectors.getOrderNamesByURI(state);
 
-  const printablePrints = _.filter(prints, print => {
+  const printablePrints = prints.filter(print => {
     if (!print.process_step) {
-      return;
+      return false;
     }
-    const step = _.find(processSteps, step => print.process_step === step.uri);
+    const step = processSteps.find(step => print.process_step === step.uri);
 
-    if (
-      step &&
-      _.find(printerTypes, type => type.uri === step.process_type_uri)
-    ) {
-      return print;
+    if (step && printerTypes.find(type => type.uri === step.process_type_uri)) {
+      return true;
     }
+    return false;
   });
 
   const pager = getPager(state, printablePrints);
@@ -159,11 +157,20 @@ function mapStateToProps(state) {
     fetching,
     loading: (!lineItems.length || !printers.length) && fetching,
     lineItems,
+    orderNamesMap,
     pager,
     printers,
     prints: printablePrints.splice(page * printsPerPage, printsPerPage),
     modelers,
   };
 }
+
+RunContainer.propTypes = {
+  bureau: PropTypes.object,
+  uuid: PropTypes.string,
+  onInitialize: PropTypes.func,
+  onUnmount: PropTypes.func,
+  loading: PropTypes.bool,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(RunContainer);
