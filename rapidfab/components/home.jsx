@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Chart, { SeriesStyle } from 'rapidfab/components/chart';
 import Locations from 'rapidfab/components/locations';
 import * as BS from 'react-bootstrap';
@@ -56,6 +57,10 @@ const LastTenOrders = ({ data }) =>
     </div>
   </BS.Panel>;
 
+LastTenOrders.propTypes = {
+  data: PropTypes.object.isRequired,
+};
+
 const RunsByStatusChart = ({ data }) => {
   const datasets = [
     {
@@ -83,7 +88,10 @@ const RunsByStatusChart = ({ data }) => {
       type="bar"
       data={{
         labels: [
-          <FormattedMessage id="status.pending" defaultMessage="Pending" />,
+          <FormattedMessage
+            id="status.calculating"
+            defaultMessage="Calculating"
+          />,
           <FormattedMessage id="status.queued" defaultMessage="Queued" />,
           <FormattedMessage
             id="status.inProgress"
@@ -96,6 +104,10 @@ const RunsByStatusChart = ({ data }) => {
       }}
     />
   );
+};
+
+RunsByStatusChart.propTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 const Home = ({
@@ -166,5 +178,13 @@ const Home = ({
       );
     })()}
   </BS.Grid>;
+
+Home.propTypes = {
+  data: PropTypes.object.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+};
 
 export default Home;
