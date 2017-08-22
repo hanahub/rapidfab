@@ -18,7 +18,7 @@ const Header = ({ onActivate }) =>
     </BS.Col>
   </BS.Row>;
 
-const PrintItem = ({ print, selected, onSelect }) =>
+const PrintItem = ({ print, selected, onSelect, orderNamesMap }) =>
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -30,7 +30,7 @@ const PrintItem = ({ print, selected, onSelect }) =>
       </BS.Col>
       <BS.Col xs={3}>
         <a href={`#/records/order/${extractUuid(print.order)}`}>
-          {extractUuid(print.order).slice(-6)}
+          {orderNamesMap[print.order].slice(0, 7)}
         </a>
       </BS.Col>
       <BS.Col xs={3}>
@@ -51,6 +51,7 @@ const PrintsList = ({
   onSelect,
   onActivate,
   onPageChange,
+  orderNamesMap,
 }) =>
   <BS.Panel header={<Header onActivate={onActivate} />}>
     <BS.ListGroup fill>
@@ -68,6 +69,7 @@ const PrintsList = ({
           selected={!!_.find(selected, ['uri', print.uri])}
           print={print}
           onSelect={onSelect}
+          orderNamesMap={orderNamesMap}
         />
       )}
       <div style={{ textAlign: 'center' }}>

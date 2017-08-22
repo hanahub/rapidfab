@@ -112,7 +112,7 @@ class Runs extends Component {
   }
 
   render() {
-    const { printers, apiErrors, fetching, prints, pager } = this.props;
+    const { printers, apiErrors, fetching, prints, pager, orderNamesMap } = this.props;
 
     const {
       selectedPrinter,
@@ -199,6 +199,7 @@ class Runs extends Component {
                   onActivate={this.handleActivatePrints}
                   pager={pager}
                   onPageChange={this.props.onPageChange}
+                  orderNamesMap={orderNamesMap}
                 />
               </BS.Col>
               <BS.Col xs={9}>
@@ -219,6 +220,7 @@ class Runs extends Component {
                       selected={activePrintsSelected}
                       onSelect={this.handleSelectActivePrint}
                       onDeactivate={this.handleDeactivatePrints}
+                      orderNamesMap={orderNamesMap}
                     />
                   </BS.Col>
                 </BS.Row>

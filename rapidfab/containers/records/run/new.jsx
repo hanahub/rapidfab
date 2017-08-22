@@ -36,6 +36,7 @@ class RunContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
+      dispatch(Actions.Api.wyatt.order.list({}));
       dispatch(
         Actions.Api.wyatt['line-item'].list({ bureau: bureau.uri })
       ).then(response => {
@@ -48,7 +49,7 @@ function mapDispatchToProps(dispatch) {
         for (const lineItems of _.chunk(printableLineItems, 15)) {
           const lineItemURIs = lineItems.map(lineItem => lineItem.uri);
           const lineItemModels = lineItems.map(lineItem => lineItem.model);
-          // remove null models from ITAR lineItems
+          // remove null values
           const filteredModels = lineItemModels.filter(model => model);
 
           dispatch(
@@ -62,6 +63,7 @@ function mapDispatchToProps(dispatch) {
               uri: filteredModels,
             })
           );
+
         }
       });
       dispatch(Actions.Api.wyatt['process-step'].list());
@@ -97,7 +99,7 @@ function mapStateToProps(state) {
   const processStep = state.ui.wyatt['process-step'];
   const lineItem = state.ui.wyatt['line-item'];
 
-  const { material, print, printer, run } = state.ui.wyatt;
+  const { material, print, printer, run, order } = state.ui.wyatt;
 
   const { model } = state.ui.hoth;
 
@@ -112,9 +114,11 @@ function mapStateToProps(state) {
     modeler.list.fetching ||
     run.post.fetching ||
     printerType.list.fetching ||
-    processStep.list.fetching;
+    processStep.list.fetching ||
+    order.list.fetching;
 
   const apiErrors = _.concat(
+    order.list.errors,
     material.list.errors,
     lineItem.list.errors,
     print.list.errors,
@@ -128,10 +132,10 @@ function mapStateToProps(state) {
 
   const bureau = Selectors.getBureau(state);
   const lineItems = Selectors.getLineItemsForRunNew(state);
-  // const orders = Selectors.getOrdersForRunNew(state)
   const prints = _.flatMap(lineItems, 'prints');
   const processSteps = Selectors.getProcessSteps(state);
   const printerTypes = Selectors.getPrinterTypes(state);
+  const orderNamesMap = Selectors.getOrderNamesByURI(state);
 
   const printablePrints = _.filter(prints, print => {
     if (!print.process_step) {
@@ -159,6 +163,7 @@ function mapStateToProps(state) {
     fetching,
     loading: (!lineItems.length || !printers.length) && fetching,
     lineItems,
+    orderNamesMap,
     pager,
     printers,
     prints: printablePrints.splice(page * printsPerPage, printsPerPage),

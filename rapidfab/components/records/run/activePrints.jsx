@@ -31,7 +31,7 @@ const Header = ({ onDeactivate }) =>
     </BS.Col>
   </BS.Row>;
 
-const Item = ({ print, printer, selected, onSelect }) =>
+const Item = ({ print, printer, selected, onSelect, orderNamesMap }) =>
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -43,7 +43,7 @@ const Item = ({ print, printer, selected, onSelect }) =>
       </BS.Col>
       <BS.Col xs={3}>
         <a href={`#/records/order/${extractUuid(print.order)}`}>
-          {extractUuid(print.order).slice(-6)}
+          {orderNamesMap[print.order].slice(0, 9)}
         </a>
       </BS.Col>
       <BS.Col xs={3}>
@@ -58,7 +58,7 @@ const Item = ({ print, printer, selected, onSelect }) =>
     </BS.Row>
   </BS.ListGroupItem>;
 
-const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) =>
+const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate, orderNamesMap }) =>
   <BS.Panel header={<Header onDeactivate={onDeactivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
@@ -77,6 +77,7 @@ const ActivePrints = ({ prints, printer, selected, onSelect, onDeactivate }) =>
             print={print}
             onSelect={onSelect}
             printer={printer}
+            orderNamesMap={orderNamesMap}
           />
         )}
       </div>
