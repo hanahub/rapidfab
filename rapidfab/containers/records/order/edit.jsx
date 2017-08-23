@@ -39,9 +39,7 @@ class OrderContainer extends Component {
     return (
       <div>
         <FlashMessages />
-        {loading
-          ? <Loading />
-          : <EditOrder />}
+        {loading ? <Loading /> : <EditOrder />}
       </div>
     );
   }
@@ -58,5 +56,13 @@ function mapStateToProps(state, props) {
     routeUUID,
   };
 }
+
+OrderContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  route: PropTypes.string.isRequired,
+  order: PropTypes.object.isRequired,
+  routeUUID: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps)(OrderContainer);
