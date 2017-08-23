@@ -38,12 +38,10 @@ class OrderContainer extends Component {
 
     return (
       <div>
+        <FlashMessages />
         {loading
           ? <Loading />
-          : <div>
-              <FlashMessages />
-              <EditOrder />
-            </div>}
+          : <EditOrder />}
       </div>
     );
   }
