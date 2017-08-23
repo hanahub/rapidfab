@@ -15,6 +15,7 @@ import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
+import ModelInput from './ModelInput';
 import SaveDropdownButton from './SaveDropdownButton';
 
 const fields = [
@@ -47,28 +48,6 @@ const FormRow = ({ id, defaultMessage, children }) =>
       {children}
     </Col>
   </FormGroup>;
-
-const ModelSelect = ({ models, modelsIsFetching, field }) => {
-  if (modelsIsFetching) {
-    return (
-      <FormControl.Static>
-        <FormattedMessage
-          id="loading.model"
-          defaultMessage="Loading models..."
-        />
-      </FormControl.Static>
-    );
-  }
-  return (
-    <FormControl componentClass="select" required {...field}>
-      {models.map(model =>
-        <option key={model.uri} value={model.uri}>
-          {model.name}
-        </option>
-      )}
-    </FormControl>
-  );
-};
 
 const Printable = ({ models, uri, itar }) => {
   const model = models.find(model => model.uri === uri);
@@ -110,6 +89,7 @@ const LineItemFormComponent = ({
   templates,
 }) => {
   const initialStatus = fields.status.initialValue;
+  const model = models.find(model => model.uri === fields.model.initialValue);
   const statusOptions = statusOptionsMap[initialStatus];
   return (
     <Form horizontal>
@@ -142,11 +122,7 @@ const LineItemFormComponent = ({
       {lineItem.itar
         ? null
         : <FormRow id="field.model" defaultMessage="Model">
-            <ModelSelect
-              models={models}
-              modelsIsFetching={modelsIsFetching}
-              field={fields.model}
-            />
+            <p>{ model ? model.name : 'Loading Model...'}</p>
           </FormRow>}
 
       <FormRow id="field.quantity" defaultMessage="Quantity">
