@@ -16,7 +16,8 @@ const LineItems = ({ lineItems = [] }) =>
   </div>;
 
 const EditOrder = ({ order = {} }) => {
-  const breadcrumbs = ['orders', order.id];
+  const { id } = order;
+  const breadcrumbs = ['orders', id ? id : ""];
   const lineItems = order.line_items;
   return (
     <Grid fluid>
