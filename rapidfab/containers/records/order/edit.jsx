@@ -60,7 +60,7 @@ function mapStateToProps(state, props) {
 OrderContainer.propTypes = {
   bureau: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
-  route: PropTypes.string.isRequired,
+  route: PropTypes.object.isRequired,
   order: PropTypes.object.isRequired,
   routeUUID: PropTypes.string.isRequired,
 };
