@@ -5,11 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 import { Currencies } from 'rapidfab/constants';
 
-const SaveButtonTitle = ({}) =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const ConversionForm = ({
   fields,

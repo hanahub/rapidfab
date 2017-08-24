@@ -4,11 +4,7 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 
-const SaveButtonTitle = ({}) =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const LocationForm = ({
   fields,

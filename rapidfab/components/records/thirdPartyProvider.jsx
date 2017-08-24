@@ -2,13 +2,9 @@ import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
 
-const SaveButtonTitle = ({}) =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
+import Error from 'rapidfab/components/error';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const Loader = () =>
   <BS.Row>
