@@ -47,7 +47,7 @@ const staticProps = [
   },
 ];
 
-const Header = ({}) =>
+const Header = () =>
   <BS.Row>
     <BS.Col xs={6}>Bed Layout</BS.Col>
     <BS.Col xs={6}>
