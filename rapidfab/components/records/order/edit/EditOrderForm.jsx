@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
+import _ from 'lodash';
 
 import Actions from 'rapidfab/actions';
 import { getShippings, getUsers } from 'rapidfab/selectors';
@@ -58,6 +60,12 @@ const FormRow = ({ id, defaultMessage, children }) =>
       {children}
     </Col>
   </FormGroup>;
+
+FormRow.propTypes = {
+  id: PropTypes.string.isRequired,
+  defaultMessage: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 const EditOrderFormComponent = ({
   created,
@@ -179,10 +187,7 @@ const EditOrderFormComponent = ({
         </FormControl>
       </FormRow>
 
-      <FormRow
-        id="field.channel_name"
-        defaultMessage="Channel Representative"
-      >
+      <FormRow id="field.channel_name" defaultMessage="Channel Representative">
         <FormControl componentClass="select" {...fields.channel_representative}>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
@@ -218,6 +223,14 @@ const EditOrderFormComponent = ({
     </FormRow>
   </div>;
 
+EditOrderFormComponent.propTypes = {
+  created: PropTypes.string.isRequired,
+  fields: PropTypes.object.isRequired,
+  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  statusOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
 class EditOrderForm extends Component {
   constructor(props) {
     super(props);
@@ -250,6 +263,13 @@ class EditOrderForm extends Component {
     );
   }
 }
+
+EditOrderForm.propTypes = {
+  created: PropTypes.string.isRequired,
+  fields: PropTypes.object.isRequired,
+  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: payload => {

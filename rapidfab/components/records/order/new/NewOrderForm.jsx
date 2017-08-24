@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 
@@ -46,6 +47,12 @@ const FormRow = ({ id, defaultMessage, children }) =>
       {children}
     </Col>
   </FormGroup>;
+
+FormRow.propTypes = {
+  id: PropTypes.string.isRequired,
+  defaultMessage: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 const NewOrderForm = ({ fields, shippings, users }) =>
   <div>
@@ -136,10 +143,7 @@ const NewOrderForm = ({ fields, shippings, users }) =>
         </FormControl>
       </FormRow>
 
-      <FormRow
-        id="field.channel_name"
-        defaultMessage="Channel Representative"
-      >
+      <FormRow id="field.channel_name" defaultMessage="Channel Representative">
         <FormControl componentClass="select" {...fields.channel_representative}>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
@@ -174,6 +178,12 @@ const NewOrderForm = ({ fields, shippings, users }) =>
       <input type="date" {...fields.due_date} style={{ color: 'black' }} />
     </FormRow>
   </div>;
+
+NewOrderForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStateToProps = state => {
   const shippings = getShippings(state);

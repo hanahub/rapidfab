@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Button, ButtonToolbar, Form, Grid, Panel } from 'react-bootstrap';
@@ -20,6 +21,10 @@ const AddLineItemButton = ({ onAddLineItem }) =>
       Add Line Item
     </Button>
   </div>;
+
+AddLineItemButton.propTypes = {
+  onAddLineItem: PropTypes.func.isRequired,
+};
 
 const HelpLink = () =>
   <div className="pull-right">
@@ -57,6 +62,13 @@ const LineItems = ({
     )}
   </div>;
 
+LineItems.propTypes = {
+  handleDeleteLineItem: PropTypes.func.isRequired,
+  handleLineItemModelChange: PropTypes.func.isRequired,
+  handleLineItemChange: PropTypes.func.isRequired,
+  lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const NewOrderComponent = ({
   handleDeleteLineItem,
   handleLineItemModelChange,
@@ -92,6 +104,15 @@ const NewOrderComponent = ({
       </Form>
     </Grid>
   );
+};
+
+NewOrderComponent.propTypes = {
+  handleDeleteLineItem: PropTypes.func.isRequired,
+  handleLineItemModelChange: PropTypes.func.isRequired,
+  handleLineItemChange: PropTypes.func.isRequired,
+  lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onAddLineItem: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 class NewOrder extends Component {
@@ -220,7 +241,7 @@ class NewOrder extends Component {
             support: supportMaterial,
           },
           model: modelLocation,
-          quantity: parseInt(quantity),
+          quantity: parseInt(quantity, 10),
           template,
           third_party_provider: thirdPartyProvider,
         };
@@ -236,8 +257,7 @@ class NewOrder extends Component {
 
         const orderPayload = {
           bureau: bureau.uri,
-          channel_representative:
-            orderForm.channel_representative.value,
+          channel_representative: orderForm.channel_representative.value,
           currency: orderForm.currency.value,
           due_date: orderForm.due_date.value
             ? new Date(orderForm.due_date.value).toISOString()
@@ -295,6 +315,15 @@ class NewOrder extends Component {
     );
   }
 }
+
+NewOrder.propTypes = {
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bureau: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  orderForm: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => {
   const bureau = Selectors.getBureau(state);
