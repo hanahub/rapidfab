@@ -236,8 +236,8 @@ class NewOrder extends Component {
 
         const orderPayload = {
           bureau: bureau.uri,
-          channel_representative_name:
-            orderForm.channel_representative_name.value,
+          channel_representative:
+            orderForm.channel_representative.value,
           currency: orderForm.currency.value,
           due_date: orderForm.due_date.value
             ? new Date(orderForm.due_date.value).toISOString()
@@ -249,7 +249,7 @@ class NewOrder extends Component {
           order_owner: orderForm.order_owner.value,
           order_type: orderForm.order_type.value,
           region: orderForm.region.value,
-          sales_representative_name: orderForm.sales_representative_name.value,
+          sales_representative: orderForm.sales_representative.value,
           sales_status: orderForm.sales_status.value,
           shipping: {
             address: orderForm.shipping.address.value,

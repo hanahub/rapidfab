@@ -18,7 +18,7 @@ import {
 import Feature from 'rapidfab/components/Feature';
 
 const fields = [
-  'channel_representative_name',
+  'channel_representative',
   'currency',
   'due_date',
   'customer_email',
@@ -27,7 +27,7 @@ const fields = [
   'order_owner',
   'order_type',
   'region',
-  'sales_representative_name',
+  'sales_representative',
   'sales_status',
   'shipping.name',
   'shipping.address',
@@ -123,15 +123,33 @@ const NewOrderForm = ({ fields, shippings, users }) =>
         </FormControl>
       </FormRow>
 
-      <FormRow id="field.sales_name" defaultMessage="Sales Representative Name">
-        <FormControlTextCareful {...fields.sales_representative_name} />
+      <FormRow id="field.sales_name" defaultMessage="Sales Representative">
+        <FormControl componentClass="select" {...fields.sales_representative}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {users.map(user =>
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          )}
+        </FormControl>
       </FormRow>
 
       <FormRow
         id="field.channel_name"
-        defaultMessage="Channel Representative Name"
+        defaultMessage="Channel Representative"
       >
-        <FormControlTextCareful {...fields.channel_representative_name} />
+        <FormControl componentClass="select" {...fields.channel_representative}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {users.map(user =>
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          )}
+        </FormControl>
       </FormRow>
 
       <FormRow id="field.region" defaultMessage="Region">
