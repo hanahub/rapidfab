@@ -130,7 +130,7 @@ const NewOrderForm = ({ fields, shippings, users }) =>
         </FormControl>
       </FormRow>
 
-      <FormRow id="field.sales_name" defaultMessage="Sales Representative">
+      <FormRow id="field.sales_representative" defaultMessage="Sales Representative">
         <FormControl componentClass="select" {...fields.sales_representative}>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
@@ -143,7 +143,7 @@ const NewOrderForm = ({ fields, shippings, users }) =>
         </FormControl>
       </FormRow>
 
-      <FormRow id="field.channel_name" defaultMessage="Channel Representative">
+      <FormRow id="field.channel_representative" defaultMessage="Channel Representative">
         <FormControl componentClass="select" {...fields.channel_representative}>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
