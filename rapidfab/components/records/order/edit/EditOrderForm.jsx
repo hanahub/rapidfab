@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
+import _ from 'lodash';
 
 import Actions from 'rapidfab/actions';
 import { getShippings, getUsers } from 'rapidfab/selectors';
@@ -20,7 +22,7 @@ import {
 import Feature from 'rapidfab/components/Feature';
 
 const fields = [
-  'channel_representative_name',
+  'channel_representative',
   'currency',
   'due_date',
   'customer_email',
@@ -29,7 +31,7 @@ const fields = [
   'order_owner',
   'order_type',
   'region',
-  'sales_representative_name',
+  'sales_representative',
   'sales_status',
   'shipping.name',
   'shipping.address',
@@ -58,6 +60,12 @@ const FormRow = ({ id, defaultMessage, children }) =>
       {children}
     </Col>
   </FormGroup>;
+
+FormRow.propTypes = {
+  id: PropTypes.string.isRequired,
+  defaultMessage: PropTypes.string.isRequired,
+  children: PropTypes.element.isRequired,
+};
 
 const EditOrderFormComponent = ({
   created,
@@ -166,15 +174,36 @@ const EditOrderFormComponent = ({
         </FormControl>
       </FormRow>
 
-      <FormRow id="field.sales_name" defaultMessage="Sales Representative Name">
-        <FormControlTextCareful {...fields.sales_representative_name} />
+      <FormRow
+        id="field.sales_representative"
+        defaultMessage="Sales Representative"
+      >
+        <FormControl componentClass="select" {...fields.sales_representative}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {users.map(user =>
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          )}
+        </FormControl>
       </FormRow>
 
       <FormRow
-        id="field.channel_name"
-        defaultMessage="Channel Representative Name"
+        id="field.channel_representative"
+        defaultMessage="Channel Representative"
       >
-        <FormControlTextCareful {...fields.channel_representative_name} />
+        <FormControl componentClass="select" {...fields.channel_representative}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {users.map(user =>
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          )}
+        </FormControl>
       </FormRow>
 
       <FormRow id="field.region" defaultMessage="Region">
@@ -199,6 +228,14 @@ const EditOrderFormComponent = ({
       <input type="date" {...fields.due_date} style={{ color: 'black' }} />
     </FormRow>
   </div>;
+
+EditOrderFormComponent.propTypes = {
+  created: PropTypes.string.isRequired,
+  fields: PropTypes.object.isRequired,
+  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  statusOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 class EditOrderForm extends Component {
   constructor(props) {
@@ -232,6 +269,13 @@ class EditOrderForm extends Component {
     );
   }
 }
+
+EditOrderForm.propTypes = {
+  created: PropTypes.string.isRequired,
+  fields: PropTypes.object.isRequired,
+  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
   onSubmit: payload => {
