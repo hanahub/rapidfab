@@ -186,6 +186,7 @@ export default {
   'field.created': 'Created',
   'field.currency': 'Currency',
   'field.customer_email': 'Customer Email',
+  'field.customer_name': 'Customer Name',
   'field.date': 'Date',
   'field.due_date': 'Due Date',
   'field.description': 'Description',

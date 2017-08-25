@@ -26,6 +26,7 @@ const fields = [
   'currency',
   'due_date',
   'customer_email',
+  'customer_name',
   'name',
   'notes',
   'order_owner',
@@ -151,6 +152,10 @@ const EditOrderFormComponent = ({
 
     <FormRow id="field.customer_email" defaultMessage="Customer Email">
       <FormControlTextCareful {...fields.customer_email} />
+    </FormRow>
+
+    <FormRow id="field.customer_name" defaultMessage="Customer Name">
+      <FormControlTextCareful {...fields.customer_name} />
     </FormRow>
 
     <Feature featureName="eos-order-fields">

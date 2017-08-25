@@ -185,6 +185,7 @@ export default {
   'field.contact': 'お問い合わせ',
   'field.created': '作成済み',
   'field.customer_email': 'Customer Email',
+  'field.customer_name': 'Customer Name',
   'field.date': '日付',
   'field.due_date': 'Due Date',
   'field.description': '説明',
