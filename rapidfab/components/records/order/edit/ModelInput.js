@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Col,
-  ControlLabel,
-  FormControl,
-  FormGroup,
-} from 'react-bootstrap';
+import { Col, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 const ModelInput = ({ handleFileChange }) =>
   <Col lg={2}>

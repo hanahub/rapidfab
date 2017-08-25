@@ -126,7 +126,9 @@ const LineItemFormComponent = ({
         ? null
         : <div>
             <FormRow id="field.model" defaultMessage="Model">
-              <p>{ currentModel ? currentModel.name : 'Loading Model...'}</p>
+              <p>
+                {currentModel ? currentModel.name : 'Loading Model...'}
+              </p>
             </FormRow>
             <FormRow id="field.replaceModel" defaultMessage="Replace Model">
               <FormControl
@@ -137,8 +139,7 @@ const LineItemFormComponent = ({
                 onChange={handleFileChange}
               />
             </FormRow>
-          </div>
-          }
+          </div>}
 
       <FormRow id="field.quantity" defaultMessage="Quantity">
         <FormControl
@@ -302,11 +303,17 @@ class LineItemForm extends Component {
         dispatch(Actions.UploadModel.upload(uploadLocation, model));
       });
     }
-
   }
 
   render() {
-    const { handleFileChange, handleInputChange, onDelete, onSubmit, props, state} = this;
+    const {
+      handleFileChange,
+      handleInputChange,
+      onDelete,
+      onSubmit,
+      props,
+      state,
+    } = this;
 
     return (
       <LineItemFormComponent
@@ -321,7 +328,7 @@ class LineItemForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { model } = state.ui.hoth;
 
   const materials = Selectors.getMaterials(state);
