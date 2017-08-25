@@ -263,6 +263,7 @@ class NewOrder extends Component {
             ? new Date(orderForm.due_date.value).toISOString()
             : null,
           customer_email: orderForm.customer_email.value,
+          customer_name: orderForm.customer_name.value,
           line_items: lineItemUris,
           name: orderForm.name.value,
           notes: orderForm.notes.value,
