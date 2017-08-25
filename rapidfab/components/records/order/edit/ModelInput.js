@@ -8,7 +8,6 @@ import {
   FormGroup,
 } from 'react-bootstrap';
 
-
 const ModelInput = ({ handleFileChange }) =>
   <Col lg={2}>
     <FormGroup>

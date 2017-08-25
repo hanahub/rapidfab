@@ -67,6 +67,7 @@ const Printable = ({ models, uri, itar }) => {
 };
 
 const LineItemFormComponent = ({
+  handleFileChange,
   handleInputChange,
   lineItem,
   baseMaterial,
@@ -123,9 +124,21 @@ const LineItemFormComponent = ({
 
       {lineItem.itar
         ? null
-        : <FormRow id="field.model" defaultMessage="Model">
-            <p>{ currentModel ? currentModel.name : 'Loading Model...'}</p>
-          </FormRow>}
+        : <div>
+            <FormRow id="field.model" defaultMessage="Model">
+              <p>{ currentModel ? currentModel.name : 'Loading Model...'}</p>
+            </FormRow>
+            <FormRow id="field.replaceModel" defaultMessage="Replace Model">
+              <FormControl
+                name="model"
+                type="file"
+                accept=".stl"
+                required
+                onChange={handleFileChange}
+              />
+            </FormRow>
+          </div>
+          }
 
       <FormRow id="field.quantity" defaultMessage="Quantity">
         <FormControl
@@ -224,9 +237,14 @@ class LineItemForm extends Component {
       thirdPartyProvider: lineItem['third_party_provider'],
     };
 
+    this.handleFileChange = this.handleFileChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  handleFileChange(event) {
+    this.setState({ model: event.target.files[0] });
   }
 
   handleInputChange(event) {
@@ -245,7 +263,7 @@ class LineItemForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
+    const { dispatch, lineItem } = this.props;
     const {
       baseMaterial,
       model,
@@ -256,9 +274,8 @@ class LineItemForm extends Component {
       thirdPartyProvider,
     } = this.state;
 
-    const { dispatch, lineItem } = this.props;
-
     const payload = {
+      bureau: lineItem.bureau,
       materials: {
         base: baseMaterial,
         support: supportMaterial,
@@ -268,19 +285,34 @@ class LineItemForm extends Component {
       template,
       third_party_provider: thirdPartyProvider,
     };
+
     if (!payload.materials.support) delete payload.materials.support;
     if (!payload.third_party_provider) delete payload.third_party_provider;
+    if (status === lineItem.status) delete payload.status;
 
-    dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
+    if (!model) {
+      dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
+    } else {
+      dispatch(
+        Actions.Api.hoth.model.post({ name: model.name, type: 'stl' })
+      ).then(args => {
+        const { location, uploadLocation } = args.headers;
+        payload.model = location;
+        dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
+        dispatch(Actions.UploadModel.upload(uploadLocation, model));
+      });
+    }
+
   }
 
   render() {
-    const { handleInputChange, onDelete, onSubmit, props, state} = this;
+    const { handleFileChange, handleInputChange, onDelete, onSubmit, props, state} = this;
 
     return (
       <LineItemFormComponent
         {...props}
         {...state}
+        handleFileChange={handleFileChange}
         handleInputChange={handleInputChange}
         onDelete={onDelete}
         onSubmit={onSubmit}
