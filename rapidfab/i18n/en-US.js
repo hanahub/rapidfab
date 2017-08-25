@@ -241,6 +241,7 @@ export default {
   'field.processType': 'Process Type',
   'field.quantity': 'Quantity',
   'field.record': 'Record',
+  'field.replaceModel': 'Replace Model',
   'field.resources': 'Resources',
   'field.region': 'Region',
   'field.resource': 'Resource',

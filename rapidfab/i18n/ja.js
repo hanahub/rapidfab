@@ -239,6 +239,7 @@ export default {
   'field.quantity': '数量',
   'field.resources': 'リソース',
   'field.record': 'Record',
+  'field.replaceModel': 'Replace Model',
   'field.resource': 'リソース',
   'field.region': '地域',
   'field.required': 'Required',
