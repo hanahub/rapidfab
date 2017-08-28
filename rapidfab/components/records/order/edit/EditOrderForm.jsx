@@ -290,6 +290,10 @@ const mapDispatchToProps = dispatch => ({
       }
     });
 
+    if (payload['sales_status'] === null) {
+      delete payload['sales_status'];
+    }
+
     if (payload.due_date) {
       const date = new Date(payload.due_date);
       payload.due_date = date.toISOString();
