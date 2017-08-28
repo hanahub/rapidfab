@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
@@ -68,13 +68,7 @@ FormRow.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const EditOrderFormComponent = ({
-  created,
-  fields,
-  shippings,
-  users,
-  statusOptions,
-}) =>
+const EditOrderForm = ({ created, fields, shippings, users }) =>
   <div>
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name} />
@@ -85,8 +79,8 @@ const EditOrderFormComponent = ({
         <option value={fields.status.initialValue}>
           {ORDER_STATUS_MAP[fields.status.initialValue]}
         </option>
-        {statusOptions
-          ? statusOptions.map(status =>
+        {statusOptionsMap[fields.status.initialValue]
+          ? statusOptionsMap[fields.status.initialValue].map(status =>
               <option key={status} value={status}>
                 {ORDER_STATUS_MAP[status]}
               </option>
@@ -233,47 +227,6 @@ const EditOrderFormComponent = ({
       <input type="date" {...fields.due_date} style={{ color: 'black' }} />
     </FormRow>
   </div>;
-
-EditOrderFormComponent.propTypes = {
-  created: PropTypes.string.isRequired,
-  fields: PropTypes.object.isRequired,
-  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  statusOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-class EditOrderForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { statusOptions: [] };
-  }
-
-  componentDidUpdate() {
-    const { fields } = this.props;
-    const { statusOptions } = this.state;
-    if (fields.status.value && statusOptions && !(statusOptions.length > 0)) {
-      const initialStatusOptions = statusOptionsMap[fields.status.value];
-      this.setState({ statusOptions: initialStatusOptions });
-    }
-  }
-
-  render() {
-    const { statusOptions } = this.state;
-
-    const { created, fields, shippings, users } = this.props;
-
-    return (
-      <EditOrderFormComponent
-        created={created}
-        fields={fields}
-        shippings={shippings}
-        users={users}
-        statusOptions={statusOptions}
-      />
-    );
-  }
-}
 
 EditOrderForm.propTypes = {
   created: PropTypes.string.isRequired,
