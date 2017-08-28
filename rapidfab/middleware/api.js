@@ -1,3 +1,5 @@
+import Raven from 'raven-js';
+
 function jsonTryParse(text) {
   try {
     return JSON.parse(text || null);
@@ -50,8 +52,12 @@ function apiMiddleware({ dispatch, getState }) {
     });
 
     const handleError = errors => {
+      const failedToFetch = errors.message === 'Failed to fetch';
       if (typeof errors === 'object' && errors.message) {
-        errors = [{ code: 'api-error', title: errors.message }];
+        const errorMessage = failedToFetch
+          ? 'An unknown error has occurred'
+          : errors.message;
+        errors = [{ code: 'api-error', title: errorMessage }];
       }
       dispatch({
         api,
@@ -61,6 +67,11 @@ function apiMiddleware({ dispatch, getState }) {
         payload,
         type: failureType,
       });
+      if (failedToFetch) {
+        Raven.captureException(new Error('Failed to fetch'), {
+          extra: api,
+        });
+      }
     };
 
     const handleResponse = response =>
