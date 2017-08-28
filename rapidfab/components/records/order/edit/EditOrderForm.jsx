@@ -236,15 +236,16 @@ EditOrderForm.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSubmit: payload => {
+  onSubmit: formValues => {
+    const payload = formValues;
     Object.keys(payload).forEach(key => {
       if (payload[key] === 'none') {
         payload[key] = null;
       }
     });
 
-    if (payload['sales_status'] === null) {
-      delete payload['sales_status'];
+    if (payload.sales_status === null) {
+      delete payload.sales_status;
     }
 
     if (payload.due_date) {
