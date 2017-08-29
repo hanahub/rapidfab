@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import Error from 'rapidfab/components/error';
 import Grid, { IdColumn, DateColumn } from 'rapidfab/components/grid';
 import Moment from 'moment';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
@@ -42,8 +41,8 @@ const StatusField = ({ statuses, fields }) => {
 };
 
 StatusField.propTypes = {
-  statuses: PropTypes.arrayOf(PropTypes.string),
-  fields: PropTypes.object,
+  statuses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fields: PropTypes.object.isRequired,
 };
 
 const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
@@ -70,10 +69,10 @@ const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
 };
 
 ModelDownloadField.propTypes = {
-  isDownloading: PropTypes.bool,
-  model: PropTypes.object,
-  onClick: PropTypes.func,
-  runUUID: PropTypes.string,
+  isDownloading: PropTypes.bool.isRequired,
+  model: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  runUUID: PropTypes.string.isRequired,
 };
 
 const LinkField = ({ uri, resources, endpoint }) => {
@@ -98,9 +97,9 @@ const LinkField = ({ uri, resources, endpoint }) => {
 };
 
 LinkField.propTypes = {
-  endpoint: PropTypes.string,
-  resources: PropTypes.arrayOf(PropTypes.object),
-  uri: PropTypes.string,
+  endpoint: PropTypes.string.isRequired,
+  resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 const TimeDisplay = ({ seconds }) => {
@@ -123,7 +122,7 @@ const TimeDisplay = ({ seconds }) => {
 };
 
 TimeDisplay.propTypes = {
-  seconds: PropTypes.number,
+  seconds: PropTypes.number.isRequired,
 };
 
 const EditRun = ({
@@ -141,7 +140,7 @@ const EditRun = ({
 }) =>
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav breadcrumbs={['runs', fields.id.value ]}/>
+      <BreadcrumbNav breadcrumbs={['runs', fields.id.value]} />
       <FlashMessages />
 
       <div className="clearfix">
@@ -587,18 +586,17 @@ const EditRun = ({
   </BS.Form>;
 
 EditRun.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object),
-  downloadModel: PropTypes.object,
-  fields: PropTypes.object,
-  gridData: PropTypes.arrayOf(PropTypes.object),
-  handleSubmit: PropTypes.func,
-  onDelete: PropTypes.func,
-  onModelDownload: PropTypes.func,
-  orders: PropTypes.arrayOf(PropTypes.object),
-  postProcessors: PropTypes.arrayOf(PropTypes.object),
-  printers: PropTypes.arrayOf(PropTypes.object),
-  printerTypes: PropTypes.arrayOf(PropTypes.object),
-  statuses: PropTypes.arrayOf(PropTypes.string),
+  downloadModel: PropTypes.object.isRequired,
+  fields: PropTypes.object.isRequired,
+  gridData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onModelDownload: PropTypes.func.isRequired,
+  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  statuses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default EditRun;
