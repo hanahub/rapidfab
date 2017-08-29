@@ -334,11 +334,14 @@ class LineItemForm extends Component {
       />
     );
   }
+}
+
+LineItemForm.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  lineItem: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {
-  const { model } = state.ui.hoth;
-
   const materials = Selectors.getMaterials(state);
   const baseMaterials = materials.filter(material => material.type === 'base');
   const supportMaterials = materials.filter(
@@ -352,7 +355,6 @@ const mapStateToProps = state => {
   return {
     baseMaterials,
     models,
-    modelsIsFetching,
     orderUuid,
     providers,
     supportMaterials,
