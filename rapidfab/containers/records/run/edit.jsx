@@ -92,6 +92,18 @@ function mapStateToProps(state, props) {
     ? state.form['record.run'].status.initial
     : null;
 
+  const gridData = prints.map(print => {
+    if (orders && prints) {
+      const printOrder = orders.find(order => order.uri === print.order);
+      const { id, order } = print;
+      const dueDate = printOrder.due_date;
+      const customerName = printOrder.customer_name;
+      return { id, order, dueDate, customerName };
+    } else {
+      return {};
+    }
+  });
+
   return {
     apiErrors: _.concat(
       print.list.errors,
@@ -102,6 +114,7 @@ function mapStateToProps(state, props) {
       downloadModel.errors
     ),
     downloadModel,
+    gridData,
     initialValues: runResource,
     orders,
     initialStatus,

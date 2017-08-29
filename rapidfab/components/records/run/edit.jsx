@@ -4,7 +4,7 @@ import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import Error from 'rapidfab/components/error';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
+import Grid, { IdColumn, DateColumn } from 'rapidfab/components/grid';
 import Moment from 'moment';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
@@ -150,6 +150,7 @@ const EditRun = ({
   apiErrors,
   downloadModel,
   fields,
+  gridData,
   handleSubmit,
   onDelete,
   onModelDownload,
@@ -591,8 +592,8 @@ const EditRun = ({
             }
           >
             <Grid
-              data={prints}
-              columns={['id', 'order']}
+              data={gridData}
+              columns={['id', 'order', 'dueDate', 'customerName']}
               columnMeta={[
                 {
                   displayName: (
@@ -609,6 +610,19 @@ const EditRun = ({
                   columnName: 'order',
                   customComponent: IdColumn('order', 'order', orders, 'name'),
                 },
+                {
+                  displayName: (
+                    <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
+                  ),
+                  columnName: 'dueDate',
+                  customComponent: DateColumn,
+                },
+                {
+                  displayName: (
+                    <FormattedMessage id="field.customer_name" defaultMessage="Customer Name" />
+                  ),
+                  columnName: 'customerName',
+                }
               ]}
             />
           </BS.Panel>
