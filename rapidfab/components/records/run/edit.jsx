@@ -18,31 +18,8 @@ import { FormControlSelect } from 'rapidfab/components/formTools';
 
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
-
-const SaveButtonTitle = () =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
-
-const FormRow = ({ id, defaultMessage, children, controlId }) =>
-  <BS.FormGroup controlId={controlId}>
-    <BS.Col xs={3}>
-      <BS.ControlLabel>
-        <FormattedMessage id={id} defaultMessage={defaultMessage} />:
-      </BS.ControlLabel>
-    </BS.Col>
-    <BS.Col xs={9}>
-      {children}
-    </BS.Col>
-  </BS.FormGroup>;
-
-FormRow.propTypes = {
-  children: PropTypes.node.isRequired,
-  controlId: PropTypes.string,
-  defaultMessage: PropTypes.string,
-  id: PropTypes.string,
-};
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
+import FormRow from 'rapidfab/components/FormRow';
 
 const StatusField = ({ statuses, fields }) => {
   const restrictedStatuses = ['calculated', 'calculating', 'queued'];
