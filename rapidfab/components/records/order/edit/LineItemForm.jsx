@@ -114,7 +114,7 @@ const LineItemFormComponent = ({
         : <div>
             <FormRow id="field.model" defaultMessage="Model">
               <p>
-                <a href={currentModel.content}>
+                <a href={currentModel ? currentModel.content : null}>
                   {currentModel ? currentModel.name : 'Loading Model...'}
                 </a>
               </p>
