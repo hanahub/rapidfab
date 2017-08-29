@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import Error from 'rapidfab/components/error';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
+import Grid, { IdColumn, DateColumn } from 'rapidfab/components/grid';
 import Moment from 'moment';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
@@ -16,30 +15,10 @@ import {
 } from 'rapidfab/i18n';
 import { FormControlSelect } from 'rapidfab/components/formTools';
 
-const SaveButtonTitle = () =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
-
-const FormRow = ({ id, defaultMessage, children, controlId }) =>
-  <BS.FormGroup controlId={controlId}>
-    <BS.Col xs={3}>
-      <BS.ControlLabel>
-        <FormattedMessage id={id} defaultMessage={defaultMessage} />:
-      </BS.ControlLabel>
-    </BS.Col>
-    <BS.Col xs={9}>
-      {children}
-    </BS.Col>
-  </BS.FormGroup>;
-
-FormRow.propTypes = {
-  children: PropTypes.node.isRequired,
-  controlId: PropTypes.string,
-  defaultMessage: PropTypes.string,
-  id: PropTypes.string,
-};
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
+import FormRow from 'rapidfab/components/FormRow';
 
 const StatusField = ({ statuses, fields }) => {
   const restrictedStatuses = ['calculated', 'calculating', 'queued'];
@@ -62,8 +41,8 @@ const StatusField = ({ statuses, fields }) => {
 };
 
 StatusField.propTypes = {
-  statuses: PropTypes.arrayOf(PropTypes.string),
-  fields: PropTypes.object,
+  statuses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fields: PropTypes.object.isRequired,
 };
 
 const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
@@ -90,10 +69,10 @@ const ModelDownloadField = ({ runUUID, model, onClick, isDownloading }) => {
 };
 
 ModelDownloadField.propTypes = {
-  isDownloading: PropTypes.bool,
-  model: PropTypes.object,
-  onClick: PropTypes.func,
-  runUUID: PropTypes.string,
+  isDownloading: PropTypes.bool.isRequired,
+  model: PropTypes.object.isRequired,
+  onClick: PropTypes.func.isRequired,
+  runUUID: PropTypes.string.isRequired,
 };
 
 const LinkField = ({ uri, resources, endpoint }) => {
@@ -118,9 +97,9 @@ const LinkField = ({ uri, resources, endpoint }) => {
 };
 
 LinkField.propTypes = {
-  endpoint: PropTypes.string,
-  resources: PropTypes.arrayOf(PropTypes.object),
-  uri: PropTypes.string,
+  endpoint: PropTypes.string.isRequired,
+  resources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 const TimeDisplay = ({ seconds }) => {
@@ -143,79 +122,49 @@ const TimeDisplay = ({ seconds }) => {
 };
 
 TimeDisplay.propTypes = {
-  seconds: PropTypes.number,
+  seconds: PropTypes.number.isRequired,
 };
 
 const EditRun = ({
-  apiErrors,
   downloadModel,
   fields,
+  gridData,
   handleSubmit,
   onDelete,
   onModelDownload,
   orders,
   postProcessors,
-  prints,
   printers,
   printerTypes,
   statuses,
 }) =>
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.Breadcrumb>
-            <BS.Breadcrumb.Item active>
-              <Fa name="road" />{' '}
-              <FormattedMessage id="plan" defaultMessage="Plan" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/plan/runs">
-              <Fa name="list" />{' '}
-              <FormattedMessage id="plan.runs" defaultMessage="Runs" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item>
-              <Fa name="file-o" /> {_.get(fields, 'id.value')}
-            </BS.Breadcrumb.Item>
-          </BS.Breadcrumb>
-        </BS.Col>
-      </BS.Row>
+      <BreadcrumbNav breadcrumbs={['runs', fields.id.value]} />
+      <FlashMessages />
 
-      <BS.Row>
-        <BS.Col xs={6}>
-          <BS.Button href="#/plan/runs" bsSize="small">
-            <Fa name="arrow-left" />{' '}
-            <FormattedMessage id="plan.runs" defaultMessage="Runs" />
-          </BS.Button>
-        </BS.Col>
-        <BS.Col xs={6}>
-          <BS.ButtonToolbar className="pull-right">
-            <BS.SplitButton
-              id="uxSaveDropdown"
-              type="submit"
-              bsStyle="success"
-              bsSize="small"
-              title={<SaveButtonTitle />}
-              pullRight
+      <div className="clearfix">
+        <BS.ButtonToolbar className="pull-right">
+          <BS.SplitButton
+            id="uxSaveDropdown"
+            type="submit"
+            bsStyle="success"
+            bsSize="small"
+            title={<SaveButtonTitle />}
+            pullRight
+          >
+            <BS.MenuItem
+              eventKey={1}
+              onClick={() => onDelete(_.get(fields, 'uuid.value'))}
             >
-              <BS.MenuItem
-                eventKey={1}
-                onClick={() => onDelete(_.get(fields, 'uuid.value'))}
-              >
-                <Fa name="ban" />{' '}
-                <FormattedMessage id="button.delete" defaultMessage="Delete" />
-              </BS.MenuItem>
-            </BS.SplitButton>
-          </BS.ButtonToolbar>
-        </BS.Col>
-      </BS.Row>
+              <Fa name="ban" />{' '}
+              <FormattedMessage id="button.delete" defaultMessage="Delete" />
+            </BS.MenuItem>
+          </BS.SplitButton>
+        </BS.ButtonToolbar>
+      </div>
 
       <hr />
-
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
 
       <BS.Row>
         <BS.Col xs={12} sm={4}>
@@ -591,8 +540,8 @@ const EditRun = ({
             }
           >
             <Grid
-              data={prints}
-              columns={['id', 'order']}
+              data={gridData}
+              columns={['id', 'order', 'dueDate', 'customerName']}
               columnMeta={[
                 {
                   displayName: (
@@ -609,6 +558,25 @@ const EditRun = ({
                   columnName: 'order',
                   customComponent: IdColumn('order', 'order', orders, 'name'),
                 },
+                {
+                  displayName: (
+                    <FormattedMessage
+                      id="field.due_date"
+                      defaultMessage="Due Date"
+                    />
+                  ),
+                  columnName: 'dueDate',
+                  customComponent: DateColumn,
+                },
+                {
+                  displayName: (
+                    <FormattedMessage
+                      id="field.customer_name"
+                      defaultMessage="Customer Name"
+                    />
+                  ),
+                  columnName: 'customerName',
+                },
               ]}
             />
           </BS.Panel>
@@ -618,18 +586,17 @@ const EditRun = ({
   </BS.Form>;
 
 EditRun.propTypes = {
-  apiErrors: PropTypes.array,
-  downloadModel: PropTypes.object,
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  onDelete: PropTypes.func,
-  onModelDownload: PropTypes.func,
-  orders: PropTypes.arrayOf(PropTypes.object),
-  postProcessors: PropTypes.arrayOf(PropTypes.object),
-  prints: PropTypes.arrayOf(PropTypes.object),
-  printers: PropTypes.arrayOf(PropTypes.object),
-  printerTypes: PropTypes.arrayOf(PropTypes.object),
-  statuses: PropTypes.arrayOf(PropTypes.string),
+  downloadModel: PropTypes.object.isRequired,
+  fields: PropTypes.object.isRequired,
+  gridData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onModelDownload: PropTypes.func.isRequired,
+  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  statuses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default EditRun;

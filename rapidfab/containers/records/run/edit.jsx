@@ -1,9 +1,11 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
-import Actions from 'rapidfab/actions';
-import RunsComponent from 'rapidfab/components/records/run/edit';
+import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
+
 import * as Selectors from 'rapidfab/selectors';
+import Actions from 'rapidfab/actions';
+
+import RunsComponent from 'rapidfab/components/records/run/edit';
 
 const fields = [
   'actuals.end',
@@ -47,6 +49,11 @@ class RunsContainer extends Component {
   }
 }
 
+RunsContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
+};
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: props => {
@@ -78,8 +85,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const { print, order, run } = state.ui.wyatt;
-
   const downloadModel = state.downloadModel;
   const runResource = Selectors.getRouteResource(state, props);
   const orders = Selectors.getOrders(state);
@@ -92,22 +97,24 @@ function mapStateToProps(state, props) {
     ? state.form['record.run'].status.initial
     : null;
 
+  const gridData = prints.map(print => {
+    if (orders && prints) {
+      const printOrder = orders.find(order => order.uri === print.order);
+      const { id, order } = print;
+      const dueDate = printOrder.due_date;
+      const customerName = printOrder.customer_name;
+      return { id, order, dueDate, customerName };
+    }
+    return {};
+  });
+
   return {
-    apiErrors: _.concat(
-      print.list.errors,
-      order.list.errors,
-      run.get.errors,
-      run.put.errors,
-      run.delete.errors,
-      downloadModel.errors
-    ),
     downloadModel,
+    gridData,
     initialValues: runResource,
     orders,
     initialStatus,
-    prints,
     resource: runResource,
-    run,
     postProcessors,
     printerTypes,
     printers,

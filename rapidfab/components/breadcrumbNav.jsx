@@ -37,6 +37,11 @@ const breadcrumbMap = {
     icon: 'files-o',
     message: <FormattedMessage id="plan.orders" defaultMessage="Orders" />,
   },
+  runs: {
+    href: '#/plan/runs',
+    icon: 'list',
+    message: <FormattedMessage id="plan.runs" defaultMessage="Runs" />,
+  },
 };
 
 const HomeLink = () =>
