@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { Col, ControlLabel, FormGroup } from 'react-bootstrap';
 
 const FormRow = ({ id, defaultMessage, children }) =>
   <FormGroup>
