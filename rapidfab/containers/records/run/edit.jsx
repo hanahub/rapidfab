@@ -6,7 +6,6 @@ import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
 import RunsComponent from 'rapidfab/components/records/run/edit';
-import FlashMessages from 'rapidfab/components/FlashMessages';
 
 const fields = [
   'actuals.end',
@@ -46,12 +45,7 @@ class RunsContainer extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <FlashMessages />
-        <RunsComponent {...this.props} />
-      </div>
-    );
+    return <RunsComponent {...this.props} />;
   }
 }
 

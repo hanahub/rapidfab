@@ -16,6 +16,9 @@ import {
 } from 'rapidfab/i18n';
 import { FormControlSelect } from 'rapidfab/components/formTools';
 
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+
 const SaveButtonTitle = () =>
   <span>
     <Fa name="floppy-o" />{' '}
@@ -161,52 +164,29 @@ const EditRun = ({
 }) =>
   <BS.Form horizontal onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.Breadcrumb>
-            <BS.Breadcrumb.Item active>
-              <Fa name="road" />{' '}
-              <FormattedMessage id="plan" defaultMessage="Plan" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/plan/runs">
-              <Fa name="list" />{' '}
-              <FormattedMessage id="plan.runs" defaultMessage="Runs" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item>
-              <Fa name="file-o" /> {_.get(fields, 'id.value')}
-            </BS.Breadcrumb.Item>
-          </BS.Breadcrumb>
-        </BS.Col>
-      </BS.Row>
+      <BreadcrumbNav breadcrumbs={['runs', fields.id.value ]}/>
+      <FlashMessages />
 
-      <BS.Row>
-        <BS.Col xs={6}>
-          <BS.Button href="#/plan/runs" bsSize="small">
-            <Fa name="arrow-left" />{' '}
-            <FormattedMessage id="plan.runs" defaultMessage="Runs" />
-          </BS.Button>
-        </BS.Col>
-        <BS.Col xs={6}>
-          <BS.ButtonToolbar className="pull-right">
-            <BS.SplitButton
-              id="uxSaveDropdown"
-              type="submit"
-              bsStyle="success"
-              bsSize="small"
-              title={<SaveButtonTitle />}
-              pullRight
+      <div className="clearfix">
+        <BS.ButtonToolbar className="pull-right">
+          <BS.SplitButton
+            id="uxSaveDropdown"
+            type="submit"
+            bsStyle="success"
+            bsSize="small"
+            title={<SaveButtonTitle />}
+            pullRight
+          >
+            <BS.MenuItem
+              eventKey={1}
+              onClick={() => onDelete(_.get(fields, 'uuid.value'))}
             >
-              <BS.MenuItem
-                eventKey={1}
-                onClick={() => onDelete(_.get(fields, 'uuid.value'))}
-              >
-                <Fa name="ban" />{' '}
-                <FormattedMessage id="button.delete" defaultMessage="Delete" />
-              </BS.MenuItem>
-            </BS.SplitButton>
-          </BS.ButtonToolbar>
-        </BS.Col>
-      </BS.Row>
+              <Fa name="ban" />{' '}
+              <FormattedMessage id="button.delete" defaultMessage="Delete" />
+            </BS.MenuItem>
+          </BS.SplitButton>
+        </BS.ButtonToolbar>
+      </div>
 
       <hr />
 
