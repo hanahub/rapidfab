@@ -213,6 +213,11 @@ const LineItemFormComponent = ({
   );
 };
 
+LineItemFormComponent.defaultProps = {
+  supportMaterial: null,
+  thirdPartyProvider: null,
+};
+
 LineItemFormComponent.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
@@ -225,11 +230,11 @@ LineItemFormComponent.propTypes = {
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
   quantity: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  supportMaterial: PropTypes.string.isRequired,
+  supportMaterial: PropTypes.string,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   template: PropTypes.string.isRequired,
   templates: PropTypes.arrayOf(PropTypes.object).isRequired,
-  thirdPartyProvider: PropTypes.string.isRequired,
+  thirdPartyProvider: PropTypes.string,
 };
 
 class LineItemForm extends Component {
@@ -240,7 +245,7 @@ class LineItemForm extends Component {
     this.state = {
       baseMaterial: lineItem.materials.base,
       supportMaterial: lineItem.materials.support,
-      quantity: lineItem.quantity,
+      quantity: lineItem.quantity.toString(),
       status: lineItem.status,
       template: lineItem.template,
       thirdPartyProvider: lineItem.third_party_provider,
