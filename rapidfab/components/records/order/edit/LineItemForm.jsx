@@ -252,18 +252,6 @@ class LineItemForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleFileChange(event) {
-    this.setState({ model: event.target.files[0] });
-  }
-
-  handleInputChange(event) {
-    const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const { name } = target;
-
-    this.setState({ [name]: value });
-  }
-
   async onDelete() {
     const { dispatch, lineItem, orderUuid } = this.props;
     await dispatch(Actions.Api.wyatt['line-item'].delete(lineItem.uuid));
@@ -313,6 +301,18 @@ class LineItemForm extends Component {
     }
   }
 
+  handleFileChange(event) {
+    this.setState({ model: event.target.files[0] });
+  }
+
+  handleInputChange(event) {
+    const { target } = event;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name } = target;
+
+    this.setState({ [name]: value });
+  }
+
   render() {
     const {
       handleFileChange,
@@ -334,7 +334,7 @@ class LineItemForm extends Component {
       />
     );
   }
-}
+};
 
 const mapStateToProps = state => {
   const { model } = state.ui.hoth;
