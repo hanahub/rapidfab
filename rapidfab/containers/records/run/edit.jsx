@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import RunsComponent from 'rapidfab/components/records/run/edit';
 import { reduxForm } from 'redux-form';
@@ -46,6 +47,11 @@ class RunsContainer extends Component {
     return <RunsComponent {...this.props} />;
   }
 }
+
+RunsContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -99,9 +105,8 @@ function mapStateToProps(state, props) {
       const dueDate = printOrder.due_date;
       const customerName = printOrder.customer_name;
       return { id, order, dueDate, customerName };
-    } else {
-      return {};
     }
+    return {};
   });
 
   return {
@@ -118,7 +123,6 @@ function mapStateToProps(state, props) {
     initialValues: runResource,
     orders,
     initialStatus,
-    prints,
     resource: runResource,
     run,
     postProcessors,
