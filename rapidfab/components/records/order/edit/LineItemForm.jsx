@@ -47,6 +47,14 @@ const Printable = ({ models, uri, itar }) => {
   );
 };
 
+Printable.defaultProps = { itar: false };
+
+Printable.propTypes = {
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uri: PropTypes.string.isRequired,
+  itar: PropTypes.bool,
+};
+
 const LineItemFormComponent = ({
   handleFileChange,
   handleInputChange,
@@ -54,8 +62,6 @@ const LineItemFormComponent = ({
   baseMaterial,
   baseMaterials,
   models,
-  modelsIsFetching,
-  materials,
   onSubmit,
   onDelete,
   providers,
@@ -207,6 +213,25 @@ const LineItemFormComponent = ({
   );
 };
 
+LineItemFormComponent.propTypes = {
+  handleFileChange: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  baseMaterial: PropTypes.string.isRequired,
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  quantity: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  supportMaterial: PropTypes.string.isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  template: PropTypes.string.isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+  thirdPartyProvider: PropTypes.string.isRequired,
+};
+
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
@@ -218,7 +243,7 @@ class LineItemForm extends Component {
       quantity: lineItem.quantity,
       status: lineItem.status,
       template: lineItem.template,
-      thirdPartyProvider: lineItem['third_party_provider'],
+      thirdPartyProvider: lineItem.third_party_provider,
     };
 
     this.handleFileChange = this.handleFileChange.bind(this);
@@ -320,7 +345,6 @@ const mapStateToProps = state => {
     material => material.type === 'support'
   );
   const models = Selectors.getModels(state);
-  const modelsIsFetching = model.list.fetching || model.get.fetching;
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const orderUuid = state.routeUUID;
