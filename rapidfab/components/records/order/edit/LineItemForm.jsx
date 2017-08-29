@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Col,
-  ControlLabel,
-  Form,
-  FormControl,
-  FormGroup,
-  Label,
-} from 'react-bootstrap';
+import { Form, FormControl, Label } from 'react-bootstrap';
 
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
-import ModelInput from './ModelInput';
+import FormRow from 'rapidfab/components/FormRow';
 import SaveDropdownButton from './SaveDropdownButton';
 
 const statusOptionsMap = {
@@ -25,18 +18,6 @@ const statusOptionsMap = {
   printed: ['cancelled', 'shipping', 'complete'],
   shipping: ['cancelled', 'complete'],
 };
-
-const FormRow = ({ id, defaultMessage, children }) =>
-  <FormGroup>
-    <Col xs={3}>
-      <ControlLabel>
-        <FormattedMessage id={id} defaultMessage={defaultMessage} />:
-      </ControlLabel>
-    </Col>
-    <Col xs={9}>
-      {children}
-    </Col>
-  </FormGroup>;
 
 const Printable = ({ models, uri, itar }) => {
   const model = models.find(model => model.uri === uri);
@@ -66,6 +47,14 @@ const Printable = ({ models, uri, itar }) => {
   );
 };
 
+Printable.defaultProps = { itar: false };
+
+Printable.propTypes = {
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uri: PropTypes.string.isRequired,
+  itar: PropTypes.bool,
+};
+
 const LineItemFormComponent = ({
   handleFileChange,
   handleInputChange,
@@ -73,8 +62,6 @@ const LineItemFormComponent = ({
   baseMaterial,
   baseMaterials,
   models,
-  modelsIsFetching,
-  materials,
   onSubmit,
   onDelete,
   providers,
@@ -127,7 +114,9 @@ const LineItemFormComponent = ({
         : <div>
             <FormRow id="field.model" defaultMessage="Model">
               <p>
-                {currentModel ? currentModel.name : 'Loading Model...'}
+                <a href={currentModel ? currentModel.content : null}>
+                  {currentModel ? currentModel.name : 'Loading Model...'}
+                </a>
               </p>
             </FormRow>
             <FormRow id="field.replaceModel" defaultMessage="Replace Model">
@@ -224,6 +213,30 @@ const LineItemFormComponent = ({
   );
 };
 
+LineItemFormComponent.defaultProps = {
+  supportMaterial: null,
+  thirdPartyProvider: null,
+};
+
+LineItemFormComponent.propTypes = {
+  handleFileChange: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  baseMaterial: PropTypes.string.isRequired,
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  quantity: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  supportMaterial: PropTypes.string,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  template: PropTypes.string.isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+  thirdPartyProvider: PropTypes.string,
+};
+
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
@@ -232,28 +245,16 @@ class LineItemForm extends Component {
     this.state = {
       baseMaterial: lineItem.materials.base,
       supportMaterial: lineItem.materials.support,
-      quantity: lineItem.quantity,
+      quantity: lineItem.quantity.toString(),
       status: lineItem.status,
       template: lineItem.template,
-      thirdPartyProvider: lineItem['third_party_provider'],
+      thirdPartyProvider: lineItem.third_party_provider,
     };
 
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  handleFileChange(event) {
-    this.setState({ model: event.target.files[0] });
-  }
-
-  handleInputChange(event) {
-    const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const { name } = target;
-
-    this.setState({ [name]: value });
   }
 
   async onDelete() {
@@ -305,6 +306,18 @@ class LineItemForm extends Component {
     }
   }
 
+  handleFileChange(event) {
+    this.setState({ model: event.target.files[0] });
+  }
+
+  handleInputChange(event) {
+    const { target } = event;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name } = target;
+
+    this.setState({ [name]: value });
+  }
+
   render() {
     const {
       handleFileChange,
@@ -328,16 +341,18 @@ class LineItemForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { model } = state.ui.hoth;
+LineItemForm.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  lineItem: PropTypes.object.isRequired,
+};
 
+const mapStateToProps = state => {
   const materials = Selectors.getMaterials(state);
   const baseMaterials = materials.filter(material => material.type === 'base');
   const supportMaterials = materials.filter(
     material => material.type === 'support'
   );
   const models = Selectors.getModels(state);
-  const modelsIsFetching = model.list.fetching || model.get.fetching;
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const orderUuid = state.routeUUID;
@@ -345,7 +360,6 @@ const mapStateToProps = state => {
   return {
     baseMaterials,
     models,
-    modelsIsFetching,
     orderUuid,
     providers,
     supportMaterials,
