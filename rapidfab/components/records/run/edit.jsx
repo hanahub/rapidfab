@@ -156,7 +156,6 @@ const EditRun = ({
   onModelDownload,
   orders,
   postProcessors,
-  prints,
   printers,
   printerTypes,
   statuses,
@@ -612,17 +611,23 @@ const EditRun = ({
                 },
                 {
                   displayName: (
-                    <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
+                    <FormattedMessage
+                      id="field.due_date"
+                      defaultMessage="Due Date"
+                    />
                   ),
                   columnName: 'dueDate',
                   customComponent: DateColumn,
                 },
                 {
                   displayName: (
-                    <FormattedMessage id="field.customer_name" defaultMessage="Customer Name" />
+                    <FormattedMessage
+                      id="field.customer_name"
+                      defaultMessage="Customer Name"
+                    />
                   ),
                   columnName: 'customerName',
-                }
+                },
               ]}
             />
           </BS.Panel>
@@ -632,15 +637,15 @@ const EditRun = ({
   </BS.Form>;
 
 EditRun.propTypes = {
-  apiErrors: PropTypes.array,
+  apiErrors: PropTypes.arrayOf(PropTypes.object),
   downloadModel: PropTypes.object,
   fields: PropTypes.object,
+  gridData: PropTypes.arrayOf(PropTypes.object),
   handleSubmit: PropTypes.func,
   onDelete: PropTypes.func,
   onModelDownload: PropTypes.func,
   orders: PropTypes.arrayOf(PropTypes.object),
   postProcessors: PropTypes.arrayOf(PropTypes.object),
-  prints: PropTypes.arrayOf(PropTypes.object),
   printers: PropTypes.arrayOf(PropTypes.object),
   printerTypes: PropTypes.arrayOf(PropTypes.object),
   statuses: PropTypes.arrayOf(PropTypes.string),
