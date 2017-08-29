@@ -1,10 +1,12 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
-import RunsComponent from 'rapidfab/components/records/run/edit';
 import { reduxForm } from 'redux-form';
+
 import * as Selectors from 'rapidfab/selectors';
+import Actions from 'rapidfab/actions';
+
+import RunsComponent from 'rapidfab/components/records/run/edit';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 
 const fields = [
   'actuals.end',
@@ -44,7 +46,12 @@ class RunsContainer extends Component {
   }
 
   render() {
-    return <RunsComponent {...this.props} />;
+    return (
+      <div>
+        <FlashMessages />
+        <RunsComponent {...this.props} />
+      </div>
+    );
   }
 }
 
@@ -84,8 +91,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const { print, order, run } = state.ui.wyatt;
-
   const downloadModel = state.downloadModel;
   const runResource = Selectors.getRouteResource(state, props);
   const orders = Selectors.getOrders(state);
@@ -110,21 +115,12 @@ function mapStateToProps(state, props) {
   });
 
   return {
-    apiErrors: _.concat(
-      print.list.errors,
-      order.list.errors,
-      run.get.errors,
-      run.put.errors,
-      run.delete.errors,
-      downloadModel.errors
-    ),
     downloadModel,
     gridData,
     initialValues: runResource,
     orders,
     initialStatus,
     resource: runResource,
-    run,
     postProcessors,
     printerTypes,
     printers,

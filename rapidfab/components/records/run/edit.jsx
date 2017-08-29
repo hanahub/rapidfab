@@ -147,7 +147,6 @@ TimeDisplay.propTypes = {
 };
 
 const EditRun = ({
-  apiErrors,
   downloadModel,
   fields,
   gridData,
@@ -210,12 +209,6 @@ const EditRun = ({
       </BS.Row>
 
       <hr />
-
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
 
       <BS.Row>
         <BS.Col xs={12} sm={4}>
