@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import {
-  Col,
-  ControlLabel,
-  Form,
-  FormControl,
-  FormGroup,
-  Label,
-} from 'react-bootstrap';
+import { Form, FormControl, Label } from 'react-bootstrap';
 
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
-import ModelInput from './ModelInput';
+import FormRow from 'rapidfab/components/FormRow';
 import SaveDropdownButton from './SaveDropdownButton';
 
 const statusOptionsMap = {
@@ -25,18 +18,6 @@ const statusOptionsMap = {
   printed: ['cancelled', 'shipping', 'complete'],
   shipping: ['cancelled', 'complete'],
 };
-
-const FormRow = ({ id, defaultMessage, children }) =>
-  <FormGroup>
-    <Col xs={3}>
-      <ControlLabel>
-        <FormattedMessage id={id} defaultMessage={defaultMessage} />:
-      </ControlLabel>
-    </Col>
-    <Col xs={9}>
-      {children}
-    </Col>
-  </FormGroup>;
 
 const Printable = ({ models, uri, itar }) => {
   const model = models.find(model => model.uri === uri);
