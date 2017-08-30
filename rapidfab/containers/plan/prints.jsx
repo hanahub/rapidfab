@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
-import Gatekeeper from 'rapidfab/components/gatekeeper';
+
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import PrintsComponent from 'rapidfab/components/plan/prints';
 
 class PrintsContainer extends Component {
@@ -13,21 +14,16 @@ class PrintsContainer extends Component {
   }
 
   render() {
-    const {
-      gridData,
-      locations,
-      fetching,
-      apiErrors,
-      handleOnChange,
-    } = this.props;
+    const { gridData, locations, handleOnChange } = this.props;
     return (
-      <Gatekeeper errors={apiErrors} loading={fetching}>
+      <div>
+        <FlashMessages />
         <PrintsComponent
           gridData={gridData}
           locations={locations}
           handleOnChange={handleOnChange}
         />
-      </Gatekeeper>
+      </div>
     );
   }
 }
@@ -47,7 +43,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { print, location } = state.ui.wyatt;
   const orders = Selectors.getOrders(state);
   const allPrints = Selectors.getPrints(state);
   const printProcessSteps = Selectors.getProcessSteps(state).filter(step =>
@@ -65,9 +60,10 @@ function mapStateToProps(state) {
   });
 
   const gridData = filteredPrints.map(print => {
-    if (orders && prints) {
-      const printOrder = orders.find(order => order.uri === print.order);
+    const printOrder = orders.find(order => order.uri === print.order);
+    if (printOrder) {
       const { id, order, status } = print;
+
       const { name } = printOrder;
       const dueDate = printOrder.due_date;
       const customerName = printOrder.customer_name;
@@ -79,13 +75,9 @@ function mapStateToProps(state) {
   return {
     gridData,
     locations: Selectors.getLocations(state),
-    fetching: print.list.fetching || location.list.fetching,
-    apiErrors: print.list.errors || location.list.errors,
   };
 }
 PrintsContainer.propTypes = {
-  apiErrors: PropTypes.array.isRequired,
-  fetching: PropTypes.bool.isRequired,
   gridData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
