@@ -4,14 +4,18 @@ import { FormattedMessage } from 'react-intl';
 import { Grid } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
-import Griddle, { IdColumn, MappedColumn } from 'rapidfab/components/grid';
+import Griddle, {
+  IdColumn,
+  MappedColumn,
+  DateColumn,
+} from 'rapidfab/components/grid';
 import Locations from 'rapidfab/components/locations';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-const PrintsGrid = ({ prints }) =>
+const PrintsGrid = ({ gridData }) =>
   <Griddle
-    data={prints}
-    columns={['id', 'status']}
+    data={gridData}
+    columns={['id', 'status', 'name', 'customerName', 'dueDate']}
     columnMeta={[
       {
         displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
@@ -26,13 +30,40 @@ const PrintsGrid = ({ prints }) =>
         ),
         customComponent: MappedColumn('status', RUN_STATUS_MAP),
       },
+      {
+        displayName: (
+          <FormattedMessage id="field.order" defaultMessage="Order" />
+        ),
+        columnName: 'name',
+      },
+      {
+        displayName: (
+          <FormattedMessage
+            id="field.customer_name"
+            defaultMessage="Customer Name"
+          />
+        ),
+        columnName: 'customerName',
+      },
+      {
+        displayName: (
+          <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
+        ),
+        columnName: 'dueDate',
+        customComponent: DateColumn,
+      },
     ]}
     initialSort="id"
     initialSortAscending={false}
   />;
 PrintsGrid.propTypes = { prints: PropTypes.array };
 
-const Prints = ({ prints, locations, locationFilter, onLocationChange }) => {
+const Prints = ({
+  gridData,
+  locations,
+  locationFilter,
+  onLocationChange,
+}) => {
   const breadcrumbs = ['prints'];
   return (
     <Grid fluid className="container">
@@ -43,13 +74,12 @@ const Prints = ({ prints, locations, locationFilter, onLocationChange }) => {
         handleOnChange={onLocationChange}
       />
       <hr />
-      <PrintsGrid prints={prints} />
+      <PrintsGrid gridData={gridData} />
     </Grid>
   );
 };
 
 Prints.propTypes = {
-  prints: PropTypes.array,
   locations: PropTypes.array,
   locationFilter: PropTypes.string,
   fetching: PropTypes.bool,
