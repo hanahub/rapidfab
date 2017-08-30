@@ -48,28 +48,6 @@ const breadcrumbMap = {
       />
     ),
   },
-  printers: {
-    href: '#/inventory/printers',
-    icon: 'print',
-    message: (
-      <FormattedMessage id="inventory.printers" defaultMessage="Printers" />
-    ),
-  },
-  printerTypes: {
-    href: '#/inventory/printer-types',
-    icon: 'print',
-    message: (
-      <FormattedMessage
-        id="inventory.printerTypes"
-        defaultMessage="inventory.printerTypes"
-      />
-    ),
-  },
-  prints: {
-    href: '#/plan/prints',
-    icon: 'list',
-    message: <FormattedMessage id="plan.prints" defaultMessage="Prints" />,
-  },
   orders: {
     href: '#/plan/orders',
     icon: 'files-o',
@@ -95,15 +73,27 @@ const breadcrumbMap = {
       />
     ),
   },
+  printers: {
+    href: '#/inventory/printers',
+    icon: 'print',
+    message: (
+      <FormattedMessage id="inventory.printers" defaultMessage="Printers" />
+    ),
+  },
   printerTypes: {
     href: '#/inventory/printer-types',
-    icon: 'list',
+    icon: 'print',
     message: (
       <FormattedMessage
-        id="inventory.postProcessors"
-        defaultMessage="Post Processors"
+        id="inventory.printerTypes"
+        defaultMessage="inventory.printerTypes"
       />
     ),
+  },
+  prints: {
+    href: '#/plan/prints',
+    icon: 'list',
+    message: <FormattedMessage id="plan.prints" defaultMessage="Prints" />,
   },
   queues: {
     href: '#/work/queues',
@@ -163,7 +153,11 @@ const BreadcrumbLink = ({ crumb, active }) => {
   );
 };
 
-BreadcrumbLink.propTypes = { crumb: PropTypes.string };
+BreadcrumbLink.defaultProps = { active: false };
+BreadcrumbLink.propTypes = {
+  crumb: PropTypes.string.isRequired,
+  active: PropTypes.bool,
+};
 
 const BreadcrumbNav = ({ breadcrumbs }) =>
   <Breadcrumb>
