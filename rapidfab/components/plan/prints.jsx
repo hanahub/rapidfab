@@ -56,23 +56,25 @@ const PrintsGrid = ({ gridData }) =>
     initialSort="id"
     initialSortAscending={false}
   />;
-PrintsGrid.propTypes = { prints: PropTypes.array };
 
-const Prints = ({
-  gridData,
-  locations,
-  locationFilter,
-  onLocationChange,
-}) => {
+PrintsGrid.propTypes = {
+  gridData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      status: PropTypes.string,
+      name: PropTypes.string,
+      customerName: PropTypes.string,
+      dueDate: PropTypes.date,
+    })
+  ).isRequired,
+};
+
+const Prints = ({ gridData, locations, handleOnChange }) => {
   const breadcrumbs = ['prints'];
   return (
     <Grid fluid className="container">
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
-      <Locations
-        locations={locations}
-        locationFilter={locationFilter}
-        handleOnChange={onLocationChange}
-      />
+      <Locations locations={locations} handleOnChange={handleOnChange} />
       <hr />
       <PrintsGrid gridData={gridData} />
     </Grid>
@@ -80,11 +82,17 @@ const Prints = ({
 };
 
 Prints.propTypes = {
-  locations: PropTypes.array,
-  locationFilter: PropTypes.string,
-  fetching: PropTypes.bool,
-  apiErrors: PropTypes.array,
-  handleOnChange: PropTypes.func,
+  gridData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      status: PropTypes.string,
+      name: PropTypes.string,
+      customerName: PropTypes.string,
+      dueDate: PropTypes.date,
+    })
+  ).isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleOnChange: PropTypes.func.isRequired,
 };
 
 export default Prints;

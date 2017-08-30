@@ -25,7 +25,7 @@ class PrintsContainer extends Component {
         <PrintsComponent
           gridData={gridData}
           locations={locations}
-          onLocationChange={handleOnChange}
+          handleOnChange={handleOnChange}
         />
       </Gatekeeper>
     );
@@ -79,16 +79,25 @@ function mapStateToProps(state) {
   return {
     gridData,
     locations: Selectors.getLocations(state),
-    locationFilter,
     fetching: print.list.fetching || location.list.fetching,
     apiErrors: print.list.errors || location.list.errors,
   };
 }
 PrintsContainer.propTypes = {
-  locations: PropTypes.array,
-  locationFilter: PropTypes.string,
-  fetching: PropTypes.bool,
-  apiErrors: PropTypes.array,
+  apiErrors: PropTypes.array.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  gridData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      status: PropTypes.string,
+      name: PropTypes.string,
+      customerName: PropTypes.string,
+      dueDate: PropTypes.date,
+    })
+  ).isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onInitialize: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintsContainer);
