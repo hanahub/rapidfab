@@ -4,7 +4,7 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 

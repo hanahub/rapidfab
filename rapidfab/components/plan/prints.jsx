@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Grid } from 'react-bootstrap';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Griddle, {
   IdColumn,
   MappedColumn,

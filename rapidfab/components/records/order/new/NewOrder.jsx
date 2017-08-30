@@ -9,7 +9,7 @@ import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import NewOrderForm from './NewOrderForm';
