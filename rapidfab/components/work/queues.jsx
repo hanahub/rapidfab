@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import { MODELER_STATUS_MAP } from 'rapidfab/constants';
 import Locations from 'rapidfab/components/locations';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const EVENT_COLOR_MAP = {
   calculating: '#e4d836',
@@ -122,6 +123,7 @@ class Queues extends Component {
   render() {
     return (
       <div>
+        <BreadcrumbNav breadcrumbs={['queues']} />
         <BS.Row>
           <BS.Col xs={4}>
             {this.props.locations.length > 1

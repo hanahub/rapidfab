@@ -3,13 +3,10 @@ import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
 
-const SaveButtonTitle = () =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
+import Error from 'rapidfab/components/error';
 
 const PostProcessorTypeForm = ({
   fields,
@@ -22,64 +19,31 @@ const PostProcessorTypeForm = ({
 }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.Breadcrumb>
-            <BS.Breadcrumb.Item active>
-              <Fa name="list" />{' '}
-              <FormattedMessage id="inventory" defaultMessage="Inventory" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/post-processor-types">
-              <Fa name="object-group" />{' '}
-              <FormattedMessage
-                id="inventory.postProcessorTypes"
-                defaultMessage="Post Processor Types"
-              />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item>
-              <Fa name="object-group" />
-              {fields.id.value ||
-                <FormattedMessage
-                  id="record.postProcessorType.new"
-                  defaultMessage="New Post Processor Type"
-                />}
-            </BS.Breadcrumb.Item>
-          </BS.Breadcrumb>
-        </BS.Col>
-      </BS.Row>
+      <BreadcrumbNav
+        breadcrumbs={['postProcessorTypes', fields.id.value || 'New']}
+      />
 
-      <BS.Row>
-        <BS.Col xs={6}>
-          <BS.Button href="#/inventory/post-processor-types" bsSize="small">
-            <Fa name="arrow-left" />{' '}
-            <FormattedMessage
-              id="inventory.postProcessorTypes"
-              defaultMessage="Post Processor Types"
-            />
-          </BS.Button>
-        </BS.Col>
-        <BS.Col xs={6}>
-          <BS.ButtonToolbar className="pull-right">
-            <BS.SplitButton
-              id="uxSaveDropdown"
-              type="submit"
-              bsStyle="success"
-              bsSize="small"
-              title={<SaveButtonTitle />}
-              pullRight
+      <div className="clearfix">
+        <BS.ButtonToolbar className="pull-right">
+          <BS.SplitButton
+            id="uxSaveDropdown"
+            type="submit"
+            bsStyle="success"
+            bsSize="small"
+            title={<SaveButtonTitle />}
+            pullRight
+          >
+            <BS.MenuItem
+              eventKey={1}
+              onClick={() => onDelete(fields.uuid.value)}
+              disabled={!fields.id.value}
             >
-              <BS.MenuItem
-                eventKey={1}
-                onClick={() => onDelete(fields.uuid.value)}
-                disabled={!fields.id.value}
-              >
-                <Fa name="ban" />{' '}
-                <FormattedMessage id="button.delete" defaultMessage="Delete" />
-              </BS.MenuItem>
-            </BS.SplitButton>
-          </BS.ButtonToolbar>
-        </BS.Col>
-      </BS.Row>
+              <Fa name="ban" />{' '}
+              <FormattedMessage id="button.delete" defaultMessage="Delete" />
+            </BS.MenuItem>
+          </BS.SplitButton>
+        </BS.ButtonToolbar>
+      </div>
 
       <hr />
 

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Error from 'rapidfab/components/error';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const styles = {
   positionHeader: {
@@ -22,12 +25,6 @@ const styles = {
     width: '50%',
   },
 };
-
-const SaveButtonTitle = () =>
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>;
 
 const OverwriteWarningModal = ({ show, close, duplicate, submit }) =>
   <BS.Modal show={show} onHide={close}>
@@ -544,79 +541,44 @@ class Template extends Component {
 
     return (
       <BS.Grid fluid>
-        <BS.Row>
-          <BS.Col xs={12}>
-            <BS.Breadcrumb>
-              <BS.Breadcrumb.Item active>
-                <Fa name="list" />{' '}
-                <FormattedMessage id="inventory" defaultMessage="Inventory" />
-              </BS.Breadcrumb.Item>
-              <BS.Breadcrumb.Item href="#/inventory/templates">
-                <Fa name="list-ol" />{' '}
-                <FormattedMessage
-                  id="inventory.templates"
-                  defaultMessage="Templates"
-                />
-              </BS.Breadcrumb.Item>
-              <BS.Breadcrumb.Item>
-                <Fa name="list-ol" />{' '}
-                {this.props.fields.id.value ||
-                  <FormattedMessage
-                    id="record.template.new"
-                    defaultMessage="New Template"
-                  />}
-              </BS.Breadcrumb.Item>
-            </BS.Breadcrumb>
-          </BS.Col>
-        </BS.Row>
+        <BreadcrumbNav breadcrumbs={['templates', template.id || 'New']} />
 
         <form onSubmit={this.onSave}>
-          <BS.Row>
-            <BS.Col xs={6}>
-              <BS.Button href="#/inventory/templates" bsSize="small">
-                <Fa name="arrow-left" />{' '}
-                <FormattedMessage
-                  id="inventory.templates"
-                  defaultMessage="Templates"
-                />
-              </BS.Button>
-            </BS.Col>
-            <BS.Col xs={6}>
-              <BS.ButtonToolbar className="pull-right">
-                <BS.SplitButton
-                  type="submit"
-                  id="uxSaveDropdown"
-                  bsStyle="success"
-                  bsSize="small"
-                  title={<SaveButtonTitle />}
-                  pullRight
+          <div className="clearfix">
+            <BS.ButtonToolbar className="pull-right">
+              <BS.SplitButton
+                type="submit"
+                id="uxSaveDropdown"
+                bsStyle="success"
+                bsSize="small"
+                title={<SaveButtonTitle />}
+                pullRight
+              >
+                <BS.MenuItem
+                  eventKey={1}
+                  onClick={() => this.openModal('showDeleteWarning')}
+                  disabled={!this.props.fields.id.value}
                 >
-                  <BS.MenuItem
-                    eventKey={1}
-                    onClick={() => this.openModal('showDeleteWarning')}
-                    disabled={!this.props.fields.id.value}
-                  >
-                    <Fa name="ban" />{' '}
-                    <FormattedMessage
-                      id="button.delete"
-                      defaultMessage="Delete"
-                    />
-                  </BS.MenuItem>
-                  <BS.MenuItem
-                    eventKey={2}
-                    onClick={() => this.onDuplicate()}
-                    disabled={!this.props.fields.id.value}
-                  >
-                    <Fa name="clone" />{' '}
-                    <FormattedMessage
-                      id="button.duplicate"
-                      defaultMessage="Duplicate"
-                    />
-                  </BS.MenuItem>
-                </BS.SplitButton>
-              </BS.ButtonToolbar>
-            </BS.Col>
-          </BS.Row>
+                  <Fa name="ban" />{' '}
+                  <FormattedMessage
+                    id="button.delete"
+                    defaultMessage="Delete"
+                  />
+                </BS.MenuItem>
+                <BS.MenuItem
+                  eventKey={2}
+                  onClick={() => this.onDuplicate()}
+                  disabled={!this.props.fields.id.value}
+                >
+                  <Fa name="clone" />{' '}
+                  <FormattedMessage
+                    id="button.duplicate"
+                    defaultMessage="Duplicate"
+                  />
+                </BS.MenuItem>
+              </BS.SplitButton>
+            </BS.ButtonToolbar>
+          </div>
 
           <hr />
 

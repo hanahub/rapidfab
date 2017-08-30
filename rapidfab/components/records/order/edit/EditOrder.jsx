@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid } from 'react-bootstrap';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 import AddLineItem from './AddLineItem';
 import LineItem from './LineItem';

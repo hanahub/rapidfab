@@ -16,7 +16,7 @@ import {
 import { FormControlSelect } from 'rapidfab/components/formTools';
 
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import FormRow from 'rapidfab/components/FormRow';
 

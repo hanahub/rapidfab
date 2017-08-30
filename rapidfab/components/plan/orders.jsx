@@ -11,6 +11,7 @@ import Grid, {
   MappedColumn,
 } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const Orders = ({
   orders,
@@ -21,20 +22,7 @@ const Orders = ({
   apiErrors,
 }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="road" />{' '}
-            <FormattedMessage id="plan" defaultMessage="Plan" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/plan/orders">
-            <Fa name="files-o" />{' '}
-            <FormattedMessage id="plan.orders" defaultMessage="Orders" />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['orders']} />
 
     <BS.Row>
       <BS.Col xs={8}>

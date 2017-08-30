@@ -2,8 +2,11 @@ import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
+import Loading from 'rapidfab/components/Loading';
 
 export const ContactColumn = ({ rowData, metadata }) => {
   if (!rowData.contact) {
@@ -81,47 +84,24 @@ const LocationsGrid = ({ locations, users }) =>
     ]}
   />;
 
-const Loading = () =>
-  <div style={{ textAlign: 'center' }}>
-    <Fa name="spinner" spin size="2x" />
-  </div>;
-
 const Locations = ({ locations, users, fetching, apiErrors }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="list" />{' '}
-            <FormattedMessage id="inventory" defaultMessage="Inventory" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/locations">
-            <Fa name="map-marker" />{' '}
-            <FormattedMessage
-              id="inventory.locations"
-              defaultMessage="Locations"
-            />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['locations']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
-          bsStyle="primary"
-          bsSize="small"
-          href="#/records/location"
-          className="pull-right"
-        >
-          <Fa name="plus" />{' '}
-          <FormattedMessage
-            id="record.location.add"
-            defaultMessage="Add Location"
-          />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+    <div className="clearfix">
+      <BS.Button
+        bsStyle="primary"
+        bsSize="small"
+        href="#/records/location"
+        className="pull-right"
+      >
+        <Fa name="plus" />{' '}
+        <FormattedMessage
+          id="record.location.add"
+          defaultMessage="Add Location"
+        />
+      </BS.Button>
+    </div>
 
     <hr />
 

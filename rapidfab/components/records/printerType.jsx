@@ -4,7 +4,7 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
@@ -17,9 +17,7 @@ const PrinterTypeForm = ({
 }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav
-        breadcrumbs={['printerTypes', fields.id.value || 'newPrinterType']}
-      />
+      <BreadcrumbNav breadcrumbs={['printerTypes', fields.id.value || 'New']} />
 
       <div className="clearfix">
         <BS.ButtonToolbar className="pull-right">

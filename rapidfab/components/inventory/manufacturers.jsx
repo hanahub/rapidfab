@@ -2,8 +2,11 @@ import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
+import Loading from 'rapidfab/components/Loading';
 
 export const ContactColumn = ({ data }) =>
   <div>
@@ -55,30 +58,9 @@ const ManufacturersGrid = ({ records }) =>
     ]}
   />;
 
-const Loading = () =>
-  <div style={{ textAlign: 'center' }}>
-    <Fa name="spinner" spin size="2x" />
-  </div>;
-
 const Manufacturers = ({ manufacturers, fetching, apiErrors }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="list" />{' '}
-            <FormattedMessage id="inventory" defaultMessage="Inventory" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/manufacturers">
-            <Fa name="industry" />{' '}
-            <FormattedMessage
-              id="inventory.manufacturers"
-              defaultMessage="Manufacturers"
-            />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['manufacturers']} />
 
     <BS.Row>
       <BS.Col xs={12}>

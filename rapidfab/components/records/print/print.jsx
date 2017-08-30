@@ -13,7 +13,7 @@ import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 
-import BreadcrumbNav from 'rapidfab/components/breadcrumbNav';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import TraceabilityReport from './TraceabilityReport';
 import ProcessSteps from './ProcessSteps';
