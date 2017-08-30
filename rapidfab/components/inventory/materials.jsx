@@ -10,6 +10,8 @@ import Grid, {
   ColorColumn,
 } from 'rapidfab/components/grid';
 
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+
 const MaterialsGrid = ({ materials, manufacturers }) =>
   <Grid
     data={materials}
@@ -79,23 +81,7 @@ const Loading = () =>
 
 const Materials = ({ materials, manufacturers, fetching, apiErrors }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="list" />{' '}
-            <FormattedMessage id="inventory" defaultMessage="Inventory" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/materials">
-            <Fa name="object-group" />{' '}
-            <FormattedMessage
-              id="inventory.materials"
-              defaultMessage="Materials"
-            />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['materials']} />
 
     <BS.Row>
       <BS.Col xs={12}>

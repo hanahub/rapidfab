@@ -3,64 +3,35 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const ShippingForm = ({ fields, bureaus, handleSubmit, onDelete, apiErrors }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.Breadcrumb>
-            <BS.Breadcrumb.Item active>
-              <Fa name="list" />{' '}
-              <FormattedMessage id="inventory" defaultMessage="Inventory" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/shipping">
-              <Fa name="truck" />{' '}
-              <FormattedMessage id="work.shipping" defaultMessage="Shipping" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item>
-              <Fa name="truck" />{' '}
-              {fields.id.value ||
-                <FormattedMessage
-                  id="record.shipping.new"
-                  defaultMessage="New Shipping"
-                />}
-            </BS.Breadcrumb.Item>
-          </BS.Breadcrumb>
-        </BS.Col>
-      </BS.Row>
-
-      <BS.Row>
-        <BS.Col xs={6}>
-          <BS.Button href="#/inventory/shipping" bsSize="small">
-            <Fa name="arrow-left" />{' '}
-            <FormattedMessage id="work.shipping" defaultMessage="Shipping" />
-          </BS.Button>
-        </BS.Col>
-        <BS.Col xs={6}>
-          <BS.ButtonToolbar className="pull-right">
-            <BS.SplitButton
-              id="uxSaveDropdown"
-              type="submit"
-              bsStyle="success"
-              bsSize="small"
-              title={<SaveButtonTitle />}
-              pullRight
+      <BreadcrumbNav breadcrumbs={['shipping', fields.id.value || 'New']} />
+      <div className="clearfix">
+        <BS.ButtonToolbar className="pull-right">
+          <BS.SplitButton
+            id="uxSaveDropdown"
+            type="submit"
+            bsStyle="success"
+            bsSize="small"
+            title={<SaveButtonTitle />}
+            pullRight
+          >
+            <BS.MenuItem
+              eventKey={1}
+              onClick={() => onDelete(fields.uuid.value)}
+              disabled={!fields.id.value}
             >
-              <BS.MenuItem
-                eventKey={1}
-                onClick={() => onDelete(fields.uuid.value)}
-                disabled={!fields.id.value}
-              >
-                <Fa name="ban" />{' '}
-                <FormattedMessage id="button.delete" defaultMessage="Delete" />
-              </BS.MenuItem>
-            </BS.SplitButton>
-          </BS.ButtonToolbar>
-        </BS.Col>
-      </BS.Row>
+              <Fa name="ban" />{' '}
+              <FormattedMessage id="button.delete" defaultMessage="Delete" />
+            </BS.MenuItem>
+          </BS.SplitButton>
+        </BS.ButtonToolbar>
+      </div>
 
       <hr />
 

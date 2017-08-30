@@ -11,6 +11,7 @@ import Grid, {
 } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const RunsGrid = ({ runs }) =>
   <Grid
@@ -58,20 +59,7 @@ const Runs = ({
   handleOnChange,
 }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="road" />{' '}
-            <FormattedMessage id="plan" defaultMessage="Plan" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/plan/runs">
-            <Fa name="list" />{' '}
-            <FormattedMessage id="plan.runs" defaultMessage="Runs" />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['runs']} />
     <BS.Row>
       <BS.Col xs={8}>
         {locations.length > 1

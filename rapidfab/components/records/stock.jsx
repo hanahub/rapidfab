@@ -5,57 +5,23 @@ import { FormattedMessage } from 'react-intl';
 
 import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.Breadcrumb>
-            <BS.Breadcrumb.Item active>
-              <Fa name="list" />{' '}
-              <FormattedMessage id="inventory" defaultMessage="Inventory" />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item href="#/inventory/stocks">
-              <Fa name="tags" />{' '}
-              <FormattedMessage
-                id="inventory.materialStocks"
-                defaultMessage="Material Stocks"
-              />
-            </BS.Breadcrumb.Item>
-            <BS.Breadcrumb.Item>
-              <Fa name="tags" />{' '}
-              {fields.id.value ||
-                <FormattedMessage
-                  id="record.materialStock.new"
-                  defaultMessage="New Material Stock"
-                />}
-            </BS.Breadcrumb.Item>
-          </BS.Breadcrumb>
-        </BS.Col>
-      </BS.Row>
+      <BreadcrumbNav breadcrumbs={['materialStocks', fields.id.value || 'New' ]} />
 
-      <BS.Row>
-        <BS.Col xs={6}>
-          <BS.Button href="#/inventory/stocks" bsSize="small">
-            <Fa name="arrow-left" />{' '}
-            <FormattedMessage
-              id="inventory.materialStocks"
-              defaultMessage="Material Stocks"
-            />
-          </BS.Button>
-        </BS.Col>
-        <BS.Col xs={6}>
-          <BS.Button
-            className="pull-right"
-            type="submit"
-            bsStyle="success"
-            bsSize="small"
-          >
-            <SaveButtonTitle />
-          </BS.Button>
-        </BS.Col>
-      </BS.Row>
+      <div className="clearfix">
+        <BS.Button
+          className="pull-right"
+          type="submit"
+          bsStyle="success"
+          bsSize="small"
+        >
+          <SaveButtonTitle />
+        </BS.Button>
+      </div>
 
       <hr />
 

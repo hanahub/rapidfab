@@ -7,6 +7,36 @@ import Fa from 'react-fontawesome';
 const spacing = { marginRight: '0.5rem' };
 
 const breadcrumbMap = {
+  currencies: {
+    href: '#/inventory/conversions',
+    icon: 'exchange',
+    message: <FormattedMessage id="inventory.currencies" defaultMessage="Currencies" />,
+  },
+  locations: {
+    href: '#/inventory/locations',
+    icon: 'map-marker',
+    message: <FormattedMessage id="inventory.locations" defaultMessage="Locations" />,
+  },
+  manufacturers: {
+    href: '#/inventory/manufacturers',
+    icon: 'industry',
+    message: <FormattedMessage id="inventory.manufacturers" defaultMessage="Manufacturers" />,
+  },
+  materials: {
+    href: '#/inventory/materials',
+    icon: 'object-group',
+    message: <FormattedMessage id="inventory.materials" defaultMessage="Materials" />,
+  },
+  materialStocks: {
+    href: '#/inventory/stocks',
+    icon: 'tags',
+    message: <FormattedMessage id="inventory.materialStocks" defaultMessage="Material Stocks" />,
+  },
+  printers: {
+    href: '#/inventory/printers',
+    icon: 'print',
+    message: <FormattedMessage id="inventory.printers" defaultMessage="Printers" />,
+  },
   printerTypes: {
     href: '#/inventory/printer-types',
     icon: 'print',
@@ -22,25 +52,50 @@ const breadcrumbMap = {
     icon: 'list',
     message: <FormattedMessage id="plan.prints" defaultMessage="Prints" />,
   },
-  newPrinterType: {
-    href: '#/records/printer-type',
-    icon: 'print',
-    message: (
-      <FormattedMessage
-        id="record.printerType.new"
-        defaultMessage="New Printer Type"
-      />
-    ),
-  },
   orders: {
     href: '#/plan/orders',
     icon: 'files-o',
     message: <FormattedMessage id="plan.orders" defaultMessage="Orders" />,
   },
+  postProcessors: {
+    href: '#/inventory/post-processors',
+    icon: 'object-ungroup',
+    message: <FormattedMessage id="inventory.postProcessors" defaultMessage="Post Processors" />,
+  },
+  postProcessorTypes: {
+    href: '#/inventory/post-processor-types',
+    icon: 'object-group',
+    message: <FormattedMessage id="inventory.postProcessorTypes" defaultMessage="Post Processor Types" />,
+  },
+  printerTypes: {
+    href: '#/inventory/printer-types',
+    icon: 'list',
+    message: <FormattedMessage id="inventory.postProcessors" defaultMessage="Post Processors" />,
+  },
+  queues: {
+    href: '#/work/queues',
+    icon: 'list',
+    message: <FormattedMessage id="work.queues" defaultMessage="Queues" />,
+  },
   runs: {
     href: '#/plan/runs',
     icon: 'list',
     message: <FormattedMessage id="plan.runs" defaultMessage="Runs" />,
+  },
+  shipping: {
+    href: '#/inventory/shipping',
+    icon: 'truck',
+    message: <FormattedMessage id="inventory.shipping" defaultMessage="Shipping" />,
+  },
+  templates: {
+    href: '#/inventory/templates',
+    icon: 'list-ol',
+    message: <FormattedMessage id="inventory.templates" defaultMessage="Templates" />,
+  },
+  thirdPartyProviders: {
+    href: '#/inventory/third-party-providers',
+    icon: 'map-marker',
+    message: <FormattedMessage id="inventory.thirdPartyProviders" defaultMessage="Third Party Providers" />,
   },
 };
 
@@ -80,6 +135,7 @@ const BreadcrumbNav = ({ breadcrumbs }) =>
     )}
   </Breadcrumb>;
 
+BreadcrumbNav.defaultProps = { breadcrumbs: [] };
 BreadcrumbNav.propTypes = { breadcrumbs: PropTypes.arrayOf(PropTypes.string) };
 
 export default BreadcrumbNav;

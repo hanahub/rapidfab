@@ -6,6 +6,9 @@ import Error from 'rapidfab/components/error';
 import { MODELER_STATUS_MAP } from 'rapidfab/constants';
 import Grid, { IdColumn, StatusColumn } from 'rapidfab/components/grid';
 
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import Loading from 'rapidfab/components/Loading';
+
 const PrintersGrid = ({ printers, locations, printerTypes, modelers }) =>
   <Grid
     data={printers}
@@ -48,11 +51,6 @@ const PrintersGrid = ({ printers, locations, printerTypes, modelers }) =>
     ]}
   />;
 
-const Loading = () =>
-  <div style={{ textAlign: 'center' }}>
-    <Fa name="spinner" spin size="2x" />
-  </div>;
-
 const Printers = ({
   printers,
   locations,
@@ -62,23 +60,7 @@ const Printers = ({
   apiErrors,
 }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="list" />{' '}
-            <FormattedMessage id="inventory" defaultMessage="Inventory" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/printers">
-            <Fa name="print" />{' '}
-            <FormattedMessage
-              id="inventory.printers"
-              defaultMessage="Printers"
-            />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['printers']} />
 
     <BS.Row>
       <BS.Col xs={12}>

@@ -18,7 +18,7 @@ const PrinterTypeForm = ({
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
-        breadcrumbs={['printerTypes', fields.id.value || 'newPrinterType']}
+        breadcrumbs={['printerTypes', fields.id.value || 'New']}
       />
 
       <div className="clearfix">

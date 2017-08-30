@@ -2,8 +2,11 @@ import React from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
+
 
 const PostProcessorsGrid = ({
   postProcessors,
@@ -68,23 +71,7 @@ const PostProcessors = ({
   apiErrors,
 }) =>
   <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Breadcrumb>
-          <BS.Breadcrumb.Item active>
-            <Fa name="list" />{' '}
-            <FormattedMessage id="inventory" defaultMessage="Inventory" />
-          </BS.Breadcrumb.Item>
-          <BS.Breadcrumb.Item href="#/inventory/post-processors">
-            <Fa name="object-ungroup" />{' '}
-            <FormattedMessage
-              id="inventory.postProcessors"
-              defaultMessage="Post Processors"
-            />
-          </BS.Breadcrumb.Item>
-        </BS.Breadcrumb>
-      </BS.Col>
-    </BS.Row>
+    <BreadcrumbNav breadcrumbs={['postProcessors']} />
 
     <BS.Row>
       <BS.Col xs={12}>
