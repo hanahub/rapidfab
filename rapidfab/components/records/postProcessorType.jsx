@@ -19,7 +19,9 @@ const PostProcessorTypeForm = ({
 }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav breadcrumbs={['postProcessorTypes', fields.id.value || 'New']} />
+      <BreadcrumbNav
+        breadcrumbs={['postProcessorTypes', fields.id.value || 'New']}
+      />
 
       <div className="clearfix">
         <BS.ButtonToolbar className="pull-right">

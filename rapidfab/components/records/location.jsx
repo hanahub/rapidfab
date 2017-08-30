@@ -17,7 +17,7 @@ const LocationForm = ({
 }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav breadcrumbs={['locations', fields.id.value || 'New' ]} />
+      <BreadcrumbNav breadcrumbs={['locations', fields.id.value || 'New']} />
 
       <div className="clearfix">
         <BS.ButtonToolbar className="pull-right">

@@ -36,7 +36,9 @@ const ThirdPartyProvider = ({
 }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav breadcrumbs={['thirdPartyProviders', fields.id.value || 'New' ]} />
+      <BreadcrumbNav
+        breadcrumbs={['thirdPartyProviders', fields.id.value || 'New']}
+      />
       <div className="clearfix">
         <BS.ButtonToolbar className="pull-right">
           <BS.SplitButton

@@ -10,7 +10,9 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav breadcrumbs={['materialStocks', fields.id.value || 'New' ]} />
+      <BreadcrumbNav
+        breadcrumbs={['materialStocks', fields.id.value || 'New']}
+      />
 
       <div className="clearfix">
         <BS.Button

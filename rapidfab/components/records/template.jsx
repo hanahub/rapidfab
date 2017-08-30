@@ -541,7 +541,7 @@ class Template extends Component {
 
     return (
       <BS.Grid fluid>
-        <BreadcrumbNav breadcrumbs={['templates', template.id || 'New' ]} />
+        <BreadcrumbNav breadcrumbs={['templates', template.id || 'New']} />
 
         <form onSubmit={this.onSave}>
           <div className="clearfix">

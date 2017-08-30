@@ -7,7 +7,6 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 
-
 const PostProcessorsGrid = ({
   postProcessors,
   postProcessorTypes,
