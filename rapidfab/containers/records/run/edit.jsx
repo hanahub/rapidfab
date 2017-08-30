@@ -100,10 +100,10 @@ function mapStateToProps(state, props) {
   const gridData = prints.map(print => {
     if (orders && prints) {
       const printOrder = orders.find(order => order.uri === print.order);
-      const { id, order } = print;
+      const { id, order, uuid } = print;
       const dueDate = printOrder.due_date;
       const customerName = printOrder.customer_name;
-      return { id, order, dueDate, customerName };
+      return { id, order, dueDate, customerName, uuid };
     }
     return {};
   });
