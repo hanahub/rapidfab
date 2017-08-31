@@ -64,7 +64,6 @@ class AddUser extends Component {
                   name="userEmail"
                   onChange={this.handleChange}
                   placeholder="Enter user email"
-                  onChange={this.handleChange}
                   required
                 />
                 <br />
@@ -74,7 +73,6 @@ class AddUser extends Component {
                   name="userName"
                   onChange={this.handleChange}
                   placeholder="Enter user name"
-                  onChange={this.handleChange}
                   required
                 />
                 <br />

@@ -67,7 +67,6 @@ class NewFeature extends Component {
                   name="featureName"
                   onChange={this.handleChange}
                   placeholder="Enter name"
-                  onChange={this.handleChange}
                   required
                 />
                 <br />
@@ -77,7 +76,6 @@ class NewFeature extends Component {
                   name="featureDescription"
                   onChange={this.handleChange}
                   placeholder="Enter description"
-                  onChange={this.handleChange}
                   required
                 />
                 <br />
@@ -87,7 +85,6 @@ class NewFeature extends Component {
                   name="featureBureau"
                   onChange={this.handleChange}
                   placeholder="Enter a bureau"
-                  onChange={this.handleChange}
                 />
                 <br />
                 <BS.ControlLabel>Enabled: </BS.ControlLabel>
