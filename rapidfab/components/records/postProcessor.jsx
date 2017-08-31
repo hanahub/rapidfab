@@ -82,7 +82,7 @@ const PostProcessorForm = ({
               <option key="placeholder" value="" disabled>
                 Select a Location
               </option>
-              {_.map(locations, location =>
+              {locations.map(location =>
                 <option key={location.uri} value={location.uri}>
                   {location.name}
                 </option>
@@ -105,7 +105,7 @@ const PostProcessorForm = ({
               <option key="placeholder" value="" disabled>
                 Select a Post Processor Type
               </option>
-              {_.map(postProcessorTypes, postProcessorType =>
+              {postProcessorTypes.map(postProcessorType =>
                 <option
                   key={postProcessorType.uri}
                   value={postProcessorType.uri}

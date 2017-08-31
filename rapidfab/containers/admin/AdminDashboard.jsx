@@ -69,9 +69,8 @@ function mapDispatchToProps(dispatch) {
             response.json.resources.length
           ) {
             // for some reason we get back all memberships, not just for the user we are searching for
-            const membership = _.find(
-              response.json.resources,
-              resource => resource.user === payload.userURI
+            const membership = response.json.resources.find( resource =>
+              resource.user === payload.userURI
             );
             const uuid = extractUuid(membership.uri);
             dispatch(

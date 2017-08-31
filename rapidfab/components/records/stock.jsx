@@ -49,7 +49,7 @@ const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
               <option key="placeholder" value="" selected disabled>
                 Select a Material
               </option>
-              {_.map(materials, material =>
+              {materials.map(material =>
                 <option
                   key={material.uri}
                   value={material.uri}
@@ -72,7 +72,7 @@ const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
               <option key="placeholder" value="" selected disabled>
                 Select a Location
               </option>
-              {_.map(locations, location =>
+              {locations.map(location =>
                 <option
                   key={location.uri}
                   value={location.uri}

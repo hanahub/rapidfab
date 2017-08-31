@@ -125,10 +125,10 @@ function mapStateToProps(state) {
     permissions,
     bureaus,
     fetching,
-    errors: _.concat(
-      state.ui.pao.sessions.get.errors,
-      state.ui.wyatt.bureau.list.errors
-    ),
+    errors: [
+      ...state.ui.pao.sessions.get.errors,
+      ...state.ui.wyatt.bureau.list.errors
+    ],
   };
   return {
     session,

@@ -71,7 +71,7 @@ const PrinterForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Printer Type
               </option>
-              {_.map(printerTypes, printerType =>
+              {printerTypes.map(printerType =>
                 <option
                   key={printerType.uri}
                   value={printerType.uri}
@@ -94,7 +94,7 @@ const PrinterForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Location
               </option>
-              {_.map(locations, location =>
+              {locations.map(location =>
                 <option
                   key={location.uri}
                   value={location.uri}
