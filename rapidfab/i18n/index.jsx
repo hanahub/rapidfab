@@ -44,7 +44,7 @@ FormattedDuration.propTypes = {
 };
 
 export const FormattedCost = ({ currency, value }) =>
-  <FormattedNumber style="currency" currency={currency} value={value} />;
+  <FormattedNumber currency={currency} value={value} />;
 
 FormattedCost.propTypes = {
   value: PropTypes.number.isRequired,
