@@ -127,7 +127,7 @@ function mapStateToProps(state) {
     fetching,
     errors: [
       ...state.ui.pao.sessions.get.errors,
-      ...state.ui.wyatt.bureau.list.errors
+      ...state.ui.wyatt.bureau.list.errors,
     ],
   };
   return {
