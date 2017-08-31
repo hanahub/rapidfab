@@ -12,7 +12,7 @@ pipeline {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     sh 'docker build -t authentise/mes:$GITDESCRIBE .'
-                    sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $(pwd):/src -v /var/lib/jenkins/.aws:/root/.aws -d authentise/mes:$GITDESCRIBE sleep infinity'
+                    sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $(pwd):/src -v $HOME/.aws:/root/.aws -d authentise/mes:$GITDESCRIBE sleep infinity'
                     sh 'docker exec rapidfab npm install'
                     sh 'docker exec rapidfab npm prune'
                     sh 'docker exec rapidfab npm run build:clean'
