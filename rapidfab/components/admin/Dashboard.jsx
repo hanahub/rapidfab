@@ -34,10 +34,6 @@ class Dashboard extends Component {
     return Permissions.has('wyatt', 'feature.all', this.props);
   }
 
-  openUserModal(user) {
-    console.log(user);
-  }
-
   render() {
     const { features, users, locations } = this.props;
     const FeatureTable = () => {

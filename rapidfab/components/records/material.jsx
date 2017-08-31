@@ -81,7 +81,7 @@ const MaterialForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Manufacturer
               </option>
-              {_.map(manufacturers, manufacturer =>
+              {manufacturers.map(manufacturer =>
                 <option
                   key={manufacturer.uri}
                   value={manufacturer.uri}
@@ -145,7 +145,7 @@ const MaterialForm = ({
               placeholder="bureau"
               {...fields.bureau}
             >
-              {_.map(bureaus, bureau =>
+              {bureaus.map(bureau =>
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>

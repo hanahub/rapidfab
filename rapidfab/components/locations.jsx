@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import HomeComponent from 'rapidfab/components/home';

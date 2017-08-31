@@ -69,8 +69,7 @@ function mapDispatchToProps(dispatch) {
             response.json.resources.length
           ) {
             // for some reason we get back all memberships, not just for the user we are searching for
-            const membership = _.find(
-              response.json.resources,
+            const membership = response.json.resources.find(
               resource => resource.user === payload.userURI
             );
             const uuid = extractUuid(membership.uri);
@@ -83,9 +82,11 @@ function mapDispatchToProps(dispatch) {
               redirect();
             });
           } else {
+            /* eslint-disable no-console */
             console.error(
               'This is the wrong bureau. Make sure you impersonate the manager of the bureau!'
             );
+            /* eslint-enable no-console */
           }
         });
       }

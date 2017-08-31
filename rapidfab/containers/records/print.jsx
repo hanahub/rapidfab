@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -95,7 +96,7 @@ function mapDispatchToProps(dispatch) {
         ];
 
         _.chunk(uris, 10).map(chunk => {
-          dispatch(Actions.Api.wyatt.event.list({ reference: uris }));
+          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }));
         });
       });
     },

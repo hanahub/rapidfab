@@ -23,7 +23,7 @@ class Queues extends Component {
   }
 
   fetchResources(callback) {
-    const machines = _.map(this.props.machines, machine => {
+    const machines = this.props.machines.map(machine => {
       const type = machine.printer_type ? 'printer' : 'post-processor';
       return {
         id: machine.uri,
@@ -37,7 +37,7 @@ class Queues extends Component {
   }
 
   fetchEvents(start, end, timezone, callback) {
-    let events = _.map(this.props.runs, run => ({
+    let events = this.props.runs.map(run => ({
       id: run.uri,
       resourceId: run.printer || run.post_processor,
       title: run.id,
@@ -47,10 +47,7 @@ class Queues extends Component {
       backgroundColor: EVENT_COLOR_MAP[run.status],
       borderColor: EVENT_COLOR_MAP[run.status],
     }));
-    events = _.filter(
-      events,
-      event => event.start != null && event.end != null
-    );
+    events = events.filter(event => event.start != null && event.end != null);
     callback(events);
   }
 
@@ -93,10 +90,6 @@ class Queues extends Component {
         cell.wrapInner(`<a href="${resourceObj.url}">`);
         if (resourceObj.type === 'printer') {
           let status = MODELER_STATUS_MAP[resourceObj.status];
-          if (!status) {
-            status = MODELER_STATUS_MAP.unknown;
-            console.error('Unknown status for printer', resourceObj.status);
-          }
           cell.prepend(
             `<span class="dot ${status.status}" title="${status.message}" /> `
           );

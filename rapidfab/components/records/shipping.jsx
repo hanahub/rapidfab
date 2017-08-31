@@ -94,7 +94,7 @@ const ShippingForm = ({ fields, bureaus, handleSubmit, onDelete, apiErrors }) =>
               placeholder="bureau"
               {...fields.bureau}
             >
-              {_.map(bureaus, bureau =>
+              {bureaus.map(bureau =>
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>

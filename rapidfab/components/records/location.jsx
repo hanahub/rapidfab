@@ -81,7 +81,7 @@ const LocationForm = ({
               <option key="placeholder" value="" disabled>
                 Select a Contact
               </option>
-              {_.map(users, user =>
+              {users.map(user =>
                 <option key={user.uri} value={user.uri}>
                   {user.username}
                 </option>
@@ -98,7 +98,7 @@ const LocationForm = ({
               placeholder="bureau"
               {...fields.bureau}
             >
-              {_.map(bureaus, bureau =>
+              {bureaus.map(bureau =>
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>

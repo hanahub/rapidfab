@@ -17,8 +17,6 @@ const mapStateToProps = state => ({
 });
 
 class Navbar extends Component {
-  handleImpersonateClick() {}
-
   shouldShowImpersonate() {
     return Permissions.has('pao', 'impersonation', this.props.session);
   }
@@ -245,7 +243,7 @@ class Navbar extends Component {
                 <Fa name="user" />{' '}
                 <FormattedMessage id="myProfile" defaultMessage="My Profile" />
               </BS.MenuItem>
-              <BS.MenuItem eventKey={1.2} onClick={this.handleImpersonateClick}>
+              <BS.MenuItem eventKey={1.2}>
                 <ShowMaybe showIf={this.shouldShowImpersonate()}>
                   <Fa name="user-secret" />{' '}
                   <FormattedMessage
