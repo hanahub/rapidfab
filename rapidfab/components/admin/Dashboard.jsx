@@ -35,7 +35,6 @@ class Dashboard extends Component {
   }
 
   openUserModal(user) {
-    console.log(user);
   }
 
   render() {

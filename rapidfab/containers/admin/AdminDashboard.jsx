@@ -83,9 +83,11 @@ function mapDispatchToProps(dispatch) {
               redirect();
             });
           } else {
+            /* eslint-disable no-console */
             console.error(
               'This is the wrong bureau. Make sure you impersonate the manager of the bureau!'
             );
+            /* eslint-enable no-console */
           }
         });
       }

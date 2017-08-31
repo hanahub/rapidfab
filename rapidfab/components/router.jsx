@@ -30,12 +30,14 @@ class Router extends Component {
       const match = pattern.exec(hash);
       if (match) {
         if (toRender) {
+          /* eslint-disable no-console */
           console.warn(
             'Matched more than one route. First route was',
             toRender.path,
             ' this match is ',
             path
           );
+          /* eslint-enable no-console */
         }
         const route = {};
         for (let i = 0; i < keys.length; i++) {

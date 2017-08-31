@@ -93,10 +93,6 @@ class Queues extends Component {
         cell.wrapInner(`<a href="${resourceObj.url}">`);
         if (resourceObj.type === 'printer') {
           let status = MODELER_STATUS_MAP[resourceObj.status];
-          if (!status) {
-            status = MODELER_STATUS_MAP.unknown;
-            console.error('Unknown status for printer', resourceObj.status);
-          }
           cell.prepend(
             `<span class="dot ${status.status}" title="${status.message}" /> `
           );
