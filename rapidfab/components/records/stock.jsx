@@ -1,6 +1,5 @@
 import React from 'react';
 import * as BS from 'react-bootstrap';
-import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import Error from 'rapidfab/components/error';

@@ -10,7 +10,6 @@ import Error from 'rapidfab/components/error';
 
 const PostProcessorTypeForm = ({
   fields,
-  bureaus,
   handleSubmit,
   onDelete,
   manufacturers,
@@ -147,7 +146,6 @@ const PostProcessorTypeForm = ({
 
 PostProcessorTypeForm.propTypes = {
   fields: PropTypes.object,
-  bureaus: PropTypes.array,
   handleSubmit: PropTypes.func,
   onDelete: PropTypes.func,
   manufacturers: PropTypes.array,

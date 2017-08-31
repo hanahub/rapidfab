@@ -10,7 +10,6 @@ import {
   ControlLabel,
   Form,
   FormControl,
-  FormGroup,
   Panel,
 } from 'react-bootstrap';
 
