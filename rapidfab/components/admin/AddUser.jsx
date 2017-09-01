@@ -86,11 +86,11 @@ class AddUser extends Component {
                 <br />
                 <BS.ControlLabel>Location:</BS.ControlLabel>
                 <BS.FormControl componentClass="select">
-                  {_.map(locations, location =>
+                  {_.map(locations, location => (
                     <option key={location.uuid} value={location.uri}>
                       {location.name}
                     </option>
-                  )}
+                  ))}
                 </BS.FormControl>
               </BS.FormGroup>
             </BS.Modal.Body>

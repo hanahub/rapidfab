@@ -48,11 +48,7 @@ const EventName = ({ name }) => {
   if (EVENT_KEY_MAPPING[name]) {
     return EVENT_KEY_MAPPING[name];
   }
-  return (
-    <span>
-      {name}
-    </span>
-  );
+  return <span>{name}</span>;
 };
 
 const EventUser = connect((state, ownProps) => {
@@ -62,11 +58,7 @@ const EventUser = connect((state, ownProps) => {
   return { user };
 })(({ user }) => {
   const href = user ? `#/records/user/${user.uuid}` : '';
-  return (
-    <a href={href}>
-      {' '}{user.name}{' '}
-    </a>
-  );
+  return <a href={href}> {user.name} </a>;
 });
 
 const ResourceValue = connect((state, ownProps) => {
@@ -84,17 +76,9 @@ const ResourceValue = connect((state, ownProps) => {
     }
     const resourceType = extractResourceType(resource.uri);
     const href = `#/records/${resourceType}/${resource.uuid}`;
-    return (
-      <a href={href}>
-        {name}
-      </a>
-    );
+    return <a href={href}>{name}</a>;
   }
-  return (
-    <span>
-      {uri}
-    </span>
-  );
+  return <span>{uri}</span>;
 });
 
 const EventValue = ({ value }) => {
@@ -103,23 +87,15 @@ const EventValue = ({ value }) => {
   } else if (isResourceValue(value)) {
     return <ResourceValue uri={value} />;
   }
-  return (
-    <span>
-      {' '}{VALUE_MAPPING[value] ? VALUE_MAPPING[value] : value}{' '}
-    </span>
-  );
+  return <span> {VALUE_MAPPING[value] ? VALUE_MAPPING[value] : value} </span>;
 };
 
 const EventReference = ({ reference }) => {
   const resourceType = extractResourceType(reference);
-  return (
-    <span>
-      {' '}{REFERENCE_MAPPING[resourceType]}{' '}
-    </span>
-  );
+  return <span> {REFERENCE_MAPPING[resourceType]} </span>;
 };
 
-const ExpandedContent = ({ event }) =>
+const ExpandedContent = ({ event }) => (
   <Row>
     <Col xs={1} />
     <Col xs={8}>
@@ -133,7 +109,8 @@ const ExpandedContent = ({ event }) =>
       <br />
       {event.user ? <EventUser userURI={event.user} /> : null}
     </Col>
-  </Row>;
+  </Row>
+);
 
 class Event extends Component {
   constructor(props) {

@@ -60,11 +60,7 @@ class Router extends Component {
         </div>
       );
     }
-    return (
-      <div className="router">
-        {toRender.element}
-      </div>
-    );
+    return <div className="router">{toRender.element}</div>;
   }
 }
 

@@ -24,11 +24,7 @@ export const ContactColumn = ({ rowData, metadata }) => {
   if (!record) {
     return <Fa name="spinner" spin />;
   }
-  return (
-    <span>
-      {record.username}
-    </span>
-  );
+  return <span>{record.username}</span>;
 };
 
 export const PhoneColumn = ({ rowData }) => {
@@ -39,14 +35,10 @@ export const PhoneColumn = ({ rowData }) => {
       </span>
     );
   }
-  return (
-    <span>
-      {rowData.phone}
-    </span>
-  );
+  return <span>{rowData.phone}</span>;
 };
 
-const LocationsGrid = ({ locations, users }) =>
+const LocationsGrid = ({ locations, users }) => (
   <Grid
     data={locations}
     columns={['id', 'name', 'address', 'contact', 'phone']}
@@ -83,9 +75,10 @@ const LocationsGrid = ({ locations, users }) =>
         records: users,
       },
     ]}
-  />;
+  />
+);
 
-const Locations = ({ locations, users, fetching, apiErrors }) =>
+const Locations = ({ locations, users, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['locations']} />
 
@@ -114,11 +107,14 @@ const Locations = ({ locations, users, fetching, apiErrors }) =>
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <LocationsGrid locations={locations} users={users} />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <LocationsGrid locations={locations} users={users} />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Locations;

@@ -13,7 +13,7 @@ import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
-const RunsGrid = ({ runs }) =>
+const RunsGrid = ({ runs }) => (
   <Grid
     data={runs}
     columns={['id', 'operation', 'status', 'created']}
@@ -48,7 +48,8 @@ const RunsGrid = ({ runs }) =>
     ]}
     initialSort="created"
     initialSortAscending={false}
-  />;
+  />
+);
 
 const Runs = ({
   locationFilter,
@@ -57,18 +58,20 @@ const Runs = ({
   fetching,
   apiErrors,
   handleOnChange,
-}) =>
+}) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['runs']} />
     <BS.Row>
       <BS.Col xs={8}>
-        {locations.length > 1
-          ? <Locations
-              locations={locations}
-              handleOnChange={handleOnChange}
-              locationFilter={locationFilter}
-            />
-          : <div />}
+        {locations.length > 1 ? (
+          <Locations
+            locations={locations}
+            handleOnChange={handleOnChange}
+            locationFilter={locationFilter}
+          />
+        ) : (
+          <div />
+        )}
       </BS.Col>
       <BS.Col xs={4}>
         <BS.Button
@@ -96,6 +99,7 @@ const Runs = ({
         {fetching ? <Loading /> : <RunsGrid runs={runs} />}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Runs;

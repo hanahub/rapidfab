@@ -34,11 +34,7 @@ const SessionProvider = ({
       return <BureauError bureaus={bureaus} />;
     }
 
-    return (
-      <div>
-        {children}
-      </div>
-    );
+    return <div>{children}</div>;
   }
 
   return <div />;

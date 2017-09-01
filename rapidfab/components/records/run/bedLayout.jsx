@@ -47,7 +47,7 @@ const staticProps = [
   },
 ];
 
-const Header = () =>
+const Header = () => (
   <BS.Row>
     <BS.Col xs={6}>Bed Layout</BS.Col>
     <BS.Col xs={6}>
@@ -57,7 +57,8 @@ const Header = () =>
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
-  </BS.Row>;
+  </BS.Row>
+);
 
 const Item = ({ index }) => {
   const style = _.assign({}, itemDefaultStyle, staticProps[index]);
@@ -65,13 +66,14 @@ const Item = ({ index }) => {
   return <BS.Image src={src} style={style} />;
 };
 
-const BedLayout = ({ prints }) =>
+const BedLayout = ({ prints }) => (
   <BS.Panel header={<Header />}>
     <div style={layoutStyle}>
-      {_.map(_.values(prints), (print, index) =>
+      {_.map(_.values(prints), (print, index) => (
         <Item print={print} index={index} />
-      )}
+      ))}
     </div>
-  </BS.Panel>;
+  </BS.Panel>
+);
 
 export default BedLayout;

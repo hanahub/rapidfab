@@ -14,7 +14,7 @@ const PrinterForm = ({
   printerTypes,
   locations,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['printers', fields.id.value || 'New']} />
@@ -71,12 +71,12 @@ const PrinterForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Printer Type
               </option>
-              {printerTypes.map(printerType =>
+              {printerTypes.map(printerType => (
                 <option
                   key={printerType.uri}
                   value={printerType.uri}
                 >{`${printerType.id} - ${printerType.name}`}</option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxLocation">
@@ -94,12 +94,12 @@ const PrinterForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Location
               </option>
-              {locations.map(location =>
+              {locations.map(location => (
                 <option
                   key={location.uri}
                   value={location.uri}
                 >{`${location.id} - ${location.name}`}</option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxModeler">
@@ -111,6 +111,7 @@ const PrinterForm = ({
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default PrinterForm;

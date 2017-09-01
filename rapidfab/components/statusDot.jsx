@@ -6,11 +6,7 @@ const StatusDot = ({ status, message = null }) => {
   // message: the string to display on hover
 
   if (message) {
-    const tooltip = (
-      <BS.Tooltip id="tooltip">
-        {message}
-      </BS.Tooltip>
-    );
+    const tooltip = <BS.Tooltip id="tooltip">{message}</BS.Tooltip>;
     return (
       <BS.OverlayTrigger placement="right" overlay={tooltip}>
         <div className={`dot ${status}`} />

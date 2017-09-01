@@ -41,9 +41,7 @@ const PrintSummary = ({ print, processSteps, order, lineItem, model }) => {
                   </span>
                 </div>
                 <div className="pull-right">
-                  <a href={`#/records/order/${uuid}`}>
-                    {name}
-                  </a>
+                  <a href={`#/records/order/${uuid}`}>{name}</a>
                 </div>
               </div>
             </ListGroupItem>
@@ -75,15 +73,12 @@ const PrintSummary = ({ print, processSteps, order, lineItem, model }) => {
   );
 };
 
-const SpaceBetweenText = ({ left, right }) =>
+const SpaceBetweenText = ({ left, right }) => (
   <div className="clearfix">
-    <div className="pull-left">
-      {left}
-    </div>
-    <div className="pull-right">
-      {right}
-    </div>
-  </div>;
+    <div className="pull-left">{left}</div>
+    <div className="pull-right">{right}</div>
+  </div>
+);
 
 const PrintComponent = ({
   print,

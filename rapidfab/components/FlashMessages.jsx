@@ -14,13 +14,11 @@ class FlashMessages extends Component {
     const { errors } = this.props;
     return (
       <div>
-        {errors.map((error, index) =>
+        {errors.map((error, index) => (
           <Alert bsStyle="danger" className="error-alert" key={index}>
-            <p>
-              {error.title}
-            </p>
+            <p>{error.title}</p>
           </Alert>
-        )}
+        ))}
       </div>
     );
   }

@@ -9,7 +9,7 @@ import Grid, { IdColumn, StatusColumn } from 'rapidfab/components/grid';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Loading from 'rapidfab/components/Loading';
 
-const PrintersGrid = ({ printers, locations, printerTypes, modelers }) =>
+const PrintersGrid = ({ printers, locations, printerTypes, modelers }) => (
   <Grid
     data={printers}
     columns={['id', 'modeler', 'name', 'location', 'printer_type']}
@@ -49,7 +49,8 @@ const PrintersGrid = ({ printers, locations, printerTypes, modelers }) =>
         customComponent: StatusColumn('modeler', modelers, MODELER_STATUS_MAP),
       },
     ]}
-  />;
+  />
+);
 
 const Printers = ({
   printers,
@@ -58,7 +59,7 @@ const Printers = ({
   modelers,
   fetching,
   apiErrors,
-}) =>
+}) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['printers']} />
 
@@ -89,16 +90,19 @@ const Printers = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <PrintersGrid
-              printers={printers}
-              locations={locations}
-              printerTypes={printerTypes}
-              modelers={modelers}
-            />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <PrintersGrid
+            printers={printers}
+            locations={locations}
+            printerTypes={printerTypes}
+            modelers={modelers}
+          />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Printers;

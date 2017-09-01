@@ -23,25 +23,17 @@ class FormModal extends Component {
       <BS.Form onSubmit={this.handleSubmit}>
         <BS.Modal show={showModal} backdrop="static" onHide={onClose}>
           <BS.ModalHeader closeButton>
-            <BS.Modal.Title>
-              {title}
-            </BS.Modal.Title>
+            <BS.Modal.Title>{title}</BS.Modal.Title>
           </BS.ModalHeader>
-          <BS.Modal.Body>
-            {this.props.children}
-          </BS.Modal.Body>
+          <BS.Modal.Body>{this.props.children}</BS.Modal.Body>
           <BS.Modal.Footer>
             <BS.Row>
               <BS.Col xs={6}>
-                {data
-                  ? <BS.Button
-                      onClick={this.handleDelete}
-                      bsStyle="danger"
-                      block
-                    >
-                      Delete
-                    </BS.Button>
-                  : null}
+                {data ? (
+                  <BS.Button onClick={this.handleDelete} bsStyle="danger" block>
+                    Delete
+                  </BS.Button>
+                ) : null}
               </BS.Col>
               <BS.Col xs={6}>
                 <BS.Button bsStyle="success" type="submit" block>

@@ -22,13 +22,11 @@ const BureauError = ({ bureaus }) => {
           <BS.Col xs={12}>
             <h1>Bureau Error!</h1>
             <FormattedMessage id={id} defaultMessage={message} />
-            {_.map(bureaus, bureau =>
+            {_.map(bureaus, bureau => (
               <p>
-                <strong>
-                  {bureau.name}
-                </strong>
+                <strong>{bureau.name}</strong>
               </p>
-            )}
+            ))}
             <FormattedMessage
               id="bureauError.docsMessage"
               defaultMessage="You can find the docs for this process"

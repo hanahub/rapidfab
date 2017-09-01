@@ -131,11 +131,12 @@ const breadcrumbMap = {
   },
 };
 
-const HomeLink = () =>
+const HomeLink = () => (
   <Breadcrumb.Item href="/#/">
     <Fa name="home" style={spacing} />
     <FormattedMessage id="home" defaultMessage="Home" />
-  </Breadcrumb.Item>;
+  </Breadcrumb.Item>
+);
 
 const BreadcrumbLink = ({ crumb, active }) => {
   if (crumb in breadcrumbMap) {
@@ -146,11 +147,7 @@ const BreadcrumbLink = ({ crumb, active }) => {
       </Breadcrumb.Item>
     );
   }
-  return (
-    <Breadcrumb.Item active={active}>
-      {crumb}
-    </Breadcrumb.Item>
-  );
+  return <Breadcrumb.Item active={active}>{crumb}</Breadcrumb.Item>;
 };
 
 BreadcrumbLink.defaultProps = { active: false };
@@ -159,17 +156,18 @@ BreadcrumbLink.propTypes = {
   active: PropTypes.bool,
 };
 
-const BreadcrumbNav = ({ breadcrumbs }) =>
+const BreadcrumbNav = ({ breadcrumbs }) => (
   <Breadcrumb>
     <HomeLink />
-    {breadcrumbs.map((crumb, index) =>
+    {breadcrumbs.map((crumb, index) => (
       <BreadcrumbLink
         crumb={crumb}
         key={crumb}
         active={index === breadcrumbs.length - 1}
       />
-    )}
-  </Breadcrumb>;
+    ))}
+  </Breadcrumb>
+);
 
 BreadcrumbNav.defaultProps = { breadcrumbs: [] };
 BreadcrumbNav.propTypes = { breadcrumbs: PropTypes.arrayOf(PropTypes.string) };

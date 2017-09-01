@@ -15,7 +15,7 @@ const ConversionForm = ({
   handleSubmit,
   onDelete,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['currencies', fields.id.value || 'New']} />
@@ -69,11 +69,11 @@ const ConversionForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a currency
               </option>
-              {_.map(Currencies, currency =>
+              {_.map(Currencies, currency => (
                 <option key={currency} value={currency}>
                   {currency}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
 
@@ -86,16 +86,17 @@ const ConversionForm = ({
               placeholder="bureau"
               {...fields.bureau}
             >
-              {_.map(bureaus, bureau =>
+              {_.map(bureaus, bureau => (
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default ConversionForm;

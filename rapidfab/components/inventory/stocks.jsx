@@ -11,7 +11,7 @@ import Grid, {
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
-const StocksGrid = ({ stocks, materials, locations }) =>
+const StocksGrid = ({ stocks, materials, locations }) => (
   <Grid
     data={stocks}
     columns={['id', 'material', 'location', 'status', 'quantity', 'units']}
@@ -58,14 +58,16 @@ const StocksGrid = ({ stocks, materials, locations }) =>
         ),
       },
     ]}
-  />;
+  />
+);
 
-const Loading = () =>
+const Loading = () => (
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>;
+  </div>
+);
 
-const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) =>
+const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['materialStocks']} />
 
@@ -96,15 +98,18 @@ const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) =>
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <StocksGrid
-              stocks={stocks}
-              materials={materials}
-              locations={locations}
-            />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <StocksGrid
+            stocks={stocks}
+            materials={materials}
+            locations={locations}
+          />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Stocks;

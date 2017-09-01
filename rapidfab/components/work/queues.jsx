@@ -89,7 +89,7 @@ class Queues extends Component {
         const cell = labelTds.find('.fc-cell-text');
         cell.wrapInner(`<a href="${resourceObj.url}">`);
         if (resourceObj.type === 'printer') {
-          let status = MODELER_STATUS_MAP[resourceObj.status];
+          const status = MODELER_STATUS_MAP[resourceObj.status];
           cell.prepend(
             `<span class="dot ${status.status}" title="${status.message}" /> `
           );
@@ -119,13 +119,15 @@ class Queues extends Component {
         <BreadcrumbNav breadcrumbs={['queues']} />
         <BS.Row>
           <BS.Col xs={4}>
-            {this.props.locations.length > 1
-              ? <Locations
-                  locations={this.props.locations}
-                  handleOnChange={this.props.handleOnChange}
-                  locationFilter={this.props.locationFilter}
-                />
-              : <div />}
+            {this.props.locations.length > 1 ? (
+              <Locations
+                locations={this.props.locations}
+                handleOnChange={this.props.handleOnChange}
+                locationFilter={this.props.locationFilter}
+              />
+            ) : (
+              <div />
+            )}
           </BS.Col>
         </BS.Row>
         <div id="scheduler" />

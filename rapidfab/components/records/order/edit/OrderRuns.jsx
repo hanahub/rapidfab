@@ -39,7 +39,7 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const RunItem = ({ run }) =>
+const RunItem = ({ run }) => (
   <ListGroupItem>
     <Row>
       <Col xs={6}>
@@ -49,11 +49,10 @@ const RunItem = ({ run }) =>
           </abbr>
         </a>
       </Col>
-      <Col xs={6}>
-        {statusMapping[run.status]}
-      </Col>
+      <Col xs={6}>{statusMapping[run.status]}</Col>
     </Row>
-  </ListGroupItem>;
+  </ListGroupItem>
+);
 
 class OrderRuns extends Component {
   componentDidMount() {

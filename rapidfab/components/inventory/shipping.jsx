@@ -8,7 +8,7 @@ import Grid, { IdColumn, CapitalizeColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-const ShippingsGrid = ({ records }) =>
+const ShippingsGrid = ({ records }) => (
   <Grid
     data={records}
     columns={['id', 'name', 'region', 'cost']}
@@ -35,9 +35,10 @@ const ShippingsGrid = ({ records }) =>
         displayName: <FormattedMessage id="field.cost" defaultMessage="Cost" />,
       },
     ]}
-  />;
+  />
+);
 
-const Shippings = ({ shippings, fetching, apiErrors }) =>
+const Shippings = ({ shippings, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['shipping']} />
 
@@ -71,6 +72,7 @@ const Shippings = ({ shippings, fetching, apiErrors }) =>
         {fetching ? <Loading /> : <ShippingsGrid records={shippings} />}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Shippings;

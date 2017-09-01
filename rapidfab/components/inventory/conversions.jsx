@@ -8,7 +8,7 @@ import Grid, { IdColumn, CapitalizeColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-const ConversionsGrid = ({ records }) =>
+const ConversionsGrid = ({ records }) => (
   <Grid
     data={records}
     columns={['id', 'currency', 'value']}
@@ -37,9 +37,10 @@ const ConversionsGrid = ({ records }) =>
         ),
       },
     ]}
-  />;
+  />
+);
 
-const Conversions = ({ conversions, fetching, apiErrors }) =>
+const Conversions = ({ conversions, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['currencies']} />
 
@@ -73,6 +74,7 @@ const Conversions = ({ conversions, fetching, apiErrors }) =>
         {fetching ? <Loading /> : <ConversionsGrid records={conversions} />}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Conversions;

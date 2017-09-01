@@ -14,15 +14,7 @@ class Feature extends Component {
     const isFeatureEnabled = features.find(
       feature => feature.name === featureName && feature.enabled
     );
-    return (
-      <div>
-        {isFeatureEnabled
-          ? <div>
-              {children}
-            </div>
-          : null}
-      </div>
-    );
+    return <div>{isFeatureEnabled ? <div>{children}</div> : null}</div>;
   }
 }
 

@@ -4,14 +4,15 @@ import { Panel, Thumbnail } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
-const Itar = () =>
+const Itar = () => (
   <Panel>
     <div className="text-center">
       <FormattedMessage id="record.itar" defaultMessage="ITAR Model" />
     </div>
-  </Panel>;
+  </Panel>
+);
 
-const Loading = () =>
+const Loading = () => (
   <Panel>
     <div className="text-center">
       <Fa name="spinner" spin />
@@ -21,9 +22,10 @@ const Loading = () =>
         defaultMessage="Loading Thumbnail..."
       />
     </div>
-  </Panel>;
+  </Panel>
+);
 
-const NoSnapshot = () =>
+const NoSnapshot = () => (
   <Panel>
     <div className="text-center">
       <FormattedMessage
@@ -31,14 +33,16 @@ const NoSnapshot = () =>
         defaultMessage="No Snapshot"
       />
     </div>
-  </Panel>;
+  </Panel>
+);
 
-const Error = () =>
+const Error = () => (
   <Panel>
     <div className="text-center">
       <FormattedMessage id="status.error" defaultMessage="Error" />
     </div>
-  </Panel>;
+  </Panel>
+);
 
 const ModelThumbnail = ({ snapshot }) => {
   switch (snapshot) {

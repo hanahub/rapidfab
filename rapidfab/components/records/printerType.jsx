@@ -14,7 +14,7 @@ const PrinterTypeForm = ({
   onDelete,
   manufacturers,
   materials,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['printerTypes', fields.id.value || 'New']} />
@@ -102,12 +102,12 @@ const PrinterTypeForm = ({
           <option key="placeholder" value="" selected disabled>
             Select a Manufacturer
           </option>
-          {manufacturers.map(manufacturer =>
+          {manufacturers.map(manufacturer => (
             <option
               key={manufacturer.uri}
               value={manufacturer.uri}
             >{`${manufacturer.id} - ${manufacturer.name}`}</option>
-          )}
+          ))}
         </BS.FormControl>
       </BS.FormGroup>
       <BS.FormGroup controlId="uxMaterials">
@@ -120,16 +120,17 @@ const PrinterTypeForm = ({
           required
           {...fields.materials}
         >
-          {materials.map(material =>
+          {materials.map(material => (
             <option
               key={material.uri}
               value={material.uri}
             >{`${material.id} - ${material.name}`}</option>
-          )}
+          ))}
         </BS.FormControl>
       </BS.FormGroup>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 PrinterTypeForm.propTypes = {
   fields: PropTypes.object.isRequired,

@@ -8,7 +8,7 @@ import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-const ThirdPartyProvidersGrid = ({ providers }) =>
+const ThirdPartyProvidersGrid = ({ providers }) => (
   <Grid
     data={providers}
     columns={['id', 'name', 'description']}
@@ -33,9 +33,10 @@ const ThirdPartyProvidersGrid = ({ providers }) =>
         ),
       },
     ]}
-  />;
+  />
+);
 
-const ThirdPartyProviders = ({ providers, fetching, apiErrors }) =>
+const ThirdPartyProviders = ({ providers, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['thirdPartyProviders']} />
 
@@ -66,11 +67,14 @@ const ThirdPartyProviders = ({ providers, fetching, apiErrors }) =>
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <ThirdPartyProvidersGrid providers={providers} />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <ThirdPartyProvidersGrid providers={providers} />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default ThirdPartyProviders;

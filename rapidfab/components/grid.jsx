@@ -24,9 +24,7 @@ export const IdColumn = (resource, field, records, property = 'id') => {
       if (!record) return <Fa name="spinner" spin />;
     }
     return (
-      <a href={`#/records/${resource}/${record.uuid}`}>
-        {record[property]}
-      </a>
+      <a href={`#/records/${resource}/${record.uuid}`}>{record[property]}</a>
     );
   };
 };
@@ -71,29 +69,31 @@ export const TimeColumn = ({ data }) => <FormattedTime value={data} />;
 
 export const DateColumn = ({ data }) => <FormattedDate value={data} />;
 
-export const ImageColumn = ({ data }) =>
+export const ImageColumn = ({ data }) => (
   <div style={{ textAlign: 'center' }}>
     <Image src={data} width={24} rouned />
-  </div>;
+  </div>
+);
 
-export const CapitalizeColumn = ({ data }) =>
-  <span style={{ textTransform: 'capitalize' }}>
-    {data}
-  </span>;
+export const CapitalizeColumn = ({ data }) => (
+  <span style={{ textTransform: 'capitalize' }}>{data}</span>
+);
 
-export const BooleanColumn = ({ data }) =>
+export const BooleanColumn = ({ data }) => (
   <div style={{ textAlign: 'center' }}>
     <Fa name={data ? 'check-square-o' : 'square-o'} />
-  </div>;
+  </div>
+);
 
 export const NumberColumn = ({ data }) => <FormattedNumber value={data} />;
 
 export const VolumeColumn = ({ data }) => <FormattedVolume value={data} />;
 
-export const ColorColumn = ({ data }) =>
+export const ColorColumn = ({ data }) => (
   <div
     style={{ margin: '0 auto', width: 24, height: 24, backgroundColor: data }}
-  />;
+  />
+);
 
 const Grid = ({
   data,
@@ -105,7 +105,7 @@ const Grid = ({
   showTableHeading,
   initialSort = null,
   initialSortAscending = true,
-}) =>
+}) => (
   <Griddle
     bodyHeight={bodyHeight}
     columns={columns}
@@ -122,7 +122,8 @@ const Grid = ({
     tableClassName="table table-bordered table-hover"
     useGriddleStyles={false}
     useFixedHeader={!!useFixedHeader}
-  />;
+  />
+);
 
 Grid.propTypes = {
   data: PropTypes.oneOfType([

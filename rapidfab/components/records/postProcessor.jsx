@@ -14,7 +14,7 @@ const PostProcessorForm = ({
   locations,
   postProcessorTypes,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
@@ -82,11 +82,11 @@ const PostProcessorForm = ({
               <option key="placeholder" value="" disabled>
                 Select a Location
               </option>
-              {locations.map(location =>
+              {locations.map(location => (
                 <option key={location.uri} value={location.uri}>
                   {location.name}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxPostProcessorType">
@@ -105,19 +105,20 @@ const PostProcessorForm = ({
               <option key="placeholder" value="" disabled>
                 Select a Post Processor Type
               </option>
-              {postProcessorTypes.map(postProcessorType =>
+              {postProcessorTypes.map(postProcessorType => (
                 <option
                   key={postProcessorType.uri}
                   value={postProcessorType.uri}
                 >
                   {postProcessorType.name}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default PostProcessorForm;

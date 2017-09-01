@@ -7,11 +7,9 @@ import Actions from 'rapidfab/actions';
 import { getOrderDocuments } from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-const OrderDocument = ({ download, name, onDelete, uuid }) =>
+const OrderDocument = ({ download, name, onDelete, uuid }) => (
   <ListGroupItem>
-    <a href={download}>
-      {name || uuid}
-    </a>
+    <a href={download}>{name || uuid}</a>
     <Button
       className="pull-right"
       bsStyle="danger"
@@ -20,7 +18,8 @@ const OrderDocument = ({ download, name, onDelete, uuid }) =>
     >
       <Fa name="times" />
     </Button>
-  </ListGroupItem>;
+  </ListGroupItem>
+);
 
 class OrderDocuments extends React.Component {
   constructor(props) {
@@ -90,7 +89,7 @@ class OrderDocuments extends React.Component {
           </ListGroupItem>
         </ListGroup>
 
-        {orderDocuments.map(orderDocument =>
+        {orderDocuments.map(orderDocument => (
           <OrderDocument
             download={orderDocument.content ? orderDocument.content : null}
             name={orderDocument.name}
@@ -98,7 +97,7 @@ class OrderDocuments extends React.Component {
             key={orderDocument.uri}
             uuid={extractUuid(orderDocument.uri)}
           />
-        )}
+        ))}
 
         <br />
 
