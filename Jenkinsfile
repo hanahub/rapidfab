@@ -27,7 +27,16 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'docker exec rapidfab npm run test:junit'
-                sh 'docker exec rapidfab npm run lint:js -- . --format checkstyle --output-file /src/eslintoutput.xml'
+                sh 'docker exec rapidfab sh -c "npm run lint:js -- . --format checkstyle --output-file /src/eslintoutput.xml || true"'
+                step([
+					$class                     : 'WarningsPublisher',
+					parserConfigurations       : [[
+														  parserName: 'PYLint',
+														  pattern   : 'eslintoutput.xml'
+												  ]],
+					unstableTotalAll           : '0',
+					usePreviousBuildAsReference: true
+                ])
             }
         }
         stage('Build') {
