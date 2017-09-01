@@ -30,13 +30,13 @@ pipeline {
                 sh 'docker exec rapidfab sh -c "npm run lint:js -- . --format checkstyle --output-file /src/eslintoutput.xml || true"'
                 sh 'docker cp rapidfab:/src/eslintoutput.xml eslintoutput.xml'
                 step([
-					$class                     : 'WarningsPublisher',
-					parserConfigurations       : [[
-														  parserName: 'checkstyle',
-														  pattern   : 'eslintoutput.xml'
-												  ]],
-					unstableTotalAll           : '0',
-					usePreviousBuildAsReference: true
+                    $class            : 'CheckStylePublisher',
+                    canRunOnFailed    : true,
+                    defaultEncoding   : '',
+                    healthy           : '100',
+                    pattern           : '**/eslintoutput.xml',
+                    unHealthy         : '90',
+                    useStableBuildAsReference: true
                 ])
             }
         }
