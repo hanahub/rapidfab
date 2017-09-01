@@ -32,7 +32,7 @@ pipeline {
                 step([
 					$class                     : 'WarningsPublisher',
 					parserConfigurations       : [[
-														  parserName: 'PYLint',
+														  parserName: 'checkstyle',
 														  pattern   : 'eslintoutput.xml'
 												  ]],
 					unstableTotalAll           : '0',
