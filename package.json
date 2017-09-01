@@ -13,7 +13,7 @@
     "build": "BUILD_VERSION=$(git describe) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "publish": "BUILD_VERSION=$(git describe) ./node_modules/gulp/bin/gulp.js publish",
     "clean": "rm npm-debug.log",
-    "lint:js": "eslint --ext .jsx --cache",
+    "lint:js": "node node_modules/.bin/eslint --ext .jsx --cache",
     "lint:js-output": "npm run lint:js -- --format tap --output-file .eslintoutput.js",
     "prettier": "prettier --trailing-comma es5 --single-quote --write \"rapidfab/**/*.{js,jsx}\""
   },
