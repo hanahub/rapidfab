@@ -8,7 +8,7 @@ import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-const TemplateGrid = ({ records }) =>
+const TemplateGrid = ({ records }) => (
   <Grid
     data={records}
     columns={['id', 'name']}
@@ -24,9 +24,10 @@ const TemplateGrid = ({ records }) =>
         displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
       },
     ]}
-  />;
+  />
+);
 
-const Templates = ({ templates, fetching, apiErrors }) =>
+const Templates = ({ templates, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['templates']} />
 
@@ -68,6 +69,7 @@ const Templates = ({ templates, fetching, apiErrors }) =>
         {fetching ? <Loading /> : <TemplateGrid records={templates} />}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Templates;

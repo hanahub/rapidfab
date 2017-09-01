@@ -96,39 +96,37 @@ const LineItemFormComponent = ({
           value={status}
           required
         >
-          <option value={status}>
-            {ORDER_STATUS_MAP[status]}
-          </option>
-          {statusOptions
-            ? statusOptions.map(status =>
-                <option key={status} value={status}>
-                  {ORDER_STATUS_MAP[status]}
-                </option>
-              )
-            : null}
+          <option value={status}>{ORDER_STATUS_MAP[status]}</option>
+          {statusOptions ? (
+            statusOptions.map(status => (
+              <option key={status} value={status}>
+                {ORDER_STATUS_MAP[status]}
+              </option>
+            ))
+          ) : null}
         </FormControl>
       </FormRow>
 
-      {lineItem.itar
-        ? null
-        : <div>
-            <FormRow id="field.model" defaultMessage="Model">
-              <p>
-                <a href={currentModel ? currentModel.content : null}>
-                  {currentModel ? currentModel.name : 'Loading Model...'}
-                </a>
-              </p>
-            </FormRow>
-            <FormRow id="field.replaceModel" defaultMessage="Replace Model">
-              <FormControl
-                name="model"
-                type="file"
-                accept=".stl"
-                required
-                onChange={handleFileChange}
-              />
-            </FormRow>
-          </div>}
+      {lineItem.itar ? null : (
+        <div>
+          <FormRow id="field.model" defaultMessage="Model">
+            <p>
+              <a href={currentModel ? currentModel.content : null}>
+                {currentModel ? currentModel.name : 'Loading Model...'}
+              </a>
+            </p>
+          </FormRow>
+          <FormRow id="field.replaceModel" defaultMessage="Replace Model">
+            <FormControl
+              name="model"
+              type="file"
+              accept=".stl"
+              required
+              onChange={handleFileChange}
+            />
+          </FormRow>
+        </div>
+      )}
 
       <FormRow id="field.quantity" defaultMessage="Quantity">
         <FormControl
@@ -148,11 +146,11 @@ const LineItemFormComponent = ({
           onChange={handleInputChange}
           required
         >
-          {baseMaterials.map(material =>
+          {baseMaterials.map(material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
@@ -166,11 +164,11 @@ const LineItemFormComponent = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {supportMaterials.map(material =>
+          {supportMaterials.map(material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
@@ -181,11 +179,11 @@ const LineItemFormComponent = ({
           componentClass="select"
           onChange={handleInputChange}
         >
-          {templates.map(template =>
+          {templates.map(template => (
             <option key={template.uri} value={template.uri}>
               {template.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
@@ -202,11 +200,11 @@ const LineItemFormComponent = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {providers.map(provider =>
+          {providers.map(provider => (
             <option key={provider.uri} value={provider.uri}>
               {provider.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
     </Form>

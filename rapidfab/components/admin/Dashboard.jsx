@@ -37,7 +37,7 @@ class Dashboard extends Component {
   render() {
     const { features, users, locations } = this.props;
     const FeatureTable = () => {
-      const feature = features.map((feature, index) =>
+      const feature = features.map((feature, index) => (
         <tr key={index}>
           <td>
             <span className="glyphicon glyphicon-file" />
@@ -54,27 +54,21 @@ class Dashboard extends Component {
             />
           </td>
         </tr>
-      );
-      return (
-        <tbody>
-          {feature}
-        </tbody>
-      );
+      ));
+      return <tbody>{feature}</tbody>;
     };
     const UserTable = () => {
-      const user = users.map((user_detail, index) =>
+      const user = users.map((user_detail, index) => (
         <tr key={index}>
+          <td>{user_detail.name}</td>
           <td>
-            {user_detail.name}
+            {Array.isArray(user_detail.emails) ? (
+              user_detail.emails[0]
+            ) : (
+              user_detail.emails
+            )}
           </td>
-          <td>
-            {Array.isArray(user_detail.emails)
-              ? user_detail.emails[0]
-              : user_detail.emails}
-          </td>
-          <td>
-            {locations[0] ? locations[0].name : null}
-          </td>
+          <td>{locations[0] ? locations[0].name : null}</td>
           <td>Manager</td>
           <td>
             <ModifyUser
@@ -85,12 +79,8 @@ class Dashboard extends Component {
             />
           </td>
         </tr>
-      );
-      return (
-        <tbody>
-          {user}
-        </tbody>
-      );
+      ));
+      return <tbody>{user}</tbody>;
     };
 
     return (
@@ -103,11 +93,11 @@ class Dashboard extends Component {
             activeKey={this.state.selectedKey}
             onSelect={this.handleSelect}
           >
-            {this.shouldShowAdminFeatures()
-              ? <BS.NavItem eventKey={1} href="/">
-                  Features
-                </BS.NavItem>
-              : null}
+            {this.shouldShowAdminFeatures() ? (
+              <BS.NavItem eventKey={1} href="/">
+                Features
+              </BS.NavItem>
+            ) : null}
             <BS.NavItem eventKey={2} href="/admin/manage">
               Manage Users
             </BS.NavItem>
@@ -122,46 +112,48 @@ class Dashboard extends Component {
             }}
           >
             <br />
-            {this.state.selectedKey === 1
-              ? <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
-                  <div>
-                    <div className="container">
-                      <BS.Row>
-                        <BS.ButtonToolbar className="pull-right">
-                          <NewFeature {...this.props} />
-                        </BS.ButtonToolbar>
-                      </BS.Row>
-                      <br />
-                    </div>
-
-                    <BS.Table responsive striped hover>
-                      <FeatureTable {...this.props} />
-                    </BS.Table>
-                  </div>
-                </ShowMaybe>
-              : <div>
+            {this.state.selectedKey === 1 ? (
+              <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
+                <div>
                   <div className="container">
                     <BS.Row>
                       <BS.ButtonToolbar className="pull-right">
-                        <AddUser {...this.props} />
+                        <NewFeature {...this.props} />
                       </BS.ButtonToolbar>
                     </BS.Row>
                     <br />
                   </div>
 
-                  <BS.Table responsive striped bordered hover>
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Location</th>
-                        <th>Permissions</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <UserTable {...this.props} />
+                  <BS.Table responsive striped hover>
+                    <FeatureTable {...this.props} />
                   </BS.Table>
-                </div>}
+                </div>
+              </ShowMaybe>
+            ) : (
+              <div>
+                <div className="container">
+                  <BS.Row>
+                    <BS.ButtonToolbar className="pull-right">
+                      <AddUser {...this.props} />
+                    </BS.ButtonToolbar>
+                  </BS.Row>
+                  <br />
+                </div>
+
+                <BS.Table responsive striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Location</th>
+                      <th>Permissions</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <UserTable {...this.props} />
+                </BS.Table>
+              </div>
+            )}
           </BS.Nav>
         </div>
       </BS.Grid>

@@ -20,8 +20,9 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import Feature from 'rapidfab/components/Feature';
 import ModelInput from './ModelInput';
 
-const PanelHeader = () =>
-  <FormattedMessage id="record.lineItem.add" defaultMessage="Add Line Item" />;
+const PanelHeader = () => (
+  <FormattedMessage id="record.lineItem.add" defaultMessage="Add Line Item" />
+);
 
 const AddLineItemPresentation = ({
   baseMaterial,
@@ -37,7 +38,7 @@ const AddLineItemPresentation = ({
   template,
   templates,
   thirdPartyProvider,
-}) =>
+}) => (
   <Panel header={<PanelHeader />}>
     <Form onSubmit={onSubmit}>
       <Feature featureName={'itar'}>
@@ -60,11 +61,11 @@ const AddLineItemPresentation = ({
           value={baseMaterial}
           required
         >
-          {baseMaterials.map(material =>
+          {baseMaterials.map(material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </Col>
       <Col lg={2}>
@@ -83,11 +84,11 @@ const AddLineItemPresentation = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {supportMaterials.map(material =>
+          {supportMaterials.map(material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </Col>
       <Col lg={1}>
@@ -114,11 +115,11 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
           value={template}
         >
-          {templates.map(template =>
+          {templates.map(template => (
             <option key={template.uri} value={template.uri}>
               {template.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </Col>
       <Col lg={2}>
@@ -137,11 +138,11 @@ const AddLineItemPresentation = ({
           <option value="">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {providers.map(provider =>
+          {providers.map(provider => (
             <option key={provider.uri} value={provider.uri}>
               {provider.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </Col>
       {/*
@@ -168,12 +169,14 @@ const AddLineItemPresentation = ({
             className="pull-right"
             style={{ marginTop: '2rem' }}
           >
-            {' '}Add
+            {' '}
+            Add
           </Button>
         </ButtonToolbar>
       </Col>
     </Form>
-  </Panel>;
+  </Panel>
+);
 
 class AddLineItem extends Component {
   constructor(props) {

@@ -11,7 +11,7 @@ const PostProcessorsGrid = ({
   postProcessors,
   postProcessorTypes,
   locations,
-}) =>
+}) => (
   <Grid
     data={postProcessors}
     columns={['id', 'name', 'duration', 'location', 'post_processor_type']}
@@ -55,12 +55,14 @@ const PostProcessorsGrid = ({
         ),
       },
     ]}
-  />;
+  />
+);
 
-const Loading = () =>
+const Loading = () => (
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>;
+  </div>
+);
 
 const PostProcessors = ({
   postProcessors,
@@ -68,7 +70,7 @@ const PostProcessors = ({
   postProcessorTypes,
   fetching,
   apiErrors,
-}) =>
+}) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['postProcessors']} />
 
@@ -99,15 +101,18 @@ const PostProcessors = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <PostProcessorsGrid
-              postProcessors={postProcessors}
-              locations={locations}
-              postProcessorTypes={postProcessorTypes}
-            />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <PostProcessorsGrid
+            postProcessors={postProcessors}
+            locations={locations}
+            postProcessorTypes={postProcessorTypes}
+          />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default PostProcessors;

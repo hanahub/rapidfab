@@ -19,9 +19,7 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
     >
       <BS.Row>
         <BS.Col xs={3}>
-          <a href={`#/records/printer/${printer.uuid}`}>
-            {printer.name}
-          </a>
+          <a href={`#/records/printer/${printer.uuid}`}>{printer.name}</a>
         </BS.Col>
         <BS.Col xs={3}>
           <a href={`#/records/printer-type/${printer.printer_type.uuid}`}>
@@ -38,18 +36,20 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
           </span>
         </BS.Col>
         <BS.Col xs={2}>
-          {printer.leadTime
-            ? <FormattedDateTime value={printer.leadTime} />
-            : <em>
-                <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-              </em>}
+          {printer.leadTime ? (
+            <FormattedDateTime value={printer.leadTime} />
+          ) : (
+            <em>
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            </em>
+          )}
         </BS.Col>
       </BS.Row>
     </BS.ListGroupItem>
   );
 };
 
-const PrintersList = ({ printers, modelers, selected, onSelect }) =>
+const PrintersList = ({ printers, modelers, selected, onSelect }) => (
   <BS.Panel header="Printers">
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
@@ -62,7 +62,7 @@ const PrintersList = ({ printers, modelers, selected, onSelect }) =>
         </BS.Row>
       </BS.ListGroupItem>
       <div style={listBodyStyle}>
-        {_.map(printers, printer =>
+        {_.map(printers, printer => (
           <PrinterItem
             key={printer.uuid}
             selected={selected}
@@ -70,10 +70,11 @@ const PrintersList = ({ printers, modelers, selected, onSelect }) =>
             modelers={modelers}
             onSelect={onSelect}
           />
-        )}
+        ))}
       </div>
     </BS.ListGroup>
-  </BS.Panel>;
+  </BS.Panel>
+);
 
 PrintersList.defaultProps = {
   onSelect: () => true,

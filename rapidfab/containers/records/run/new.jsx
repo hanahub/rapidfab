@@ -11,14 +11,15 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 const printsPerPage = 10;
 
-const Loading = () =>
+const Loading = () => (
   <BS.Row>
     <BS.Col xs={12}>
       <div style={{ textAlign: 'center' }}>
         <Fa name="spinner" spin size="2x" />
       </div>
     </BS.Col>
-  </BS.Row>;
+  </BS.Row>
+);
 
 class RunContainer extends Component {
   componentWillMount() {

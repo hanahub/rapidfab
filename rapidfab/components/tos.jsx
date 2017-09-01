@@ -7,10 +7,11 @@ import * as BS from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import Logo from 'rapidfab/images/logo.png';
 
-const TosLink = () =>
+const TosLink = () => (
   <a href={Config.TOS_URL} target="_blank">
     <FormattedMessage id="tos" defaultMessage="Terms of Service" />
-  </a>;
+  </a>
+);
 
 class Tos extends Component {
   constructor(props) {

@@ -15,42 +15,45 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import NewOrderForm from './NewOrderForm';
 import LineItem from './LineItem';
 
-const AddLineItemButton = ({ onAddLineItem }) =>
+const AddLineItemButton = ({ onAddLineItem }) => (
   <div className="clearfix">
     <Button bsSize="small" onClick={() => onAddLineItem()}>
       Add Line Item
     </Button>
-  </div>;
+  </div>
+);
 
 AddLineItemButton.propTypes = {
   onAddLineItem: PropTypes.func.isRequired,
 };
 
-const HelpLink = () =>
+const HelpLink = () => (
   <div className="pull-right">
     <a href="https://authentise.com/orderuploadhelp">
       <FormattedMessage id="help.link" defaultMessage="Help" />{' '}
       <Fa name="question-circle" />
     </a>
-  </div>;
+  </div>
+);
 
-const SaveButton = () =>
+const SaveButton = () => (
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
       <Button type="submit" value="submit" bsStyle="success" bsSize="small">
         <SaveButtonTitle />
       </Button>
     </div>
-  </ButtonToolbar>;
+  </ButtonToolbar>
+);
 
 const LineItems = ({
   handleDeleteLineItem,
   handleLineItemModelChange,
   handleLineItemChange,
   lineItems,
-}) =>
+}) => (
   <div>
-    {lineItems.map((lineItem, index) =>
+    {lineItems.map((lineItem, index) => (
       <LineItem
         key={index}
         handleDeleteLineItem={handleDeleteLineItem}
@@ -59,8 +62,9 @@ const LineItems = ({
         index={index}
         lineItem={lineItem}
       />
-    )}
-  </div>;
+    ))}
+  </div>
+);
 
 LineItems.propTypes = {
   handleDeleteLineItem: PropTypes.func.isRequired,

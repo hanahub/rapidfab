@@ -6,7 +6,13 @@ import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
-const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
+const StockForm = ({
+  fields,
+  handleSubmit,
+  locations,
+  materials,
+  apiErrors,
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
@@ -49,12 +55,12 @@ const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
               <option key="placeholder" value="" selected disabled>
                 Select a Material
               </option>
-              {materials.map(material =>
+              {materials.map(material => (
                 <option
                   key={material.uri}
                   value={material.uri}
                 >{`${material.id} - ${material.name}`}</option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxLocation">
@@ -72,12 +78,12 @@ const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
               <option key="placeholder" value="" selected disabled>
                 Select a Location
               </option>
-              {locations.map(location =>
+              {locations.map(location => (
                 <option
                   key={location.uri}
                   value={location.uri}
                 >{`${location.id} - ${location.name}`}</option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxStatus">
@@ -130,6 +136,7 @@ const StockForm = ({ fields, handleSubmit, locations, materials, apiErrors }) =>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default StockForm;

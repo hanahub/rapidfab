@@ -14,7 +14,7 @@ const MaterialForm = ({
   onDelete,
   manufacturers,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['materials', fields.id.value || 'New']} />
@@ -81,12 +81,12 @@ const MaterialForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Manufacturer
               </option>
-              {manufacturers.map(manufacturer =>
+              {manufacturers.map(manufacturer => (
                 <option
                   key={manufacturer.uri}
                   value={manufacturer.uri}
                 >{`${manufacturer.id} - ${manufacturer.name}`}</option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxColor">
@@ -145,16 +145,17 @@ const MaterialForm = ({
               placeholder="bureau"
               {...fields.bureau}
             >
-              {bureaus.map(bureau =>
+              {bureaus.map(bureau => (
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default MaterialForm;

@@ -8,7 +8,7 @@ import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) =>
+const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) => (
   <Grid
     data={postProcessorTypes}
     columns={['id', 'name', 'manufacturer']}
@@ -48,7 +48,8 @@ const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) =>
         ),
       },
     ]}
-  />;
+  />
+);
 
 const PostProcessorTypes = ({
   postProcessorTypes,
@@ -56,7 +57,7 @@ const PostProcessorTypes = ({
   apiErrors,
   manufacturers,
   materials,
-}) =>
+}) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['postProcessorTypes']} />
 
@@ -87,15 +88,18 @@ const PostProcessorTypes = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <PostProcessorTypesGrid
-              postProcessorTypes={postProcessorTypes}
-              manufacturers={manufacturers}
-              materials={materials}
-            />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <PostProcessorTypesGrid
+            postProcessorTypes={postProcessorTypes}
+            manufacturers={manufacturers}
+            materials={materials}
+          />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default PostProcessorTypes;

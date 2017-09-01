@@ -19,10 +19,11 @@ if (Config.SENTRY_DSN) {
   Raven.config(Config.SENTRY_DSN, { fetchContext: true }).install();
 }
 
-const App = ({ store }) =>
+const App = ({ store }) => (
   <Provider store={store}>
     <AppContainer />
-  </Provider>;
+  </Provider>
+);
 
 ReactDOM.render(
   <App store={initializeStore()} />,

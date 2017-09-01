@@ -12,7 +12,7 @@ import Griddle, {
 import Locations from 'rapidfab/components/locations';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-const PrintsGrid = ({ gridData }) =>
+const PrintsGrid = ({ gridData }) => (
   <Griddle
     data={gridData}
     columns={['id', 'status', 'name', 'customerName', 'dueDate']}
@@ -55,7 +55,8 @@ const PrintsGrid = ({ gridData }) =>
     ]}
     initialSort="id"
     initialSortAscending={false}
-  />;
+  />
+);
 
 PrintsGrid.propTypes = {
   gridData: PropTypes.arrayOf(

@@ -4,7 +4,7 @@ import * as BS from 'react-bootstrap';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 const Locations = injectIntl(
-  ({ locationFilter, locations, handleOnChange, intl }) =>
+  ({ locationFilter, locations, handleOnChange, intl }) => (
     <BS.Form inline>
       <BS.FormGroup>
         <BS.ControlLabel>
@@ -23,12 +23,12 @@ const Locations = injectIntl(
               defaultMessage: 'All',
             })}
           </option>
-          {_.map(locations, location =>
+          {_.map(locations, location => (
             <option
               key={location.uri}
               value={location.uri}
             >{`${location.id} - ${location.name}`}</option>
-          )}
+          ))}
           <option key="unassigned" value="unassigned">
             {intl.formatMessage({
               id: 'field.location.unassigned',
@@ -38,6 +38,7 @@ const Locations = injectIntl(
         </BS.FormControl>
       </BS.FormGroup>
     </BS.Form>
+  )
 );
 
 export default Locations;

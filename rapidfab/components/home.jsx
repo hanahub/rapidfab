@@ -19,7 +19,7 @@ const panelBodyStyle = {
   overflow: 'scroll',
 };
 
-const LastTenOrders = ({ data }) =>
+const LastTenOrders = ({ data }) => (
   <BS.Panel header="Orders">
     <div style={panelBodyStyle} fill>
       <Grid
@@ -55,7 +55,8 @@ const LastTenOrders = ({ data }) =>
         ]}
       />
     </div>
-  </BS.Panel>;
+  </BS.Panel>
+);
 
 LastTenOrders.propTypes = {
   data: PropTypes.object.isRequired,
@@ -117,17 +118,19 @@ const Home = ({
   locationFilter,
   locations,
   handleOnChange,
-}) =>
+}) => (
   <BS.Grid fluid>
     <BS.Row>
       <BS.Col xs={8}>
-        {locations.length > 1
-          ? <Locations
-              locations={locations}
-              handleOnChange={handleOnChange}
-              locationFilter={locationFilter}
-            />
-          : <div />}
+        {locations.length > 1 ? (
+          <Locations
+            locations={locations}
+            handleOnChange={handleOnChange}
+            locationFilter={locationFilter}
+          />
+        ) : (
+          <div />
+        )}
       </BS.Col>
       <BS.Col xs={4}>
         <BS.ButtonToolbar className="pull-right">
@@ -177,7 +180,8 @@ const Home = ({
         </BS.Row>
       );
     })()}
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 Home.propTypes = {
   data: PropTypes.object.isRequired,

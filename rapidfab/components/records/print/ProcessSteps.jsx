@@ -35,19 +35,16 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const ProcessStep = ({ step }) =>
+const ProcessStep = ({ step }) => (
   <ListGroupItem>
     <Row>
-      <Col xs={6}>
-        {step.id}
-      </Col>
-      <Col xs={6}>
-        {statusMapping[step.status]}
-      </Col>
+      <Col xs={6}>{step.id}</Col>
+      <Col xs={6}>{statusMapping[step.status]}</Col>
     </Row>
-  </ListGroupItem>;
+  </ListGroupItem>
+);
 
-const ProcessSteps = ({ processSteps = [] }) =>
+const ProcessSteps = ({ processSteps = [] }) => (
   <Panel header={ProcessStepHeader(processSteps)} bsStyle="primary">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -67,6 +64,7 @@ const ProcessSteps = ({ processSteps = [] }) =>
 
       {processSteps.map(step => <ProcessStep key={step.id} step={step} />)}
     </ListGroup>
-  </Panel>;
+  </Panel>
+);
 
 export default ProcessSteps;

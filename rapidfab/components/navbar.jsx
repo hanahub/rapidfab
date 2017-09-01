@@ -61,9 +61,7 @@ class Navbar extends Component {
       <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
-            <a href="#/">
-              {bureauName}
-            </a>
+            <a href="#/">{bureauName}</a>
           </BS.Navbar.Brand>
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>

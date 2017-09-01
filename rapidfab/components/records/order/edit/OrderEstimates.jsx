@@ -19,7 +19,7 @@ const OrderEstimates = ({
   printTime,
   shippingAmount,
   support,
-}) =>
+}) => (
   <Panel bsStyle="info">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -39,9 +39,11 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {printTime
-              ? <FormattedDuration value={printTime} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+            {printTime ? (
+              <FormattedDuration value={printTime} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
           </Col>
         </Row>
       </ListGroupItem>
@@ -55,9 +57,11 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {base
-              ? <FormattedVolume value={base} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+            {base ? (
+              <FormattedVolume value={base} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
           </Col>
         </Row>
       </ListGroupItem>
@@ -71,9 +75,11 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {support
-              ? <FormattedVolume value={support} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+            {support ? (
+              <FormattedVolume value={support} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
           </Col>
         </Row>
       </ListGroupItem>
@@ -87,9 +93,11 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {postProcessing
-              ? <FormattedCost currency={currency} value={postProcessing} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+            {postProcessing ? (
+              <FormattedCost currency={currency} value={postProcessing} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
           </Col>
         </Row>
       </ListGroupItem>
@@ -103,9 +111,11 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {shippingAmount
-              ? <FormattedCost currency={currency} value={shippingAmount} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+            {shippingAmount ? (
+              <FormattedCost currency={currency} value={shippingAmount} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
           </Col>
         </Row>
       </ListGroupItem>
@@ -119,14 +129,17 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {amount
-              ? <FormattedCost currency={currency} value={amount} />
-              : <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+            {amount ? (
+              <FormattedCost currency={currency} value={amount} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
           </Col>
         </Row>
       </ListGroupItem>
     </ListGroup>
-  </Panel>;
+  </Panel>
+);
 
 const mapStateToProps = state => {
   const { resources, routeUUID } = state;

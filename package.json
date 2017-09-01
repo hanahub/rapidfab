@@ -13,9 +13,8 @@
     "build": "BUILD_VERSION=$(git describe) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "publish": "BUILD_VERSION=$(git describe) ./node_modules/gulp/bin/gulp.js publish",
     "clean": "rm npm-debug.log",
-    "lint:js": "eslint --ext .jsx --cache",
-    "lint:js-output": "npm run lint:js -- --format tap --output-file .eslintoutput.js",
-    "prettier": "prettier --trailing-comma es5 --single-quote --write \"rapidfab/**/*.{js,jsx}\""
+    "lint:js": "node node_modules/.bin/eslint . --ext .jsx -c .eslintrc.js",
+    "lint:js-output": "npm run lint:js -- --format tap --output-file .eslintoutput.js"
   },
   "author": "Authentise, Inc.",
   "devDependencies": {
@@ -82,7 +81,6 @@
     "lodash": "^4.13.1",
     "moment": "^2.15.0",
     "path-to-regexp": "^1.5.3",
-    "prettier": "^1.5.3",
     "prop-types": "^15.5.10",
     "raven-js": "git+https://github.com/getsentry/raven-js.git",
     "react": "^15.1.0",

@@ -8,17 +8,14 @@ import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-export const ContactColumn = ({ data }) =>
+export const ContactColumn = ({ data }) => (
   <div>
-    <h5>
-      {data.name}
-    </h5>
-    <p>
-      {data.phone}
-    </p>
-  </div>;
+    <h5>{data.name}</h5>
+    <p>{data.phone}</p>
+  </div>
+);
 
-const ManufacturersGrid = ({ records }) =>
+const ManufacturersGrid = ({ records }) => (
   <Grid
     data={records}
     columns={['id', 'name', 'address', 'contact', 'support']}
@@ -56,9 +53,10 @@ const ManufacturersGrid = ({ records }) =>
         customComponent: ContactColumn,
       },
     ]}
-  />;
+  />
+);
 
-const Manufacturers = ({ manufacturers, fetching, apiErrors }) =>
+const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['manufacturers']} />
 
@@ -92,6 +90,7 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) =>
         {fetching ? <Loading /> : <ManufacturersGrid records={manufacturers} />}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Manufacturers;

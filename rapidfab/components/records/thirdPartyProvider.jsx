@@ -8,7 +8,7 @@ import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import Loading from 'rapidfab/components/Loading';
 
-const ThirdPartyProviderForm = ({ fields }) =>
+const ThirdPartyProviderForm = ({ fields }) => (
   <BS.Row>
     <BS.Col xs={12}>
       <BS.FormGroup controlId="uxName">
@@ -25,7 +25,8 @@ const ThirdPartyProviderForm = ({ fields }) =>
         />
       </BS.FormGroup>
     </BS.Col>
-  </BS.Row>;
+  </BS.Row>
+);
 
 const ThirdPartyProvider = ({
   fields,
@@ -33,7 +34,7 @@ const ThirdPartyProvider = ({
   submitting,
   onDelete,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
@@ -71,6 +72,7 @@ const ThirdPartyProvider = ({
 
       {submitting ? <Loading /> : <ThirdPartyProviderForm fields={fields} />}
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default ThirdPartyProvider;

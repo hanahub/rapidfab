@@ -20,19 +20,21 @@ const Orders = ({
   handleOnChange,
   fetching,
   apiErrors,
-}) =>
+}) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['orders']} />
 
     <BS.Row>
       <BS.Col xs={8}>
-        {locations.length > 1
-          ? <Locations
-              locations={locations}
-              handleOnChange={handleOnChange}
-              locationFilter={locationFilter}
-            />
-          : <div />}
+        {locations.length > 1 ? (
+          <Locations
+            locations={locations}
+            handleOnChange={handleOnChange}
+            locationFilter={locationFilter}
+          />
+        ) : (
+          <div />
+        )}
       </BS.Col>
       <BS.Col xs={4}>
         <BS.Button
@@ -57,52 +59,52 @@ const Orders = ({
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <Grid
-              data={orders}
-              columns={['id', 'name', 'status', 'created']}
-              columnMeta={[
-                {
-                  displayName: (
-                    <FormattedMessage id="field.id" defaultMessage="Id" />
-                  ),
-                  columnName: 'id',
-                  customComponent: IdColumn('order'),
-                  locked: true,
-                },
-                {
-                  columnName: 'name',
-                  displayName: (
-                    <FormattedMessage id="field.name" defaultMessage="Name" />
-                  ),
-                },
-                {
-                  customComponent: MappedColumn('status', ORDER_STATUS_MAP),
-                  columnName: 'status',
-                  displayName: (
-                    <FormattedMessage
-                      id="field.status"
-                      defaultMessage="Status"
-                    />
-                  ),
-                },
-                {
-                  customComponent: DateTimeColumn,
-                  columnName: 'created',
-                  displayName: (
-                    <FormattedMessage
-                      id="field.created"
-                      defaultMessage="Created"
-                    />
-                  ),
-                },
-              ]}
-              initialSort="created"
-              initialSortAscending={false}
-            />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <Grid
+            data={orders}
+            columns={['id', 'name', 'status', 'created']}
+            columnMeta={[
+              {
+                displayName: (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                ),
+                columnName: 'id',
+                customComponent: IdColumn('order'),
+                locked: true,
+              },
+              {
+                columnName: 'name',
+                displayName: (
+                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                ),
+              },
+              {
+                customComponent: MappedColumn('status', ORDER_STATUS_MAP),
+                columnName: 'status',
+                displayName: (
+                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                ),
+              },
+              {
+                customComponent: DateTimeColumn,
+                columnName: 'created',
+                displayName: (
+                  <FormattedMessage
+                    id="field.created"
+                    defaultMessage="Created"
+                  />
+                ),
+              },
+            ]}
+            initialSort="created"
+            initialSortAscending={false}
+          />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Orders;

@@ -14,7 +14,7 @@ const LocationForm = ({
   onDelete,
   users,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['locations', fields.id.value || 'New']} />
@@ -81,11 +81,11 @@ const LocationForm = ({
               <option key="placeholder" value="" disabled>
                 Select a Contact
               </option>
-              {users.map(user =>
+              {users.map(user => (
                 <option key={user.uri} value={user.uri}>
                   {user.username}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
 
@@ -98,16 +98,17 @@ const LocationForm = ({
               placeholder="bureau"
               {...fields.bureau}
             >
-              {bureaus.map(bureau =>
+              {bureaus.map(bureau => (
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default LocationForm;

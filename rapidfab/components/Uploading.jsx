@@ -21,7 +21,7 @@ const statusDisplayMapping = {
   ),
 };
 
-const Uploading = ({ status, percent }) =>
+const Uploading = ({ status, percent }) => (
   <Row>
     <Col xsOffset={2} xs={8}>
       <ProgressBar
@@ -32,11 +32,10 @@ const Uploading = ({ status, percent }) =>
       />
     </Col>
     <Col xsOffset={2} xs={8} style={{ textAlign: 'center' }}>
-      <h4>
-        {statusDisplayMapping[status]}
-      </h4>
+      <h4>{statusDisplayMapping[status]}</h4>
     </Col>
-  </Row>;
+  </Row>
+);
 
 const mapStateToProps = state => {
   const { modelUuid, percent } = state.uploadModel;

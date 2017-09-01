@@ -13,7 +13,7 @@ const ManufacturerForm = ({
   handleSubmit,
   onDelete,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
@@ -121,16 +121,17 @@ const ManufacturerForm = ({
               placeholder="bureau"
               {...fields.bureau}
             >
-              {bureaus.map(bureau =>
+              {bureaus.map(bureau => (
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default ManufacturerForm;

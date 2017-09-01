@@ -1,7 +1,7 @@
 import React from 'react';
 import * as BS from 'react-bootstrap';
 
-const Manufacturers = () =>
+const Manufacturers = () => (
   <BS.Grid>
     <BS.Row>
       <BS.Col xs={12}>
@@ -129,6 +129,7 @@ const Manufacturers = () =>
         </BS.Row>
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Manufacturers;

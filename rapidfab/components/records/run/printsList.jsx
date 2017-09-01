@@ -6,7 +6,7 @@ import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-const Header = ({ onActivate }) =>
+const Header = ({ onActivate }) => (
   <BS.Row>
     <BS.Col xs={6}>Pending Prints</BS.Col>
     <BS.Col xs={6}>
@@ -16,9 +16,10 @@ const Header = ({ onActivate }) =>
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
-  </BS.Row>;
+  </BS.Row>
+);
 
-const PrintItem = ({ print, selected, onSelect, orderNamesMap }) =>
+const PrintItem = ({ print, selected, onSelect, orderNamesMap }) => (
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -42,7 +43,8 @@ const PrintItem = ({ print, selected, onSelect, orderNamesMap }) =>
         <FormattedDateTime value={print.lineItem.created} />
       </BS.Col>
     </BS.Row>
-  </BS.ListGroupItem>;
+  </BS.ListGroupItem>
+);
 
 const PrintsList = ({
   prints,
@@ -52,7 +54,7 @@ const PrintsList = ({
   onActivate,
   onPageChange,
   orderNamesMap,
-}) =>
+}) => (
   <BS.Panel header={<Header onActivate={onActivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
@@ -63,7 +65,7 @@ const PrintsList = ({
           <BS.Col xs={3}>Created</BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
-      {_.map(prints, print =>
+      {_.map(prints, print => (
         <PrintItem
           key={print.uuid}
           selected={!!_.find(selected, ['uri', print.uri])}
@@ -71,7 +73,7 @@ const PrintsList = ({
           onSelect={onSelect}
           orderNamesMap={orderNamesMap}
         />
-      )}
+      ))}
       <div style={{ textAlign: 'center' }}>
         <BS.Pagination
           prev
@@ -83,7 +85,8 @@ const PrintsList = ({
         />
       </div>
     </BS.ListGroup>
-  </BS.Panel>;
+  </BS.Panel>
+);
 
 PrintsList.defaultProps = {
   onSelect: () => true,

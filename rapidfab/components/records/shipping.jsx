@@ -7,7 +7,13 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const ShippingForm = ({ fields, bureaus, handleSubmit, onDelete, apiErrors }) =>
+const ShippingForm = ({
+  fields,
+  bureaus,
+  handleSubmit,
+  onDelete,
+  apiErrors,
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['shipping', fields.id.value || 'New']} />
@@ -94,16 +100,17 @@ const ShippingForm = ({ fields, bureaus, handleSubmit, onDelete, apiErrors }) =>
               placeholder="bureau"
               {...fields.bureau}
             >
-              {bureaus.map(bureau =>
+              {bureaus.map(bureau => (
                 <option key={bureau.uri} value={bureau.uri}>
                   {bureau.uri}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 export default ShippingForm;

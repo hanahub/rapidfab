@@ -37,17 +37,16 @@ const fields = [
   'shipping.uri',
 ];
 
-const FormRow = ({ id, defaultMessage, children }) =>
+const FormRow = ({ id, defaultMessage, children }) => (
   <FormGroup>
     <Col xs={3}>
       <ControlLabel>
         <FormattedMessage id={id} defaultMessage={defaultMessage} />:
       </ControlLabel>
     </Col>
-    <Col xs={9}>
-      {children}
-    </Col>
-  </FormGroup>;
+    <Col xs={9}>{children}</Col>
+  </FormGroup>
+);
 
 FormRow.propTypes = {
   id: PropTypes.string.isRequired,
@@ -55,7 +54,7 @@ FormRow.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const NewOrderForm = ({ fields, shippings, users }) =>
+const NewOrderForm = ({ fields, shippings, users }) => (
   <div>
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name} />
@@ -66,11 +65,11 @@ const NewOrderForm = ({ fields, shippings, users }) =>
         <option value="none">
           <FormattedMessage id="field.none" defaultMessage="None" />
         </option>
-        {users.map(user =>
+        {users.map(user => (
           <option key={user.uuid} value={user.uri}>
             {user.name}
           </option>
-        )}
+        ))}
       </FormControl>
     </FormRow>
 
@@ -88,21 +87,21 @@ const NewOrderForm = ({ fields, shippings, users }) =>
 
     <FormRow id="field.shippingType" defaultMessage="Shipping Type">
       <FormControl componentClass="select" {...fields.shipping.uri}>
-        {shippings.map(shipping =>
+        {shippings.map(shipping => (
           <option key={shipping.uri} value={shipping.uri}>
             {shipping.name}
           </option>
-        )}
+        ))}
       </FormControl>
     </FormRow>
 
     <FormRow id="field.currency" defaultMessage="Currency">
       <FormControl componentClass="select" {...fields.currency}>
-        {Currencies.map(currency =>
+        {Currencies.map(currency => (
           <option key={currency} value={currency}>
             {currency}
           </option>
-        )}
+        ))}
       </FormControl>
     </FormRow>
 
@@ -117,21 +116,21 @@ const NewOrderForm = ({ fields, shippings, users }) =>
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
-          {Object.keys(ORDER_TYPE_MAPPING).map(type =>
+          {Object.keys(ORDER_TYPE_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_TYPE_MAPPING[type]}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
       <FormRow id="field.sales_status" defaultMessage="Sales Status">
         <FormControl componentClass="select" {...fields.sales_status}>
-          {Object.keys(ORDER_SALES_MAPPING).map(type =>
+          {Object.keys(ORDER_SALES_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_SALES_MAPPING[type]}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
@@ -143,11 +142,11 @@ const NewOrderForm = ({ fields, shippings, users }) =>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {users.map(user =>
+          {users.map(user => (
             <option key={user.uuid} value={user.uri}>
               {user.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
@@ -159,11 +158,11 @@ const NewOrderForm = ({ fields, shippings, users }) =>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {users.map(user =>
+          {users.map(user => (
             <option key={user.uuid} value={user.uri}>
               {user.name}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
 
@@ -172,11 +171,11 @@ const NewOrderForm = ({ fields, shippings, users }) =>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {Object.keys(ORDER_REGION_MAPPING).map(type =>
+          {Object.keys(ORDER_REGION_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_REGION_MAPPING[type]}
             </option>
-          )}
+          ))}
         </FormControl>
       </FormRow>
     </Feature>
@@ -188,7 +187,8 @@ const NewOrderForm = ({ fields, shippings, users }) =>
     <FormRow id="field.due_date" defaultMessage="Due Date">
       <input type="date" {...fields.due_date} style={{ color: 'black' }} />
     </FormRow>
-  </div>;
+  </div>
+);
 
 NewOrderForm.propTypes = {
   fields: PropTypes.object.isRequired,

@@ -21,8 +21,9 @@ import {
 
 import LineItemForm from './LineItemForm';
 
-const LineItemHeader = () =>
-  <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />;
+const LineItemHeader = () => (
+  <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
+);
 
 const PrintsHeader = prints => {
   const complete = prints
@@ -57,19 +58,16 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const PrintItem = ({ id, uuid, status }) =>
+const PrintItem = ({ id, uuid, status }) => (
   <ListGroupItem>
     <Row>
       <Col xs={6}>
-        <a href={`/#/records/print/${uuid}`}>
-          {id}
-        </a>
+        <a href={`/#/records/print/${uuid}`}>{id}</a>
       </Col>
-      <Col xs={6}>
-        {statusMapping[status]}
-      </Col>
+      <Col xs={6}>{statusMapping[status]}</Col>
     </Row>
-  </ListGroupItem>;
+  </ListGroupItem>
+);
 
 PrintItem.propTypes = {
   id: PropTypes.string,
@@ -77,7 +75,7 @@ PrintItem.propTypes = {
   status: PropTypes.string,
 };
 
-const Prints = ({ prints }) =>
+const Prints = ({ prints }) => (
   <Panel header={PrintsHeader(prints)} bsStyle="primary">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -95,22 +93,23 @@ const Prints = ({ prints }) =>
         </Row>
       </ListGroupItem>
 
-      {prints.map(print =>
+      {prints.map(print => (
         <PrintItem
           id={print.id}
           key={print.id}
           status={print.status}
           uuid={print.uuid}
         />
-      )}
+      ))}
     </ListGroup>
-  </Panel>;
+  </Panel>
+);
 
 Prints.propTypes = {
   prints: PropTypes.arrayOf(PropTypes.object),
 };
 
-const Estimates = ({ estimates, currency }) =>
+const Estimates = ({ estimates, currency }) => (
   <Panel bsStyle="info">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -122,112 +121,107 @@ const Estimates = ({ estimates, currency }) =>
         </b>
       </ListGroupItem>
 
-      {estimates
-        ? <div>
-            <ListGroupItem>
-              <Row>
-                <Col xs={8}>
-                  <FormattedMessage
-                    id="estimates.printTime"
-                    defaultMessage="Print Time"
-                  />
-                </Col>
-                <Col xs={4}>
-                  {estimates.print_time
-                    ? <FormattedDuration value={estimates.print_time} />
-                    : <FormattedMessage
-                        id="notAvailable"
-                        defaultMessage="N/A"
-                      />}
-                </Col>
-              </Row>
-            </ListGroupItem>
+      {estimates ? (
+        <div>
+          <ListGroupItem>
+            <Row>
+              <Col xs={8}>
+                <FormattedMessage
+                  id="estimates.printTime"
+                  defaultMessage="Print Time"
+                />
+              </Col>
+              <Col xs={4}>
+                {estimates.print_time ? (
+                  <FormattedDuration value={estimates.print_time} />
+                ) : (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                )}
+              </Col>
+            </Row>
+          </ListGroupItem>
 
-            <ListGroupItem>
-              <Row>
-                <Col xs={8}>
-                  <FormattedMessage
-                    id="estimates.materialUsed"
-                    defaultMessage="Material Used"
-                  />
-                </Col>
-                <Col xs={4}>
-                  {estimates.materials.base
-                    ? <FormattedVolume value={estimates.materials.base} />
-                    : <FormattedMessage
-                        id="notAvailable"
-                        defaultMessage="N/A"
-                      />}
-                </Col>
-              </Row>
-            </ListGroupItem>
+          <ListGroupItem>
+            <Row>
+              <Col xs={8}>
+                <FormattedMessage
+                  id="estimates.materialUsed"
+                  defaultMessage="Material Used"
+                />
+              </Col>
+              <Col xs={4}>
+                {estimates.materials.base ? (
+                  <FormattedVolume value={estimates.materials.base} />
+                ) : (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                )}
+              </Col>
+            </Row>
+          </ListGroupItem>
 
-            <ListGroupItem>
-              <Row>
-                <Col xs={8}>
-                  <FormattedMessage
-                    id="estimates.supportUsed"
-                    defaultMessage="Support Used"
-                  />
-                </Col>
-                <Col xs={4}>
-                  {estimates.materials.support
-                    ? <FormattedVolume value={estimates.materials.support} />
-                    : <FormattedMessage
-                        id="notAvailable"
-                        defaultMessage="N/A"
-                      />}
-                </Col>
-              </Row>
-            </ListGroupItem>
+          <ListGroupItem>
+            <Row>
+              <Col xs={8}>
+                <FormattedMessage
+                  id="estimates.supportUsed"
+                  defaultMessage="Support Used"
+                />
+              </Col>
+              <Col xs={4}>
+                {estimates.materials.support ? (
+                  <FormattedVolume value={estimates.materials.support} />
+                ) : (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                )}
+              </Col>
+            </Row>
+          </ListGroupItem>
 
-            <ListGroupItem>
-              <Row>
-                <Col xs={8}>
-                  <FormattedMessage
-                    id="estimates.postProcessingCost"
-                    defaultMessage="Post Processing Cost"
+          <ListGroupItem>
+            <Row>
+              <Col xs={8}>
+                <FormattedMessage
+                  id="estimates.postProcessingCost"
+                  defaultMessage="Post Processing Cost"
+                />
+              </Col>
+              <Col xs={4}>
+                {estimates.post_processing_cost ? (
+                  <FormattedCost
+                    currency={currency}
+                    value={estimates.post_processing_cost}
                   />
-                </Col>
-                <Col xs={4}>
-                  {estimates.post_processing_cost
-                    ? <FormattedCost
-                        currency={currency}
-                        value={estimates.post_processing_cost}
-                      />
-                    : <FormattedMessage
-                        id="notAvailable"
-                        defaultMessage="N/A"
-                      />}
-                </Col>
-              </Row>
-            </ListGroupItem>
+                ) : (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                )}
+              </Col>
+            </Row>
+          </ListGroupItem>
 
-            <ListGroupItem>
-              <Row>
-                <Col xs={8}>
-                  <FormattedMessage
-                    id="estimates.printingCost"
-                    defaultMessage="Printing Cost"
-                  />
-                </Col>
-                <Col xs={4}>
-                  {estimates.amount
-                    ? <FormattedCost
-                        currency={currency}
-                        value={estimates.amount}
-                      />
-                    : <FormattedMessage
-                        id="notAvailable"
-                        defaultMessage="N/A"
-                      />}
-                </Col>
-              </Row>
-            </ListGroupItem>
-          </div>
-        : <Loading />}
+          <ListGroupItem>
+            <Row>
+              <Col xs={8}>
+                <FormattedMessage
+                  id="estimates.printingCost"
+                  defaultMessage="Printing Cost"
+                />
+              </Col>
+              <Col xs={4}>
+                {estimates.amount ? (
+                  <FormattedCost currency={currency} value={estimates.amount} />
+                ) : (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                )}
+              </Col>
+            </Row>
+          </ListGroupItem>
+        </div>
+      ) : (
+        <Loading />
+      )}
     </ListGroup>
-  </Panel>;
+  </Panel>
+);
 
 Estimates.propTypes = {
   currency: PropTypes.string,
@@ -258,13 +252,13 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
           </Col>
         </Row>
 
-        {itar
-          ? null
-          : <Row>
-              <Col xs={12} lg={10} lgOffset={1}>
-                <Estimates estimates={estimates} currency={currency} />
-              </Col>
-            </Row>}
+        {itar ? null : (
+          <Row>
+            <Col xs={12} lg={10} lgOffset={1}>
+              <Estimates estimates={estimates} currency={currency} />
+            </Col>
+          </Row>
+        )}
       </Col>
 
       <Col xs={12} sm={8}>

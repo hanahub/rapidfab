@@ -15,7 +15,7 @@ const PostProcessorTypeForm = ({
   manufacturers,
   materials,
   apiErrors,
-}) =>
+}) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
@@ -109,11 +109,11 @@ const PostProcessorTypeForm = ({
               required
               {...fields.materials}
             >
-              {materials.map(material =>
+              {materials.map(material => (
                 <option key={material.uri} value={material.uri}>
                   {material.name}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxManufacturer">
@@ -132,17 +132,18 @@ const PostProcessorTypeForm = ({
               <option key="placeholder" value="" selected disabled>
                 Select a Manufacturer
               </option>
-              {manufacturers.map(manufacturer =>
+              {manufacturers.map(manufacturer => (
                 <option key={manufacturer.uri} value={manufacturer.uri}>
                   {manufacturer.name}
                 </option>
-              )}
+              ))}
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
-  </form>;
+  </form>
+);
 
 PostProcessorTypeForm.propTypes = {
   fields: PropTypes.object,

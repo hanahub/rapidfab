@@ -9,12 +9,13 @@ import AddLineItem from './AddLineItem';
 import LineItem from './LineItem';
 import OrderSummary from './OrderSummary';
 
-const LineItems = ({ lineItems }) =>
+const LineItems = ({ lineItems }) => (
   <div>
-    {lineItems.map(lineItem =>
+    {lineItems.map(lineItem => (
       <LineItem key={lineItem} formKey={lineItem} uri={lineItem} />
-    )}
-  </div>;
+    ))}
+  </div>
+);
 
 LineItems.propTypes = {
   lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,

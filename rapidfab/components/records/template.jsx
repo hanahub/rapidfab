@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-const OverwriteWarningModal = ({ show, close, duplicate, submit }) =>
+const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
       <BS.Modal.Title>
@@ -54,9 +54,10 @@ const OverwriteWarningModal = ({ show, close, duplicate, submit }) =>
         <FormattedMessage id="button.replace" defaultMessage="Replace" />
       </BS.Button>
     </BS.Modal.Footer>
-  </BS.Modal>;
+  </BS.Modal>
+);
 
-const DeleteWarningModal = ({ show, close, name, id, submit }) =>
+const DeleteWarningModal = ({ show, close, name, id, submit }) => (
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
       <FormattedMessage
@@ -73,7 +74,8 @@ const DeleteWarningModal = ({ show, close, name, id, submit }) =>
         <FormattedMessage id="button.delete" defaultMessage="Delete" />
       </BS.Button>
     </BS.Modal.Footer>
-  </BS.Modal>;
+  </BS.Modal>
+);
 
 class StepFormModal extends Component {
   constructor(props) {
@@ -148,11 +150,11 @@ class StepFormModal extends Component {
                 <option value="" selected disabled>
                   Select a Process Step
                 </option>
-                {processTypes.map(processType =>
+                {processTypes.map(processType => (
                   <option value={processType.uri} key={processType.uri}>
                     {processType.name}
                   </option>
-                )}
+                ))}
               </BS.FormControl>
             </BS.FormGroup>
             <BS.FormGroup className="clearfix" name="notes">
@@ -263,9 +265,11 @@ class StepFormModal extends Component {
               <FormattedMessage id="button.cancel" defaultMessage="Cancel" />
             </BS.Button>
             <BS.Button type="submit" bsStyle="success">
-              {data
-                ? <FormattedMessage id="button.save" defaultMessage="Save" />
-                : <FormattedMessage id="button.add" defaultMessage="Add" />}
+              {data ? (
+                <FormattedMessage id="button.save" defaultMessage="Save" />
+              ) : (
+                <FormattedMessage id="button.add" defaultMessage="Add" />
+              )}
             </BS.Button>
           </BS.Modal.Footer>
         </form>
@@ -478,7 +482,7 @@ class Template extends Component {
   }
 
   render() {
-    const Arrows = ({ index }) =>
+    const Arrows = ({ index }) => (
       <div>
         <div
           onClick={() => {
@@ -496,10 +500,11 @@ class Template extends Component {
         >
           <Fa name="angle-up" size="2x" />
         </div>
-      </div>;
+      </div>
+    );
 
     const Rows = () => {
-      const rows = _.map(this.state.steps, (step, index) =>
+      const rows = _.map(this.state.steps, (step, index) => (
         <tr key={index}>
           <td>
             <Arrows index={index} />
@@ -521,13 +526,9 @@ class Template extends Component {
             </div>
           </td>
         </tr>
-      );
+      ));
 
-      return (
-        <tbody>
-          {rows}
-        </tbody>
-      );
+      return <tbody>{rows}</tbody>;
     };
 
     const {

@@ -12,7 +12,7 @@ import Grid, {
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
-const MaterialsGrid = ({ materials, manufacturers }) =>
+const MaterialsGrid = ({ materials, manufacturers }) => (
   <Grid
     data={materials}
     columns={[
@@ -72,14 +72,16 @@ const MaterialsGrid = ({ materials, manufacturers }) =>
         ),
       },
     ]}
-  />;
+  />
+);
 
-const Loading = () =>
+const Loading = () => (
   <div style={{ textAlign: 'center' }}>
     <Fa name="spinner" spin size="2x" />
-  </div>;
+  </div>
+);
 
-const Materials = ({ materials, manufacturers, fetching, apiErrors }) =>
+const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['materials']} />
 
@@ -110,14 +112,14 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) =>
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching
-          ? <Loading />
-          : <MaterialsGrid
-              materials={materials}
-              manufacturers={manufacturers}
-            />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <MaterialsGrid materials={materials} manufacturers={manufacturers} />
+        )}
       </BS.Col>
     </BS.Row>
-  </BS.Grid>;
+  </BS.Grid>
+);
 
 export default Materials;

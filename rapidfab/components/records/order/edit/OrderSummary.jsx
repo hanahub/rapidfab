@@ -12,8 +12,9 @@ import OrderEstimates from './OrderEstimates';
 import OrderRuns from './OrderRuns';
 import SaveDropdownButton from './SaveDropdownButton';
 
-const PanelHeader = () =>
-  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />;
+const PanelHeader = () => (
+  <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />
+);
 
 class OrderSummary extends Component {
   constructor(props) {

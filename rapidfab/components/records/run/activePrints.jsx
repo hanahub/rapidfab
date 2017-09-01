@@ -19,7 +19,7 @@ function printBedFill(printer, model) {
   return `${percentage}%`;
 }
 
-const Header = ({ onDeactivate }) =>
+const Header = ({ onDeactivate }) => (
   <BS.Row>
     <BS.Col xs={6}>Active Prints</BS.Col>
     <BS.Col xs={6}>
@@ -29,9 +29,10 @@ const Header = ({ onDeactivate }) =>
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
-  </BS.Row>;
+  </BS.Row>
+);
 
-const Item = ({ print, printer, selected, onSelect, orderNamesMap }) =>
+const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
   <BS.ListGroupItem>
     <BS.Row>
       <BS.Col xs={1}>
@@ -52,11 +53,10 @@ const Item = ({ print, printer, selected, onSelect, orderNamesMap }) =>
           2
         )}`}
       </BS.Col>
-      <BS.Col xs={3}>
-        {printBedFill(printer, print.lineItem.model)}
-      </BS.Col>
+      <BS.Col xs={3}>{printBedFill(printer, print.lineItem.model)}</BS.Col>
     </BS.Row>
-  </BS.ListGroupItem>;
+  </BS.ListGroupItem>
+);
 
 const ActivePrints = ({
   prints,
@@ -65,7 +65,7 @@ const ActivePrints = ({
   onSelect,
   onDeactivate,
   orderNamesMap,
-}) =>
+}) => (
   <BS.Panel header={<Header onDeactivate={onDeactivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
@@ -77,7 +77,7 @@ const ActivePrints = ({
         </BS.Row>
       </BS.ListGroupItem>
       <div style={listBodyStyle}>
-        {_.map(prints, print =>
+        {_.map(prints, print => (
           <Item
             key={print.uuid}
             selected={!!_.find(selected, ['uri', print.uri])}
@@ -86,10 +86,11 @@ const ActivePrints = ({
             printer={printer}
             orderNamesMap={orderNamesMap}
           />
-        )}
+        ))}
       </div>
     </BS.ListGroup>
-  </BS.Panel>;
+  </BS.Panel>
+);
 
 ActivePrints.defaultProps = {
   onSelect: () => true,
