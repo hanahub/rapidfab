@@ -5,21 +5,12 @@ import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import RunComponent from 'rapidfab/components/records/run/new';
 import * as Selectors from 'rapidfab/selectors';
-import Fa from 'react-fontawesome';
 import * as BS from 'react-bootstrap';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-const printsPerPage = 10;
+import { Loading } from 'rapidfab/components/Loading';
 
-const Loading = () => (
-  <BS.Row>
-    <BS.Col xs={12}>
-      <div style={{ textAlign: 'center' }}>
-        <Fa name="spinner" spin size="2x" />
-      </div>
-    </BS.Col>
-  </BS.Row>
-);
+const printsPerPage = 10;
 
 class RunContainer extends Component {
   componentWillMount() {
