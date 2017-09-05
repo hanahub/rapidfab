@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
@@ -36,6 +36,8 @@ const Header = ({ onDeactivate }) => (
   </BS.Row>
 );
 
+Header.propTypes = { onDeactivate: PropTypes.func.isRequired };
+
 const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
   <BS.ListGroupItem>
     <BS.Row>
@@ -61,6 +63,14 @@ const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
     </BS.Row>
   </BS.ListGroupItem>
 );
+
+Item.propTypes = {
+  print: PropTypes.object.isRequired,
+  printer: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
+};
 
 const ActivePrints = ({
   prints,
@@ -98,6 +108,15 @@ const ActivePrints = ({
 
 ActivePrints.defaultProps = {
   onSelect: () => true,
+};
+
+ActivePrints.propTypes = {
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printer: PropTypes.object.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onDeactivate: PropTypes.func.isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
 };
 
 export default ActivePrints;
