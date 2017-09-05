@@ -29,7 +29,10 @@ const Header = ({ onDeactivate }) => (
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="info" onClick={onDeactivate}>
-          <FormattedMessage id="record.run.remove" defaultMessage="Remove Prints" />
+          <FormattedMessage
+            id="record.run.remove"
+            defaultMessage="Remove Prints"
+          />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>

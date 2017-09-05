@@ -14,7 +14,10 @@ const Header = ({ onActivate }) => (
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="success" onClick={onActivate}>
-          <FormattedMessage id="record.run.addPrints" defaultMessage="Add Prints" />
+          <FormattedMessage
+            id="record.run.addPrints"
+            defaultMessage="Add Prints"
+          />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
