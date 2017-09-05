@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import Error from 'rapidfab/components/error';
 
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import PrintersList from './printersList';
 import PrintsList from './printsList';
 import ActivePrints from './activePrints';
@@ -133,49 +134,21 @@ class Runs extends Component {
 
     return (
       <BS.Grid fluid>
-        <BS.Row>
-          <BS.Col xs={12}>
-            <BS.Breadcrumb>
-              <BS.Breadcrumb.Item active>
-                <Fa name="road" />{' '}
-                <FormattedMessage id="plan" defaultMessage="Plan" />
-              </BS.Breadcrumb.Item>
-              <BS.Breadcrumb.Item href="#/plan/runs">
-                <Fa name="list" />{' '}
-                <FormattedMessage id="plan.runs" defaultMessage="Runs" />
-              </BS.Breadcrumb.Item>
-              <BS.Breadcrumb.Item>
-                <Fa name="file-o" />{' '}
-                <FormattedMessage
-                  id="record.run.new"
-                  defaultMessage="New Run"
-                />
-              </BS.Breadcrumb.Item>
-            </BS.Breadcrumb>
-          </BS.Col>
-        </BS.Row>
+        <BreadcrumbNav breadcrumbs={['runs', 'New']} />
 
-        <BS.Row>
-          <BS.Col xs={6}>
-            <BS.Button href="#/plan/runs" bsSize="small">
-              <Fa name="arrow-left" />{' '}
-              <FormattedMessage id="plan.runs" defaultMessage="Runs" />
+        <div className="clearfix">
+          <BS.ButtonToolbar className="pull-right">
+            <BS.Button
+              bsSize="small"
+              onClick={this.handleSave}
+              disabled={!activePrints.length}
+              bsStyle="primary"
+            >
+              <Fa name="floppy-o" />{' '}
+              <FormattedMessage id="button.save" defaultMessage="Save" />
             </BS.Button>
-          </BS.Col>
-          <BS.Col xs={6}>
-            <BS.ButtonToolbar className="pull-right">
-              <BS.Button
-                bsSize="small"
-                onClick={this.handleSave}
-                disabled={!activePrints.length}
-                bsStyle="primary"
-              >
-                <Fa name="floppy-o" />{' '}
-                <FormattedMessage id="button.save" defaultMessage="Save" />
-              </BS.Button>
-            </BS.ButtonToolbar>
-          </BS.Col>
-        </BS.Row>
+          </BS.ButtonToolbar>
+        </div>
 
         <hr />
 
