@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import { FormattedMessage, FormattedDateTime } from 'rapidfab/i18n';
@@ -49,6 +50,15 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
   );
 };
 
+PrinterItem.defaultProps = { modelers: [] };
+
+PrinterItem.propTypes = {
+  printer: PropTypes.object.isRequired,
+  modelers: PropTypes.arrayOf(PropTypes.object),
+  selected: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
+
 const PrintersList = ({ printers, modelers, selected, onSelect }) => (
   <BS.Panel header="Run Printer">
     <BS.ListGroup fill>
@@ -77,7 +87,15 @@ const PrintersList = ({ printers, modelers, selected, onSelect }) => (
 );
 
 PrintersList.defaultProps = {
+  modelers: [],
   onSelect: () => true,
+};
+
+PrintersList.propTypes = {
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  modelers: PropTypes.arrayOf(PropTypes.object),
+  selected: PropTypes.object.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default PrintersList;
