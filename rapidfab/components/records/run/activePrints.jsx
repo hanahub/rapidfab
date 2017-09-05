@@ -5,6 +5,8 @@ import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
+import { FormattedMessage } from 'rapidfab/i18n';
+
 const listBodyStyle = {
   height: 243,
   verflowY: 'scroll',
@@ -21,11 +23,13 @@ function printBedFill(printer, model) {
 
 const Header = ({ onDeactivate }) => (
   <BS.Row>
-    <BS.Col xs={6}>Run Prints</BS.Col>
+    <BS.Col xs={6}>
+      <FormattedMessage id="record.run.prints" defaultMessage="Run Prints" />
+    </BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="info" onClick={onDeactivate}>
-          Remove Prints
+          <FormattedMessage id="record.run.remove" defaultMessage="Remove Prints" />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>

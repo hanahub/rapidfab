@@ -6,13 +6,15 @@ import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
+import { FormattedMessage } from 'rapidfab/i18n';
+
 const Header = ({ onActivate }) => (
   <BS.Row>
     <BS.Col xs={6}>Select Prints for Run</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="success" onClick={onActivate}>
-          Add Prints
+          <FormattedMessage id="record.run.addPrints" defaultMessage="Add Prints" />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
