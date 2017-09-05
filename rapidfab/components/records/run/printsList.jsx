@@ -1,12 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import { FormattedDateTime } from 'rapidfab/i18n';
-import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-import { FormattedMessage } from 'rapidfab/i18n';
+import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 
 const Header = ({ onActivate }) => (
   <BS.Row>
@@ -23,6 +22,8 @@ const Header = ({ onActivate }) => (
     </BS.Col>
   </BS.Row>
 );
+
+Header.propTypes = { onActivate: PropTypes.func.isRequired };
 
 const PrintItem = ({ print, selected, onSelect, orderNamesMap }) => (
   <BS.ListGroupItem>
@@ -50,6 +51,13 @@ const PrintItem = ({ print, selected, onSelect, orderNamesMap }) => (
     </BS.Row>
   </BS.ListGroupItem>
 );
+
+PrintItem.propTypes = {
+  print: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
+};
 
 const PrintsList = ({
   prints,
@@ -95,6 +103,19 @@ const PrintsList = ({
 
 PrintsList.defaultProps = {
   onSelect: () => true,
+};
+
+PrintsList.propTypes = {
+  onActivate: PropTypes.func.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
+  pager: PropTypes.shape({
+    activePage: PropTypes.number,
+    items: PropTypes.number,
+  }).isRequired,
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selected: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PrintsList;
