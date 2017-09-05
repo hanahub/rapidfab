@@ -21,11 +21,11 @@ function printBedFill(printer, model) {
 
 const Header = ({ onDeactivate }) => (
   <BS.Row>
-    <BS.Col xs={6}>Active Prints</BS.Col>
+    <BS.Col xs={6}>Run Prints</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
-        <BS.Button bsSize="small" bsStyle="danger" onClick={onDeactivate}>
-          <Fa name="times" />
+        <BS.Button bsSize="small" bsStyle="info" onClick={onDeactivate}>
+          Remove Prints
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>

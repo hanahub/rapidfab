@@ -50,7 +50,7 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
 };
 
 const PrintersList = ({ printers, modelers, selected, onSelect }) => (
-  <BS.Panel header="Printers">
+  <BS.Panel header="Run Printer">
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>

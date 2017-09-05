@@ -8,11 +8,11 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 const Header = ({ onActivate }) => (
   <BS.Row>
-    <BS.Col xs={6}>Pending Prints</BS.Col>
+    <BS.Col xs={6}>Select Prints for Run</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
-        <BS.Button bsSize="small" bsStyle="primary" onClick={onActivate}>
-          <Fa name="arrow-right" />
+        <BS.Button bsSize="small" bsStyle="success" onClick={onActivate}>
+          Add Prints
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
@@ -55,7 +55,7 @@ const PrintsList = ({
   onPageChange,
   orderNamesMap,
 }) => (
-  <BS.Panel header={<Header onActivate={onActivate} />}>
+  <BS.Panel bsStyle="primary" header={<Header onActivate={onActivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>

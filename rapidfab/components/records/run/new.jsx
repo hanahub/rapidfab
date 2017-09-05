@@ -199,7 +199,7 @@ class Runs extends Component {
           }
           return (
             <BS.Row>
-              <BS.Col xs={3}>
+              <BS.Col xs={12} lg={4}>
                 <PrintsList
                   prints={inactivePrints}
                   selected={selectedPrints}
@@ -210,16 +210,7 @@ class Runs extends Component {
                   orderNamesMap={orderNamesMap}
                 />
               </BS.Col>
-              <BS.Col xs={9}>
-                <BS.Row>
-                  <BS.Col xs={12}>
-                    <PrintersList
-                      printers={printers}
-                      selected={selectedPrinter}
-                      onSelect={this.handleSelectPrinter}
-                    />
-                  </BS.Col>
-                </BS.Row>
+              <BS.Col xs={12} lg={8}>
                 <BS.Row>
                   <BS.Col xs={12}>
                     <ActivePrints
@@ -229,6 +220,15 @@ class Runs extends Component {
                       onSelect={this.handleSelectActivePrint}
                       onDeactivate={this.handleDeactivatePrints}
                       orderNamesMap={orderNamesMap}
+                    />
+                  </BS.Col>
+                </BS.Row>
+                <BS.Row>
+                  <BS.Col xs={12}>
+                    <PrintersList
+                      printers={printers}
+                      selected={selectedPrinter}
+                      onSelect={this.handleSelectPrinter}
                     />
                   </BS.Col>
                 </BS.Row>
