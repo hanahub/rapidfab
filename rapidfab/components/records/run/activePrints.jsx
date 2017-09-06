@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+
+import { FormattedMessage } from 'rapidfab/i18n';
 
 const listBodyStyle = {
   height: 243,
@@ -21,16 +23,23 @@ function printBedFill(printer, model) {
 
 const Header = ({ onDeactivate }) => (
   <BS.Row>
-    <BS.Col xs={6}>Active Prints</BS.Col>
+    <BS.Col xs={6}>
+      <FormattedMessage id="record.run.prints" defaultMessage="Run Prints" />
+    </BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
-        <BS.Button bsSize="small" bsStyle="danger" onClick={onDeactivate}>
-          <Fa name="times" />
+        <BS.Button bsSize="small" bsStyle="info" onClick={onDeactivate}>
+          <FormattedMessage
+            id="record.run.remove"
+            defaultMessage="Remove Prints"
+          />
         </BS.Button>
       </BS.ButtonToolbar>
     </BS.Col>
   </BS.Row>
 );
+
+Header.propTypes = { onDeactivate: PropTypes.func.isRequired };
 
 const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
   <BS.ListGroupItem>
@@ -57,6 +66,14 @@ const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
     </BS.Row>
   </BS.ListGroupItem>
 );
+
+Item.propTypes = {
+  print: PropTypes.object.isRequired,
+  printer: PropTypes.object.isRequired,
+  selected: PropTypes.bool.isRequired,
+  onSelect: PropTypes.func.isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
+};
 
 const ActivePrints = ({
   prints,
@@ -94,6 +111,15 @@ const ActivePrints = ({
 
 ActivePrints.defaultProps = {
   onSelect: () => true,
+};
+
+ActivePrints.propTypes = {
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printer: PropTypes.object.isRequired,
+  selected: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  onDeactivate: PropTypes.func.isRequired,
+  orderNamesMap: PropTypes.object.isRequired,
 };
 
 export default ActivePrints;
