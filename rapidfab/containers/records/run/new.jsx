@@ -8,7 +8,7 @@ import * as Selectors from 'rapidfab/selectors';
 import * as BS from 'react-bootstrap';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-import { Loading } from 'rapidfab/components/Loading';
+import Loading from 'rapidfab/components/Loading';
 
 const printsPerPage = 10;
 
