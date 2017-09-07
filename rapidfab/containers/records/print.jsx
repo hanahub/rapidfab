@@ -100,11 +100,6 @@ function mapDispatchToProps(dispatch) {
         });
       });
     },
-    onExport: print => {
-      dispatch(
-        Actions.Api.wyatt['traceability-report'].post({ print: print.uri })
-      );
-    },
   };
 }
 

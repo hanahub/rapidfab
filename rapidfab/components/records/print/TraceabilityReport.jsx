@@ -42,6 +42,14 @@ const TraceabilityReport = ({ print, events, onExport }) => {
   );
 };
 
+const mapDispatchToProps = dispatch => ({
+  onExport: print => {
+    dispatch(
+      Actions.Api.wyatt['traceability-report'].post({ print: print.uri })
+    );
+  },
+});
+
 const mapStateToProps = state => {
   const print = state.resources[state.routeUUID];
   const events = Selectors.getEventsForPrint(state, print);
@@ -50,6 +58,8 @@ const mapStateToProps = state => {
 
 TraceabilityReport.propTypes = {
   events: PropTypes.array.isRequired,
+  onExport: PropTypes.func.isRequired,
+  print: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(TraceabilityReport);
+export default connect(mapStateToProps, mapDispatchToProps)(TraceabilityReport);

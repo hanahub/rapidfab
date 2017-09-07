@@ -86,7 +86,6 @@ const PrintComponent = ({
   order,
   lineItem,
   model,
-  onExport,
 }) => {
   const breadcrumbs = ['prints', print.id];
 
@@ -104,7 +103,7 @@ const PrintComponent = ({
         model={model}
       />
 
-      <TraceabilityReport onExport={onExport} />
+      <TraceabilityReport />
     </Grid>
   );
 };
