@@ -63,7 +63,7 @@ const MaterialForm = ({
                 defaultMessage="Description"
               />:
             </BS.ControlLabel>
-            <BS.FormControl componentClass="textarea" {...fields.description} />
+            <BS.FormControl componentClass="textarea" required {...fields.description} />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel>
