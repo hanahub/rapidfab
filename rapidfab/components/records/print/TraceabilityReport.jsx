@@ -53,6 +53,12 @@ const ExportButton = ({ download, loadingReport, onExport }) => {
   );
 };
 
+ExportButton.propTypes = {
+  download: PropTypes.string.isRequired,
+  loadingReport: PropTypes.bool.isRequired,
+  onExport: PropTypes.func.isRequired,
+};
+
 class TraceabilityReport extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +80,7 @@ class TraceabilityReport extends React.Component {
 
   render() {
     const { onExport } = this;
-    const { download, events, print } = this.props;
+    const { download, events } = this.props;
     const { loadingReport } = this.state;
     const visibleEvents = filterEvents(events);
     return (
@@ -101,9 +107,10 @@ const mapStateToProps = state => {
 };
 
 TraceabilityReport.propTypes = {
-  events: PropTypes.array.isRequired,
-  print: PropTypes.object.isRequired,
+  events: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
   download: PropTypes.string.isRequired,
+  print: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps)(TraceabilityReport);
