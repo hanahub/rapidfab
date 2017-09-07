@@ -112,6 +112,8 @@ export default {
   'record.postProcessor.add': 'ポストプロセッサの追加',
   'record.postProcessorType.new': '新規ポストプロセッサタイプ',
   'record.postProcessorType.add': 'ポストプロセッサタイプの追加',
+  'record.print.download': 'Download Report',
+  'record.print.export': 'Export Report',
   'record.printCompleteCount': 'Prints - {complete} / {total} complete',
   'record.processStepCompleteCount':
     'Process Steps - {complete} / {total} が完了しました',

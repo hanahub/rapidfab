@@ -18,61 +18,6 @@ import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import TraceabilityReport from './TraceabilityReport';
 import ProcessSteps from './ProcessSteps';
 
-const PrintSummary = ({ print, processSteps, order, lineItem, model }) => {
-  const { status } = print;
-  const { created } = lineItem;
-  const { name, uuid } = order;
-  return (
-    <Panel header="Print Summary">
-      <Row>
-        <Col xs={6}>
-          <ModelThumbnail snapshot={model.snapshot_content} />
-        </Col>
-        <Col xs={6}>
-          <ListGroup>
-            <ListGroupItem>
-              <div className="clearfix">
-                <div className="pull-left">
-                  <span>
-                    <FormattedMessage
-                      id="field.order"
-                      defaultMessage="Order"
-                    />:
-                  </span>
-                </div>
-                <div className="pull-right">
-                  <a href={`#/records/order/${uuid}`}>{name}</a>
-                </div>
-              </div>
-            </ListGroupItem>
-            <ListGroupItem>
-              <SpaceBetweenText
-                left={
-                  <FormattedMessage id="field.status" defaultMessage="Status" />
-                }
-                right={RUN_STATUS_MAP[status]}
-              />
-            </ListGroupItem>
-            <ListGroupItem>
-              <SpaceBetweenText
-                left={
-                  <FormattedMessage
-                    id="status.created"
-                    defaultMessage="Created"
-                  />
-                }
-                right={<FormattedDateTime value={created} />}
-              />
-            </ListGroupItem>
-          </ListGroup>
-
-          <ProcessSteps processSteps={processSteps} />
-        </Col>
-      </Row>
-    </Panel>
-  );
-};
-
 const SpaceBetweenText = ({ left, right }) => (
   <div className="clearfix">
     <div className="pull-left">{left}</div>
@@ -80,35 +25,85 @@ const SpaceBetweenText = ({ left, right }) => (
   </div>
 );
 
-const PrintComponent = ({
-  print,
-  processSteps,
-  order,
-  lineItem,
-  model,
-  onExport,
-}) => {
+SpaceBetweenText.propTypes = {
+  left: PropTypes.element.isRequired,
+  right: PropTypes.element.isRequired,
+};
+
+const PrintComponent = ({ print, processSteps, order, lineItem, model }) => {
   const breadcrumbs = ['prints', print.id];
 
+  const { status } = print;
+  const { created } = lineItem;
+  const { name, uuid } = order;
   return (
     <Grid fluid className="container">
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
 
       <hr />
 
-      <PrintSummary
-        print={print}
-        processSteps={processSteps}
-        order={order}
-        lineItem={lineItem}
-        model={model}
-      />
+      <Panel header="Print Summary">
+        <Row>
+          <Col xs={6}>
+            <ModelThumbnail snapshot={model.snapshot_content} />
+          </Col>
+          <Col xs={6}>
+            <ListGroup>
+              <ListGroupItem>
+                <div className="clearfix">
+                  <div className="pull-left">
+                    <span>
+                      <FormattedMessage
+                        id="field.order"
+                        defaultMessage="Order"
+                      />:
+                    </span>
+                  </div>
+                  <div className="pull-right">
+                    <a href={`#/records/order/${uuid}`}>{name}</a>
+                  </div>
+                </div>
+              </ListGroupItem>
+              <ListGroupItem>
+                <SpaceBetweenText
+                  left={
+                    <FormattedMessage
+                      id="field.status"
+                      defaultMessage="Status"
+                    />
+                  }
+                  right={RUN_STATUS_MAP[status]}
+                />
+              </ListGroupItem>
+              <ListGroupItem>
+                <SpaceBetweenText
+                  left={
+                    <FormattedMessage
+                      id="status.created"
+                      defaultMessage="Created"
+                    />
+                  }
+                  right={<FormattedDateTime value={created} />}
+                />
+              </ListGroupItem>
+            </ListGroup>
 
-      <TraceabilityReport onExport={onExport} />
+            <ProcessSteps processSteps={processSteps} />
+          </Col>
+        </Row>
+      </Panel>
+
+      <TraceabilityReport />
     </Grid>
   );
 };
 
-PrintComponent.propTypes = { print: PropTypes.object };
+PrintComponent.propTypes = {
+  print: PropTypes.object.isRequired,
+  processSteps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  order: PropTypes.object.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  model: PropTypes.object.isRequired,
+};
 
 export default PrintComponent;

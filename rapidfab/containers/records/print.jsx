@@ -14,16 +14,6 @@ class PrintContainer extends Component {
     this.props.onInitialize(this.props);
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.report &&
-      !prevProps.report.content &&
-      this.props.report.content
-    ) {
-      window.open(this.props.report.content);
-    }
-  }
-
   render() {
     const {
       apiErrors,
@@ -100,11 +90,6 @@ function mapDispatchToProps(dispatch) {
         });
       });
     },
-    onExport: print => {
-      dispatch(
-        Actions.Api.wyatt['traceability-report'].post({ print: print.uri })
-      );
-    },
   };
 }
 
@@ -118,7 +103,6 @@ function mapStateToProps(state, props) {
   const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
   const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
-  const report = Selectors.getTraceabilityReportForPrint(state, print);
 
   const order = print ? orders.find(order => order.uri === print.order) : null;
   const lineItem = print
@@ -156,7 +140,6 @@ function mapStateToProps(state, props) {
     models,
     fetching,
     apiErrors,
-    report,
   };
 }
 

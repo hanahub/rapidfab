@@ -113,6 +113,8 @@ export default {
   'record.postProcessor.add': 'Add Post Processor',
   'record.postProcessorType.new': 'New Post Processor Type',
   'record.postProcessorType.add': 'Add Post Processor Type',
+  'record.print.download': 'Download Report',
+  'record.print.export': 'Export Report',
   'record.printCompleteCount': 'Prints - {complete} / {total} complete',
   'record.processStepCompleteCount':
     'Process Steps - {complete} / {total} complete',
