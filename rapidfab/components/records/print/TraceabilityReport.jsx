@@ -29,7 +29,7 @@ const ExportButton = ({ download, loadingReport, onExport,  }) => {
     return (
       <a href={download} download>
         <Button bsStyle="success" className="pull-right">
-          Download Report
+          <FormattedMessage id="record.print.download" defaultMessage="Download Report" />
         </Button>
       </a>
     );
@@ -46,7 +46,7 @@ const ExportButton = ({ download, loadingReport, onExport,  }) => {
         onClick={onExport}
         className="pull-right"
       >
-        Export Report
+        <FormattedMessage id="record.print.export" defaultMessage="Export Report" />
       </Button>
     );
   }
