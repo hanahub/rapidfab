@@ -24,37 +24,38 @@ const filterEvents = events => {
   });
 };
 
-const ExportButton = ({ download, loadingReport, onExport,  }) => {
-  if (download !== "none") {
+const ExportButton = ({ download, loadingReport, onExport }) => {
+  if (download !== 'none') {
     return (
       <a href={download} download>
         <Button bsStyle="success" className="pull-right">
-          <FormattedMessage id="record.print.download" defaultMessage="Download Report" />
+          <FormattedMessage
+            id="record.print.download"
+            defaultMessage="Download Report"
+          />
         </Button>
       </a>
     );
-  } else if ( loadingReport ) {
+  } else if (loadingReport) {
     return (
       <Button bsStyle="primary" className="pull-right">
         <Fa name="spinner" spin />
       </Button>
     );
-  } else {
-    return (
-      <Button
-        bsStyle="primary"
-        onClick={onExport}
-        className="pull-right"
-      >
-        <FormattedMessage id="record.print.export" defaultMessage="Export Report" />
-      </Button>
-    );
   }
+  return (
+    <Button bsStyle="primary" onClick={onExport} className="pull-right">
+      <FormattedMessage
+        id="record.print.export"
+        defaultMessage="Export Report"
+      />
+    </Button>
+  );
 };
 
 class TraceabilityReport extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       loadingReport: false,
@@ -88,14 +89,14 @@ class TraceabilityReport extends React.Component {
         </ListGroup>
       </Panel>
     );
-  };
-};
+  }
+}
 
 const mapStateToProps = state => {
   const print = state.resources[state.routeUUID];
   const events = Selectors.getEventsForPrint(state, print);
   const report = Selectors.getTraceabilityReportForPrint(state, print);
-  const download = report && report.content ? report.content : "none";
+  const download = report && report.content ? report.content : 'none';
   return { events, print, download, report };
 };
 

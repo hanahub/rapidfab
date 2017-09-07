@@ -80,13 +80,7 @@ const SpaceBetweenText = ({ left, right }) => (
   </div>
 );
 
-const PrintComponent = ({
-  print,
-  processSteps,
-  order,
-  lineItem,
-  model,
-}) => {
+const PrintComponent = ({ print, processSteps, order, lineItem, model }) => {
   const breadcrumbs = ['prints', print.id];
 
   return (
