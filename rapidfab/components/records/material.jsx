@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +10,6 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const MaterialForm = ({
   fields,
-  bureaus,
   handleSubmit,
   onDelete,
   manufacturers,
@@ -64,7 +64,11 @@ const MaterialForm = ({
                 defaultMessage="Description"
               />:
             </BS.ControlLabel>
-            <BS.FormControl componentClass="textarea" {...fields.description} />
+            <BS.FormControl
+              componentClass="textarea"
+              required
+              {...fields.description}
+            />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel>
@@ -136,26 +140,18 @@ const MaterialForm = ({
               {...fields.post_processing_seconds}
             />
           </BS.FormGroup>
-          <BS.FormGroup style={{ display: 'none' }} controlId="uxBureau">
-            <BS.ControlLabel>
-              <FormattedMessage id="field.bureau" defaultMessage="Bureau" />:
-            </BS.ControlLabel>
-            <BS.FormControl
-              componentClass="select"
-              placeholder="bureau"
-              {...fields.bureau}
-            >
-              {bureaus.map(bureau => (
-                <option key={bureau.uri} value={bureau.uri}>
-                  {bureau.uri}
-                </option>
-              ))}
-            </BS.FormControl>
-          </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
   </form>
 );
+
+MaterialForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default MaterialForm;
