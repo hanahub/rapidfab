@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -63,7 +64,11 @@ const MaterialForm = ({
                 defaultMessage="Description"
               />:
             </BS.ControlLabel>
-            <BS.FormControl componentClass="textarea" required {...fields.description} />
+            <BS.FormControl
+              componentClass="textarea"
+              required
+              {...fields.description}
+            />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxManufacturer">
             <BS.ControlLabel>
@@ -140,5 +145,13 @@ const MaterialForm = ({
     </BS.Grid>
   </form>
 );
+
+MaterialForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default MaterialForm;
