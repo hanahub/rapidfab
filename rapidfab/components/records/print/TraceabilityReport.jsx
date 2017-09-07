@@ -1,9 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Fa from 'react-fontawesome';
+import { connect } from 'react-redux';
 import { Button, Panel, ListGroup } from 'react-bootstrap';
 import { FormattedMessage } from 'rapidfab/i18n';
 
+import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 
 import Event from './Event';
@@ -22,44 +24,85 @@ const filterEvents = events => {
   });
 };
 
-const TraceabilityReport = ({ print, events, onExport }) => {
-  const visibleEvents = filterEvents(events);
-  return (
-    <Panel header="Traceability Report">
+const ExportButton = ({ download, loadingReport, onExport,  }) => {
+  if (download !== "none") {
+    return (
+      <a href={download} download>
+        <Button bsStyle="success" className="pull-right">
+          Download Report
+        </Button>
+      </a>
+    );
+  } else if ( loadingReport ) {
+    return (
+      <Button bsStyle="primary" className="pull-right">
+        <Fa name="spinner" spin />
+      </Button>
+    );
+  } else {
+    return (
       <Button
         bsStyle="primary"
-        onClick={() => {
-          onExport(print);
-        }}
+        onClick={onExport}
         className="pull-right"
       >
-        <FormattedMessage id="button.exportDoc" defaultMessage="Export Doc" />
+        Export Report
       </Button>
-      <ListGroup fill>
-        {visibleEvents.map(event => <Event event={event} key={event.uuid} />)}
-      </ListGroup>
-    </Panel>
-  );
+    );
+  }
 };
 
-const mapDispatchToProps = dispatch => ({
-  onExport: print => {
-    dispatch(
+class TraceabilityReport extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      loadingReport: false,
+    };
+
+    this.onExport = this.onExport.bind(this);
+  }
+
+  onExport() {
+    const { print } = this.props;
+    this.props.dispatch(
       Actions.Api.wyatt['traceability-report'].post({ print: print.uri })
     );
-  },
-});
+    this.setState({ loadingReport: true });
+  }
+
+  render() {
+    const { onExport } = this;
+    const { download, events, print } = this.props;
+    const { loadingReport } = this.state;
+    const visibleEvents = filterEvents(events);
+    return (
+      <Panel header="Traceability Report">
+        <ExportButton
+          download={download}
+          loadingReport={loadingReport}
+          onExport={onExport}
+        />
+        <ListGroup fill>
+          {visibleEvents.map(event => <Event event={event} key={event.uuid} />)}
+        </ListGroup>
+      </Panel>
+    );
+  };
+};
 
 const mapStateToProps = state => {
   const print = state.resources[state.routeUUID];
   const events = Selectors.getEventsForPrint(state, print);
-  return { events, print };
+  const report = Selectors.getTraceabilityReportForPrint(state, print);
+  const download = report && report.content ? report.content : "none";
+  return { events, print, download, report };
 };
 
 TraceabilityReport.propTypes = {
   events: PropTypes.array.isRequired,
-  onExport: PropTypes.func.isRequired,
   print: PropTypes.object.isRequired,
+  download: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TraceabilityReport);
+export default connect(mapStateToProps)(TraceabilityReport);
