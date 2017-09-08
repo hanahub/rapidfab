@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import Config from 'rapidfab/config';
 import { connect } from 'react-redux';
+import Raven from 'raven-js';
 
 import Navbar from 'rapidfab/components/navbar';
 import Routes from 'rapidfab/routes';
@@ -94,7 +95,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.pao.sessions.delete('')).then(redirect);
     },
     onInitialize: () => {
-      dispatch(Actions.Api.pao.sessions.get('')).then(() => {
+      dispatch(Actions.Api.pao.sessions.get('')).then(response => {
+        Raven.setUserContext(response.json);
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT);
         dispatch(Actions.Api.wyatt.bureau.list());
       });
