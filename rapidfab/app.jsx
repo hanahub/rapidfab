@@ -17,6 +17,9 @@ import '../node_modules/fullcalendar-scheduler/dist/scheduler.css';
 
 if (Config.SENTRY_DSN) {
   Raven.config(Config.SENTRY_DSN, { fetchContext: true }).install();
+  /* eslint-disable no-console */
+  console.log('Raven integration installed');
+  /* eslint-disable no-console */
 }
 
 const App = ({ store }) => (
