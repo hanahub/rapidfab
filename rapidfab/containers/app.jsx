@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import Config from 'rapidfab/config';
 import { connect } from 'react-redux';
@@ -41,6 +42,14 @@ const SessionProvider = ({
   return <div />;
 };
 
+SessionProvider.propTypes = {
+  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.element.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onAcceptTerms: PropTypes.func.isRequired,
+};
+
 function redirect() {
   window.location = '/?nextPath=/&subdomain=rapidfab#/';
 }
@@ -64,20 +73,34 @@ class App extends Component {
     return (
       <IntlProvider locale={i18n.locale} messages={i18n.messages}>
         <SessionProvider {...session} onAcceptTerms={onAcceptTerms}>
-          <Navbar
-            onChangeLocale={onChangeLocale}
-            onLogout={onLogout}
-            locale={i18n.locale}
-            currentUser={session.currentUser}
-            bureaus={session.bureaus}
-            session={session}
-          />
-          <Router routes={routes} onNavigate={onNavigate} hash={url.hash} />
+          <div>
+            <Navbar
+              onChangeLocale={onChangeLocale}
+              onLogout={onLogout}
+              locale={i18n.locale}
+              currentUser={session.currentUser}
+              bureaus={session.bureaus}
+              session={session}
+            />
+            <Router routes={routes} onNavigate={onNavigate} hash={url.hash} />
+          </div>
         </SessionProvider>
       </IntlProvider>
     );
   }
 }
+
+App.propTypes = {
+  i18n: PropTypes.object.isRequired,
+  onAcceptTerms: PropTypes.func.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  onNavigate: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+  routes: PropTypes.object.isRequired,
+  url: PropTypes.shape({ hash: PropTypes.string }).isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
