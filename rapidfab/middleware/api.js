@@ -69,7 +69,7 @@ function apiMiddleware({ dispatch, getState }) {
       });
       if (failedToFetch) {
         Raven.captureException(new Error('Failed to fetch'), {
-          extra: api,
+          extra: { api, uuid, filters, errors, payload },
         });
       }
     };
