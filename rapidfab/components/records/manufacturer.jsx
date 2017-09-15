@@ -112,22 +112,6 @@ const ManufacturerForm = ({
               {...fields.notes}
             />
           </BS.FormGroup>
-          <BS.FormGroup style={{ display: 'none' }} controlId="uxBureau">
-            <BS.ControlLabel>
-              <FormattedMessage id="field.bureau" defaultMessage="Bureau" />:
-            </BS.ControlLabel>
-            <BS.FormControl
-              componentClass="select"
-              placeholder="bureau"
-              {...fields.bureau}
-            >
-              {bureaus.map(bureau => (
-                <option key={bureau.uri} value={bureau.uri}>
-                  {bureau.uri}
-                </option>
-              ))}
-            </BS.FormControl>
-          </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
