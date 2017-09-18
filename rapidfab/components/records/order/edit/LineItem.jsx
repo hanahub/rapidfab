@@ -168,7 +168,7 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.materials.support === null? (
+                {estimates.materials.support === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
                 ) : (
                   <FormattedVolume value={estimates.materials.support} />
