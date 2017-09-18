@@ -132,10 +132,10 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.print_time ? (
-                  <FormattedDuration value={estimates.print_time} />
-                ) : (
+                {estimates.print_time === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                ) : (
+                  <FormattedDuration value={estimates.print_time} />
                 )}
               </Col>
             </Row>
@@ -150,10 +150,10 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.materials.base ? (
-                  <FormattedVolume value={estimates.materials.base} />
-                ) : (
+                {estimates.materials.base === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                ) : (
+                  <FormattedVolume value={estimates.materials.base} />
                 )}
               </Col>
             </Row>
@@ -168,10 +168,10 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.materials.support ? (
-                  <FormattedVolume value={estimates.materials.support} />
-                ) : (
+                {estimates.materials.support === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                ) : (
+                  <FormattedVolume value={estimates.materials.support} />
                 )}
               </Col>
             </Row>
@@ -186,13 +186,13 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.post_processing_cost ? (
+                {estimates.post_processing_cost === null ? (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                ) : (
                   <FormattedCost
                     currency={currency}
                     value={estimates.post_processing_cost}
                   />
-                ) : (
-                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
                 )}
               </Col>
             </Row>
@@ -207,10 +207,10 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.amount ? (
-                  <FormattedCost currency={currency} value={estimates.amount} />
-                ) : (
+                {estimates.amount === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                ) : (
+                  <FormattedCost currency={currency} value={estimates.amount} />
                 )}
               </Col>
             </Row>

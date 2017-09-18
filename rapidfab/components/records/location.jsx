@@ -88,7 +88,6 @@ const LocationForm = ({
               ))}
             </BS.FormControl>
           </BS.FormGroup>
-
         </BS.Col>
       </BS.Row>
     </BS.Grid>
