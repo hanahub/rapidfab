@@ -34,6 +34,7 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
+    sourceMapFilename: "[name].js.map",
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

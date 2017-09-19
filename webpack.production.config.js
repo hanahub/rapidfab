@@ -11,6 +11,7 @@ module.exports = Object.assign(webpackConfig, {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: `[name].${process.env.BUILD_VERSION}.bundle.js`,
+    sourceMapFilename: "[name].js.map",
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
