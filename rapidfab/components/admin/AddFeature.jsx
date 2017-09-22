@@ -51,7 +51,7 @@ class NewFeature extends Component {
   render() {
     return (
       <div>
-        <BS.Button bsStyle="success" bsSize="medium" onClick={this.open}>
+        <BS.Button bsStyle="success" onClick={this.open}>
           Add feature
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>

@@ -49,7 +49,7 @@ class AddUser extends Component {
     const { locations } = this.props;
     return (
       <div>
-        <BS.Button bsStyle="success" bsSize="medium" onClick={this.open}>
+        <BS.Button bsStyle="success" onClick={this.open}>
           Add User
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>
