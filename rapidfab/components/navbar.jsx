@@ -56,7 +56,8 @@ class Navbar extends Component {
         <Fa name="user" /> {currentUser.name}
       </span>
     );
-    const bureauName = (bureaus && bureaus.length && bureaus[0].name) || '...';
+    const bureauList = Array.from(bureaus);
+    const bureauName = (bureauList && bureauList.length && bureauList[0].name) || '...';
     return (
       <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>

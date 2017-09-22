@@ -21,6 +21,7 @@ const SessionProvider = ({
   fetching,
   errors,
   onAcceptTerms,
+  roles,
 }) => {
   if (!currentUser && errors.length) {
     const next = window.location.hash.substr(1);
@@ -32,7 +33,7 @@ const SessionProvider = ({
     if (!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />;
     }
-    if (bureaus.length !== 1) {
+    if (bureaus.size !== 1) {
       return <BureauError bureaus={bureaus} />;
     }
 
@@ -43,11 +44,11 @@ const SessionProvider = ({
 };
 
 SessionProvider.propTypes = {
-  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
   children: PropTypes.element.isRequired,
   fetching: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAcceptTerms: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function redirect() {
@@ -122,9 +123,11 @@ function mapDispatchToProps(dispatch) {
         Raven.setUserContext(response.json);
         Actions.EventStream.subscribe(dispatch, Config.HOST.EVENT);
         dispatch(Actions.Api.wyatt.bureau.list());
+        dispatch(Actions.Api.wyatt.role.list());
       });
       dispatch(Actions.Api.pao.permissions.list({ namespace: 'pao' }));
       dispatch(Actions.Api.wyatt.bureau.list());
+      dispatch(Actions.Api.wyatt.role.list());
     },
     onAcceptTerms: user => {
       dispatch(Actions.Api.pao.users.put(user.uuid, { tos: true })).then(() => {
@@ -136,15 +139,17 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const { url, i18n } = state;
+  const bureaus = Selectors.getBureausCurrentUserRoles(state);
   const currentUser = Selectors.getSession(state);
   const permissions = Selectors.getPermissions(state);
-  const bureaus = Selectors.getBureaus(state);
-  const fetching = !currentUser || state.ui.wyatt.bureau.list.fetching;
+  const roles = Selectors.getRolesCurrentUser(state);
+  const fetching = !currentUser || state.ui.wyatt.bureau.list.fetching || state.ui.wyatt.role.list.fetching;
 
   const session = {
+    bureaus,
     currentUser,
     permissions,
-    bureaus,
+    roles,
     fetching,
     errors: [
       ...state.ui.pao.sessions.get.errors,
