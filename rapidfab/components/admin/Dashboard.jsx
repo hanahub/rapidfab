@@ -103,6 +103,11 @@ class Dashboard extends Component {
             </BS.NavItem>
           </BS.Nav>
 
+          <div style={{
+            'borderLeft': '1px solid #ddd',
+            'borderBottom': '1px solid #ddd',
+            'borderRight': '1px solid #ddd',
+          }}>
             {this.state.selectedKey === 1 ? (
               <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
                 <div>
@@ -145,6 +150,7 @@ class Dashboard extends Component {
                 </BS.Table>
               </div>
             )}
+          </div>
         </div>
       </BS.Grid>
     );
