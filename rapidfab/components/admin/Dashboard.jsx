@@ -106,9 +106,9 @@ class Dashboard extends Component {
           <BS.Nav
             activeKey={this.state.selectedKey}
             style={{
-              'border-left': '1px solid #ddd',
-              'border-bottom': '1px solid #ddd',
-              'border-right': '1px solid #ddd',
+              'borderLeft': '1px solid #ddd',
+              'borderBottom': '1px solid #ddd',
+              'borderRight': '1px solid #ddd',
             }}
           >
             <br />
