@@ -103,14 +103,15 @@ function mapStateToProps(state) {
   const feature = state.ui.wyatt.feature;
 
   return {
-    locations: Selectors.getLocations(state),
-    user: Selectors.getSession(state),
-    bureau: Selectors.getBureau(state),
-    permissions: Selectors.getPermissions(state),
-    features: Selectors.getFeatures(state),
-    users: Selectors.getUsers(state),
-    fetching: feature.list.fetching,
-    apiErrors: feature.list.errors,
+    apiErrors   : feature.list.errors,
+    bureau      : Selectors.getBureau(state),
+    features    : Selectors.getFeatures(state),
+    fetching    : feature.list.fetching,
+    locations   : Selectors.getLocations(state),
+    permissions : Selectors.getPermissions(state),
+    roles       : Selectors.getRoles(state),
+    user        : Selectors.getSession(state),
+    users       : Selectors.getUsers(state),
   };
 }
 
