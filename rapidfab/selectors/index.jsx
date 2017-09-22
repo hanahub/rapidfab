@@ -31,6 +31,7 @@ export const getStateBureaus = state => state.api.wyatt.bureau;
 export const getStateFeatures = state => state.api.wyatt.feature;
 export const getStateEvents = state => state.api.wyatt.event;
 export const getStateMaterials = state => state.api.wyatt.material;
+export const getStateRoles = state => state.api.wyatt.role;
 export const getStateStocks = state => state.api.wyatt.stock;
 export const getStateOrders = state => state.api.wyatt.order;
 export const getStateOrderDocuments = state =>
@@ -160,6 +161,28 @@ export const getModels = createSelector(
 export const getMemberships = createSelector(
   [getStateMemberships, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getRoles = createSelector(
+  [getStateRoles, getStateResources],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getRolesCurrentUser = createSelector(
+  [getRoles, getSession],
+  (roles, session) => roles.filter(role  => {
+    return role.username == session.username;
+  })
+);
+
+export const getBureausCurrentUserRoles = createSelector(
+  [getRolesCurrentUser, getBureaus],
+  (roles, bureaus) => roles.reduce((accumulator, role) => {
+    accumulator.add(bureaus.find(bureau => {
+      return bureau.uri == role.bureau;
+    }));
+    return accumulator;
+  }, new Set())
 );
 
 export const getSessions = createSelector(
