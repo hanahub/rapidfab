@@ -150,7 +150,7 @@ const mapStateToProps = state => {
   const postProcessing = _.get(estimates, 'cost.post_processing', null);
   const printTime = _.get(estimates, 'print_time', null);
   const shippingAmount = _.get(estimates, 'cost.shipping_amount', null);
-  const support = _.get(estimates, 'support.base', null);
+  const support = _.get(estimates, 'materials.support', null);
 
   return {
     amount,
