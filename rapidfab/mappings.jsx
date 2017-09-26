@@ -67,13 +67,13 @@ export const ORDER_REGION_MAPPING = {
 };
 
 export const ORDER_SALES_MAPPING = {
+  pending: <FormattedMessage id="order.pending" defaultMessage="Pending" />,
   won: <FormattedMessage id="order.won" defaultMessage="Won" />,
   lost: <FormattedMessage id="order.lost" defaultMessage="Lost" />,
   outsourced: (
     <FormattedMessage id="order.outsourced" defaultMessage="Outsourced" />
   ),
   dead: <FormattedMessage id="order.dead" defaultMessage="Dead" />,
-  pending: <FormattedMessage id="order.pending" defaultMessage="Pending" />,
 };
 
 export const ORDER_TYPE_MAPPING = {
