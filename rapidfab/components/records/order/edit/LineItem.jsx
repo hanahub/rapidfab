@@ -58,19 +58,19 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const PrintItem = ({ id, uuid, status }) => (
+const PrintItem = ({ name, uuid, status }) => (
   <ListGroupItem>
     <Row>
-      <Col xs={6}>
-        <a href={`/#/records/print/${uuid}`}>{id}</a>
+      <Col xs={9}>
+        <a href={`/#/records/print/${uuid}`}>{name}</a>
       </Col>
-      <Col xs={6}>{statusMapping[status]}</Col>
+      <Col xs={3}>{statusMapping[status]}</Col>
     </Row>
   </ListGroupItem>
 );
 
 PrintItem.propTypes = {
-  id: PropTypes.string,
+  name: PropTypes.string,
   uuid: PropTypes.string,
   status: PropTypes.string,
 };
@@ -80,12 +80,12 @@ const Prints = ({ prints }) => (
     <ListGroup fill>
       <ListGroupItem key="header">
         <Row>
-          <Col xs={6}>
+          <Col xs={9}>
             <b>
               <FormattedMessage id="field.id" defaultMessage="ID" />
             </b>
           </Col>
-          <Col xs={6}>
+          <Col xs={3}>
             <b>
               <FormattedMessage id="field.status" defaultMessage="Status" />
             </b>
@@ -95,7 +95,7 @@ const Prints = ({ prints }) => (
 
       {prints.map(print => (
         <PrintItem
-          id={print.id}
+          name={print.name}
           key={print.id}
           status={print.status}
           uuid={print.uuid}

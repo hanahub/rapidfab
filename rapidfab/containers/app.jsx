@@ -143,7 +143,10 @@ function mapStateToProps(state) {
   const currentUser = Selectors.getSession(state);
   const permissions = Selectors.getPermissions(state);
   const roles = Selectors.getRolesCurrentUser(state);
-  const fetching = !currentUser || state.ui.wyatt.bureau.list.fetching || state.ui.wyatt.role.list.fetching;
+  const fetching =
+    !currentUser ||
+    state.ui.wyatt.bureau.list.fetching ||
+    state.ui.wyatt.role.list.fetching;
 
   const session = {
     bureaus,
