@@ -171,7 +171,7 @@ export const getRoles = createSelector(
 export const getRolesCurrentUser = createSelector(
   [getRoles, getSession],
   (roles, session) => roles.filter(role  => {
-    return role.username == session.username;
+    return role.username == session.username ? session : false;
   })
 );
 
