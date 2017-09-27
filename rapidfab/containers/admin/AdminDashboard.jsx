@@ -6,7 +6,7 @@ import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 class DashboardContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.onInitialize(this.props);
   }
   render() {
