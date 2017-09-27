@@ -170,19 +170,16 @@ export const getRoles = createSelector(
 
 export const getRolesCurrentUser = createSelector(
   [getRoles, getSession],
-  (roles, session) => roles.filter(role  => {
-    return role.username == session.username;
-  })
+  (roles, session) => roles.filter(role => role.username == session.username)
 );
 
 export const getBureausCurrentUserRoles = createSelector(
   [getRolesCurrentUser, getBureaus],
-  (roles, bureaus) => roles.reduce((accumulator, role) => {
-    accumulator.add(bureaus.find(bureau => {
-      return bureau.uri == role.bureau;
-    }));
-    return accumulator;
-  }, new Set())
+  (roles, bureaus) =>
+    roles.reduce((accumulator, role) => {
+      accumulator.add(bureaus.find(bureau => bureau.uri == role.bureau));
+      return accumulator;
+    }, new Set())
 );
 
 export const getSessions = createSelector(
