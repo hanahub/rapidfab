@@ -15,7 +15,7 @@ function apiMiddleware({ dispatch, getState }) {
       api,
       types,
       callApi,
-      shouldCallApi = () => true,
+      shouldCallAPI = () => true,
       uuid,
       filters,
       payload,
@@ -37,7 +37,7 @@ function apiMiddleware({ dispatch, getState }) {
       throw new Error('Expected fetch to be a function.');
     }
 
-    if (!shouldCallApi(getState())) {
+    if (!shouldCallAPI(getState())) {
       return next(action);
     }
 
