@@ -1,3 +1,4 @@
+import Constants from 'rapidfab/constants';
 import Raven from 'raven-js';
 
 function jsonTryParse(text) {
@@ -38,7 +39,13 @@ function apiMiddleware({ dispatch, getState }) {
     }
 
     if (!shouldCallAPI(getState())) {
-      return next(action);
+      return next({
+        api,
+        uuid,
+        filters,
+        payload,
+        type: Constants.RESOURCE_REQUEST_SUPPRESSED,
+      });
     }
 
     const [requestType, successType, failureType] = types;
