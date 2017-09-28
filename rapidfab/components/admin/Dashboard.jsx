@@ -4,6 +4,7 @@ import Toggle from 'react-bootstrap-toggle';
 
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import NewFeature from './AddFeature';
 import AddUser from './AddUser';
@@ -35,7 +36,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { features, users, locations } = this.props;
+    const { features, locations, roles } = this.props;
     const FeatureTable = () => {
       const feature = features.map((feature, index) => (
         <tr key={index}>
@@ -58,29 +59,47 @@ class Dashboard extends Component {
       return <tbody>{feature}</tbody>;
     };
     const UserTable = () => {
-      const user = users.map((user_detail, index) => (
-        <tr key={index}>
-          <td>{user_detail.name}</td>
-          <td>
-            {Array.isArray(user_detail.emails) ? (
-              user_detail.emails[0]
-            ) : (
-              user_detail.emails
-            )}
-          </td>
-          <td>{locations[0] ? locations[0].name : null}</td>
-          <td>Manager</td>
-          <td>
-            <ModifyUser
-              modifyUser={user_detail}
-              locations={locations}
-              bureau={this.props.bureau}
-              {...this.props}
-            />
-          </td>
-        </tr>
-      ));
-      return <tbody>{user}</tbody>;
+      const locationByURI = locations.reduce((map, obj) => {
+        map[obj.uri] = obj;
+        return map;
+      }, {});
+      const LocationLink = ({location}) => {
+        if (!location)
+          return null;
+        const locationUUID = extractUuid(location.uri);
+        const locationPath = `#/records/location/${locationUUID}`;
+        return (
+          <a href={locationPath}>
+            {location.name}
+          </a>
+        )
+      }
+      const role = roles.map((role_detail, index) => {
+        const location = role_detail.location ? locationByURI[role_detail.location] : null;
+        return (
+          <tr key={index}>
+            <td>{role_detail.name}</td>
+            <td>
+              {Array.isArray(role_detail.emails) ? (
+                role_detail.emails[0]
+              ) : (
+                role_detail.emails
+              )}
+            </td>
+            <td>{role_detail.role}</td>
+            <td><LocationLink location={location}/></td>
+            <td>
+              <ModifyUser
+                modifyUser={role_detail}
+                locations={locations}
+                bureau={this.props.bureau}
+                {...this.props}
+              />
+            </td>
+          </tr>
+        )}
+      );
+      return <tbody>{role}</tbody>;
     };
 
     return (
@@ -141,8 +160,8 @@ class Dashboard extends Component {
                     <tr>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Role</th>
                       <th>Location</th>
-                      <th>Permissions</th>
                       <th>Action</th>
                     </tr>
                   </thead>

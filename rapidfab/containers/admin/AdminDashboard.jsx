@@ -105,7 +105,6 @@ function mapStateToProps(state) {
     permissions : Selectors.getPermissions(state),
     roles       : Selectors.getRoles(state),
     user        : Selectors.getSession(state),
-    users       : Selectors.getUsers(state),
   };
 }
 
