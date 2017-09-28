@@ -5,12 +5,12 @@ import * as BS from 'react-bootstrap';
 class ModifyUser extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false };
-    this.onSubmit = this.onSubmit.bind(this);
+    this.close = this.close.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.close = this.close.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.open = this.open.bind(this);
+    this.state = { showModal: false };
   }
 
   onSubmit(event) {
@@ -19,13 +19,13 @@ class ModifyUser extends Component {
     const { userEmail, userName } = this.state;
 
     const payload = {
-      email: userEmail,
-      login: false,
-      name: userName,
-      uri: this.props.modifyUser.uri,
-      username: userEmail,
-      uuid: this.props.modifyUser.uuid,
       bureau,
+      email    : userEmail,
+      login    : false,
+      name     : userName,
+      uri      : this.props.modifyUser.uri,
+      username : userEmail,
+      uuid     : this.props.modifyUser.uuid,
     };
 
     this.props.onSaveUser(payload);
@@ -35,8 +35,8 @@ class ModifyUser extends Component {
   deleteUser() {
     const user = this.props.modifyUser.uri;
     const payload = {
-      userURI: user,
-      bureau: this.props.bureau,
+      bureau  : this.props.bureau,
+      userURI : user,
     };
     this.props.onDeleteUser(payload);
   }
