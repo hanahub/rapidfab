@@ -34,7 +34,12 @@ function reducer(state = {}, action) {
       if (!action.payload) {
         return state;
       }
-      record = hydrateRecord(action.payload);
+      try {
+        record = hydrateRecord(action.payload);
+      } catch (e) {
+        console.warn("Could not handle stream event", e);
+        return state;
+      }
       return _.assign({}, state, {
         [record.uuid]: _.assign({}, state[record.uuid], record),
       });
