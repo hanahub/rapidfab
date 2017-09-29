@@ -15,30 +15,17 @@ class ModifyUser extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const bureau = this.props.bureau.uri;
-    const { userEmail, userName } = this.state;
-
-    const payload = {
-      bureau,
-      email    : userEmail,
-      login    : false,
-      name     : userName,
-      uri      : this.props.modifyUser.uri,
-      username : userEmail,
-      uuid     : this.props.modifyUser.uuid,
-    };
-
-    this.props.onSaveUser(payload);
+    this.props.onSaveUser(
+      this.props.bureau,
+      this.state.userEmail,
+      this.state.userName,
+      this.props.role,
+    );
     this.setState({ showModal: false });
   }
 
   deleteUser() {
-    const user = this.props.modifyUser.uri;
-    const payload = {
-      bureau  : this.props.bureau,
-      userURI : user,
-    };
-    this.props.onDeleteUser(payload);
+    this.props.onDeleteUser(this.props.bureau, this.props.role);
   }
 
   handleChange(event) {
@@ -74,8 +61,8 @@ class ModifyUser extends Component {
                   name="userEmail"
                   onChange={this.handleChange}
                   value={
-                    this.props.modifyUser.emails ? (
-                      this.props.modifyUser.emails[0]
+                    this.props.role.emails ? (
+                      this.props.role.emails[0]
                     ) : null
                   }
                   disabled
@@ -86,7 +73,7 @@ class ModifyUser extends Component {
                   type="text"
                   name="userName"
                   onChange={this.handleChange}
-                  defaultValue={this.props.modifyUser.name}
+                  defaultValue={this.props.role.name}
                   required
                 />
                 <br />

@@ -90,9 +90,9 @@ class Dashboard extends Component {
             <td><LocationLink location={location}/></td>
             <td>
               <ModifyUser
-                modifyUser={role_detail}
-                locations={locations}
                 bureau={this.props.bureau}
+                locations={locations}
+                role={role_detail}
                 {...this.props}
               />
             </td>

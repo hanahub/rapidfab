@@ -36,39 +36,50 @@ function makePut(api, host, resource) {
 }
 
 function makeList(api, host, resource) {
-  return filters => ({
+  return (filters, forced=false) => ({
     api: {
       resource,
       host,
       method: 'LIST',
     },
+    callApi: () => api[host][resource].list(filters),
     filters,
+    previousCallResult: state => {
+      return state.ui[host][resource].list;
+    },
+    shouldCallAPI: state => {
+      if(forced) return true;
+      return !state.ui[host][resource].list.count
+    },
     types: [
       Constants.RESOURCE_LIST_REQUEST,
       Constants.RESOURCE_LIST_SUCCESS,
       Constants.RESOURCE_LIST_FAILURE,
     ],
-    shouldCallAPI: state =>
-      !state.ui[host][resource].list.count,
-    callApi: () => api[host][resource].list(filters),
   });
 }
 
 function makeGet(api, host, resource) {
-  return uuid => ({
+  return (uuid, forced=false) => ({
     api: {
       resource,
       host,
       method: 'GET',
     },
-    uuid,
+    callApi: () => api[host][resource].get(uuid),
+    previousCallResult: state => {
+      return state.resources[uuid];
+    },
+    shouldCallAPI: state => {
+      if(forced) return true;
+      return !state.resources[uuid];
+    },
     types: [
       Constants.RESOURCE_GET_REQUEST,
       Constants.RESOURCE_GET_SUCCESS,
       Constants.RESOURCE_GET_FAILURE,
     ],
-    shouldCallAPI: state => !state.resources[uuid],
-    callApi: () => api[host][resource].get(uuid),
+    uuid,
   });
 }
 
