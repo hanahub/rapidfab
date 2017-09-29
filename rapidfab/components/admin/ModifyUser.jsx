@@ -17,9 +17,9 @@ class ModifyUser extends Component {
     event.preventDefault();
     this.props.onSaveUser(
       this.props.bureau,
+      this.props.role,
       this.state.userEmail,
       this.state.userName,
-      this.props.role,
     );
     this.setState({ showModal: false });
   }
@@ -41,11 +41,10 @@ class ModifyUser extends Component {
   }
 
   render() {
-    const { locations } = this.props;
-
+    const { enabled, locations } = this.props;
     return (
       <div>
-        <BS.Button bsSize="small" onClick={this.open}>
+        <BS.Button bsSize="small" onClick={this.open} disabled={!enabled}>
           Modify User
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>

@@ -10,6 +10,15 @@ import NewFeature from './AddFeature';
 import AddUser from './AddUser';
 import ModifyUser from './ModifyUser';
 
+function hasManagerRole(bureau, roles, user) {
+  for(const role of roles) {
+    if(role.username == user.username && role.bureau == bureau.uri && role.role == 'manager') {
+      return true;
+    }
+  }
+  return false;
+}
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +45,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { features, locations, roles } = this.props;
+    const { bureau, features, locations, roles, user } = this.props;
+    const isManager = hasManagerRole(bureau, roles, user);
     const FeatureTable = () => {
       const feature = features.map((feature, index) => (
         <tr key={index}>
@@ -58,7 +68,7 @@ class Dashboard extends Component {
       ));
       return <tbody>{feature}</tbody>;
     };
-    const UserTable = () => {
+    const UserTable = ({manager}) => {
       const locationByURI = locations.reduce((map, obj) => {
         map[obj.uri] = obj;
         return map;
@@ -91,6 +101,7 @@ class Dashboard extends Component {
             <td>
               <ModifyUser
                 bureau={this.props.bureau}
+                enabled={manager}
                 locations={locations}
                 role={role_detail}
                 {...this.props}
@@ -165,7 +176,7 @@ class Dashboard extends Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <UserTable {...this.props} />
+                  <UserTable manager={isManager} {...this.props} />
                 </BS.Table>
               </div>
             )}
