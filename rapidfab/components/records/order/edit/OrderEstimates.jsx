@@ -39,10 +39,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {printTime !== null ? (
-              <FormattedDuration value={printTime} />
-            ) : (
+            {printTime === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedDuration value={printTime} />
             )}
           </Col>
         </Row>
@@ -57,10 +57,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {base ? (
-              <FormattedVolume value={base} />
-            ) : (
+            {base === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedVolume value={base} />
             )}
           </Col>
         </Row>
@@ -75,10 +75,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {support ? (
-              <FormattedVolume value={support} />
-            ) : (
+            {support === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedVolume value={support} />
             )}
           </Col>
         </Row>
@@ -93,10 +93,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {postProcessing ? (
-              <FormattedCost currency={currency} value={postProcessing} />
-            ) : (
+            {postProcessing === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedCost currency={currency} value={postProcessing} />
             )}
           </Col>
         </Row>
@@ -111,10 +111,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {shippingAmount ? (
-              <FormattedCost currency={currency} value={shippingAmount} />
-            ) : (
+            {shippingAmount === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedCost currency={currency} value={shippingAmount} />
             )}
           </Col>
         </Row>
@@ -129,10 +129,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {amount ? (
-              <FormattedCost currency={currency} value={amount} />
-            ) : (
+            {amount === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedCost currency={currency} value={amount} />
             )}
           </Col>
         </Row>
