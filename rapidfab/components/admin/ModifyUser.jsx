@@ -74,9 +74,9 @@ class ModifyUser extends Component {
                   name="userEmail"
                   onChange={this.handleChange}
                   value={
-                    this.props.modifyUser.emails ? (
-                      this.props.modifyUser.emails[0]
-                    ) : null
+                    this.props.modifyUser.emails
+                      ? this.props.modifyUser.emails[0]
+                      : null
                   }
                   disabled
                 />

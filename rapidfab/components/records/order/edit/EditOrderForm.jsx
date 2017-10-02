@@ -78,13 +78,13 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
         <option value={fields.status.initialValue}>
           {ORDER_STATUS_MAP[fields.status.initialValue]}
         </option>
-        {statusOptionsMap[fields.status.initialValue] ? (
-          statusOptionsMap[fields.status.initialValue].map(status => (
-            <option key={status} value={status}>
-              {ORDER_STATUS_MAP[status]}
-            </option>
-          ))
-        ) : null}
+        {statusOptionsMap[fields.status.initialValue]
+          ? statusOptionsMap[fields.status.initialValue].map(status => (
+              <option key={status} value={status}>
+                {ORDER_STATUS_MAP[status]}
+              </option>
+            ))
+          : null}
       </FormControl>
     </FormRow>
 

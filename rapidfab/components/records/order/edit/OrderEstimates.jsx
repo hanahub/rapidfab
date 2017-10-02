@@ -6,10 +6,11 @@ import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import {
   FormattedCost,
-  FormattedDuration,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
+
+import hhmmss from 'rapidfab/utils/hhmmss';
 
 const OrderEstimates = ({
   amount,
@@ -42,7 +43,7 @@ const OrderEstimates = ({
             {printTime === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
             ) : (
-              <FormattedDuration value={printTime} />
+              <span>{hhmmss(printTime)}</span>
             )}
           </Col>
         </Row>

@@ -62,11 +62,9 @@ class Dashboard extends Component {
         <tr key={index}>
           <td>{user_detail.name}</td>
           <td>
-            {Array.isArray(user_detail.emails) ? (
-              user_detail.emails[0]
-            ) : (
-              user_detail.emails
-            )}
+            {Array.isArray(user_detail.emails)
+              ? user_detail.emails[0]
+              : user_detail.emails}
           </td>
           <td>{locations[0] ? locations[0].name : null}</td>
           <td>Manager</td>
