@@ -14,14 +14,13 @@ import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import Loading from 'rapidfab/components/Loading';
 import {
   FormattedCost,
-  FormattedDuration,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
 
-import LineItemForm from './LineItemForm';
-
 import hhmmss from 'rapidfab/utils/hhmmss';
+
+import LineItemForm from './LineItemForm';
 
 const LineItemHeader = () => (
   <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
@@ -72,9 +71,9 @@ const PrintItem = ({ name, uuid, status }) => (
 );
 
 PrintItem.propTypes = {
-  name: PropTypes.string,
-  uuid: PropTypes.string,
-  status: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 const Prints = ({ prints }) => (
@@ -108,7 +107,7 @@ const Prints = ({ prints }) => (
 );
 
 Prints.propTypes = {
-  prints: PropTypes.arrayOf(PropTypes.object),
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const Estimates = ({ estimates, currency }) => (
@@ -226,7 +225,7 @@ const Estimates = ({ estimates, currency }) => (
 );
 
 Estimates.propTypes = {
-  currency: PropTypes.string,
+  currency: PropTypes.string.isRequired,
   estimates: PropTypes.shape({
     print_time: PropTypes.number,
     amount: PropTypes.number,
@@ -235,7 +234,7 @@ Estimates.propTypes = {
       support: PropTypes.number,
       base: PropTypes.number,
     }),
-  }),
+  }).isRequired,
 };
 
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
@@ -328,10 +327,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 LineItem.propTypes = {
-  currency: PropTypes.string,
-  lineItem: PropTypes.object,
-  prints: PropTypes.arrayOf(PropTypes.object),
-  snapshot: PropTypes.string,
+  currency: PropTypes.string.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+  snapshot: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(LineItem);

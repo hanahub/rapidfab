@@ -6,7 +6,6 @@ import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import {
   FormattedCost,
-  FormattedDuration,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
