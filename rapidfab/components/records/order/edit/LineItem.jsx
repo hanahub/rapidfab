@@ -21,6 +21,8 @@ import {
 
 import LineItemForm from './LineItemForm';
 
+import hhmmss from 'rapidfab/utils/hhmmss';
+
 const LineItemHeader = () => (
   <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
 );
@@ -135,7 +137,7 @@ const Estimates = ({ estimates, currency }) => (
                 {estimates.print_time === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
                 ) : (
-                  <FormattedDuration value={estimates.print_time} />
+                  <span>{hhmmss(estimates.print_time)}</span>
                 )}
               </Col>
             </Row>
