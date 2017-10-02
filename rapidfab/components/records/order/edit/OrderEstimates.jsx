@@ -39,7 +39,7 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {printTime ? (
+            {printTime !== null ? (
               <FormattedDuration value={printTime} />
             ) : (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
