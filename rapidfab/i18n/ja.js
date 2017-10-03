@@ -162,6 +162,7 @@ export default {
   'order.pending': 'Pending',
   'order.central': 'Central',
   'order.east': 'East',
+  'order.atlantic': 'Mid-Atlantic',
   'order.south': 'South',
   'order.west': 'West',
 
