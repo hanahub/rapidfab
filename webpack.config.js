@@ -77,6 +77,10 @@ module.exports = {
         test: /\.css$/,
         loaders: ['style', 'css-loader'],
       },
+      {
+        test: /\.json$/,
+        loaders: ['json-loader'],
+      },
       { test: /\.png$/, loader: 'url-loader?mimetype=image/png' },
       { test: /\.jpg$/, loader: 'url-loader?mimetype=image/jpg' },
       {

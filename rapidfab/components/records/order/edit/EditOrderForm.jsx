@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 import Actions from 'rapidfab/actions';
 import { getShippings, getUsers } from 'rapidfab/selectors';
@@ -136,7 +137,10 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
     <FormRow id="field.created" defaultMessage="Created">
       <FormControl.Static>
         {created ? (
-          <FormattedDateTime value={created} />
+          <span>
+            <FormattedDateTime value={created} />
+            <span> { moment().tz(moment.tz.guess()).format('z') } </span>
+          </span>
         ) : (
           <em>
             <FormattedMessage id="notAvailable" defaultMessage="N/A" />
