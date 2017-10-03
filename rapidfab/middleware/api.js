@@ -17,7 +17,6 @@ function apiMiddleware({ dispatch, getState }) {
       callApi,
       filters,
       payload,
-      previousCallResult = () => null,
       shouldCallAPI = () => true,
       types,
       uuid,
@@ -52,10 +51,8 @@ function apiMiddleware({ dispatch, getState }) {
 
     const state = getState()
     if(!shouldCallAPI(state)) {
-      const previousResult = previousCallResult(state);
       return new Promise((resolve, reject) => {
         resolve(next(createAPIAction({
-          json: previousResult,
           type: Constants.RESOURCE_REQUEST_SUPPRESSED,
         })));
       });

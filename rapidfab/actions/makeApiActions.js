@@ -44,9 +44,6 @@ function makeList(api, host, resource) {
     },
     callApi: () => api[host][resource].list(filters),
     filters,
-    previousCallResult: state => {
-      return state.ui[host][resource].list;
-    },
     shouldCallAPI: state => {
       if(forced) return true;
       return !state.ui[host][resource].list.count
@@ -67,9 +64,6 @@ function makeGet(api, host, resource) {
       method: 'GET',
     },
     callApi: () => api[host][resource].get(uuid),
-    previousCallResult: state => {
-      return state.resources[uuid];
-    },
     shouldCallAPI: state => {
       if(forced) return true;
       return !state.resources[uuid];
