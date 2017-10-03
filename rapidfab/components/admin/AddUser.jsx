@@ -46,10 +46,10 @@ class AddUser extends Component {
   }
 
   render() {
-    const { locations } = this.props;
+    const { enabled, locations } = this.props;
     return (
       <div>
-        <BS.Button bsStyle="success" onClick={this.open}>
+        <BS.Button bsStyle="success" onClick={this.open} disabled={!enabled} >
           Add User
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>

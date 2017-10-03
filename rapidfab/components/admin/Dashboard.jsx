@@ -160,7 +160,7 @@ class Dashboard extends Component {
                 <div className="container">
                   <BS.Row>
                     <BS.ButtonToolbar className="pull-right">
-                      <AddUser {...this.props} />
+                      <AddUser enabled={isManager} {...this.props} />
                     </BS.ButtonToolbar>
                   </BS.Row>
                   <br />
