@@ -154,7 +154,6 @@ export default {
   'estimates.supportUsed': 'Support Used',
   'estimates.totalCost': 'Total Cost',
 
-  'order.standard': 'Standard',
   'order.benchmark': 'Benchmark',
   'order.timestudy': 'Timestudy',
   'order.won': 'Won',

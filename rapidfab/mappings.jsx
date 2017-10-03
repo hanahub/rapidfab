@@ -77,7 +77,6 @@ export const ORDER_SALES_MAPPING = {
 };
 
 export const ORDER_TYPE_MAPPING = {
-  standard: <FormattedMessage id="order.standard" defaultMessage="Standard" />,
   benchmark: (
     <FormattedMessage id="order.benchmark" defaultMessage="Benchmark" />
   ),
