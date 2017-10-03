@@ -46,7 +46,9 @@ function makeList(api, host, resource) {
     filters,
     shouldCallAPI: state => {
       if(forced) return true;
-      return !state.ui[host][resource].list.count
+      const request = state.ui[host][resource].list;
+      const timeSinceLastRequest = (new Date() - request.finished);
+      return !(request.fetching || (timeSinceLastRequest < 3000));
     },
     types: [
       Constants.RESOURCE_LIST_REQUEST,
@@ -66,7 +68,9 @@ function makeGet(api, host, resource) {
     callApi: () => api[host][resource].get(uuid),
     shouldCallAPI: state => {
       if(forced) return true;
-      return !state.resources[uuid];
+      const request = state.ui[host][resource].get;
+      const timeSinceLastRequest = new Date() - request.finished;
+      return !(request.fetching || timeSinceLastRequest < 3000);
     },
     types: [
       Constants.RESOURCE_GET_REQUEST,

@@ -46,12 +46,13 @@ function reduceMethod(state, action) {
     case Constants.RESOURCE_GET_REQUEST:
     case Constants.RESOURCE_DELETE_REQUEST:
       return {
-        fetching: true,
-        payload,
-        uuid,
-        filters,
-        errors,
         count: state.count + 1,
+        errors,
+        fetching: true,
+        filters,
+        payload,
+        started: new Date(),
+        uuid,
       };
     case Constants.RESOURCE_POST_SUCCESS:
     case Constants.RESOURCE_PUT_SUCCESS:
@@ -64,12 +65,13 @@ function reduceMethod(state, action) {
     case Constants.RESOURCE_GET_FAILURE:
     case Constants.RESOURCE_DELETE_FAILURE:
       return {
+        count: state.count + 1,
+        errors,
         fetching: false,
+        filters,
+        finished: new Date(),
         payload,
         uuid,
-        filters,
-        errors,
-        count: state.count + 1,
       };
     default:
       return state;
