@@ -162,7 +162,7 @@ export default {
   'order.outsourced': 'Outsourced',
   'order.dead': 'Dead',
   'order.pending': 'Pending',
-  'order.north': 'North',
+  'order.central': 'Central',
   'order.east': 'East',
   'order.south': 'South',
   'order.west': 'West',
