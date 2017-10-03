@@ -11,6 +11,7 @@ import AddUser from './AddUser';
 import ModifyUser from './ModifyUser';
 
 function hasManagerRole(bureau, roles, user) {
+  if(!bureau) return false;
   for(const role of roles) {
     if(role.username == user.username && role.bureau == bureau.uri && role.role == 'manager') {
       return true;
