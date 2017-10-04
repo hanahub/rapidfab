@@ -154,7 +154,6 @@ export default {
   'estimates.supportUsed': 'Support Used',
   'estimates.totalCost': 'Total Cost',
 
-  'order.standard': 'Standard',
   'order.benchmark': 'Benchmark',
   'order.timestudy': 'Timestudy',
   'order.won': 'Won',
@@ -162,8 +161,9 @@ export default {
   'order.outsourced': 'Outsourced',
   'order.dead': 'Dead',
   'order.pending': 'Pending',
-  'order.north': 'North',
+  'order.central': 'Central',
   'order.east': 'East',
+  'order.atlantic': 'Mid-Atlantic',
   'order.south': 'South',
   'order.west': 'West',
 

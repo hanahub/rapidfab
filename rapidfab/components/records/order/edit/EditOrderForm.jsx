@@ -160,6 +160,9 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
           {Object.keys(ORDER_TYPE_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_TYPE_MAPPING[type]}
