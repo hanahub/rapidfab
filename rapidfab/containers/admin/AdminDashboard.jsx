@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import DashboardComponent from 'rapidfab/components/admin/Dashboard';
+
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
+import DashboardComponent from 'rapidfab/components/admin/Dashboard';
+
+function redirect() {
+  window.location.hash = '#/admin/dashboard';
+}
+
 class DashboardContainer extends Component {
   componentDidMount() {
-    this.props.onInitialize(this.props);
+    this.props.onInitialize();
   }
   render() {
     return <DashboardComponent {...this.props} />;
   }
 }
 
-function redirect() {
-  window.location.hash = '#/admin/dashboard';
-}
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onInitialize: props => {
+    onInitialize: () => {
       dispatch(Actions.Api.wyatt.feature.list());
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.Api.wyatt.role.list());
@@ -88,19 +90,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
-  const feature = state.ui.wyatt.feature;
-
-  return {
-    apiErrors   : feature.list.errors,
-    bureau      : Selectors.getBureau(state),
-    features    : Selectors.getFeatures(state),
-    fetching    : feature.list.fetching,
-    locations   : Selectors.getLocations(state),
-    permissions : Selectors.getPermissions(state),
-    roles       : Selectors.getRoles(state),
-    user        : Selectors.getSession(state),
-  };
-}
+const mapStateToProps = (state) => ({
+  bureau      : Selectors.getBureau(state),
+  features    : Selectors.getFeatures(state),
+  locations   : Selectors.getLocations(state),
+  permissions : Selectors.getPermissions(state),
+  roles       : Selectors.getRoles(state),
+  user        : Selectors.getSession(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
