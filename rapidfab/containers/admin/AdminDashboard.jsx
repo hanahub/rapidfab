@@ -30,60 +30,55 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.wyatt.feature.post(payload));
       }
     },
-    onSaveUser: payload => {
-      const bureau = payload.bureau;
-      delete payload.bureau;
-      if (payload.uuid) {
-        dispatch(Actions.Api.pao.users.put(payload.uuid, payload));
-        redirect();
-      } else {
-        dispatch(Actions.Api.pao.users.post(payload)).then(args => {
-          dispatch(
-            Actions.Api.wyatt['membership-bureau'].post({
-              user: args.headers.location,
-              bureau,
-            })
-          );
-        });
-        redirect();
+    onCreateUser: (bureau, name, email, role, location) => {
+      const payload = {
+        bureau: bureau.uri,
+        location: role == 'location-user' ? location : null,
+        role: role,
+        username: email,
       }
+      dispatch(Actions.Api.wyatt.role.post(payload)).then(() => {
+        dispatch(Actions.Api.wyatt.role.list({}, true));
+      });
     },
-    onDeleteUser: payload => {
-      if (payload) {
-        dispatch(
-          Actions.Api.wyatt['membership-bureau'].list({
-            user: payload.userURI,
-            bureau: payload.bureau.uri,
-          })
-        ).then(response => {
-          if (
-            response &&
-            response.json &&
-            response.json.resources &&
-            response.json.resources.length
-          ) {
-            // for some reason we get back all memberships, not just for the user we are searching for
-            const membership = response.json.resources.find(
-              resource => resource.user === payload.userURI
-            );
-            const uuid = extractUuid(membership.uri);
-            dispatch(
-              Actions.Api.wyatt['membership-bureau'].delete(uuid)
-            ).then(() => {
-              dispatch(
-                Actions.Api.pao.users.remove(extractUuid(membership.user))
-              );
-              redirect();
-            });
-          } else {
-            /* eslint-disable no-console */
-            console.error(
-              'This is the wrong bureau. Make sure you impersonate the manager of the bureau!'
-            );
-            /* eslint-enable no-console */
-          }
-        });
+    onUpdateUser: (role, newRole, location, userName) => {
+      let roleUpdate = new Promise((resolve, reject) => {resolve()});
+      if(newRole || location) {
+        let rolePayload = {
+          location  : location || role.location,
+          role      : newRole || role.role,
+        }
+        if(rolePayload.role != "location-user") {
+          rolePayload.location = null;
+        }
+        roleUpdate = dispatch(Actions.Api.wyatt.role.put(role.uuid, rolePayload));
       }
+      let userUpdate = null;
+      if(userName) {
+        userUpdate = new Promise((resolve, reject) => {
+          dispatch(Actions.Api.pao.users.list({ username: role.username })).then(response => {
+            const userPayload = {
+              name  : userName,
+            }
+            const userUUID = response.json.resources[0].uuid;
+            userUpdate = dispatch(Actions.Api.pao.users.put(userUUID, userPayload)).then(() => {
+              resolve()
+            });
+          });
+        })
+      } else {
+        userUpdate = new Promise((resolve, reject) => {resolve()});
+      }
+      Promise.all([roleUpdate, userUpdate]).then(() => {
+        dispatch(Actions.Api.wyatt.role.list({}, true));
+      });
+    },
+    onDeleteUser: (bureau, role) => {
+      dispatch(
+        Actions.Api.wyatt.role.delete(role.uuid)
+      ).then(response => {
+        redirect();
+      });
     },
     updateFeature: payload => {
       if (payload) {
