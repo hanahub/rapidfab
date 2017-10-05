@@ -10,7 +10,7 @@ class ModifyUser extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.open = this.open.bind(this);
-    this.state = { role: this.props.role.role, showModal: false };
+    this.state = { role: this.props.role.role || 'global-user', showModal: false };
   }
 
   onSubmit(event) {
