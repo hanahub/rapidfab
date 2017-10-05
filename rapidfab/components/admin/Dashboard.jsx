@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
@@ -27,6 +28,10 @@ class Dashboard extends Component {
     this.state = { selectedKey: 2, features };
     this.onToggle = this.onToggle.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(_.isEqual(nextProps, this.props) && _.isEqual(nextState, this.state))
   }
 
   onToggle(updatedFeature) {
