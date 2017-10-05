@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(
         Actions.Api.wyatt.role.delete(role.uuid)
       ).then(response => {
-        redirect();
+        dispatch(Actions.Api.wyatt.role.list({}, true));
       });
     },
     updateFeature: payload => {
