@@ -146,9 +146,14 @@ export const getRoles = createSelector(
 
 export const getRolesCurrentUser = createSelector(
   [getRoles, getSession],
-  (roles, session) => roles.filter(role  => {
-    return role.username == session.username ? session : false;
-  })
+  (roles, session) => {
+    if(!session) {
+      return [];
+    }
+    return roles.filter(role  => {
+      return role.username == session.username ? session : false;
+     });
+  }
 );
 
 export const getBureausCurrentUserRoles = createSelector(
