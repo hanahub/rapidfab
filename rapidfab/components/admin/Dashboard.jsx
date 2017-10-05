@@ -8,7 +8,6 @@ import ShowMaybe from 'rapidfab/components/showMaybe';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import NewFeature from './AddFeature';
-import AddUser from './AddUser';
 import ModifyUser from './ModifyUser';
 
 function hasManagerRole(bureau, roles, user) {
@@ -109,6 +108,7 @@ class Dashboard extends Component {
                 bureau={this.props.bureau}
                 enabled={manager}
                 locations={locations}
+                newUser={false}
                 role={role_detail}
                 {...this.props}
               />
@@ -166,7 +166,7 @@ class Dashboard extends Component {
                 <div className="container">
                   <BS.Row>
                     <BS.ButtonToolbar className="pull-right">
-                      <AddUser enabled={isManager} {...this.props} />
+                      <ModifyUser newUser={true} enabled={isManager} role={{}} {...this.props} />
                     </BS.ButtonToolbar>
                   </BS.Row>
                   <br />
