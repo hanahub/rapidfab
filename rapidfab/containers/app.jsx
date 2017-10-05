@@ -33,7 +33,7 @@ const SessionProvider = ({
     if (!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />;
     }
-    if (bureaus.size !== 1) {
+    if (bureaus.size == 0) {
       return <BureauError bureaus={bureaus} />;
     }
 
