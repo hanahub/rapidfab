@@ -98,33 +98,9 @@ export const getRouteResource = createSelector(
   (route, resources) => resources[route.uuid]
 );
 
-export const getBureau = createSelector(
-  [getStateBureaus, getStateResources],
-  (uuids, resources) => {
-    const bureau = resources[_.head(uuids)];
-    if (!bureau) {
-      throw new Error('No bureau found. A Bureau is required.');
-    }
-    return bureau;
-  }
-);
-
-export const getBureauUri = createSelector([getBureau], bureau => bureau.uri);
-
 export const getFeatures = createSelector(
   [getStateFeatures, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
-);
-
-export const getInitialValuesBureau = createSelector(
-  [getRoute, getStateResources, getBureau],
-  (route, resources, bureau) => {
-    const resource = resources[route.uuid] || {};
-    if (!resource.bureau) {
-      resource.bureau = bureau.uri;
-    }
-    return resource;
-  }
 );
 
 export const getSession = createSelector(
@@ -184,6 +160,28 @@ export const getBureausCurrentUserRoles = createSelector(
     return accumulator;
   }, new Set())
 );
+
+export const getBureau = createSelector(
+  [getBureausCurrentUserRoles],
+  (bureaus) => {
+    if(!(bureaus && bureaus.size)) {
+      return null;
+    }
+    return Array.from(bureaus)[0]
+  }
+);
+
+export const getInitialValuesBureau = createSelector(
+  [getRoute, getStateResources, getBureau],
+  (route, resources, bureau) => {
+    const resource = resources[route.uuid] || {};
+    if (!resource.bureau) {
+      resource.bureau = bureau.uri;
+    }
+    return resource;
+  }
+);
+
 
 export const getSessions = createSelector(
   [getStateSessions, getStateResources],
