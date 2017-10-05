@@ -33,15 +33,20 @@ const mapDispatchToProps = (dispatch) => {
       }
     },
     onCreateUser: (bureau, name, email, role, location) => {
-      const payload = {
+      const userPayload = {
+        name,
+        email,
+        login: false,
+      };
+      const rolePayload = {
         bureau: bureau.uri,
         location: role == 'location-user' ? location : null,
         role: role,
         username: email,
-      }
-      dispatch(Actions.Api.wyatt.role.post(payload)).then(() => {
-        dispatch(Actions.Api.wyatt.role.list({}, true));
-      });
+      };
+      dispatch(Actions.Api.pao.users.post(userPayload))
+        .then(() => dispatch(Actions.Api.wyatt.role.post(rolePayload)))
+        .then(() => dispatch(Actions.Api.wyatt.role.list({}, true)));
     },
     onUpdateUser: (role, newRole, location, userName) => {
       let roleUpdate = new Promise((resolve, reject) => {resolve()});
