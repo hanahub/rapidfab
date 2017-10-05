@@ -29,6 +29,9 @@ class ModifyUser extends Component {
   }
 
   handleChange(event) {
+    if(event.target.name == 'role' && !this.state.location && this.props.locations.length) {
+      this.setState({ location: this.props.locations[0].uri })
+    }
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -84,8 +87,8 @@ class ModifyUser extends Component {
                 </BS.FormControl>
                 <br />
                 <BS.ControlLabel>Location:</BS.ControlLabel>
-                <BS.FormControl componentClass="select">
-                  {_.map(locations, location => (
+                <BS.FormControl name="location" componentClass="select" defaultValue={this.props.role.location} disabled={this.state.role != 'location-user'} onChange={this.handleChange}>
+                  {this.state.role != 'location-user' ? <option key="empty" value=""></option> : _.map(locations, location => (
                     <option key={location.uuid} value={location.uri}>
                       {location.name}
                     </option>
