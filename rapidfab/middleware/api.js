@@ -89,7 +89,7 @@ function apiMiddleware({ dispatch, getState }) {
         if (response.status >= 400) {
           const error = new Error(
             `Error calling API on ${failureType} response status ${response.status}`,
-            args
+            createAPIAction({}),
           );
           if (json && json.errors && json.errors.length) {
             handleError(json.errors);
