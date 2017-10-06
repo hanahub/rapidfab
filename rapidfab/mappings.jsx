@@ -60,24 +60,24 @@ export const RUN_OPERATION_MAP = {
 };
 
 export const ORDER_REGION_MAPPING = {
-  north: <FormattedMessage id="order.north" defaultMessage="North" />,
+  central: <FormattedMessage id="order.central" defaultMessage="Central" />,
   east: <FormattedMessage id="order.east" defaultMessage="East" />,
+  'mid_atlantic': <FormattedMessage id="order.midAtlantic" defaultMessage="Mid-Atlantic" />,
   south: <FormattedMessage id="order.south" defaultMessage="South" />,
   west: <FormattedMessage id="order.west" defaultMessage="West" />,
 };
 
 export const ORDER_SALES_MAPPING = {
+  pending: <FormattedMessage id="order.pending" defaultMessage="Pending" />,
   won: <FormattedMessage id="order.won" defaultMessage="Won" />,
   lost: <FormattedMessage id="order.lost" defaultMessage="Lost" />,
   outsourced: (
     <FormattedMessage id="order.outsourced" defaultMessage="Outsourced" />
   ),
   dead: <FormattedMessage id="order.dead" defaultMessage="Dead" />,
-  pending: <FormattedMessage id="order.pending" defaultMessage="Pending" />,
 };
 
 export const ORDER_TYPE_MAPPING = {
-  standard: <FormattedMessage id="order.standard" defaultMessage="Standard" />,
   benchmark: (
     <FormattedMessage id="order.benchmark" defaultMessage="Benchmark" />
   ),

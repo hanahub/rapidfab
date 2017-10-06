@@ -14,10 +14,11 @@ import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import Loading from 'rapidfab/components/Loading';
 import {
   FormattedCost,
-  FormattedDuration,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
+
+import hhmmss from 'rapidfab/utils/hhmmss';
 
 import LineItemForm from './LineItemForm';
 
@@ -58,21 +59,21 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const PrintItem = ({ id, uuid, status }) => (
+const PrintItem = ({ name, uuid, status }) => (
   <ListGroupItem>
     <Row>
-      <Col xs={6}>
-        <a href={`/#/records/print/${uuid}`}>{id}</a>
+      <Col xs={9}>
+        <a href={`/#/records/print/${uuid}`}>{name}</a>
       </Col>
-      <Col xs={6}>{statusMapping[status]}</Col>
+      <Col xs={3}>{statusMapping[status]}</Col>
     </Row>
   </ListGroupItem>
 );
 
 PrintItem.propTypes = {
-  id: PropTypes.string,
-  uuid: PropTypes.string,
-  status: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  uuid: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 const Prints = ({ prints }) => (
@@ -80,12 +81,12 @@ const Prints = ({ prints }) => (
     <ListGroup fill>
       <ListGroupItem key="header">
         <Row>
-          <Col xs={6}>
+          <Col xs={9}>
             <b>
               <FormattedMessage id="field.id" defaultMessage="ID" />
             </b>
           </Col>
-          <Col xs={6}>
+          <Col xs={3}>
             <b>
               <FormattedMessage id="field.status" defaultMessage="Status" />
             </b>
@@ -95,7 +96,7 @@ const Prints = ({ prints }) => (
 
       {prints.map(print => (
         <PrintItem
-          id={print.id}
+          name={print.name}
           key={print.id}
           status={print.status}
           uuid={print.uuid}
@@ -106,7 +107,7 @@ const Prints = ({ prints }) => (
 );
 
 Prints.propTypes = {
-  prints: PropTypes.arrayOf(PropTypes.object),
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const Estimates = ({ estimates, currency }) => (
@@ -135,7 +136,7 @@ const Estimates = ({ estimates, currency }) => (
                 {estimates.print_time === null ? (
                   <FormattedMessage id="notAvailable" defaultMessage="N/A" />
                 ) : (
-                  <FormattedDuration value={estimates.print_time} />
+                  <span>{hhmmss(estimates.print_time)}</span>
                 )}
               </Col>
             </Row>
@@ -224,7 +225,7 @@ const Estimates = ({ estimates, currency }) => (
 );
 
 Estimates.propTypes = {
-  currency: PropTypes.string,
+  currency: PropTypes.string.isRequired,
   estimates: PropTypes.shape({
     print_time: PropTypes.number,
     amount: PropTypes.number,
@@ -233,7 +234,7 @@ Estimates.propTypes = {
       support: PropTypes.number,
       base: PropTypes.number,
     }),
-  }),
+  }).isRequired,
 };
 
 const LineItem = ({ currency, lineItem, prints, snapshot }) => {
@@ -326,10 +327,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 LineItem.propTypes = {
-  currency: PropTypes.string,
-  lineItem: PropTypes.object,
-  prints: PropTypes.arrayOf(PropTypes.object),
-  snapshot: PropTypes.string,
+  currency: PropTypes.string.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+  snapshot: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(LineItem);

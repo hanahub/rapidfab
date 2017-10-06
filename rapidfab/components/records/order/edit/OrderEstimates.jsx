@@ -6,10 +6,11 @@ import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import {
   FormattedCost,
-  FormattedDuration,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
+
+import hhmmss from 'rapidfab/utils/hhmmss';
 
 const OrderEstimates = ({
   amount,
@@ -39,10 +40,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {printTime ? (
-              <FormattedDuration value={printTime} />
-            ) : (
+            {printTime === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <span>{hhmmss(printTime)}</span>
             )}
           </Col>
         </Row>
@@ -57,10 +58,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {base ? (
-              <FormattedVolume value={base} />
-            ) : (
+            {base === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedVolume value={base} />
             )}
           </Col>
         </Row>
@@ -75,10 +76,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {support ? (
-              <FormattedVolume value={support} />
-            ) : (
+            {support === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedVolume value={support} />
             )}
           </Col>
         </Row>
@@ -93,10 +94,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {postProcessing ? (
-              <FormattedCost currency={currency} value={postProcessing} />
-            ) : (
+            {postProcessing === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedCost currency={currency} value={postProcessing} />
             )}
           </Col>
         </Row>
@@ -111,10 +112,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {shippingAmount ? (
-              <FormattedCost currency={currency} value={shippingAmount} />
-            ) : (
+            {shippingAmount === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedCost currency={currency} value={shippingAmount} />
             )}
           </Col>
         </Row>
@@ -129,10 +130,10 @@ const OrderEstimates = ({
             />
           </Col>
           <Col xs={4}>
-            {amount ? (
-              <FormattedCost currency={currency} value={amount} />
-            ) : (
+            {amount === null ? (
               <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            ) : (
+              <FormattedCost currency={currency} value={amount} />
             )}
           </Col>
         </Row>
@@ -150,7 +151,7 @@ const mapStateToProps = state => {
   const postProcessing = _.get(estimates, 'cost.post_processing', null);
   const printTime = _.get(estimates, 'print_time', null);
   const shippingAmount = _.get(estimates, 'cost.shipping_amount', null);
-  const support = _.get(estimates, 'support.base', null);
+  const support = _.get(estimates, 'materials.support', null);
 
   return {
     amount,

@@ -116,6 +116,9 @@ const NewOrderForm = ({ fields, shippings, users }) => (
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
           {Object.keys(ORDER_TYPE_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_TYPE_MAPPING[type]}
@@ -202,12 +205,10 @@ const mapStateToProps = state => {
 
   const initialCurrency = Currencies[0];
   const initialSalesStatus = Object.keys(ORDER_SALES_MAPPING)[0];
-  const initialOrderType = Object.keys(ORDER_TYPE_MAPPING)[0];
   const initialShipping = shippings[0] ? shippings[0].uri : null;
 
   const initialValues = {
     currency: initialCurrency,
-    order_type: initialOrderType,
     sales_status: initialSalesStatus,
     shipping: {
       uri: initialShipping,

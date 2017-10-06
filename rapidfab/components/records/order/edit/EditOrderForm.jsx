@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 import Actions from 'rapidfab/actions';
 import { getShippings, getUsers } from 'rapidfab/selectors';
@@ -78,13 +79,13 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
         <option value={fields.status.initialValue}>
           {ORDER_STATUS_MAP[fields.status.initialValue]}
         </option>
-        {statusOptionsMap[fields.status.initialValue] ? (
-          statusOptionsMap[fields.status.initialValue].map(status => (
-            <option key={status} value={status}>
-              {ORDER_STATUS_MAP[status]}
-            </option>
-          ))
-        ) : null}
+        {statusOptionsMap[fields.status.initialValue]
+          ? statusOptionsMap[fields.status.initialValue].map(status => (
+              <option key={status} value={status}>
+                {ORDER_STATUS_MAP[status]}
+              </option>
+            ))
+          : null}
       </FormControl>
     </FormRow>
 
@@ -136,7 +137,10 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
     <FormRow id="field.created" defaultMessage="Created">
       <FormControl.Static>
         {created ? (
-          <FormattedDateTime value={created} />
+          <span>
+            <FormattedDateTime value={created} />
+            <span> { moment().tz(moment.tz.guess()).format('z') } </span>
+          </span>
         ) : (
           <em>
             <FormattedMessage id="notAvailable" defaultMessage="N/A" />
@@ -156,6 +160,9 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
           {Object.keys(ORDER_TYPE_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_TYPE_MAPPING[type]}

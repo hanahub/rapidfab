@@ -75,8 +75,8 @@ class ModifyUser extends Component {
                   onChange={this.handleChange}
                   placeholder="someone@aol.com"
                   value={
-                    this.props.role && this.props.role.emails ? (
-                      this.props.role.emails[0]
+                    this.props.role && this.props.role.emails
+                      ? this.props.role.emails[0]
                     ) : null
                   }
                   disabled={!this.props.newUser}

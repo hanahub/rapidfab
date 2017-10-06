@@ -33,8 +33,8 @@ class OrderContainer extends Component {
   }
 
   render() {
-    const { order, routeUUID } = this.props;
-    const loading = !order || !routeUUID;
+    const { order, route, routeUUID } = this.props;
+    const loading = !order || !routeUUID || routeUUID !== route.uuid;
 
     return (
       <div>
