@@ -1,31 +1,31 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
+import api from './api';
 import downloadModel from './downloadModel';
-import uploadModel from './uploadModel';
-import url from './url';
+import i18n from './i18n';
 import locationFilter from './locationFilter';
 import orderLocation from './orderLocation';
-import i18n from './i18n';
-import ui from './ui';
-import routeUUID from './routeUUID';
-import api from './api';
-import resources from './resources';
 import pager from './pager';
+import routeUUID from './routeUUID';
+import resources from './resources';
+import uploadModel from './uploadModel';
+import url from './url';
+import ui from './ui';
 
 const Reducer = combineReducers({
-  form: formReducer,
-  url,
-  i18n,
+  api,
   downloadModel,
+  form: formReducer,
+  i18n,
   locationFilter,
   orderLocation,
-  uploadModel,
-  resources,
-  api,
-  ui,
-  routeUUID,
   pager,
+  resources,
+  routeUUID,
+  ui,
+  uploadModel,
+  url,
 });
 
 export default Reducer;

@@ -1,95 +1,91 @@
 import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import DashboardComponent from 'rapidfab/components/admin/Dashboard';
+
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
+import DashboardComponent from 'rapidfab/components/admin/Dashboard';
+
+function redirect() {
+  window.location.hash = '#/admin/dashboard';
+}
+
 class DashboardContainer extends Component {
-  componentWillMount() {
-    this.props.onInitialize(this.props);
+  componentDidMount() {
+    this.props.onInitialize();
   }
   render() {
     return <DashboardComponent {...this.props} />;
   }
 }
 
-function redirect() {
-  window.location.hash = '#/admin/dashboard';
-}
-
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
-    onInitialize: props => {
+    onInitialize: () => {
       dispatch(Actions.Api.wyatt.feature.list());
       dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.pao.permissions.list({ namespace: 'wyatt' }));
-      if (props.bureau.group) {
-        dispatch(Actions.Api.pao.users.list({ group: props.bureau.group }));
-      }
-      if (props.user.uuid) {
-        dispatch(Actions.Api.pao.users.get(props.user.uuid));
-      }
+      dispatch(Actions.Api.wyatt.role.list());
     },
     onSaveFeature: payload => {
       if (payload) {
         dispatch(Actions.Api.wyatt.feature.post(payload));
       }
     },
-    onSaveUser: payload => {
-      const bureau = payload.bureau;
-      delete payload.bureau;
-      if (payload.uuid) {
-        dispatch(Actions.Api.pao.users.put(payload.uuid, payload));
-        redirect();
-      } else {
-        dispatch(Actions.Api.pao.users.post(payload)).then(args => {
-          dispatch(
-            Actions.Api.wyatt['membership-bureau'].post({
-              user: args.headers.location,
-              bureau,
-            })
-          );
-        });
-        redirect();
-      }
+    onCreateUser: (bureau, name, email, role, location) => {
+      const userPayload = {
+        name,
+        email,
+        login: false,
+      };
+      const rolePayload = {
+        bureau: bureau.uri,
+        location: role == 'location-user' ? location : null,
+        role: role,
+        username: email,
+      };
+      dispatch(Actions.Api.pao.users.post(userPayload))
+        .then(() => dispatch(Actions.Api.wyatt.role.post(rolePayload)))
+        .then(() => dispatch(Actions.Api.wyatt.role.list({}, true)));
     },
-    onDeleteUser: payload => {
-      if (payload) {
-        dispatch(
-          Actions.Api.wyatt['membership-bureau'].list({
-            user: payload.userURI,
-            bureau: payload.bureau.uri,
-          })
-        ).then(response => {
-          if (
-            response &&
-            response.json &&
-            response.json.resources &&
-            response.json.resources.length
-          ) {
-            // for some reason we get back all memberships, not just for the user we are searching for
-            const membership = response.json.resources.find(
-              resource => resource.user === payload.userURI
-            );
-            const uuid = extractUuid(membership.uri);
-            dispatch(
-              Actions.Api.wyatt['membership-bureau'].delete(uuid)
-            ).then(() => {
-              dispatch(
-                Actions.Api.pao.users.remove(extractUuid(membership.user))
-              );
-              redirect();
-            });
-          } else {
-            /* eslint-disable no-console */
-            console.error(
-              'This is the wrong bureau. Make sure you impersonate the manager of the bureau!'
-            );
-            /* eslint-enable no-console */
-          }
-        });
+    onUpdateUser: (role, newRole, location, userName) => {
+      let roleUpdate = new Promise((resolve, reject) => {resolve()});
+      if(newRole || location) {
+        let rolePayload = {
+          location  : location || role.location,
+          role      : newRole || role.role,
+        }
+        if(rolePayload.role != "location-user") {
+          rolePayload.location = null;
+        }
+        roleUpdate = dispatch(Actions.Api.wyatt.role.put(role.uuid, rolePayload));
       }
+      let userUpdate = null;
+      if(userName) {
+        userUpdate = new Promise((resolve, reject) => {
+          dispatch(Actions.Api.pao.users.list({ username: role.username })).then(response => {
+            const userPayload = {
+              name  : userName,
+            }
+            const userUUID = response.json.resources[0].uuid;
+            userUpdate = dispatch(Actions.Api.pao.users.put(userUUID, userPayload)).then(() => {
+              resolve()
+            });
+          });
+        })
+      } else {
+        userUpdate = new Promise((resolve, reject) => {resolve()});
+      }
+      Promise.all([roleUpdate, userUpdate]).then(() => {
+        dispatch(Actions.Api.wyatt.role.list({}, true));
+      });
+    },
+    onDeleteUser: (bureau, role) => {
+      dispatch(
+        Actions.Api.wyatt.role.delete(role.uuid)
+      ).then(response => {
+        dispatch(Actions.Api.wyatt.role.list({}, true));
+      });
     },
     updateFeature: payload => {
       if (payload) {
@@ -99,19 +95,13 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
-  const feature = state.ui.wyatt.feature;
-
-  return {
-    locations: Selectors.getLocations(state),
-    user: Selectors.getSession(state),
-    bureau: Selectors.getBureau(state),
-    permissions: Selectors.getPermissions(state),
-    features: Selectors.getFeatures(state),
-    users: Selectors.getUsers(state),
-    fetching: feature.list.fetching,
-    apiErrors: feature.list.errors,
-  };
-}
+const mapStateToProps = (state) => ({
+  bureau      : Selectors.getBureau(state),
+  features    : Selectors.getFeatures(state),
+  locations   : Selectors.getLocations(state),
+  permissions : Selectors.getPermissions(state),
+  roles       : Selectors.getRoles(state),
+  user        : Selectors.getSession(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

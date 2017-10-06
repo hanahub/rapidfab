@@ -64,7 +64,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
-    bureau: Selectors.getBureauUri(state),
+    bureau: Selectors.getBureau(state).uri,
     manufacturers: Selectors.getManufacturers(state),
     materials: Selectors.getMaterials(state),
     initialValues: Selectors.getInitialValuesBureau(state, props),

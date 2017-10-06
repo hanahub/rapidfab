@@ -36,39 +36,48 @@ function makePut(api, host, resource) {
 }
 
 function makeList(api, host, resource) {
-  return filters => ({
+  return (filters, forced=false) => ({
     api: {
       resource,
       host,
       method: 'LIST',
     },
+    callApi: () => api[host][resource].list(filters),
     filters,
+    shouldCallAPI: state => {
+      if(forced) return true;
+      const request = state.ui[host][resource].list;
+      const timeSinceLastRequest = (new Date() - request.finished);
+      return !(request.fetching || (timeSinceLastRequest < 3000));
+    },
     types: [
       Constants.RESOURCE_LIST_REQUEST,
       Constants.RESOURCE_LIST_SUCCESS,
       Constants.RESOURCE_LIST_FAILURE,
     ],
-    shouldCallAPI: state =>
-      !state.ui[host][resource][method.toLowerCase()].count,
-    callApi: () => api[host][resource].list(filters),
   });
 }
 
 function makeGet(api, host, resource) {
-  return uuid => ({
+  return (uuid, forced=false) => ({
     api: {
       resource,
       host,
       method: 'GET',
     },
-    uuid,
+    callApi: () => api[host][resource].get(uuid),
+    shouldCallAPI: state => {
+      if(forced) return true;
+      const request = state.ui[host][resource].get;
+      const timeSinceLastRequest = new Date() - request.finished;
+      return !(request.fetching || timeSinceLastRequest < 3000);
+    },
     types: [
       Constants.RESOURCE_GET_REQUEST,
       Constants.RESOURCE_GET_SUCCESS,
       Constants.RESOURCE_GET_FAILURE,
     ],
-    shouldCallAPI: state => !state.resources[uuid],
-    callApi: () => api[host][resource].get(uuid),
+    uuid,
   });
 }
 

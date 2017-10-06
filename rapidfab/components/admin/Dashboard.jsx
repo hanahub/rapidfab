@@ -1,13 +1,24 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import NewFeature from './AddFeature';
-import AddUser from './AddUser';
 import ModifyUser from './ModifyUser';
+
+function hasManagerRole(bureau, roles, user) {
+  if(!bureau) return false;
+  for(const role of roles) {
+    if(role.username == user.username && role.bureau == bureau.uri && role.role == 'manager') {
+      return true;
+    }
+  }
+  return false;
+}
 
 class Dashboard extends Component {
   constructor(props) {
@@ -16,6 +27,10 @@ class Dashboard extends Component {
     this.state = { selectedKey: 2, features };
     this.onToggle = this.onToggle.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(_.isEqual(nextProps, this.props) && _.isEqual(nextState, this.state))
   }
 
   onToggle(updatedFeature) {
@@ -35,7 +50,8 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { features, users, locations } = this.props;
+    const { bureau, features, locations, roles, user } = this.props;
+    const isManager = hasManagerRole(bureau, roles, user);
     const FeatureTable = () => {
       const feature = features.map((feature, index) => (
         <tr key={index}>
@@ -57,28 +73,50 @@ class Dashboard extends Component {
       ));
       return <tbody>{feature}</tbody>;
     };
-    const UserTable = () => {
-      const user = users.map((user_detail, index) => (
-        <tr key={index}>
-          <td>{user_detail.name}</td>
-          <td>
-            {Array.isArray(user_detail.emails)
-              ? user_detail.emails[0]
-              : user_detail.emails}
-          </td>
-          <td>{locations[0] ? locations[0].name : null}</td>
-          <td>Manager</td>
-          <td>
-            <ModifyUser
-              modifyUser={user_detail}
-              locations={locations}
-              bureau={this.props.bureau}
-              {...this.props}
-            />
-          </td>
-        </tr>
-      ));
-      return <tbody>{user}</tbody>;
+    const UserTable = ({manager}) => {
+      const locationByURI = locations.reduce((map, obj) => {
+        map[obj.uri] = obj;
+        return map;
+      }, {});
+      const LocationLink = ({location}) => {
+        if (!location)
+          return null;
+        const locationUUID = extractUuid(location.uri);
+        const locationPath = `#/records/location/${locationUUID}`;
+        return (
+          <a href={locationPath}>
+            {location.name}
+          </a>
+        )
+      }
+      const role = roles.map((role_detail, index) => {
+        const location = role_detail.location ? locationByURI[role_detail.location] : null;
+        return (
+          <tr key={index}>
+            <td>{role_detail.name}</td>
+            <td>
+              {Array.isArray(role_detail.emails) ? (
+                role_detail.emails[0]
+              ) : (
+                role_detail.emails
+              )}
+            </td>
+            <td>{role_detail.role}</td>
+            <td><LocationLink location={location}/></td>
+            <td>
+              <ModifyUser
+                bureau={this.props.bureau}
+                enabled={manager}
+                locations={locations}
+                newUser={false}
+                role={role_detail}
+                {...this.props}
+              />
+            </td>
+          </tr>
+        )}
+      );
+      return <tbody>{role}</tbody>;
     };
 
     return (
@@ -101,15 +139,11 @@ class Dashboard extends Component {
             </BS.NavItem>
           </BS.Nav>
 
-          <BS.Nav
-            activeKey={this.state.selectedKey}
-            style={{
-              'border-left': '1px solid #ddd',
-              'border-bottom': '1px solid #ddd',
-              'border-right': '1px solid #ddd',
-            }}
-          >
-            <br />
+          <div style={{
+            'borderLeft': '1px solid #ddd',
+            'borderBottom': '1px solid #ddd',
+            'borderRight': '1px solid #ddd',
+          }}>
             {this.state.selectedKey === 1 ? (
               <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
                 <div>
@@ -132,7 +166,7 @@ class Dashboard extends Component {
                 <div className="container">
                   <BS.Row>
                     <BS.ButtonToolbar className="pull-right">
-                      <AddUser {...this.props} />
+                      <ModifyUser newUser={true} enabled={isManager} role={{}} {...this.props} />
                     </BS.ButtonToolbar>
                   </BS.Row>
                   <br />
@@ -143,16 +177,16 @@ class Dashboard extends Component {
                     <tr>
                       <th>Name</th>
                       <th>Email</th>
+                      <th>Role</th>
                       <th>Location</th>
-                      <th>Permissions</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <UserTable {...this.props} />
+                  <UserTable manager={isManager} {...this.props} />
                 </BS.Table>
               </div>
             )}
-          </BS.Nav>
+          </div>
         </div>
       </BS.Grid>
     );
