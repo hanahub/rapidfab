@@ -46,7 +46,11 @@ const mapDispatchToProps = (dispatch) => {
       };
       dispatch(Actions.Api.pao.users.post(userPayload))
         .then(() => dispatch(Actions.Api.wyatt.role.post(rolePayload)))
-        .then(() => dispatch(Actions.Api.wyatt.role.list({}, true)));
+        .then(() => dispatch(Actions.Api.wyatt.role.list({}, true)))
+        .catch( e => {
+           dispatch(Actions.Api.wyatt.role.post(rolePayload))
+            .then(() => dispatch(Actions.Api.wyatt.role.list({}, true)))
+        });
     },
     onUpdateUser: (role, newRole, location, userName) => {
       let roleUpdate = new Promise((resolve, reject) => {resolve()});
