@@ -112,6 +112,7 @@ describe('ui', () => {
           filters: action.filters,
           errors: [],
           count: 1,
+          started: results.hoth.model[method.toLowerCase()].started,
         };
         expect(results).to.eql(expected);
       });
@@ -147,6 +148,7 @@ describe('ui', () => {
           filters: action.filters,
           errors: [],
           count: 1,
+          finished: results.hoth.model[method.toLowerCase()].finished,
         };
         expect(results).to.eql(expected);
       });
@@ -183,6 +185,7 @@ describe('ui', () => {
           filters: action.filters,
           errors: action.errors,
           count: 1,
+          finished: results.hoth.model[method.toLowerCase()].finished,
         };
         expect(results).to.eql(expected);
       });
