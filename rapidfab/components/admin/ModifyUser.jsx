@@ -77,7 +77,7 @@ class ModifyUser extends Component {
                   value={
                     this.props.role && this.props.role.emails
                       ? this.props.role.emails[0]
-                    ) : null
+                      : null
                   }
                   disabled={!this.props.newUser}
                   required
