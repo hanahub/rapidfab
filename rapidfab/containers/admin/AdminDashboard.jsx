@@ -22,14 +22,8 @@ class DashboardContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   onInitialize: () => {
-    dispatch(Actions.Api.wyatt.feature.list());
     dispatch(Actions.Api.wyatt.location.list());
     dispatch(Actions.Api.wyatt.role.list());
-  },
-  onSaveFeature: payload => {
-    if (payload) {
-      dispatch(Actions.Api.wyatt.feature.post(payload));
-    }
   },
   onCreateUser: (bureau, name, email, role, location) => {
     const userPayload = {
@@ -97,18 +91,11 @@ const mapDispatchToProps = dispatch => ({
       dispatch(Actions.Api.wyatt.role.list({}, true));
     });
   },
-  updateFeature: payload => {
-    if (payload) {
-      dispatch(Actions.Api.wyatt.feature.put(payload.uuid, payload));
-    }
-  },
 });
 
 const mapStateToProps = state => ({
   bureau: Selectors.getBureau(state),
-  features: Selectors.getFeatures(state),
   locations: Selectors.getLocations(state),
-  permissions: Selectors.getPermissions(state),
   roles: Selectors.getRoles(state),
   user: Selectors.getSession(state),
 });
