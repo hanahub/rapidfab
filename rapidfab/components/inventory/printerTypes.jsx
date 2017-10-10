@@ -11,7 +11,7 @@ import Loading from 'rapidfab/components/Loading';
 const PrinterTypesGrid = ({ printerTypes, manufacturers }) => (
   <Grid
     data={printerTypes}
-    columns={['id', 'name', 'type', 'manufacturer']}
+    columns={['id', 'name', 'manufacturer']}
     columnMeta={[
       {
         displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
@@ -22,10 +22,6 @@ const PrinterTypesGrid = ({ printerTypes, manufacturers }) => (
       {
         displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
         columnName: 'name',
-      },
-      {
-        displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
-        columnName: 'type',
       },
       {
         displayName: (
