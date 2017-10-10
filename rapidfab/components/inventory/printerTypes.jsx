@@ -1,48 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-import Error from 'rapidfab/components/error';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 
-const PrinterTypesGrid = ({ printerTypes, manufacturers }) => (
-  <Grid
-    data={printerTypes}
-    columns={['id', 'name', 'manufacturer']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('printer-type'),
-        locked: true,
-      },
-      {
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-        columnName: 'name',
-      },
-      {
-        displayName: (
-          <FormattedMessage
-            id="field.manufacturer"
-            defaultMessage="Manufacturer"
-          />
-        ),
-        columnName: 'manufacturer',
-        customComponent: IdColumn(
-          'manufacturer',
-          'manufacturer',
-          manufacturers,
-          'name'
-        ),
-      },
-    ]}
-  />
-);
-
-const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
+const PrinterTypes = ({ printerTypes, manufacturers, fetching }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['printerTypes']} />
 
@@ -65,25 +33,54 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching, apiErrors }) => (
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
-          <PrinterTypesGrid
-            printerTypes={printerTypes}
-            manufacturers={manufacturers}
+          <Grid
+            data={printerTypes}
+            columns={['id', 'name', 'manufacturer']}
+            columnMeta={[
+              {
+                displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+                columnName: 'id',
+                customComponent: IdColumn('printer-type'),
+                locked: true,
+              },
+              {
+                displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+                columnName: 'name',
+              },
+              {
+                displayName: (
+                  <FormattedMessage
+                    id="field.manufacturer"
+                    defaultMessage="Manufacturer"
+                  />
+                ),
+                columnName: 'manufacturer',
+                customComponent: IdColumn(
+                  'manufacturer',
+                  'manufacturer',
+                  manufacturers,
+                  'name'
+                ),
+              },
+            ]}
           />
         )}
       </BS.Col>
     </BS.Row>
   </BS.Grid>
 );
+
+PrinterTypes.propTypes = {
+  printerTypes: PropTypes.object.isRequired,
+  manufacturers: PropTypes.object.isRequired,
+  fetching: PropTypes.bool.isRequired,
+};
 
 export default PrinterTypes;
