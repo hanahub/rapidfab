@@ -10,26 +10,29 @@ class ModifyUser extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.open = this.open.bind(this);
-    this.state = { role: this.props.role.role || 'global-user', showModal: false };
+    this.state = {
+      role: this.props.role.role || 'global-user',
+      showModal: false,
+    };
   }
 
   onSubmit(event) {
     event.preventDefault();
-    if(this.props.newUser) {
+    if (this.props.newUser) {
       this.props.onCreateUser(
         this.props.bureau,
         this.state.userName,
         this.state.userEmail,
         this.state.role,
-        this.state.location,
-      )
+        this.state.location
+      );
     } else {
       this.props.onUpdateUser(
         this.props.role,
         this.state.role,
         this.state.location,
         this.state.userName,
-        this.props.newUser,
+        this.props.newUser
       );
     }
     this.setState({ showModal: false });
@@ -40,8 +43,12 @@ class ModifyUser extends Component {
   }
 
   handleChange(event) {
-    if(event.target.name == 'role' && !this.state.location && this.props.locations.length) {
-      this.setState({ location: this.props.locations[0].uri })
+    if (
+      event.target.name == 'role' &&
+      !this.state.location &&
+      this.props.locations.length
+    ) {
+      this.setState({ location: this.props.locations[0].uri });
     }
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -58,8 +65,13 @@ class ModifyUser extends Component {
     const { enabled, locations } = this.props;
     return (
       <div>
-        <BS.Button bsSize="small" bsStyle={this.props.newUser ? "success" : "info"} onClick={this.open} disabled={!enabled}>
-          { this.props.newUser ? "Add User" : "Modify User" }
+        <BS.Button
+          bsSize="small"
+          bsStyle={this.props.newUser ? 'success' : 'info'}
+          onClick={this.open}
+          disabled={!enabled}
+        >
+          {this.props.newUser ? 'Add User' : 'Modify User'}
         </BS.Button>
         <BS.Modal show={this.state.showModal} onHide={this.close}>
           <BS.Form onSubmit={this.onSubmit}>
@@ -75,9 +87,9 @@ class ModifyUser extends Component {
                   onChange={this.handleChange}
                   placeholder="someone@aol.com"
                   value={
-                    this.props.role && this.props.role.emails
-                      ? this.props.role.emails[0]
-                      : null
+                    this.props.role && this.props.role.emails ? (
+                      this.props.role.emails[0]
+                    ) : null
                   }
                   disabled={!this.props.newUser}
                   required
@@ -94,28 +106,54 @@ class ModifyUser extends Component {
                 />
                 <br />
                 <BS.ControlLabel>Role:</BS.ControlLabel>
-                <BS.FormControl name="role" defaultValue={this.props.role ? this.props.role.role : null} onChange={this.handleChange} componentClass="select">
-                  <option key="global-user" value="global-user">Global User</option>
-                  <option key="location-user" value="location-user">Local User</option>
-                  <option key="manager" value="manager">Manager</option>
-                  <option key="restricted" value="restricted">Restricted</option>
+                <BS.FormControl
+                  name="role"
+                  defaultValue={this.props.role ? this.props.role.role : null}
+                  onChange={this.handleChange}
+                  componentClass="select"
+                >
+                  <option key="global-user" value="global-user">
+                    Global User
+                  </option>
+                  <option key="location-user" value="location-user">
+                    Local User
+                  </option>
+                  <option key="manager" value="manager">
+                    Manager
+                  </option>
+                  <option key="restricted" value="restricted">
+                    Restricted
+                  </option>
                 </BS.FormControl>
                 <br />
                 <BS.ControlLabel>Location:</BS.ControlLabel>
-                <BS.FormControl name="location" componentClass="select" defaultValue={this.props.role.location} disabled={this.state.role != 'location-user'} onChange={this.handleChange}>
-                  {this.state.role != 'location-user' ? <option key="empty" value=""></option> : _.map(locations, location => (
-                    <option key={location.uuid} value={location.uri}>
-                      {location.name}
-                    </option>
-                  ))}
+                <BS.FormControl
+                  name="location"
+                  componentClass="select"
+                  defaultValue={this.props.role.location}
+                  disabled={this.state.role != 'location-user'}
+                  onChange={this.handleChange}
+                >
+                  {this.state.role != 'location-user' ? (
+                    <option key="empty" value="" />
+                  ) : (
+                    _.map(locations, location => (
+                      <option key={location.uuid} value={location.uri}>
+                        {location.name}
+                      </option>
+                    ))
+                  )}
                 </BS.FormControl>
               </BS.FormGroup>
             </BS.Modal.Body>
             <BS.Modal.Footer>
               <BS.Button onClick={this.close}>Cancel</BS.Button>
-              { this.props.newUser ?
-                <BS.Button bsStyle="success" type="submit">Save{' '}</BS.Button>
-              : <div>
+              {this.props.newUser ? (
+                <BS.Button bsStyle="success" type="submit">
+                  Save{' '}
+                </BS.Button>
+              ) : (
+                <div>
                   <BS.Button bsStyle="danger" onClick={this.deleteUser}>
                     Delete{' '}
                   </BS.Button>
@@ -123,7 +161,7 @@ class ModifyUser extends Component {
                     Update{' '}
                   </BS.Button>
                 </div>
-              }
+              )}
             </BS.Modal.Footer>
           </BS.Form>
         </BS.Modal>

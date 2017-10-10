@@ -147,12 +147,12 @@ export const getRoles = createSelector(
 export const getRolesCurrentUser = createSelector(
   [getRoles, getSession],
   (roles, session) => {
-    if(!session) {
+    if (!session) {
       return [];
     }
-    return roles.filter(role  => {
-      return role.username == session.username ? session : false;
-     });
+    return roles.filter(
+      role => (role.username == session.username ? session : false)
+    );
   }
 );
 
@@ -167,11 +167,11 @@ export const getBureausCurrentUserRoles = createSelector(
 
 export const getBureau = createSelector(
   [getBureausCurrentUserRoles],
-  (bureaus) => {
-    if(!(bureaus && bureaus.size)) {
+  bureaus => {
+    if (!(bureaus && bureaus.size)) {
       return null;
     }
-    return Array.from(bureaus)[0]
+    return Array.from(bureaus)[0];
   }
 );
 
@@ -185,7 +185,6 @@ export const getInitialValuesBureau = createSelector(
     return resource;
   }
 );
-
 
 export const getSessions = createSelector(
   [getStateSessions, getStateResources],
