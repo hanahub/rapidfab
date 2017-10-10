@@ -11,9 +11,13 @@ import NewFeature from './AddFeature';
 import ModifyUser from './ModifyUser';
 
 function hasManagerRole(bureau, roles, user) {
-  if(!bureau) return false;
-  for(const role of roles) {
-    if(role.username == user.username && role.bureau == bureau.uri && role.role == 'manager') {
+  if (!bureau) return false;
+  for (const role of roles) {
+    if (
+      role.username == user.username &&
+      role.bureau == bureau.uri &&
+      role.role == 'manager'
+    ) {
       return true;
     }
   }
@@ -30,7 +34,9 @@ class Dashboard extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !(_.isEqual(nextProps, this.props) && _.isEqual(nextState, this.state))
+    return !(
+      _.isEqual(nextProps, this.props) && _.isEqual(nextState, this.state)
+    );
   }
 
   onToggle(updatedFeature) {
@@ -73,24 +79,21 @@ class Dashboard extends Component {
       ));
       return <tbody>{feature}</tbody>;
     };
-    const UserTable = ({manager}) => {
+    const UserTable = ({ manager }) => {
       const locationByURI = locations.reduce((map, obj) => {
         map[obj.uri] = obj;
         return map;
       }, {});
-      const LocationLink = ({location}) => {
-        if (!location)
-          return null;
+      const LocationLink = ({ location }) => {
+        if (!location) return null;
         const locationUUID = extractUuid(location.uri);
         const locationPath = `#/records/location/${locationUUID}`;
-        return (
-          <a href={locationPath}>
-            {location.name}
-          </a>
-        )
-      }
+        return <a href={locationPath}>{location.name}</a>;
+      };
       const role = roles.map((role_detail, index) => {
-        const location = role_detail.location ? locationByURI[role_detail.location] : null;
+        const location = role_detail.location
+          ? locationByURI[role_detail.location]
+          : null;
         return (
           <tr key={index}>
             <td>{role_detail.name}</td>
@@ -102,7 +105,9 @@ class Dashboard extends Component {
               )}
             </td>
             <td>{role_detail.role}</td>
-            <td><LocationLink location={location}/></td>
+            <td>
+              <LocationLink location={location} />
+            </td>
             <td>
               <ModifyUser
                 bureau={this.props.bureau}
@@ -114,8 +119,8 @@ class Dashboard extends Component {
               />
             </td>
           </tr>
-        )}
-      );
+        );
+      });
       return <tbody>{role}</tbody>;
     };
 
@@ -139,11 +144,13 @@ class Dashboard extends Component {
             </BS.NavItem>
           </BS.Nav>
 
-          <div style={{
-            'borderLeft': '1px solid #ddd',
-            'borderBottom': '1px solid #ddd',
-            'borderRight': '1px solid #ddd',
-          }}>
+          <div
+            style={{
+              borderLeft: '1px solid #ddd',
+              borderBottom: '1px solid #ddd',
+              borderRight: '1px solid #ddd',
+            }}
+          >
             {this.state.selectedKey === 1 ? (
               <ShowMaybe showIf={this.shouldShowAdminFeatures()}>
                 <div>
@@ -166,7 +173,12 @@ class Dashboard extends Component {
                 <div className="container">
                   <BS.Row>
                     <BS.ButtonToolbar className="pull-right">
-                      <ModifyUser newUser={true} enabled={isManager} role={{}} {...this.props} />
+                      <ModifyUser
+                        newUser
+                        enabled={isManager}
+                        role={{}}
+                        {...this.props}
+                      />
                     </BS.ButtonToolbar>
                   </BS.Row>
                   <br />

@@ -57,7 +57,12 @@ class Navbar extends Component {
       </span>
     );
     const bureauList = Array.from(bureaus);
-    const bureauName = (bureauList && bureauList.length && bureauList[0] && bureauList[0].name) || '...';
+    const bureauName =
+      (bureauList &&
+        bureauList.length &&
+        bureauList[0] &&
+        bureauList[0].name) ||
+      '...';
     return (
       <BS.Navbar fixedTop inverse fluid>
         <BS.Navbar.Header>

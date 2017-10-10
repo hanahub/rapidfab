@@ -62,7 +62,9 @@ export const RUN_OPERATION_MAP = {
 export const ORDER_REGION_MAPPING = {
   central: <FormattedMessage id="order.central" defaultMessage="Central" />,
   east: <FormattedMessage id="order.east" defaultMessage="East" />,
-  'mid_atlantic': <FormattedMessage id="order.midAtlantic" defaultMessage="Mid-Atlantic" />,
+  mid_atlantic: (
+    <FormattedMessage id="order.midAtlantic" defaultMessage="Mid-Atlantic" />
+  ),
   south: <FormattedMessage id="order.south" defaultMessage="South" />,
   west: <FormattedMessage id="order.west" defaultMessage="West" />,
 };

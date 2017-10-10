@@ -45,13 +45,17 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching }) => (
             columns={['id', 'name', 'manufacturer']}
             columnMeta={[
               {
-                displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+                displayName: (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                ),
                 columnName: 'id',
                 customComponent: IdColumn('printer-type'),
                 locked: true,
               },
               {
-                displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
+                displayName: (
+                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                ),
                 columnName: 'name',
               },
               {
