@@ -1,46 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Grid, { IdColumn, CapitalizeColumn } from 'rapidfab/components/grid';
-import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
-const ConversionsGrid = ({ records }) => (
-  <Grid
-    data={records}
-    columns={['id', 'currency', 'value']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('conversion'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'region',
-        customComponent: CapitalizeColumn,
-        displayName: (
-          <FormattedMessage id="field.region" defaultMessage="Region" />
-        ),
-      },
-      {
-        columnName: 'value',
-        displayName: (
-          <FormattedMessage id="field.multiplier" defaultMessage="Multiplier" />
-        ),
-      },
-    ]}
-  />
-);
-
-const Conversions = ({ conversions, fetching, apiErrors }) => (
+const Conversions = ({ conversions, fetching }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['currencies']} />
 
@@ -63,18 +33,58 @@ const Conversions = ({ conversions, fetching, apiErrors }) => (
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col xs={12}>
-        {fetching ? <Loading /> : <ConversionsGrid records={conversions} />}
+        {fetching ? (
+          <Loading />
+        ) : (
+          <Grid
+            data={conversions}
+            columns={['id', 'currency', 'value']}
+            columnMeta={[
+              {
+                displayName: (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                ),
+                columnName: 'id',
+                customComponent: IdColumn('conversion'),
+                locked: true,
+              },
+              {
+                columnName: 'name',
+                displayName: (
+                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                ),
+              },
+              {
+                columnName: 'region',
+                customComponent: CapitalizeColumn,
+                displayName: (
+                  <FormattedMessage id="field.region" defaultMessage="Region" />
+                ),
+              },
+              {
+                columnName: 'value',
+                displayName: (
+                  <FormattedMessage
+                    id="field.multiplier"
+                    defaultMessage="Multiplier"
+                  />
+                ),
+              },
+            ]}
+          />
+        )}
       </BS.Col>
     </BS.Row>
   </BS.Grid>
 );
+
+Conversions.propTypes = {
+  conversions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+};
 
 export default Conversions;
