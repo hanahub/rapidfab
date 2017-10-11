@@ -14,6 +14,8 @@ import {
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import UsersContainer from 'rapidfab/containers/admin/UsersContainer';
 
+import AdminSidebar from './AdminSidebar';
+
 const buttonRow ={
   display: 'flex',
   flexDirection: 'row-reverse',
@@ -29,25 +31,20 @@ const Admin = ({ selection, handleSelectionChange }) => (
     </PageHeader>
 
     <div style={buttonRow}>
-      <Button onClick={() => handleSelectionChange('new')}>
+      <Button onClick={() => handleSelectionChange('add')}>
         Add New User
       </Button>
     </div>
 
     <Row>
       <Col xs={12} sm={6}>
-        <UsersContainer
-          selection={selection}
-          handleSelectionChange={handleSelectionChange}
-        />
+        <UsersContainer handleSelectionChange={handleSelectionChange} />
       </Col>
       <Col xs={12} sm={6}>
-        { selection !== 'none' &&
-          <Button onClick={() => handleSelectionChange('none')}>
-            <Fa name="arrow-left" />
-          </Button>
-        }
-        { selection }
+        <AdminSidebar
+          handleSelectionChange={handleSelectionChange}
+          selection={selection}
+        />
       </Col>
     </Row>
   </Grid>
