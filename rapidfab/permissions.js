@@ -1,13 +1,10 @@
 module.exports = {
   has(namespace, right, state) {
-    const foundPermission = [];
-    state.permissions.forEach(permission => {
+    for(const permission of state.permissions) {
       if (permission.namespace === namespace && permission.right === right) {
-        foundPermission.push(permission);
+        return true;
       }
-    });
-    if (foundPermission.length > 0) {
-      return true;
     }
-  },
+    return false;
+  }
 };
