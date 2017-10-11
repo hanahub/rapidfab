@@ -23,7 +23,7 @@ function hasManagerRole(bureau, roles, user) {
   return false;
 }
 
-class Dashboard extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props);
   }
@@ -121,4 +121,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default Admin;

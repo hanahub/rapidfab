@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-import DashboardComponent from 'rapidfab/components/admin/Dashboard';
+import Admin from 'rapidfab/components/admin/Admin';
 
 function redirect() {
   window.location.hash = '#/admin/dashboard';
 }
 
-class DashboardContainer extends Component {
+class AdminContainer extends Component {
   componentDidMount() {
     this.props.onInitialize();
   }
   render() {
-    return <DashboardComponent {...this.props} />;
+    return <Admin {...this.props} />;
   }
 }
 
@@ -100,4 +100,4 @@ const mapStateToProps = state => ({
   user: Selectors.getSession(state),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
