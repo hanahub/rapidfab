@@ -5,17 +5,12 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import { getUsers } from 'rapidfab/selectors';
 
+import Users from 'rapidfab/components/admin/Users';
+
 class UsersContainer extends React.Component {
   componentDidMount() { this.props.fetchUsers() }
 
-  render() {
-    const { users } = this.props;
-    return (
-      <div>
-        { users.map(user => <p>{user.name}</p> )}
-      </div>
-    );
-  }
+  render() { return <Users users={this.props.users} /> }
 }
 
 const mapDispatchToProps = dispatch => ({
