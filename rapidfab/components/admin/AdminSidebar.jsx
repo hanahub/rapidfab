@@ -20,7 +20,7 @@ const AdminSidebar = ({ handleSelectionChange, selection }) => (
       </Button>
     }
     { selection === 'add' && <AddUser handleSelectionChange={handleSelectionChange} /> }
-    { isUuid(selection) && <UserContainer uuid={selection}/> }
+    { isUuid(selection) && <UserContainer uuid={selection} handleSelectionChange={handleSelectionChange} /> }
   </div>
 );
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Actions from 'rapidfab/actions';
 import { getUsers } from 'rapidfab/selectors';
 
 import User from 'rapidfab/components/admin/User';
@@ -9,10 +10,32 @@ import User from 'rapidfab/components/admin/User';
 class UserContainer extends React.Component {
   constructor(props) {
     super(props)
+
+    this.state = { view: 'main' };
+
+    this.handleViewChange = this.handleViewChange.bind(this);
+    this.handleDeleteUser = this.handleDeleteUser.bind(this);
+  }
+
+  handleDeleteUser() {
+    this.props.dispatch(Actions.Api.pao.users.delete(this.props.uuid))
+      .then(() => this.props.handleSelectionChange('none'))
+      .catch(() => {});
+  };
+
+  handleViewChange(view) {
+    this.setState({ view });
   }
 
   render() {
-    return <User user={this.props.user}/>;
+    return (
+      <User
+        handleDeleteUser={this.handleDeleteUser}
+        handleViewChange={this.handleViewChange}
+        user={this.props.user}
+        view={this.state.view}
+      />
+    );
   }
 }
 
