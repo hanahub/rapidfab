@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import HomeComponent from 'rapidfab/components/home';
 import * as Selectors from 'rapidfab/selectors';
+import * as Roles from 'rapidfab/roles';
 
 class HomeContainer extends Component {
   componentWillMount() {
@@ -32,7 +33,11 @@ function mapStateToProps(state) {
   const { run, order, location } = state.ui.wyatt;
   const orderLocation = Selectors.getOrderLocations(state);
   const orders = Selectors.getOrders(state);
+  const roles = Selectors.getRolesCurrentUser(state);
   const runs = Selectors.getRuns(state);
+  if(roles && roles.length && Roles.isRestricted(roles)) {
+    window.location.hash = '#/records/order';
+  }
   let locationFilter = Selectors.getLocationFilter(state);
   let filteredRuns = null;
   let filteredOrders = null;
