@@ -13,7 +13,7 @@ const AdminSidebar = ({ handleSelectionChange, selection }) => (
         <Fa name="arrow-left" />
       </Button>
     }
-    { selection === 'add' && <AddUser /> }
+    { selection === 'add' && <AddUser handleSelectionChange={handleSelectionChange} /> }
   </div>
 );
 

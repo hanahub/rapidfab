@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import UsersContainer from 'rapidfab/containers/admin/UsersContainer';
 
 import AdminSidebar from './AdminSidebar';
@@ -25,6 +26,7 @@ const buttonRow ={
 const Admin = ({ selection, handleSelectionChange }) => (
   <Grid>
     <BreadcrumbNav breadcrumbs={["Admin"]} />
+    <FlashMessages />
 
     <PageHeader>
       User Administration
