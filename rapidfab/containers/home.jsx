@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import HomeComponent from 'rapidfab/components/home';
 import * as Selectors from 'rapidfab/selectors';
+import * as Roles from 'rapidfab/roles';
 
 class HomeContainer extends Component {
   componentWillMount() {
@@ -32,7 +33,11 @@ function mapStateToProps(state) {
   const { run, order, location } = state.ui.wyatt;
   const orderLocation = Selectors.getOrderLocations(state);
   const orders = Selectors.getOrders(state);
+  const roles = Selectors.getRolesCurrentUser(state);
   const runs = Selectors.getRuns(state);
+  if(roles && roles.length && Roles.isRestricted(roles)) {
+    window.location.hash = '#/records/order';
+  }
   let locationFilter = Selectors.getLocationFilter(state);
   let filteredRuns = null;
   let filteredOrders = null;
@@ -58,23 +63,23 @@ function mapStateToProps(state) {
     filteredRuns = Selectors.getRunStatusChart(filteredRuns);
   }
   return {
-    fetching:
-      order.list.fetching ||
-      run.list.fetching ||
-      location.list.fetching ||
-      orderLocation.fetching,
     apiErrors: _.concat(
       order.list.errors,
       run.list.errors,
       location.list.errors,
       orderLocation.errors
     ),
-    locationFilter,
-    locations: Selectors.getLocations(state),
     data: {
       runStatus: filteredRuns || Selectors.getRunStatusChartData(state),
       lastTenOrders: filteredOrders || Selectors.getLastTenOrders(state),
     },
+    fetching:
+      order.list.fetching ||
+      run.list.fetching ||
+      location.list.fetching ||
+      orderLocation.fetching,
+    locationFilter,
+    locations: Selectors.getLocations(state),
   };
 }
 
