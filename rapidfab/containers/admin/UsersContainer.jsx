@@ -10,7 +10,7 @@ import Users from 'rapidfab/components/admin/Users';
 class UsersContainer extends React.Component {
   componentDidMount() { this.props.fetchUsers() }
 
-  render() { return <Users users={this.props.users} /> }
+  render() { return <Users {...this.props} /> }
 }
 
 const mapDispatchToProps = dispatch => ({
