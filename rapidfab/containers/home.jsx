@@ -63,23 +63,23 @@ function mapStateToProps(state) {
     filteredRuns = Selectors.getRunStatusChart(filteredRuns);
   }
   return {
-    fetching:
-      order.list.fetching ||
-      run.list.fetching ||
-      location.list.fetching ||
-      orderLocation.fetching,
     apiErrors: _.concat(
       order.list.errors,
       run.list.errors,
       location.list.errors,
       orderLocation.errors
     ),
-    locationFilter,
-    locations: Selectors.getLocations(state),
     data: {
       runStatus: filteredRuns || Selectors.getRunStatusChartData(state),
       lastTenOrders: filteredOrders || Selectors.getLastTenOrders(state),
     },
+    fetching:
+      order.list.fetching ||
+      run.list.fetching ||
+      location.list.fetching ||
+      orderLocation.fetching,
+    locationFilter,
+    locations: Selectors.getLocations(state),
   };
 }
 
