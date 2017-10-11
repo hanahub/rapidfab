@@ -76,11 +76,11 @@ class App extends Component {
         <SessionProvider {...session} onAcceptTerms={onAcceptTerms}>
           <div>
             <Navbar
-              onChangeLocale={onChangeLocale}
-              onLogout={onLogout}
-              locale={i18n.locale}
               currentUser={session.currentUser}
               bureaus={session.bureaus}
+              locale={i18n.locale}
+              onChangeLocale={onChangeLocale}
+              onLogout={onLogout}
               session={session}
             />
             <Router routes={routes} onNavigate={onNavigate} hash={url.hash} />
