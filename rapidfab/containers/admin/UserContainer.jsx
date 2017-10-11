@@ -17,6 +17,11 @@ class UserContainer extends React.Component {
     this.handleDeleteUser = this.handleDeleteUser.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.uuid !== this.props.uuid)
+      this.setState({ view: 'main' });
+  }
+
   handleDeleteUser() {
     this.props.dispatch(Actions.Api.pao.users.delete(this.props.uuid))
       .then(() => this.props.handleSelectionChange('none'))
@@ -31,6 +36,7 @@ class UserContainer extends React.Component {
     return (
       <User
         handleDeleteUser={this.handleDeleteUser}
+        handleSelectionChange={this.props.handleSelectionChange}
         handleViewChange={this.handleViewChange}
         user={this.props.user}
         view={this.state.view}

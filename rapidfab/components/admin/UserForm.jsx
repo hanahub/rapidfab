@@ -8,7 +8,13 @@ import {
   FormGroup,
 } from 'react-bootstrap';
 
-const UserForm = ({ email, name, handleInputChange, handleSubmit }) => (
+const UserForm = ({
+  isEditing,
+  email,
+  name,
+  handleInputChange,
+  handleSubmit
+}) => (
   <form onSubmit={handleSubmit}>
     <FormGroup>
       <ControlLabel>
@@ -34,13 +40,14 @@ const UserForm = ({ email, name, handleInputChange, handleSubmit }) => (
     </FormGroup>
     <FormGroup>
       <Button type="submit">
-        Create User
+        { isEditing ? "Edit User" : "Create User" }
       </Button>
     </FormGroup>
   </form>
 );
 
 UserForm.propTypes = {
+  isEditing: PropTypes.bool.isRequired,
   email: PropTypes.string.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,

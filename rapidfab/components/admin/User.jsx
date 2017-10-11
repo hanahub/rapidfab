@@ -3,14 +3,26 @@ import PropTypes from 'prop-types';
 
 import { Button } from 'react-bootstrap';
 
+import UserFormContainer from 'rapidfab/containers/admin/UserFormContainer';
 
-const User = ({ view, handleDeleteUser, handleViewChange, user }) => (
+const User = ({
+  handleDeleteUser,
+  handleSelectionChange,
+  handleViewChange,
+  user,
+  view,
+}) => (
   <div>
     <h2>{user.name}</h2>
     { view === 'main' &&
-        <Button onClick={() => handleViewChange('delete')}>
-          Delete User
-        </Button>
+        <div>
+          <Button onClick={() => handleViewChange('edit')}>
+            Edit User
+          </Button>
+          <Button onClick={() => handleViewChange('delete')}>
+            Delete User
+          </Button>
+        </div>
     }
     { view === 'delete' &&
         <div>
@@ -20,6 +32,18 @@ const User = ({ view, handleDeleteUser, handleViewChange, user }) => (
           </Button>
           <Button onClick={() => handleViewChange('main')}>
             No
+          </Button>
+        </div>
+    }
+    {
+      view === 'edit' &&
+        <div>
+          <UserFormContainer
+            handleSelectionChange={handleSelectionChange}
+            user={user}
+          />
+          <Button onClick={() => handleViewChange('main')}>
+            Back
           </Button>
         </div>
     }

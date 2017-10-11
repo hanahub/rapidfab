@@ -10,9 +10,11 @@ class UserFormContainer extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      email: '',
-      name: '',
+    if (this.props.user) {
+      const { name, emails } = this.props.user;
+      this.state = { name, email: emails[0] };
+    } else {
+      this.state = { email: '', name: ''};
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,10 +36,12 @@ class UserFormContainer extends React.Component {
   }
 
   render() {
+    const { editing, email, name } = this.state;
     return (
       <UserForm
-        {...this.props}
-        {...this.state}
+        isEditing={this.props.user ? true : false}
+        email={email}
+        name={name}
         handleInputChange={this.handleInputChange}
         handleSubmit={this.handleSubmit}
       />
@@ -49,7 +53,4 @@ UserFormContainer.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-});
-
-export default connect(mapStateToProps)(UserFormContainer);
+export default connect()(UserFormContainer);
