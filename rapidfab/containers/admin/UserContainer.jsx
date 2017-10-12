@@ -45,6 +45,13 @@ class UserContainer extends React.Component {
   }
 }
 
+UserContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  handleSelectionChange: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = (state, ownProps) => ({
   user: getUsers(state).find(user => user.uuid === ownProps.uuid),
 });

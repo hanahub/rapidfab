@@ -42,7 +42,7 @@ class UserFormContainer extends React.Component {
     this.props
       .dispatch(Actions.Api.pao.users.post(payload))
       .then(() => this.props.handleSelectionChange('none'))
-      .catch(e => {});
+      .catch(() => {});
   }
 
   updateUser(payload) {
@@ -50,7 +50,7 @@ class UserFormContainer extends React.Component {
     this.props
       .dispatch(Actions.Api.pao.users.put(uuid, payload))
       .then(() => this.props.handleSelectionChange('none'))
-      .catch(e => {});
+      .catch(() => {});
   }
 
   isEditing() {
@@ -58,7 +58,7 @@ class UserFormContainer extends React.Component {
   }
 
   render() {
-    const { editing, email, name } = this.state;
+    const { email, name } = this.state;
     return (
       <UserForm
         isEditing={this.isEditing()}
@@ -73,6 +73,7 @@ class UserFormContainer extends React.Component {
 
 UserFormContainer.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default connect()(UserFormContainer);

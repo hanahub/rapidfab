@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { getBureauURI, getLocations, getUserRoles } from 'rapidfab/selectors';
 
 import UserRoles from 'rapidfab/components/admin/UserRoles';
@@ -71,7 +70,9 @@ const mapStateToProps = (state, ownProps) => ({
 
 UserRolesContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  user: PropTypes.object.isRequired,
   userRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

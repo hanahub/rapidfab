@@ -1,11 +1,8 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
 import Permissions from 'rapidfab/permissions';
-import ShowMaybe from 'rapidfab/components/showMaybe';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import AddFeature from './AddFeature';
 
@@ -28,7 +25,7 @@ class Features extends Component {
   }
 
   render() {
-    const { bureau, features, user } = this.props;
+    const { features } = this.props;
     return (
       <BS.Grid fluid>
         <BS.PageHeader>Admin Features</BS.PageHeader>

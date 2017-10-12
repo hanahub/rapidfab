@@ -33,8 +33,8 @@ const UserRoles = ({ handleToggle, userRoles, locations }) => (
 
 UserRoles.propTypes = {
   handleToggle: PropTypes.func.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.object),
-  userRoles: PropTypes.arrayOf(PropTypes.string),
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userRoles: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default UserRoles;

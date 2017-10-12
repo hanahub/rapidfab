@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Fa from 'react-fontawesome';
-import { Button, Col, Grid, PageHeader, Row, Well } from 'react-bootstrap';
+import { Button, Col, Grid, PageHeader, Row } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
@@ -41,7 +40,7 @@ const Admin = ({ selection, handleSelectionChange }) => (
   </Grid>
 );
 
-Admin.PropTypes = {
+Admin.propTypes = {
   selection: PropTypes.string.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
 };

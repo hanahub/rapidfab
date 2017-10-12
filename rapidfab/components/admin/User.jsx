@@ -44,6 +44,7 @@ const User = ({
 User.propTypes = {
   view: PropTypes.string.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
+  handleSelectionChange: PropTypes.func.isRequired,
   handleViewChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
