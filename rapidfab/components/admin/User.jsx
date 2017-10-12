@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button } from 'react-bootstrap';
 
+import UserRolesContainer from 'rapidfab/containers/admin/UserRolesContainer';
 import UserFormContainer from 'rapidfab/containers/admin/UserFormContainer';
 
 const User = ({
@@ -16,6 +17,7 @@ const User = ({
     <h2>{user.name}</h2>
     { view === 'main' &&
         <div>
+          <UserRolesContainer user={user} />
           <Button onClick={() => handleViewChange('edit')}>
             Edit User
           </Button>
