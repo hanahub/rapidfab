@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import {
   getBureauURI,
   getLocations,
@@ -18,17 +19,25 @@ class UserRolesContainer extends React.Component {
     this.handleToggle = this.handleToggle.bind(this);
   }
 
+  componentDidMount() {
+    this.props.dispatch(Actions.Api.wyatt.location.list());
+  }
+
   handleToggle(event) {
-    const { name, checked } = event.target;
+    const { name, checked, dataset } = event.target;
     if (checked) {
       const payload = {
         bureau: this.props.bureau,
+        location: dataset.location || null,
         username: this.props.user.username,
         role: name,
       }
       this.createRole(payload)
     } else {
-      const { uuid } = this.props.userRoles.find(role => role.role === name)
+      const { uuid } = this.props.userRoles.find(role =>
+        dataset.location ? role.location === dataset.location : role.role === name
+      );
+
       this.deleteRole(uuid);
     }
   }
@@ -42,11 +51,14 @@ class UserRolesContainer extends React.Component {
   }
 
   render() {
-    const isManager = this.props.userRoles.some(role => role.role === 'manager')
+    const userRoles = this.props.userRoles.map(role =>
+      role.location ? role.location : role.role
+    );
     return (
       <UserRoles
         handleToggle={this.handleToggle}
-        isManager={isManager}
+        locations={this.props.locations}
+        userRoles={userRoles}
       />
     );
   }
