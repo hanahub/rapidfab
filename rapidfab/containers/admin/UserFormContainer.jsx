@@ -26,20 +26,41 @@ class UserFormContainer extends React.Component {
     this.setState({ [name]: value });
   }
 
+
   handleSubmit(event) {
     event.preventDefault();
     const { email, name } = this.state;
-    const payload = { email, name, login: false };
+    const payload = { email, name };
+
+    if (this.isEditing()) {
+      this.updateUser(payload);
+    } else {
+      this.createUser(Object.assign(payload, { login: false }));
+    }
+  }
+
+  createUser(payload) {
     this.props.dispatch(Actions.Api.pao.users.post(payload))
       .then(() => this.props.handleSelectionChange('none'))
       .catch((e) => {});
+  }
+
+  updateUser(payload) {
+    const { uuid } = this.props.user;
+    this.props.dispatch(Actions.Api.pao.users.put(uuid, payload))
+      .then(() => this.props.handleSelectionChange('none'))
+      .catch((e) => {});
+  }
+
+  isEditing() {
+    return this.props.user ? true : false;
   }
 
   render() {
     const { editing, email, name } = this.state;
     return (
       <UserForm
-        isEditing={this.props.user ? true : false}
+        isEditing={this.isEditing()}
         email={email}
         name={name}
         handleInputChange={this.handleInputChange}
