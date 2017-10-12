@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const UserRoles = ({ userRoles }) => (
+const UserRoles = ({
+  handleToggle,
+  isManager
+}) => (
   <div>
-    { userRoles.map(role =>
-      <p key={role.uri}>
-        {role.role}
-      </p>
-    )}
+    <input
+      name="manager"
+      checked={isManager}
+      onChange={handleToggle}
+      type="checkbox"
+    />
+    <span> Manager</span>
   </div>
 );
 
 UserRoles.propTypes = {
-  userRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isManager: PropTypes.bool.isRequired,
 };
 
 export default UserRoles;
