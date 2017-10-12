@@ -8,13 +8,13 @@ import UserForm from 'rapidfab/components/admin/UserForm';
 
 class UserFormContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     if (this.props.user) {
       const { name, emails } = this.props.user;
       this.state = { name, email: emails[0] };
     } else {
-      this.state = { email: '', name: ''};
+      this.state = { email: '', name: '' };
     }
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -25,7 +25,6 @@ class UserFormContainer extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
-
 
   handleSubmit(event) {
     event.preventDefault();
@@ -40,20 +39,22 @@ class UserFormContainer extends React.Component {
   }
 
   createUser(payload) {
-    this.props.dispatch(Actions.Api.pao.users.post(payload))
+    this.props
+      .dispatch(Actions.Api.pao.users.post(payload))
       .then(() => this.props.handleSelectionChange('none'))
-      .catch((e) => {});
+      .catch(e => {});
   }
 
   updateUser(payload) {
     const { uuid } = this.props.user;
-    this.props.dispatch(Actions.Api.pao.users.put(uuid, payload))
+    this.props
+      .dispatch(Actions.Api.pao.users.put(uuid, payload))
       .then(() => this.props.handleSelectionChange('none'))
-      .catch((e) => {});
+      .catch(e => {});
   }
 
   isEditing() {
-    return this.props.user ? true : false;
+    return !!this.props.user;
   }
 
   render() {

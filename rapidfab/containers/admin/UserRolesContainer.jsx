@@ -4,17 +4,13 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
-import {
-  getBureauURI,
-  getLocations,
-  getUserRoles,
-} from 'rapidfab/selectors';
+import { getBureauURI, getLocations, getUserRoles } from 'rapidfab/selectors';
 
 import UserRoles from 'rapidfab/components/admin/UserRoles';
 
 class UserRolesContainer extends React.Component {
   constructor() {
-    super()
+    super();
 
     this.handleToggle = this.handleToggle.bind(this);
   }
@@ -31,11 +27,14 @@ class UserRolesContainer extends React.Component {
         location: dataset.location || null,
         username: this.props.user.username,
         role: name,
-      }
-      this.createRole(payload)
+      };
+      this.createRole(payload);
     } else {
-      const { uuid } = this.props.userRoles.find(role =>
-        dataset.location ? role.location === dataset.location : role.role === name
+      const { uuid } = this.props.userRoles.find(
+        role =>
+          dataset.location
+            ? role.location === dataset.location
+            : role.role === name
       );
 
       this.deleteRole(uuid);
@@ -51,8 +50,8 @@ class UserRolesContainer extends React.Component {
   }
 
   render() {
-    const userRoles = this.props.userRoles.map(role =>
-      role.location ? role.location : role.role
+    const userRoles = this.props.userRoles.map(
+      role => (role.location ? role.location : role.role)
     );
     return (
       <UserRoles
@@ -67,7 +66,7 @@ class UserRolesContainer extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   bureau: getBureauURI(state),
   locations: getLocations(state),
-  userRoles: getUserRoles(state, ownProps.user)
+  userRoles: getUserRoles(state, ownProps.user),
 });
 
 UserRolesContainer.propTypes = {

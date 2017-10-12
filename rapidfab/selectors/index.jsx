@@ -180,10 +180,7 @@ export const getBureau = createSelector(
   }
 );
 
-export const getBureauURI = createSelector(
-  [getBureau],
-  bureau => bureau.uri
-);
+export const getBureauURI = createSelector([getBureau], bureau => bureau.uri);
 
 export const getInitialValuesBureau = createSelector(
   [getRoute, getStateResources, getBureau],

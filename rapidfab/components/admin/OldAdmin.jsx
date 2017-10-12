@@ -90,12 +90,7 @@ class Admin extends Component {
             className="pull-right"
             style={{ paddingBottom: '2rem' }}
           >
-            <ModifyUser
-              newUser
-              enabled={isManager}
-              role={{}}
-              {...this.props}
-            />
+            <ModifyUser newUser enabled={isManager} role={{}} {...this.props} />
           </BS.ButtonToolbar>
         </div>
         <BS.Table

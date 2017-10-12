@@ -1,25 +1,18 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Button,
-  ControlLabel,
-  FormControl,
-  FormGroup,
-} from 'react-bootstrap';
+import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 const UserForm = ({
   isEditing,
   email,
   name,
   handleInputChange,
-  handleSubmit
+  handleSubmit,
 }) => (
   <form onSubmit={handleSubmit}>
     <FormGroup>
-      <ControlLabel>
-        Name
-      </ControlLabel>
+      <ControlLabel>Name</ControlLabel>
       <FormControl
         type="text"
         name="name"
@@ -28,9 +21,7 @@ const UserForm = ({
       />
     </FormGroup>
     <FormGroup>
-      <ControlLabel>
-        Email
-      </ControlLabel>
+      <ControlLabel>Email</ControlLabel>
       <FormControl
         type="text"
         name="email"
@@ -39,9 +30,7 @@ const UserForm = ({
       />
     </FormGroup>
     <FormGroup>
-      <Button type="submit">
-        { isEditing ? "Edit User" : "Create User" }
-      </Button>
+      <Button type="submit">{isEditing ? 'Edit User' : 'Create User'}</Button>
     </FormGroup>
   </form>
 );

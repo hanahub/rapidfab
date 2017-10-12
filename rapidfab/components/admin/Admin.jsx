@@ -1,15 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Fa from 'react-fontawesome'
-import {
-  Button,
-  Col,
-  Grid,
-  PageHeader,
-  Row,
-  Well,
-} from 'react-bootstrap';
+import Fa from 'react-fontawesome';
+import { Button, Col, Grid, PageHeader, Row, Well } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
@@ -17,7 +10,7 @@ import UsersContainer from 'rapidfab/containers/admin/UsersContainer';
 
 import AdminSidebar from './AdminSidebar';
 
-const buttonRow ={
+const buttonRow = {
   display: 'flex',
   flexDirection: 'row-reverse',
   margin: '1rem 0 2rem 0',
@@ -25,17 +18,13 @@ const buttonRow ={
 
 const Admin = ({ selection, handleSelectionChange }) => (
   <Grid>
-    <BreadcrumbNav breadcrumbs={["Admin"]} />
+    <BreadcrumbNav breadcrumbs={['Admin']} />
     <FlashMessages />
 
-    <PageHeader>
-      User Administration
-    </PageHeader>
+    <PageHeader>User Administration</PageHeader>
 
     <div style={buttonRow}>
-      <Button onClick={() => handleSelectionChange('add')}>
-        Add New User
-      </Button>
+      <Button onClick={() => handleSelectionChange('add')}>Add New User</Button>
     </div>
 
     <Row>

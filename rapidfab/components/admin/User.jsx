@@ -15,40 +15,29 @@ const User = ({
 }) => (
   <div>
     <h2>{user.name}</h2>
-    { view === 'main' &&
-        <div>
-          <UserRolesContainer user={user} />
-          <Button onClick={() => handleViewChange('edit')}>
-            Edit User
-          </Button>
-          <Button onClick={() => handleViewChange('delete')}>
-            Delete User
-          </Button>
-        </div>
-    }
-    { view === 'delete' &&
-        <div>
-          <p>Really delete?</p>
-          <Button onClick={handleDeleteUser}>
-            Yes
-          </Button>
-          <Button onClick={() => handleViewChange('main')}>
-            No
-          </Button>
-        </div>
-    }
-    {
-      view === 'edit' &&
-        <div>
-          <UserFormContainer
-            handleSelectionChange={handleSelectionChange}
-            user={user}
-          />
-          <Button onClick={() => handleViewChange('main')}>
-            Back
-          </Button>
-        </div>
-    }
+    {view === 'main' && (
+      <div>
+        <UserRolesContainer user={user} />
+        <Button onClick={() => handleViewChange('edit')}>Edit User</Button>
+        <Button onClick={() => handleViewChange('delete')}>Delete User</Button>
+      </div>
+    )}
+    {view === 'delete' && (
+      <div>
+        <p>Really delete?</p>
+        <Button onClick={handleDeleteUser}>Yes</Button>
+        <Button onClick={() => handleViewChange('main')}>No</Button>
+      </div>
+    )}
+    {view === 'edit' && (
+      <div>
+        <UserFormContainer
+          handleSelectionChange={handleSelectionChange}
+          user={user}
+        />
+        <Button onClick={() => handleViewChange('main')}>Back</Button>
+      </div>
+    )}
   </div>
 );
 

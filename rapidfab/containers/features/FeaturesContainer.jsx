@@ -10,9 +10,7 @@ class FeaturesContainer extends Component {
     this.props.onInitialize();
   }
   render() {
-    <p>
-      Features Container
-    </p>
+    <p>Features Container</p>;
   }
 }
 

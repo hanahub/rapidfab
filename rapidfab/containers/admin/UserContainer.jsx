@@ -9,7 +9,7 @@ import User from 'rapidfab/components/admin/User';
 
 class UserContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = { view: 'main' };
 
@@ -18,15 +18,15 @@ class UserContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.uuid !== this.props.uuid)
-      this.setState({ view: 'main' });
+    if (prevProps.uuid !== this.props.uuid) this.setState({ view: 'main' });
   }
 
   handleDeleteUser() {
-    this.props.dispatch(Actions.Api.pao.users.delete(this.props.uuid))
+    this.props
+      .dispatch(Actions.Api.pao.users.delete(this.props.uuid))
       .then(() => this.props.handleSelectionChange('none'))
       .catch(() => {});
-  };
+  }
 
   handleViewChange(view) {
     this.setState({ view });

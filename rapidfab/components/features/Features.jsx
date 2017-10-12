@@ -24,14 +24,14 @@ class Features extends Component {
   }
 
   shouldShowAdminFeatures() {
-  return Permissions.has('wyatt', 'feature.all', this.props);
-}
+    return Permissions.has('wyatt', 'feature.all', this.props);
+  }
 
-render() {
-  const { bureau, features, user } = this.props;
-  return (
-    <BS.Grid fluid>
-      <BS.PageHeader>Admin Features</BS.PageHeader>
+  render() {
+    const { bureau, features, user } = this.props;
+    return (
+      <BS.Grid fluid>
+        <BS.PageHeader>Admin Features</BS.PageHeader>
         <div
           style={{
             borderLeft: '1px solid #ddd',
@@ -47,7 +47,7 @@ render() {
 
           <BS.Table responsive striped hover>
             <tbody>
-              { features.map((feature, index) => (
+              {features.map((feature, index) => (
                 <tr key={index}>
                   <td>
                     <span className="glyphicon glyphicon-file" />

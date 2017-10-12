@@ -6,7 +6,7 @@ import UserFormContainer from 'rapidfab/containers/admin/UserFormContainer';
 const AddUser = ({ handleSelectionChange }) => (
   <div>
     <h2>Create New User</h2>
-    <UserFormContainer handleSelectionChange={handleSelectionChange}/>
+    <UserFormContainer handleSelectionChange={handleSelectionChange} />
   </div>
 );
 

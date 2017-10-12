@@ -8,13 +8,17 @@ import { getUsers } from 'rapidfab/selectors';
 import Users from 'rapidfab/components/admin/Users';
 
 class UsersContainer extends React.Component {
-  componentDidMount() { this.props.fetchUsers() }
+  componentDidMount() {
+    this.props.fetchUsers();
+  }
 
-  render() { return <Users {...this.props} /> }
+  render() {
+    return <Users {...this.props} />;
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchUsers: () => dispatch(Actions.Api.pao.users.list())
+  fetchUsers: () => dispatch(Actions.Api.pao.users.list()),
 });
 
 const mapStateToProps = state => ({ users: getUsers(state) });
