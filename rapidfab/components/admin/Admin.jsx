@@ -9,10 +9,12 @@ import UsersContainer from 'rapidfab/containers/admin/UsersContainer';
 
 import AdminSidebar from './AdminSidebar';
 
-const buttonRow = {
-  display: 'flex',
-  flexDirection: 'row-reverse',
-  margin: '1rem 0 2rem 0',
+const styles = {
+  buttonRow: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    margin: '1rem 0 2rem 0',
+  },
 };
 
 const Admin = ({ selection, handleSelectionChange }) => (
@@ -22,7 +24,7 @@ const Admin = ({ selection, handleSelectionChange }) => (
 
     <PageHeader>User Administration</PageHeader>
 
-    <div style={buttonRow}>
+    <div style={styles.buttonRow}>
       <Button onClick={() => handleSelectionChange('add')}>Add New User</Button>
     </div>
 
