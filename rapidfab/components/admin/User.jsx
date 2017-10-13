@@ -19,7 +19,7 @@ const User = ({
       <div>
         <UserRolesContainer user={user} />
         <Button onClick={() => handleViewChange('edit')}>Edit User</Button>
-        <Button onClick={() => handleViewChange('delete')}>Delete User</Button>
+        {/* <Button onClick={() => handleViewChange('delete')}>Delete User</Button> */}
       </div>
     )}
     {view === 'delete' && (

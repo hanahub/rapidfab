@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { getBureauURI, getLocations, getUserRoles } from 'rapidfab/selectors';
+import {
+  getBureauURI,
+  getLocations,
+  isSessionManager,
+  getUserRoles,
+} from 'rapidfab/selectors';
 
 import UserRoles from 'rapidfab/components/admin/UserRoles';
 
@@ -35,7 +40,6 @@ class UserRolesContainer extends React.Component {
             ? role.location === dataset.location
             : role.role === name
       );
-
       this.deleteRole(uuid);
     }
   }
@@ -56,6 +60,7 @@ class UserRolesContainer extends React.Component {
       <UserRoles
         handleToggle={this.handleToggle}
         locations={this.props.locations}
+        isSessionManager={this.props.isSessionManager}
         userRoles={userRoles}
       />
     );
@@ -65,6 +70,7 @@ class UserRolesContainer extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   bureau: getBureauURI(state),
   locations: getLocations(state),
+  isSessionManager: isSessionManager(state),
   userRoles: getUserRoles(state, ownProps.user),
 });
 
@@ -72,6 +78,7 @@ UserRolesContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isSessionManager: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
   userRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
