@@ -1,11 +1,8 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
 import Permissions from 'rapidfab/permissions';
-import ShowMaybe from 'rapidfab/components/showMaybe';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import AddFeature from './AddFeature';
 
@@ -24,14 +21,14 @@ class Features extends Component {
   }
 
   shouldShowAdminFeatures() {
-  return Permissions.has('wyatt', 'feature.all', this.props);
-}
+    return Permissions.has('wyatt', 'feature.all', this.props);
+  }
 
-render() {
-  const { bureau, features, user } = this.props;
-  return (
-    <BS.Grid fluid>
-      <BS.PageHeader>Admin Features</BS.PageHeader>
+  render() {
+    const { features } = this.props;
+    return (
+      <BS.Grid fluid>
+        <BS.PageHeader>Admin Features</BS.PageHeader>
         <div
           style={{
             borderLeft: '1px solid #ddd',
@@ -47,7 +44,7 @@ render() {
 
           <BS.Table responsive striped hover>
             <tbody>
-              { features.map((feature, index) => (
+              {features.map((feature, index) => (
                 <tr key={index}>
                   <td>
                     <span className="glyphicon glyphicon-file" />

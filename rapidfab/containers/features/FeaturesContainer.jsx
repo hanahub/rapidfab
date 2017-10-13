@@ -3,16 +3,13 @@ import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 
 import * as Selectors from 'rapidfab/selectors';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 class FeaturesContainer extends Component {
   componentDidMount() {
     this.props.onInitialize();
   }
   render() {
-    <p>
-      Features Container
-    </p>
+    return <p>Features Container</p>;
   }
 }
 

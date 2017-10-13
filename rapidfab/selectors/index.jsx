@@ -144,6 +144,11 @@ export const getRoles = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getUserRoles = createSelector(
+  [getPredicate, getRoles],
+  (user, roles) => roles.filter(role => role.username === user.username)
+);
+
 export const getRolesCurrentUser = createSelector(
   [getRoles, getSession],
   (roles, session) => {
@@ -174,6 +179,8 @@ export const getBureau = createSelector(
     return Array.from(bureaus)[0];
   }
 );
+
+export const getBureauURI = createSelector([getBureau], bureau => bureau.uri);
 
 export const getInitialValuesBureau = createSelector(
   [getRoute, getStateResources, getBureau],
