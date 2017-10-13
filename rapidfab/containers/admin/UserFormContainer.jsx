@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
+import { getBureauURI } from 'rapidfab/selectors';
 
 import UserForm from 'rapidfab/components/admin/UserForm';
 
@@ -10,7 +11,7 @@ class UserFormContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    if (this.props.user) {
+    if (this.props.user.username) {
       const { name, emails } = this.props.user;
       this.state = { name, email: emails[0] };
     } else {
@@ -39,9 +40,19 @@ class UserFormContainer extends React.Component {
   }
 
   createUser(payload) {
-    this.props
-      .dispatch(Actions.Api.pao.users.post(payload))
-      .then(() => this.props.handleSelectionChange('none'))
+    const { dispatch } = this.props;
+    dispatch(Actions.Api.pao.users.post(payload))
+      .then(response => {
+        const payload = {
+          bureau: this.props.bureau,
+          username: response.json.username,
+          role: 'restricted',
+        };
+        this.props.dispatch(Actions.Api.wyatt.role.post(payload));
+      })
+      .then(response => {
+        dispatch(Actions.Api.pao.users.list());
+      })
       .catch(() => {});
   }
 
@@ -54,7 +65,7 @@ class UserFormContainer extends React.Component {
   }
 
   isEditing() {
-    return !!this.props.user;
+    return !!this.props.user.username;
   }
 
   render() {
@@ -71,9 +82,14 @@ class UserFormContainer extends React.Component {
   }
 }
 
+UserFormContainer.defaultProps = { user: {} };
+
 UserFormContainer.propTypes = {
+  bureau: PropTypes.string.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
 };
 
-export default connect()(UserFormContainer);
+const mapStateToProps = state => ({ bureau: getBureauURI(state) });
+
+export default connect(mapStateToProps)(UserFormContainer);

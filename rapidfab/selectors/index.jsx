@@ -146,7 +146,13 @@ export const getRoles = createSelector(
 
 export const getUserRoles = createSelector(
   [getPredicate, getRoles],
-  (user, roles) => roles.filter(role => role.username === user.username)
+  (user, roles) =>
+    roles.filter(
+      role => role.username === (user.username ? user.username : user.email)
+      // Check for username by default
+      // but the username isn't stored on successful POST
+      // so check the email as an alternative
+    )
 );
 
 export const getRolesCurrentUser = createSelector(
