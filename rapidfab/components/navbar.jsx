@@ -79,7 +79,7 @@ const NavProfile = ({ currentUser, locale, session }) => {
             <FormattedMessage id="impersonate" defaultMessage="Impersonate" />
           </ShowMaybe>
         </BS.MenuItem>
-        <BS.MenuItem eventKey={1.3} href="#/admin/dashboard">
+        <BS.MenuItem eventKey={1.3} href="#/admin">
           <ShowMaybe showIf={shouldShowAdmin}>
             <Fa name="users" />{' '}
             <FormattedMessage id="admin" defaultMessage="Admin" />
