@@ -162,7 +162,7 @@ export const getRolesCurrentUser = createSelector(
       return [];
     }
     return roles.filter(
-      role => (role.username == session.username ? session : false)
+      role => (role.username === session.username ? session : false)
     );
   }
 );
@@ -171,7 +171,7 @@ export const getBureausCurrentUserRoles = createSelector(
   [getRolesCurrentUser, getBureaus],
   (roles, bureaus) =>
     roles.reduce((accumulator, role) => {
-      accumulator.add(bureaus.find(bureau => bureau.uri == role.bureau));
+      accumulator.add(bureaus.find(bureau => bureau.uri === role.bureau));
       return accumulator;
     }, new Set())
 );
@@ -623,4 +623,15 @@ export function getRunStatusChart(runs) {
 
 export const getRunStatusChartData = createSelector([getRuns], runs =>
   getRunStatusChart(runs)
+);
+
+export const isSessionManager = createSelector(
+  [getSession, getRoles, getBureau],
+  (session, roles, bureau) =>
+    roles.some(
+      role =>
+        role.username === session.username &&
+        role.bureau === bureau.uri &&
+        role.role === 'manager'
+    )
 );
