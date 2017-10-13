@@ -35,7 +35,7 @@ function mapStateToProps(state) {
   const orders = Selectors.getOrders(state);
   const roles = Selectors.getRolesCurrentUser(state);
   const runs = Selectors.getRuns(state);
-  if(roles && roles.length && Roles.isRestricted(roles)) {
+  if (roles && roles.length && Roles.isRestricted(roles)) {
     window.location.hash = '#/records/order';
   }
   let locationFilter = Selectors.getLocationFilter(state);

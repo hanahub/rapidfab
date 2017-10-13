@@ -17,19 +17,17 @@ const mapStateToProps = state => ({
 });
 
 const _hasUnrestrictedRole = session => {
-  for(let role of session.roles) {
-    if(role.role != "restricted") {
+  for (const role of session.roles) {
+    if (role.role != 'restricted') {
       return true;
     }
   }
   return false;
-}
+};
 
-const _isRestricted = session => {
-  return !_hasUnrestrictedRole(session);
-}
+const _isRestricted = session => !_hasUnrestrictedRole(session);
 
-const _getTitles = (currentUser) => {
+const _getTitles = currentUser => {
   const plan = (
     <span>
       <Fa name="road" /> <FormattedMessage id="plan" defaultMessage="Plan" />
@@ -37,8 +35,7 @@ const _getTitles = (currentUser) => {
   );
   const work = (
     <span>
-      <Fa name="wrench" />{' '}
-      <FormattedMessage id="work" defaultMessage="Work" />
+      <Fa name="wrench" /> <FormattedMessage id="work" defaultMessage="Work" />
     </span>
   );
   const inventory = (
@@ -49,7 +46,7 @@ const _getTitles = (currentUser) => {
   );
   const myProfile = (
     <span>
-      <Fa name="user" /> {currentUser ? currentUser.name : "..."}
+      <Fa name="user" /> {currentUser ? currentUser.name : '...'}
     </span>
   );
   return {
@@ -57,21 +54,21 @@ const _getTitles = (currentUser) => {
     work,
     inventory,
     myProfile,
-  }
-}
+  };
+};
 
-const NavProfile = ({currentUser, locale, session}) => {
+const NavProfile = ({ currentUser, locale, session }) => {
   const titles = _getTitles(currentUser);
   const flag = LanguageFlagMap[locale];
-  const shouldShowImpersonate = Permissions.has('pao', 'impersonation', session);
+  const shouldShowImpersonate = Permissions.has(
+    'pao',
+    'impersonation',
+    session
+  );
   const shouldShowAdmin = Permissions.has('pao', 'administrate.group', session);
   return (
     <BS.Nav pullRight>
-      <BS.NavDropdown
-        eventKey={1}
-        title={titles.myProfile}
-        id="uxNavProfile"
-      >
+      <BS.NavDropdown eventKey={1} title={titles.myProfile} id="uxNavProfile">
         <BS.MenuItem eventKey={1.1} href="#/profile" disabled>
           <Fa name="user" />{' '}
           <FormattedMessage id="myProfile" defaultMessage="My Profile" />
@@ -79,10 +76,7 @@ const NavProfile = ({currentUser, locale, session}) => {
         <BS.MenuItem eventKey={1.2}>
           <ShowMaybe showIf={shouldShowImpersonate}>
             <Fa name="user-secret" />{' '}
-            <FormattedMessage
-              id="impersonate"
-              defaultMessage="Impersonate"
-            />
+            <FormattedMessage id="impersonate" defaultMessage="Impersonate" />
           </ShowMaybe>
         </BS.MenuItem>
         <BS.MenuItem eventKey={1.3} href="#/admin/dashboard">
@@ -125,9 +119,9 @@ const NavProfile = ({currentUser, locale, session}) => {
       </BS.NavDropdown>
     </BS.Nav>
   );
-}
+};
 
-const NavLinksRestricted = ({currentUser, locale, session}) => {
+const NavLinksRestricted = ({ currentUser, locale, session }) => {
   const titles = _getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
@@ -137,12 +131,12 @@ const NavLinksRestricted = ({currentUser, locale, session}) => {
           <FormattedMessage id="plan.orders" defaultMessage="Orders" />
         </BS.MenuItem>
       </BS.Nav>
-      <NavProfile currentUser={currentUser} locale={locale} session={session}/>
+      <NavProfile currentUser={currentUser} locale={locale} session={session} />
     </BS.Navbar.Collapse>
   );
-}
+};
 
-const NavLinksRegular = ({currentUser, locale, session}) => {
+const NavLinksRegular = ({ currentUser, locale, session }) => {
   const titles = _getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
@@ -184,10 +178,7 @@ const NavLinksRegular = ({currentUser, locale, session}) => {
             style={{ display: 'none' }}
           >
             <Fa name="truck" />{' '}
-            <FormattedMessage
-              id="work.shipping"
-              defaultMessage="Shipping"
-            />
+            <FormattedMessage id="work.shipping" defaultMessage="Shipping" />
           </BS.MenuItem>
           <BS.MenuItem
             eventKey={2.3}
@@ -242,10 +233,7 @@ const NavLinksRegular = ({currentUser, locale, session}) => {
               defaultMessage="Printer Types"
             />
           </BS.MenuItem>
-          <BS.MenuItem
-            eventKey={3.6}
-            href="#/inventory/post-processor-types"
-          >
+          <BS.MenuItem eventKey={3.6} href="#/inventory/post-processor-types">
             <Fa name="object-group" />{' '}
             <FormattedMessage
               id="inventory.postProcessorTypes"
@@ -285,10 +273,7 @@ const NavLinksRegular = ({currentUser, locale, session}) => {
               defaultMessage="Locations"
             />
           </BS.MenuItem>
-          <BS.MenuItem
-            eventKey={3.11}
-            href="#/inventory/third-party-providers"
-          >
+          <BS.MenuItem eventKey={3.11} href="#/inventory/third-party-providers">
             <Fa name="map-marker" />{' '}
             <FormattedMessage
               id="inventory.thirdPartyProviders"
@@ -297,10 +282,7 @@ const NavLinksRegular = ({currentUser, locale, session}) => {
           </BS.MenuItem>
           <BS.MenuItem eventKey={3.13} href="#/inventory/shipping">
             <Fa name="truck" />{' '}
-            <FormattedMessage
-              id="work.shipping"
-              defaultMessage="Shipping"
-            />
+            <FormattedMessage id="work.shipping" defaultMessage="Shipping" />
           </BS.MenuItem>
           <BS.MenuItem eventKey={3.14} href="#/inventory/conversions">
             <Fa name="exchange" />{' '}
@@ -311,10 +293,10 @@ const NavLinksRegular = ({currentUser, locale, session}) => {
           </BS.MenuItem>
         </BS.NavDropdown>
       </BS.Nav>
-      <NavProfile currentUser={currentUser} locale={locale} session={session}/>
+      <NavProfile currentUser={currentUser} locale={locale} session={session} />
     </BS.Navbar.Collapse>
   );
-}
+};
 
 class Navbar extends Component {
   render() {
@@ -342,10 +324,19 @@ class Navbar extends Component {
           </BS.Navbar.Brand>
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>
-        { isRestricted ?
-          <NavLinksRestricted currentUser={currentUser} locale={locale} session={session} /> :
-          <NavLinksRegular currentUser={currentUser} locale={locale} session={session} />
-        }
+        {isRestricted ? (
+          <NavLinksRestricted
+            currentUser={currentUser}
+            locale={locale}
+            session={session}
+          />
+        ) : (
+          <NavLinksRegular
+            currentUser={currentUser}
+            locale={locale}
+            session={session}
+          />
+        )}
       </BS.Navbar>
     );
   }
