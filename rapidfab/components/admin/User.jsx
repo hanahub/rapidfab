@@ -17,10 +17,10 @@ const User = ({
   view,
 }) => (
   <div>
-    <h2>{user.name}</h2>
+    <h2>{user.name || user.username}</h2>
     {view === 'main' && (
       <div>
-        <span>{user.emails[0]}</span>
+        <span>{user.emails && user.emails[0]}</span>
         <UserRolesContainer user={user} />
         <ButtonGroup vertical block>
           <Button
