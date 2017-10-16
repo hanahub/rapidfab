@@ -13,8 +13,16 @@ const isUuid = string =>
     string
   );
 
+const styles = {
+  border: {
+    border: '1px solid rgb(67, 72, 87)',
+    borderRadius: '4px',
+    padding: '10px 15px',
+  },
+};
+
 const AdminSidebar = ({ handleSelectionChange, selection }) => (
-  <div>
+  <div style={selection !== 'none' ? styles.border : null}>
     {selection !== 'none' && (
       <Button onClick={() => handleSelectionChange('none')}>
         <Fa name="arrow-left" />
