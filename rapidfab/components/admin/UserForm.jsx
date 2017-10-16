@@ -9,6 +9,8 @@ import {
   FormGroup,
 } from 'react-bootstrap';
 
+import { FormattedMessage } from 'rapidfab/i18n';
+
 const styles = {
   paddingTop: { paddingTop: '1rem' },
 };
@@ -22,7 +24,9 @@ const UserForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <FormGroup>
-      <ControlLabel>Name</ControlLabel>
+      <ControlLabel>
+        <FormattedMessage id="name" defaultMessage="Name" />
+      </ControlLabel>
       <FormControl
         type="text"
         name="name"
@@ -31,7 +35,9 @@ const UserForm = ({
       />
     </FormGroup>
     <FormGroup>
-      <ControlLabel>Email</ControlLabel>
+      <ControlLabel>
+        <FormattedMessage id="email" defaultMessage="Email" />
+      </ControlLabel>
       <FormControl
         type="text"
         name="email"
@@ -42,7 +48,11 @@ const UserForm = ({
     <FormGroup style={styles.paddingTop}>
       <ButtonGroup vertical block>
         <Button type="submit">
-          {isEditing ? 'Update User' : 'Create User'}
+          {isEditing ? (
+            <FormattedMessage id="updateUser" defaultMessage="Update User" />
+          ) : (
+            <FormattedMessage id="createUser" defaultMessage="Create User" />
+          )}
         </Button>
       </ButtonGroup>
     </FormGroup>

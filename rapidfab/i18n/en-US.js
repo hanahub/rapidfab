@@ -1,4 +1,16 @@
 export default {
+  addNewUser: 'Add New User',
+  back: 'Back',
+  createNewUser: 'Create New User',
+  createUser: 'Create User',
+  editUser: 'Edit User',
+  email: 'Email',
+  name: 'Name',
+  roles: 'Roles',
+  updateUser: 'Update User',
+  userAdministration: 'User Administration',
+  users: 'Users',
+
   rapidfab: 'Rapid Fab',
 
   downloading: 'Downloading...',
@@ -137,7 +149,7 @@ export default {
   'record.template.new': 'New Template',
   'record.thirdPartyProvider': 'Third Party Provider',
   'record.thirdPartyProvider.add': 'Add Third Party Provider',
-  'record.user.add': 'Add User',
+  'record.user.add': 'Add New User',
   'record.user.new': 'New User',
 
   'estimates.estimates': 'Estimates',

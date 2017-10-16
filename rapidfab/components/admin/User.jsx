@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button, ButtonGroup } from 'react-bootstrap';
 
+import { FormattedMessage } from 'rapidfab/i18n';
 import UserRolesContainer from 'rapidfab/containers/admin/UserRolesContainer';
 import UserFormContainer from 'rapidfab/containers/admin/UserFormContainer';
 
@@ -26,7 +27,7 @@ const User = ({
             disabled={!isSessionManager && !isSessionUser}
             onClick={() => handleViewChange('edit')}
           >
-            Edit User
+            <FormattedMessage id="editUser" defaultMessage="Edit User" />
           </Button>
           {/* <Button onClick={() => handleViewChange('delete')}>Delete User</Button> */}
         </ButtonGroup>
@@ -46,7 +47,9 @@ const User = ({
           user={user}
         />
         <ButtonGroup vertical block>
-          <Button onClick={() => handleViewChange('main')}>Back</Button>
+          <Button onClick={() => handleViewChange('main')}>
+            <FormattedMessage id="back" defaultMessage="back" />
+          </Button>
         </ButtonGroup>
       </div>
     )}
