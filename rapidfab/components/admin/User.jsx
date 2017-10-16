@@ -10,6 +10,8 @@ const User = ({
   handleDeleteUser,
   handleSelectionChange,
   handleViewChange,
+  isSessionManager,
+  isSessionUser,
   user,
   view,
 }) => (
@@ -20,7 +22,12 @@ const User = ({
         <span>{user.emails[0]}</span>
         <UserRolesContainer user={user} />
         <ButtonGroup vertical block>
-          <Button onClick={() => handleViewChange('edit')}>Edit User</Button>
+          <Button
+            disabled={!isSessionManager && !isSessionUser}
+            onClick={() => handleViewChange('edit')}
+          >
+            Edit User
+          </Button>
           {/* <Button onClick={() => handleViewChange('delete')}>Delete User</Button> */}
         </ButtonGroup>
       </div>
@@ -51,6 +58,8 @@ User.propTypes = {
   handleDeleteUser: PropTypes.func.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
   handleViewChange: PropTypes.func.isRequired,
+  isSessionManager: PropTypes.bool.isRequired,
+  isSessionUser: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
 };
 

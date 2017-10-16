@@ -114,6 +114,11 @@ export const getSession = createSelector(
   }
 );
 
+export const isSessionUser = createSelector(
+  [getPredicate, getSession],
+  (userUUID, session) => userUUID === session.uuid
+);
+
 export const getPermissions = createSelector(
   [getStatePermissions, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
