@@ -1,4 +1,15 @@
 export default {
+  addNewUser: 'Add New User',
+  back: 'Back',
+  createNewUser: 'Create New User',
+  createUser: 'Create User',
+  editUser: 'Edit User',
+  email: 'Email',
+  name: 'Name',
+  roles: 'Roles',
+  updateUser: 'Update User',
+  userAdministration: 'User Administration',
+  users: 'Users',
   rapidfab: 'Rapid Fab',
 
   downloading: 'ダウンロードしています...',

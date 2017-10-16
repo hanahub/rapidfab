@@ -5,6 +5,7 @@ import { Button, Col, Grid, PageHeader, Row } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import { FormattedMessage } from 'rapidfab/i18n';
 import UsersContainer from 'rapidfab/containers/admin/UsersContainer';
 
 import AdminSidebar from './AdminSidebar';
@@ -22,18 +23,25 @@ const Admin = ({ selection, handleSelectionChange, isSessionManager }) => (
     <BreadcrumbNav breadcrumbs={['Admin']} />
     <FlashMessages />
 
-    <PageHeader>User Administration</PageHeader>
+    <PageHeader>
+      <FormattedMessage
+        id="userAdministration"
+        defaultMessage="User Administration"
+      />
+    </PageHeader>
 
     <div style={styles.buttonRow}>
       <Button
         disabled={!isSessionManager}
         onClick={() => handleSelectionChange('add')}
       >
-        Add New User
+        <FormattedMessage id="addNewUser" defaultMessage="Add New User" />
       </Button>
     </div>
 
-    <h3>Users</h3>
+    <h3>
+      <FormattedMessage id="users" defaultMessage="Users" />
+    </h3>
     <Row>
       <Col xs={12} sm={6}>
         <UsersContainer handleSelectionChange={handleSelectionChange} />

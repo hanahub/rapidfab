@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { FormControl, FormGroup, InputGroup, Label } from 'react-bootstrap';
 
+import { FormattedMessage } from 'rapidfab/i18n';
+
 const roles = ['manager', 'global-user', 'restricted'];
 
 const styles = {
@@ -18,7 +20,9 @@ const UserRoles = ({
 }) => (
   <FormGroup style={styles.spacingVertical}>
     <div style={styles.spacingBottom}>
-      <Label>Roles</Label>
+      <Label>
+        <FormattedMessage id="roles" defaultMessage="Roles" />
+      </Label>
     </div>
     {roles.map(role => (
       <InputGroup key={role} style={styles.spacingBottom}>
