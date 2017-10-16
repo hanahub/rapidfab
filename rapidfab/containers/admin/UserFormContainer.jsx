@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { getBureauURI } from 'rapidfab/selectors';
+import { getBureauURI, getRoles } from 'rapidfab/selectors';
 
 import UserForm from 'rapidfab/components/admin/UserForm';
 
@@ -53,7 +53,26 @@ class UserFormContainer extends React.Component {
       .then(response => {
         dispatch(Actions.Api.pao.users.list());
       })
-      .catch(() => {});
+      .catch(e => {
+        const userHasRoles = this.props.roles.some(
+          role => role.username === this.state.email
+        );
+        if (userHasRoles) {
+        } else {
+          dispatch(Actions.UI.clearUIState());
+          const payload = {
+            bureau: this.props.bureau,
+            username: this.state.email,
+            role: 'restricted',
+          };
+          this.props
+            .dispatch(Actions.Api.wyatt.role.post(payload))
+            .then(() => {
+              dispatch(Actions.Api.pao.users.list());
+            })
+            .catch(() => dispatch(Actions.UI.clearUIState()));
+        }
+      });
   }
 
   updateUser(payload) {
@@ -90,6 +109,9 @@ UserFormContainer.propTypes = {
   user: PropTypes.object,
 };
 
-const mapStateToProps = state => ({ bureau: getBureauURI(state) });
+const mapStateToProps = state => ({
+  bureau: getBureauURI(state),
+  roles: getRoles(state),
+});
 
 export default connect(mapStateToProps)(UserFormContainer);
