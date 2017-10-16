@@ -33,6 +33,7 @@ const Admin = ({ selection, handleSelectionChange, isSessionManager }) => (
       </Button>
     </div>
 
+    <h3>Users</h3>
     <Row>
       <Col xs={12} sm={6}>
         <UsersContainer handleSelectionChange={handleSelectionChange} />
