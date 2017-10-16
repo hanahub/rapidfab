@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { FormControl, FormGroup, InputGroup, Label } from 'react-bootstrap';
+
 const roles = ['manager', 'global-user', 'restricted'];
+
+const styles = {
+  spacingVertical: { padding: '2rem 0' },
+  spacingBottom: { marginBottom: '0.5rem' },
+};
 
 const UserRoles = ({
   handleToggle,
@@ -9,33 +16,44 @@ const UserRoles = ({
   userRoles,
   locations,
 }) => (
-  <div>
+  <FormGroup style={styles.spacingVertical}>
+    <div style={styles.spacingBottom}>
+      <Label>Roles</Label>
+    </div>
     {roles.map(role => (
-      <div key={role}>
-        <input
-          checked={userRoles.includes(role)}
-          disabled={!isSessionManager}
-          name={role}
-          onChange={handleToggle}
-          type="checkbox"
-        />
-        <span> {role}</span>
-      </div>
+      <InputGroup key={role} style={styles.spacingBottom}>
+        <InputGroup.Addon>
+          <input
+            checked={userRoles.includes(role)}
+            disabled={!isSessionManager}
+            name={role}
+            onChange={handleToggle}
+            type="checkbox"
+          />
+        </InputGroup.Addon>
+        <FormControl type="text" value={role} disabled />
+      </InputGroup>
     ))}
     {locations.map(location => (
-      <div key={location.uri}>
-        <input
-          checked={userRoles.includes(location.uri)}
-          disabled={!isSessionManager}
-          data-location={location.uri}
-          name="location-user"
-          onChange={handleToggle}
-          type="checkbox"
+      <InputGroup key={location.uri} style={styles.spacingBottom}>
+        <InputGroup.Addon>
+          <input
+            checked={userRoles.includes(location.uri)}
+            disabled={!isSessionManager}
+            data-location={location.uri}
+            name="location-user"
+            onChange={handleToggle}
+            type="checkbox"
+          />
+        </InputGroup.Addon>
+        <FormControl
+          type="text"
+          value={`Location: ${location.name}`}
+          disabled
         />
-        <span> Location: {location.name}</span>
-      </div>
+      </InputGroup>
     ))}
-  </div>
+  </FormGroup>
 );
 
 UserRoles.propTypes = {
