@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-const Admin = ({ selection, handleSelectionChange }) => (
+const Admin = ({ selection, handleSelectionChange, isSessionManager }) => (
   <Grid>
     <BreadcrumbNav breadcrumbs={['Admin']} />
     <FlashMessages />
@@ -25,7 +25,12 @@ const Admin = ({ selection, handleSelectionChange }) => (
     <PageHeader>User Administration</PageHeader>
 
     <div style={styles.buttonRow}>
-      <Button onClick={() => handleSelectionChange('add')}>Add New User</Button>
+      <Button
+        disabled={!isSessionManager}
+        onClick={() => handleSelectionChange('add')}
+      >
+        Add New User
+      </Button>
     </div>
 
     <Row>
@@ -45,6 +50,7 @@ const Admin = ({ selection, handleSelectionChange }) => (
 Admin.propTypes = {
   selection: PropTypes.string.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
+  isSessionManager: PropTypes.bool.isRequired,
 };
 
 export default Admin;

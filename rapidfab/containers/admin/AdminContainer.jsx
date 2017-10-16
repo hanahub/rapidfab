@@ -1,10 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { isSessionManager } from 'rapidfab/selectors';
 
 import Admin from 'rapidfab/components/admin/Admin';
 
 class AdminContainer extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { selection: 'none' };
 
     this.handleSelectionChange = this.handleSelectionChange.bind(this);
@@ -19,9 +23,18 @@ class AdminContainer extends React.Component {
       <Admin
         selection={this.state.selection}
         handleSelectionChange={this.handleSelectionChange}
+        isSessionManager={this.props.isSessionManager}
       />
     );
   }
 }
 
-export default AdminContainer;
+AdminContainer.propTypes = {
+  isSessionManager: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = state => ({
+  isSessionManager: isSessionManager(state),
+});
+
+export default connect(mapStateToProps)(AdminContainer);
