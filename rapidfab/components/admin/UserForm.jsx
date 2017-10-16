@@ -41,7 +41,9 @@ const UserForm = ({
     </FormGroup>
     <FormGroup style={styles.paddingTop}>
       <ButtonGroup vertical block>
-        <Button type="submit">{isEditing ? 'Update User' : 'Create User'}</Button>
+        <Button type="submit">
+          {isEditing ? 'Update User' : 'Create User'}
+        </Button>
       </ButtonGroup>
     </FormGroup>
   </form>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { getUsers } from 'rapidfab/selectors';
+import { getUsers, isSessionManager, isSessionUser } from 'rapidfab/selectors';
 
 import User from 'rapidfab/components/admin/User';
 
@@ -38,8 +38,9 @@ class UserContainer extends React.Component {
         handleDeleteUser={this.handleDeleteUser}
         handleSelectionChange={this.props.handleSelectionChange}
         handleViewChange={this.handleViewChange}
-        user={this.props.user}
-        view={this.state.view}
+        isSessionUser={isSessionUser}
+        {...this.props}
+        {...this.state}
       />
     );
   }
@@ -48,11 +49,15 @@ class UserContainer extends React.Component {
 UserContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
+  isSessionManager: PropTypes.bool.isRequired,
+  isSessionUser: PropTypes.bool.isRequired,
   uuid: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
+  isSessionManager: isSessionManager(state),
+  isSessionUser: isSessionUser(state, ownProps.uuid),
   user: getUsers(state).find(user => user.uuid === ownProps.uuid),
 });
 
