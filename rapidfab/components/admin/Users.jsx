@@ -13,7 +13,7 @@ const Users = ({ users, handleSelectionChange }) => (
         onClick={() => handleSelectionChange(user.uuid)}
       >
         <Fa className="pull-left" name="user" size="2x" />
-        <span className="pull-right">{user.name}</span>
+        <span className="pull-right">{user.name || user.username}</span>
       </ListGroupItem>
     ))}
   </ListGroup>
