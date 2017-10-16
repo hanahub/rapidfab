@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
+import {
+  Button,
+  ButtonGroup,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+} from 'react-bootstrap';
+
+const styles = {
+  paddingTop: { paddingTop: '1rem' },
+};
 
 const UserForm = ({
   isEditing,
@@ -29,8 +39,10 @@ const UserForm = ({
         onChange={handleInputChange}
       />
     </FormGroup>
-    <FormGroup>
-      <Button type="submit">{isEditing ? 'Edit User' : 'Create User'}</Button>
+    <FormGroup style={styles.paddingTop}>
+      <ButtonGroup vertical block>
+        <Button type="submit">{isEditing ? 'Edit User' : 'Create User'}</Button>
+      </ButtonGroup>
     </FormGroup>
   </form>
 );

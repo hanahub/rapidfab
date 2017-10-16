@@ -19,7 +19,7 @@ const User = ({
       <div>
         <span>{user.emails[0]}</span>
         <UserRolesContainer user={user} />
-        <ButtonGroup vertical block >
+        <ButtonGroup vertical block>
           <Button onClick={() => handleViewChange('edit')}>Edit User</Button>
           {/* <Button onClick={() => handleViewChange('delete')}>Delete User</Button> */}
         </ButtonGroup>
@@ -38,7 +38,7 @@ const User = ({
           handleSelectionChange={handleSelectionChange}
           user={user}
         />
-        <ButtonGroup vertical block >
+        <ButtonGroup vertical block>
           <Button onClick={() => handleViewChange('main')}>Back</Button>
         </ButtonGroup>
       </div>
