@@ -13,7 +13,10 @@ class UserFormContainer extends React.Component {
 
     if (this.props.user.username) {
       const { name, emails } = this.props.user;
-      this.state = { name, email: emails[0] };
+      this.state = {
+        name: name || '',
+        email: emails ? emails[0] : '',
+      };
     } else {
       this.state = { email: '', name: '' };
     }
