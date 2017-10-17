@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
-import Gatekeeper from 'rapidfab/components/gatekeeper';
+
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 import PrintComponent from 'rapidfab/components/records/print/print';
 
 class PrintContainer extends Component {
@@ -16,7 +18,6 @@ class PrintContainer extends Component {
 
   render() {
     const {
-      apiErrors,
       fetching,
       print,
       order,
@@ -28,9 +29,10 @@ class PrintContainer extends Component {
     const loading =
       fetching || !print || !order || !lineItem || !model || !events || !users;
     return (
-      <Gatekeeper errors={apiErrors} loading={loading}>
-        <PrintComponent {...this.props} />
-      </Gatekeeper>
+      <div>
+        <FlashMessages />
+        {loading ? <Loading /> : <PrintComponent {...this.props} />}
+      </div>
     );
   }
 }
@@ -101,7 +103,6 @@ function mapStateToProps(state, props) {
   const users = Selectors.getUsers(state);
   const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
-  const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
 
   const order = print ? orders.find(order => order.uri === print.order) : null;
   const lineItem = print
@@ -138,7 +139,6 @@ function mapStateToProps(state, props) {
     model,
     models,
     fetching,
-    apiErrors,
   };
 }
 
@@ -146,7 +146,6 @@ PrintContainer.propTypes = {
   uuid: PropTypes.string,
   print: PropTypes.object,
   fetching: PropTypes.bool,
-  apiErrors: PropTypes.array,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintContainer);
