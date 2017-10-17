@@ -16,14 +16,8 @@ const mapStateToProps = state => ({
   state,
 });
 
-const hasUnrestrictedRole = session => {
-  for (const role of session.roles) {
-    if (role.role != 'restricted') {
-      return true;
-    }
-  }
-  return false;
-};
+const hasUnrestrictedRole = session =>
+  session.roles.some(role => role.role !== 'restricted');
 
 const isRestricted = session => !hasUnrestrictedRole(session);
 
