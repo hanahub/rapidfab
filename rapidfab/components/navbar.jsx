@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   state,
 });
 
-const _hasUnrestrictedRole = session => {
+const hasUnrestrictedRole = session => {
   for (const role of session.roles) {
     if (role.role != 'restricted') {
       return true;
@@ -25,9 +25,9 @@ const _hasUnrestrictedRole = session => {
   return false;
 };
 
-const _isRestricted = session => !_hasUnrestrictedRole(session);
+const isRestricted = session => !hasUnrestrictedRole(session);
 
-const _getTitles = currentUser => {
+const getTitles = currentUser => {
   const plan = (
     <span>
       <Fa name="road" /> <FormattedMessage id="plan" defaultMessage="Plan" />
@@ -58,7 +58,7 @@ const _getTitles = currentUser => {
 };
 
 const NavProfile = ({ currentUser, onLogout, locale, session }) => {
-  const titles = _getTitles(currentUser);
+  const titles = getTitles(currentUser);
   const flag = LanguageFlagMap[locale];
   const shouldShowImpersonate = Permissions.has(
     'pao',
@@ -122,7 +122,7 @@ const NavProfile = ({ currentUser, onLogout, locale, session }) => {
 };
 
 const NavLinksRestricted = ({ currentUser, onLogout, locale, session }) => {
-  const titles = _getTitles(currentUser);
+  const titles = getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
       <BS.Nav>
@@ -142,7 +142,7 @@ const NavLinksRestricted = ({ currentUser, onLogout, locale, session }) => {
 };
 
 const NavLinksRegular = ({ currentUser, locale, onLogout, session }) => {
-  const titles = _getTitles(currentUser);
+  const titles = getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
       <BS.Nav>
@@ -318,7 +318,7 @@ class Navbar extends Component {
       onLogout,
       session,
     } = this.props;
-    const isRestricted = _isRestricted(session);
+    const isRestricted = isRestricted(session);
     const bureauList = Array.from(bureaus);
     const bureauName =
       (bureauList &&
