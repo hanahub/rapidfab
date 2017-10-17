@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
-import Gatekeeper from 'rapidfab/components/gatekeeper';
+
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 import PrintComponent from 'rapidfab/components/records/print/print';
 
 class PrintContainer extends Component {
@@ -16,7 +18,6 @@ class PrintContainer extends Component {
 
   render() {
     const {
-      apiErrors,
       fetching,
       print,
       order,
@@ -28,9 +29,10 @@ class PrintContainer extends Component {
     const loading =
       fetching || !print || !order || !lineItem || !model || !events || !users;
     return (
-      <Gatekeeper errors={apiErrors} loading={loading}>
-        <PrintComponent {...this.props} />
-      </Gatekeeper>
+      <div>
+        <FlashMessages />
+        {loading ? <Loading /> : <PrintComponent {...this.props} />}
+      </div>
     );
   }
 }
@@ -41,7 +43,6 @@ function mapDispatchToProps(dispatch) {
       const { bureau } = props;
       dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
       dispatch(Actions.Api.hoth.model.list());
-      dispatch(Actions.Api.wyatt.print.list());
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
@@ -85,9 +86,9 @@ function mapDispatchToProps(dispatch) {
           ),
         ];
 
-        _.chunk(uris, 10).map(chunk => {
-          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }));
-        });
+        _.chunk(uris, 10).map(chunk =>
+          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }))
+        );
       });
     },
   };
@@ -102,7 +103,6 @@ function mapStateToProps(state, props) {
   const users = Selectors.getUsers(state);
   const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
-  const apiErrors = Selectors.getResourceErrors(state, 'wyatt.print');
 
   const order = print ? orders.find(order => order.uri === print.order) : null;
   const lineItem = print
@@ -139,15 +139,20 @@ function mapStateToProps(state, props) {
     model,
     models,
     fetching,
-    apiErrors,
   };
 }
 
 PrintContainer.propTypes = {
-  uuid: PropTypes.string,
-  print: PropTypes.object,
-  fetching: PropTypes.bool,
-  apiErrors: PropTypes.array,
+  events: PropTypes.events.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  model: PropTypes.model.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  order: PropTypes.object.isRequired,
+  print: PropTypes.object.isRequired,
+  processSteps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uuid: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintContainer);
