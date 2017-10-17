@@ -86,9 +86,9 @@ function mapDispatchToProps(dispatch) {
           ),
         ];
 
-        _.chunk(uris, 10).map(chunk => {
-          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }));
-        });
+        _.chunk(uris, 10).map(chunk =>
+          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }))
+        );
       });
     },
   };
@@ -143,9 +143,16 @@ function mapStateToProps(state, props) {
 }
 
 PrintContainer.propTypes = {
-  uuid: PropTypes.string,
-  print: PropTypes.object,
-  fetching: PropTypes.bool,
+  events: PropTypes.events.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  lineItem: PropTypes.object.isRequired,
+  model: PropTypes.model.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  order: PropTypes.object.isRequired,
+  print: PropTypes.object.isRequired,
+  processSteps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  uuid: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintContainer);
