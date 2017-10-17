@@ -318,7 +318,6 @@ class Navbar extends Component {
       onLogout,
       session,
     } = this.props;
-    const isRestricted = isRestricted(session);
     const bureauList = Array.from(bureaus);
     const bureauName =
       (bureauList &&
@@ -334,7 +333,7 @@ class Navbar extends Component {
           </BS.Navbar.Brand>
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>
-        {isRestricted ? (
+        {isRestricted(session) ? (
           <NavLinksRestricted
             currentUser={currentUser}
             locale={locale}
