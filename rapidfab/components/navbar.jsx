@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import Flag from 'rapidfab/components/flag';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
@@ -11,10 +10,6 @@ const LanguageFlagMap = {
   'en-US': 'us',
   ja: 'jp',
 };
-
-const mapStateToProps = state => ({
-  state,
-});
 
 const hasUnrestrictedRole = session =>
   session.roles.some(role => role.role !== 'restricted');
@@ -369,4 +364,4 @@ class Navbar extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;
