@@ -51,7 +51,13 @@ const getTitles = currentUser => {
   };
 };
 
-const NavProfile = ({ currentUser, onLogout, locale, session }) => {
+const NavProfile = ({
+  currentUser,
+  onChangeLocale,
+  onLogout,
+  locale,
+  session,
+}) => {
   const titles = getTitles(currentUser);
   const flag = LanguageFlagMap[locale];
   const shouldShowImpersonate = Permissions.has(
@@ -115,7 +121,13 @@ const NavProfile = ({ currentUser, onLogout, locale, session }) => {
   );
 };
 
-const NavLinksRestricted = ({ currentUser, onLogout, locale, session }) => {
+const NavLinksRestricted = ({
+  currentUser,
+  onChangeLocale,
+  onLogout,
+  locale,
+  session,
+}) => {
   const titles = getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
@@ -128,6 +140,7 @@ const NavLinksRestricted = ({ currentUser, onLogout, locale, session }) => {
       <NavProfile
         currentUser={currentUser}
         locale={locale}
+        onChangeLocale={onChangeLocale}
         onLogout={onLogout}
         session={session}
       />
@@ -135,7 +148,13 @@ const NavLinksRestricted = ({ currentUser, onLogout, locale, session }) => {
   );
 };
 
-const NavLinksRegular = ({ currentUser, locale, onLogout, session }) => {
+const NavLinksRegular = ({
+  currentUser,
+  onChangeLocale,
+  locale,
+  onLogout,
+  session,
+}) => {
   const titles = getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
@@ -295,6 +314,7 @@ const NavLinksRegular = ({ currentUser, locale, onLogout, session }) => {
       <NavProfile
         currentUser={currentUser}
         locale={locale}
+        onChangeLocale={onChangeLocale}
         onLogout={onLogout}
         session={session}
       />
@@ -331,6 +351,7 @@ class Navbar extends Component {
           <NavLinksRestricted
             currentUser={currentUser}
             locale={locale}
+            onChangeLocale={onChangeLocale}
             onLogout={onLogout}
             session={session}
           />
@@ -338,6 +359,7 @@ class Navbar extends Component {
           <NavLinksRegular
             currentUser={currentUser}
             locale={locale}
+            onChangeLocale={onChangeLocale}
             onLogout={onLogout}
             session={session}
           />
