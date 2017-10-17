@@ -55,6 +55,7 @@ class UserFormContainer extends React.Component {
       })
       .then(response => {
         dispatch(Actions.Api.pao.users.list());
+        this.props.handleSelectionChange('none');
       })
       .catch(e => {
         const userHasRoles = this.props.roles.some(
@@ -72,6 +73,7 @@ class UserFormContainer extends React.Component {
             .dispatch(Actions.Api.wyatt.role.post(payload))
             .then(() => {
               dispatch(Actions.Api.pao.users.list());
+              this.props.handleSelectionChange('none');
             })
             .catch(() => dispatch(Actions.UI.clearUIState()));
         }
