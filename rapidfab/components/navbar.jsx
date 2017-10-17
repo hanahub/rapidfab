@@ -123,7 +123,6 @@ const NavLinksRestricted = ({
   locale,
   session,
 }) => {
-  const titles = getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
       <BS.Nav>
