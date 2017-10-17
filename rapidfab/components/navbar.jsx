@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import Flag from 'rapidfab/components/flag';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
@@ -12,22 +11,12 @@ const LanguageFlagMap = {
   ja: 'jp',
 };
 
-const mapStateToProps = state => ({
-  state,
-});
+const hasUnrestrictedRole = session =>
+  session.roles.some(role => role.role !== 'restricted');
 
-const _hasUnrestrictedRole = session => {
-  for (const role of session.roles) {
-    if (role.role != 'restricted') {
-      return true;
-    }
-  }
-  return false;
-};
+const isRestricted = session => !hasUnrestrictedRole(session);
 
-const _isRestricted = session => !_hasUnrestrictedRole(session);
-
-const _getTitles = currentUser => {
+const getTitles = currentUser => {
   const plan = (
     <span>
       <Fa name="road" /> <FormattedMessage id="plan" defaultMessage="Plan" />
@@ -57,8 +46,14 @@ const _getTitles = currentUser => {
   };
 };
 
-const NavProfile = ({ currentUser, locale, session }) => {
-  const titles = _getTitles(currentUser);
+const NavProfile = ({
+  currentUser,
+  onChangeLocale,
+  onLogout,
+  locale,
+  session,
+}) => {
+  const titles = getTitles(currentUser);
   const flag = LanguageFlagMap[locale];
   const shouldShowImpersonate = Permissions.has(
     'pao',
@@ -121,23 +116,38 @@ const NavProfile = ({ currentUser, locale, session }) => {
   );
 };
 
-const NavLinksRestricted = ({ currentUser, locale, session }) => {
-  const titles = _getTitles(currentUser);
-  return (
-    <BS.Navbar.Collapse>
-      <BS.Nav>
-        <BS.MenuItem eventKey={1.1} href="#/plan/orders">
-          <Fa name="files-o" />{' '}
-          <FormattedMessage id="plan.orders" defaultMessage="Orders" />
-        </BS.MenuItem>
-      </BS.Nav>
-      <NavProfile currentUser={currentUser} locale={locale} session={session} />
-    </BS.Navbar.Collapse>
-  );
-};
+const NavLinksRestricted = ({
+  currentUser,
+  onChangeLocale,
+  onLogout,
+  locale,
+  session,
+}) => (
+  <BS.Navbar.Collapse>
+    <BS.Nav>
+      <BS.MenuItem eventKey={1.1} href="#/plan/orders">
+        <Fa name="files-o" />{' '}
+        <FormattedMessage id="plan.orders" defaultMessage="Orders" />
+      </BS.MenuItem>
+    </BS.Nav>
+    <NavProfile
+      currentUser={currentUser}
+      locale={locale}
+      onChangeLocale={onChangeLocale}
+      onLogout={onLogout}
+      session={session}
+    />
+  </BS.Navbar.Collapse>
+);
 
-const NavLinksRegular = ({ currentUser, locale, session }) => {
-  const titles = _getTitles(currentUser);
+const NavLinksRegular = ({
+  currentUser,
+  onChangeLocale,
+  locale,
+  onLogout,
+  session,
+}) => {
+  const titles = getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
       <BS.Nav>
@@ -293,7 +303,13 @@ const NavLinksRegular = ({ currentUser, locale, session }) => {
           </BS.MenuItem>
         </BS.NavDropdown>
       </BS.Nav>
-      <NavProfile currentUser={currentUser} locale={locale} session={session} />
+      <NavProfile
+        currentUser={currentUser}
+        locale={locale}
+        onChangeLocale={onChangeLocale}
+        onLogout={onLogout}
+        session={session}
+      />
     </BS.Navbar.Collapse>
   );
 };
@@ -308,7 +324,6 @@ class Navbar extends Component {
       onLogout,
       session,
     } = this.props;
-    const isRestricted = _isRestricted(session);
     const bureauList = Array.from(bureaus);
     const bureauName =
       (bureauList &&
@@ -324,16 +339,20 @@ class Navbar extends Component {
           </BS.Navbar.Brand>
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>
-        {isRestricted ? (
+        {isRestricted(session) ? (
           <NavLinksRestricted
             currentUser={currentUser}
             locale={locale}
+            onChangeLocale={onChangeLocale}
+            onLogout={onLogout}
             session={session}
           />
         ) : (
           <NavLinksRegular
             currentUser={currentUser}
             locale={locale}
+            onChangeLocale={onChangeLocale}
+            onLogout={onLogout}
             session={session}
           />
         )}
@@ -342,4 +361,4 @@ class Navbar extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;
