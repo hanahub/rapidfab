@@ -122,25 +122,23 @@ const NavLinksRestricted = ({
   onLogout,
   locale,
   session,
-}) => {
-  return (
-    <BS.Navbar.Collapse>
-      <BS.Nav>
-        <BS.MenuItem eventKey={1.1} href="#/plan/orders">
-          <Fa name="files-o" />{' '}
-          <FormattedMessage id="plan.orders" defaultMessage="Orders" />
-        </BS.MenuItem>
-      </BS.Nav>
-      <NavProfile
-        currentUser={currentUser}
-        locale={locale}
-        onChangeLocale={onChangeLocale}
-        onLogout={onLogout}
-        session={session}
-      />
-    </BS.Navbar.Collapse>
-  );
-};
+}) => (
+  <BS.Navbar.Collapse>
+    <BS.Nav>
+      <BS.MenuItem eventKey={1.1} href="#/plan/orders">
+        <Fa name="files-o" />{' '}
+        <FormattedMessage id="plan.orders" defaultMessage="Orders" />
+      </BS.MenuItem>
+    </BS.Nav>
+    <NavProfile
+      currentUser={currentUser}
+      locale={locale}
+      onChangeLocale={onChangeLocale}
+      onLogout={onLogout}
+      session={session}
+    />
+  </BS.Navbar.Collapse>
+);
 
 const NavLinksRegular = ({
   currentUser,
