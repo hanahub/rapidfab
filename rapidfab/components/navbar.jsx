@@ -57,7 +57,7 @@ const _getTitles = currentUser => {
   };
 };
 
-const NavProfile = ({ currentUser, locale, session }) => {
+const NavProfile = ({ currentUser, onLogout, locale, session }) => {
   const titles = _getTitles(currentUser);
   const flag = LanguageFlagMap[locale];
   const shouldShowImpersonate = Permissions.has(
@@ -121,7 +121,7 @@ const NavProfile = ({ currentUser, locale, session }) => {
   );
 };
 
-const NavLinksRestricted = ({ currentUser, locale, session }) => {
+const NavLinksRestricted = ({ currentUser, onLogout, locale, session }) => {
   const titles = _getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
@@ -131,12 +131,17 @@ const NavLinksRestricted = ({ currentUser, locale, session }) => {
           <FormattedMessage id="plan.orders" defaultMessage="Orders" />
         </BS.MenuItem>
       </BS.Nav>
-      <NavProfile currentUser={currentUser} locale={locale} session={session} />
+      <NavProfile
+        currentUser={currentUser}
+        locale={locale}
+        onLogout={onLogout}
+        session={session}
+      />
     </BS.Navbar.Collapse>
   );
 };
 
-const NavLinksRegular = ({ currentUser, locale, session }) => {
+const NavLinksRegular = ({ currentUser, locale, onLogout, session }) => {
   const titles = _getTitles(currentUser);
   return (
     <BS.Navbar.Collapse>
@@ -293,7 +298,12 @@ const NavLinksRegular = ({ currentUser, locale, session }) => {
           </BS.MenuItem>
         </BS.NavDropdown>
       </BS.Nav>
-      <NavProfile currentUser={currentUser} locale={locale} session={session} />
+      <NavProfile
+        currentUser={currentUser}
+        locale={locale}
+        onLogout={onLogout}
+        session={session}
+      />
     </BS.Navbar.Collapse>
   );
 };
@@ -328,12 +338,14 @@ class Navbar extends Component {
           <NavLinksRestricted
             currentUser={currentUser}
             locale={locale}
+            onLogout={onLogout}
             session={session}
           />
         ) : (
           <NavLinksRegular
             currentUser={currentUser}
             locale={locale}
+            onLogout={onLogout}
             session={session}
           />
         )}
