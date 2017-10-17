@@ -143,10 +143,10 @@ function mapStateToProps(state, props) {
 }
 
 PrintContainer.propTypes = {
-  events: PropTypes.events.isRequired,
+  events: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   lineItem: PropTypes.object.isRequired,
-  model: PropTypes.model.isRequired,
+  model: PropTypes.object.isRequired,
   onInitialize: PropTypes.func.isRequired,
   order: PropTypes.object.isRequired,
   print: PropTypes.object.isRequired,
