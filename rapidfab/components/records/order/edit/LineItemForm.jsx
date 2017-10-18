@@ -2,14 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Form, FormControl, Label } from 'react-bootstrap';
+import { Form, FormControl, InputGroup, Label } from 'react-bootstrap';
+import Fa from 'react-fontawesome';
 
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
 import FormRow from 'rapidfab/components/FormRow';
 import SaveDropdownButton from './SaveDropdownButton';
+
+const ResourceLink = ({ href }) => (
+  <a href={href}>
+    Go <Fa name="external-link" />
+  </a>
+);
 
 const statusOptionsMap = {
   pending: ['cancelled', 'confirmed'],
@@ -139,73 +147,107 @@ const LineItemFormComponent = ({
       </FormRow>
 
       <FormRow id="field.baseMaterial" defaultMessage="Base Material">
-        <FormControl
-          name="baseMaterial"
-          value={baseMaterial}
-          componentClass="select"
-          onChange={handleInputChange}
-          required
-        >
-          {baseMaterials.map(material => (
-            <option key={material.uri} value={material.uri}>
-              {material.name}
-            </option>
-          ))}
-        </FormControl>
+        <InputGroup>
+          <FormControl
+            name="baseMaterial"
+            value={baseMaterial}
+            componentClass="select"
+            onChange={handleInputChange}
+            required
+          >
+            {baseMaterials.map(material => (
+              <option key={material.uri} value={material.uri}>
+                {material.name}
+              </option>
+            ))}
+          </FormControl>
+          <InputGroup.Addon>
+            <ResourceLink
+              href={`/#/records/materials/${extractUuid(baseMaterial)}`}
+            />
+          </InputGroup.Addon>
+        </InputGroup>
       </FormRow>
 
       <FormRow id="field.supportMaterial" defaultMessage="Support Material">
-        <FormControl
-          name="supportMaterial"
-          value={supportMaterial}
-          componentClass="select"
-          onChange={handleInputChange}
-        >
-          <option value="">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {supportMaterials.map(material => (
-            <option key={material.uri} value={material.uri}>
-              {material.name}
+        <InputGroup>
+          <FormControl
+            name="supportMaterial"
+            value={supportMaterial}
+            componentClass="select"
+            onChange={handleInputChange}
+          >
+            <option value="">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
+            {supportMaterials.map(material => (
+              <option key={material.uri} value={material.uri}>
+                {material.name}
+              </option>
+            ))}
+          </FormControl>
+          <InputGroup.Addon>
+            {supportMaterial && (
+              <ResourceLink
+                href={`/#/records/materials/${extractUuid(supportMaterial)}`}
+              />
+            )}
+          </InputGroup.Addon>
+        </InputGroup>
       </FormRow>
 
       <FormRow id="field.template" defaultMessage="Select a template">
-        <FormControl
-          name="template"
-          value={template}
-          componentClass="select"
-          onChange={handleInputChange}
-        >
-          {templates.map(template => (
-            <option key={template.uri} value={template.uri}>
-              {template.name}
-            </option>
-          ))}
-        </FormControl>
+        <InputGroup>
+          <FormControl
+            name="template"
+            value={template}
+            componentClass="select"
+            onChange={handleInputChange}
+          >
+            {templates.map(template => (
+              <option key={template.uri} value={template.uri}>
+                {template.name}
+              </option>
+            ))}
+          </FormControl>
+          <InputGroup.Addon>
+            <ResourceLink
+              href={`/#/records/template/${extractUuid(template)}`}
+            />
+          </InputGroup.Addon>
+        </InputGroup>
       </FormRow>
 
       <FormRow
         id="field.thirdPartyProvider"
         defaultMessage="Third-Party Provider"
       >
-        <FormControl
-          name="thirdPartyProvider"
-          value={thirdPartyProvider}
-          componentClass="select"
-          onChange={handleInputChange}
-        >
-          <option value="">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {providers.map(provider => (
-            <option key={provider.uri} value={provider.uri}>
-              {provider.name}
+        <InputGroup>
+          <FormControl
+            name="thirdPartyProvider"
+            value={thirdPartyProvider}
+            componentClass="select"
+            onChange={handleInputChange}
+          >
+            <option value="">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
+            {providers.map(provider => (
+              <option key={provider.uri} value={provider.uri}>
+                {provider.name}
+              </option>
+            ))}
+          </FormControl>
+          <InputGroup.Addon>
+            {thirdPartyProvider && (
+              <ResourceLink
+                href={`/#/records/third-party-providers/${extractUuid(
+                  thirdPartyProvider
+                )}`}
+              />
+            )}
+          </InputGroup.Addon>
+        </InputGroup>
       </FormRow>
     </Form>
   );
