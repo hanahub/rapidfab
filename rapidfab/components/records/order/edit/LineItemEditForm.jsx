@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+
 import { FormattedMessage } from 'react-intl';
 import { Form, FormControl, InputGroup, Label } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
-import * as Selectors from 'rapidfab/selectors';
-import Actions from 'rapidfab/actions';
-
 import FormRow from 'rapidfab/components/FormRow';
 import SaveDropdownButton from './SaveDropdownButton';
 
@@ -63,7 +60,7 @@ Printable.propTypes = {
   itar: PropTypes.bool,
 };
 
-const LineItemFormComponent = ({
+const LineItemEditForm = ({
   handleFileChange,
   handleInputChange,
   lineItem,
@@ -269,13 +266,13 @@ const LineItemFormComponent = ({
   );
 };
 
-LineItemFormComponent.defaultProps = {
+LineItemEditForm.defaultProps = {
   supportMaterial: null,
   template: null,
   thirdPartyProvider: null,
 };
 
-LineItemFormComponent.propTypes = {
+LineItemEditForm.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   lineItem: PropTypes.object.isRequired,
@@ -294,137 +291,4 @@ LineItemFormComponent.propTypes = {
   thirdPartyProvider: PropTypes.string,
 };
 
-class LineItemForm extends Component {
-  constructor(props) {
-    super(props);
-    const { lineItem } = this.props;
-
-    this.state = {
-      baseMaterial: lineItem.materials.base,
-      notes: lineItem.notes,
-      supportMaterial: lineItem.materials.support,
-      quantity: lineItem.quantity.toString(),
-      status: lineItem.status,
-      template: lineItem.template,
-      thirdPartyProvider: lineItem.third_party_provider,
-    };
-
-    this.handleFileChange = this.handleFileChange.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.onDelete = this.onDelete.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  async onDelete() {
-    const { dispatch, lineItem, orderUuid } = this.props;
-    await dispatch(Actions.Api.wyatt['line-item'].delete(lineItem.uuid));
-    dispatch(Actions.Api.wyatt.order.get(orderUuid));
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
-    const { dispatch, lineItem } = this.props;
-    const {
-      baseMaterial,
-      model,
-      notes,
-      quantity,
-      status,
-      supportMaterial,
-      template,
-      thirdPartyProvider,
-    } = this.state;
-
-    const payload = {
-      bureau: lineItem.bureau,
-      materials: {
-        base: baseMaterial,
-        support: supportMaterial,
-      },
-      notes,
-      quantity: parseInt(quantity, 10),
-      status,
-      template,
-      third_party_provider: thirdPartyProvider,
-    };
-
-    if (!payload.materials.support) delete payload.materials.support;
-    if (!payload.third_party_provider) delete payload.third_party_provider;
-    if (status === lineItem.status) delete payload.status;
-
-    if (!model) {
-      dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
-    } else {
-      dispatch(
-        Actions.Api.hoth.model.post({ name: model.name, type: 'stl' })
-      ).then(args => {
-        const { location, uploadLocation } = args.headers;
-        payload.model = location;
-        dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
-        dispatch(Actions.UploadModel.upload(uploadLocation, model));
-      });
-    }
-  }
-
-  handleFileChange(event) {
-    this.setState({ model: event.target.files[0] });
-  }
-
-  handleInputChange(event) {
-    const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const { name } = target;
-
-    this.setState({ [name]: value });
-  }
-
-  render() {
-    const {
-      handleFileChange,
-      handleInputChange,
-      onDelete,
-      onSubmit,
-      props,
-      state,
-    } = this;
-
-    return (
-      <LineItemFormComponent
-        {...props}
-        {...state}
-        handleFileChange={handleFileChange}
-        handleInputChange={handleInputChange}
-        onDelete={onDelete}
-        onSubmit={onSubmit}
-      />
-    );
-  }
-}
-
-LineItemForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  lineItem: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = state => {
-  const materials = Selectors.getMaterials(state);
-  const baseMaterials = materials.filter(material => material.type === 'base');
-  const supportMaterials = materials.filter(
-    material => material.type === 'support'
-  );
-  const models = Selectors.getModels(state);
-  const providers = Selectors.getThirdPartyProviders(state);
-  const templates = Selectors.getTemplates(state);
-  const orderUuid = state.routeUUID;
-
-  return {
-    baseMaterials,
-    models,
-    orderUuid,
-    providers,
-    supportMaterials,
-    templates,
-  };
-};
-
-export default connect(mapStateToProps)(LineItemForm);
+export default LineItemEditForm;
