@@ -10,6 +10,7 @@ export default {
   updateUser: 'Update User',
   userAdministration: 'User Administration',
   users: 'Users',
+  scheduleAsNextPrint: 'Schedule As Next Print',
 
   rapidfab: 'Rapid Fab',
 

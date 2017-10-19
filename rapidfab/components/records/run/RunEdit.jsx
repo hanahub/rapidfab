@@ -20,6 +20,8 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import FormRow from 'rapidfab/components/FormRow';
 
+const styles = { spacingBelow: { marginBottom: '2rem' } };
+
 const StatusField = ({ statuses, fields }) => {
   const restrictedStatuses = ['calculated', 'calculating', 'queued'];
   _.pull(restrictedStatuses, fields.status.value);
@@ -119,13 +121,14 @@ TimeDisplay.propTypes = {
   seconds: PropTypes.number.isRequired,
 };
 
-const EditRun = ({
+const RunEdit = ({
   downloadModel,
   fields,
   gridData,
   handleSubmit,
   onDelete,
   onModelDownload,
+  onRequeue,
   orders,
   postProcessors,
   printers,
@@ -162,6 +165,14 @@ const EditRun = ({
 
       <BS.Row>
         <BS.Col xs={12} sm={4}>
+          <BS.ButtonGroup style={styles.spacingBelow} vertical block>
+            <BS.Button onClick={() => onRequeue(fields.uri.value)}>
+              <FormattedMessage
+                id="scheduleAsNextPrint"
+                defaultMessage="Schedule As Next Print"
+              />
+            </BS.Button>
+          </BS.ButtonGroup>
           <BS.Panel bsStyle="info">
             <BS.ListGroup fill>
               <BS.ListGroupItem
@@ -568,13 +579,14 @@ const EditRun = ({
   </BS.Form>
 );
 
-EditRun.propTypes = {
+RunEdit.propTypes = {
   downloadModel: PropTypes.object.isRequired,
   fields: PropTypes.object.isRequired,
   gridData: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onModelDownload: PropTypes.func.isRequired,
+  onRequeue: PropTypes.func.isRequired,
   orders: PropTypes.arrayOf(PropTypes.object).isRequired,
   postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,
   printers: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -582,4 +594,4 @@ EditRun.propTypes = {
   statuses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default EditRun;
+export default RunEdit;

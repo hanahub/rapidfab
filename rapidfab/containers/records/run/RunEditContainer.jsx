@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
-import RunsComponent from 'rapidfab/components/records/run/edit';
+import RunEdit from 'rapidfab/components/records/run/RunEdit';
 
 const fields = [
   'actuals.end',
@@ -35,23 +35,18 @@ const fields = [
   'uuid',
 ];
 
-class RunsContainer extends Component {
+class RunEditContainer extends Component {
   componentWillMount() {
     this.props.onInitialize(this.props);
   }
 
-  componentWillUnmount() {
-    this.props.onUnmount();
-  }
-
   render() {
-    return <RunsComponent {...this.props} />;
+    return <RunEdit {...this.props} />;
   }
 }
 
-RunsContainer.propTypes = {
+RunEditContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
-  onUnmount: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -65,9 +60,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.printer.list());
     },
     onDelete: uuid =>
-      dispatch(Actions.Api.wyatt.run.delete(uuid)).then(
-        () => (window.location.hash = '#/plan/runs')
-      ),
+      dispatch(Actions.Api.wyatt.run.delete(uuid)).then(() => {
+        window.location.hash = '#/plan/runs';
+      }),
     onModelDownload: (runUUID, modelURI) => {
       dispatch(Actions.DownloadModel.fetchModel(modelURI)).then(response => {
         dispatch(
@@ -78,8 +73,12 @@ function mapDispatchToProps(dispatch) {
         );
       });
     },
-    onUnmount: () => {
-      dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
+    onRequeue: runURI => {
+      dispatch(
+        Actions.Api.wyatt['run-queue'].post({ run: runURI })
+      ).then(() => {
+        dispatch(Actions.Api.wyatt.run.list());
+      });
     },
   };
 }
@@ -114,7 +113,6 @@ function mapStateToProps(state, props) {
     initialValues: runResource,
     orders,
     initialStatus,
-    resource: runResource,
     postProcessors,
     printerTypes,
     printers,
@@ -140,9 +138,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
     if (props.initialStatus === run.status) {
       delete payload.status;
     }
-    props
-      .dispatch(Actions.Api.wyatt.run.put(run.uuid, payload))
-      .then(() => (window.location.hash = '#/plan/runs'));
+    props.dispatch(Actions.Api.wyatt.run.put(run.uuid, payload)).then(() => {
+      window.location.hash = '#/plan/runs';
+    });
   };
   return props;
 }
@@ -155,4 +153,4 @@ export default reduxForm(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(RunsContainer);
+)(RunEditContainer);
