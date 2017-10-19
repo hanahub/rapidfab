@@ -65,9 +65,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.printer.list());
     },
     onDelete: uuid =>
-      dispatch(Actions.Api.wyatt.run.delete(uuid))
-        .then( () => { window.location.hash = '#/plan/runs' }
-      ),
+      dispatch(Actions.Api.wyatt.run.delete(uuid)).then(() => {
+        window.location.hash = '#/plan/runs';
+      }),
     onModelDownload: (runUUID, modelURI) => {
       dispatch(Actions.DownloadModel.fetchModel(modelURI)).then(response => {
         dispatch(
@@ -81,7 +81,7 @@ function mapDispatchToProps(dispatch) {
     onRequeue: runURI => {
       dispatch(
         Actions.Api.wyatt['run-queue'].post({ run: runURI })
-      ).then(response => {
+      ).then(() => {
         dispatch(Actions.Api.wyatt.run.list());
       });
     },
