@@ -265,7 +265,10 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
       <Col xs={12} sm={8}>
         <Row>
           <Col>
-            <LineItemEditFormContainer lineItem={lineItem} formKey={lineItem.uri} />
+            <LineItemEditFormContainer
+              lineItem={lineItem}
+              formKey={lineItem.uri}
+            />
           </Col>
         </Row>
 

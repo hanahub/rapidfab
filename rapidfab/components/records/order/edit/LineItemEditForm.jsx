@@ -251,10 +251,7 @@ const LineItemEditForm = ({
           </InputGroup.Addon>
         </InputGroup>
       </FormRow>
-      <FormRow
-        id="field.notes"
-        defaultMessage="Notes"
-      >
+      <FormRow id="field.notes" defaultMessage="Notes">
         <FormControl
           name="notes"
           value={notes}
