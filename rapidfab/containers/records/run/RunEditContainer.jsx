@@ -146,9 +146,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
     if (props.initialStatus === run.status) {
       delete payload.status;
     }
-    props
-      .dispatch(Actions.Api.wyatt.run.put(run.uuid, payload))
-      .then(() => (window.location.hash = '#/plan/runs'));
+    props.dispatch(Actions.Api.wyatt.run.put(run.uuid, payload)).then(() => {
+      window.location.hash = '#/plan/runs';
+    });
   };
   return props;
 }
