@@ -119,7 +119,7 @@ TimeDisplay.propTypes = {
   seconds: PropTypes.number.isRequired,
 };
 
-const EditRun = ({
+const RunEdit = ({
   downloadModel,
   fields,
   gridData,
@@ -568,7 +568,7 @@ const EditRun = ({
   </BS.Form>
 );
 
-EditRun.propTypes = {
+RunEdit.propTypes = {
   downloadModel: PropTypes.object.isRequired,
   fields: PropTypes.object.isRequired,
   gridData: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -582,4 +582,4 @@ EditRun.propTypes = {
   statuses: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default EditRun;
+export default RunEdit;

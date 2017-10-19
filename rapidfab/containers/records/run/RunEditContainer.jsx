@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
-import RunsComponent from 'rapidfab/components/records/run/edit';
+import RunEdit from 'rapidfab/components/records/run/RunEdit';
 
 const fields = [
   'actuals.end',
@@ -35,7 +35,7 @@ const fields = [
   'uuid',
 ];
 
-class RunsContainer extends Component {
+class RunEditContainer extends Component {
   componentWillMount() {
     this.props.onInitialize(this.props);
   }
@@ -45,11 +45,11 @@ class RunsContainer extends Component {
   }
 
   render() {
-    return <RunsComponent {...this.props} />;
+    return <RunEdit {...this.props} />;
   }
 }
 
-RunsContainer.propTypes = {
+RunEditContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,
 };
@@ -155,4 +155,4 @@ export default reduxForm(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(RunsContainer);
+)(RunEditContainer);
