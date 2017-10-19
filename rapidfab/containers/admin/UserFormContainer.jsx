@@ -45,12 +45,15 @@ class UserFormContainer extends React.Component {
   createUser(payload) {
     const { dispatch, handleSelectionChange } = this.props;
     dispatch(Actions.Api.pao.users.post(payload))
-      .then(response => (
-        dispatch(Actions.Api.wyatt.role.post({
-          bureau: this.props.bureau,
-          username: response.json.username,
-          role: 'restricted',
-        }))))
+      .then(response =>
+        dispatch(
+          Actions.Api.wyatt.role.post({
+            bureau: this.props.bureau,
+            username: response.json.username,
+            role: 'restricted',
+          })
+        )
+      )
       .then(response => {
         dispatch(Actions.Api.pao.users.list());
         handleSelectionChange('none');

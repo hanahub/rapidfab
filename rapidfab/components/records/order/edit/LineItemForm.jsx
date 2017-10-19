@@ -162,9 +162,11 @@ const LineItemFormComponent = ({
             ))}
           </FormControl>
           <InputGroup.Addon>
-            <ResourceLink
-              href={`/#/records/materials/${extractUuid(baseMaterial)}`}
-            />
+            {baseMaterial && (
+              <ResourceLink
+                href={`/#/records/materials/${extractUuid(baseMaterial)}`}
+              />
+            )}
           </InputGroup.Addon>
         </InputGroup>
       </FormRow>
@@ -211,9 +213,11 @@ const LineItemFormComponent = ({
             ))}
           </FormControl>
           <InputGroup.Addon>
-            <ResourceLink
-              href={`/#/records/template/${extractUuid(template)}`}
-            />
+            {template && (
+              <ResourceLink
+                href={`/#/records/template/${extractUuid(template)}`}
+              />
+            )}
           </InputGroup.Addon>
         </InputGroup>
       </FormRow>
@@ -255,6 +259,7 @@ const LineItemFormComponent = ({
 
 LineItemFormComponent.defaultProps = {
   supportMaterial: null,
+  template: null,
   thirdPartyProvider: null,
 };
 
@@ -272,7 +277,7 @@ LineItemFormComponent.propTypes = {
   status: PropTypes.string.isRequired,
   supportMaterial: PropTypes.string,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  template: PropTypes.string.isRequired,
+  template: PropTypes.string,
   templates: PropTypes.arrayOf(PropTypes.object).isRequired,
   thirdPartyProvider: PropTypes.string,
 };
