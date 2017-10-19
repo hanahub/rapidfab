@@ -162,9 +162,11 @@ const LineItemFormComponent = ({
             ))}
           </FormControl>
           <InputGroup.Addon>
-            <ResourceLink
-              href={`/#/records/materials/${extractUuid(baseMaterial)}`}
-            />
+            {baseMaterial && (
+              <ResourceLink
+                href={`/#/records/materials/${extractUuid(baseMaterial)}`}
+              />
+            )}
           </InputGroup.Addon>
         </InputGroup>
       </FormRow>
@@ -211,9 +213,11 @@ const LineItemFormComponent = ({
             ))}
           </FormControl>
           <InputGroup.Addon>
-            <ResourceLink
-              href={`/#/records/template/${extractUuid(template)}`}
-            />
+            {template && (
+              <ResourceLink
+                href={`/#/records/template/${extractUuid(template)}`}
+              />
+            )}
           </InputGroup.Addon>
         </InputGroup>
       </FormRow>
