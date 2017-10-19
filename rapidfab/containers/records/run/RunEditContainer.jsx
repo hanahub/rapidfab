@@ -78,6 +78,13 @@ function mapDispatchToProps(dispatch) {
         );
       });
     },
+    onRequeue: runURI => {
+      dispatch(
+        Actions.Api.wyatt['run-queue'].post({ run: runURI })
+      ).then(response => {
+        dispatch(Actions.Api.wyatt.run.list());
+      });
+    },
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
     },
@@ -114,7 +121,6 @@ function mapStateToProps(state, props) {
     initialValues: runResource,
     orders,
     initialStatus,
-    resource: runResource,
     postProcessors,
     printerTypes,
     printers,

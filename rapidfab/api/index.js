@@ -23,6 +23,7 @@ export const RESOURCES = {
     'printer-type',
     'role',
     'run',
+    'run-queue',
     'shipping',
     'stock',
     'third-party',
