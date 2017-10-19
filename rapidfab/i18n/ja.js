@@ -11,6 +11,7 @@ export default {
   userAdministration: 'User Administration',
   users: 'Users',
   rapidfab: 'Rapid Fab',
+  scheduleAsNextPrint: 'Schedule As Next Print',
 
   downloading: 'ダウンロードしています...',
 

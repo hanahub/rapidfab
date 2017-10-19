@@ -20,6 +20,8 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import FormRow from 'rapidfab/components/FormRow';
 
+const styles = { spacingBelow: { marginBottom: '2rem' }};
+
 const StatusField = ({ statuses, fields }) => {
   const restrictedStatuses = ['calculated', 'calculating', 'queued'];
   _.pull(restrictedStatuses, fields.status.value);
@@ -162,6 +164,11 @@ const RunEdit = ({
 
       <BS.Row>
         <BS.Col xs={12} sm={4}>
+          <BS.ButtonGroup style={styles.spacingBelow} vertical block>
+            <BS.Button>
+              <FormattedMessage id="scheduleAsNextPrint" defaultMessage="Schedule As Next Print"/>
+            </BS.Button>
+          </BS.ButtonGroup>
           <BS.Panel bsStyle="info">
             <BS.ListGroup fill>
               <BS.ListGroupItem
