@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
