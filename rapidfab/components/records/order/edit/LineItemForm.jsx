@@ -67,6 +67,7 @@ const LineItemFormComponent = ({
   handleFileChange,
   handleInputChange,
   lineItem,
+  notes,
   baseMaterial,
   baseMaterials,
   models,
@@ -253,6 +254,17 @@ const LineItemFormComponent = ({
           </InputGroup.Addon>
         </InputGroup>
       </FormRow>
+      <FormRow
+        id="field.notes"
+        defaultMessage="Notes"
+      >
+        <FormControl
+          name="notes"
+          value={notes}
+          componentClass="textarea"
+          onChange={handleInputChange}
+        />
+      </FormRow>
     </Form>
   );
 };
@@ -289,6 +301,7 @@ class LineItemForm extends Component {
 
     this.state = {
       baseMaterial: lineItem.materials.base,
+      notes: lineItem.notes,
       supportMaterial: lineItem.materials.support,
       quantity: lineItem.quantity.toString(),
       status: lineItem.status,
@@ -314,6 +327,7 @@ class LineItemForm extends Component {
     const {
       baseMaterial,
       model,
+      notes,
       quantity,
       status,
       supportMaterial,
@@ -327,6 +341,7 @@ class LineItemForm extends Component {
         base: baseMaterial,
         support: supportMaterial,
       },
+      notes,
       quantity: parseInt(quantity, 10),
       status,
       template,
