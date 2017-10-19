@@ -16,6 +16,8 @@ const ResourceLink = ({ href }) => (
   </a>
 );
 
+ResourceLink.propTypes = { href: PropTypes.string.isRequired };
+
 const statusOptionsMap = {
   pending: ['cancelled', 'confirmed'],
   confirmed: ['cancelled'],
@@ -276,6 +278,7 @@ LineItemEditForm.propTypes = {
   baseMaterial: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notes: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
