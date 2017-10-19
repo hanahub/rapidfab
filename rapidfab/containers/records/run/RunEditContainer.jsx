@@ -40,10 +40,6 @@ class RunEditContainer extends Component {
     this.props.onInitialize(this.props);
   }
 
-  componentWillUnmount() {
-    this.props.onUnmount();
-  }
-
   render() {
     return <RunEdit {...this.props} />;
   }
@@ -51,7 +47,6 @@ class RunEditContainer extends Component {
 
 RunEditContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
-  onUnmount: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -84,9 +79,6 @@ function mapDispatchToProps(dispatch) {
       ).then(() => {
         dispatch(Actions.Api.wyatt.run.list());
       });
-    },
-    onUnmount: () => {
-      dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
     },
   };
 }
