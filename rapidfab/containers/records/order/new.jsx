@@ -49,14 +49,12 @@ class NewOrderContainer extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
-      const { group, uri } = bureau;
+      const { uri } = bureau;
       dispatch(Actions.Api.wyatt.material.list({ bureau: uri }));
       dispatch(Actions.Api.wyatt['third-party'].list({ bureau: uri }));
       dispatch(Actions.Api.wyatt.shipping.list({ bureau: uri }));
       dispatch(Actions.Api.wyatt.template.list({ bureau: uri }));
-      if (group) {
-        dispatch(Actions.Api.pao.users.list({ group }));
-      }
+      dispatch(Actions.Api.pao.users.list());
     },
     onSaveOrder: payload => {
       if (payload) {
