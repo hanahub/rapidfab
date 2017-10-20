@@ -20,7 +20,7 @@ import {
 
 import hhmmss from 'rapidfab/utils/hhmmss';
 
-import LineItemForm from './LineItemForm';
+import LineItemEditFormContainer from 'rapidfab/containers/records/order/LineItemEditFormContainer';
 
 const LineItemHeader = () => (
   <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
@@ -265,7 +265,10 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
       <Col xs={12} sm={8}>
         <Row>
           <Col>
-            <LineItemForm lineItem={lineItem} formKey={lineItem.uri} />
+            <LineItemEditFormContainer
+              lineItem={lineItem}
+              formKey={lineItem.uri}
+            />
           </Col>
         </Row>
 
