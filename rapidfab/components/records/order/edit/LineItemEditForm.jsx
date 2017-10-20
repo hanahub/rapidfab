@@ -164,7 +164,7 @@ const LineItemEditForm = ({
           <InputGroup.Addon>
             {baseMaterial && (
               <ResourceLink
-                href={`/#/records/materials/${extractUuid(baseMaterial)}`}
+                href={`/#/records/material/${extractUuid(baseMaterial)}`}
               />
             )}
           </InputGroup.Addon>
@@ -191,7 +191,7 @@ const LineItemEditForm = ({
           <InputGroup.Addon>
             {supportMaterial && (
               <ResourceLink
-                href={`/#/records/materials/${extractUuid(supportMaterial)}`}
+                href={`/#/records/material/${extractUuid(supportMaterial)}`}
               />
             )}
           </InputGroup.Addon>
