@@ -46,7 +46,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
-      dispatch(Actions.Api.pao.users.list({ group: props.bureau.group }));
+      dispatch(Actions.Api.pao.users.list());
       const print = dispatch(Actions.Api.wyatt.print.get(props.uuid));
 
       // GET model
