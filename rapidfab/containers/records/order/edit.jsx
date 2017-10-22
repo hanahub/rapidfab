@@ -29,7 +29,7 @@ class OrderContainer extends Component {
     dispatch(Actions.Api.wyatt['post-processor-type'].list());
     dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
     dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
-    dispatch(Actions.Api.pao.users.list({ group: props.bureau.group }));
+    dispatch(Actions.Api.pao.users.list());
   }
 
   render() {
