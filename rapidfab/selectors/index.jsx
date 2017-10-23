@@ -426,21 +426,16 @@ export const getEvents = createSelector(
 export const getEventsForPrint = createSelector(
   [getPredicate, getPrints, getEvents],
   (print, prints, events) => {
-    if (print) {
-      const relevantPrints = _.filter(
-        prints,
-        p => print.line_item === p.line_item
-      );
+    if (!print) return null;
 
-      const uris = _.compact([
-        print.order,
-        print.line_item,
-        ..._.filter(_.map(relevantPrints, p => p.run)),
-      ]);
+    const relevantPrints = prints.filter(p => print.line_item === p.line_item);
+    const uris = _.compact([
+      print.order,
+      print.line_item,
+      ...relevantPrints.map(p => p.run),
+    ]);
 
-      return _.filter(events, event => _.includes(uris, event.reference));
-    }
-    return null;
+    return events.filter(event => uris.includes(event.reference));
   }
 );
 
