@@ -439,6 +439,16 @@ export const getEventsForPrint = createSelector(
   }
 );
 
+export const getEventsForPrintSortedByCreated = createSelector(
+  [getEventsForPrint],
+  prints =>
+    prints.sort((a, b) => {
+      if (a.created > b.created) return 1;
+      if (a.created < b.created) return -1;
+      return 0;
+    })
+);
+
 export const getRunsForOrder = createSelector(
   [getPredicate, getStateResources, getPrintsForOrder],
   (order, resources, prints) => {
