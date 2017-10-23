@@ -19,6 +19,16 @@ class OrderContainer extends Component {
     // Fetch order and related resources
     dispatch(Actions.Api.wyatt.order.get(uuid)).then(res => {
       dispatch(Actions.Api.wyatt['line-item'].list({ order: res.json.uri }));
+      if(res.json.channel_representative) {
+        dispatch(Actions.Api.pao.users.get(res.json.channel_representative));
+      }
+      if(res.json.order_owner) {
+        dispatch(Actions.Api.pao.users.get(res.json.order_owner));
+      }
+      debugger;
+      if(res.json.sales_representative) {
+        dispatch(Actions.Api.pao.users.get(res.json.sales_representative));
+      }
     });
 
     // Fetch resource options for input selections
