@@ -25,7 +25,6 @@ class OrderContainer extends Component {
       if(res.json.order_owner) {
         dispatch(Actions.Api.pao.users.get(res.json.order_owner));
       }
-      debugger;
       if(res.json.sales_representative) {
         dispatch(Actions.Api.pao.users.get(res.json.sales_representative));
       }
