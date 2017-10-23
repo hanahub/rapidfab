@@ -100,7 +100,7 @@ class TraceabilityReport extends React.Component {
 
 const mapStateToProps = state => {
   const print = state.resources[state.routeUUID];
-  const events = Selectors.getEventsForPrint(state, print);
+  const events = Selectors.getEventsForPrintSortedByCreated(state, print);
   const report = Selectors.getTraceabilityReportForPrint(state, print);
   const download = report && report.content ? report.content : 'none';
   return { events, print, download, report };
