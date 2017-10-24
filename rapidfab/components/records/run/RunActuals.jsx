@@ -11,21 +11,21 @@ import {
   FormattedVolume,
 } from 'rapidfab/i18n';
 
-const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
-  <Panel bsStyle="info">
+const RunActuals = ({ base, end, postProcessing, print, start, support }) => (
+  <Panel bsStyle="success">
     <ListGroup fill>
       <ListGroupItem
         header={
           <FormattedMessage
-            id="field.estimatedStartTime"
-            defaultMessage="Estimated Start Time"
+            id="field.actualStartTime"
+            defaultMessage="Actual Start Time"
           />
         }
       >
         {start ? (
           <span>
-            {Moment(start).format('MMMM DD YYYY, h:mm:ss a')}{' '}
-            {Moment(start).fromNow()}
+            {Moment(start).format('MMMM DD YYYY, h:mm:ss a')}
+            ({Moment(start).fromNow()})
           </span>
         ) : (
           <em>
@@ -37,8 +37,8 @@ const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
       <ListGroupItem
         header={
           <FormattedMessage
-            id="field.estimatedEndTime"
-            defaultMessage="Estimated End Time"
+            id="field.actualEndTime"
+            defaultMessage="Actual End Time"
           />
         }
       >
@@ -57,8 +57,8 @@ const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
       <ListGroupItem
         header={
           <FormattedMessage
-            id="field.estimatedPrintTime"
-            defaultMessage="Estimated Print Time"
+            id="field.actualPrintTime"
+            defaultMessage="Actual Print Time"
           />
         }
       >
@@ -74,13 +74,13 @@ const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
       <ListGroupItem
         header={
           <FormattedMessage
-            id="field.estimatedPostProcessingTime"
-            defaultMessage="Estimated Post Processing Time"
+            id="field.actualPostProcessingTime"
+            defaultMessage="Actual Post Processing Time"
           />
         }
       >
         {postProcessing ? (
-          <FormattedDuration seconds={postProcessing} />
+          <FormattedDuration value={postProcessing} />
         ) : (
           <em>
             <FormattedMessage id="notAvailable" defaultMessage="N/A" />
@@ -91,8 +91,8 @@ const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
       <ListGroupItem
         header={
           <FormattedMessage
-            id="field.estimatedMaterialUsed"
-            defaultMessage="Estimated Material Used"
+            id="field.actualMaterialUsed"
+            defaultMessage="Actual Material Used"
           />
         }
       >
@@ -107,8 +107,8 @@ const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
       <ListGroupItem
         header={
           <FormattedMessage
-            id="field.estimatedSupportUsed"
-            defaultMessage="Estimated Support Used"
+            id="field.actualSupportUsed"
+            defaultMessage="Actual Support Used"
           />
         }
       >
@@ -124,7 +124,7 @@ const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
   </Panel>
 );
 
-RunEstimates.defaultProps = {
+RunActuals.defaultProps = {
   base: null,
   end: null,
   postProcessing: null,
@@ -133,7 +133,7 @@ RunEstimates.defaultProps = {
   support: null,
 };
 
-RunEstimates.propTypes = {
+RunActuals.propTypes = {
   base: PropTypes.number,
   end: PropTypes.string,
   postProcessing: PropTypes.number,
@@ -146,7 +146,7 @@ const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
   if (!run) return {};
   const {
-    estimates: {
+    actuals: {
       start,
       end,
       time: { print, post_processing: postProcessing },
@@ -163,4 +163,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(RunEstimates);
+export default connect(mapStateToProps)(RunActuals);

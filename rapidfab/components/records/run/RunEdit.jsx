@@ -4,15 +4,9 @@ import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import Grid, { IdColumn, DateColumn } from 'rapidfab/components/grid';
-import Moment from 'moment';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-import {
-  FormattedDateTime,
-  FormattedDuration,
-  FormattedMessage,
-  FormattedVolume,
-} from 'rapidfab/i18n';
+import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import { FormControlSelect } from 'rapidfab/components/formTools';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
@@ -21,6 +15,7 @@ import FormRow from 'rapidfab/components/FormRow';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import RunEstimates from './RunEstimates';
+import RunActuals from './RunActuals';
 
 const styles = { spacingBelow: { marginBottom: '2rem' } };
 
@@ -158,127 +153,7 @@ const RunEdit = ({
           </BS.ButtonGroup>
 
           <RunEstimates />
-
-          <BS.Panel bsStyle="success">
-            <BS.ListGroup fill>
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.actualStartTime"
-                    defaultMessage="Actual Start Time"
-                  />
-                }
-              >
-                {_.get(fields, 'actuals.start.value') ? (
-                  <span>
-                    {Moment(fields.actuals.start.value).format(
-                      'MMMM DD YYYY, h:mm:ss a'
-                    )}
-                    ({Moment(fields.actuals.start.value).fromNow()})
-                  </span>
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.actualEndTime"
-                    defaultMessage="Actual End Time"
-                  />
-                }
-              >
-                {_.get(fields, 'actuals.end.value') ? (
-                  <span>
-                    {Moment(fields.actuals.end.value).format(
-                      'MMMM DD YYYY, h:mm:ss a'
-                    )}{' '}
-                    {Moment(fields.actuals.end.value).fromNow()}
-                  </span>
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.actualPrintTime"
-                    defaultMessage="Actual Print Time"
-                  />
-                }
-              >
-                {_.get(fields, 'actuals.time.print.value') ? (
-                  <FormattedDuration value={fields.actuals.time.print.value} />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.actualPostProcessingTime"
-                    defaultMessage="Actual Post Processing Time"
-                  />
-                }
-              >
-                {_.get(fields, 'actuals.time.post_processing.value') ? (
-                  <FormattedDuration
-                    value={fields.actuals.time.post_processing.value}
-                  />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.actualMaterialUsed"
-                    defaultMessage="Actual Material Used"
-                  />
-                }
-              >
-                {_.get(fields, 'actuals.materials.base.value') ? (
-                  <FormattedVolume
-                    value={fields.actuals.materials.base.value}
-                  />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.actualSupportUsed"
-                    defaultMessage="Actual Support Used"
-                  />
-                }
-              >
-                {_.get(fields, 'actuals.materials.support.value') ? (
-                  <FormattedVolume
-                    value={fields.actuals.materials.support.value}
-                  />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-            </BS.ListGroup>
-          </BS.Panel>
+          <RunActuals />
         </BS.Col>
 
         <BS.Col xs={12} sm={8}>
