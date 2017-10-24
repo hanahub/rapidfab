@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
-import RunEdit from 'rapidfab/components/records/run/RunEdit';
+import RunRecord from 'rapidfab/components/records/run/RunRecord';
 
 const fields = [
   'actuals.end',
@@ -41,7 +41,7 @@ class RunEditContainer extends Component {
   }
 
   render() {
-    return <RunEdit {...this.props} />;
+    return <RunRecord {...this.props} />;
   }
 }
 
