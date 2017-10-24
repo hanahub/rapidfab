@@ -15,10 +15,12 @@ import {
 } from 'rapidfab/i18n';
 import { FormControlSelect } from 'rapidfab/components/formTools';
 
-import FlashMessages from 'rapidfab/components/FlashMessages';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import FormRow from 'rapidfab/components/FormRow';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
+
+import RunEstimates from './RunEstimates';
 
 const styles = { spacingBelow: { marginBottom: '2rem' } };
 
@@ -102,25 +104,6 @@ LinkField.propTypes = {
   uri: PropTypes.string.isRequired,
 };
 
-const TimeDisplay = ({ seconds }) => {
-  const convertedTime = Moment.duration(seconds, 'seconds');
-  let displayTime = `${convertedTime.seconds()} s`;
-  if (convertedTime.minutes()) {
-    displayTime = `${convertedTime.minutes()} m ${displayTime}`;
-    if (convertedTime.hours()) {
-      displayTime = `${convertedTime.hours()} h ${displayTime}`;
-      if (convertedTime.days()) {
-        displayTime = `${convertedTime.days()} d ${displayTime}`;
-      }
-    }
-  }
-  return <span>{displayTime}</span>;
-};
-
-TimeDisplay.propTypes = {
-  seconds: PropTypes.number.isRequired,
-};
-
 const RunEdit = ({
   downloadModel,
   fields,
@@ -173,126 +156,8 @@ const RunEdit = ({
               />
             </BS.Button>
           </BS.ButtonGroup>
-          <BS.Panel bsStyle="info">
-            <BS.ListGroup fill>
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.estimatedStartTime"
-                    defaultMessage="Estimated Start Time"
-                  />
-                }
-              >
-                {_.get(fields, 'estimates.start.value') ? (
-                  <span>
-                    {Moment(fields.estimates.start.value).format(
-                      'MMMM DD YYYY, h:mm:ss a'
-                    )}{' '}
-                    {Moment(fields.estimates.start.value).fromNow()}
-                  </span>
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
 
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.estimatedEndTime"
-                    defaultMessage="Estimated End Time"
-                  />
-                }
-              >
-                {_.get(fields, 'estimates.end.value') ? (
-                  <span>
-                    {Moment(fields.estimates.end.value).format(
-                      'MMMM DD YYYY, h:mm:ss a'
-                    )}{' '}
-                    {Moment(fields.estimates.end.value).fromNow()}
-                  </span>
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.estimatedPrintTime"
-                    defaultMessage="Estimated Print Time"
-                  />
-                }
-              >
-                {_.get(fields, 'estimates.time.print.value') ? (
-                  <TimeDisplay seconds={fields.estimates.time.print.value} />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.estimatedPostProcessingTime"
-                    defaultMessage="Estimated Post Processing Time"
-                  />
-                }
-              >
-                {_.get(fields, 'estimates.time.post_processing.value') ? (
-                  <TimeDisplay
-                    seconds={fields.estimates.time.post_processing.value}
-                  />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.estimatedMaterialUsed"
-                    defaultMessage="Estimated Material Used"
-                  />
-                }
-              >
-                {_.get(fields, 'estimates.materials.base.value') ? (
-                  <FormattedVolume
-                    value={fields.estimates.materials.base.value}
-                  />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-              <BS.ListGroupItem
-                header={
-                  <FormattedMessage
-                    id="field.estimatedSupportUsed"
-                    defaultMessage="Estimated Support Used"
-                  />
-                }
-              >
-                {_.get(fields, 'estimates.materials.support.value') ? (
-                  <FormattedVolume
-                    value={fields.estimates.materials.support.value}
-                  />
-                ) : (
-                  <em>
-                    <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                  </em>
-                )}
-              </BS.ListGroupItem>
-            </BS.ListGroup>
-          </BS.Panel>
+          <RunEstimates />
 
           <BS.Panel bsStyle="success">
             <BS.ListGroup fill>

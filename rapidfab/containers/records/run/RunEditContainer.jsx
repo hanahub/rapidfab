@@ -52,6 +52,7 @@ RunEditContainer.propTypes = {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: props => {
+      dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
       dispatch(Actions.Api.wyatt.run.get(props.route.uuid));
       dispatch(Actions.Api.wyatt.print.list());
       dispatch(Actions.Api.wyatt.order.list());
