@@ -5,6 +5,7 @@ import moment from 'moment';
 
 export const getStateResources = state => state.resources;
 export const getRoute = (state, props) => props.route;
+export const getRouteUUID = state => state.routeUUID;
 export const getPredicate = (state, predicate) => predicate;
 
 export const getStateModels = state => state.api.hoth.model;
@@ -96,6 +97,11 @@ export const getResourceFetching = (state, path) => {
 export const getRouteResource = createSelector(
   [getRoute, getStateResources],
   (route, resources) => resources[route.uuid]
+);
+
+export const getRouteUUIDResource = createSelector(
+  [getRouteUUID, getStateResources],
+  (routeUUID, resources) => resources[routeUUID]
 );
 
 export const getFeatures = createSelector(
