@@ -8,14 +8,32 @@ import Actions from 'rapidfab/actions';
 import RunRecord from 'rapidfab/components/records/run/RunRecord';
 
 class RunRecordContainer extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = { tab: 1 };
+
+    this.handleSelectTab = this.handleSelectTab.bind(this);
+  }
+
   componentWillMount() {
     const { dispatch, route: { uuid } } = this.props;
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
     dispatch(Actions.Api.wyatt.run.get(uuid));
   }
 
+  handleSelectTab(tab) {
+    this.setState({ tab });
+  }
+
   render() {
-    return <RunRecord {...this.props} />;
+    return (
+      <RunRecord
+        {...this.props}
+        {...this.state}
+        handleSelectTab={this.handleSelectTab}
+      />
+    );
   }
 }
 
