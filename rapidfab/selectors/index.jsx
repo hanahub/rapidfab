@@ -651,3 +651,21 @@ export const isSessionManager = createSelector(
         role.role === 'manager'
     )
 );
+
+export const getRunPrintsGridData = createSelector(
+  [getRouteUUIDResource, getOrders, getPrints],
+  (run, orders, prints) => {
+    if (!run) return [];
+    return prints
+      .filter(
+        print => print.run === run.uri || print.post_processor_run === run.uri
+      )
+      .map(print => {
+        const printOrder = orders.find(order => order.uri === print.order);
+        if (!printOrder) return {};
+        const { id, order, uuid } = print;
+        const { customer_name: customerName, due_date: dueDate } = printOrder;
+        return { id, order, dueDate, customerName, uuid };
+      });
+  }
+);
