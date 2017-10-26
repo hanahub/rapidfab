@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import { Label, ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 
 import { getRouteUUIDResource } from 'rapidfab/selectors';
 import {
@@ -14,110 +14,101 @@ import {
 const RunActuals = ({ base, end, postProcessing, print, start, support }) => (
   <Panel bsStyle="success">
     <ListGroup fill>
-      <ListGroupItem
-        header={
+      <ListGroupItem header="Actuals" />
+
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.actualStartTime"
             defaultMessage="Actual Start Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {start ? (
           <span>
             {Moment(start).format('MMMM DD YYYY, h:mm:ss a')}
+            <br />
             ({Moment(start).fromNow()})
           </span>
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.actualEndTime"
             defaultMessage="Actual End Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {end ? (
           <span>
-            {Moment(end).format('MMMM DD YYYY, h:mm:ss a')}{' '}
+            {Moment(end).format('MMMM DD YYYY, h:mm:ss a')} <br />
             {Moment(end).fromNow()}
           </span>
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.actualPrintTime"
             defaultMessage="Actual Print Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {print ? (
           <FormattedDuration value={print} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.actualPostProcessingTime"
             defaultMessage="Actual Post Processing Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {postProcessing ? (
           <FormattedDuration value={postProcessing} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.actualMaterialUsed"
             defaultMessage="Actual Material Used"
           />
-        }
-      >
+        </Label>
+        <br />
         {base ? (
           <FormattedVolume value={base} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.actualSupportUsed"
             defaultMessage="Actual Support Used"
           />
-        }
-      >
+        </Label>
+        <br />
         {support ? (
           <FormattedVolume value={support} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
     </ListGroup>
@@ -145,6 +136,7 @@ RunActuals.propTypes = {
 const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
   if (!run) return {};
+
   const {
     actuals: {
       start,

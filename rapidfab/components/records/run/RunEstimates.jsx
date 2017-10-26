@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'moment';
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import { Label, ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 
 import { getRouteUUIDResource } from 'rapidfab/selectors';
 import {
@@ -14,110 +14,101 @@ import {
 const RunEstimates = ({ base, end, postProcessing, print, start, support }) => (
   <Panel bsStyle="info">
     <ListGroup fill>
-      <ListGroupItem
-        header={
+      <ListGroupItem header="Estimates" />
+
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.estimatedStartTime"
             defaultMessage="Estimated Start Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {start ? (
           <span>
-            {Moment(start).format('MMMM DD YYYY, h:mm:ss a')}{' '}
+            {Moment(start).format('MMMM DD YYYY, h:mm:ss a')} <br />
             {Moment(start).fromNow()}
           </span>
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.estimatedEndTime"
             defaultMessage="Estimated End Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {end ? (
           <span>
-            {Moment(end).format('MMMM DD YYYY, h:mm:ss a')}{' '}
+            {Moment(end).format('MMMM DD YYYY, h:mm:ss a')} <br />
             {Moment(end).fromNow()}
           </span>
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.estimatedPrintTime"
             defaultMessage="Estimated Print Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {print ? (
           <FormattedDuration value={print} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.estimatedPostProcessingTime"
             defaultMessage="Estimated Post Processing Time"
           />
-        }
-      >
+        </Label>
+        <br />
         {postProcessing ? (
           <FormattedDuration seconds={postProcessing} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
 
-      <ListGroupItem
-        header={
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.estimatedMaterialUsed"
             defaultMessage="Estimated Material Used"
           />
-        }
-      >
+        </Label>
+        <br />
         {base ? (
           <FormattedVolume value={base} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
-      <ListGroupItem
-        header={
+
+      <ListGroupItem>
+        <Label>
           <FormattedMessage
             id="field.estimatedSupportUsed"
             defaultMessage="Estimated Support Used"
           />
-        }
-      >
+        </Label>
+        <br />
         {support ? (
           <FormattedVolume value={support} />
         ) : (
-          <em>
-            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-          </em>
+          <FormattedMessage id="notAvailable" defaultMessage="N/A" />
         )}
       </ListGroupItem>
     </ListGroup>
