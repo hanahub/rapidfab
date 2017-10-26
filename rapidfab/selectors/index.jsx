@@ -5,6 +5,7 @@ import moment from 'moment';
 
 export const getStateResources = state => state.resources;
 export const getRoute = (state, props) => props.route;
+export const getRouteUUID = state => state.routeUUID;
 export const getPredicate = (state, predicate) => predicate;
 
 export const getStateModels = state => state.api.hoth.model;
@@ -96,6 +97,11 @@ export const getResourceFetching = (state, path) => {
 export const getRouteResource = createSelector(
   [getRoute, getStateResources],
   (route, resources) => resources[route.uuid]
+);
+
+export const getRouteUUIDResource = createSelector(
+  [getRouteUUID, getStateResources],
+  (routeUUID, resources) => resources[routeUUID]
 );
 
 export const getFeatures = createSelector(
@@ -644,4 +650,22 @@ export const isSessionManager = createSelector(
         role.bureau === bureau.uri &&
         role.role === 'manager'
     )
+);
+
+export const getRunPrintsGridData = createSelector(
+  [getRouteUUIDResource, getOrders, getPrints],
+  (run, orders, prints) => {
+    if (!run) return [];
+    return prints
+      .filter(
+        print => print.run === run.uri || print.post_processor_run === run.uri
+      )
+      .map(print => {
+        const printOrder = orders.find(order => order.uri === print.order);
+        if (!printOrder) return {};
+        const { id, order, uuid } = print;
+        const { customer_name: customerName, due_date: dueDate } = printOrder;
+        return { id, order, dueDate, customerName, uuid };
+      });
+  }
 );
