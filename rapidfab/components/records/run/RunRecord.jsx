@@ -14,6 +14,10 @@ import RunActuals from './RunActuals';
 import RunEstimates from './RunEstimates';
 import RunRequeueButton from './RunRequeueButton';
 
+const styles = {
+  spacingTop: { marginTop: '1rem' }
+};
+
 const RunRecord = ({ handleSelectTab, isRunFetching, id, tab }) => (
   <Grid fluid>
     <BreadcrumbNav breadcrumbs={['runs', id || '']} />
@@ -29,7 +33,7 @@ const RunRecord = ({ handleSelectTab, isRunFetching, id, tab }) => (
 
     <FlashMessages />
 
-    <Col xs={12} style={{ marginTop: '1rem' }}>
+    <Col xs={12} style={styles.spacingTop}>
       <Row>
         {tab === 1 && (
           <div>
@@ -41,7 +45,9 @@ const RunRecord = ({ handleSelectTab, isRunFetching, id, tab }) => (
 
             <Col xs={12} sm={8}>
               {isRunFetching ? null : <RunRecordFormContainer />}
-              <RunPrintsContainer />
+              <div style={styles.spacingTop}>
+                <RunPrintsContainer />
+              </div>
             </Col>
           </div>
         )}
