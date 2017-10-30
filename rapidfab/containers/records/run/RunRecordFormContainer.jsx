@@ -23,13 +23,6 @@ class RunRecordFormContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.props.dispatch(Actions.Api.wyatt.run.get(this.props.uuid))
-      .then(response => {
-        debugger
-      });
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.isFetching && !this.props.isFetching) {
       const { initialNotes, initialStatus } = this.props;
