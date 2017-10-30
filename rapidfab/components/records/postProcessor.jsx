@@ -58,7 +58,7 @@ const PostProcessorForm = ({
             <BS.FormControl name="name" type="text" required {...fields.name} />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDuration">
-            <BS.ControlLabel>Duration:</BS.ControlLabel>
+            <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
             <BS.FormControl
               name="duration"
               type="number"
