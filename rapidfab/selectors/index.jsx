@@ -596,6 +596,63 @@ export const getLineItemsForRunNew = createSelector(
   }
 );
 
+export const getLineItemsForRunEdit = createSelector(
+  [
+    getRouteUUIDResource,
+    getLineItems,
+    getMaterials,
+    getModels,
+    getStatePrints,
+    getStateResources,
+  ],
+  (run, lineItems, materials, models, printUuids, resources) => {
+    const printResources = printUuids.map(uuid => resources[uuid]);
+    const prints = printResources.filter(
+      print => print.status === 'created' || run.prints.includes(print.uri)
+    );
+    if (
+      lineItems.length &&
+      materials.length &&
+      prints.length &&
+      models.length
+    ) {
+      return _.reduce(
+        lineItems,
+        (result, lineItem) => {
+          const baseMaterial = materials.find(
+            material => material.uri === lineItem.materials.base
+          );
+          const model = models.find(model => model.uri === lineItem.model);
+          const lineItemPrints = prints.filter(
+            print => print.line_item === lineItem.uri
+          );
+
+          if (
+            baseMaterial &&
+            model &&
+            lineItemPrints.length &&
+            (lineItem.status === 'confirmed' || lineItem.status === 'printing')
+          ) {
+            const hydratedRecord = Object.assign({}, lineItem, {
+              materials: {
+                base: baseMaterial,
+              },
+              model,
+            });
+            hydratedRecord.prints = lineItemPrints.map(print =>
+              Object.assign({}, print, { lineItem: hydratedRecord })
+            );
+            result.push(hydratedRecord);
+          }
+          return result;
+        },
+        []
+      );
+    }
+    return [];
+  }
+);
+
 export const getThirdPartyProviders = createSelector(
   [getStateThirdPartyProviders, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])

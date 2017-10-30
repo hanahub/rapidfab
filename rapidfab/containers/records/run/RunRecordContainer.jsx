@@ -9,7 +9,7 @@ import RunRecord from 'rapidfab/components/records/run/RunRecord';
 
 class RunRecordContainer extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = { tab: 1 };
 
@@ -44,8 +44,11 @@ RunRecordContainer.propTypes = {
 
 const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
-  if (!run) return {};
-  return { id: run.id };
+  return Object.assign(
+    {},
+    { isRunFetching: !run && state.ui.wyatt.run.get.fetching },
+    run ? { id: run.id } : null
+  );
 };
 
 export default connect(mapStateToProps)(RunRecordContainer);
