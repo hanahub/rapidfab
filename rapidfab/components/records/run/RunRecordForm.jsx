@@ -20,12 +20,16 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import RunModelDownload from './RunModelDownload';
 
+const styles = {
+  spacingBottom: { marginBottom: '15px' },
+};
+
 const InfoRow = ({ children, id, message }) => (
-  <Row>
+  <Row style={styles.spacingBottom}>
     <Col xs={3}>
-      <Label>
+      <strong>
         <FormattedMessage id={id} defaultMessage={message} />:
-      </Label>
+      </strong>
     </Col>
     <Col xs={9}>{children}</Col>
   </Row>
