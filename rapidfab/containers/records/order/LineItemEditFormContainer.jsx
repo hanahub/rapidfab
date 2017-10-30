@@ -24,6 +24,7 @@ class LineItemEditFormContainer extends Component {
 
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleModelDownload = this.handleModelDownload.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -91,10 +92,24 @@ class LineItemEditFormContainer extends Component {
     this.setState({ [name]: value });
   }
 
+  handleModelDownload() {
+    const { dispatch, lineItem: { model: modelUri }, models } = this.props;
+    const currentModel = models.find(model => model.uri === modelUri);
+    dispatch(Actions.DownloadModel.fetchModel(modelUri)).then(response => {
+      dispatch(
+        Actions.DownloadModel.downloadContent(
+          currentModel.name,
+          response.json.content
+        )
+      );
+    });
+  }
+
   render() {
     const {
       handleFileChange,
       handleInputChange,
+      handleModelDownload,
       onDelete,
       onSubmit,
       props,
@@ -107,6 +122,7 @@ class LineItemEditFormContainer extends Component {
         {...state}
         handleFileChange={handleFileChange}
         handleInputChange={handleInputChange}
+        handleModelDownload={handleModelDownload}
         onDelete={onDelete}
         onSubmit={onSubmit}
       />

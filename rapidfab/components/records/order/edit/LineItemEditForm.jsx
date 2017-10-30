@@ -65,6 +65,7 @@ Printable.propTypes = {
 const LineItemEditForm = ({
   handleFileChange,
   handleInputChange,
+  handleModelDownload,
   lineItem,
   notes,
   baseMaterial,
@@ -118,11 +119,13 @@ const LineItemEditForm = ({
       {lineItem.itar ? null : (
         <div>
           <FormRow id="field.model" defaultMessage="Model">
-            <p>
-              <a href={currentModel ? currentModel.content : null}>
-                {currentModel ? currentModel.name : 'Loading Model...'}
-              </a>
-            </p>
+            <div>
+              {currentModel ? (
+                <a onClick={handleModelDownload}>{currentModel.name}</a>
+              ) : (
+                <Fa name="spinner" spin />
+              )}
+            </div>
           </FormRow>
           <FormRow id="field.replaceModel" defaultMessage="Replace Model">
             <FormControl
@@ -274,6 +277,7 @@ LineItemEditForm.defaultProps = {
 LineItemEditForm.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
+  handleModelDownload: PropTypes.func.isRequired,
   lineItem: PropTypes.object.isRequired,
   baseMaterial: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
