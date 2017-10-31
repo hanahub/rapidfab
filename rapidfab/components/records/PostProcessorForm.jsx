@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const PostProcessorForm = ({
@@ -13,7 +14,6 @@ const PostProcessorForm = ({
   onDelete,
   locations,
   postProcessorTypes,
-  apiErrors,
 }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -45,11 +45,7 @@ const PostProcessorForm = ({
 
       <hr />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
+      <FlashMessages />
 
       <BS.Row>
         <BS.Col xs={12}>
@@ -120,5 +116,6 @@ const PostProcessorForm = ({
     </BS.Grid>
   </form>
 );
+
 
 export default PostProcessorForm;
