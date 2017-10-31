@@ -142,16 +142,29 @@ const PostProcessorForm = ({
               <Panel header={`Post Processor Type: ${postProcessorType.name}`}>
                 <ListGroup fill>
                   <ListGroupItem style={styles.flexRow}>
-                    <strong>Description</strong>
+                    <strong>
+                      <FormattedMessage
+                        id="field.description"
+                        defaultMessages="Description"
+                      />
+                    </strong>
                     <span>{postProcessorType.description}</span>
                   </ListGroupItem>
                   <ListGroupItem style={styles.flexRow}>
-                    <strong>Duration</strong>
+                    <strong>
+                      <FormattedMessage
+                        id="field.duration"
+                        defaultMessage="Duration"
+                      />
+                    </strong>
                     <span>
                       {postProcessorType.duration ? (
                         postProcessorType.duration
                       ) : (
-                        'N/A'
+                        <FormattedMessage
+                          id="notAvailable"
+                          defaultMessage="N/A"
+                        />
                       )}
                     </span>
                   </ListGroupItem>
