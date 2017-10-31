@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as BS from 'react-bootstrap';
+import {
+  ButtonToolbar,
+  Col,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Grid,
+  MenuItem,
+  Row,
+  SplitButton,
+} from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
@@ -17,14 +27,14 @@ const PostProcessorForm = ({
   postProcessorTypes,
 }) => (
   <form onSubmit={handleSubmit}>
-    <BS.Grid fluid>
+    <Grid fluid>
       <BreadcrumbNav
         breadcrumbs={['postProcessors', fields.id.value || 'New']}
       />
 
       <div className="clearfix">
-        <BS.ButtonToolbar className="pull-right">
-          <BS.SplitButton
+        <ButtonToolbar className="pull-right">
+          <SplitButton
             id="uxSaveDropdown"
             type="submit"
             bsStyle="success"
@@ -32,36 +42,36 @@ const PostProcessorForm = ({
             title={<SaveButtonTitle />}
             pullRight
           >
-            <BS.MenuItem
+            <MenuItem
               eventKey={1}
               onClick={() => onDelete(fields.uuid.value)}
               disabled={!fields.id.value}
             >
               <Fa name="ban" />{' '}
               <FormattedMessage id="button.delete" defaultMessage="Delete" />
-            </BS.MenuItem>
-          </BS.SplitButton>
-        </BS.ButtonToolbar>
+            </MenuItem>
+          </SplitButton>
+        </ButtonToolbar>
       </div>
 
       <hr />
 
       <FlashMessages />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.FormGroup controlId="uxName">
-            <BS.ControlLabel>Name:</BS.ControlLabel>
-            <BS.FormControl name="name" type="text" required {...fields.name} />
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxLocation">
-            <BS.ControlLabel>
+      <Row>
+        <Col xs={12}>
+          <FormGroup controlId="uxName">
+            <ControlLabel>Name:</ControlLabel>
+            <FormControl name="name" type="text" required {...fields.name} />
+          </FormGroup>
+          <FormGroup controlId="uxLocation">
+            <ControlLabel>
               <FormattedMessage
                 id="field.location"
                 defaultMessage="Location"
               />:
-            </BS.ControlLabel>
-            <BS.FormControl
+            </ControlLabel>
+            <FormControl
               componentClass="select"
               placeholder="location"
               required
@@ -75,16 +85,16 @@ const PostProcessorForm = ({
                   {location.name}
                 </option>
               ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxPostProcessorType">
-            <BS.ControlLabel>
+            </FormControl>
+          </FormGroup>
+          <FormGroup controlId="uxPostProcessorType">
+            <ControlLabel>
               <FormattedMessage
                 id="field.postProcessorType"
                 defaultMessage="Post Processor Type"
               />:
-            </BS.ControlLabel>
-            <BS.FormControl
+            </ControlLabel>
+            <FormControl
               componentClass="select"
               placeholder="post_processor_type"
               required
@@ -101,20 +111,20 @@ const PostProcessorForm = ({
                   {postProcessorType.name}
                 </option>
               ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxDuration">
-            <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
-            <BS.FormControl
+            </FormControl>
+          </FormGroup>
+          <FormGroup controlId="uxDuration">
+            <ControlLabel>Duration (seconds):</ControlLabel>
+            <FormControl
               name="duration"
               type="number"
               required
               {...fields.duration}
             />
-          </BS.FormGroup>
-        </BS.Col>
-      </BS.Row>
-    </BS.Grid>
+          </FormGroup>
+        </Col>
+      </Row>
+    </Grid>
   </form>
 );
 
