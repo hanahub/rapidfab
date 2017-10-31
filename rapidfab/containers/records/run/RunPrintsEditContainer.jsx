@@ -61,8 +61,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.printer.list());
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
     },
-    onSave: (uri, payload) =>
-      dispatch(Actions.Api.wyatt.run.put(uri, payload)),
+    onSave: (uri, payload) => dispatch(Actions.Api.wyatt.run.put(uri, payload)),
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
