@@ -15,7 +15,7 @@ import RunEstimates from './RunEstimates';
 import RunRequeueButton from './RunRequeueButton';
 
 const styles = {
-  spacingTop: { marginTop: '1rem' }
+  spacingTop: { marginTop: '1rem' },
 };
 
 const RunRecord = ({ handleSelectTab, isRunFetching, id, tab }) => (

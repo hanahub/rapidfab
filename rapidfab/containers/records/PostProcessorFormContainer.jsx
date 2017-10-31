@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import Actions from 'rapidfab/actions';
-import PostProcessorComponent from 'rapidfab/components/records/postProcessor';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
+
+import PostProcessorForm from 'rapidfab/components/records/PostProcessorForm';
 
 const fields = [
   'id',
@@ -14,15 +17,20 @@ const fields = [
   'post_processor_type',
 ];
 
-class PostProcessorContainer extends Component {
+class PostProcessorFormContainer extends React.Component {
   componentWillMount() {
     this.props.onInitialize(this.props.uuid);
   }
 
   render() {
-    return <PostProcessorComponent {...this.props} />;
+    return <PostProcessorForm {...this.props} />;
   }
 }
+
+PostProcessorFormContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/post-processors';
@@ -58,7 +66,6 @@ function mapStateToProps(state, props) {
     uuid: Selectors.getRoute(state, props).uuid,
     initialValues: Selectors.getRouteResource(state, props),
     submitting: Selectors.getResourceFetching(state, 'wyatt.post-processor'),
-    apiErrors: Selectors.getResourceErrors(state, 'wyatt.post-processor'),
     locations: Selectors.getLocations(state),
     postProcessorTypes: Selectors.getPostProcessorTypes(state),
   };
@@ -71,4 +78,4 @@ export default reduxForm(
   },
   mapStateToProps,
   mapDispatchToProps
-)(PostProcessorContainer);
+)(PostProcessorFormContainer);
