@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -11,8 +12,8 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 const PostProcessorForm = ({
   fields,
   handleSubmit,
-  onDelete,
   locations,
+  onDelete,
   postProcessorTypes,
 }) => (
   <form onSubmit={handleSubmit}>
@@ -117,5 +118,12 @@ const PostProcessorForm = ({
   </form>
 );
 
+PostProcessorForm.propTypes = {
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default PostProcessorForm;
