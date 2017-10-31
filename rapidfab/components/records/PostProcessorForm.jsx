@@ -57,15 +57,6 @@ const PostProcessorForm = ({
             <BS.ControlLabel>Name:</BS.ControlLabel>
             <BS.FormControl name="name" type="text" required {...fields.name} />
           </BS.FormGroup>
-          <BS.FormGroup controlId="uxDuration">
-            <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
-            <BS.FormControl
-              name="duration"
-              type="number"
-              required
-              {...fields.duration}
-            />
-          </BS.FormGroup>
           <BS.FormGroup controlId="uxLocation">
             <BS.ControlLabel>
               <FormattedMessage
@@ -114,6 +105,15 @@ const PostProcessorForm = ({
                 </option>
               ))}
             </BS.FormControl>
+          </BS.FormGroup>
+          <BS.FormGroup controlId="uxDuration">
+            <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
+            <BS.FormControl
+              name="duration"
+              type="number"
+              required
+              {...fields.duration}
+            />
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>

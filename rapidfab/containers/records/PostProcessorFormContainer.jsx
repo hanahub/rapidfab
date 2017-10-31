@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import Actions from 'rapidfab/actions';
-import PostProcessorComponent from 'rapidfab/components/records/postProcessor';
+import PostProcessorForm from 'rapidfab/components/records/PostProcessorForm';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 
@@ -14,13 +15,13 @@ const fields = [
   'post_processor_type',
 ];
 
-class PostProcessorContainer extends Component {
+class PostProcessorFormContainer extends React.Component {
   componentWillMount() {
     this.props.onInitialize(this.props.uuid);
   }
 
   render() {
-    return <PostProcessorComponent {...this.props} />;
+    return <PostProcessorForm {...this.props} />;
   }
 }
 
@@ -71,4 +72,4 @@ export default reduxForm(
   },
   mapStateToProps,
   mapDispatchToProps
-)(PostProcessorContainer);
+)(PostProcessorFormContainer);
