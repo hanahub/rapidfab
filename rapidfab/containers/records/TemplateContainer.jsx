@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Actions from 'rapidfab/actions';
 import TemplateComponent from 'rapidfab/components/records/template';
@@ -29,6 +30,17 @@ class TemplateContainer extends Component {
     return <TemplateComponent {...this.props} />;
   }
 }
+
+TemplateContainer.defaultProps = {
+  uuid: null,
+};
+
+TemplateContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  uuid: PropTypes.string,
+  onInitialize: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/templates';
@@ -69,18 +81,18 @@ function mapDispatchToProps(dispatch) {
     onDuplicate: templateCopy => {
       const { bureau, name, steps } = templateCopy;
       const stepCopies = steps.map(step => {
-        const step_data = _.omit(step, ['step_position', 'template']);
+        const stepData = _.omit(step, ['step_position', 'template']);
         return new Promise(resolve => {
           dispatch(
-            Actions.Api.wyatt['process-step'].post(step_data)
+            Actions.Api.wyatt['process-step'].post(stepData)
           ).then(response => resolve(response.payload.uri));
         });
       });
-      Promise.all(stepCopies).then(process_steps => {
+      Promise.all(stepCopies).then(processSteps => {
         const payload = {
           bureau,
           name,
-          process_steps,
+          processSteps,
         };
         dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect);
       });

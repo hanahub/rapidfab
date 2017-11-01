@@ -37,7 +37,7 @@ import PrinterType from 'rapidfab/containers/records/printerType';
 import PostProcessorFormContainer from 'rapidfab/containers/records/PostProcessorFormContainer';
 import PostProcessorType from 'rapidfab/containers/records/postProcessorType';
 import Stock from 'rapidfab/containers/records/stock';
-import Template from 'rapidfab/containers/records/template';
+import TemplateContainer from 'rapidfab/containers/records/TemplateContainer';
 import RunRecordContainer from 'rapidfab/containers/records/run/RunRecordContainer';
 import RunNew from 'rapidfab/containers/records/run/new';
 
@@ -96,8 +96,8 @@ const Routes = {
   '/records/stock/:uuid': Stock,
   '/records/run': RunNew,
   '/records/run/:uuid': RunRecordContainer,
-  '/records/template/': Template,
-  '/records/template/:uuid': Template,
+  '/records/template/': TemplateContainer,
+  '/records/template/:uuid': TemplateContainer,
 };
 
 export default Routes;
