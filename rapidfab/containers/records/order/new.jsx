@@ -15,10 +15,6 @@ class NewOrderContainer extends Component {
     this.props.onInitialize(this.props.bureau);
   }
 
-  componentWillUnmount() {
-    this.props.onUnmount();
-  }
-
   componentDidUpdate(prevProps) {
     const { model, uploadModel } = this.props;
     const prevModel = prevProps.model;
@@ -30,6 +26,10 @@ class NewOrderContainer extends Component {
     ) {
       this.props.onSaveOrder(uploadModel.orderPayload);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.onUnmount();
   }
 
   render() {
@@ -45,6 +45,16 @@ class NewOrderContainer extends Component {
     );
   }
 }
+
+NewOrderContainer.propTypes = {
+  bureau: PropTypes.bureau.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  model: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  onSaveOrder: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
+  uploadModel: PropTypes.object.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
