@@ -63,7 +63,7 @@ export const MappedColumn = (field, mapping) =>
     return message;
   };
 
-export const DateTimeColumn = ({ data }) => <FormattedDateTime value={data} />;
+export const DateTimeColumn = ({ data }) => data ? <FormattedDateTime value={data} /> : null ;
 
 export const TimeColumn = ({ data }) => <FormattedTime value={data} />;
 
