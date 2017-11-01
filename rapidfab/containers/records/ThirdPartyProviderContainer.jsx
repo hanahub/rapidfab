@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
-import ThirdPartyProviderComponent from 'rapidfab/components/records/thirdPartyProvider';
+import ThirdPartyProvider from 'rapidfab/components/records/thirdPartyProvider';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 
@@ -12,9 +13,14 @@ class ThirdPartyProviderContainer extends Component {
   }
 
   render() {
-    return <ThirdPartyProviderComponent {...this.props} />;
+    return <ThirdPartyProvider {...this.props} />;
   }
 }
+
+ThirdPartyProviderContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/third-party-providers';
