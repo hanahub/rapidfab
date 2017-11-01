@@ -135,8 +135,7 @@ RunActuals.propTypes = {
 
 const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
-  if (!run) return {};
-
+  if (!run || !run.actuals) return {};
   const {
     actuals: {
       start,
