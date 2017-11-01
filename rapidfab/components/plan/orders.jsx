@@ -64,7 +64,7 @@ const Orders = ({
         ) : (
           <Grid
             data={orders}
-            columns={['id', 'name', 'status', 'created']}
+            columns={['id', 'name', 'status', 'created', 'customer_name', 'due_date']}
             columnMeta={[
               {
                 displayName: (
@@ -95,6 +95,19 @@ const Orders = ({
                     id="field.created"
                     defaultMessage="Created"
                   />
+                ),
+              },
+              {
+                columnName: 'customer_name',
+                displayName: (
+                  <FormattedMessage id="field.customer_name" defaultMessage="Customer Name" />
+                ),
+              },
+              {
+                customComponent: DateTimeColumn,
+                columnName: 'due_date',
+                displayName: (
+                  <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
                 ),
               },
             ]}
