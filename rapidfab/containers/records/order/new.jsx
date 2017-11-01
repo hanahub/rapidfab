@@ -47,7 +47,7 @@ class NewOrderContainer extends Component {
 }
 
 NewOrderContainer.propTypes = {
-  bureau: PropTypes.bureau.isRequired,
+  bureau: PropTypes.object.isRequired,
   fetching: PropTypes.bool.isRequired,
   model: PropTypes.object.isRequired,
   onInitialize: PropTypes.func.isRequired,
