@@ -338,10 +338,7 @@ const Navbar = ({
 }) => {
   const bureauList = Array.from(bureaus);
   const bureauName =
-    (bureauList &&
-      bureauList.length &&
-      bureauList[0] &&
-      bureauList[0].name) ||
+    (bureauList && bureauList.length && bureauList[0] && bureauList[0].name) ||
     '...';
   return (
     <BS.Navbar fixedTop inverse fluid>
@@ -370,6 +367,15 @@ const Navbar = ({
       )}
     </BS.Navbar>
   );
-}
+};
+
+Navbar.PropTypes = {
+  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogOut: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
 
 export default Navbar;
