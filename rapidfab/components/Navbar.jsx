@@ -1,10 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import Flag from 'rapidfab/components/flag';
 import { FormattedMessage } from 'react-intl';
+
+import Flag from 'rapidfab/components/flag';
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
+
+const styles = {
+  spacingRight: { marginRight: '1rem' },
+};
 
 const LanguageFlagMap = {
   'en-US': 'us',
@@ -112,8 +119,23 @@ const NavProfile = ({
           <Flag type="jp" /> 日本語
         </BS.MenuItem>
       </BS.NavDropdown>
+      <BS.NavItem
+        style={styles.spacingRight}
+        href="https://authentise.zendesk.com/hc/en-us"
+        target="_blank"
+      >
+        <Fa name="question-circle-o" />
+      </BS.NavItem>
     </BS.Nav>
   );
+};
+
+NavProfile.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
 };
 
 const NavLinksRestricted = ({
@@ -139,6 +161,14 @@ const NavLinksRestricted = ({
     />
   </BS.Navbar.Collapse>
 );
+
+NavLinksRestricted.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
 
 const NavLinksRegular = ({
   currentUser,
@@ -314,51 +344,66 @@ const NavLinksRegular = ({
   );
 };
 
-class Navbar extends Component {
-  render() {
-    const {
-      bureaus,
-      currentUser,
-      locale,
-      onChangeLocale,
-      onLogout,
-      session,
-    } = this.props;
-    const bureauList = Array.from(bureaus);
-    const bureauName =
-      (bureauList &&
-        bureauList.length &&
-        bureauList[0] &&
-        bureauList[0].name) ||
-      '...';
-    return (
-      <BS.Navbar fixedTop inverse fluid>
-        <BS.Navbar.Header>
-          <BS.Navbar.Brand>
-            <a href="#/">{bureauName}</a>
-          </BS.Navbar.Brand>
-          <BS.Navbar.Toggle />
-        </BS.Navbar.Header>
-        {isRestricted(session) ? (
-          <NavLinksRestricted
-            currentUser={currentUser}
-            locale={locale}
-            onChangeLocale={onChangeLocale}
-            onLogout={onLogout}
-            session={session}
-          />
-        ) : (
-          <NavLinksRegular
-            currentUser={currentUser}
-            locale={locale}
-            onChangeLocale={onChangeLocale}
-            onLogout={onLogout}
-            session={session}
-          />
-        )}
-      </BS.Navbar>
-    );
-  }
-}
+NavLinksRegular.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
+
+const Navbar = ({
+  bureaus,
+  currentUser,
+  locale,
+  onChangeLocale,
+  onLogout,
+  session,
+}) => {
+  const bureauList = Array.from(bureaus);
+  const bureauName =
+    (bureauList && bureauList.length && bureauList[0] && bureauList[0].name) ||
+    '...';
+  return (
+    <BS.Navbar fixedTop inverse fluid>
+      <BS.Navbar.Header>
+        <BS.Navbar.Brand>
+          <a href="#/">{bureauName}</a>
+        </BS.Navbar.Brand>
+        <BS.Navbar.Toggle />
+      </BS.Navbar.Header>
+      {isRestricted(session) ? (
+        <NavLinksRestricted
+          currentUser={currentUser}
+          locale={locale}
+          onChangeLocale={onChangeLocale}
+          onLogout={onLogout}
+          session={session}
+        />
+      ) : (
+        <NavLinksRegular
+          currentUser={currentUser}
+          locale={locale}
+          onChangeLocale={onChangeLocale}
+          onLogout={onLogout}
+          session={session}
+        />
+      )}
+    </BS.Navbar>
+  );
+};
+
+Navbar.defaultProps = {
+  currentUser: null,
+};
+
+Navbar.propTypes = {
+  bureaus: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
 
 export default Navbar;
