@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import LocationComponent from 'rapidfab/components/records/location';
 import { reduxForm } from 'redux-form';
@@ -27,6 +28,13 @@ class LocationContainer extends Component {
     return <LocationComponent {...this.props} />;
   }
 }
+
+LocationContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/locations';
