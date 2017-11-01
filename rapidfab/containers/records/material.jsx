@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import MaterialComponent from 'rapidfab/components/records/material';
 import { reduxForm } from 'redux-form';
@@ -29,6 +30,15 @@ class MaterialContainer extends Component {
   }
 }
 
+MaterialContainer.defaultProps = {
+  uuid: null,
+};
+
+MaterialContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string,
+};
+
 function redirect() {
   window.location.hash = '#/inventory/materials';
 }
@@ -42,15 +52,20 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
-      if (!payload.third_party_fulfillment) {
-        payload.third_party_fulfillment = false;
-      }
+      const validatedPayload = Object.assign({}, payload, {
+        third_party_fulfillment: payload.third_party_fulfillment
+          ? payload.third_party_fulfillment
+          : false,
+      });
+
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt.material.put(payload.uuid, payload)).then(
+        dispatch(
+          Actions.Api.wyatt.material.put(payload.uuid, validatedPayload)
+        ).then(redirect);
+      } else {
+        dispatch(Actions.Api.wyatt.material.post(validatedPayload)).then(
           redirect
         );
-      } else {
-        dispatch(Actions.Api.wyatt.material.post(payload)).then(redirect);
       }
     },
     onDelete: uuid => {

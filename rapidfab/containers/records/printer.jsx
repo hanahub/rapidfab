@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import PrinterComponent from 'rapidfab/components/records/printer';
 import { reduxForm } from 'redux-form';
@@ -24,6 +25,15 @@ class PrinterContainer extends Component {
   }
 }
 
+PrinterContainer.defaultProps = {
+  uuid: null,
+};
+
+PrinterContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string,
+};
+
 function redirect() {
   window.location.hash = '#/inventory/printers';
 }
@@ -38,13 +48,17 @@ function mapDispatchToProps(dispatch) {
       }
     },
     onSubmit: payload => {
-      if (!payload.modeler) payload.modeler = '';
+      const validatedPayload = Object.assign({}, payload, {
+        modeler: payload.modeler ? payload.modeler : '',
+      });
       if (payload.uuid) {
-        dispatch(Actions.Api.wyatt.printer.put(payload.uuid, payload)).then(
+        dispatch(
+          Actions.Api.wyatt.printer.put(payload.uuid, validatedPayload)
+        ).then(redirect);
+      } else {
+        dispatch(Actions.Api.wyatt.printer.post(validatedPayload)).then(
           redirect
         );
-      } else {
-        dispatch(Actions.Api.wyatt.printer.post(payload)).then(redirect);
       }
     },
     onDelete: uuid => {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { getRouteUUID, getRouteUUIDResource } from 'rapidfab/selectors';
 
 import RunRecordForm from 'rapidfab/components/records/run/RunRecordForm';
@@ -72,6 +71,7 @@ class RunRecordFormContainer extends React.Component {
 RunRecordFormContainer.defaultProps = {
   initialNotes: null,
   initialStatus: null,
+  uuid: null,
 };
 
 RunRecordFormContainer.propTypes = {

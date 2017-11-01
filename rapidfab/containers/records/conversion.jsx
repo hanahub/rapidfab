@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import ConversionComponent from 'rapidfab/components/records/conversion';
 import { reduxForm } from 'redux-form';
@@ -15,6 +16,11 @@ class ConversionContainer extends Component {
     return <ConversionComponent {...this.props} />;
   }
 }
+
+ConversionContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/conversions';

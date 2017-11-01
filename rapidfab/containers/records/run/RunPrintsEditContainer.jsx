@@ -84,8 +84,6 @@ function mapStateToProps(state) {
 
   const { model } = state.ui.hoth;
 
-  const { modeler } = state.ui.nautilus;
-
   const fetching =
     lineItem.list.fetching ||
     material.list.fetching ||
@@ -139,12 +137,16 @@ function mapStateToProps(state) {
   };
 }
 
+RunPrintsEditContainer.defaultProps = {
+  uuid: null,
+};
+
 RunPrintsEditContainer.propTypes = {
-  bureau: PropTypes.object,
+  bureau: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
   uuid: PropTypes.string,
-  onInitialize: PropTypes.func,
-  onUnmount: PropTypes.func,
-  loading: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

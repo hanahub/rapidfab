@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import ManufacturerComponent from 'rapidfab/components/records/manufacturer';
 import { reduxForm } from 'redux-form';
@@ -27,6 +28,15 @@ class ManufacturerContainer extends Component {
     return <ManufacturerComponent {...this.props} />;
   }
 }
+
+ManufacturerContainer.defaultProps = {
+  uuid: null,
+};
+
+ManufacturerContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/manufacturers';
@@ -62,7 +72,6 @@ function mapStateToProps(state, props) {
     initialValues: Selectors.getRouteResource(state, props),
     submitting: Selectors.getResourceFetching(state, 'wyatt.manufacturer'),
     apiErrors: Selectors.getResourceErrors(state, 'wyatt.manufacturer'),
-    initialValues: Selectors.getInitialValuesBureau(state, props),
   };
 }
 

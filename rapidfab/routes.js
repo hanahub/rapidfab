@@ -20,26 +20,26 @@ import Orders from 'rapidfab/containers/plan/orders';
 import Runs from 'rapidfab/containers/plan/runs';
 import Prints from 'rapidfab/containers/plan/prints';
 
-import Queues from 'rapidfab/containers/work/queues';
+import QueuesContainer from 'rapidfab/containers/work/QueuesContainer';
 
 import OrderEdit from 'rapidfab/containers/records/order/edit';
 import OrderNew from 'rapidfab/containers/records/order/new';
 
 import Location from 'rapidfab/containers/records/location';
-import ThirdPartyProvider from 'rapidfab/containers/records/thirdPartyProvider';
+import ThirdPartyProviderContainer from 'rapidfab/containers/records/ThirdPartyProviderContainer';
 import Manufacturer from 'rapidfab/containers/records/manufacturer';
 import conversion from 'rapidfab/containers/records/conversion';
-import Shipping from 'rapidfab/containers/records/shipping';
+import ShippingContainer from 'rapidfab/containers/records/ShippingContainer';
 import Material from 'rapidfab/containers/records/material';
 import Print from 'rapidfab/containers/records/print';
 import Printer from 'rapidfab/containers/records/printer';
 import PrinterType from 'rapidfab/containers/records/printerType';
 import PostProcessorFormContainer from 'rapidfab/containers/records/PostProcessorFormContainer';
 import PostProcessorType from 'rapidfab/containers/records/postProcessorType';
-import Stock from 'rapidfab/containers/records/stock';
-import Template from 'rapidfab/containers/records/template';
+import StockContainer from 'rapidfab/containers/records/StockContainer';
+import TemplateContainer from 'rapidfab/containers/records/TemplateContainer';
 import RunRecordContainer from 'rapidfab/containers/records/run/RunRecordContainer';
-import RunNew from 'rapidfab/containers/records/run/new';
+import RunNewContainer from 'rapidfab/containers/records/run/RunNewContainer';
 
 import Styles from 'rapidfab/containers/styles';
 
@@ -67,18 +67,18 @@ const Routes = {
   '/plan/runs': Runs,
   '/plan/prints': Prints,
 
-  '/work/queues': Queues,
+  '/work/queues': QueuesContainer,
 
   '/records/order': OrderNew,
   '/records/order/:uuid': OrderEdit,
   '/records/location': Location,
   '/records/location/:uuid': Location,
-  '/records/third-party-provider': ThirdPartyProvider,
-  '/records/third-party-provider/:uuid': ThirdPartyProvider,
+  '/records/third-party-provider': ThirdPartyProviderContainer,
+  '/records/third-party-provider/:uuid': ThirdPartyProviderContainer,
   '/records/manufacturer': Manufacturer,
   '/records/manufacturer/:uuid': Manufacturer,
-  '/records/shipping': Shipping,
-  '/records/shipping/:uuid': Shipping,
+  '/records/shipping': ShippingContainer,
+  '/records/shipping/:uuid': ShippingContainer,
   '/records/conversion': conversion,
   '/records/conversion/:uuid': conversion,
   '/records/material': Material,
@@ -92,12 +92,12 @@ const Routes = {
   '/records/post-processor/:uuid': PostProcessorFormContainer,
   '/records/post-processor-type': PostProcessorType,
   '/records/post-processor-type/:uuid': PostProcessorType,
-  '/records/stock': Stock,
-  '/records/stock/:uuid': Stock,
-  '/records/run': RunNew,
+  '/records/stock': StockContainer,
+  '/records/stock/:uuid': StockContainer,
+  '/records/run': RunNewContainer,
   '/records/run/:uuid': RunRecordContainer,
-  '/records/template/': Template,
-  '/records/template/:uuid': Template,
+  '/records/template/': TemplateContainer,
+  '/records/template/:uuid': TemplateContainer,
 };
 
 export default Routes;

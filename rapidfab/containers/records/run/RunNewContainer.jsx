@@ -5,14 +5,13 @@ import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import RunComponent from 'rapidfab/components/records/run/new';
 import * as Selectors from 'rapidfab/selectors';
-import * as BS from 'react-bootstrap';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import Loading from 'rapidfab/components/Loading';
 
 const printsPerPage = 10;
 
-class RunContainer extends Component {
+class RunNewContainer extends Component {
   componentWillMount() {
     const { bureau, uuid } = this.props;
     this.props.onInitialize(bureau, uuid);
@@ -157,12 +156,16 @@ function mapStateToProps(state) {
   };
 }
 
-RunContainer.propTypes = {
-  bureau: PropTypes.object,
-  uuid: PropTypes.string,
-  onInitialize: PropTypes.func,
-  onUnmount: PropTypes.func,
-  loading: PropTypes.bool,
+RunNewContainer.defaultProps = {
+  uuid: null,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RunContainer);
+RunNewContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  onUnmount: PropTypes.func.isRequired,
+  uuid: PropTypes.string,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RunNewContainer);

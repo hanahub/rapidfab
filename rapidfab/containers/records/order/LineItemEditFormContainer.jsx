@@ -133,6 +133,7 @@ class LineItemEditFormContainer extends Component {
 LineItemEditFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   lineItem: PropTypes.object.isRequired,
+  models: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
-import ShippingComponent from 'rapidfab/components/records/shipping';
+import Shipping from 'rapidfab/components/records/shipping';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 
@@ -20,9 +21,18 @@ class ShippingContainer extends Component {
   }
 
   render() {
-    return <ShippingComponent {...this.props} />;
+    return <Shipping {...this.props} />;
   }
 }
+
+ShippingContainer.defaultProps = {
+  uuid: null,
+};
+
+ShippingContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/shipping';

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import StockComponent from 'rapidfab/components/records/stock';
 import { reduxForm } from 'redux-form';
@@ -25,6 +26,16 @@ class StockContainer extends Component {
     return <StockComponent {...this.props} />;
   }
 }
+
+StockContainer.defaultProps = {
+  uuid: null,
+};
+
+StockContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+  uuid: PropTypes.string,
+};
 
 function redirect() {
   window.location.hash = '#/inventory/stocks';
