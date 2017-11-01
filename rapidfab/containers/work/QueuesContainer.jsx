@@ -1,8 +1,9 @@
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import QueuesComponent from 'rapidfab/components/work/queues';
+import Queues from 'rapidfab/components/work/Queues';
 import * as Selectors from 'rapidfab/selectors';
 
 class QueuesContainer extends Component {
@@ -11,7 +12,7 @@ class QueuesContainer extends Component {
   }
 
   render() {
-    return <QueuesComponent {...this.props} />;
+    return <Queues {...this.props} />;
   }
 }
 
@@ -64,5 +65,9 @@ function mapStateToProps(state) {
     ),
   };
 }
+
+QueuesContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(QueuesContainer);
