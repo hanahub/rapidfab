@@ -325,51 +325,48 @@ const NavLinksRegular = ({
   );
 };
 
-class Navbar extends Component {
-  render() {
-    const {
-      bureaus,
-      currentUser,
-      locale,
-      onChangeLocale,
-      onLogout,
-      session,
-    } = this.props;
-    const bureauList = Array.from(bureaus);
-    const bureauName =
-      (bureauList &&
-        bureauList.length &&
-        bureauList[0] &&
-        bureauList[0].name) ||
-      '...';
-    return (
-      <BS.Navbar fixedTop inverse fluid>
-        <BS.Navbar.Header>
-          <BS.Navbar.Brand>
-            <a href="#/">{bureauName}</a>
-          </BS.Navbar.Brand>
-          <BS.Navbar.Toggle />
-        </BS.Navbar.Header>
-        {isRestricted(session) ? (
-          <NavLinksRestricted
-            currentUser={currentUser}
-            locale={locale}
-            onChangeLocale={onChangeLocale}
-            onLogout={onLogout}
-            session={session}
-          />
-        ) : (
-          <NavLinksRegular
-            currentUser={currentUser}
-            locale={locale}
-            onChangeLocale={onChangeLocale}
-            onLogout={onLogout}
-            session={session}
-          />
-        )}
-      </BS.Navbar>
-    );
-  }
+const Navbar = ({
+  bureaus,
+  currentUser,
+  locale,
+  onChangeLocale,
+  onLogout,
+  session,
+}) => {
+  const bureauList = Array.from(bureaus);
+  const bureauName =
+    (bureauList &&
+      bureauList.length &&
+      bureauList[0] &&
+      bureauList[0].name) ||
+    '...';
+  return (
+    <BS.Navbar fixedTop inverse fluid>
+      <BS.Navbar.Header>
+        <BS.Navbar.Brand>
+          <a href="#/">{bureauName}</a>
+        </BS.Navbar.Brand>
+        <BS.Navbar.Toggle />
+      </BS.Navbar.Header>
+      {isRestricted(session) ? (
+        <NavLinksRestricted
+          currentUser={currentUser}
+          locale={locale}
+          onChangeLocale={onChangeLocale}
+          onLogout={onLogout}
+          session={session}
+        />
+      ) : (
+        <NavLinksRegular
+          currentUser={currentUser}
+          locale={locale}
+          onChangeLocale={onChangeLocale}
+          onLogout={onLogout}
+          session={session}
+        />
+      )}
+    </BS.Navbar>
+  );
 }
 
 export default Navbar;
