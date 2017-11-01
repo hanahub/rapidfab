@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import Flag from 'rapidfab/components/flag';
 import { FormattedMessage } from 'react-intl';
+
+import Flag from 'rapidfab/components/flag';
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
 
