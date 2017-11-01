@@ -130,6 +130,14 @@ const NavProfile = ({
   );
 };
 
+NavProfile.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
+
 const NavLinksRestricted = ({
   currentUser,
   onChangeLocale,
@@ -153,6 +161,14 @@ const NavLinksRestricted = ({
     />
   </BS.Navbar.Collapse>
 );
+
+NavLinksRestricted.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
 
 const NavLinksRegular = ({
   currentUser,
@@ -328,6 +344,14 @@ const NavLinksRegular = ({
   );
 };
 
+NavLinksRegular.propTypes = {
+  currentUser: PropTypes.object.isRequired,
+  locale: PropTypes.string.isRequired,
+  onChangeLocale: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired,
+};
+
 const Navbar = ({
   bureaus,
   currentUser,
@@ -369,12 +393,16 @@ const Navbar = ({
   );
 };
 
-Navbar.PropTypes = {
-  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currentUser: PropTypes.object.isRequired,
+Navbar.defaultProps = {
+  currentUser: null,
+};
+
+Navbar.propTypes = {
+  bureaus: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   locale: PropTypes.string.isRequired,
   onChangeLocale: PropTypes.func.isRequired,
-  onLogOut: PropTypes.func.isRequired,
+  onLogout: PropTypes.func.isRequired,
   session: PropTypes.object.isRequired,
 };
 
