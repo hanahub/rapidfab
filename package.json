@@ -13,8 +13,7 @@
     "build": "BUILD_VERSION=$(git describe) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "publish": "BUILD_VERSION=$(git describe) ./node_modules/gulp/bin/gulp.js publish",
     "clean": "rm npm-debug.log",
-    "lint:js": "node node_modules/.bin/eslint . --ext .jsx -c .eslintrc.js",
-    "lint:js-output": "npm run lint:js -- --format tap --output-file .eslintoutput.js"
+    "lint:js": "node node_modules/.bin/eslint . --ext .jsx -c .eslintrc.js"
   },
   "author": "Authentise, Inc.",
   "devDependencies": {
