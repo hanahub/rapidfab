@@ -29,7 +29,7 @@ import Location from 'rapidfab/containers/records/location';
 import ThirdPartyProviderContainer from 'rapidfab/containers/records/ThirdPartyProviderContainer';
 import Manufacturer from 'rapidfab/containers/records/manufacturer';
 import conversion from 'rapidfab/containers/records/conversion';
-import Shipping from 'rapidfab/containers/records/shipping';
+import ShippingContainer from 'rapidfab/containers/records/ShippingContainer';
 import Material from 'rapidfab/containers/records/material';
 import Print from 'rapidfab/containers/records/print';
 import Printer from 'rapidfab/containers/records/printer';
@@ -77,8 +77,8 @@ const Routes = {
   '/records/third-party-provider/:uuid': ThirdPartyProviderContainer,
   '/records/manufacturer': Manufacturer,
   '/records/manufacturer/:uuid': Manufacturer,
-  '/records/shipping': Shipping,
-  '/records/shipping/:uuid': Shipping,
+  '/records/shipping': ShippingContainer,
+  '/records/shipping/:uuid': ShippingContainer,
   '/records/conversion': conversion,
   '/records/conversion/:uuid': conversion,
   '/records/material': Material,
