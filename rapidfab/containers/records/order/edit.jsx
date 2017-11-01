@@ -11,7 +11,7 @@ import Loading from 'rapidfab/components/Loading';
 
 class OrderContainer extends Component {
   componentDidMount() {
-    const { props, props: { bureau, dispatch, route: { uuid } } } = this;
+    const { props: { bureau, dispatch, route: { uuid } } } = this;
 
     // Set route UUID in state
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
