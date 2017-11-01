@@ -6,6 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import Permissions from 'rapidfab/permissions';
 import ShowMaybe from 'rapidfab/components/showMaybe';
 
+const styles = {
+  spacingRight: { marginRight: '1rem' },
+};
+
 const LanguageFlagMap = {
   'en-US': 'us',
   ja: 'jp',
@@ -112,6 +116,13 @@ const NavProfile = ({
           <Flag type="jp" /> 日本語
         </BS.MenuItem>
       </BS.NavDropdown>
+      <BS.NavItem
+        style={styles.spacingRight}
+        href="https://authentise.zendesk.com/hc/en-us"
+        target="_blank"
+      >
+        <Fa name="question-circle-o" />
+      </BS.NavItem>
     </BS.Nav>
   );
 };
