@@ -26,12 +26,16 @@ def main():
 
     assert contents.startswith('export default {'), 'sanity check'
     body = contents[len('export default '):]
+    if body[-2] == ';':
+        LOGGER.info("Ignoring ending semicolon")
+        body = body[:-2]
     try:
         data = json.loads(body)
     except Exception as e:
         LOGGER.error("Failed to parse data: %s", e)
         return -1
-    pprint.pprint(list(data.values()))
+    output = pprint.pformat(list(data.values()))
+    print(output[1:-1])
 
 if __name__ == '__main__':
     main()
