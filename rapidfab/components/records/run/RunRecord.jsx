@@ -5,6 +5,7 @@ import { Col, Grid, Nav, NavItem, PageHeader, Row } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import { RUN_OPERATION_MAP } from 'rapidfab/mappings';
 
 import RunPrintsContainer from 'rapidfab/containers/records/run/RunPrintsContainer';
 import RunPrintsEditContainer from 'rapidfab/containers/records/run/RunPrintsEditContainer';
@@ -18,12 +19,12 @@ const styles = {
   spacingTop: { marginTop: '1rem' },
 };
 
-const RunRecord = ({ handleSelectTab, isRunFetching, id, tab }) => (
+const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
   <Grid fluid>
     <BreadcrumbNav breadcrumbs={['runs', id || '']} />
 
     <PageHeader>
-      Run <small>{id}</small>
+      {operation ? RUN_OPERATION_MAP[operation] : null} Run
     </PageHeader>
 
     <Nav bsStyle="tabs" activeKey={tab} onSelect={handleSelectTab}>
@@ -59,12 +60,16 @@ const RunRecord = ({ handleSelectTab, isRunFetching, id, tab }) => (
   </Grid>
 );
 
-RunRecord.defaultProps = { id: null };
+RunRecord.defaultProps = {
+  id: null,
+  operation: null,
+};
 
 RunRecord.propTypes = {
   handleSelectTab: PropTypes.func.isRequired,
   id: PropTypes.string,
   isRunFetching: PropTypes.bool.isRequired,
+  operation: PropTypes.string,
   tab: PropTypes.number.isRequired,
 };
 
