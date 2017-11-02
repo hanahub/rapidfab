@@ -135,7 +135,7 @@ RunEstimates.propTypes = {
 
 const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
-  if (!run ||!run.estimates) return {};
+  if (!run || !run.estimates) return {};
   const {
     estimates: {
       start,

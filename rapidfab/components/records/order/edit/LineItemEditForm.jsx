@@ -106,13 +106,13 @@ const LineItemEditForm = ({
           required
         >
           <option value={status}>{ORDER_STATUS_MAP[status]}</option>
-          {statusOptions ? (
-            statusOptions.map(status => (
-              <option key={status} value={status}>
-                {ORDER_STATUS_MAP[status]}
-              </option>
-            ))
-          ) : null}
+          {statusOptions
+            ? statusOptions.map(status => (
+                <option key={status} value={status}>
+                  {ORDER_STATUS_MAP[status]}
+                </option>
+              ))
+            : null}
         </FormControl>
       </FormRow>
 
