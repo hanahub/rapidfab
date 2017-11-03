@@ -71,12 +71,14 @@ const RunRecordForm = ({
       </ButtonToolbar>
     </div>
 
-    <InfoRow id="field.created" defaultMessage="Created">
-      {created ? <FormattedDateTime value={created} /> : <span>-</span>}
-    </InfoRow>
+    {created ? (
+      <InfoRow id="field.created" defaultMessage="Created">
+        <FormattedDateTime value={created} />
+      </InfoRow>
+    ) : null}
 
-    <InfoRow id="field.status" defaultMessage="Status">
-      {status ? (
+    {status ? (
+      <InfoRow id="field.status" defaultMessage="Status">
         <FormControl
           componentClass="select"
           id="status"
@@ -96,38 +98,32 @@ const RunRecordForm = ({
               </option>
             ))}
         </FormControl>
-      ) : (
-        <span>-</span>
-      )}
-    </InfoRow>
+      </InfoRow>
+    ) : null}
 
-    <InfoRow id="field.model" defaultMessage="Model">
-      {model ? <RunModelDownload model={model} run={uuid} /> : <span>-</span>}
-    </InfoRow>
+    {model ? (
+      <InfoRow id="field.model" defaultMessage="Model">
+        <RunModelDownload model={model} run={uuid} />
+      </InfoRow>
+    ) : null}
 
-    <InfoRow id="field.printer" defaultMessage="Printer">
-      {printer ? (
+    {printer ? (
+      <InfoRow id="field.printer" defaultMessage="Printer">
         <ResourceLink uri={printer} endpoint="printer" />
-      ) : (
-        <span>-</span>
-      )}
-    </InfoRow>
+      </InfoRow>
+    ) : null}
 
-    <InfoRow id="field.printerType" defaultMessage="Printer Type">
-      {printerType ? (
+    {printerType ? (
+      <InfoRow id="field.printerType" defaultMessage="Printer Type">
         <ResourceLink uri={printerType} endpoint="printer-type" />
-      ) : (
-        <span>-</span>
-      )}
-    </InfoRow>
+      </InfoRow>
+    ) : null}
 
-    <InfoRow id="field.postProcessor" defaultMessage="Post-Processor">
-      {postProcessor ? (
+    {postProcessor ? (
+      <InfoRow id="field.postProcessor" defaultMessage="Post-Processor">
         <ResourceLink uri={postProcessor} endpoint="post-processor" />
-      ) : (
-        <span>-</span>
-      )}
-    </InfoRow>
+      </InfoRow>
+    ) : null}
 
     <InfoRow id="field.notes" defaultMessage="Notes">
       <FormControl

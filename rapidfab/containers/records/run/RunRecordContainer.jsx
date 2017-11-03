@@ -47,7 +47,12 @@ const mapStateToProps = state => {
   return Object.assign(
     {},
     { isRunFetching: !run && state.ui.wyatt.run.get.fetching },
-    run ? { id: run.id } : null
+    run
+      ? {
+          id: run.id,
+          operation: run.operation,
+        }
+      : null
   );
 };
 
