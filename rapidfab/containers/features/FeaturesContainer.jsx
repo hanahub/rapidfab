@@ -13,6 +13,10 @@ class FeaturesContainer extends Component {
   }
 }
 
+FeaturesContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = dispatch => ({
   onInitialize: () => {
     dispatch(Actions.Api.wyatt.feature.list());

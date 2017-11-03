@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import ShippingsComponent from 'rapidfab/components/inventory/shipping';
@@ -14,6 +15,11 @@ class ShippingsContainer extends Component {
     return <ShippingsComponent {...this.props} />;
   }
 }
+
+ShippingsContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   const { shipping } = state.ui.wyatt;

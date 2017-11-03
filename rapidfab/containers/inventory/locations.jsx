@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import LocationsComponent from 'rapidfab/components/inventory/locations';
@@ -14,6 +15,11 @@ class LocationsContainer extends Component {
     return <LocationsComponent {...this.props} />;
   }
 }
+
+LocationsContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {

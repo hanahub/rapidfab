@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import MaterialsComponent from 'rapidfab/components/inventory/materials';
@@ -16,6 +17,11 @@ class MaterialsContainer extends Component {
     return <MaterialsComponent {...this.props} />;
   }
 }
+
+MaterialsContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   const { material, manufacturer } = state.ui.wyatt;

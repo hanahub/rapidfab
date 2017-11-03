@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import ConversionsComponent from 'rapidfab/components/inventory/conversions';
@@ -16,6 +17,11 @@ class ConversionsContainer extends Component {
     return <ConversionsComponent {...this.props} />;
   }
 }
+
+ConversionsContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   const conversion = state.ui.wyatt['currency-conversion'];

@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import StocksComponent from 'rapidfab/components/inventory/stocks';
@@ -14,6 +14,11 @@ class StocksContainer extends Component {
     return <StocksComponent {...this.props} />;
   }
 }
+
+StocksContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -35,11 +40,11 @@ function mapStateToProps(state) {
     stocks: Selectors.getStocks(state),
     fetching:
       material.list.fetching || location.list.fetching || stock.list.fetching,
-    apiErrors: _.concat(
-      material.list.errors,
-      location.list.errors,
-      stock.list.errors
-    ),
+    apiErrors: [
+      ...material.list.errors,
+      ...location.list.errors,
+      ...stock.list.errors,
+    ],
   };
 }
 

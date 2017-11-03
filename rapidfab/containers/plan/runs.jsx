@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import RunsComponent from 'rapidfab/components/plan/runs';
@@ -14,6 +15,10 @@ class RunsContainer extends Component {
     return <RunsComponent {...this.props} />;
   }
 }
+
+RunsContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import TemplateComponent from 'rapidfab/components/inventory/templates';
@@ -14,6 +15,11 @@ class TemplatesContainer extends Component {
     return <TemplateComponent {...this.props} />;
   }
 }
+
+TemplatesContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapStateToProps(state) {
   const { template } = state.ui.wyatt;

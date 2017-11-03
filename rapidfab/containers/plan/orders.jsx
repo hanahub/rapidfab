@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import OrdersComponent from 'rapidfab/components/plan/orders';
@@ -14,6 +15,11 @@ class OrdersContainer extends Component {
     return <OrdersComponent {...this.props} />;
   }
 }
+
+OrdersContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -30,7 +36,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { order, material } = state.ui.wyatt;
+  const { order: orderApi, material } = state.ui.wyatt;
   const orderLocation = Selectors.getOrderLocations(state);
   const orders = Selectors.getOrders(state);
   let locationFilter = Selectors.getLocationFilter(state);
@@ -60,9 +66,11 @@ function mapStateToProps(state) {
     locationFilter,
     locations: Selectors.getLocations(state),
     fetching:
-      material.list.fetching || order.list.fetching || orderLocation.fetching,
+      material.list.fetching ||
+      orderApi.list.fetching ||
+      orderLocation.fetching,
     apiErrors: _.concat(
-      order.list.errors,
+      orderApi.list.errors,
       material.list.errors,
       orderLocation.errors
     ),

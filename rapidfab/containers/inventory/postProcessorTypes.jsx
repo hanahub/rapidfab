@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import PostProcessorTypesComponent from 'rapidfab/components/inventory/postProcessorTypes';
@@ -13,6 +14,11 @@ class PostProcessorTypesContainer extends Component {
     return <PostProcessorTypesComponent {...this.props} />;
   }
 }
+
+PostProcessorTypesContainer.propTypes = {
+  bureau: PropTypes.object.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {

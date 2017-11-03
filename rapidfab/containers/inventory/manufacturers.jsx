@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import ManufacturersComponent from 'rapidfab/components/inventory/manufacturers';
@@ -13,6 +14,10 @@ class ManufacturersContainer extends Component {
     return <ManufacturersComponent {...this.props} />;
   }
 }
+
+ManufacturersContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
