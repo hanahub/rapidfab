@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 
@@ -12,6 +13,10 @@ class FeaturesContainer extends Component {
     return <p>Features Container</p>;
   }
 }
+
+FeaturesContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
   onInitialize: () => {

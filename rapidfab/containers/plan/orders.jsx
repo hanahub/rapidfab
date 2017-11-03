@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import OrdersComponent from 'rapidfab/components/plan/orders';
@@ -15,12 +16,17 @@ class OrdersContainer extends Component {
   }
 }
 
+OrdersContainer.propTypes = {
+  bureau: PropTypes.string.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
       dispatch(Actions.OrderLocation.getOrderLocations());
       dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.order.list());
     },
     handleOnChange: location => {
@@ -30,7 +36,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { order, material } = state.ui.wyatt;
+  const { order: orderApi, material } = state.ui.wyatt;
   const orderLocation = Selectors.getOrderLocations(state);
   const orders = Selectors.getOrders(state);
   let locationFilter = Selectors.getLocationFilter(state);
@@ -54,15 +60,17 @@ function mapStateToProps(state) {
     }
   }
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     orders: filteredOrders || Selectors.getOrders(state),
     materials: Selectors.getMaterials(state),
     locationFilter,
     locations: Selectors.getLocations(state),
     fetching:
-      material.list.fetching || order.list.fetching || orderLocation.fetching,
+      material.list.fetching ||
+      orderApi.list.fetching ||
+      orderLocation.fetching,
     apiErrors: _.concat(
-      order.list.errors,
+      orderApi.list.errors,
       material.list.errors,
       orderLocation.errors
     ),

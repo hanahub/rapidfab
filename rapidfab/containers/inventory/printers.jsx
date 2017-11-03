@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import PrintersComponent from 'rapidfab/components/inventory/printers';
@@ -14,6 +15,10 @@ class PrintersContainer extends Component {
     return <PrintersComponent {...this.props} />;
   }
 }
+
+PrintersContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {

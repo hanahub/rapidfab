@@ -17,6 +17,10 @@ class UsersContainer extends React.Component {
   }
 }
 
+UsersContainer.propTypes = {
+  fetchUsers: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = dispatch => ({
   fetchUsers: () => dispatch(Actions.Api.pao.users.list()),
 });

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import MaterialsComponent from 'rapidfab/components/inventory/materials';
@@ -9,7 +10,7 @@ class MaterialsContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;
     dispatch(Actions.Api.wyatt.manufacturer.list());
-    dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt.material.list({ bureau }));
   }
 
   render() {
@@ -17,11 +18,16 @@ class MaterialsContainer extends Component {
   }
 }
 
+MaterialsContainer.propTypes = {
+  bureau: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
 function mapStateToProps(state) {
   const { material, manufacturer } = state.ui.wyatt;
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     materials: Selectors.getMaterials(state),
     manufacturers: Selectors.getManufacturers(state),
     fetching: material.list.fetching || manufacturer.list.fetching,

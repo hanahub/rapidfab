@@ -32,7 +32,7 @@ StockContainer.defaultProps = {
 };
 
 StockContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
   uuid: PropTypes.string,
 };
@@ -44,7 +44,7 @@ function redirect() {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: (bureau, uuid) => {
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.location.list());
       if (uuid) dispatch(Actions.Api.wyatt.stock.get(uuid));
     },
@@ -67,7 +67,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state, props) {
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     uuid: Selectors.getRoute(state, props).uuid,
     initialValues: Selectors.getRouteResource(state, props),
     submitting: Selectors.getResourceFetching(state, 'wyatt.stock'),

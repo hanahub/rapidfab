@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
@@ -14,6 +15,10 @@ class HomeContainer extends Component {
     return <HomeComponent {...this.props} />;
   }
 }
+
+HomeContainer.propTypes = {
+  onInitialize: PropTypes.func.isRequired,
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -53,7 +58,7 @@ function mapStateToProps(state) {
       ordersForMyLocation = ordersForMyLocation[0].orders;
       filteredOrders = _.filter(
         orders,
-        order => _.indexOf(ordersForMyLocation, order.uri) >= 0
+        o => _.indexOf(ordersForMyLocation, o.uri) >= 0
       );
       filteredOrders = _.slice(filteredOrders, 0, 10);
     } else {

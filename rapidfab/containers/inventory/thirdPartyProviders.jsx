@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import ThirdPartyProvidersComponent from 'rapidfab/components/inventory/thirdPartyProviders';
@@ -15,22 +15,27 @@ class ThirdPartyProvidersContainer extends Component {
   }
 }
 
+ThirdPartyProvidersContainer.propTypes = {
+  bureau: PropTypes.string.isRequired,
+  onInitialize: PropTypes.func.isRequired,
+};
+
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
-      dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt['third-party'].list({ bureau }));
     },
   };
 }
 
 function mapStateToProps(state) {
-  const third_party_providers = state.ui.wyatt['third-party'];
+  const thirdPartyProviders = state.ui.wyatt['third-party'];
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     providers: Selectors.getThirdPartyProviders(state),
-    fetching: third_party_providers.list.fetching,
-    errors: _.concat(third_party_providers.list.errors),
+    fetching: thirdPartyProviders.list.fetching,
+    errors: thirdPartyProviders.list.errors,
   };
 }
 

@@ -18,7 +18,7 @@ const fields = [
 
 class LocationContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.uuid, this.props.bureau);
+    this.props.onInitialize(this.props.uuid, this.props.bureauGroup);
   }
   componentWillUnmount() {
     this.props.onUnmount();
@@ -30,7 +30,7 @@ class LocationContainer extends Component {
 }
 
 LocationContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureauGroup: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,
   uuid: PropTypes.string.isRequired,
@@ -42,10 +42,10 @@ function redirect() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: (uuid, bureau) => {
+    onInitialize: (uuid, bureauGroup) => {
       dispatch(
         Actions.Api.pao.users.list({
-          group: bureau.group,
+          group: bureauGroup,
         })
       );
       if (uuid) {
@@ -80,7 +80,7 @@ function mapStateToProps(state, props) {
     submitting: Selectors.getResourceFetching(state, 'wyatt.location'),
     apiErrors: Selectors.getResourceErrors(state, 'wyatt.location'),
     users: Selectors.getUsers(state),
-    bureau: Selectors.getBureau(state),
+    bureauGroup: Selectors.getBureau(state).group,
   };
 }
 
