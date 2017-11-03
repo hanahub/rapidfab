@@ -1,48 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Label } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import { FormattedMessage } from 'rapidfab/i18n';
 import Grid, { IdColumn, DateColumn } from 'rapidfab/components/grid';
 
 const RunPrints = ({ gridData, orders }) => (
   <div>
-    <Label>Prints</Label>
-    <Grid
-      data={gridData}
-      columns={['id', 'order', 'dueDate', 'customerName']}
-      columnMeta={[
-        {
-          displayName: <FormattedMessage id="field.id" defaultMessage="ID" />,
-          columnName: 'id',
-          customComponent: IdColumn('print'),
-          locked: true,
-        },
-        {
-          displayName: (
-            <FormattedMessage id="field.order" defaultMessage="Order" />
-          ),
-          columnName: 'order',
-          customComponent: IdColumn('order', 'order', orders, 'name'),
-        },
-        {
-          displayName: (
-            <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
-          ),
-          columnName: 'dueDate',
-          customComponent: DateColumn,
-        },
-        {
-          displayName: (
-            <FormattedMessage
-              id="field.customer_name"
-              defaultMessage="Customer Name"
-            />
-          ),
-          columnName: 'customerName',
-        },
-      ]}
-    />
+    <Panel header="Prints">
+      <Grid
+        fill
+        style={{marginBottom: 0}}
+        data={gridData}
+        columns={['id', 'order', 'dueDate', 'customerName']}
+        columnMeta={[
+          {
+            displayName: <FormattedMessage id="field.id" defaultMessage="ID" />,
+            columnName: 'id',
+            customComponent: IdColumn('print'),
+            locked: true,
+          },
+          {
+            displayName: (
+              <FormattedMessage id="field.order" defaultMessage="Order" />
+            ),
+            columnName: 'order',
+            customComponent: IdColumn('order', 'order', orders, 'name'),
+          },
+          {
+            displayName: (
+              <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
+            ),
+            columnName: 'dueDate',
+            customComponent: DateColumn,
+          },
+          {
+            displayName: (
+              <FormattedMessage
+                id="field.customer_name"
+                defaultMessage="Customer Name"
+              />
+            ),
+            columnName: 'customerName',
+          },
+        ]}
+      />
+    </Panel>
   </div>
 );
 
