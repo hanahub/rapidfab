@@ -564,14 +564,16 @@ export const getLineItemsForRunNew = createSelector(
           const supportMaterial = materials.find(
             material => material.uri === lineItem.materials.support
           );
-          const model = models.find(model => model.uri === lineItem.model);
+          const lineItemModel = models.find(
+            model => model.uri === lineItem.model
+          );
           const lineItemPrints = prints.filter(
             print => print.line_item === lineItem.uri
           );
 
           if (
             baseMaterial &&
-            model &&
+            lineItemModel &&
             lineItemPrints.length &&
             (lineItem.status === 'confirmed' || lineItem.status === 'printing')
           ) {
@@ -580,7 +582,7 @@ export const getLineItemsForRunNew = createSelector(
                 base: baseMaterial,
                 support: supportMaterial,
               },
-              model,
+              lineItemModel,
             });
             hydratedRecord.prints = lineItemPrints.map(print =>
               Object.assign({}, print, { lineItem: hydratedRecord })
@@ -622,14 +624,16 @@ export const getLineItemsForRunEdit = createSelector(
           const baseMaterial = materials.find(
             material => material.uri === lineItem.materials.base
           );
-          const model = models.find(model => model.uri === lineItem.model);
+          const lineItemModel = models.find(
+            model => model.uri === lineItem.model
+          );
           const lineItemPrints = prints.filter(
             print => print.line_item === lineItem.uri
           );
 
           if (
             baseMaterial &&
-            model &&
+            lineItemModel &&
             lineItemPrints.length &&
             (lineItem.status === 'confirmed' || lineItem.status === 'printing')
           ) {
@@ -637,7 +641,7 @@ export const getLineItemsForRunEdit = createSelector(
               materials: {
                 base: baseMaterial,
               },
-              model,
+              lineItemModel,
             });
             hydratedRecord.prints = lineItemPrints.map(print =>
               Object.assign({}, print, { lineItem: hydratedRecord })
