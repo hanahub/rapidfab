@@ -582,7 +582,7 @@ export const getLineItemsForRunNew = createSelector(
                 base: baseMaterial,
                 support: supportMaterial,
               },
-              lineItemModel,
+              model: lineItemModel,
             });
             hydratedRecord.prints = lineItemPrints.map(print =>
               Object.assign({}, print, { lineItem: hydratedRecord })
@@ -641,7 +641,7 @@ export const getLineItemsForRunEdit = createSelector(
               materials: {
                 base: baseMaterial,
               },
-              lineItemModel,
+              model: lineItemModel,
             });
             hydratedRecord.prints = lineItemPrints.map(print =>
               Object.assign({}, print, { lineItem: hydratedRecord })
