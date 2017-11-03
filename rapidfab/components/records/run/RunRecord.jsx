@@ -5,14 +5,14 @@ import { Col, Grid, Nav, NavItem, PageHeader, Row } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 import { RUN_OPERATION_MAP } from 'rapidfab/mappings';
 
 import RunPrintsContainer from 'rapidfab/containers/records/run/RunPrintsContainer';
 import RunPrintsEditContainer from 'rapidfab/containers/records/run/RunPrintsEditContainer';
 import RunRecordFormContainer from 'rapidfab/containers/records/run/RunRecordFormContainer';
 
-import RunActuals from './RunActuals';
-import RunEstimates from './RunEstimates';
+import RunData from './RunData';
 import RunRequeueButton from './RunRequeueButton';
 
 const styles = {
@@ -35,27 +35,28 @@ const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
     <FlashMessages />
 
     <Col xs={12} style={styles.spacingTop}>
-      <Row>
-        {tab === 1 && (
-          <div>
-            <Col xs={12} sm={4}>
-              <RunRequeueButton />
-              <RunEstimates />
-              <RunActuals />
-            </Col>
+      {isRunFetching ? (
+        <Loading />
+      ) : (
+        <Row>
+          {tab === 1 && (
+            <div>
+              <Col xs={12} sm={6} md={4}>
+                <RunRequeueButton />
+                <RunData />
+              </Col>
 
-            <Col xs={12} sm={8}>
-              {isRunFetching ? null : <RunRecordFormContainer />}
-              <div style={styles.spacingTop}>
-                <RunPrintsContainer />
-              </div>
-            </Col>
-          </div>
-        )}
-        {tab === 2 && (
-          <div>{isRunFetching ? null : <RunPrintsEditContainer />}</div>
-        )}
-      </Row>
+              <Col xs={12} sm={6} md={8}>
+                <RunRecordFormContainer />
+                <div style={styles.spacingTop}>
+                  <RunPrintsContainer />
+                </div>
+              </Col>
+            </div>
+          )}
+          {tab === 2 && <RunPrintsEditContainer />}
+        </Row>
+      )}
     </Col>
   </Grid>
 );
