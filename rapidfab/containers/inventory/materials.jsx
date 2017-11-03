@@ -10,7 +10,7 @@ class MaterialsContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;
     dispatch(Actions.Api.wyatt.manufacturer.list());
-    dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt.material.list({ bureau }));
   }
 
   render() {
@@ -19,15 +19,15 @@ class MaterialsContainer extends Component {
 }
 
 MaterialsContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
-  onInitialize: PropTypes.func.isRequired,
+  bureau: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   const { material, manufacturer } = state.ui.wyatt;
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     materials: Selectors.getMaterials(state),
     manufacturers: Selectors.getManufacturers(state),
     fetching: material.list.fetching || manufacturer.list.fetching,

@@ -8,7 +8,7 @@ import * as Selectors from 'rapidfab/selectors';
 
 class LocationsContainer extends Component {
   componentDidMount() {
-    this.props.onInitialize(this.props.bureau);
+    this.props.onInitialize(this.props.bureauGroup);
   }
 
   render() {
@@ -17,16 +17,16 @@ class LocationsContainer extends Component {
 }
 
 LocationsContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureauGroup: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: bureau => {
+    onInitialize: bureauGroup => {
       dispatch(
         Actions.Api.pao.users.list({
-          group: bureau.GROUP,
+          group: bureauGroup,
         })
       );
       dispatch(Actions.Api.wyatt.location.list());
@@ -44,7 +44,7 @@ function mapStateToProps(state) {
     users: Selectors.getUsers(state),
     fetching: location.list.fetching || users.list.fetching,
     errors: _.concat(location.list.errors, users.list.errors),
-    bureau: Selectors.getBureau(state),
+    bureauGroup: Selectors.getBureau(state).group,
   };
 }
 

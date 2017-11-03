@@ -8,7 +8,7 @@ import * as Selectors from 'rapidfab/selectors';
 class ShippingsContainer extends Component {
   componentWillMount() {
     const { bureau, dispatch } = this.props;
-    dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt.shipping.list({ bureau }));
   }
 
   render() {
@@ -17,15 +17,15 @@ class ShippingsContainer extends Component {
 }
 
 ShippingsContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
-  onInitialize: PropTypes.func.isRequired,
+  bureau: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   const { shipping } = state.ui.wyatt;
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     locations: Selectors.getLocations(state),
     shippings: Selectors.getShippings(state),
     users: Selectors.getUsers(state),

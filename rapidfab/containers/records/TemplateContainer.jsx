@@ -36,7 +36,7 @@ TemplateContainer.defaultProps = {
 };
 
 TemplateContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   uuid: PropTypes.string,
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,
@@ -51,7 +51,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: (bureau, uuid) => {
       dispatch(Actions.Api.wyatt['printer-type'].list());
       dispatch(Actions.Api.wyatt['post-processor-type'].list());
-      dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.shipping.list({ bureau }));
       if (uuid) {
         dispatch(Actions.Api.wyatt.template.get(uuid));
         dispatch(Actions.Api.wyatt['process-step'].list());
@@ -88,12 +88,14 @@ function mapDispatchToProps(dispatch) {
           ).then(response => resolve(response.payload.uri));
         });
       });
+
       Promise.all(stepCopies).then(processSteps => {
         const payload = {
           bureau,
           name,
-          processSteps,
+          process_steps: processSteps,
         };
+
         dispatch(Actions.Api.wyatt.template.post(payload)).then(redirect);
       });
     },
@@ -128,7 +130,7 @@ function mapStateToProps(state, props) {
   return {
     uuid: Selectors.getRoute(state, props).uuid,
     template,
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     initialValues: Selectors.getInitialValuesBureau(state, props),
     submitting: Selectors.getResourceFetching(state, 'wyatt.template'),
     apiErrors: Selectors.getResourceErrors(state, 'wyatt.template'),

@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: bureau => {
       dispatch(Actions.Api.wyatt.order.list({}));
       dispatch(
-        Actions.Api.wyatt['line-item'].list({ bureau: bureau.uri })
+        Actions.Api.wyatt['line-item'].list({ bureau })
       ).then(response => {
         const lineItems = response.json.resources;
         const printableLineItems = lineItems.filter(lineItem => {
@@ -59,7 +59,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['process-step'].list());
       dispatch(Actions.Api.wyatt['printer-type'].list());
       dispatch(Actions.Api.wyatt.printer.list());
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
     },
     onSave: (uri, payload) => dispatch(Actions.Api.wyatt.run.put(uri, payload)),
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
@@ -142,7 +142,7 @@ RunPrintsEditContainer.defaultProps = {
 };
 
 RunPrintsEditContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,

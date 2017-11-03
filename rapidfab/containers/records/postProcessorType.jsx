@@ -36,7 +36,7 @@ function redirect() {
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: (bureau, uuid) => {
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.manufacturer.list());
       if (uuid) {
         dispatch(Actions.Api.wyatt['post-processor-type'].get(uuid));
@@ -64,14 +64,14 @@ function mapDispatchToProps(dispatch) {
 }
 
 PostProcessorTypeContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   uuid: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, props) {
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     uuid: Selectors.getRoute(state, props).uuid,
     initialValues: Selectors.getInitialValuesBureau(state, props),
     submitting: Selectors.getResourceFetching(

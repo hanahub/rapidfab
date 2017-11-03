@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { getBureauURI, getRoles } from 'rapidfab/selectors';
+import { getBureauUri, getRoles } from 'rapidfab/selectors';
 
 import UserForm from 'rapidfab/components/admin/UserForm';
 
@@ -114,7 +114,7 @@ UserFormContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  bureau: getBureauURI(state),
+  bureau: getBureauUri(state),
   roles: getRoles(state),
 });
 

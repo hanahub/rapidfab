@@ -16,7 +16,7 @@ class PostProcessorTypesContainer extends Component {
 }
 
 PostProcessorTypesContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
       dispatch(Actions.Api.wyatt.manufacturer.list());
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt['post-processor-type'].list());
     },
   };
@@ -35,7 +35,7 @@ function mapStateToProps(state) {
   const { manufacturer, material } = state.ui.wyatt;
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     manufacturers: Selectors.getManufacturers(state),
     materials: Selectors.getMaterials(state),
     postProcessorTypes: Selectors.getPostProcessorTypes(state),

@@ -16,14 +16,14 @@ class StocksContainer extends Component {
 }
 
 StocksContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.Api.wyatt.stock.list());
     },
@@ -34,7 +34,7 @@ function mapStateToProps(state) {
   const { material, location, stock } = state.ui.wyatt;
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     materials: Selectors.getMaterials(state),
     locations: Selectors.getLocations(state),
     stocks: Selectors.getStocks(state),

@@ -16,14 +16,14 @@ class ThirdPartyProvidersContainer extends Component {
 }
 
 ThirdPartyProvidersContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
-      dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt['third-party'].list({ bureau }));
     },
   };
 }
@@ -32,7 +32,7 @@ function mapStateToProps(state) {
   const thirdPartyProviders = state.ui.wyatt['third-party'];
 
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     providers: Selectors.getThirdPartyProviders(state),
     fetching: thirdPartyProviders.list.fetching,
     errors: thirdPartyProviders.list.errors,

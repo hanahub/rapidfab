@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 import {
-  getBureauURI,
+  getBureauUri,
   getLocations,
   isSessionManager,
   getUserRoles,
@@ -68,7 +68,7 @@ class UserRolesContainer extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  bureau: getBureauURI(state),
+  bureau: getBureauUri(state),
   locations: getLocations(state),
   isSessionManager: isSessionManager(state),
   userRoles: getUserRoles(state, ownProps.user),

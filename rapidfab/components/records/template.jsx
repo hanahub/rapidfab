@@ -404,7 +404,7 @@ class Template extends Component {
     });
     Promise.all(uris).then(uris => {
       const payload = _.cloneDeep(this.state.template);
-      payload.bureau = payload.bureau ? payload.bureau : this.props.bureau.uri;
+      payload.bureau = payload.bureau ? payload.bureau : this.props.bureau;
       payload.description = payload.description ? payload.description : '';
       payload.process_steps = uris;
 
@@ -421,7 +421,7 @@ class Template extends Component {
     const duplicateName = name === initialName ? `${name} copy` : name;
 
     const templateCopy = {
-      bureau: this.props.bureau.uri,
+      bureau: this.props.bureau,
       name: duplicateName,
       steps: this.state.steps,
     };

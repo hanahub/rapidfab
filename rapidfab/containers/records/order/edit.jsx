@@ -33,11 +33,11 @@ class OrderContainer extends Component {
     // Fetch resource options for input selections
     dispatch(Actions.Api.hoth.model.list());
     dispatch(Actions.Api.wyatt['process-step'].list());
-    dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
-    dispatch(Actions.Api.wyatt['third-party'].list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt.material.list({ bureau }));
+    dispatch(Actions.Api.wyatt['third-party'].list({ bureau }));
     dispatch(Actions.Api.wyatt['post-processor-type'].list());
-    dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
-    dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
+    dispatch(Actions.Api.wyatt.template.list({ bureau }));
+    dispatch(Actions.Api.wyatt.shipping.list({ bureau }));
     dispatch(Actions.Api.pao.users.list());
   }
 
@@ -55,7 +55,7 @@ class OrderContainer extends Component {
 }
 
 function mapStateToProps(state, props) {
-  const bureau = Selectors.getBureau(state);
+  const bureau = Selectors.getBureauUri(state);
   const order = Selectors.getRouteResource(state, props);
   const { routeUUID } = state;
 
@@ -67,7 +67,7 @@ function mapStateToProps(state, props) {
 }
 
 OrderContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   route: PropTypes.object.isRequired,
   order: PropTypes.object.isRequired,

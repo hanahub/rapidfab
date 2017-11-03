@@ -17,7 +17,7 @@ class OrdersContainer extends Component {
 }
 
 OrdersContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
@@ -26,7 +26,7 @@ function mapDispatchToProps(dispatch) {
     onInitialize: bureau => {
       dispatch(Actions.OrderLocation.getOrderLocations());
       dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.order.list());
     },
     handleOnChange: location => {
@@ -60,7 +60,7 @@ function mapStateToProps(state) {
     }
   }
   return {
-    bureau: Selectors.getBureau(state),
+    bureau: Selectors.getBureauUri(state),
     orders: filteredOrders || Selectors.getOrders(state),
     materials: Selectors.getMaterials(state),
     locationFilter,
