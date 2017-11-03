@@ -10,7 +10,6 @@ const RunPrints = ({ gridData, orders }) => (
     <Panel header="Prints">
       <Grid
         fill
-        style={{marginBottom: 0}}
         data={gridData}
         columns={['id', 'order', 'dueDate', 'customerName']}
         columnMeta={[
