@@ -95,18 +95,18 @@ function mapStateToProps(state) {
     processStep.list.fetching ||
     order.list.fetching;
 
-  const bureau = Selectors.getBureau(state);
+  const bureau = Selectors.getBureauUri(state);
   const lineItems = Selectors.getLineItemsForRunEdit(state);
   const prints = _.flatMap(lineItems, 'prints');
   const processSteps = Selectors.getProcessSteps(state);
   const printerTypes = Selectors.getPrinterTypes(state);
   const orderNamesMap = Selectors.getOrderNamesByURI(state);
 
-  const printablePrints = prints.filter(print => {
-    if (!print.process_step) {
+  const printablePrints = prints.filter(p => {
+    if (!p.process_step) {
       return false;
     }
-    const step = processSteps.find(step => print.process_step === step.uri);
+    const step = processSteps.find(s => p.process_step === s.uri);
 
     if (step && printerTypes.find(type => type.uri === step.process_type_uri)) {
       return true;
@@ -114,9 +114,7 @@ function mapStateToProps(state) {
     return false;
   });
 
-  const activePrints = prints.filter(print =>
-    runResource.prints.includes(print.uri)
-  );
+  const activePrints = prints.filter(p => runResource.prints.includes(p.uri));
 
   const printers = Selectors.getPrintersForRunNew(state);
   const pager = getPager(state, printablePrints);

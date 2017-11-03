@@ -58,7 +58,7 @@ function mapStateToProps(state) {
       ordersForMyLocation = ordersForMyLocation[0].orders;
       filteredOrders = _.filter(
         orders,
-        order => _.indexOf(ordersForMyLocation, order.uri) >= 0
+        o => _.indexOf(ordersForMyLocation, o.uri) >= 0
       );
       filteredOrders = _.slice(filteredOrders, 0, 10);
     } else {
