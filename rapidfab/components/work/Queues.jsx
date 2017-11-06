@@ -114,7 +114,6 @@ class Queues extends Component {
     callback(events);
   }
 
-
   render() {
     return (
       <div>
@@ -137,5 +136,17 @@ class Queues extends Component {
     );
   }
 }
+
+Queues.defaultProps = {
+  locationFilter: null,
+};
+
+Queues.propTypes = {
+  handleOnChange: PropTypes.func.isRequired,
+  locationFilter: PropTypes.string,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  machines: PropTypes.arrayOf(PropTypes.object).isRequired,
+  runs: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Queues;
