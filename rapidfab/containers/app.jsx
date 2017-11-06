@@ -21,7 +21,6 @@ const SessionProvider = ({
   fetching,
   errors,
   onAcceptTerms,
-  roles,
 }) => {
   if (!currentUser && errors.length) {
     const next = window.location.hash.substr(1);
@@ -33,7 +32,7 @@ const SessionProvider = ({
     if (!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />;
     }
-    if (bureaus.size == 0) {
+    if (bureaus.size === 0) {
       return <BureauError bureaus={bureaus} />;
     }
 
@@ -44,11 +43,12 @@ const SessionProvider = ({
 };
 
 SessionProvider.propTypes = {
+  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentUser: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired,
   fetching: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAcceptTerms: PropTypes.func.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function redirect() {
