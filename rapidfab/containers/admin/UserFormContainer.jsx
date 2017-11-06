@@ -54,22 +54,22 @@ class UserFormContainer extends React.Component {
           })
         )
       )
-      .then(response => {
+      .then(() => {
         dispatch(Actions.Api.pao.users.list());
         handleSelectionChange('none');
       })
-      .catch(e => {
+      .catch(() => {
         const userHasRoles = this.props.roles.some(
           role => role.username === this.state.email
         );
         if (!userHasRoles) {
           dispatch(Actions.UI.clearUIState());
-          const payload = {
+          const rolePayload = {
             bureau: this.props.bureau,
             username: this.state.email,
             role: 'restricted',
           };
-          dispatch(Actions.Api.wyatt.role.post(payload))
+          dispatch(Actions.Api.wyatt.role.post(rolePayload))
             .then(() => {
               dispatch(Actions.Api.pao.users.list());
               this.props.handleSelectionChange('none');
@@ -109,7 +109,9 @@ UserFormContainer.defaultProps = { user: {} };
 
 UserFormContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.object).isRequired,
   user: PropTypes.object,
 };
 
