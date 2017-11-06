@@ -27,6 +27,7 @@ module.exports = Object.assign(webpackConfig, {
         BUILD_VERSION: JSON.stringify(
           process.env.BUILD_VERSION || 'development'
         ),
+        COMMIT_HASH: JSON.stringify(process.env.COMMIT_HASH),
       },
     }),
     new webpack.ProvidePlugin({
