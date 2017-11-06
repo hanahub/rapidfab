@@ -2,7 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
-
 const host = process.env.HOST || 'rapidfab.auth.dev';
 const hostname = process.env.HOSTNAME || 'https://rapidfab.auth.dev/';
 const port = process.env.PORT || 443;
@@ -21,6 +20,10 @@ if (port === 443) {
     key: fs.readFileSync('./nginx.key'),
   };
 }
+
+const commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString();
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -55,6 +58,9 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'root.jQuery': 'jquery',
+    }),
+    new webpack.DefinePlugin({
+      COMMIT_HASH: JSON.stringify(commitHash),
     }),
   ],
   module: {
