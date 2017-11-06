@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SentryPlugin = require('webpack-sentry-plugin');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 
@@ -29,6 +30,13 @@ module.exports = Object.assign(webpackConfig, {
         ),
         COMMIT_HASH: JSON.stringify(process.env.COMMIT_HASH),
       },
+    }),
+    new SentryPlugin({
+      baseSentryURL: 'https://sentry.authentise.com/api/0',
+      organization: 'sentry',
+      project: process.env.NODE_ENV === 'production' ? 'prod-rapidfab' : 'dev-rapidfab',
+      apiKey: '67c4a607495a44a3aa8695834fd9bd713063bc6333a342f3b98e08e3a21ade26',
+      release: process.env.COMMIT_HASH
     }),
     new webpack.ProvidePlugin({
       $: 'jquery',
