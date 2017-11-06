@@ -80,19 +80,22 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.UploadModel.clearState());
     },
     onSubmit: payload => {
-      if (!!payload.materials.support === false)
-        delete payload.materials.support;
-      if (!!payload.shipping.name === false) delete payload.shipping.name;
-      if (!!payload.shipping.address === false) delete payload.shipping.address;
-      if (!!payload.shipping.tracking === false)
-        delete payload.shipping.tracking;
-      if (!!payload.third_party_provider === false)
-        delete payload.third_party_provider;
-      if (!!payload.post_processor_type === false)
-        delete payload.post_processor_type;
+      const validatedPayload = Object.assign({}, payload);
+      if (!!validatedPayload.materials.support === false)
+        delete validatedPayload.materials.support;
+      if (!!validatedPayload.shipping.name === false)
+        delete validatedPayload.shipping.name;
+      if (!!validatedPayload.shipping.address === false)
+        delete validatedPayload.shipping.address;
+      if (!!validatedPayload.shipping.tracking === false)
+        delete validatedPayload.shipping.tracking;
+      if (!!validatedPayload.third_party_provider === false)
+        delete validatedPayload.third_party_provider;
+      if (!!validatedPayload.post_processor_type === false)
+        delete validatedPayload.post_processor_type;
 
-      if (!payload.model) {
-        dispatch(Actions.Api.wyatt.order.post(payload)).then(args => {
+      if (!validatedPayload.model) {
+        dispatch(Actions.Api.wyatt.order.post(validatedPayload)).then(args => {
           window.location.hash = `#/records/order/${extractUuid(
             args.headers.location
           )}`;
@@ -100,18 +103,18 @@ function mapDispatchToProps(dispatch) {
       } else {
         dispatch(
           Actions.Api.hoth.model.post({
-            name: payload.name,
+            name: validatedPayload.name,
             type: 'stl',
           })
         ).then(args => {
           dispatch(
             Actions.UploadModel.upload(
               args.headers.uploadLocation,
-              payload.model[0]
+              validatedPayload.model[0]
             )
           );
-          payload.model = args.headers.location;
-          dispatch(Actions.UploadModel.storePayload(payload));
+          validatedPayload.model = args.headers.location;
+          dispatch(Actions.UploadModel.storePayload(validatedPayload));
         });
       }
     },
