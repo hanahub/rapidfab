@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import { MODELER_STATUS_MAP } from 'rapidfab/constants';
 import Locations from 'rapidfab/components/locations';
@@ -20,35 +21,6 @@ class Queues extends Component {
 
     this.fetchResources = this.fetchResources.bind(this);
     this.fetchEvents = this.fetchEvents.bind(this);
-  }
-
-  fetchResources(callback) {
-    const machines = this.props.machines.map(machine => {
-      const type = machine.printer_type ? 'printer' : 'post-processor';
-      return {
-        id: machine.uri,
-        title: machine.name,
-        url: `#/records/${type}/${machine.uuid}`,
-        status: machine.status,
-        type,
-      };
-    });
-    callback(machines);
-  }
-
-  fetchEvents(start, end, timezone, callback) {
-    let events = this.props.runs.map(run => ({
-      id: run.uri,
-      resourceId: run.printer || run.post_processor,
-      title: run.id,
-      url: `#/records/run/${run.uuid}`,
-      start: run.actuals.start || run.estimates.start,
-      end: run.actuals.end || run.estimates.end,
-      backgroundColor: EVENT_COLOR_MAP[run.status],
-      borderColor: EVENT_COLOR_MAP[run.status],
-    }));
-    events = events.filter(event => event.start != null && event.end != null);
-    callback(events);
   }
 
   componentDidMount() {
@@ -113,6 +85,35 @@ class Queues extends Component {
     jQuery('#scheduler').fullCalendar('destroy');
   }
 
+  fetchResources(callback) {
+    const machines = this.props.machines.map(machine => {
+      const type = machine.printer_type ? 'printer' : 'post-processor';
+      return {
+        id: machine.uri,
+        title: machine.name,
+        url: `#/records/${type}/${machine.uuid}`,
+        status: machine.status,
+        type,
+      };
+    });
+    callback(machines);
+  }
+
+  fetchEvents(start, end, timezone, callback) {
+    let events = this.props.runs.map(run => ({
+      id: run.uri,
+      resourceId: run.printer || run.post_processor,
+      title: run.id,
+      url: `#/records/run/${run.uuid}`,
+      start: run.actuals.start || run.estimates.start,
+      end: run.actuals.end || run.estimates.end,
+      backgroundColor: EVENT_COLOR_MAP[run.status],
+      borderColor: EVENT_COLOR_MAP[run.status],
+    }));
+    events = events.filter(event => event.start != null && event.end != null);
+    callback(events);
+  }
+
   render() {
     return (
       <div>
@@ -135,5 +136,17 @@ class Queues extends Component {
     );
   }
 }
+
+Queues.defaultProps = {
+  locationFilter: null,
+};
+
+Queues.propTypes = {
+  handleOnChange: PropTypes.func.isRequired,
+  locationFilter: PropTypes.string,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  machines: PropTypes.arrayOf(PropTypes.object).isRequired,
+  runs: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Queues;

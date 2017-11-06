@@ -104,13 +104,11 @@ function mapStateToProps(state, props) {
   const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
 
-  const order = print ? orders.find(order => order.uri === print.order) : null;
+  const order = print ? orders.find(o => o.uri === print.order) : null;
   const lineItem = print
-    ? lineItems.find(lineItem => lineItem.uri === print.line_item)
+    ? lineItems.find(li => li.uri === print.line_item)
     : null;
-  const model = lineItem
-    ? models.find(model => model.uri === lineItem.model)
-    : null;
+  const model = lineItem ? models.find(m => m.uri === lineItem.model) : null;
 
   const copy = print ? print.copy : null;
   const lineItemProcessSteps = lineItem

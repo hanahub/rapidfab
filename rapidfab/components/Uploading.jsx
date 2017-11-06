@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Col, ProgressBar, Row } from 'react-bootstrap';
@@ -36,6 +37,11 @@ const Uploading = ({ status, percent }) => (
     </Col>
   </Row>
 );
+
+Uploading.propTypes = {
+  percent: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = state => {
   const { modelUuid, percent } = state.uploadModel;
