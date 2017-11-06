@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Config from 'rapidfab/config';
 
 import Fa from 'react-fontawesome';
@@ -74,5 +75,10 @@ class Tos extends Component {
     );
   }
 }
+
+Tos.propTypes = {
+  onAcceptTerms: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+};
 
 export default Tos;
