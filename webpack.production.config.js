@@ -1,6 +1,5 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SentryPlugin = require('webpack-sentry-plugin');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 
@@ -15,12 +14,6 @@ module.exports = Object.assign(webpackConfig, {
     sourceMapFilename: "[name].js.map",
   },
   plugins: [
-    new SentryPlugin({
-      organization: 'authentise',
-      project: 'dev-rapidfab',
-      apiKey: '1dc52630bff511e7a1220242ac140009',
-      release: process.env.GIT_SHA
-    }),
     new webpack.optimize.DedupePlugin(),
     new HtmlWebpackPlugin({
       title: 'Rapidfab',
