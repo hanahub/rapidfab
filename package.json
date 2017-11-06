@@ -10,7 +10,7 @@
     "test:watch": "./node_modules/karma/bin/karma start",
     "test:junit": "./node_modules/karma/bin/karma start --single-run --reporters junit,dots",
     "build:clean": "rm -rf ./dist",
-    "build": "BUILD_VERSION=$(git describe) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
+    "build": "BUILD_VERSION=$(git describe) GIT_SHA=$(git log --pretty=format:'%H' -n 1) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "publish": "BUILD_VERSION=$(git describe) ./node_modules/gulp/bin/gulp.js publish",
     "clean": "rm npm-debug.log",
     "lint:js": "node node_modules/.bin/eslint . --ext .jsx -c .eslintrc.js"
@@ -64,6 +64,7 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack-dev-server": "^1.14.1",
+    "webpack-sentry-plugin": "^1.14.0",
     "webpack-version-file-plugin": "^0.2.2"
   },
   "dependencies": {
