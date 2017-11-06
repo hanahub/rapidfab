@@ -18,10 +18,10 @@ import '../node_modules/fullcalendar-scheduler/dist/scheduler.css';
 if (Config.SENTRY_DSN) {
   Raven.config(Config.SENTRY_DSN, {
     fetchContext: true,
-    release: COMMIT_HASH,
+    release: process.env.COMMIT_HASH,
   }).install();
   /* eslint-disable no-console */
-  console.log(`Raven integration installed. Release: ${COMMIT_HASH}`);
+  console.log(`Raven integration installed. Release: ${process.env.COMMIT_HASH}`);
   /* eslint-disable no-console */
 }
 
