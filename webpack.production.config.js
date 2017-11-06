@@ -33,6 +33,7 @@ module.exports = Object.assign(webpackConfig, {
       },
     }),
     new SentryPlugin({
+      baseSentryURL: 'https://sentry.authentise.com/api/0',
       organization: 'sentry',
       project: 'dev-rapidfab',
       apiKey: '67c4a607495a44a3aa8695834fd9bd713063bc6333a342f3b98e08e3a21ade26',
