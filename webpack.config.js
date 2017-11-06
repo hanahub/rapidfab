@@ -21,10 +21,6 @@ if (port === 443) {
   };
 }
 
-const commitHash = require('child_process')
-  .execSync('git rev-parse --short HEAD')
-  .toString();
-
 module.exports = {
   devtool: 'inline-source-map',
   devServer,
@@ -51,6 +47,7 @@ module.exports = {
         BUILD_VERSION: JSON.stringify(
           process.env.BUILD_VERSION || 'development'
         ),
+        COMMIT_HASH: JSON.stringify(process.env.COMMIT_HASH),
       },
     }),
     new webpack.ProvidePlugin({
@@ -58,9 +55,6 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'root.jQuery': 'jquery',
-    }),
-    new webpack.DefinePlugin({
-      COMMIT_HASH: JSON.stringify(commitHash),
     }),
   ],
   module: {
