@@ -4,7 +4,6 @@ const SentryPlugin = require('webpack-sentry-plugin');
 const webpack = require('webpack');
 const webpackConfig = require('./webpack.config');
 
-
 module.exports = Object.assign(webpackConfig, {
   devtool: 'source-map',
   entry: {
