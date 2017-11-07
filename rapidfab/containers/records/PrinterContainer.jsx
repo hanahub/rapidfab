@@ -27,9 +27,9 @@ class PrinterContainer extends Component {
     } else {
       this.state = {
         name: '',
-        printerType: printerTypes.length ? printerTypes[0].uri : null,
+        printerType: printerTypes.length ? printerTypes[0].uri : '',
         loading: true,
-        location: locations.length ? locations[0].uri : null,
+        location: locations.length ? locations[0].uri : '',
         modeler: '',
       };
     }
