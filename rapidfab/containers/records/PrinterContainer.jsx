@@ -40,17 +40,10 @@ class PrinterContainer extends Component {
 
   componentDidMount() {
     const { dispatch, uuid } = this.props;
-    const locationRequest = dispatch(Actions.Api.wyatt.location.list());
-    const printerTypeRequest = dispatch(
-      Actions.Api.wyatt['printer-type'].list()
-    );
-    const printerRequest = uuid
-      ? dispatch(Actions.Api.wyatt.printer.get(uuid))
-      : null;
     Promise.all([
-      locationRequest,
-      printerTypeRequest,
-      printerRequest,
+      dispatch(Actions.Api.wyatt.location.list()),
+      dispatch(Actions.Api.wyatt['printer-type'].list()),
+      uuid ? dispatch(Actions.Api.wyatt.printer.get(uuid)) : null,
     ]).then(() => {
       this.setState({ loading: false });
     });
