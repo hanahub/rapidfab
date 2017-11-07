@@ -1,8 +1,17 @@
 import React from 'react';
-import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
+
+import {
+  ButtonToolbar,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Grid,
+  MenuItem,
+  SplitButton,
+} from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
@@ -20,11 +29,11 @@ const Printer = ({
   name,
   uuid,
 }) => (
-    <BS.Grid fluid>
+    <Grid fluid>
       <BreadcrumbNav breadcrumbs={['printers', uuid || 'New']} />
       <div className="clearfix">
-        <BS.ButtonToolbar className="pull-right">
-          <BS.SplitButton
+        <ButtonToolbar className="pull-right">
+          <SplitButton
             id="uxSaveDropdown"
             type="submit"
             bsStyle="success"
@@ -32,16 +41,16 @@ const Printer = ({
             title={<SaveButtonTitle />}
             pullRight
           >
-            <BS.MenuItem
+            <MenuItem
               eventKey={1}
               onClick={handleDelete}
               disabled={!uuid}
             >
               <Fa name="ban" />{' '}
               <FormattedMessage id="button.delete" defaultMessage="Delete" />
-            </BS.MenuItem>
-          </BS.SplitButton>
-        </BS.ButtonToolbar>
+            </MenuItem>
+          </SplitButton>
+        </ButtonToolbar>
       </div>
 
       <hr />
@@ -50,27 +59,27 @@ const Printer = ({
 
       <form onSubmit={handleSubmit}>
 
-        <BS.FormGroup controlId="uxName">
-          <BS.ControlLabel>
+        <FormGroup controlId="uxName">
+          <ControlLabel>
             <FormattedMessage id="field.name" defaultMessage="Name" />
-          </BS.ControlLabel>
-          <BS.FormControl
+          </ControlLabel>
+          <FormControl
             name="name"
             onChange={handleInputChange}
             required
             type="text"
             value={name}
           />
-        </BS.FormGroup>
+        </FormGroup>
 
-        <BS.FormGroup controlId="uxPrinterType">
-          <BS.ControlLabel>
+        <FormGroup controlId="uxPrinterType">
+          <ControlLabel>
             <FormattedMessage
               id="field.printerType"
               defaultMessage="Printer Type"
             />
-          </BS.ControlLabel>
-          <BS.FormControl
+          </ControlLabel>
+          <FormControl
             name="printerType"
             onChange={handleInputChange}
             componentClass="select"
@@ -83,17 +92,17 @@ const Printer = ({
                 value={printerType.uri}
               >{`${printerType.name} - ${printerType.id}`}</option>
             ))}
-          </BS.FormControl>
-        </BS.FormGroup>
+          </FormControl>
+        </FormGroup>
 
-        <BS.FormGroup controlId="uxLocation">
-          <BS.ControlLabel>
+        <FormGroup controlId="uxLocation">
+          <ControlLabel>
             <FormattedMessage
               id="field.location"
               defaultMessage="Location"
             />
-          </BS.ControlLabel>
-          <BS.FormControl
+          </ControlLabel>
+          <FormControl
             name="location"
             componentClass="select"
             onChange={handleInputChange}
@@ -106,24 +115,24 @@ const Printer = ({
                 value={location.uri}
               >{`${location.name} - ${location.id}`}</option>
             ))}
-          </BS.FormControl>
-        </BS.FormGroup>
+          </FormControl>
+        </FormGroup>
 
-        <BS.FormGroup controlId="uxModeler">
-          <BS.ControlLabel>
+        <FormGroup controlId="uxModeler">
+          <ControlLabel>
             <FormattedMessage id="field.modeler" defaultMessage="Modeler" />
-          </BS.ControlLabel>
-          <BS.FormControl
+          </ControlLabel>
+          <FormControl
             name="modeler"
             onChange={handleInputChange}
             required
             type="text"
             value={modeler}
           />
-        </BS.FormGroup>
+        </FormGroup>
 
       </form>
-    </BS.Grid>
+    </Grid>
 );
 
 export default Printer;
