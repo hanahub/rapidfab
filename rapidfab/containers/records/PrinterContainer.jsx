@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
-import PrinterComponent from 'rapidfab/components/records/printer';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
+
+import Actions from 'rapidfab/actions';
+import Printer from 'rapidfab/components/records/Printer';
 
 const fields = [
   'id',
@@ -21,7 +22,7 @@ class PrinterContainer extends Component {
   }
 
   render() {
-    return <PrinterComponent {...this.props} />;
+    return <Printer {...this.props} />;
   }
 }
 
