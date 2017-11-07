@@ -13,12 +13,14 @@ import {
   SplitButton,
 } from 'react-bootstrap';
 
-import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const PrinterForm= ({
+const styles = {
+  spacingTop: { marginTop: '1rem' },
+};
+
+const PrinterForm = ({
   handleSubmit,
   handleInputChange,
   handleDelete,
@@ -31,7 +33,7 @@ const PrinterForm= ({
   printerTypes,
   uuid,
 }) => (
-  <div>
+  <div style={styles.spacingTop}>
     {loading ? (
       <Loading />
     ) : (
@@ -53,8 +55,6 @@ const PrinterForm= ({
             </SplitButton>
           </ButtonToolbar>
         </div>
-
-        <hr />
 
         <FormGroup controlId="uxName">
           <ControlLabel>
@@ -129,8 +129,8 @@ const PrinterForm= ({
 );
 
 PrinterForm.defaultProps = {
-  location: null,
-  printerType: null,
+  location: '',
+  printerType: '',
   uuid: null,
 };
 
@@ -140,11 +140,21 @@ PrinterForm.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   location: PropTypes.string,
-  locations: PropTypes.array.isRequired,
+  locations: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      uri: PropTypes.string,
+    })
+  ).isRequired,
   modeler: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   printerType: PropTypes.string,
-  printerTypes: PropTypes.array.isRequired,
+  printerTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      uri: PropTypes.string,
+    })
+  ).isRequired,
   uuid: PropTypes.string,
 };
 
