@@ -21,7 +21,9 @@ if (Config.SENTRY_DSN) {
     release: process.env.COMMIT_HASH,
   }).install();
   /* eslint-disable no-console */
-  console.log(`Raven integration installed. Release: ${process.env.COMMIT_HASH}`);
+  console.log(
+    `Raven integration installed. Release: ${process.env.COMMIT_HASH}`
+  );
   /* eslint-disable no-console */
 }
 

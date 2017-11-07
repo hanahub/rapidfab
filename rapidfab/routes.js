@@ -32,7 +32,7 @@ import conversion from 'rapidfab/containers/records/conversion';
 import ShippingContainer from 'rapidfab/containers/records/ShippingContainer';
 import Material from 'rapidfab/containers/records/material';
 import Print from 'rapidfab/containers/records/print';
-import Printer from 'rapidfab/containers/records/printer';
+import PrinterContainer from 'rapidfab/containers/records/PrinterContainer';
 import PrinterType from 'rapidfab/containers/records/printerType';
 import PostProcessorFormContainer from 'rapidfab/containers/records/PostProcessorFormContainer';
 import PostProcessorType from 'rapidfab/containers/records/postProcessorType';
@@ -84,8 +84,8 @@ const Routes = {
   '/records/material': Material,
   '/records/material/:uuid': Material,
   '/records/print/:uuid': Print,
-  '/records/printer': Printer,
-  '/records/printer/:uuid': Printer,
+  '/records/printer': PrinterContainer,
+  '/records/printer/:uuid': PrinterContainer,
   '/records/printer-type': PrinterType,
   '/records/printer-type/:uuid': PrinterType,
   '/records/post-processor': PostProcessorFormContainer,
