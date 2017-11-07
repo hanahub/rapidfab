@@ -17,10 +17,10 @@ class PrinterContainer extends Component {
     super(props)
 
     this.state = {
-      name: null,
-      printerType: null,
-      location: null,
-      modeler: null,
+      name: '',
+      printerType: '',
+      location: '',
+      modeler: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
