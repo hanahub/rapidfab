@@ -225,6 +225,13 @@ export const getLocations = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getLocationOptions = createSelector([getLocations], locations =>
+  locations.map(location => ({
+    name: location.name,
+    uri: location.uri,
+  }))
+);
+
 export const getPostProcessorTypes = createSelector(
   [getStatePostProcessorTypes, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
@@ -320,6 +327,15 @@ export const getLocationFilter = createSelector(
 export const getPrinterTypes = createSelector(
   [getStatePrinterTypes, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getPrinterTypeOptions = createSelector(
+  [getPrinterTypes],
+  printerTypes =>
+    printerTypes.map(printerType => ({
+      name: printerType.name,
+      uri: printerType.uri,
+    }))
 );
 
 export const getProcessSteps = createSelector(

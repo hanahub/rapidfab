@@ -124,14 +124,24 @@ PrinterContainer.defaultProps = {
 
 PrinterContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  locations: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      uri: PropTypes.string,
+    })
+  ).isRequired,
   printer: PropTypes.shape({
     location: PropTypes.string,
     name: PropTypes.string,
     modeler: PropTypes.string,
     printerType: PropTypes.string,
   }),
-  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printerTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      uri: PropTypes.string,
+    })
+  ).isRequired,
   uuid: PropTypes.string,
 };
 
@@ -141,8 +151,8 @@ const mapStateToProps = (state, props) => {
     {},
     {
       uuid: Selectors.getRoute(state, props).uuid,
-      locations: Selectors.getLocations(state),
-      printerTypes: Selectors.getPrinterTypes(state),
+      locations: Selectors.getLocationOptions(state),
+      printerTypes: Selectors.getPrinterTypeOptions(state),
     },
     printer
       ? {
