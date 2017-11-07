@@ -20,7 +20,6 @@ const Printer = ({
   name,
   uuid,
 }) => (
-  <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['printers', uuid || 'New']} />
       <div className="clearfix">
@@ -49,68 +48,82 @@ const Printer = ({
 
       <FlashMessages />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.FormGroup controlId="uxName">
-            <BS.ControlLabel>
-              <FormattedMessage id="field.name" defaultMessage="Name" />:
-            </BS.ControlLabel>
-            <BS.FormControl type="text" required />
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxPrinterType">
-            <BS.ControlLabel>
-              <FormattedMessage
-                id="field.printerType"
-                defaultMessage="Printer Type"
-              />:
-            </BS.ControlLabel>
-            <BS.FormControl
-              componentClass="select"
-              required
-            >
-              <option key="placeholder" value="" selected disabled>
-                Select a Printer Type
-              </option>
-              {printerTypes.map(printerType => (
-                <option
-                  key={printerType.uri}
-                  value={printerType.uri}
-                >{`${printerType.id} - ${printerType.name}`}</option>
-              ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxLocation">
-            <BS.ControlLabel>
-              <FormattedMessage
-                id="field.location"
-                defaultMessage="Location"
-              />:
-            </BS.ControlLabel>
-            <BS.FormControl
-              componentClass="select"
-              required
-            >
-              <option key="placeholder" value="" selected disabled>
-                Select a Location
-              </option>
-              {locations.map(location => (
-                <option
-                  key={location.uri}
-                  value={location.uri}
-                >{`${location.id} - ${location.name}`}</option>
-              ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxModeler">
-            <BS.ControlLabel>
-              <FormattedMessage id="field.modeler" defaultMessage="Modeler" />:
-            </BS.ControlLabel>
-            <BS.FormControl type="text"/>
-          </BS.FormGroup>
-        </BS.Col>
-      </BS.Row>
+      <form onSubmit={handleSubmit}>
+
+        <BS.FormGroup controlId="uxName">
+          <BS.ControlLabel>
+            <FormattedMessage id="field.name" defaultMessage="Name" />
+          </BS.ControlLabel>
+          <BS.FormControl
+            name="name"
+            onChange={handleInputChange}
+            required
+            type="text"
+            value={name}
+          />
+        </BS.FormGroup>
+
+        <BS.FormGroup controlId="uxPrinterType">
+          <BS.ControlLabel>
+            <FormattedMessage
+              id="field.printerType"
+              defaultMessage="Printer Type"
+            />
+          </BS.ControlLabel>
+          <BS.FormControl
+            name="printerType"
+            onChange={handleInputChange}
+            componentClass="select"
+            required
+            value={printerType}
+          >
+            {printerTypes.map(printerType => (
+              <option
+                key={printerType.uri}
+                value={printerType.uri}
+              >{`${printerType.name} - ${printerType.id}`}</option>
+            ))}
+          </BS.FormControl>
+        </BS.FormGroup>
+
+        <BS.FormGroup controlId="uxLocation">
+          <BS.ControlLabel>
+            <FormattedMessage
+              id="field.location"
+              defaultMessage="Location"
+            />
+          </BS.ControlLabel>
+          <BS.FormControl
+            name="location"
+            componentClass="select"
+            onChange={handleInputChange}
+            required
+            value={location}
+          >
+            {locations.map(location => (
+              <option
+                key={location.uri}
+                value={location.uri}
+              >{`${location.name} - ${location.id}`}</option>
+            ))}
+          </BS.FormControl>
+        </BS.FormGroup>
+
+        <BS.FormGroup controlId="uxModeler">
+          <BS.ControlLabel>
+            <FormattedMessage id="field.modeler" defaultMessage="Modeler" />
+          </BS.ControlLabel>
+          <BS.FormControl
+            name="modeler"
+            onChange={handleInputChange}
+            required
+            type="text"
+            value={modeler}
+          />
+        </BS.FormGroup>
+
+      </form>
     </BS.Grid>
-  </form>
 );
 
 export default Printer;
