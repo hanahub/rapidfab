@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import Actions from 'rapidfab/actions';
+import { getRouteResource } from 'rapidfab/selectors';
 
 import Printer from 'rapidfab/components/records/Printer';
 
@@ -12,6 +16,13 @@ class PrinterContainer extends Component {
     this.handleSelectTab = this.handleSelectTab.bind(this);
   }
 
+  componentDidMount() {
+    const { dispatch, route } = this.props;
+    if (route.uuid) {
+      dispatch(Actions.Api.wyatt.printer.get(route.uuid));
+    }
+  };
+
   handleSelectTab(tab) {
     this.setState({ tab });
   }
@@ -19,6 +30,7 @@ class PrinterContainer extends Component {
   render() {
     return (
       <Printer
+        uri={this.props.uri}
         handleSelectTab={this.handleSelectTab}
         route={this.props.route}
         tab={this.state.tab}
@@ -27,8 +39,20 @@ class PrinterContainer extends Component {
   }
 }
 
-PrinterContainer.propTypes = {
-  route: PropTypes.shape({ uuid: PropTypes.string }).isRequired,
+PrinterContainer.defaultProps = {
+  uri: null,
 };
 
-export default PrinterContainer;
+PrinterContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  route: PropTypes.shape({ uuid: PropTypes.string }).isRequired,
+  uri: PropTypes.string,
+};
+
+const mapStateToProps = (state, props) => {
+  const printer = getRouteResource(state, props);
+  if (!printer) return {};
+  return { uri: printer.uri }
+};
+
+export default connect(mapStateToProps)(PrinterContainer);
