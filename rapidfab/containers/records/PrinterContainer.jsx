@@ -16,15 +16,24 @@ class PrinterContainer extends Component {
   constructor(props) {
     super(props)
 
-    const { locations, printerTypes } = this.props;
+    const { locations, printer, printerTypes } = this.props;
 
-    this.state = {
-      name: '',
-      printerType: printerTypes.length ? printerTypes[0].uri : null,
-      loading: true,
-      location: locations.length ? locations[0].uri : null,
-      modeler: '',
-    };
+    if (printer) {
+      this.state = {
+        name: printer.name,
+        printerType: printer.printerType,
+        location: printer.location,
+        modeler: printer.modeler,
+      }
+    } else {
+      this.state = {
+        name: '',
+        printerType: printerTypes.length ? printerTypes[0].uri : null,
+        loading: true,
+        location: locations.length ? locations[0].uri : null,
+        modeler: '',
+      };
+    }
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,11 +50,24 @@ class PrinterContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.locations.length === 0 && nextProps.locations.length > 0) {
-      this.setState({ location: nextProps.locations[0].uri })
-    }
-    if (this.props.printerTypes.length === 0 && nextProps.printerTypes.length > 0) {
-      this.setState({ printerType: nextProps.printerTypes[0].uri })
+    const { locations, printer, printerTypes, uuid } = this.props;
+    if (uuid) {
+      if (!printer && nextProps.printer) {
+        const { name, printer_type: printerType, location, modeler } = nextProps.printer;
+        this.setState({
+          name,
+          printerType,
+          location,
+          modeler,
+        });
+      }
+    } else {
+      if (locations.length === 0 && nextProps.locations.length > 0) {
+        this.setState({ location: nextProps.locations[0].uri })
+      }
+      if (printerTypes.length === 0 && nextProps.printerTypes.length > 0) {
+        this.setState({ printerType: nextProps.printerTypes[0].uri })
+      }
     }
   }
 
@@ -100,19 +122,21 @@ class PrinterContainer extends Component {
 }
 
 PrinterContainer.defaultProps = {
+  printer: null,
   uuid: null,
 };
 
 PrinterContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printer: PropTypes.object,
   uuid: PropTypes.string,
 };
 
 function mapStateToProps(state, props) {
   return {
     uuid: Selectors.getRoute(state, props).uuid,
-    initialValues: Selectors.getRouteResource(state, props),
+    printer: Selectors.getRouteResource(state, props),
     locations: Selectors.getLocations(state),
     printerTypes: Selectors.getPrinterTypes(state),
   };
