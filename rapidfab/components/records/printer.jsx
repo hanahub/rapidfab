@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const PrinterForm = ({
@@ -13,7 +14,6 @@ const PrinterForm = ({
   onDelete,
   printerTypes,
   locations,
-  apiErrors,
 }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -42,11 +42,7 @@ const PrinterForm = ({
 
       <hr />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
+      <FlashMessages />
 
       <BS.Row>
         <BS.Col xs={12}>
