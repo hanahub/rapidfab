@@ -1,28 +1,65 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
-import * as Selectors from 'rapidfab/selectors';
+import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
+import * as Selectors from 'rapidfab/selectors';
+
 import Printer from 'rapidfab/components/records/Printer';
 
-const fields = [
-  'id',
-  'uri',
-  'uuid',
-  'name',
-  'printer_type',
-  'location',
-  'modeler',
-];
+
+function redirect() {
+  window.location.hash = '#/inventory/printers';
+}
 
 class PrinterContainer extends Component {
-  componentWillMount() {
-    this.props.onInitialize(this.props.uuid);
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      name: null,
+      printerType: null,
+      location: null,
+      modeler: null,
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch, uuid } = this.props;
+    dispatch(Actions.Api.wyatt.location.list());
+    dispatch(Actions.Api.wyatt['printer-type'].list());
+    if (uuid) {
+      dispatch(Actions.Api.wyatt.printer.get(uuid));
+    }
+  }
+
+  handleDelete() {
+    console.log('delete');
+  }
+
+  handleInputChange(event) {
+    const { value, name } = event.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit() {
+    console.log('submit');
   }
 
   render() {
-    return <Printer {...this.props} />;
+    const { handleDelete, handleInputChange, handleSubmit } = this;
+    return (
+      <Printer
+        {...this.state}
+        {...this.props}
+        handleDelete={handleDelete}
+        handleInputChange={handleInputChange}
+        handleSubmit={handleSubmit}
+      />
+    );
   }
 }
 
@@ -31,23 +68,13 @@ PrinterContainer.defaultProps = {
 };
 
 PrinterContainer.propTypes = {
-  onInitialize: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
   uuid: PropTypes.string,
 };
 
-function redirect() {
-  window.location.hash = '#/inventory/printers';
-}
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: uuid => {
-      dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt['printer-type'].list());
-      if (uuid) {
-        dispatch(Actions.Api.wyatt.printer.get(uuid));
-      }
-    },
     onSubmit: payload => {
       const validatedPayload = Object.assign({}, payload, {
         modeler: payload.modeler ? payload.modeler : '',
@@ -80,11 +107,4 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default reduxForm(
-  {
-    form: 'record.printer',
-    fields,
-  },
-  mapStateToProps,
-  mapDispatchToProps
-)(PrinterContainer);
+export default connect(mapStateToProps)(PrinterContainer);

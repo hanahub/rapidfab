@@ -8,16 +8,21 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const PrinterForm = ({
-  fields,
+const Printer = ({
   handleSubmit,
-  onDelete,
+  handleInputChange,
+  handleDelete,
+  printerType,
   printerTypes,
+  location,
   locations,
+  modeler,
+  name,
+  uuid,
 }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
-      <BreadcrumbNav breadcrumbs={['printers', fields.id.value || 'New']} />
+      <BreadcrumbNav breadcrumbs={['printers', uuid || 'New']} />
       <div className="clearfix">
         <BS.ButtonToolbar className="pull-right">
           <BS.SplitButton
@@ -30,8 +35,8 @@ const PrinterForm = ({
           >
             <BS.MenuItem
               eventKey={1}
-              onClick={() => onDelete(fields.uuid.value)}
-              disabled={!fields.id.value}
+              onClick={handleDelete}
+              disabled={!uuid}
             >
               <Fa name="ban" />{' '}
               <FormattedMessage id="button.delete" defaultMessage="Delete" />
@@ -50,7 +55,7 @@ const PrinterForm = ({
             <BS.ControlLabel>
               <FormattedMessage id="field.name" defaultMessage="Name" />:
             </BS.ControlLabel>
-            <BS.FormControl type="text" required {...fields.name} />
+            <BS.FormControl type="text" required />
           </BS.FormGroup>
           <BS.FormGroup controlId="uxPrinterType">
             <BS.ControlLabel>
@@ -62,7 +67,6 @@ const PrinterForm = ({
             <BS.FormControl
               componentClass="select"
               required
-              {...fields.printer_type}
             >
               <option key="placeholder" value="" selected disabled>
                 Select a Printer Type
@@ -85,7 +89,6 @@ const PrinterForm = ({
             <BS.FormControl
               componentClass="select"
               required
-              {...fields.location}
             >
               <option key="placeholder" value="" selected disabled>
                 Select a Location
@@ -102,7 +105,7 @@ const PrinterForm = ({
             <BS.ControlLabel>
               <FormattedMessage id="field.modeler" defaultMessage="Modeler" />:
             </BS.ControlLabel>
-            <BS.FormControl type="text" {...fields.modeler} />
+            <BS.FormControl type="text"/>
           </BS.FormGroup>
         </BS.Col>
       </BS.Row>
@@ -110,4 +113,4 @@ const PrinterForm = ({
   </form>
 );
 
-export default PrinterForm;
+export default Printer;
