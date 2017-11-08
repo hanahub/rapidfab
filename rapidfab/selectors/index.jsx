@@ -48,6 +48,7 @@ export const getStateThirdPartyProviders = state =>
 export const getStateModelers = state => state.api.nautilus.modeler;
 export const getStateUploadModel = state => state.uploadModel;
 export const getStateLocationFilter = state => state.locationFilter.location;
+export const getStateBlockMachines = state => state.api.wyatt['block-machine'];
 
 export const getResourceByUuid = createSelector(
   [getPredicate, getStateResources],
@@ -534,6 +535,22 @@ export const getPrintsCreated = createSelector(
 export const getRuns = createSelector(
   [getStateRuns, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getBlockMachines = createSelector(
+  [getStateBlockMachines, getStateResources],
+  (uuids, resources) => uuids.map(uuid => resources[uuid])
+);
+
+export const getBlockMachinesForMachine = createSelector(
+  [getPredicate, getBlockMachines],
+  (uri, blockMachines) =>
+    blockMachines.filter(
+      machine =>
+        machine.printer === uri ||
+        machine.post_processor === uri ||
+        machine.shipping === uri
+    )
 );
 
 export const getPrintersForRunNew = createSelector(
