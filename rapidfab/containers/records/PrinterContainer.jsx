@@ -21,7 +21,7 @@ class PrinterContainer extends Component {
     if (route.uuid) {
       dispatch(Actions.Api.wyatt.printer.get(route.uuid));
     }
-  };
+  }
 
   handleSelectTab(tab) {
     this.setState({ tab });
@@ -52,7 +52,7 @@ PrinterContainer.propTypes = {
 const mapStateToProps = (state, props) => {
   const printer = getRouteResource(state, props);
   if (!printer) return {};
-  return { uri: printer.uri }
+  return { uri: printer.uri };
 };
 
 export default connect(mapStateToProps)(PrinterContainer);

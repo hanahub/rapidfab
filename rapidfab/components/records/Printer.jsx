@@ -16,14 +16,16 @@ const Printer = ({ handleSelectTab, route, tab, uri }) => (
     {route.uuid && (
       <Nav bsStyle="tabs" activeKey={tab} onSelect={handleSelectTab}>
         <NavItem eventKey={1}>Summary</NavItem>
-        <NavItem disabled={!uri} eventKey={2}>Block Machine</NavItem>
+        <NavItem disabled={!uri} eventKey={2}>
+          Block Machine
+        </NavItem>
       </Nav>
     )}
 
     <FlashMessages />
 
     {tab === 1 && <PrinterFormContainer route={route} />}
-    {tab === 2 && <BlockMachineFormContainer machineType="printer" uri={uri} /> }
+    {tab === 2 && <BlockMachineFormContainer machineType="printer" uri={uri} />}
   </Grid>
 );
 

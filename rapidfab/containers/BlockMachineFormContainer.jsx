@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
+import { getBlockMachinesForMachine } from 'rapidfab/selectors';
 
 import BlockMachineForm from 'rapidfab/components/BlockMachineForm';
 
@@ -11,12 +13,16 @@ class BlockMachineFormContainer extends Component {
 
     this.state = {
       description: '',
-      end: '',
+      finish: '',
       start: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(Actions.Api.wyatt['block-machine'].list());
   }
 
   handleInputChange(event) {
@@ -26,8 +32,14 @@ class BlockMachineFormContainer extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('submit');
-
+    const { dispatch, machineType, uri } = this.props;
+    const payload = {
+      description: this.state.description,
+      [machineType]: uri,
+      finish: this.state.finish,
+      start: this.state.start,
+    };
+    dispatch(Actions.Api.wyatt['block-machine'].post(payload));
   }
 
   render() {
@@ -35,6 +47,7 @@ class BlockMachineFormContainer extends Component {
     return (
       <BlockMachineForm
         {...this.state}
+        {...this.props}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />
@@ -48,4 +61,8 @@ BlockMachineFormContainer.propTypes = {
   uri: PropTypes.string.isRequired,
 };
 
-export default BlockMachineFormContainer;
+const mapStateToProps = (state, ownProps) => ({
+  blockMachines: getBlockMachinesForMachine(state, ownProps.uri),
+});
+
+export default connect(mapStateToProps)(BlockMachineFormContainer);
