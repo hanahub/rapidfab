@@ -775,9 +775,9 @@ const QUEUE_EVENT_COLOR_MAP = {
 };
 
 export const getQueueEvents = createSelector(
-  [getRuns, getLocationFilter],
-  (runs, locationFilter) =>
-    runs.reduce(
+  [getRuns, getBlockMachines, getLocationFilter],
+  (runs, blocks, locationFilter) => [
+    ...runs.reduce(
       (events, run) =>
         (locationFilter ? locationFilter === run.location : true) &&
         (run.actuals.start || run.estimates.start) &&
@@ -797,5 +797,15 @@ export const getQueueEvents = createSelector(
             ]
           : events,
       []
-    )
+    ),
+    ...blocks.map(block => ({
+      id: block.uri,
+      resourceId: block.printer || block.post_processor || block.shipping,
+      title: block.description,
+      start: block.start,
+      end: block.end,
+      backgroundColor: '#FFA500',
+      borderColor: '#FFA500',
+    })),
+  ]
 );

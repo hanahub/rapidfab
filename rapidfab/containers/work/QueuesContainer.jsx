@@ -27,6 +27,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['post-processor'].list());
       dispatch(Actions.Api.wyatt.printer.list());
       dispatch(Actions.Api.wyatt.run.list());
+      dispatch(Actions.Api.wyatt['block-machine'].list());
       dispatch(Actions.Api.wyatt.location.list());
     },
   };
@@ -34,6 +35,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const postProcessor = state.ui.wyatt['post-processor'];
+  const blockMachine = state.ui.wyatt['block-machine'];
   const { printer, location, run } = state.ui.wyatt;
   const machines = Selectors.getMachinesForQueues(state);
   const locationFilter = Selectors.getLocationFilter(state);
@@ -48,11 +50,13 @@ function mapStateToProps(state) {
     locations: Selectors.getLocations(state),
     locationFilter,
     fetching:
+      blockMachine.fetching ||
       run.list.fetching ||
       printer.list.fetching ||
       postProcessor.list.fetching ||
       location.list.fetching,
     apiErrors: _.concat(
+      blockMachine.errors,
       run.list.errors,
       postProcessor.list.errors,
       printer.list.errors,
