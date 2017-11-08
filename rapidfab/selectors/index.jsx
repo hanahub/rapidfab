@@ -48,6 +48,7 @@ export const getStateThirdPartyProviders = state =>
 export const getStateModelers = state => state.api.nautilus.modeler;
 export const getStateUploadModel = state => state.uploadModel;
 export const getStateLocationFilter = state => state.locationFilter.location;
+export const getStateBlockMachines = state => state.api.wyatt['block-machine'];
 
 export const getResourceByUuid = createSelector(
   [getPredicate, getStateResources],
@@ -536,6 +537,22 @@ export const getRuns = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getBlockMachines = createSelector(
+  [getStateBlockMachines, getStateResources],
+  (uuids, resources) => uuids.map(uuid => resources[uuid])
+);
+
+export const getBlockMachinesForMachine = createSelector(
+  [getPredicate, getBlockMachines],
+  (uri, blockMachines) =>
+    blockMachines.filter(
+      machine =>
+        machine.printer === uri ||
+        machine.post_processor === uri ||
+        machine.shipping === uri
+    )
+);
+
 export const getPrintersForRunNew = createSelector(
   [getPrinters, getPrinterTypes],
   (printers, printerTypes) => {
@@ -745,4 +762,50 @@ export const getRunPrintsGridData = createSelector(
         return { id, order, dueDate, customerName, uuid };
       });
   }
+);
+
+const QUEUE_EVENT_COLOR_MAP = {
+  calculating: '#e4d836',
+  calculated: '#9f86ff',
+  queued: '#9f86ff',
+  printing: '#1ca8dd',
+  post_processing: '#e4d836',
+  complete: '#1bc98e',
+  error: '#e64759',
+};
+
+export const getQueueEvents = createSelector(
+  [getRuns, getBlockMachines, getLocationFilter],
+  (runs, blocks, locationFilter) => [
+    ...runs.reduce(
+      (events, run) =>
+        (locationFilter ? locationFilter === run.location : true) &&
+        (run.actuals.start || run.estimates.start) &&
+        (run.actuals.end || run.estimates.end)
+          ? [
+              ...events,
+              {
+                id: run.uri,
+                resourceId: run.printer || run.post_processor,
+                title: run.id,
+                url: `#/records/run/${run.uuid}`,
+                start: run.actuals.start || run.estimates.start,
+                end: run.actuals.end || run.estimates.end,
+                backgroundColor: QUEUE_EVENT_COLOR_MAP[run.status],
+                borderColor: QUEUE_EVENT_COLOR_MAP[run.status],
+              },
+            ]
+          : events,
+      []
+    ),
+    ...blocks.map(block => ({
+      id: block.uri,
+      resourceId: block.printer || block.post_processor || block.shipping,
+      title: block.description,
+      start: block.start,
+      end: block.end,
+      backgroundColor: '#FFA500',
+      borderColor: '#FFA500',
+    })),
+  ]
 );

@@ -4,6 +4,7 @@ export const RESOURCES = {
   hoth: ['model'],
   pao: ['memberships', 'permissions', 'groups', 'sessions', 'users'],
   wyatt: [
+    'block-machine',
     'bureau',
     'currency-conversion',
     'feature',
