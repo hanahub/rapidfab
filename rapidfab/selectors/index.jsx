@@ -763,3 +763,39 @@ export const getRunPrintsGridData = createSelector(
       });
   }
 );
+
+const QUEUE_EVENT_COLOR_MAP = {
+  calculating: '#e4d836',
+  calculated: '#9f86ff',
+  queued: '#9f86ff',
+  printing: '#1ca8dd',
+  post_processing: '#e4d836',
+  complete: '#1bc98e',
+  error: '#e64759',
+};
+
+export const getQueueEvents = createSelector(
+  [getRuns, getLocationFilter],
+  (runs, locationFilter) =>
+    runs.reduce(
+      (events, run) =>
+        (locationFilter ? locationFilter === run.location : true) &&
+        (run.actuals.start || run.estimates.start) &&
+        (run.actuals.end || run.estimates.end)
+          ? [
+              ...events,
+              {
+                id: run.uri,
+                resourceId: run.printer || run.post_processor,
+                title: run.id,
+                url: `#/records/run/${run.uuid}`,
+                start: run.actuals.start || run.estimates.start,
+                end: run.actuals.end || run.estimates.end,
+                backgroundColor: QUEUE_EVENT_COLOR_MAP[run.status],
+                borderColor: QUEUE_EVENT_COLOR_MAP[run.status],
+              },
+            ]
+          : events,
+      []
+    )
+);

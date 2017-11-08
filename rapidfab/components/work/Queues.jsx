@@ -5,16 +5,6 @@ import { MODELER_STATUS_MAP } from 'rapidfab/constants';
 import Locations from 'rapidfab/components/locations';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
-const EVENT_COLOR_MAP = {
-  calculating: '#e4d836',
-  calculated: '#9f86ff',
-  queued: '#9f86ff',
-  printing: '#1ca8dd',
-  post_processing: '#e4d836',
-  complete: '#1bc98e',
-  error: '#e64759',
-};
-
 class Queues extends Component {
   constructor(props) {
     super(props);
@@ -76,7 +66,7 @@ class Queues extends Component {
     if (prevProps.machines !== this.props.machines) {
       jQuery('#scheduler').fullCalendar('refetchResources');
     }
-    if (prevProps.runs !== this.props.runs) {
+    if (prevProps.events !== this.props.events) {
       jQuery('#scheduler').fullCalendar('refetchEvents');
     }
   }
@@ -100,18 +90,7 @@ class Queues extends Component {
   }
 
   fetchEvents(start, end, timezone, callback) {
-    let events = this.props.runs.map(run => ({
-      id: run.uri,
-      resourceId: run.printer || run.post_processor,
-      title: run.id,
-      url: `#/records/run/${run.uuid}`,
-      start: run.actuals.start || run.estimates.start,
-      end: run.actuals.end || run.estimates.end,
-      backgroundColor: EVENT_COLOR_MAP[run.status],
-      borderColor: EVENT_COLOR_MAP[run.status],
-    }));
-    events = events.filter(event => event.start != null && event.end != null);
-    callback(events);
+    callback(this.props.events);
   }
 
   render() {
@@ -142,11 +121,22 @@ Queues.defaultProps = {
 };
 
 Queues.propTypes = {
+  events: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      resourceId: PropTypes.string,
+      title: PropTypes.string,
+      url: PropTypes.string,
+      start: PropTypes.string,
+      end: PropTypes.string,
+      backgroundColor: PropTypes.string,
+      borderColor: PropTypes.string,
+    })
+  ).isRequired,
   handleOnChange: PropTypes.func.isRequired,
   locationFilter: PropTypes.string,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   machines: PropTypes.arrayOf(PropTypes.object).isRequired,
-  runs: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Queues;

@@ -35,21 +35,16 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   const postProcessor = state.ui.wyatt['post-processor'];
   const { printer, location, run } = state.ui.wyatt;
-  const runs = Selectors.getRuns(state);
   const machines = Selectors.getMachinesForQueues(state);
   const locationFilter = Selectors.getLocationFilter(state);
-  let filteredRuns = null;
-  if (locationFilter) {
-    filteredRuns = _.filter(runs, ['location', locationFilter]);
-  }
   let filteredMachines = null;
   if (locationFilter) {
     filteredMachines = _.filter(machines, ['location', locationFilter]);
   }
 
   return {
+    events: Selectors.getQueueEvents(state),
     machines: filteredMachines || machines,
-    runs: filteredRuns || runs,
     locations: Selectors.getLocations(state),
     locationFilter,
     fetching:
