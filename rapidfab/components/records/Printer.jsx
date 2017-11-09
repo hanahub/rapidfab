@@ -6,7 +6,7 @@ import { Grid, Nav, NavItem } from 'react-bootstrap';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 
-import BlockMachinesContainer from 'rapidfab/containers/inventory/BlockMachinesContainer';
+import BlockMachineContainer from 'rapidfab/containers/blockMachine/BlockMachineContainer';
 import PrinterFormContainer from 'rapidfab/containers/records/PrinterFormContainer';
 
 const Printer = ({ handleSelectTab, route, tab, uri }) => (
@@ -25,7 +25,7 @@ const Printer = ({ handleSelectTab, route, tab, uri }) => (
     <FlashMessages />
 
     {tab === 1 && <PrinterFormContainer route={route} />}
-    {tab === 2 && <BlockMachinesContainer machineType="printer" uri={uri} />}
+    {tab === 2 && <BlockMachineContainer machineType="printer" uri={uri} />}
   </Grid>
 );
 
