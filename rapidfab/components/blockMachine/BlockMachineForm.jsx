@@ -7,6 +7,7 @@ import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 const BlockMachineForm = ({
   description,
+  downtime,
   finish,
   handleSubmit,
   handleInputChange,
@@ -53,14 +54,19 @@ const BlockMachineForm = ({
       </FormGroup>
 
       <Button block type="submit" vertical>
-        Create Block Machine
+        {downtime ? 'Update Downtime' : 'Create New Downtime'}
       </Button>
     </form>
   </div>
 );
 
+BlockMachineForm.defaultProps = {
+  downtime: null,
+};
+
 BlockMachineForm.propTypes = {
   description: PropTypes.string.isRequired,
+  downtime: PropTypes.string,
   finish: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,

@@ -52,13 +52,20 @@ const BlockMachine = ({
         {selection === 'add' && (
           <div>
             <h2>Create New Block Machine</h2>
-            <BlockMachineFormContainer machineType={machineType} machinreUri={machineUri} />
+            <BlockMachineFormContainer
+              machineType={machineType}
+              machineUri={machineUri}
+            />
           </div>
         )}
         {isUuid(selection) && (
           <div>
             <h2>Edit</h2>
-            {selection}
+            <BlockMachineFormContainer
+              downtime={selection}
+              machineType={machineType}
+              machineUri={machineUri}
+            />
           </div>
         )}
       </div>
@@ -70,6 +77,7 @@ BlockMachine.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
   machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
   machineUri: PropTypes.string.isRequired,
+  selection: PropTypes.string.isRequired,
 };
 
 export default BlockMachine;

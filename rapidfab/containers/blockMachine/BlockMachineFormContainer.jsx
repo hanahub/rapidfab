@@ -11,13 +11,23 @@ class BlockMachineFormContainer extends Component {
     super(props);
 
     this.state = {
-      description: '',
-      finish: '',
-      start: '',
+      description: props.initialValues ? props.initialValues.description : '',
+      finish: props.initialValues ? props.initialValues.finish : '',
+      start: props.initialValues ? props.initialValues.start : '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.downtime !== this.props.downtime && nextProps.initialValues) {
+      this.setState({
+        description: nextProps.initialValues.description,
+        finish: nextProps.initialValues.finish,
+        start: nextProps.initialValues.start,
+      });
+    }
   }
 
   handleInputChange(event) {
@@ -50,10 +60,32 @@ class BlockMachineFormContainer extends Component {
   }
 }
 
+BlockMachineFormContainer.defaultProps = {
+  downtime: null,
+  initialValues: null,
+};
+
 BlockMachineFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  downtime: PropTypes.string,
+  initialValues: PropTypes.shape({
+    description: PropTypes.string,
+    finish: PropTypes.string,
+    start: PropTypes.string,
+  }),
   machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
   machineUri: PropTypes.string.isRequired,
 };
 
-export default connect()(BlockMachineFormContainer);
+const mapStateToProps = (state, ownProps) => ({
+  initialValues: state.resources[ownProps.downtime]
+    ? {
+        description: state.resources[ownProps.downtime].description,
+        finish: state.resources[ownProps.downtime].finish,
+        start: state.resources[ownProps.downtime].start,
+        uri: state.resources[ownProps.downtime].uri,
+      }
+    : null,
+});
+
+export default connect(mapStateToProps)(BlockMachineFormContainer);
