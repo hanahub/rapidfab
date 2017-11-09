@@ -7,7 +7,7 @@ import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 import BlockMachineFormContainer from 'rapidfab/containers/blockMachine/BlockMachineFormContainer';
 
-const BlockMachines = ({
+const BlockMachine = ({
   blockMachines,
   machineType,
   uri,
@@ -23,7 +23,7 @@ const BlockMachines = ({
   </div>
 );
 
-BlockMachines.propTypes = {
+BlockMachine.propTypes = {
   blockMachines: PropTypes.arrayOf(
     PropTypes.shape({
       description: PropTypes.string,
@@ -35,4 +35,4 @@ BlockMachines.propTypes = {
   uri: PropTypes.string.isRequired,
 };
 
-export default BlockMachines;
+export default BlockMachine;
