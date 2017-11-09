@@ -6,7 +6,7 @@ import { Grid, Nav, NavItem } from 'react-bootstrap';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 
-import BlockMachineFormContainer from 'rapidfab/containers/BlockMachineFormContainer';
+import BlockMachineFormContainer from 'rapidfab/containers/inventory/BlockMachineFormContainer';
 import PrinterFormContainer from 'rapidfab/containers/records/PrinterFormContainer';
 
 const Printer = ({ handleSelectTab, route, tab, uri }) => (
