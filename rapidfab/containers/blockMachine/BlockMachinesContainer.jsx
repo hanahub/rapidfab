@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import { getBlockMachinesForMachine } from 'rapidfab/selectors';
 
-import BlockMachines from 'rapidfab/components/inventory/BlockMachines';
+import BlockMachines from 'rapidfab/components/blockMachine/BlockMachines';
 
 class BlockMachineContainer extends Component {
 

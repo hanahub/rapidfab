@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
-import BlockMachineFormContainer from 'rapidfab/containers/inventory/BlockMachineFormContainer';
+import BlockMachineFormContainer from 'rapidfab/containers/blockMachine/BlockMachineFormContainer';
 
 const BlockMachines = ({
   blockMachines,
