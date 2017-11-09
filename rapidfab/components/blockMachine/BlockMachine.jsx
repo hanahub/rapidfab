@@ -36,7 +36,7 @@ const BlockMachine = ({
     </div>
 
     <Col xs={12} sm={6}>
-      <BlockMachinesContainer uri={uri} />
+      <BlockMachinesContainer handleSelectionChange={handleSelectionChange} uri={uri} />
     </Col>
     <Col xs={12} sm={6}>
       <div style={selection !== 'none' ? styles.border : null}>
