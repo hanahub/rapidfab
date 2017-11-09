@@ -803,7 +803,7 @@ export const getQueueEvents = createSelector(
       resourceId: block.printer || block.post_processor || block.shipping,
       title: block.description,
       start: block.start,
-      end: block.end,
+      end: block.finish,
       backgroundColor: '#FFA500',
       borderColor: '#FFA500',
     })),
