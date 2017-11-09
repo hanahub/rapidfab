@@ -35,8 +35,8 @@ const BlockMachines = ({ blockMachines, handleSelectionChange }) => (
           key={block.uri}
         >
           <div style={styles.listRow}>
-            <Fa style={styles.spacingHorizontal} name="clock-o"/>
-            <div style={{width: '100%'}}>
+            <Fa style={styles.spacingHorizontal} name="clock-o" />
+            <div style={{ width: '100%' }}>
               <span style={styles.timeRow}>
                 <span>Start:</span> <FormattedDateTime value={block.start} />
               </span>

@@ -19,11 +19,11 @@ class BlockMachinesContainer extends Component {
 
 BlockMachinesContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  uri: PropTypes.string.isRequired,
+  machineUri: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  blockMachines: getBlockMachinesForMachine(state, ownProps.uri),
+  blockMachines: getBlockMachinesForMachine(state, ownProps.machineUri),
 });
 
 export default connect(mapStateToProps)(BlockMachinesContainer);

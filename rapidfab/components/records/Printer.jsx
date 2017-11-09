@@ -25,7 +25,7 @@ const Printer = ({ handleSelectTab, route, tab, uri }) => (
     <FlashMessages />
 
     {tab === 1 && <PrinterFormContainer route={route} />}
-    {tab === 2 && <BlockMachineContainer machineType="printer" uri={uri} />}
+    {tab === 2 && <BlockMachineContainer machineType="printer" machineUri={uri} />}
   </Grid>
 );
 

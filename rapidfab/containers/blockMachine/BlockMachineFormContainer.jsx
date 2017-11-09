@@ -27,10 +27,10 @@ class BlockMachineFormContainer extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { dispatch, machineType, uri } = this.props;
+    const { dispatch, machineType, machineUri } = this.props;
     const payload = {
       description: this.state.description,
-      [machineType]: uri,
+      [machineType]: machineUri,
       finish: this.state.finish,
       start: this.state.start,
     };
@@ -53,7 +53,7 @@ class BlockMachineFormContainer extends Component {
 BlockMachineFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
-  uri: PropTypes.string.isRequired,
+  machineUri: PropTypes.string.isRequired,
 };
 
 export default connect()(BlockMachineFormContainer);

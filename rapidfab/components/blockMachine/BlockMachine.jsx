@@ -26,8 +26,8 @@ const styles = {
 const BlockMachine = ({
   handleSelectionChange,
   machineType,
+  machineUri,
   selection,
-  uri,
 }) => (
   <Grid>
     <div style={styles.buttonRow}>
@@ -37,7 +37,10 @@ const BlockMachine = ({
     </div>
 
     <Col xs={12} sm={6}>
-      <BlockMachinesContainer handleSelectionChange={handleSelectionChange} uri={uri} />
+      <BlockMachinesContainer
+        handleSelectionChange={handleSelectionChange}
+        machineUri={machineUri}
+      />
     </Col>
     <Col xs={12} sm={6}>
       <div style={selection !== 'none' ? styles.border : null}>
@@ -49,7 +52,7 @@ const BlockMachine = ({
         {selection === 'add' && (
           <div>
             <h2>Create New Block Machine</h2>
-            <BlockMachineFormContainer machineType={machineType} uri={uri} />
+            <BlockMachineFormContainer machineType={machineType} machinreUri={machineUri} />
           </div>
         )}
         {isUuid(selection) && (
@@ -66,7 +69,7 @@ const BlockMachine = ({
 BlockMachine.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
   machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
-  uri: PropTypes.string.isRequired,
+  machineUri: PropTypes.string.isRequired,
 };
 
 export default BlockMachine;
