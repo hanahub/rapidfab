@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { Button, Col, Grid } from 'react-bootstrap';
 
-import { FormattedMessage } from 'rapidfab/i18n';
+import isUuid from 'rapidfab/utils/isUuid';
 
+import { FormattedMessage } from 'rapidfab/i18n';
 import BlockMachineFormContainer from 'rapidfab/containers/blockMachine/BlockMachineFormContainer';
 import BlockMachinesContainer from 'rapidfab/containers/blockMachine/BlockMachinesContainer';
 
@@ -49,6 +50,12 @@ const BlockMachine = ({
           <div>
             <h2>Create New Block Machine</h2>
             <BlockMachineFormContainer machineType={machineType} uri={uri} />
+          </div>
+        )}
+        {isUuid(selection) && (
+          <div>
+            <h2>Edit</h2>
+            {selection}
           </div>
         )}
       </div>
