@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { getBlockMachinesForMachine } from 'rapidfab/selectors';
 
 import BlockMachineForm from 'rapidfab/components/blockMachine/BlockMachineForm';
 
@@ -19,10 +18,6 @@ class BlockMachineFormContainer extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.dispatch(Actions.Api.wyatt['block-machine'].list());
   }
 
   handleInputChange(event) {
@@ -61,8 +56,4 @@ BlockMachineFormContainer.propTypes = {
   uri: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  blockMachines: getBlockMachinesForMachine(state, ownProps.uri),
-});
-
-export default connect(mapStateToProps)(BlockMachineFormContainer);
+export default connect()(BlockMachineFormContainer);

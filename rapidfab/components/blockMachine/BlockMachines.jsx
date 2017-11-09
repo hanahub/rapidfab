@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+
 const BlockMachines = ({ blockMachines }) => (
-  <div>
-    {blockMachines.map(block => (
-      <p key={block.uri}>
-        {block.description} - {block.start} - {block.finish}
-      </p>
-    ))}
-  </div>
+  <Panel header="Blocks">
+    <ListGroup fill>
+      {blockMachines.map(block => (
+        <ListGroupItem key={block.uri}>
+          {block.description} - {block.start} - {block.finish}
+        </ListGroupItem>
+      ))}
+    </ListGroup>
+  </Panel>
 );
 
 BlockMachines.propTypes = {

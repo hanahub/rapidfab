@@ -7,7 +7,6 @@ import { Button, ControlLabel, FormControl, FormGroup } from 'react-bootstrap';
 
 const BlockMachineForm = ({
   description,
-  blockMachines,
   finish,
   handleSubmit,
   handleInputChange,
@@ -53,26 +52,15 @@ const BlockMachineForm = ({
         />
       </FormGroup>
 
-      <Button type="submit">Block Machine</Button>
+      <Button block type="submit" vertical>
+        Create Block Machine
+      </Button>
     </form>
-
-    {blockMachines.map(block => (
-      <p key={block.uri}>
-        {block.description} - {block.start} - {block.finish}
-      </p>
-    ))}
   </div>
 );
 
 BlockMachineForm.propTypes = {
   description: PropTypes.string.isRequired,
-  blockMachines: PropTypes.arrayOf(
-    PropTypes.shape({
-      description: PropTypes.string,
-      finish: PropTypes.string,
-      start: PropTypes.string,
-    })
-  ).isRequired,
   finish: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,

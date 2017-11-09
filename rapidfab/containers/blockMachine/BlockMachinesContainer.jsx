@@ -8,21 +8,17 @@ import { getBlockMachinesForMachine } from 'rapidfab/selectors';
 import BlockMachines from 'rapidfab/components/blockMachine/BlockMachines';
 
 class BlockMachinesContainer extends Component {
-
   componentDidMount() {
     this.props.dispatch(Actions.Api.wyatt['block-machine'].list());
   }
 
   render() {
-    return (
-      <BlockMachines {...this.props} />
-    );
+    return <BlockMachines {...this.props} />;
   }
 }
 
 BlockMachinesContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
   uri: PropTypes.string.isRequired,
 };
 
