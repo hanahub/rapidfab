@@ -69,12 +69,15 @@ const BlockMachine = ({
               machineType={machineType}
               machineUri={machineUri}
             />
-            <Button block onClick={() => handleSelectionChange(`DELETE/${selection}`)}>
+            <Button
+              block
+              onClick={() => handleSelectionChange(`DELETE/${selection}`)}
+            >
               Delete Downtime
             </Button>
           </div>
         )}
-        { selection.split('/')[0] === 'DELETE' && (
+        {selection.split('/')[0] === 'DELETE' && (
           <BlockMachineDeleteContainer
             handleSelectionChange={handleSelectionChange}
             uuid={selection.split('/')[1]}

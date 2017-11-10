@@ -8,20 +8,24 @@ import BlockMachineDelete from 'rapidfab/components/blockMachine/BlockMachineDel
 
 class BlockMachineDeleteContainer extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.handleBack = this.handleBack.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleBack() {
-    this.props.handleSelectionChange(uuid);
+    this.props.handleSelectionChange(this.props.uuid);
   }
 
   async handleDelete() {
     const { dispatch, handleSelectionChange, uuid } = this.props;
-    const response = await dispatch(Actions.Api.wyatt['block-machine'].delete(uuid));
-    response.type === 'RESOURCE_DELETE_SUCCESS' && handleSelectionChange('none');
+    const response = await dispatch(
+      Actions.Api.wyatt['block-machine'].delete(uuid)
+    );
+    if (response.type === 'RESOURCE_DELETE_SUCCESS') {
+      handleSelectionChange('none');
+    }
   }
 
   render() {
@@ -33,7 +37,7 @@ class BlockMachineDeleteContainer extends React.Component {
       />
     );
   }
-};
+}
 
 BlockMachineDeleteContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
