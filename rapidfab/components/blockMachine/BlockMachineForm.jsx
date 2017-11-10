@@ -53,7 +53,7 @@ const BlockMachineForm = ({
         />
       </FormGroup>
 
-      <Button block type="submit" vertical>
+      <Button block type="submit">
         {downtime ? 'Update Downtime' : 'Create New Downtime'}
       </Button>
     </form>

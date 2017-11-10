@@ -35,16 +35,20 @@ class BlockMachineFormContainer extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    const { dispatch, machineType, machineUri } = this.props;
+    const { dispatch, downtime, machineType, machineUri, handleSelectionChange, initialValues } = this.props;
     const payload = {
       description: this.state.description,
       [machineType]: machineUri,
       finish: this.state.finish,
       start: this.state.start,
     };
-    dispatch(Actions.Api.wyatt['block-machine'].post(payload));
+    const response = await (initialValues
+      ? dispatch(Actions.Api.wyatt['block-machine'].put(downtime, payload))
+      : dispatch(Actions.Api.wyatt['block-machine'].post(payload))
+    );
+    response.type === 'RESOURCE_PUT_SUCCESS' && handleSelectionChange('none')
   }
 
   render() {
@@ -68,6 +72,7 @@ BlockMachineFormContainer.defaultProps = {
 BlockMachineFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   downtime: PropTypes.string,
+  handleSelectionChange: PropTypes.func.isRequired,
   initialValues: PropTypes.shape({
     description: PropTypes.string,
     finish: PropTypes.string,
@@ -81,9 +86,8 @@ const mapStateToProps = (state, ownProps) => ({
   initialValues: state.resources[ownProps.downtime]
     ? {
         description: state.resources[ownProps.downtime].description,
-        finish: state.resources[ownProps.downtime].finish,
-        start: state.resources[ownProps.downtime].start,
-        uri: state.resources[ownProps.downtime].uri,
+        finish: new Date(state.resources[ownProps.downtime].finish).toISOString().slice(0,16),
+        start: new Date(state.resources[ownProps.downtime].start).toISOString().slice(0,16),
       }
     : null,
 });

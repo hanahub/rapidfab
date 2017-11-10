@@ -53,6 +53,7 @@ const BlockMachine = ({
           <div>
             <h2>Create New Block Machine</h2>
             <BlockMachineFormContainer
+              handleSelectionChange={handleSelectionChange}
               machineType={machineType}
               machineUri={machineUri}
             />
@@ -63,6 +64,7 @@ const BlockMachine = ({
             <h2>Edit</h2>
             <BlockMachineFormContainer
               downtime={selection}
+              handleSelectionChange={handleSelectionChange}
               machineType={machineType}
               machineUri={machineUri}
             />
