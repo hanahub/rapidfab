@@ -91,17 +91,18 @@ BlockMachineFormContainer.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  initialValues: ownProps.downtime && state.resources[ownProps.downtime]
-    ? {
-        description: state.resources[ownProps.downtime].description,
-        finish: new Date(state.resources[ownProps.downtime].finish)
-          .toISOString()
-          .slice(0, 16),
-        start: new Date(state.resources[ownProps.downtime].start)
-          .toISOString()
-          .slice(0, 16),
-      }
-    : null,
+  initialValues:
+    ownProps.downtime && state.resources[ownProps.downtime]
+      ? {
+          description: state.resources[ownProps.downtime].description,
+          finish: new Date(state.resources[ownProps.downtime].finish)
+            .toISOString()
+            .slice(0, 16),
+          start: new Date(state.resources[ownProps.downtime].start)
+            .toISOString()
+            .slice(0, 16),
+        }
+      : null,
 });
 
 export default connect(mapStateToProps)(BlockMachineFormContainer);

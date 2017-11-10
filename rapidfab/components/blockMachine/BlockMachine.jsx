@@ -33,7 +33,10 @@ const BlockMachine = ({
   <Grid>
     <div style={styles.buttonRow}>
       <Button onClick={() => handleSelectionChange('add')}>
-        <FormattedMessage id="addNewBlock" defaultMessage="Add New Block" />
+        <FormattedMessage
+          id="addNewDowntime"
+          defaultMessage="Add New Downtime"
+        />
       </Button>
     </div>
 
@@ -51,18 +54,14 @@ const BlockMachine = ({
           </Button>
         )}
         {selection === 'add' && (
-          <div>
-            <h2>Create New Block Machine</h2>
-            <BlockMachineFormContainer
-              handleSelectionChange={handleSelectionChange}
-              machineType={machineType}
-              machineUri={machineUri}
-            />
-          </div>
+          <BlockMachineFormContainer
+            handleSelectionChange={handleSelectionChange}
+            machineType={machineType}
+            machineUri={machineUri}
+          />
         )}
         {isUuid(selection) && (
           <div>
-            <h2>Edit</h2>
             <BlockMachineFormContainer
               downtime={selection}
               handleSelectionChange={handleSelectionChange}

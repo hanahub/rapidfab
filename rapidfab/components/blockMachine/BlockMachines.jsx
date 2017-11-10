@@ -26,7 +26,7 @@ const styles = {
 };
 
 const BlockMachines = ({ blockMachines, handleSelectionChange }) => (
-  <Panel header="Blocks">
+  <Panel header="Scheduled Downtime">
     <ListGroup fill>
       {blockMachines.map(block => (
         <ListGroupItem

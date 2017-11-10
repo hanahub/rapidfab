@@ -17,7 +17,7 @@ const Printer = ({ handleSelectTab, route, tab, uri }) => (
       <Nav bsStyle="tabs" activeKey={tab} onSelect={handleSelectTab}>
         <NavItem eventKey={1}>Summary</NavItem>
         <NavItem disabled={!uri} eventKey={2}>
-          Block Machine
+          Printer Downtime
         </NavItem>
       </Nav>
     )}
