@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Fa from 'react-fontawesome';
-
-import { FormattedDateTime } from 'rapidfab/i18n';
+import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 
 import extractUuid from 'rapidfab/utils/extractUuid';
 
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import { FormattedDateTime } from 'rapidfab/i18n';
+import Loading from 'rapidfab/components/Loading';
 
 const styles = {
   listRow: {
@@ -25,8 +25,16 @@ const styles = {
   },
 };
 
-const BlockMachines = ({ blockMachines, handleSelectionChange }) => (
-  <Panel header="Scheduled Downtime">
+const BlockMachines = ({ blockMachines, handleSelectionChange, loading }) => (
+  <Panel
+    header={
+      loading ? (
+        <Loading />
+      ) : (
+        `${blockMachines.length === 0 && 'No'} Scheduled Downtime`
+      )
+    }
+  >
     <ListGroup fill>
       {blockMachines.map(block => (
         <ListGroupItem
@@ -60,6 +68,7 @@ BlockMachines.propTypes = {
     })
   ).isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default BlockMachines;
