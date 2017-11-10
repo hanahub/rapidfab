@@ -15,8 +15,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-start',
   },
-  spacingHorizontal: {
-    margin: '0 2rem',
+  spacingRight: {
+    marginRight: '2rem',
   },
   timeRow: {
     display: 'flex',
@@ -31,12 +31,12 @@ const BlockMachines = ({ blockMachines, handleSelectionChange }) => (
       {blockMachines.map(block => (
         <ListGroupItem
           onClick={() => handleSelectionChange(extractUuid(block.uri))}
-          header={block.description}
           key={block.uri}
         >
           <div style={styles.listRow}>
-            <Fa style={styles.spacingHorizontal} name="clock-o" />
+            <Fa style={styles.spacingRight} name="clock-o" />
             <div style={{ width: '100%' }}>
+              <span>{block.description}</span>
               <span style={styles.timeRow}>
                 <span>Start:</span> <FormattedDateTime value={block.start} />
               </span>
