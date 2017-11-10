@@ -22,6 +22,9 @@ const styles = {
     flexDirection: 'row-reverse',
     margin: '1rem 0 2rem 0',
   },
+  spacingTop: {
+    marginTop: '1rem',
+  },
 };
 
 const BlockMachine = ({
@@ -71,6 +74,7 @@ const BlockMachine = ({
             <Button
               block
               onClick={() => handleSelectionChange(`DELETE/${selection}`)}
+              style={styles.spacingTop}
             >
               Delete Downtime
             </Button>
