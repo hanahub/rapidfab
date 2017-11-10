@@ -36,11 +36,13 @@ class NewOrderContainer extends Component {
 
     return (
       <div>
-        { fetching
-            ? <Loading />
-            : (
-              <FlashMessages />
-              <NewOrder {...this.props} />
+        {fetching ? (
+          <Loading />
+        ) : (
+          <div>
+            <FlashMessages />
+            <NewOrder {...this.props} />
+          </div>
         )}
       </div>
     );
