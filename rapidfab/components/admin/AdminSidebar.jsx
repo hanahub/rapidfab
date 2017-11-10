@@ -4,14 +4,10 @@ import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { Button } from 'react-bootstrap';
 
+import isUuid from 'rapidfab/utils/isUuid';
+
 import UserContainer from 'rapidfab/containers/admin/UserContainer';
-
 import AddUser from './AddUser';
-
-const isUuid = string =>
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
-    string
-  );
 
 const styles = {
   border: {
