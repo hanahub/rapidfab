@@ -7,6 +7,7 @@ import { Button, Col, Grid } from 'react-bootstrap';
 import isUuid from 'rapidfab/utils/isUuid';
 
 import { FormattedMessage } from 'rapidfab/i18n';
+import BlockMachineDeleteContainer from 'rapidfab/containers/blockMachine/BlockMachineDeleteContainer';
 import BlockMachineFormContainer from 'rapidfab/containers/blockMachine/BlockMachineFormContainer';
 import BlockMachinesContainer from 'rapidfab/containers/blockMachine/BlockMachinesContainer';
 
@@ -68,7 +69,16 @@ const BlockMachine = ({
               machineType={machineType}
               machineUri={machineUri}
             />
+            <Button block onClick={() => handleSelectionChange(`DELETE/${selection}`)}>
+              Delete Downtime
+            </Button>
           </div>
+        )}
+        { selection.split('/')[0] === 'DELETE' && (
+          <BlockMachineDeleteContainer
+            handleSelectionChange={handleSelectionChange}
+            uuid={selection.split('/')[1]}
+          />
         )}
       </div>
     </Col>
