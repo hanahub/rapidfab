@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 
 import Flag from 'rapidfab/components/flag';
 import Permissions from 'rapidfab/permissions';
-import ShowMaybe from 'rapidfab/components/showMaybe';
 
 const styles = {
   spacingRight: { marginRight: '1rem' },
@@ -76,16 +75,20 @@ const NavProfile = ({
           <FormattedMessage id="myProfile" defaultMessage="My Profile" />
         </BS.MenuItem>
         <BS.MenuItem eventKey={1.2}>
-          <ShowMaybe showIf={shouldShowImpersonate}>
-            <Fa name="user-secret" />{' '}
-            <FormattedMessage id="impersonate" defaultMessage="Impersonate" />
-          </ShowMaybe>
+          {shouldShowImpersonate && (
+            <div>
+              <Fa name="user-secret" />{' '}
+              <FormattedMessage id="impersonate" defaultMessage="Impersonate" />
+            </div>
+          )}
         </BS.MenuItem>
         <BS.MenuItem eventKey={1.3} href="#/admin">
-          <ShowMaybe showIf={shouldShowAdmin}>
-            <Fa name="users" />{' '}
-            <FormattedMessage id="admin" defaultMessage="Admin" />
-          </ShowMaybe>
+          {shouldShowAdmin && (
+            <div>
+              <Fa name="users" />{' '}
+              <FormattedMessage id="admin" defaultMessage="Admin" />
+            </div>
+          )}
         </BS.MenuItem>
         <BS.MenuItem divider style={{ display: 'none' }} />
         <BS.MenuItem eventKey={1.4} onClick={() => onLogout()}>
