@@ -30,10 +30,9 @@ class PrinterContainer extends Component {
   render() {
     return (
       <Printer
-        uri={this.props.uri}
+        {...this.props}
+        {...this.state}
         handleSelectTab={this.handleSelectTab}
-        route={this.props.route}
-        tab={this.state.tab}
       />
     );
   }
@@ -52,7 +51,10 @@ PrinterContainer.propTypes = {
 const mapStateToProps = (state, props) => {
   const printer = getRouteResource(state, props);
   if (!printer) return {};
-  return { uri: printer.uri };
+  return {
+    uri: printer.uri,
+    name: printer.name,
+  };
 };
 
 export default connect(mapStateToProps)(PrinterContainer);
