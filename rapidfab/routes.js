@@ -41,14 +41,11 @@ import TemplateContainer from 'rapidfab/containers/records/TemplateContainer';
 import RunRecordContainer from 'rapidfab/containers/records/run/RunRecordContainer';
 import RunNewContainer from 'rapidfab/containers/records/run/RunNewContainer';
 
-import Styles from 'rapidfab/containers/styles';
-
 const Routes = {
   '/': Home,
   '/about': About,
   '/admin': AdminContainer,
   '/bureau-error': BureauError,
-  '/styles': Styles,
 
   '/inventory/materials': InventoryMaterials,
   '/inventory/stocks': InventoryStocks,
