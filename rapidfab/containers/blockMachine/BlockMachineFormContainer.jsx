@@ -91,7 +91,7 @@ BlockMachineFormContainer.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  initialValues: state.resources[ownProps.downtime]
+  initialValues: ownProps.downtime && state.resources[ownProps.downtime]
     ? {
         description: state.resources[ownProps.downtime].description,
         finish: new Date(state.resources[ownProps.downtime].finish)
