@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 
 const StatusDot = ({ status, message = null }) => {
@@ -14,6 +15,16 @@ const StatusDot = ({ status, message = null }) => {
     );
   }
   return <div className={`dot ${status}`} />;
+};
+
+StatusDot.defaultProps = {
+  message: null,
+  status: null,
+};
+
+StatusDot.propTypes = {
+  message: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default StatusDot;

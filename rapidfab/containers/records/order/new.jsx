@@ -7,7 +7,6 @@ import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import * as Selectors from 'rapidfab/selectors';
 
 import NewOrder from 'rapidfab/components/records/order/new/NewOrder';
-import Gatekeeper from 'rapidfab/components/gatekeeper';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 
 class NewOrderContainer extends Component {
@@ -36,12 +35,16 @@ class NewOrderContainer extends Component {
     const { fetching } = this.props;
 
     return (
-      <Gatekeeper loading={fetching}>
-        <div>
-          <FlashMessages />
-          <NewOrder {...this.props} />
-        </div>
-      </Gatekeeper>
+      <div>
+        {fetching ? (
+          <Loading />
+        ) : (
+          <div>
+            <FlashMessages />
+            <NewOrder {...this.props} />
+          </div>
+        )}
+      </div>
     );
   }
 }
