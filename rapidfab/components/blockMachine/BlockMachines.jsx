@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Fa from 'react-fontawesome';
-
-import { FormattedDateTime } from 'rapidfab/i18n';
+import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
 
 import extractUuid from 'rapidfab/utils/extractUuid';
 
-import { ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
+import { FormattedDateTime } from 'rapidfab/i18n';
+import Loading from 'rapidfab/components/Loading';
 
 const styles = {
   listRow: {
@@ -15,8 +15,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'flex-start',
   },
-  spacingHorizontal: {
-    margin: '0 2rem',
+  spacingRight: {
+    marginRight: '2rem',
   },
   timeRow: {
     display: 'flex',
@@ -25,18 +25,26 @@ const styles = {
   },
 };
 
-const BlockMachines = ({ blockMachines, handleSelectionChange }) => (
-  <Panel header="Blocks">
+const BlockMachines = ({ blockMachines, handleSelectionChange, loading }) => (
+  <Panel
+    header={
+      loading ? (
+        <Loading />
+      ) : (
+        `${blockMachines.length === 0 && 'No'} Scheduled Downtime`
+      )
+    }
+  >
     <ListGroup fill>
       {blockMachines.map(block => (
         <ListGroupItem
           onClick={() => handleSelectionChange(extractUuid(block.uri))}
-          header={block.description}
           key={block.uri}
         >
           <div style={styles.listRow}>
-            <Fa style={styles.spacingHorizontal} name="clock-o" />
+            <Fa style={styles.spacingRight} name="clock-o" />
             <div style={{ width: '100%' }}>
+              <span>{block.description}</span>
               <span style={styles.timeRow}>
                 <span>Start:</span> <FormattedDateTime value={block.start} />
               </span>
@@ -60,6 +68,7 @@ BlockMachines.propTypes = {
     })
   ).isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default BlockMachines;

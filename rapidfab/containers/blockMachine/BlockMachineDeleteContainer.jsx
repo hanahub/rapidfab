@@ -45,4 +45,8 @@ BlockMachineDeleteContainer.propTypes = {
   uuid: PropTypes.string.isRequired,
 };
 
-export default connect()(BlockMachineDeleteContainer);
+const mapStateToProps = (state, ownProps) => ({
+  description: state.resources[ownProps.uuid].description,
+});
+
+export default connect(mapStateToProps)(BlockMachineDeleteContainer);

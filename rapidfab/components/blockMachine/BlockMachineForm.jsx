@@ -11,9 +11,15 @@ const BlockMachineForm = ({
   finish,
   handleSubmit,
   handleInputChange,
+  initialValues,
   start,
 }) => (
   <div>
+    <h2>
+      {downtime
+        ? `Editing ${initialValues.description}`
+        : 'Create New Downtime'}
+    </h2>
     <form onSubmit={handleSubmit}>
       <FormGroup controlId="uxName">
         <ControlLabel>
@@ -62,6 +68,7 @@ const BlockMachineForm = ({
 
 BlockMachineForm.defaultProps = {
   downtime: null,
+  initialValues: null,
 };
 
 BlockMachineForm.propTypes = {
@@ -70,6 +77,9 @@ BlockMachineForm.propTypes = {
   finish: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({
+    description: PropTypes.string,
+  }),
   start: PropTypes.string.isRequired,
 };
 
