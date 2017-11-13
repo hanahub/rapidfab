@@ -20,6 +20,7 @@ import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const styles = {
@@ -30,160 +31,171 @@ const styles = {
 };
 
 const PostProcessorForm = ({
-  fields,
+  duration,
+  handleDelete,
+  handleInputChange,
   handleSubmit,
+  location,
   locations,
-  onDelete,
+  name,
+  postProcessorType,
   postProcessorTypes,
-}) => {
-  const postProcessorType = postProcessorTypes.find(
-    ppt => ppt.uri === fields.post_processor_type.value
-  );
-  return (
-    <form onSubmit={handleSubmit}>
-      <Grid fluid>
-        <BreadcrumbNav
-          breadcrumbs={['postProcessors', fields.id.value || 'New']}
-        />
+  selectedPostProcessorType,
+  submitting,
+  uuid,
+}) => (
+  <form onSubmit={handleSubmit}>
+    <Grid fluid>
+      <BreadcrumbNav breadcrumbs={['postProcessors', uuid || 'New']} />
 
-        <div className="clearfix">
-          <ButtonToolbar className="pull-right">
-            <SplitButton
-              id="uxSaveDropdown"
-              type="submit"
-              bsStyle="success"
-              bsSize="small"
-              title={<SaveButtonTitle />}
-              pullRight
+      <div className="clearfix">
+        <ButtonToolbar className="pull-right">
+          <SplitButton
+            id="uxSaveDropdown"
+            type="submit"
+            bsStyle="success"
+            bsSize="small"
+            title={submitting ? <Loading /> : <SaveButtonTitle />}
+            pullRight
+          >
+            <MenuItem eventKey={1} onClick={handleDelete} disabled={!uuid}>
+              <Fa name="ban" />{' '}
+              <FormattedMessage id="button.delete" defaultMessage="Delete" />
+            </MenuItem>
+          </SplitButton>
+        </ButtonToolbar>
+      </div>
+
+      <hr />
+
+      <FlashMessages />
+
+      <Row>
+        <Col xs={12} sm={6}>
+          <FormGroup controlId="uxName">
+            <ControlLabel>Name</ControlLabel>
+            <FormControl
+              name="name"
+              type="text"
+              required
+              onChange={handleInputChange}
+              value={name}
+            />
+          </FormGroup>
+          <FormGroup controlId="uxLocation">
+            <ControlLabel>
+              <FormattedMessage id="field.location" defaultMessage="Location" />
+            </ControlLabel>
+            <FormControl
+              componentClass="select"
+              name="location"
+              onChange={handleInputChange}
+              required
+              value={location}
             >
-              <MenuItem
-                eventKey={1}
-                onClick={() => onDelete(fields.uuid.value)}
-                disabled={!fields.id.value}
-              >
-                <Fa name="ban" />{' '}
-                <FormattedMessage id="button.delete" defaultMessage="Delete" />
-              </MenuItem>
-            </SplitButton>
-          </ButtonToolbar>
-        </div>
-
-        <hr />
-
-        <FlashMessages />
-
-        <Row>
-          <Col xs={12} sm={6}>
-            <FormGroup controlId="uxName">
-              <ControlLabel>Name:</ControlLabel>
-              <FormControl name="name" type="text" required {...fields.name} />
-            </FormGroup>
-            <FormGroup controlId="uxLocation">
-              <ControlLabel>
-                <FormattedMessage
-                  id="field.location"
-                  defaultMessage="Location"
-                />:
-              </ControlLabel>
-              <FormControl
-                componentClass="select"
-                placeholder="location"
-                required
-                {...fields.location}
-              >
-                <option key="placeholder" value="" disabled>
-                  Select a Location
+              {locations.map(loc => (
+                <option key={loc.uri} value={loc.uri}>
+                  {loc.name}
                 </option>
-                {locations.map(location => (
-                  <option key={location.uri} value={location.uri}>
-                    {location.name}
-                  </option>
-                ))}
-              </FormControl>
-            </FormGroup>
-            <FormGroup controlId="uxPostProcessorType">
-              <ControlLabel>
-                <FormattedMessage
-                  id="field.postProcessorType"
-                  defaultMessage="Post Processor Type"
-                />:
-              </ControlLabel>
-              <FormControl
-                componentClass="select"
-                placeholder="post_processor_type"
-                required
-                {...fields.post_processor_type}
-              >
-                <option key="placeholder" value="" disabled>
-                  Select a Post Processor Type
-                </option>
-                {postProcessorTypes.map(postProcessorType => (
-                  <option
-                    key={postProcessorType.uri}
-                    value={postProcessorType.uri}
-                  >
-                    {postProcessorType.name}
-                  </option>
-                ))}
-              </FormControl>
-            </FormGroup>
-            <FormGroup controlId="uxDuration">
-              <ControlLabel>Duration (seconds):</ControlLabel>
-              <FormControl
-                name="duration"
-                type="number"
-                required
-                {...fields.duration}
+              ))}
+            </FormControl>
+          </FormGroup>
+          <FormGroup controlId="uxPostProcessorType">
+            <ControlLabel>
+              <FormattedMessage
+                id="field.postProcessorType"
+                defaultMessage="Post Processor Type"
               />
-            </FormGroup>
-          </Col>
-          <Col xs={12} sm={6}>
-            {postProcessorType && (
-              <Panel header={`Post Processor Type: ${postProcessorType.name}`}>
-                <ListGroup fill>
-                  <ListGroupItem style={styles.flexRow}>
-                    <strong>
+            </ControlLabel>
+            <FormControl
+              componentClass="select"
+              name="postProcessorType"
+              onChange={handleInputChange}
+              required
+              value={postProcessorType}
+            >
+              {postProcessorTypes.map(ppt => (
+                <option key={ppt.uri} value={ppt.uri}>
+                  {ppt.name}
+                </option>
+              ))}
+            </FormControl>
+          </FormGroup>
+          <FormGroup controlId="uxDuration">
+            <ControlLabel>Duration (seconds)</ControlLabel>
+            <FormControl
+              name="duration"
+              onChange={handleInputChange}
+              required
+              type="number"
+              value={duration}
+            />
+          </FormGroup>
+        </Col>
+        <Col xs={12} sm={6}>
+          {selectedPostProcessorType && (
+            <Panel
+              header={`Post Processor Type: ${selectedPostProcessorType.name}`}
+            >
+              <ListGroup fill>
+                <ListGroupItem style={styles.flexRow}>
+                  <strong>
+                    <FormattedMessage
+                      id="field.description"
+                      defaultMessages="Description"
+                    />
+                  </strong>
+                  <span>{selectedPostProcessorType.description}</span>
+                </ListGroupItem>
+                <ListGroupItem style={styles.flexRow}>
+                  <strong>
+                    <FormattedMessage
+                      id="field.duration"
+                      defaultMessage="Duration"
+                    />
+                  </strong>
+                  <span>
+                    {selectedPostProcessorType.duration ? (
+                      selectedPostProcessorType.duration
+                    ) : (
                       <FormattedMessage
-                        id="field.description"
-                        defaultMessages="Description"
+                        id="notAvailable"
+                        defaultMessage="N/A"
                       />
-                    </strong>
-                    <span>{postProcessorType.description}</span>
-                  </ListGroupItem>
-                  <ListGroupItem style={styles.flexRow}>
-                    <strong>
-                      <FormattedMessage
-                        id="field.duration"
-                        defaultMessage="Duration"
-                      />
-                    </strong>
-                    <span>
-                      {postProcessorType.duration ? (
-                        postProcessorType.duration
-                      ) : (
-                        <FormattedMessage
-                          id="notAvailable"
-                          defaultMessage="N/A"
-                        />
-                      )}
-                    </span>
-                  </ListGroupItem>
-                </ListGroup>
-              </Panel>
-            )}
-          </Col>
-        </Row>
-      </Grid>
-    </form>
-  );
+                    )}
+                  </span>
+                </ListGroupItem>
+              </ListGroup>
+            </Panel>
+          )}
+        </Col>
+      </Row>
+    </Grid>
+  </form>
+);
+
+PostProcessorForm.defaultProps = {
+  selectedPostProcessorType: null,
+  uuid: null,
 };
 
 PostProcessorForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+  duration: PropTypes.string.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  location: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onDelete: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  postProcessorType: PropTypes.string.isRequired,
   postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedPostProcessorType: PropTypes.shape({
+    description: PropTypes.string,
+    duration: PropTypes.number,
+    name: PropTypes.string,
+  }),
+  submitting: PropTypes.bool.isRequired,
+  uuid: PropTypes.string,
 };
 
 export default PostProcessorForm;
