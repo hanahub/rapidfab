@@ -31,7 +31,7 @@ const BlockMachines = ({ blockMachines, handleSelectionChange, loading }) => (
       loading ? (
         <Loading />
       ) : (
-        `${blockMachines.length === 0 ? 'No' : '' } Scheduled Downtime`
+        `${blockMachines.length === 0 ? 'No' : ''} Scheduled Downtime`
       )
     }
   >

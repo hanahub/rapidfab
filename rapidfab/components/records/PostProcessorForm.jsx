@@ -48,7 +48,6 @@ const PostProcessorForm = ({
       <Loading />
     ) : (
       <form onSubmit={handleSubmit}>
-
         <div className="clearfix">
           <ButtonToolbar className="pull-right">
             <SplitButton
@@ -83,7 +82,10 @@ const PostProcessorForm = ({
             </FormGroup>
             <FormGroup controlId="uxLocation">
               <ControlLabel>
-                <FormattedMessage id="field.location" defaultMessage="Location" />
+                <FormattedMessage
+                  id="field.location"
+                  defaultMessage="Location"
+                />
               </ControlLabel>
               <FormControl
                 componentClass="select"
@@ -157,7 +159,10 @@ const PostProcessorForm = ({
                       {selectedPostProcessorType.duration ? (
                         selectedPostProcessorType.duration
                       ) : (
-                        <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                        <FormattedMessage
+                          id="notAvailable"
+                          defaultMessage="N/A"
+                        />
                       )}
                     </span>
                   </ListGroupItem>
@@ -181,6 +186,7 @@ PostProcessorForm.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
   location: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   name: PropTypes.string.isRequired,
