@@ -7,7 +7,6 @@ import {
   ControlLabel,
   FormControl,
   FormGroup,
-  Grid,
   ListGroup,
   ListGroupItem,
   MenuItem,
@@ -18,8 +17,6 @@ import {
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
-import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
@@ -28,6 +25,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
   },
+  spacingTop: { marginTop: '1rem' },
 };
 
 const PostProcessorForm = ({
@@ -35,6 +33,7 @@ const PostProcessorForm = ({
   handleDelete,
   handleInputChange,
   handleSubmit,
+  loading,
   location,
   locations,
   name,
@@ -44,134 +43,137 @@ const PostProcessorForm = ({
   submitting,
   uuid,
 }) => (
-  <form onSubmit={handleSubmit}>
-    <Grid fluid>
-      <BreadcrumbNav breadcrumbs={['postProcessors', uuid || 'New']} />
-
-      <div className="clearfix">
-        <ButtonToolbar className="pull-right">
-          <SplitButton
-            id="uxSaveDropdown"
-            type="submit"
-            bsStyle="success"
-            bsSize="small"
-            title={submitting ? <Loading /> : <SaveButtonTitle />}
-            pullRight
-          >
-            <MenuItem eventKey={1} onClick={handleDelete} disabled={!uuid}>
-              <Fa name="ban" />{' '}
-              <FormattedMessage id="button.delete" defaultMessage="Delete" />
-            </MenuItem>
-          </SplitButton>
-        </ButtonToolbar>
-      </div>
-
-      <hr />
-
-      <FlashMessages />
-
-      <Row>
-        <Col xs={12} sm={6}>
-          <FormGroup controlId="uxName">
-            <ControlLabel>Name</ControlLabel>
-            <FormControl
-              name="name"
-              type="text"
-              required
-              onChange={handleInputChange}
-              value={name}
-            />
-          </FormGroup>
-          <FormGroup controlId="uxLocation">
-            <ControlLabel>
-              <FormattedMessage id="field.location" defaultMessage="Location" />
-            </ControlLabel>
-            <FormControl
-              componentClass="select"
-              name="location"
-              onChange={handleInputChange}
-              required
-              value={location}
+  <div style={styles.spacingTop}>
+    {loading ? (
+      <Loading />
+    ) : (
+      <form onSubmit={handleSubmit}>
+        <div className="clearfix">
+          <ButtonToolbar className="pull-right">
+            <SplitButton
+              id="uxSaveDropdown"
+              type="submit"
+              bsStyle="success"
+              bsSize="small"
+              title={submitting ? <Loading /> : <SaveButtonTitle />}
+              pullRight
             >
-              {locations.map(loc => (
-                <option key={loc.uri} value={loc.uri}>
-                  {loc.name}
-                </option>
-              ))}
-            </FormControl>
-          </FormGroup>
-          <FormGroup controlId="uxPostProcessorType">
-            <ControlLabel>
-              <FormattedMessage
-                id="field.postProcessorType"
-                defaultMessage="Post Processor Type"
+              <MenuItem eventKey={1} onClick={handleDelete} disabled={!uuid}>
+                <Fa name="ban" />{' '}
+                <FormattedMessage id="button.delete" defaultMessage="Delete" />
+              </MenuItem>
+            </SplitButton>
+          </ButtonToolbar>
+        </div>
+
+        <br />
+
+        <Row>
+          <Col xs={12} sm={6}>
+            <FormGroup controlId="uxName">
+              <ControlLabel>Name</ControlLabel>
+              <FormControl
+                name="name"
+                type="text"
+                required
+                onChange={handleInputChange}
+                value={name}
               />
-            </ControlLabel>
-            <FormControl
-              componentClass="select"
-              name="postProcessorType"
-              onChange={handleInputChange}
-              required
-              value={postProcessorType}
-            >
-              {postProcessorTypes.map(ppt => (
-                <option key={ppt.uri} value={ppt.uri}>
-                  {ppt.name}
-                </option>
-              ))}
-            </FormControl>
-          </FormGroup>
-          <FormGroup controlId="uxDuration">
-            <ControlLabel>Duration (seconds)</ControlLabel>
-            <FormControl
-              name="duration"
-              onChange={handleInputChange}
-              required
-              type="number"
-              value={duration}
-            />
-          </FormGroup>
-        </Col>
-        <Col xs={12} sm={6}>
-          {selectedPostProcessorType && (
-            <Panel
-              header={`Post Processor Type: ${selectedPostProcessorType.name}`}
-            >
-              <ListGroup fill>
-                <ListGroupItem style={styles.flexRow}>
-                  <strong>
-                    <FormattedMessage
-                      id="field.description"
-                      defaultMessages="Description"
-                    />
-                  </strong>
-                  <span>{selectedPostProcessorType.description}</span>
-                </ListGroupItem>
-                <ListGroupItem style={styles.flexRow}>
-                  <strong>
-                    <FormattedMessage
-                      id="field.duration"
-                      defaultMessage="Duration"
-                    />
-                  </strong>
-                  <span>
-                    {selectedPostProcessorType.duration ? (
-                      selectedPostProcessorType.duration
-                    ) : (
+            </FormGroup>
+            <FormGroup controlId="uxLocation">
+              <ControlLabel>
+                <FormattedMessage
+                  id="field.location"
+                  defaultMessage="Location"
+                />
+              </ControlLabel>
+              <FormControl
+                componentClass="select"
+                name="location"
+                onChange={handleInputChange}
+                required
+                value={location}
+              >
+                {locations.map(loc => (
+                  <option key={loc.uri} value={loc.uri}>
+                    {loc.name}
+                  </option>
+                ))}
+              </FormControl>
+            </FormGroup>
+            <FormGroup controlId="uxPostProcessorType">
+              <ControlLabel>
+                <FormattedMessage
+                  id="field.postProcessorType"
+                  defaultMessage="Post Processor Type"
+                />
+              </ControlLabel>
+              <FormControl
+                componentClass="select"
+                name="postProcessorType"
+                onChange={handleInputChange}
+                required
+                value={postProcessorType}
+              >
+                {postProcessorTypes.map(ppt => (
+                  <option key={ppt.uri} value={ppt.uri}>
+                    {ppt.name}
+                  </option>
+                ))}
+              </FormControl>
+            </FormGroup>
+            <FormGroup controlId="uxDuration">
+              <ControlLabel>Duration (seconds)</ControlLabel>
+              <FormControl
+                name="duration"
+                onChange={handleInputChange}
+                required
+                type="number"
+                value={duration}
+              />
+            </FormGroup>
+          </Col>
+          <Col xs={12} sm={6}>
+            {selectedPostProcessorType && (
+              <Panel
+                header={`Post Processor Type: ${selectedPostProcessorType.name}`}
+              >
+                <ListGroup fill>
+                  <ListGroupItem style={styles.flexRow}>
+                    <strong>
                       <FormattedMessage
-                        id="notAvailable"
-                        defaultMessage="N/A"
+                        id="field.description"
+                        defaultMessages="Description"
                       />
-                    )}
-                  </span>
-                </ListGroupItem>
-              </ListGroup>
-            </Panel>
-          )}
-        </Col>
-      </Row>
-    </Grid>
-  </form>
+                    </strong>
+                    <span>{selectedPostProcessorType.description}</span>
+                  </ListGroupItem>
+                  <ListGroupItem style={styles.flexRow}>
+                    <strong>
+                      <FormattedMessage
+                        id="field.duration"
+                        defaultMessage="Duration"
+                      />
+                    </strong>
+                    <span>
+                      {selectedPostProcessorType.duration ? (
+                        selectedPostProcessorType.duration
+                      ) : (
+                        <FormattedMessage
+                          id="notAvailable"
+                          defaultMessage="N/A"
+                        />
+                      )}
+                    </span>
+                  </ListGroupItem>
+                </ListGroup>
+              </Panel>
+            )}
+          </Col>
+        </Row>
+      </form>
+    )}
+  </div>
 );
 
 PostProcessorForm.defaultProps = {
@@ -184,6 +186,7 @@ PostProcessorForm.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
   location: PropTypes.string.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   name: PropTypes.string.isRequired,

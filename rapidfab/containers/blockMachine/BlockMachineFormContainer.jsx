@@ -54,7 +54,7 @@ class BlockMachineFormContainer extends Component {
     const response = await (initialValues
       ? dispatch(Actions.Api.wyatt['block-machine'].put(downtime, payload))
       : dispatch(Actions.Api.wyatt['block-machine'].post(payload)));
-    if (response.type === 'RESOURCE_PUT_SUCCESS') {
+    if (response.type === 'RESOURCE_POST_SUCCESS' || response.type === 'RESOURCE_PUT_SUCCESS') {
       handleSelectionChange('none');
     }
   }
@@ -86,7 +86,7 @@ BlockMachineFormContainer.propTypes = {
     finish: PropTypes.string,
     start: PropTypes.string,
   }),
-  machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
+  machineType: PropTypes.oneOf(['post_processor', 'printer']).isRequired,
   machineUri: PropTypes.string.isRequired,
 };
 
