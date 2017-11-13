@@ -94,9 +94,7 @@ class PostProcessorFormContainer extends React.Component {
       post_processor_type: postProcessorType,
     };
     if (uuid) {
-      dispatch(Actions.Api.wyatt['post-processor'].put(uuid, payload)).then(
-        redirect
-      );
+      dispatch(Actions.Api.wyatt['post-processor'].put(uuid, payload));
     } else {
       dispatch(Actions.Api.wyatt['post-processor'].post(payload)).then(
         redirect
@@ -132,7 +130,7 @@ PostProcessorFormContainer.propTypes = {
   postProcessor: PropTypes.shape({
     name: PropTypes.string,
     location: PropTypes.string,
-    postProcessorType: PropTypes.string,
+    post_processor_type: PropTypes.string,
     duration: PropTypes.number,
   }),
   postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
