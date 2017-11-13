@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import { getRouteResource } from 'rapidfab/selectors';
 
-import Printer from 'rapidfab/components/records/Printer';
+import PostProcessor from 'rapidfab/components/records/PostProcessor';
 
-class PrinterContainer extends Component {
+class PostProcessorContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +19,7 @@ class PrinterContainer extends Component {
   componentDidMount() {
     const { dispatch, route } = this.props;
     if (route.uuid) {
-      dispatch(Actions.Api.wyatt.printer.get(route.uuid));
+      dispatch(Actions.Api.wyatt['post-processor'].get(route.uuid));
     }
   }
 
@@ -29,7 +29,7 @@ class PrinterContainer extends Component {
 
   render() {
     return (
-      <Printer
+      <PostProcessor
         {...this.props}
         {...this.state}
         handleSelectTab={this.handleSelectTab}
@@ -38,18 +38,18 @@ class PrinterContainer extends Component {
   }
 }
 
-PrinterContainer.propTypes = {
+PostProcessorContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   route: PropTypes.shape({ uuid: PropTypes.string }).isRequired,
 };
 
 const mapStateToProps = (state, props) => {
-  const printer = getRouteResource(state, props);
-  if (!printer) return {};
+  const postProcessor = getRouteResource(state, props);
+  if (!postProcessor) return {};
   return {
-    uri: printer.uri,
-    name: printer.name,
+    uri: postProcessor.uri,
+    name: postProcessor.name,
   };
 };
 
-export default connect(mapStateToProps)(PrinterContainer);
+export default connect(mapStateToProps)(PostProcessorContainer);

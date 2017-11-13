@@ -86,7 +86,7 @@ BlockMachineFormContainer.propTypes = {
     finish: PropTypes.string,
     start: PropTypes.string,
   }),
-  machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
+  machineType: PropTypes.oneOf(['post_processor', 'printer']).isRequired,
   machineUri: PropTypes.string.isRequired,
 };
 
