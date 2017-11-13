@@ -15,13 +15,24 @@ class PostProcessorFormContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      name: '',
-      loading: true,
-      location: '',
-      postProcessorType: '',
-      duration: '',
-    };
+    const { postProcessor } = this.props;
+    if (postProcessor) {
+      this.state = {
+        name: postProcessor.name,
+        loading: false,
+        location: postProcessor.location,
+        postProcessorType: postProcessor.post_processor_type,
+        duration: postProcessor.duration.toString(),
+      };
+    } else {
+      this.state = {
+        name: '',
+        loading: true,
+        location: '',
+        postProcessorType: '',
+        duration: '',
+      };
+    }
 
     this.handleDelete = this.handleDelete.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -38,15 +49,26 @@ class PostProcessorFormContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { locations, postProcessorTypes } = this.props;
-    if (locations.length === 0 && nextProps.locations.length > 0) {
-      this.setState({ location: nextProps.locations[0].uri });
-    }
-    if (
-      postProcessorTypes.length === 0 &&
-      nextProps.postProcessorTypes.length > 0
-    ) {
-      this.setState({ postProcessorType: nextProps.postProcessorTypes[0].uri });
+    const { locations, postProcessor, postProcessorTypes, uuid } = this.props;
+    if (uuid && !postProcessor && nextProps.postProcessor) {
+      this.setState({
+        duration: nextProps.postProcessor.duration,
+        name: nextProps.postProcessor.name,
+        postProcessorType: nextProps.postProcessor.post_processor_type,
+        location: nextProps.postProcessor.location,
+      });
+    } else {
+      if (locations.length === 0 && nextProps.locations.length > 0) {
+        this.setState({ location: nextProps.locations[0].uri });
+      }
+      if (
+        postProcessorTypes.length === 0 &&
+        nextProps.postProcessorTypes.length > 0
+      ) {
+        this.setState({
+          postProcessorType: nextProps.postProcessorTypes[0].uri,
+        });
+      }
     }
   }
 
@@ -100,12 +122,19 @@ class PostProcessorFormContainer extends React.Component {
 }
 
 PostProcessorFormContainer.defaultProps = {
+  postProcessor: null,
   uuid: null,
 };
 
 PostProcessorFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessor: PropTypes.shape({
+    name: PropTypes.string,
+    location: PropTypes.string,
+    postProcessorType: PropTypes.string,
+    duration: PropTypes.number,
+  }),
   postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
   uuid: PropTypes.string,
 };
@@ -113,6 +142,7 @@ PostProcessorFormContainer.propTypes = {
 const mapStateToProps = (state, props) => ({
   uuid: Selectors.getRoute(state, props).uuid,
   locations: Selectors.getLocations(state),
+  postProcessor: Selectors.getRouteResource(state, props),
   postProcessorTypes: Selectors.getPostProcessorTypes(state),
   submitting:
     state.ui.wyatt['post-processor'].post.fetching ||
