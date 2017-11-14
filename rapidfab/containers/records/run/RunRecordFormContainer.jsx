@@ -22,9 +22,9 @@ class RunRecordFormContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.isFetching && !this.props.isFetching) {
-      const { initialNotes, initialStatus } = this.props;
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isFetching && !nextProps.isFetching) {
+      const { initialNotes, initialStatus } = nextProps;
       this.setState({
         notes: initialNotes,
         status: initialStatus,
