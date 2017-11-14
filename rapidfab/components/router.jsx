@@ -66,7 +66,7 @@ class Router extends Component {
 
 Router.propTypes = {
   routes: PropTypes.object.isRequired,
-  hash: PropTypes.string,
+  hash: PropTypes.string.isRequired,
   onNavigate: PropTypes.func.isRequired,
 };
 
