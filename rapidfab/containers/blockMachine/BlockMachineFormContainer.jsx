@@ -70,11 +70,12 @@ class BlockMachineFormContainer extends Component {
       handleSelectionChange,
       initialValues,
     } = this.props;
+    const { finishDate, finishTime, startDate, startTime } = this.state;
     const payload = {
       description: this.state.description,
       [machineType]: machineUri,
-      finish: this.state.finish,
-      start: this.state.start,
+      finish: moment(`${finishDate} ${finishTime}`).toISOString(),
+      start: moment(`${startDate} ${startTime}`).toISOString(),
     };
     const response = await (initialValues
       ? dispatch(Actions.Api.wyatt['block-machine'].put(downtime, payload))
