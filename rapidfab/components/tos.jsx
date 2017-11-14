@@ -78,7 +78,7 @@ class Tos extends Component {
 
 Tos.propTypes = {
   onAcceptTerms: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({}).isRequired,
 };
 
 export default Tos;
