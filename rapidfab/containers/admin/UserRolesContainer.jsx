@@ -79,7 +79,9 @@ UserRolesContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   isSessionManager: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({
+    username: PropTypes.string,
+  }).isRequired,
   userRoles: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
