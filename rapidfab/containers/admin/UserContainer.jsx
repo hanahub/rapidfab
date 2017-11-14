@@ -17,8 +17,10 @@ class UserContainer extends React.Component {
     this.handleDeleteUser = this.handleDeleteUser.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.uuid !== this.props.uuid) this.setState({ view: 'main' });
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.uuid && nextProps.uuid) {
+      this.setState({ view: 'main' });
+    }
   }
 
   handleDeleteUser() {
@@ -52,7 +54,6 @@ UserContainer.propTypes = {
   isSessionManager: PropTypes.bool.isRequired,
   isSessionUser: PropTypes.bool.isRequired,
   uuid: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
