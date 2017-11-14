@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Actions from 'rapidfab/actions';
 
@@ -12,8 +13,28 @@ class BlockMachineFormContainer extends Component {
 
     this.state = {
       description: props.initialValues ? props.initialValues.description : '',
-      finish: props.initialValues ? props.initialValues.finish : '',
-      start: props.initialValues ? props.initialValues.start : '',
+      finishDate: props.initialValues
+        ? props.initialValues.finishDate
+        : moment()
+            .add(1, 'd')
+            .format('YYYY-MM-DD'),
+      finishTime: props.initialValues
+        ? props.initialValues.finishTime
+        : moment()
+            .minutes(0)
+            .add(2, 'h')
+            .format('HH:mm'),
+      startDate: props.initialValues
+        ? props.initialValues.startDate
+        : moment()
+            .add(1, 'd')
+            .format('YYYY-MM-DD'),
+      startTime: props.initialValues
+        ? props.initialValues.startTime
+        : moment()
+            .minutes(0)
+            .add(1, 'h')
+            .format('HH:mm'),
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,8 +45,10 @@ class BlockMachineFormContainer extends Component {
     if (nextProps.downtime !== this.props.downtime && nextProps.initialValues) {
       this.setState({
         description: nextProps.initialValues.description,
-        finish: nextProps.initialValues.finish,
-        start: nextProps.initialValues.start,
+        finishDate: nextProps.initialValues.finishDate,
+        finishTime: nextProps.initialValues.finishTime,
+        startDate: nextProps.initialValues.startDate,
+        startTime: nextProps.initialValues.startTime,
       });
     }
   }
@@ -45,16 +68,20 @@ class BlockMachineFormContainer extends Component {
       handleSelectionChange,
       initialValues,
     } = this.props;
+    const { finishDate, finishTime, startDate, startTime } = this.state;
     const payload = {
       description: this.state.description,
       [machineType]: machineUri,
-      finish: this.state.finish,
-      start: this.state.start,
+      finish: moment(`${finishDate} ${finishTime}`).toISOString(),
+      start: moment(`${startDate} ${startTime}`).toISOString(),
     };
     const response = await (initialValues
       ? dispatch(Actions.Api.wyatt['block-machine'].put(downtime, payload))
       : dispatch(Actions.Api.wyatt['block-machine'].post(payload)));
-    if (response.type === 'RESOURCE_POST_SUCCESS' || response.type === 'RESOURCE_PUT_SUCCESS') {
+    if (
+      response.type === 'RESOURCE_POST_SUCCESS' ||
+      response.type === 'RESOURCE_PUT_SUCCESS'
+    ) {
       handleSelectionChange('none');
     }
   }
@@ -83,8 +110,10 @@ BlockMachineFormContainer.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
   initialValues: PropTypes.shape({
     description: PropTypes.string,
-    finish: PropTypes.string,
-    start: PropTypes.string,
+    finishDate: PropTypes.string,
+    finishTime: PropTypes.string,
+    startDate: PropTypes.string,
+    startTime: PropTypes.string,
   }),
   machineType: PropTypes.oneOf(['post_processor', 'printer']).isRequired,
   machineUri: PropTypes.string.isRequired,
@@ -95,12 +124,18 @@ const mapStateToProps = (state, ownProps) => ({
     ownProps.downtime && state.resources[ownProps.downtime]
       ? {
           description: state.resources[ownProps.downtime].description,
-          finish: new Date(state.resources[ownProps.downtime].finish)
-            .toISOString()
-            .slice(0, 16),
-          start: new Date(state.resources[ownProps.downtime].start)
-            .toISOString()
-            .slice(0, 16),
+          finishDate: moment(state.resources[ownProps.downtime].finish).format(
+            'YYYY-MM-DD'
+          ),
+          finishTime: moment(state.resources[ownProps.downtime].finish).format(
+            'HH:ss'
+          ),
+          startDate: moment(state.resources[ownProps.downtime].start).format(
+            'YYYY-MM-DD'
+          ),
+          startTime: moment(state.resources[ownProps.downtime].start).format(
+            'HH:ss'
+          ),
         }
       : null,
 });
