@@ -132,7 +132,7 @@ class LineItemEditFormContainer extends Component {
 
 LineItemEditFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  lineItem: PropTypes.object.isRequired,
+  lineItem: PropTypes.shape({}).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

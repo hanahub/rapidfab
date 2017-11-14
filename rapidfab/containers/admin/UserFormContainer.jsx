@@ -112,7 +112,12 @@ UserFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
   roles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  user: PropTypes.object,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    emails: PropTypes.arrayOf(PropTypes.string),
+    username: PropTypes.string,
+    uuid: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = state => ({

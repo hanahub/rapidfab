@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
@@ -57,6 +58,13 @@ const OverwriteWarningModal = ({ show, close, duplicate, submit }) => (
   </BS.Modal>
 );
 
+OverwriteWarningModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  duplicate: PropTypes.func.isRequired,
+  submit: PropTypes.func.isRequired,
+};
+
 const DeleteWarningModal = ({ show, close, name, id, submit }) => (
   <BS.Modal show={show} onHide={close}>
     <BS.Modal.Header closeButton>
@@ -76,6 +84,14 @@ const DeleteWarningModal = ({ show, close, name, id, submit }) => (
     </BS.Modal.Footer>
   </BS.Modal>
 );
+
+DeleteWarningModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  submit: PropTypes.func.isRequired,
+};
 
 class StepFormModal extends Component {
   constructor(props) {
@@ -277,6 +293,14 @@ class StepFormModal extends Component {
     );
   }
 }
+
+StepFormModal.propTypes = {
+  close: PropTypes.func.isRequired,
+  data: PropTypes.shape({}).isRequired,
+  processTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  show: PropTypes.bool.isRequired,
+  submit: PropTypes.func.isRequired,
+};
 
 class Template extends Component {
   constructor(props) {
@@ -664,5 +688,38 @@ class Template extends Component {
     );
   }
 }
+
+Template.defaultProps = {
+  template: null,
+};
+
+Template.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bureau: PropTypes.string.isRequired,
+  fetching: PropTypes.bool.isRequired,
+  fields: PropTypes.shape({
+    name: PropTypes.shape({
+      value: PropTypes.string,
+      initialValue: PropTypes.string,
+    }),
+    id: PropTypes.shape({
+      value: PropTypes.string,
+    }),
+  }).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  processTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  route: PropTypes.shape({
+    uuid: PropTypes.string,
+  }).isRequired,
+  steps: PropTypes.arrayOf(PropTypes.object).isRequired,
+  submitStep: PropTypes.func.isRequired,
+  template: PropTypes.shape({}),
+  values: PropTypes.shape({
+    name: PropTypes.string,
+    uuid: PropTypes.string,
+  }).isRequired,
+};
 
 export default Template;

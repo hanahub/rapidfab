@@ -6,6 +6,7 @@ import Actions from 'rapidfab/actions';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import * as Selectors from 'rapidfab/selectors';
 
+import Loading from 'rapidfab/components/Loading';
 import NewOrder from 'rapidfab/components/records/order/new/NewOrder';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 

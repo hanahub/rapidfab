@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -27,6 +28,10 @@ const ThirdPartyProviderForm = ({ fields }) => (
     </BS.Col>
   </BS.Row>
 );
+
+ThirdPartyProviderForm.propTypes = {
+  fields: PropTypes.shape({}).isRequired,
+};
 
 const ThirdPartyProvider = ({
   fields,
@@ -74,5 +79,13 @@ const ThirdPartyProvider = ({
     </BS.Grid>
   </form>
 );
+
+ThirdPartyProvider.propTypes = {
+  fields: PropTypes.shape({}).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ThirdPartyProvider;
