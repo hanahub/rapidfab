@@ -689,9 +689,13 @@ class Template extends Component {
   }
 }
 
+Template.defaultProps = {
+  template: null,
+};
+
 Template.propTypes = {
   apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
-  bureau: PropTypes.shape({}).isRequired,
+  bureau: PropTypes.string.isRequired,
   fetching: PropTypes.bool.isRequired,
   fields: PropTypes.shape({
     name: PropTypes.shape({
@@ -711,7 +715,7 @@ Template.propTypes = {
   }).isRequired,
   steps: PropTypes.arrayOf(PropTypes.object).isRequired,
   submitStep: PropTypes.func.isRequired,
-  template: PropTypes.shape({}).isRequired,
+  template: PropTypes.shape({}),
   values: PropTypes.shape({
     name: PropTypes.string,
     uuid: PropTypes.string,
