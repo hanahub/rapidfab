@@ -17,26 +17,24 @@ class BlockMachineFormContainer extends Component {
         ? props.initialValues.finishDate
         : moment()
             .add(1, 'd')
-            .add(2, 'h')
             .format('YYYY-MM-DD'),
       finishTime: props.initialValues
         ? props.initialValues.finishTime
         : moment()
-            .add(1, 'd')
+            .minutes(0)
             .add(2, 'h')
-            .format('MM:ss'),
+            .format('HH:mm'),
       startDate: props.initialValues
         ? props.initialValues.startDate
         : moment()
             .add(1, 'd')
-            .add(2, 'h')
             .format('YYYY-MM-DD'),
       startTime: props.initialValues
         ? props.initialValues.startTime
         : moment()
-            .add(1, 'd')
+            .minutes(0)
             .add(1, 'h')
-            .format('MM:ss'),
+            .format('HH:mm'),
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
