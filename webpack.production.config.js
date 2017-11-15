@@ -35,7 +35,7 @@ module.exports = Object.assign(webpackConfig, {
       baseSentryURL: 'https://sentry.authentise.com/api/0',
       organization: 'sentry',
       project: process.env.NODE_ENV === 'production' ? 'prod-rapidfab' : 'dev-rapidfab',
-      apiKey: '67c4a607495a44a3aa8695834fd9bd713063bc6333a342f3b98e08e3a21ade26',
+      apiKey: 'dcc7578cf56a46dd802b8bd3d38419089c4c0ce601914bb7b05ea825afc9087e',
       release: process.env.COMMIT_HASH
     }),
     new webpack.ProvidePlugin({
