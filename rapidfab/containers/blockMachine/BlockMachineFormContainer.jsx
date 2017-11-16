@@ -53,9 +53,26 @@ class BlockMachineFormContainer extends Component {
     }
   }
 
+  getFinish() {
+    const { finishDate, finishTime } = this.state;
+    return moment(`${finishDate} ${finishTime}`);
+  }
+  getStart() {
+    const { startDate, startTime } = this.state;
+    return moment(`${startDate} ${startTime}`);
+  }
+
   handleInputChange(event) {
     const { value, name } = event.target;
     this.setState({ [name]: value });
+  }
+
+  isStartValid() {
+    return moment(this.getStart()).isAfter(moment());
+  }
+
+  isFinishValid() {
+    return this.getFinish().isAfter(this.getStart());
   }
 
   async handleSubmit(event) {
@@ -92,6 +109,8 @@ class BlockMachineFormContainer extends Component {
       <BlockMachineForm
         {...this.state}
         {...this.props}
+        isFinishValid={this.isFinishValid()}
+        isStartValid={this.isStartValid()}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />

@@ -10,6 +10,7 @@ import {
   Form,
   FormControl,
   FormGroup,
+  HelpBlock,
   Row,
 } from 'react-bootstrap';
 
@@ -20,6 +21,8 @@ const BlockMachineForm = ({
   finishTime,
   handleInputChange,
   handleSubmit,
+  isStartValid,
+  isFinishValid,
   initialValues,
   startDate,
   startTime,
@@ -50,7 +53,10 @@ const BlockMachineForm = ({
       <hr />
       <Row>
         <Col sm={12} md={6}>
-          <FormGroup controlId="uxName">
+          <FormGroup
+            controlId="uxName"
+            validationState={isStartValid ? null : 'error'}
+          >
             <ControlLabel>Start Date</ControlLabel>
             <FormControl
               name="startDate"
@@ -62,7 +68,10 @@ const BlockMachineForm = ({
           </FormGroup>
         </Col>
         <Col sm={12} md={6}>
-          <FormGroup controlId="uxName">
+          <FormGroup
+            controlId="uxName"
+            validationState={isStartValid ? null : 'error'}
+          >
             <ControlLabel>Start Time</ControlLabel>
             <FormControl
               name="startTime"
@@ -71,6 +80,14 @@ const BlockMachineForm = ({
               type="time"
               value={startTime}
             />
+            {!isStartValid && (
+              <HelpBlock>
+                <FormattedMessage
+                  id="validateStartTime"
+                  defaultValue="Must begin in the future"
+                />
+              </HelpBlock>
+            )}
           </FormGroup>
         </Col>
       </Row>
@@ -78,7 +95,10 @@ const BlockMachineForm = ({
       <hr />
       <Row>
         <Col sm={12} md={6}>
-          <FormGroup controlId="uxName">
+          <FormGroup
+            controlId="uxName"
+            validationState={isFinishValid ? null : 'error'}
+          >
             <ControlLabel>End Date</ControlLabel>
             <FormControl
               name="finishDate"
@@ -90,7 +110,10 @@ const BlockMachineForm = ({
           </FormGroup>
         </Col>
         <Col sm={12} md={6}>
-          <FormGroup controlId="uxName">
+          <FormGroup
+            controlId="uxName"
+            validationState={isFinishValid ? null : 'error'}
+          >
             <ControlLabel>End Time</ControlLabel>
             <FormControl
               name="finishTime"
@@ -99,13 +122,21 @@ const BlockMachineForm = ({
               type="time"
               value={finishTime}
             />
+            {!isFinishValid && (
+              <HelpBlock>
+                <FormattedMessage
+                  id="validateFinishTime"
+                  defaultMessage="Must begin after the start time"
+                />
+              </HelpBlock>
+            )}
           </FormGroup>
         </Col>
       </Row>
 
       <hr />
 
-      <Button block type="submit">
+      <Button block disabled={!isFinishValid || !isStartValid} type="submit">
         {downtime ? 'Update Downtime' : 'Create New Downtime'}
       </Button>
     </Form>

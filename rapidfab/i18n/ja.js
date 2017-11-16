@@ -21,6 +21,9 @@ export default {
   "start": "Start",
   "supportUsed": "Support Used",
 
+  "validateStartTime": "Must begin in the future",
+  "validateFinishTime": "Must begin in after the start time",
+
   "downloading": "ダウンロードしています...",
 
   "events.model": "Model Changes ({num})",
