@@ -71,18 +71,14 @@ function mapStateToProps(state) {
     apiErrors: _.concat(
       order.list.errors,
       run.list.errors,
-      location.list.errors,
-      orderLocation.errors
+      location.list.errors
     ),
     data: {
       runStatus: filteredRuns || Selectors.getRunStatusChartData(state),
       lastTenOrders: filteredOrders || Selectors.getLastTenOrders(state),
     },
-    fetching:
-      order.list.fetching ||
-      run.list.fetching ||
-      location.list.fetching ||
-      orderLocation.fetching,
+    fetchingOrders: order.list.fetching,
+    fetchingRuns: run.list.fetching,
     locationFilter,
     locations: Selectors.getLocations(state),
   };
