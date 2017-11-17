@@ -85,11 +85,7 @@ class Chart extends Component {
   }
 
   render() {
-    return (
-      <BS.Panel header={this.props.title}>
-        <canvas ref="chart" height="300" width="600" />
-      </BS.Panel>
-    );
+    return <canvas ref="chart" height="300" width="600" />;
   }
 }
 

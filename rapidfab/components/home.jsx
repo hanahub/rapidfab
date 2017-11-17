@@ -12,6 +12,7 @@ import Grid, {
   DateTimeColumn,
 } from 'rapidfab/components/grid';
 
+import Loading from 'rapidfab/components/Loading';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 
 const panelBodyStyle = {
@@ -20,46 +21,44 @@ const panelBodyStyle = {
 };
 
 const LastTenOrders = ({ data }) => (
-  <BS.Panel header="Orders">
-    <div style={panelBodyStyle} fill>
-      <Grid
-        data={data}
-        columns={['id', 'name', 'status', 'created']}
-        columnMeta={[
-          {
-            displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-            columnName: 'id',
-            customComponent: IdColumn('order'),
-            locked: true,
-          },
-          {
-            columnName: 'name',
-            displayName: (
-              <FormattedMessage id="field.name" defaultMessage="Name" />
-            ),
-          },
-          {
-            customComponent: MappedColumn('status', ORDER_STATUS_MAP),
-            columnName: 'status',
-            displayName: (
-              <FormattedMessage id="field.status" defaultMessage="Status" />
-            ),
-          },
-          {
-            customComponent: DateTimeColumn,
-            columnName: 'created',
-            displayName: (
-              <FormattedMessage id="field.created" defaultMessage="Created" />
-            ),
-          },
-        ]}
-      />
-    </div>
-  </BS.Panel>
+  <div style={panelBodyStyle} fill>
+    <Grid
+      data={data}
+      columns={['id', 'name', 'status', 'created']}
+      columnMeta={[
+        {
+          displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+          columnName: 'id',
+          customComponent: IdColumn('order'),
+          locked: true,
+        },
+        {
+          columnName: 'name',
+          displayName: (
+            <FormattedMessage id="field.name" defaultMessage="Name" />
+          ),
+        },
+        {
+          customComponent: MappedColumn('status', ORDER_STATUS_MAP),
+          columnName: 'status',
+          displayName: (
+            <FormattedMessage id="field.status" defaultMessage="Status" />
+          ),
+        },
+        {
+          customComponent: DateTimeColumn,
+          columnName: 'created',
+          displayName: (
+            <FormattedMessage id="field.created" defaultMessage="Created" />
+          ),
+        },
+      ]}
+    />
+  </div>
 );
 
 LastTenOrders.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const RunsByStatusChart = ({ data }) => {
@@ -85,7 +84,6 @@ const RunsByStatusChart = ({ data }) => {
   ];
   return (
     <Chart
-      title="Run Status"
       type="bar"
       data={{
         labels: [
@@ -108,11 +106,12 @@ const RunsByStatusChart = ({ data }) => {
 };
 
 RunsByStatusChart.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.arrayOf(PropTypes.num).isRequired,
 };
 
 const Home = ({
-  fetching,
+  fetchingOrders,
+  fetchingRuns,
   apiErrors,
   data,
   locationFilter,
@@ -157,36 +156,42 @@ const Home = ({
       </BS.Col>
     </BS.Row>
 
-    {(() => {
-      if (fetching) {
-        return (
-          <BS.Row>
-            <BS.Col xs={12}>
-              <div style={{ textAlign: 'center' }}>
-                <Fa name="spinner" spin size="2x" />
-              </div>
-            </BS.Col>
-          </BS.Row>
-        );
-      }
-      return (
-        <BS.Row>
-          <BS.Col md={6}>
+    <BS.Row>
+      <BS.Col md={6}>
+        <BS.Panel header="Orders">
+          {fetchingOrders ? (
+            <Loading />
+          ) : (
             <LastTenOrders data={data.lastTenOrders} />
-          </BS.Col>
-          <BS.Col md={6}>
+          )}
+        </BS.Panel>
+      </BS.Col>
+      <BS.Col md={6}>
+        <BS.Panel header="Run Status">
+          {fetchingRuns ? (
+            <Loading />
+          ) : (
             <RunsByStatusChart data={data.runStatus} />
-          </BS.Col>
-        </BS.Row>
-      );
-    })()}
+          )}
+        </BS.Panel>
+      </BS.Col>
+    </BS.Row>
   </BS.Grid>
 );
 
+Home.defaultProps = {
+  locationFilter: null,
+};
+
 Home.propTypes = {
-  data: PropTypes.object.isRequired,
-  fetching: PropTypes.bool.isRequired,
+  data: PropTypes.shape({
+    lastTenOrders: PropTypes.arrayOf(PropTypes.object),
+    runStatus: PropTypes.arrayOf(PropTypes.num),
+  }).isRequired,
+  fetchingOrders: PropTypes.bool.isRequired,
+  fetchingRuns: PropTypes.bool.isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  locationFilter: PropTypes.string,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleOnChange: PropTypes.func.isRequired,
 };
