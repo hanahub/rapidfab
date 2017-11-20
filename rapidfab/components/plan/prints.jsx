@@ -9,6 +9,7 @@ import Griddle, {
   MappedColumn,
   DateColumn,
 } from 'rapidfab/components/grid';
+import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
@@ -70,19 +71,20 @@ PrintsGrid.propTypes = {
   ).isRequired,
 };
 
-const Prints = ({ gridData, locations, handleOnChange }) => {
+const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
   const breadcrumbs = ['prints'];
   return (
     <Grid fluid className="container">
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
       <Locations locations={locations} handleOnChange={handleOnChange} />
       <hr />
-      <PrintsGrid gridData={gridData} />
+      {fetching ? <Loading /> : <PrintsGrid gridData={gridData} />}
     </Grid>
   );
 };
 
 Prints.propTypes = {
+  fetching: PropTypes.bool.isRequired,
   gridData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,

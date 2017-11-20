@@ -49,12 +49,6 @@ function mapStateToProps(state) {
     machines: filteredMachines || machines,
     locations: Selectors.getLocations(state),
     locationFilter,
-    fetching:
-      blockMachine.fetching ||
-      run.list.fetching ||
-      printer.list.fetching ||
-      postProcessor.list.fetching ||
-      location.list.fetching,
     apiErrors: _.concat(
       blockMachine.errors,
       run.list.errors,

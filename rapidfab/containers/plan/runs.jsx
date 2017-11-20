@@ -44,7 +44,7 @@ function mapStateToProps(state) {
     runs: filteredRuns || runs,
     locations: Selectors.getLocations(state),
     locationFilter,
-    fetching: run.list.fetching || location.list.fetching,
+    fetching: run.list.count === 0 || (run.list.count === 1 && run.list.fetching),
     apiErrors: run.list.errors || location.list.errors,
   };
 }

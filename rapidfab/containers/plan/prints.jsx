@@ -14,11 +14,12 @@ class PrintsContainer extends Component {
   }
 
   render() {
-    const { gridData, locations, handleOnChange } = this.props;
+    const { fetching, gridData, locations, handleOnChange } = this.props;
     return (
       <div>
         <FlashMessages />
         <PrintsComponent
+          fetching={fetching}
           gridData={gridData}
           locations={locations}
           handleOnChange={handleOnChange}
@@ -43,6 +44,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
+  const printApi = state.ui.wyatt.print.list;
   const orders = Selectors.getOrders(state);
   const allPrints = Selectors.getPrints(state);
   const printProcessSteps = Selectors.getProcessSteps(state).filter(step =>
@@ -72,6 +74,7 @@ function mapStateToProps(state) {
   });
 
   return {
+    fetching: printApi.count === 0 || (printApi.count === 1 && printApi.fetching),
     gridData,
     locations: Selectors.getLocations(state),
   };
