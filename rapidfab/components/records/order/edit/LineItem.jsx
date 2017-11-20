@@ -329,9 +329,13 @@ const mapStateToProps = (state, ownProps) => {
   return { currency, lineItem, prints, snapshot };
 };
 
+LineItem.defaultProps = {
+  lineItem: null,
+};
+
 LineItem.propTypes = {
   currency: PropTypes.string.isRequired,
-  lineItem: PropTypes.object.isRequired,
+  lineItem: PropTypes.object,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
   snapshot: PropTypes.string.isRequired,
 };

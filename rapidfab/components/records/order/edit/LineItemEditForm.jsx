@@ -269,6 +269,7 @@ const LineItemEditForm = ({
 };
 
 LineItemEditForm.defaultProps = {
+  notes: null,
   supportMaterial: null,
   template: null,
   thirdPartyProvider: null,
@@ -282,7 +283,7 @@ LineItemEditForm.propTypes = {
   baseMaterial: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
-  notes: PropTypes.string.isRequired,
+  notes: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
