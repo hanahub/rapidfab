@@ -18,7 +18,7 @@ const LineItems = ({ lineItems }) => (
 );
 
 LineItems.propTypes = {
-  lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+  lineItems: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const EditOrder = ({ order = {} }) => {
