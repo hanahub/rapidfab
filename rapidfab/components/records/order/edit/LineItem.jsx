@@ -349,7 +349,7 @@ LineItem.defaultProps = {
 
 LineItem.propTypes = {
   currency: PropTypes.string.isRequired,
-  lineItem: PropTypes.object,
+  lineItem: PropTypes.shape({}),
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
   snapshot: PropTypes.string.isRequired,
 };
