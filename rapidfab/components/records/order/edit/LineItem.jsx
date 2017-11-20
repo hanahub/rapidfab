@@ -151,10 +151,17 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.materials.base === null ? (
-                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                ) : (
-                  <FormattedVolume value={estimates.materials.base} />
+                {estimates.materials && (
+                  <div>
+                    {estimates.materials.base === null ? (
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    ) : (
+                      <FormattedVolume value={estimates.materials.base} />
+                    )}
+                  </div>
                 )}
               </Col>
             </Row>
@@ -169,10 +176,17 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.materials.support === null ? (
-                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-                ) : (
-                  <FormattedVolume value={estimates.materials.support} />
+                {estimates.materials && (
+                  <div>
+                    {estimates.materials.support === null ? (
+                      <FormattedMessage
+                        id="notAvailable"
+                        defaultMessage="N/A"
+                      />
+                    ) : (
+                      <FormattedVolume value={estimates.materials.support} />
+                    )}
+                  </div>
                 )}
               </Col>
             </Row>
@@ -329,9 +343,13 @@ const mapStateToProps = (state, ownProps) => {
   return { currency, lineItem, prints, snapshot };
 };
 
+LineItem.defaultProps = {
+  lineItem: null,
+};
+
 LineItem.propTypes = {
   currency: PropTypes.string.isRequired,
-  lineItem: PropTypes.object.isRequired,
+  lineItem: PropTypes.shape({}),
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
   snapshot: PropTypes.string.isRequired,
 };
