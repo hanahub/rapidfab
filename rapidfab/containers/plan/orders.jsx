@@ -26,7 +26,6 @@ function mapDispatchToProps(dispatch) {
     onInitialize: bureau => {
       dispatch(Actions.OrderLocation.getOrderLocations());
       dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt.material.list({ bureau }));
       dispatch(Actions.Api.wyatt.order.list());
     },
     handleOnChange: location => {
@@ -36,9 +35,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { order: orderApi, material } = state.ui.wyatt;
+  const { list: orderApi } = state.ui.wyatt.order;
   const orderLocation = Selectors.getOrderLocations(state);
-  const orders = Selectors.getOrders(state);
+  const stateOrders = Selectors.getOrders(state);
   let locationFilter = Selectors.getLocationFilter(state);
   let filteredOrders = null;
   if (locationFilter) {
@@ -52,28 +51,21 @@ function mapStateToProps(state) {
     if (ordersForMyLocation.length > 0) {
       ordersForMyLocation = ordersForMyLocation[0].orders;
       filteredOrders = _.filter(
-        orders,
+        stateOrders,
         order => _.indexOf(ordersForMyLocation, order.uri) >= 0
       );
     } else {
       filteredOrders = [];
     }
   }
+  const orders = filteredOrders || Selectors.getOrders(state);
   return {
     bureau: Selectors.getBureauUri(state),
-    orders: filteredOrders || Selectors.getOrders(state),
-    materials: Selectors.getMaterials(state),
+    fetching: orderApi.count === 0 || (orderApi.count === 1 && orderApi.fetching),
+    orders: orders,
     locationFilter,
     locations: Selectors.getLocations(state),
-    fetching:
-      material.list.fetching ||
-      orderApi.list.fetching ||
-      orderLocation.fetching,
-    apiErrors: _.concat(
-      orderApi.list.errors,
-      material.list.errors,
-      orderLocation.errors
-    ),
+    apiErrors: _.concat( orderApi.errors ),
   };
 }
 
