@@ -13,6 +13,8 @@ const styles = {
 };
 
 const LanguageFlagMap = {
+  dk: 'dk',
+  de: 'de',
   'en-US': 'us',
   ja: 'jp',
 };
@@ -113,6 +115,26 @@ const NavProfile = ({
         </BS.MenuItem>
         <BS.MenuItem
           eventKey={2.2}
+          onClick={() => onChangeLocale(locale, 'de')}
+        >
+          <Fa
+            name="check"
+            style={{ visibility: flag === 'de' ? null : 'hidden' }}
+          />{' '}
+          <Flag type="de" /> German
+        </BS.MenuItem>
+        <BS.MenuItem
+          eventKey={2.3}
+          onClick={() => onChangeLocale(locale, 'da')}
+        >
+          <Fa
+            name="check"
+            style={{ visibility: flag === 'dk' ? null : 'hidden' }}
+          />{' '}
+          <Flag type="dk" /> Danish
+        </BS.MenuItem>
+        <BS.MenuItem
+          eventKey={2.4}
           onClick={() => onChangeLocale(locale, 'ja')}
         >
           <Fa
