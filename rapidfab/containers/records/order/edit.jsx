@@ -69,9 +69,9 @@ function mapStateToProps(state, props) {
 OrderContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
-  route: PropTypes.object.isRequired,
-  order: PropTypes.object.isRequired,
-  routeUUID: PropTypes.string.isRequired,
+  route: PropTypes.shape({}).isRequired,
+  order: PropTypes.shape({}).isRequired,
+  routeUUID: PropTypes.shape({}).isRequired,
 };
 
 export default connect(mapStateToProps)(OrderContainer);

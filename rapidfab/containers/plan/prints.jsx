@@ -81,6 +81,7 @@ function mapStateToProps(state) {
   };
 }
 PrintsContainer.propTypes = {
+  fetching: PropTypes.bool.isRequired,
   gridData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
