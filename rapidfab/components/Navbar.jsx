@@ -13,7 +13,7 @@ const styles = {
 };
 
 const LanguageFlagMap = {
-  dk: 'dk',
+  da: 'dk',
   de: 'de',
   'en-US': 'us',
   ja: 'jp',
