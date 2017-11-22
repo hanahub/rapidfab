@@ -61,11 +61,12 @@ function mapStateToProps(state) {
   const orders = filteredOrders || Selectors.getOrders(state);
   return {
     bureau: Selectors.getBureauUri(state),
-    fetching: orderApi.count === 0 || (orderApi.count === 1 && orderApi.fetching),
-    orders: orders,
+    fetching:
+      orderApi.count === 0 || (orderApi.count === 1 && orderApi.fetching),
+    orders,
     locationFilter,
     locations: Selectors.getLocations(state),
-    apiErrors: _.concat( orderApi.errors ),
+    apiErrors: _.concat(orderApi.errors),
   };
 }
 

@@ -74,7 +74,8 @@ function mapStateToProps(state) {
   });
 
   return {
-    fetching: printApi.count === 0 || (printApi.count === 1 && printApi.fetching),
+    fetching:
+      printApi.count === 0 || (printApi.count === 1 && printApi.fetching),
     gridData,
     locations: Selectors.getLocations(state),
   };
