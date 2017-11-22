@@ -13,6 +13,8 @@ class Queues extends Component {
     this.fetchEvents = this.fetchEvents.bind(this);
   }
 
+  // jQuery is undefined because it's injected by webpack
+  /* eslint-disable no-undef */
   componentDidMount() {
     jQuery('#scheduler').fullCalendar({
       editable: false,
