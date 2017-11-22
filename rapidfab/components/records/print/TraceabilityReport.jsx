@@ -110,7 +110,7 @@ TraceabilityReport.propTypes = {
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatch: PropTypes.func.isRequired,
   download: PropTypes.string.isRequired,
-  print: PropTypes.object.isRequired,
+  print: PropTypes.shape({}).isRequired,
 };
 
 export default connect(mapStateToProps)(TraceabilityReport);

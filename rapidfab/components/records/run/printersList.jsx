@@ -53,9 +53,9 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
 PrinterItem.defaultProps = { modelers: [] };
 
 PrinterItem.propTypes = {
-  printer: PropTypes.object.isRequired,
-  modelers: PropTypes.arrayOf(PropTypes.object),
-  selected: PropTypes.object.isRequired,
+  printer: PropTypes.shape({}).isRequired,
+  modelers: PropTypes.arrayOf(PropTypes.shape({})),
+  selected: PropTypes.shape({}).isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 
@@ -94,7 +94,7 @@ PrintersList.defaultProps = {
 PrintersList.propTypes = {
   printers: PropTypes.arrayOf(PropTypes.object).isRequired,
   modelers: PropTypes.arrayOf(PropTypes.object),
-  selected: PropTypes.object.isRequired,
+  selected: PropTypes.shape({}).isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

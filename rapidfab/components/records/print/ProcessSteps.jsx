@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'rapidfab/i18n';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
@@ -44,7 +45,14 @@ const ProcessStep = ({ step }) => (
   </ListGroupItem>
 );
 
-const ProcessSteps = ({ processSteps = [] }) => (
+ProcessStep.propTypes = {
+  step: PropTypes.shape({
+    id: PropTypes.string,
+    status: PropTypes.string,
+  }).isRequired,
+};
+
+const ProcessSteps = ({ processSteps }) => (
   <Panel header={ProcessStepHeader(processSteps)} bsStyle="primary">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -66,5 +74,9 @@ const ProcessSteps = ({ processSteps = [] }) => (
     </ListGroup>
   </Panel>
 );
+
+ProcessSteps.propTypes = {
+  processSteps: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ProcessSteps;
