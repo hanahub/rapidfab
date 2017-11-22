@@ -8,7 +8,7 @@ import * as Selectors from 'rapidfab/selectors';
 
 class OrdersContainer extends Component {
   componentWillMount() {
-    this.props.onInitialize(this.props.bureau);
+    this.props.onInitialize();
   }
 
   render() {
@@ -17,13 +17,12 @@ class OrdersContainer extends Component {
 }
 
 OrdersContainer.propTypes = {
-  bureau: PropTypes.string.isRequired,
   onInitialize: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    onInitialize: bureau => {
+    onInitialize: () => {
       dispatch(Actions.OrderLocation.getOrderLocations());
       dispatch(Actions.Api.wyatt.location.list());
       dispatch(Actions.Api.wyatt.order.list());
@@ -60,7 +59,6 @@ function mapStateToProps(state) {
   }
   const orders = filteredOrders || Selectors.getOrders(state);
   return {
-    bureau: Selectors.getBureauUri(state),
     fetching:
       orderApi.count === 0 || (orderApi.count === 1 && orderApi.fetching),
     orders,
