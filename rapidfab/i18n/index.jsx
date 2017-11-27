@@ -2,11 +2,17 @@ import React, { PropTypes } from 'react';
 
 import * as ReactIntl from 'react-intl';
 
+import daLocaleData from 'react-intl/locale-data/da';
+import deLocaleData from 'react-intl/locale-data/de';
 import enLocaleData from 'react-intl/locale-data/en';
 import jaLocaleData from 'react-intl/locale-data/ja';
+import daMessages from 'rapidfab/i18n/da.js';
+import deMessages from 'rapidfab/i18n/de.js';
 import enUSMessages from 'rapidfab/i18n/en-US';
 import jaMessages from 'rapidfab/i18n/ja';
 
+ReactIntl.addLocaleData(daLocaleData);
+ReactIntl.addLocaleData(deLocaleData);
 ReactIntl.addLocaleData(enLocaleData);
 ReactIntl.addLocaleData(jaLocaleData);
 
@@ -56,6 +62,14 @@ FormattedCost.propTypes = {
 };
 
 export default {
+  da: {
+    localeData: daLocaleData,
+    messages: daMessages,
+  },
+  de: {
+    localeData: deLocaleData,
+    messages: deMessages,
+  },
   'en-US': {
     localeData: enLocaleData,
     messages: enUSMessages,
