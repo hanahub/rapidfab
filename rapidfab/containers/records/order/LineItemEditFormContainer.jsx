@@ -116,24 +116,36 @@ class LineItemEditFormContainer extends Component {
       state,
     } = this;
 
+    const baseMaterialColor = this.props.baseMaterials.find(
+      material => material.uri === this.state.baseMaterial
+    ).color;
+    const supportMaterial = this.props.supportMaterials.find(
+      material => material.uri === this.state.supportMaterial
+    );
+    const supportMaterialColor = supportMaterial ? supportMaterial.color : null;
+
     return (
       <LineItemEditForm
         {...props}
         {...state}
+        baseMaterialColor={baseMaterialColor}
         handleFileChange={handleFileChange}
         handleInputChange={handleInputChange}
         handleModelDownload={handleModelDownload}
         onDelete={onDelete}
         onSubmit={onSubmit}
+        supportMaterialColor={supportMaterialColor}
       />
     );
   }
 }
 
 LineItemEditFormContainer.propTypes = {
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatch: PropTypes.func.isRequired,
   lineItem: PropTypes.shape({}).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => {
