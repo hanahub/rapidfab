@@ -41,8 +41,10 @@ const extractResourceType = uri => {
 };
 
 const isResourceValue = value => {
+  /* eslint-disable no-useless-escape */
   const uriPattern = /^(?:[^\/]+?)\/\/(?:[^\/]+?)\/(?:[^\/]+?)\/(?:[^\/]+?)(?:\/(?=$))?$/;
   return uriPattern.test(value);
+  /* eslint-enable no-useless-escape */
 };
 
 const EventName = ({ name }) => {
@@ -52,9 +54,13 @@ const EventName = ({ name }) => {
   return <span>{name}</span>;
 };
 
+EventName.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
 const EventUser = connect((state, ownProps) => {
   const user = Selectors.getUsers(state).find(
-    user => user.uri === ownProps.userURI
+    stateUser => stateUser.uri === ownProps.userURI
   );
   return { user };
 })(({ user }) => {
@@ -67,10 +73,10 @@ const ResourceValue = connect((state, ownProps) => {
   return { resource };
 })(({ resource, uri }) => {
   if (resource && resource.name) {
-    const { name, snapshot_content } = resource;
-    if (snapshot_content) {
+    const { name, snapshot_content: snapshotContent } = resource;
+    if (snapshotContent) {
       return (
-        <a href={snapshot_content} target="_blank">
+        <a href={snapshotContent} target="_blank">
           {name}
         </a>
       );

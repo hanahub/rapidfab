@@ -196,8 +196,10 @@ class NewOrder extends Component {
 
         return dispatch(Actions.Api.wyatt['line-item'].post(payload));
       });
-      Promise.all(lineItemsPosts).then(responses => {
-        const lineItemUris = responses.map(response => response.payload.uri);
+      Promise.all(lineItemsPosts).then(lineItemResponses => {
+        const lineItemUris = lineItemResponses.map(
+          response => response.payload.uri
+        );
 
         const orderPayload = {
           bureau: bureau.uri,
