@@ -134,66 +134,6 @@ class NewOrder extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleDeleteLineItem(deletedLineItemIndex) {
-    const { lineItems } = this.state;
-
-    const updatedLineItems = lineItems.filter(
-      (lineItem, index) => index !== deletedLineItemIndex
-    );
-
-    this.setState({ lineItems: updatedLineItems });
-  }
-
-  handleLineItemModelChange(lineItemChange) {
-    const { lineItems } = this.state;
-    const { updatedLineItemIndex, model } = lineItemChange;
-
-    const updatedLineItems = lineItems.map((lineItem, index) => {
-      if (index === updatedLineItemIndex) {
-        return Object.assign({}, lineItem, { model });
-      }
-      return lineItem;
-    });
-
-    this.setState({ lineItems: updatedLineItems });
-  }
-
-  handleLineItemChange(lineItemChange) {
-    const { lineItems } = this.state;
-    const { updatedLineItemIndex, name } = lineItemChange;
-    const value = lineItemChange.value === 'none' ? null : lineItemChange.value;
-
-    const updatedLineItems = lineItems.map((lineItem, index) => {
-      if (index === updatedLineItemIndex) {
-        return Object.assign({}, lineItem, { [name]: value });
-      }
-      return lineItem;
-    });
-
-    this.setState({ lineItems: updatedLineItems });
-  }
-
-  onAddLineItem() {
-    const { lineItems } = this.state;
-    const { baseMaterials, supportMaterials, templates } = this.props;
-
-    const initialBaseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
-    const initialSupportMaterial = supportMaterials[0]
-      ? supportMaterials[0].uri
-      : null;
-    const initialTemplate = templates[0] ? templates[0].uri : null;
-
-    const initialLineItemState = {
-      baseMaterial: initialBaseMaterial,
-      itar: false,
-      supportMaterial: initialSupportMaterial,
-      template: initialTemplate,
-    };
-
-    const updatedLineItems = [...lineItems, initialLineItemState];
-    this.setState({ lineItems: updatedLineItems });
-  }
-
   onSubmit(event) {
     event.preventDefault();
 
@@ -296,6 +236,56 @@ class NewOrder extends Component {
         });
       });
     });
+  }
+
+  onAddLineItem() {
+    const { lineItems } = this.state;
+    const { baseMaterials, supportMaterials, templates } = this.props;
+
+    const initialBaseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
+    const initialSupportMaterial = supportMaterials[0]
+      ? supportMaterials[0].uri
+      : null;
+    const initialTemplate = templates[0] ? templates[0].uri : null;
+
+    const initialLineItemState = {
+      baseMaterial: initialBaseMaterial,
+      itar: false,
+      supportMaterial: initialSupportMaterial,
+      template: initialTemplate,
+    };
+
+    const updatedLineItems = [...lineItems, initialLineItemState];
+    this.setState({ lineItems: updatedLineItems });
+  }
+
+  handleLineItemModelChange(lineItemChange) {
+    const { lineItems } = this.state;
+    const { updatedLineItemIndex, model } = lineItemChange;
+
+    const updatedLineItems = lineItems.map((lineItem, index) => {
+      if (index === updatedLineItemIndex) {
+        return Object.assign({}, lineItem, { model });
+      }
+      return lineItem;
+    });
+
+    this.setState({ lineItems: updatedLineItems });
+  }
+
+  handleLineItemChange(lineItemChange) {
+    const { lineItems } = this.state;
+    const { updatedLineItemIndex, name } = lineItemChange;
+    const value = lineItemChange.value === 'none' ? null : lineItemChange.value;
+
+    const updatedLineItems = lineItems.map((lineItem, index) => {
+      if (index === updatedLineItemIndex) {
+        return Object.assign({}, lineItem, { [name]: value });
+      }
+      return lineItem;
+    });
+
+    this.setState({ lineItems: updatedLineItems });
   }
 
   render() {
