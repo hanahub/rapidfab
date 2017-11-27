@@ -325,9 +325,9 @@ NewOrder.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   templates: PropTypes.arrayOf(PropTypes.object).isRequired,
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.shape({}).isRequired,
   dispatch: PropTypes.func.isRequired,
-  orderForm: PropTypes.object.isRequired,
+  orderForm: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => {

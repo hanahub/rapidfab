@@ -99,11 +99,11 @@ const PrintComponent = ({ print, processSteps, order, lineItem, model }) => {
 };
 
 PrintComponent.propTypes = {
-  print: PropTypes.object.isRequired,
+  print: PropTypes.shape({}).isRequired,
   processSteps: PropTypes.arrayOf(PropTypes.object).isRequired,
-  order: PropTypes.object.isRequired,
-  lineItem: PropTypes.object.isRequired,
-  model: PropTypes.object.isRequired,
+  order: PropTypes.shape({}).isRequired,
+  lineItem: PropTypes.shape({}).isRequired,
+  model: PropTypes.shape({}).isRequired,
 };
 
 export default PrintComponent;

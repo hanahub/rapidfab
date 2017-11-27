@@ -146,12 +146,12 @@ const PostProcessorTypeForm = ({
 );
 
 PostProcessorTypeForm.propTypes = {
-  fields: PropTypes.object,
-  handleSubmit: PropTypes.func,
-  onDelete: PropTypes.func,
-  manufacturers: PropTypes.array,
-  materials: PropTypes.array,
-  apiErrors: PropTypes.array,
+  fields: PropTypes.shape({}).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PostProcessorTypeForm;

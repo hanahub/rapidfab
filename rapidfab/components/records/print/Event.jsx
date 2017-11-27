@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PathToRegexp from 'path-to-regexp';
 import FontAwesome from 'react-fontawesome';
@@ -90,9 +91,17 @@ const EventValue = ({ value }) => {
   return <span> {VALUE_MAPPING[value] ? VALUE_MAPPING[value] : value} </span>;
 };
 
+EventValue.propTypes = {
+  value: PropTypes.string.isRequired,
+};
+
 const EventReference = ({ reference }) => {
   const resourceType = extractResourceType(reference);
   return <span> {REFERENCE_MAPPING[resourceType]} </span>;
+};
+
+EventReference.propTypes = {
+  reference: PropTypes.string.isRequired,
 };
 
 const ExpandedContent = ({ event }) => (
@@ -111,6 +120,10 @@ const ExpandedContent = ({ event }) => (
     </Col>
   </Row>
 );
+
+ExpandedContent.propTypes = {
+  event: PropTypes.shape({}).isRequired,
+};
 
 class Event extends Component {
   constructor(props) {
@@ -154,5 +167,9 @@ class Event extends Component {
     );
   }
 }
+
+Event.propTypes = {
+  event: PropTypes.shape({}).isRequired,
+};
 
 export default Event;
