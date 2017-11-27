@@ -69,6 +69,7 @@ const LineItemEditForm = ({
   lineItem,
   notes,
   baseMaterial,
+  baseMaterialColor,
   baseMaterials,
   models,
   onSubmit,
@@ -77,6 +78,7 @@ const LineItemEditForm = ({
   quantity,
   status,
   supportMaterial,
+  supportMaterialColor,
   supportMaterials,
   template,
   templates,
@@ -166,6 +168,18 @@ const LineItemEditForm = ({
           </FormControl>
           <InputGroup.Addon>
             {baseMaterial && (
+              <div
+                style={{
+                  margin: '0 auto',
+                  width: 24,
+                  height: 24,
+                  backgroundColor: baseMaterialColor,
+                }}
+              />
+            )}
+          </InputGroup.Addon>
+          <InputGroup.Addon>
+            {baseMaterialColor && (
               <ResourceLink
                 href={`/#/records/material/${extractUuid(baseMaterial)}`}
               />
@@ -191,6 +205,16 @@ const LineItemEditForm = ({
               </option>
             ))}
           </FormControl>
+          <InputGroup.Addon>
+            <div
+              style={{
+                margin: '0 auto',
+                width: 24,
+                height: 24,
+                backgroundColor: supportMaterialColor || null,
+              }}
+            />
+          </InputGroup.Addon>
           <InputGroup.Addon>
             {supportMaterial && (
               <ResourceLink
@@ -271,6 +295,7 @@ const LineItemEditForm = ({
 LineItemEditForm.defaultProps = {
   notes: null,
   supportMaterial: null,
+  supportMaterialColor: null,
   template: null,
   thirdPartyProvider: null,
 };
@@ -281,6 +306,7 @@ LineItemEditForm.propTypes = {
   handleModelDownload: PropTypes.func.isRequired,
   lineItem: PropTypes.object.isRequired,
   baseMaterial: PropTypes.string.isRequired,
+  baseMaterialColor: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
   notes: PropTypes.string,
@@ -290,6 +316,7 @@ LineItemEditForm.propTypes = {
   quantity: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
   supportMaterial: PropTypes.string,
+  supportMaterialColor: PropTypes.string,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   template: PropTypes.string,
   templates: PropTypes.arrayOf(PropTypes.object).isRequired,
