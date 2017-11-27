@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
+import extractUuid from 'rapidfab/utils/extractUuid';
 import { getRouteUUID, getRouteUUIDResource } from 'rapidfab/selectors';
 
 import RunRecordForm from 'rapidfab/components/records/run/RunRecordForm';
@@ -11,11 +12,26 @@ class RunRecordFormContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    const { initialNotes, initialStatus } = this.props;
+    const {
+      initialNotes,
+      initialStatus,
+      model,
+      postProcessor,
+      printerType,
+      printer,
+    } = this.props;
+
     this.state = {
       notes: initialNotes || null,
       status: initialStatus || null,
     };
+
+    this.handleFetchAssociatedResources({
+      model,
+      postProcessor,
+      printerType,
+      printer,
+    });
 
     this.handleDelete = this.handleDelete.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -24,10 +40,23 @@ class RunRecordFormContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isFetching && !nextProps.isFetching) {
-      const { initialNotes, initialStatus } = nextProps;
+      const {
+        initialNotes,
+        initialStatus,
+        model,
+        postProcessor,
+        printerType,
+        printer,
+      } = nextProps;
       this.setState({
         notes: initialNotes,
         status: initialStatus,
+      });
+      this.handleFetchAssociatedResources({
+        model,
+        postProcessor,
+        printerType,
+        printer,
       });
     }
   }
@@ -38,6 +67,30 @@ class RunRecordFormContainer extends React.Component {
       .then(() => {
         window.location.hash = '#/plan/runs';
       });
+  }
+
+  handleFetchAssociatedResources(resources) {
+    const { dispatch } = this.props;
+    if (resources.model) {
+      dispatch(Actions.Api.hoth.model.get(extractUuid(resources.model)));
+    }
+    if (resources.postProcessor) {
+      dispatch(
+        Actions.Api.wyatt['post-processor'].get(
+          extractUuid(resources.postProcessor)
+        )
+      );
+    }
+    if (resources.printer) {
+      dispatch(Actions.Api.wyatt.printer.get(extractUuid(resources.printer)));
+    }
+    if (resources.printerType) {
+      dispatch(
+        Actions.Api.wyatt['printer-type'].get(
+          extractUuid(resources.printerType)
+        )
+      );
+    }
   }
 
   handleInputChange(event) {
@@ -71,6 +124,10 @@ class RunRecordFormContainer extends React.Component {
 RunRecordFormContainer.defaultProps = {
   initialNotes: null,
   initialStatus: null,
+  model: null,
+  postProcessor: null,
+  printer: null,
+  printerType: null,
   uuid: null,
 };
 
@@ -79,6 +136,10 @@ RunRecordFormContainer.propTypes = {
   initialNotes: PropTypes.string,
   initialStatus: PropTypes.string,
   isFetching: PropTypes.bool.isRequired,
+  model: PropTypes.string,
+  postProcessor: PropTypes.string,
+  printer: PropTypes.string,
+  printerType: PropTypes.string,
   uuid: PropTypes.string,
 };
 
@@ -96,10 +157,22 @@ const mapStateToProps = state => {
           created: run.created,
           initialNotes: run.notes,
           initialStatus: run.status,
-          postProcessor: run.post_processor,
-          printerType: run.printer_type,
-          printer: run.printer,
           model: run.model,
+          modelName: state.resources[extractUuid(run.model)]
+            ? state.resources[extractUuid(run.model)].name
+            : null,
+          postProcessor: run.post_processor,
+          postProcessorName: state.resources[extractUuid(run.post_processor)]
+            ? state.resources[extractUuid(run.post_processor)].name
+            : null,
+          printerType: run.printer_type,
+          printerTypeName: state.resources[extractUuid(run.printer_type)]
+            ? state.resources[extractUuid(run.printer_type)].name
+            : null,
+          printer: run.printer,
+          printerName: state.resources[extractUuid(run.printer)]
+            ? state.resources[extractUuid(run.printer)].name
+            : null,
         }
       : null
   );
