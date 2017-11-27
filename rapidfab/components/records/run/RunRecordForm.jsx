@@ -11,10 +11,10 @@ import {
   SplitButton,
 } from 'react-bootstrap';
 
+import extractUuid from 'rapidfab/utils/extractUuid';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-import ResourceLink from 'rapidfab/components/ResourceLink';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import RunModelDownload from './RunModelDownload';
@@ -50,9 +50,13 @@ const RunRecordForm = ({
   isSaving,
   notes,
   model,
+  modelName,
   postProcessor,
-  printerType,
+  postProcessorName,
   printer,
+  printerName,
+  printerType,
+  printerTypeName,
   status,
   uuid,
 }) => (
@@ -108,25 +112,37 @@ const RunRecordForm = ({
 
     {model ? (
       <InfoRow id="field.model" defaultMessage="Model">
-        <RunModelDownload model={model} run={uuid} />
+        <RunModelDownload model={model} name={modelName} run={uuid} />
       </InfoRow>
     ) : null}
 
     {printer ? (
       <InfoRow id="field.printer" defaultMessage="Printer">
-        <ResourceLink uri={printer} endpoint="printer" />
+        <FormControl.Static>
+          <a href={`/#/records/printer/${extractUuid(printer)}`}>
+            {printerName || printer}
+          </a>
+        </FormControl.Static>
       </InfoRow>
     ) : null}
 
     {printerType ? (
       <InfoRow id="field.printerType" defaultMessage="Printer Type">
-        <ResourceLink uri={printerType} endpoint="printer-type" />
+        <FormControl.Static>
+          <a href={`/#/records/printerType/${extractUuid(printerType)}`}>
+            {printerTypeName || printerType}
+          </a>
+        </FormControl.Static>
       </InfoRow>
     ) : null}
 
     {postProcessor ? (
       <InfoRow id="field.postProcessor" defaultMessage="Post-Processor">
-        <ResourceLink uri={postProcessor} endpoint="post-processor" />
+        <FormControl.Static>
+          <a href={`/#/records/printerType/${extractUuid(postProcessor)}`}>
+            {postProcessorName || postProcessor}
+          </a>
+        </FormControl.Static>
       </InfoRow>
     ) : null}
 
@@ -147,9 +163,13 @@ RunRecordForm.defaultProps = {
   notes: null,
   initialStatus: null,
   model: null,
+  modelName: null,
   postProcessor: null,
+  postProcessorName: null,
   printerType: null,
+  printerTypeName: null,
   printer: null,
+  printerName: null,
   status: null,
   uuid: null,
 };
@@ -164,9 +184,13 @@ RunRecordForm.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
   model: PropTypes.string,
+  modelName: PropTypes.string,
   postProcessor: PropTypes.string,
-  printerType: PropTypes.string,
+  postProcessorName: PropTypes.string,
   printer: PropTypes.string,
+  printerName: PropTypes.string,
+  printerType: PropTypes.string,
+  printerTypeName: PropTypes.string,
   status: PropTypes.string,
   uuid: PropTypes.string,
 };
