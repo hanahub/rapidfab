@@ -55,7 +55,7 @@ const LineItems = ({
   <div>
     {lineItems.map((lineItem, index) => (
       <LineItem
-        key={index}
+        key={lineItem.uri}
         handleDeleteLineItem={handleDeleteLineItem}
         handleLineItemModelChange={handleLineItemModelChange}
         handleLineItemChange={handleLineItemChange}
