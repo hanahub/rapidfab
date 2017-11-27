@@ -15,7 +15,6 @@ import extractUuid from 'rapidfab/utils/extractUuid';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 
-import ResourceLink from 'rapidfab/components/ResourceLink';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import RunModelDownload from './RunModelDownload';
@@ -113,7 +112,7 @@ const RunRecordForm = ({
 
     {model ? (
       <InfoRow id="field.model" defaultMessage="Model">
-        <RunModelDownload model={model} run={uuid} />
+        <RunModelDownload model={model} name={modelName} run={uuid} />
       </InfoRow>
     ) : null}
 
@@ -164,9 +163,13 @@ RunRecordForm.defaultProps = {
   notes: null,
   initialStatus: null,
   model: null,
+  modelName: null,
   postProcessor: null,
+  postProcessorName: null,
   printerType: null,
+  printerTypeName: null,
   printer: null,
+  printerName: null,
   status: null,
   uuid: null,
 };

@@ -6,20 +6,27 @@ import Actions from 'rapidfab/actions';
 
 import { FormattedMessage } from 'rapidfab/i18n';
 
-const RunModelDownload = ({ run, model, handleDownload, isDownloading }) => (
+const RunModelDownload = ({
+  handleDownload,
+  isDownloading,
+  model,
+  name,
+  run,
+}) => (
   <span>
     {isDownloading ? (
       <FormattedMessage id="downloading" defaultMessage="Downloading..." />
     ) : (
-      <a onClick={() => handleDownload(run, model)}>{model} </a>
+      <a onClick={() => handleDownload(run, model)}>{name || model} </a>
     )}
   </span>
 );
 
 RunModelDownload.propTypes = {
+  handleDownload: PropTypes.func.isRequired,
   isDownloading: PropTypes.bool.isRequired,
   model: PropTypes.string.isRequired,
-  handleDownload: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   run: PropTypes.string.isRequired,
 };
 
