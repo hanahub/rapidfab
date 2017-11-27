@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Fa from 'react-fontawesome';
 import { Button, ListGroup, ListGroupItem, Panel } from 'react-bootstrap';
@@ -21,6 +22,13 @@ const OrderDocument = ({ download, name, onDelete, uuid }) => (
   </ListGroupItem>
 );
 
+OrderDocument.propTypes = {
+  download: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
+
 class OrderDocuments extends React.Component {
   constructor(props) {
     super(props);
@@ -32,14 +40,11 @@ class OrderDocuments extends React.Component {
     this.uploadDocument = this.uploadDocument.bind(this);
   }
 
-  async componentDidMount() {
-    try {
-      const { dispatch, orderDocumentUUIDs } = this.props;
-      const orderDocumentResponses = orderDocumentUUIDs.map(uuid =>
-        dispatch(Actions.Api.wyatt['order-document'].get(uuid))
-      );
-      await Promise.all(orderDocumentResponses);
-    } catch (e) {}
+  componentDidMount() {
+    const { dispatch, orderDocumentUUIDs } = this.props;
+    orderDocumentUUIDs.forEach(uuid =>
+      dispatch(Actions.Api.wyatt['order-document'].get(uuid))
+    );
   }
 
   onChange(event) {
@@ -112,6 +117,12 @@ class OrderDocuments extends React.Component {
     );
   }
 }
+
+OrderDocuments.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  orderDocumentUUIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  orderDocuments: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStateToProps = state => {
   const orderResource = state.resources[state.routeUUID];

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PathToRegexp from 'path-to-regexp';
 import FontAwesome from 'react-fontawesome';
@@ -40,8 +41,10 @@ const extractResourceType = uri => {
 };
 
 const isResourceValue = value => {
+  /* eslint-disable no-useless-escape */
   const uriPattern = /^(?:[^\/]+?)\/\/(?:[^\/]+?)\/(?:[^\/]+?)\/(?:[^\/]+?)(?:\/(?=$))?$/;
   return uriPattern.test(value);
+  /* eslint-enable no-useless-escape */
 };
 
 const EventName = ({ name }) => {
@@ -51,9 +54,13 @@ const EventName = ({ name }) => {
   return <span>{name}</span>;
 };
 
+EventName.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
 const EventUser = connect((state, ownProps) => {
   const user = Selectors.getUsers(state).find(
-    user => user.uri === ownProps.userURI
+    stateUser => stateUser.uri === ownProps.userURI
   );
   return { user };
 })(({ user }) => {
@@ -66,10 +73,10 @@ const ResourceValue = connect((state, ownProps) => {
   return { resource };
 })(({ resource, uri }) => {
   if (resource && resource.name) {
-    const { name, snapshot_content } = resource;
-    if (snapshot_content) {
+    const { name, snapshot_content: snapshotContent } = resource;
+    if (snapshotContent) {
       return (
-        <a href={snapshot_content} target="_blank">
+        <a href={snapshotContent} target="_blank">
           {name}
         </a>
       );
@@ -90,9 +97,17 @@ const EventValue = ({ value }) => {
   return <span> {VALUE_MAPPING[value] ? VALUE_MAPPING[value] : value} </span>;
 };
 
+EventValue.propTypes = {
+  value: PropTypes.string.isRequired,
+};
+
 const EventReference = ({ reference }) => {
   const resourceType = extractResourceType(reference);
   return <span> {REFERENCE_MAPPING[resourceType]} </span>;
+};
+
+EventReference.propTypes = {
+  reference: PropTypes.string.isRequired,
 };
 
 const ExpandedContent = ({ event }) => (
@@ -111,6 +126,10 @@ const ExpandedContent = ({ event }) => (
     </Col>
   </Row>
 );
+
+ExpandedContent.propTypes = {
+  event: PropTypes.shape({}).isRequired,
+};
 
 class Event extends Component {
   constructor(props) {
@@ -154,5 +173,9 @@ class Event extends Component {
     );
   }
 }
+
+Event.propTypes = {
+  event: PropTypes.shape({}).isRequired,
+};
 
 export default Event;

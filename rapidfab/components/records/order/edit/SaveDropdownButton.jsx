@@ -48,8 +48,8 @@ const SaveDropdownButton = ({ onSubmit, onDelete }) => (
 );
 
 SaveDropdownButton.propTypes = {
-  onSubmit: PropTypes.func,
-  onDelete: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default SaveDropdownButton;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
@@ -54,6 +55,10 @@ const RunItem = ({ run }) => (
   </ListGroupItem>
 );
 
+RunItem.propTypes = {
+  run: PropTypes.shape({}).isRequired,
+};
+
 class OrderRuns extends Component {
   componentDidMount() {
     const { dispatch, order } = this.props;
@@ -99,8 +104,15 @@ class OrderRuns extends Component {
 }
 
 OrderRuns.defaultProps = {
-  runs: [],
   fetching: true,
+  runs: [],
+};
+
+OrderRuns.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  fetching: PropTypes.bool,
+  order: PropTypes.shape({}).isRequired,
+  runs: PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = state => {

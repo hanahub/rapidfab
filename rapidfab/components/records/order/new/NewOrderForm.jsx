@@ -194,7 +194,7 @@ const NewOrderForm = ({ fields, shippings, users }) => (
 );
 
 NewOrderForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.shape({}).isRequired,
   shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
