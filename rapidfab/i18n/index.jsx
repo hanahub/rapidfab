@@ -6,8 +6,8 @@ import daLocaleData from 'react-intl/locale-data/da';
 import deLocaleData from 'react-intl/locale-data/de';
 import enLocaleData from 'react-intl/locale-data/en';
 import jaLocaleData from 'react-intl/locale-data/ja';
-import daMessages from 'rapidfab/i18n/da.js';
-import deMessages from 'rapidfab/i18n/de.js';
+import daMessages from 'rapidfab/i18n/da';
+import deMessages from 'rapidfab/i18n/de';
 import enUSMessages from 'rapidfab/i18n/en-US';
 import jaMessages from 'rapidfab/i18n/ja';
 
