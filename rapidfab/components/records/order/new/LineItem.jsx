@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
@@ -28,6 +29,12 @@ const FileInput = ({ itar, onFileInputChange, value }) => {
       onChange={onFileInputChange}
     />
   );
+};
+
+FileInput.propTypes = {
+  itar: PropTypes.bool.isRequired,
+  onFileInputChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 const LineItemComponent = ({
@@ -186,6 +193,17 @@ const LineItemComponent = ({
   </FormGroup>
 );
 
+LineItemComponent.propTypes = {
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  lineItem: PropTypes.shape({}).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onFileInputChange: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 class LineItem extends Component {
   constructor(props) {
     super(props);
@@ -251,6 +269,18 @@ class LineItem extends Component {
     );
   }
 }
+
+LineItem.propTypes = {
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleDeleteLineItem: PropTypes.func.isRequired,
+  handleLineItemModelChange: PropTypes.func.isRequired,
+  handleLineItemChange: PropTypes.func.isRequired,
+  index: PropTypes.string.isRequired,
+  lineItem: PropTypes.shape({}).isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStateToProps = state => {
   const materials = Selectors.getMaterials(state);

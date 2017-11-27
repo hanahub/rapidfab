@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Col, Form, Panel } from 'react-bootstrap';
@@ -34,7 +35,9 @@ class OrderSummary extends Component {
   onDelete() {
     this.props
       .dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
-      .then(() => (window.location.hash = '#/plan/orders'));
+      .then(() => {
+        window.location.hash = '#/plan/orders';
+      });
   }
 
   render() {
@@ -61,6 +64,11 @@ class OrderSummary extends Component {
     );
   }
 }
+
+OrderSummary.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  uuid: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = state => ({ uuid: state.routeUUID });
 
