@@ -74,12 +74,14 @@ function mapStateToProps(state) {
   });
 
   return {
-    fetching: printApi.count === 0 || (printApi.count === 1 && printApi.fetching),
+    fetching:
+      printApi.count === 0 || (printApi.count === 1 && printApi.fetching),
     gridData,
     locations: Selectors.getLocations(state),
   };
 }
 PrintsContainer.propTypes = {
+  fetching: PropTypes.bool.isRequired,
   gridData: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,

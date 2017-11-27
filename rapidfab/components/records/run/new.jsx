@@ -219,9 +219,9 @@ Runs.propTypes = {
   onSave: PropTypes.func.isRequired,
   apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
-  pager: PropTypes.object.isRequired,
+  pager: PropTypes.shape({}).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
-  orderNamesMap: PropTypes.object.isRequired,
+  orderNamesMap: PropTypes.shape({}).isRequired,
   onPageChange: PropTypes.func.isRequired,
 };
 

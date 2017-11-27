@@ -51,13 +51,13 @@ class NewOrderContainer extends Component {
 }
 
 NewOrderContainer.propTypes = {
-  bureau: PropTypes.object.isRequired,
+  bureau: PropTypes.shape({}).isRequired,
   fetching: PropTypes.bool.isRequired,
-  model: PropTypes.object.isRequired,
+  model: PropTypes.shape({}).isRequired,
   onInitialize: PropTypes.func.isRequired,
   onSaveOrder: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,
-  uploadModel: PropTypes.object.isRequired,
+  uploadModel: PropTypes.shape({}).isRequired,
 };
 
 function mapDispatchToProps(dispatch) {

@@ -68,11 +68,11 @@ const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
 );
 
 Item.propTypes = {
-  print: PropTypes.object.isRequired,
-  printer: PropTypes.object.isRequired,
+  print: PropTypes.shape({}).isRequired,
+  printer: PropTypes.shape({}).isRequired,
   selected: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
-  orderNamesMap: PropTypes.object.isRequired,
+  orderNamesMap: PropTypes.shape({}).isRequired,
 };
 
 const ActivePrints = ({
@@ -115,11 +115,11 @@ ActivePrints.defaultProps = {
 
 ActivePrints.propTypes = {
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
-  printer: PropTypes.object.isRequired,
+  printer: PropTypes.shape({}).isRequired,
   selected: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSelect: PropTypes.func.isRequired,
   onDeactivate: PropTypes.func.isRequired,
-  orderNamesMap: PropTypes.object.isRequired,
+  orderNamesMap: PropTypes.shape({}).isRequired,
 };
 
 export default ActivePrints;

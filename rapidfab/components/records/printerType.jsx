@@ -133,7 +133,7 @@ const PrinterTypeForm = ({
 );
 
 PrinterTypeForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.shape({}).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   materials: PropTypes.arrayOf(PropTypes.obj),
   manufacturers: PropTypes.arrayOf(PropTypes.obj),

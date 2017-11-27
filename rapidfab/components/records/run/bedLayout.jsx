@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
@@ -66,6 +67,10 @@ const Item = ({ index }) => {
   return <BS.Image src={src} style={style} />;
 };
 
+Item.propTypes = {
+  index: PropTypes.number.isRequired,
+};
+
 const BedLayout = ({ prints }) => (
   <BS.Panel header={<Header />}>
     <div style={layoutStyle}>
@@ -75,5 +80,9 @@ const BedLayout = ({ prints }) => (
     </div>
   </BS.Panel>
 );
+
+BedLayout.propTypes = {
+  prints: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default BedLayout;

@@ -6,7 +6,6 @@ import {
   ButtonToolbar,
   Col,
   FormControl,
-  Label,
   MenuItem,
   Row,
   SplitButton,
@@ -34,6 +33,12 @@ const InfoRow = ({ children, id, message }) => (
     <Col xs={9}>{children}</Col>
   </Row>
 );
+
+InfoRow.propTypes = {
+  children: PropTypes.node.isRequired,
+  id: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+};
 
 const RunRecordForm = ({
   created,
@@ -137,7 +142,7 @@ const RunRecordForm = ({
   </div>
 );
 
-RunRecordForm.propTypes = {
+RunRecordForm.defaultProps = {
   created: null,
   notes: null,
   initialStatus: null,

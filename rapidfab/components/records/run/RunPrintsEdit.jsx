@@ -161,12 +161,13 @@ class RunPrintsEdit extends Component {
 }
 
 RunPrintsEdit.propTypes = {
-  activePrints: PropTypes.arrayOf(PropTypes.object),
+  activePrints: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSave: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
-  pager: PropTypes.object.isRequired,
+  pager: PropTypes.shape({}).isRequired,
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
-  orderNamesMap: PropTypes.object.isRequired,
+  orderNamesMap: PropTypes.shape({}).isRequired,
   onPageChange: PropTypes.func.isRequired,
   runUri: PropTypes.string.isRequired,
 };

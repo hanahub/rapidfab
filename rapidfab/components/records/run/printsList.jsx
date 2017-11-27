@@ -53,10 +53,10 @@ const PrintItem = ({ print, selected, onSelect, orderNamesMap }) => (
 );
 
 PrintItem.propTypes = {
-  print: PropTypes.object.isRequired,
+  print: PropTypes.shape({}).isRequired,
   selected: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
-  orderNamesMap: PropTypes.object.isRequired,
+  orderNamesMap: PropTypes.shape({}).isRequired,
 };
 
 const PrintsList = ({
@@ -109,7 +109,7 @@ PrintsList.propTypes = {
   onActivate: PropTypes.func.isRequired,
   onPageChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
-  orderNamesMap: PropTypes.object.isRequired,
+  orderNamesMap: PropTypes.shape({}).isRequired,
   pager: PropTypes.shape({
     activePage: PropTypes.number,
     items: PropTypes.number,

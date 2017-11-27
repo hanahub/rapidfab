@@ -44,7 +44,7 @@ const SessionProvider = ({
 
 SessionProvider.propTypes = {
   bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currentUser: PropTypes.object.isRequired,
+  currentUser: PropTypes.shape({}).isRequired,
   children: PropTypes.element.isRequired,
   fetching: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -92,14 +92,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-  i18n: PropTypes.object.isRequired,
+  i18n: PropTypes.shape({}).isRequired,
   onAcceptTerms: PropTypes.func.isRequired,
   onChangeLocale: PropTypes.func.isRequired,
   onInitialize: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onNavigate: PropTypes.func.isRequired,
-  session: PropTypes.object.isRequired,
-  routes: PropTypes.object.isRequired,
+  session: PropTypes.shape({}).isRequired,
+  routes: PropTypes.shape({}).isRequired,
   url: PropTypes.shape({ hash: PropTypes.string }).isRequired,
 };
 
