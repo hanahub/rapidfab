@@ -36,14 +36,22 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
-const ProcessStep = ({ step }) => (
-  <ListGroupItem>
-    <Row>
-      <Col xs={6}>{step.id}</Col>
-      <Col xs={6}>{statusMapping[step.status]}</Col>
-    </Row>
-  </ListGroupItem>
-);
+const ProcessStep = ({ step }) => {
+  let name = '';
+  if (step.process_step && step.process_step.name) {
+    name = step.process_step.name;
+  } else if (step.process_step && step.process_step.process_type) {
+    name = step.process_step.process_type.name;
+  }
+  return (
+    <ListGroupItem>
+      <Row>
+        <Col xs={6}>{name}</Col>
+        <Col xs={6}>{statusMapping[step.status]}</Col>
+      </Row>
+    </ListGroupItem>
+  );
+};
 
 ProcessStep.propTypes = {
   step: PropTypes.shape({
@@ -59,7 +67,7 @@ const ProcessSteps = ({ processSteps }) => (
         <Row>
           <Col xs={6}>
             <b>
-              <FormattedMessage id="field.id" defaultMessage="ID" />
+              <FormattedMessage id="field.name" defaultMessage="Name" />
             </b>
           </Col>
           <Col xs={6}>
