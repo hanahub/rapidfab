@@ -46,6 +46,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
+      dispatch(Actions.Api.wyatt['process-step'].list());
+      dispatch(Actions.Api.wyatt['printer-type'].list());
+      dispatch(Actions.Api.wyatt['post-processor-type'].list());
+      dispatch(Actions.Api.wyatt.shipping.list());
       dispatch(Actions.Api.pao.users.list());
       const print = dispatch(Actions.Api.wyatt.print.get(props.uuid));
 
@@ -114,7 +118,21 @@ function mapStateToProps(state, props) {
   const lineItemProcessSteps = lineItem
     ? Selectors.getPrintsForLineItem(state, lineItem)
     : [];
-  const processSteps = lineItemProcessSteps.filter(step => step.copy === copy);
+
+  const processSteps = lineItemProcessSteps
+    .filter(step => step.copy === copy)
+    .map(step => {
+      const processStep = Selectors.getProcessSteps(state).find(
+        pstep => pstep.uri === step.process_step
+      );
+      return Object.assign({}, step, {
+        process_step: Object.assign({}, processStep, {
+          process_type: processStep
+            ? state.resources[extractUuid(processStep.process_type_uri)]
+            : null,
+        }),
+      });
+    });
 
   const fetching =
     state.ui.wyatt.print.get.fetching ||
