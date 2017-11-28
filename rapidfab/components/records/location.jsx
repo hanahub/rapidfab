@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -7,14 +8,7 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const LocationForm = ({
-  fields,
-  bureaus,
-  handleSubmit,
-  onDelete,
-  users,
-  apiErrors,
-}) => (
+const LocationForm = ({ fields, handleSubmit, onDelete, users, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['locations', fields.id.value || 'New']} />
@@ -93,5 +87,13 @@ const LocationForm = ({
     </BS.Grid>
   </form>
 );
+
+LocationForm.propTypes = {
+  fields: PropTypes.shape({}).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default LocationForm;

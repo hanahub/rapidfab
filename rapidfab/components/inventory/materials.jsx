@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
+import Loading from 'rapidfab/components/Loading';
 import Grid, {
   IdColumn,
   BooleanColumn,
@@ -75,11 +77,10 @@ const MaterialsGrid = ({ materials, manufacturers }) => (
   />
 );
 
-const Loading = () => (
-  <div style={{ textAlign: 'center' }}>
-    <Fa name="spinner" spin size="2x" />
-  </div>
-);
+MaterialsGrid.propTypes = {
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
   <BS.Grid fluid>
@@ -121,5 +122,12 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+Materials.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Materials;

@@ -12,7 +12,7 @@ Loading.defaultProps = {
   size: null,
 };
 
-Loading.PropTypes = {
+Loading.propTypes = {
   size: PropTypes.string,
 };
 

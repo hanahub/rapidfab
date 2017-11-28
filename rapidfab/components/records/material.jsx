@@ -147,7 +147,7 @@ const MaterialForm = ({
 );
 
 MaterialForm.propTypes = {
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.shape({}).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,

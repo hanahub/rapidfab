@@ -60,7 +60,7 @@ const ModelThumbnail = ({ snapshot }) => {
 };
 
 ModelThumbnail.propTypes = {
-  snapshot: PropTypes.string,
+  snapshot: PropTypes.string.isRequired,
 };
 
 export default ModelThumbnail;

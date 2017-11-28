@@ -244,7 +244,7 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
 
 EditOrderForm.propTypes = {
   created: PropTypes.string.isRequired,
-  fields: PropTypes.object.isRequired,
+  fields: PropTypes.shape({}).isRequired,
   shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

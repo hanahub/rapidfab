@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
+import Loading from 'rapidfab/components/Loading';
 import Error from 'rapidfab/components/error';
 
 const PostProcessorsGrid = ({
@@ -58,11 +60,11 @@ const PostProcessorsGrid = ({
   />
 );
 
-const Loading = () => (
-  <div style={{ textAlign: 'center' }}>
-    <Fa name="spinner" spin size="2x" />
-  </div>
-);
+PostProcessorsGrid.propTypes = {
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const PostProcessors = ({
   postProcessors,
@@ -114,5 +116,13 @@ const PostProcessors = ({
     </BS.Row>
   </BS.Grid>
 );
+
+PostProcessors.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default PostProcessors;

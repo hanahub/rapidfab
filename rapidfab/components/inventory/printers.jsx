@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -52,6 +53,13 @@ const PrintersGrid = ({ printers, locations, printerTypes, modelers }) => (
   />
 );
 
+PrintersGrid.propTypes = {
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  modelers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const Printers = ({
   printers,
   locations,
@@ -104,5 +112,14 @@ const Printers = ({
     </BS.Row>
   </BS.Grid>
 );
+
+Printers.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  modelers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Printers;

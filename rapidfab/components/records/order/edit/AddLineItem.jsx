@@ -115,9 +115,9 @@ const AddLineItemPresentation = ({
           onChange={handleInputChange}
           value={template}
         >
-          {templates.map(template => (
-            <option key={template.uri} value={template.uri}>
-              {template.name}
+          {templates.map(templateOption => (
+            <option key={templateOption.uri} value={templateOption.uri}>
+              {templateOption.name}
             </option>
           ))}
         </FormControl>
@@ -178,6 +178,22 @@ const AddLineItemPresentation = ({
   </Panel>
 );
 
+AddLineItemPresentation.propTypes = {
+  baseMaterial: PropTypes.string.isRequired,
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleFileChange: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  itar: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  quantity: PropTypes.string.isRequired,
+  supportMaterial: PropTypes.string.isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  template: PropTypes.string.isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+  thirdPartyProvider: PropTypes.string.isRequired,
+};
+
 class AddLineItem extends Component {
   constructor(props) {
     super(props);
@@ -203,18 +219,6 @@ class AddLineItem extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleFileChange(event) {
-    this.setState({ model: event.target.files[0] });
-  }
-
-  handleInputChange(event) {
-    const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const { name } = target;
-
-    this.setState({ [name]: value });
-  }
-
   onSubmit(event) {
     event.preventDefault();
 
@@ -238,7 +242,7 @@ class AddLineItem extends Component {
         support: supportMaterial,
       },
       // notes: PENDING api implementation
-      quantity: parseInt(quantity),
+      quantity: parseInt(quantity, 10),
       template,
       third_party_provider: thirdPartyProvider,
     };
@@ -248,12 +252,12 @@ class AddLineItem extends Component {
     if (itar) {
       dispatch(Actions.Api.wyatt['line-item'].post(payload)).then(response => {
         const newLineItem = response.headers.location;
-        const payload = {
+        const orderPayload = {
           line_items: [...order.line_items, newLineItem],
         };
         const uuid = extractUuid(order.uri);
 
-        return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+        return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
       });
     } else {
       dispatch(
@@ -270,15 +274,27 @@ class AddLineItem extends Component {
           Actions.Api.wyatt['line-item'].post(payload)
         ).then(response => {
           const newLineItem = response.headers.location;
-          const payload = {
+          const orderPayload = {
             line_items: [...order.line_items, newLineItem],
           };
           const uuid = extractUuid(order.uri);
 
-          return dispatch(Actions.Api.wyatt.order.put(uuid, payload));
+          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
         });
       });
     }
+  }
+
+  handleFileChange(event) {
+    this.setState({ model: event.target.files[0] });
+  }
+
+  handleInputChange(event) {
+    const { target } = event;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { name } = target;
+
+    this.setState({ [name]: value });
   }
 
   render() {
@@ -300,6 +316,25 @@ class AddLineItem extends Component {
     );
   }
 }
+
+AddLineItem.propTypes = {
+  baseMaterial: PropTypes.string.isRequired,
+  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bureau: PropTypes.shape({}).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  handleFileChange: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  itar: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  order: PropTypes.shape({}).isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  quantity: PropTypes.string.isRequired,
+  supportMaterial: PropTypes.string.isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  template: PropTypes.string.isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+  thirdPartyProvider: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = state => {
   const bureau = Selectors.getBureau(state);

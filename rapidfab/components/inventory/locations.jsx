@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
@@ -27,6 +28,13 @@ export const ContactColumn = ({ rowData, metadata }) => {
   return <span>{record.username}</span>;
 };
 
+ContactColumn.propTypes = {
+  rowData: PropTypes.shape({
+    phone: PropTypes.string,
+  }).isRequired,
+  metaData: PropTypes.shape({}).isRequired,
+};
+
 export const PhoneColumn = ({ rowData }) => {
   if (!rowData.phone) {
     return (
@@ -36,6 +44,12 @@ export const PhoneColumn = ({ rowData }) => {
     );
   }
   return <span>{rowData.phone}</span>;
+};
+
+PhoneColumn.propTypes = {
+  rowData: PropTypes.shape({
+    phone: PropTypes.string,
+  }).isRequired,
 };
 
 const LocationsGrid = ({ locations, users }) => (
@@ -78,6 +92,11 @@ const LocationsGrid = ({ locations, users }) => (
   />
 );
 
+LocationsGrid.propTypes = {
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const Locations = ({ locations, users, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['locations']} />
@@ -116,5 +135,12 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+Locations.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Locations;
