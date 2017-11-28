@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -35,6 +36,10 @@ const ThirdPartyProvidersGrid = ({ providers }) => (
     ]}
   />
 );
+
+ThirdPartyProvidersGrid.propTypes = {
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const ThirdPartyProviders = ({ providers, fetching, apiErrors }) => (
   <BS.Grid fluid>
@@ -76,5 +81,11 @@ const ThirdPartyProviders = ({ providers, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+ThirdPartyProviders.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  providers: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ThirdPartyProviders;

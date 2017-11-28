@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -38,6 +39,10 @@ const ShippingsGrid = ({ records }) => (
   />
 );
 
+ShippingsGrid.propTypes = {
+  records: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const Shippings = ({ shippings, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['shipping']} />
@@ -74,5 +79,11 @@ const Shippings = ({ shippings, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+Shippings.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Shippings;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
@@ -98,5 +99,13 @@ const ConversionForm = ({
     </BS.Grid>
   </form>
 );
+
+ConversionForm.propTypes = {
+  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fields: PropTypes.shape({}).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ConversionForm;

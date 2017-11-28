@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -132,5 +133,14 @@ const Orders = ({
     </BS.Row>
   </BS.Grid>
 );
+
+Orders.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  handleOnChange: PropTypes.func.isRequired,
+  locationFilter: PropTypes.string.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  orders: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Orders;

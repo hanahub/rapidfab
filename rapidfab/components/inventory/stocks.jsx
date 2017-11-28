@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
+import Loading from 'rapidfab/components/Loading';
 import Grid, {
   IdColumn,
   CapitalizeColumn,
@@ -61,11 +63,11 @@ const StocksGrid = ({ stocks, materials, locations }) => (
   />
 );
 
-const Loading = () => (
-  <div style={{ textAlign: 'center' }}>
-    <Fa name="spinner" spin size="2x" />
-  </div>
-);
+StocksGrid.propTypes = {
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  stocks: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
   <BS.Grid fluid>
@@ -111,5 +113,13 @@ const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+Stocks.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  stocks: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Stocks;

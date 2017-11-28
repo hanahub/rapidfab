@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -26,6 +27,10 @@ const TemplateGrid = ({ records }) => (
     ]}
   />
 );
+
+TemplateGrid.propTypes = {
+  records: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const Templates = ({ templates, fetching, apiErrors }) => (
   <BS.Grid fluid>
@@ -71,5 +76,11 @@ const Templates = ({ templates, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+Templates.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Templates;

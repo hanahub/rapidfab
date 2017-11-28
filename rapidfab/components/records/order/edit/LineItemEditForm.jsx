@@ -27,7 +27,7 @@ const statusOptionsMap = {
 };
 
 const Printable = ({ models, uri, itar }) => {
-  const model = models.find(model => model.uri === uri);
+  const model = models.find(m => m.uri === uri);
   let printable = true;
 
   if (model && model.analyses && !model.analyses.manifold) {
@@ -109,9 +109,9 @@ const LineItemEditForm = ({
         >
           <option value={status}>{ORDER_STATUS_MAP[status]}</option>
           {statusOptions
-            ? statusOptions.map(status => (
-                <option key={status} value={status}>
-                  {ORDER_STATUS_MAP[status]}
+            ? statusOptions.map(statusOption => (
+                <option key={statusOption} value={statusOption}>
+                  {ORDER_STATUS_MAP[statusOption]}
                 </option>
               ))
             : null}
@@ -233,9 +233,9 @@ const LineItemEditForm = ({
             componentClass="select"
             onChange={handleInputChange}
           >
-            {templates.map(template => (
-              <option key={template.uri} value={template.uri}>
-                {template.name}
+            {templates.map(t => (
+              <option key={t.uri} value={t.uri}>
+                {t.name}
               </option>
             ))}
           </FormControl>
@@ -304,7 +304,7 @@ LineItemEditForm.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleModelDownload: PropTypes.func.isRequired,
-  lineItem: PropTypes.object.isRequired,
+  lineItem: PropTypes.shape({}).isRequired,
   baseMaterial: PropTypes.string.isRequired,
   baseMaterialColor: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -117,11 +117,6 @@ function mapStateToProps(state, props) {
     : null;
   const model = lineItem ? models.find(m => m.uri === lineItem.model) : null;
 
-  const copy = print ? print.copy : null;
-  const lineItemProcessSteps = lineItem
-    ? Selectors.getPrintsForLineItem(state, lineItem)
-    : [];
-
   const fetching =
     state.ui.wyatt.print.get.fetching ||
     state.ui.wyatt.print.list.fetching ||

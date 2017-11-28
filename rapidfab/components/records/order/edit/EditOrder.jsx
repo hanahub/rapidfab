@@ -36,7 +36,7 @@ const EditOrder = ({ order = {} }) => {
 };
 
 EditOrder.propTypes = {
-  order: PropTypes.object.isRequired,
+  order: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => ({ order: state.resources[state.routeUUID] });

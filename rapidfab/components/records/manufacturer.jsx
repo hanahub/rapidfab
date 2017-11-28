@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -7,13 +8,7 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const ManufacturerForm = ({
-  fields,
-  bureaus,
-  handleSubmit,
-  onDelete,
-  apiErrors,
-}) => (
+const ManufacturerForm = ({ fields, handleSubmit, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav
@@ -117,5 +112,12 @@ const ManufacturerForm = ({
     </BS.Grid>
   </form>
 );
+
+ManufacturerForm.propTypes = {
+  fields: PropTypes.shape({}).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ManufacturerForm;

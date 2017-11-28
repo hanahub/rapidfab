@@ -82,8 +82,8 @@ const PrinterTypes = ({ printerTypes, manufacturers, fetching }) => (
 );
 
 PrinterTypes.propTypes = {
-  printerTypes: PropTypes.object.isRequired,
-  manufacturers: PropTypes.object.isRequired,
+  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -14,6 +15,13 @@ export const ContactColumn = ({ data }) => (
     <p>{data.phone}</p>
   </div>
 );
+
+ContactColumn.propTypes = {
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 const ManufacturersGrid = ({ records }) => (
   <Grid
@@ -56,6 +64,10 @@ const ManufacturersGrid = ({ records }) => (
   />
 );
 
+ManufacturersGrid.propTypes = {
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['manufacturers']} />
@@ -92,5 +104,11 @@ const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (
     </BS.Row>
   </BS.Grid>
 );
+
+Manufacturers.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Manufacturers;

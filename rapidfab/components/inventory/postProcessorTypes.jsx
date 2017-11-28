@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
@@ -51,6 +52,11 @@ const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) => (
   />
 );
 
+PostProcessorTypesGrid.propTypes = {
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const PostProcessorTypes = ({
   postProcessorTypes,
   fetching,
@@ -101,5 +107,13 @@ const PostProcessorTypes = ({
     </BS.Row>
   </BS.Grid>
 );
+
+PostProcessorTypes.propTypes = {
+  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetching: PropTypes.bool.isRequired,
+  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default PostProcessorTypes;
