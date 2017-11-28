@@ -107,6 +107,9 @@ function mapStateToProps(state, props) {
   const users = Selectors.getUsers(state);
   const bureau = Selectors.getBureau(state);
   const events = Selectors.getEventsForPrint(state, print);
+  const processSteps = print
+    ? Selectors.getProcessStepsForPrint(state, print)
+    : [];
 
   const order = print ? orders.find(o => o.uri === print.order) : null;
   const lineItem = print
@@ -118,21 +121,6 @@ function mapStateToProps(state, props) {
   const lineItemProcessSteps = lineItem
     ? Selectors.getPrintsForLineItem(state, lineItem)
     : [];
-
-  const processSteps = lineItemProcessSteps
-    .filter(step => step.copy === copy)
-    .map(step => {
-      const processStep = Selectors.getProcessSteps(state).find(
-        pstep => pstep.uri === step.process_step
-      );
-      return Object.assign({}, step, {
-        process_step: Object.assign({}, processStep, {
-          process_type: processStep
-            ? state.resources[extractUuid(processStep.process_type_uri)]
-            : null,
-        }),
-      });
-    });
 
   const fetching =
     state.ui.wyatt.print.get.fetching ||

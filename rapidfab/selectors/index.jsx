@@ -809,3 +809,34 @@ export const getQueueEvents = createSelector(
     })),
   ]
 );
+
+export const getProcessStepsForPrint = createSelector(
+  [getPredicate, getLineItems, getPrints, getProcessSteps, getStateResources],
+  (routePrint, lineItems, prints, processSteps, stateResources) => {
+    const lineItem = lineItems.find(li => li.uri === routePrint.line_item);
+    if (!lineItem) {
+      return [];
+    }
+    const lineItemPrints = prints.filter(
+      print => print.line_item === lineItem.uri
+    );
+    return lineItemPrints.reduce((printProcessSteps, print) => {
+      if (print.copy !== routePrint.copy) {
+        return printProcessSteps;
+      }
+      const processStep = processSteps.find(
+        pstep => pstep.uri === print.process_step
+      );
+      return [
+        ...printProcessSteps,
+        Object.assign({}, print, {
+          process_step: Object.assign({}, processStep, {
+            process_type: processStep
+              ? stateResources[extractUuid(processStep.process_type_uri)]
+              : null,
+          }),
+        }),
+      ];
+    }, []);
+  }
+);
