@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'react-bootstrap';
 
-const Errors = ({ errors = [] }) => (
+const Errors = ({ errors }) => (
   <div>
     {errors.map((error, index) => (
       <Alert bsStyle="danger" className="error-alert" key={index}>
@@ -10,5 +11,11 @@ const Errors = ({ errors = [] }) => (
     ))}
   </div>
 );
+
+Errors.defaultProps = { errors: null };
+
+Errors.propTypes = {
+  errors: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default Errors;

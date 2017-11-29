@@ -63,7 +63,7 @@ User.propTypes = {
   handleViewChange: PropTypes.func.isRequired,
   isSessionManager: PropTypes.bool.isRequired,
   isSessionUser: PropTypes.bool.isRequired,
-  user: PropTypes.object.isRequired,
+  user: PropTypes.shape({}).isRequired,
 };
 
 export default User;

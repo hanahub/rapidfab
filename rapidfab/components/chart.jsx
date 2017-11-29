@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import * as BS from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import ChartJS from 'chart.js';
 import { injectIntl } from 'react-intl';
 
@@ -88,5 +88,15 @@ class Chart extends Component {
     return <canvas ref="chart" height="300" width="600" />;
   }
 }
+
+Chart.propTypes = {
+  data: PropTypes.shape({
+    datasets: PropTypes.arrayOf(PropTypes.object),
+    labels: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  intl: PropTypes.shape({}).isRequired,
+  options: PropTypes.shape({}).isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 export default injectIntl(Chart);

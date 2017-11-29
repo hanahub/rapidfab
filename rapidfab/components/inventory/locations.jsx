@@ -32,7 +32,7 @@ ContactColumn.propTypes = {
   rowData: PropTypes.shape({
     phone: PropTypes.string,
   }).isRequired,
-  metaData: PropTypes.shape({}).isRequired,
+  metadata: PropTypes.shape({}).isRequired,
 };
 
 export const PhoneColumn = ({ rowData }) => {

@@ -65,7 +65,7 @@ const ManufacturersGrid = ({ records }) => (
 );
 
 ManufacturersGrid.propTypes = {
-  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  records: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const Manufacturers = ({ manufacturers, fetching, apiErrors }) => (

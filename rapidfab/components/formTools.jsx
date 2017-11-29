@@ -1,10 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 
 export function FormControlTextCareful({ value, onChange }) {
   const safeValue = value == null ? '' : value;
   return <BS.FormControl type="text" value={safeValue} onChange={onChange} />;
 }
+
+FormControlTextCareful.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export function FormControlTextArea({ id, value, onChange }) {
   return (
@@ -16,6 +22,12 @@ export function FormControlTextArea({ id, value, onChange }) {
     />
   );
 }
+
+FormControlTextArea.propTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export function FormControlSelect({ onChange, children, id, value }) {
   return (
@@ -29,3 +41,10 @@ export function FormControlSelect({ onChange, children, id, value }) {
     </BS.FormControl>
   );
 }
+
+FormControlSelect.propTypes = {
+  children: PropTypes.element.isRequired,
+  id: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+};
