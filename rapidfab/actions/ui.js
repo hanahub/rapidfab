@@ -6,3 +6,9 @@ export function clearUIState(paths = []) {
     paths,
   };
 }
+
+export function clearUIErrors() {
+  return {
+    type: Constants.CLEAR_UI_ERRORS,
+  };
+}
