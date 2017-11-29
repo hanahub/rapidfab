@@ -46,6 +46,7 @@ const Constants = [
   'SET_PAGE',
   'SET_ROUTE_UUID',
   'CLEAR_UI_STATE',
+  'CLEAR_UI_ERRORS',
 ];
 
 export const Currencies = ['USD', 'GBP', 'JPY', 'EUR', 'DKK'];

@@ -7,7 +7,7 @@ import Actions from 'rapidfab/actions';
 
 class FlashMessages extends Component {
   componentWillUnmount() {
-    this.props.dispatch(Actions.UI.clearUIState());
+    this.props.dispatch(Actions.UI.clearUIErrors());
   }
 
   render() {

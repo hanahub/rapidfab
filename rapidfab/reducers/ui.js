@@ -133,6 +133,31 @@ function reducer(state = initialState, action) {
       // if they dont pass in paths, reset it all
       return initialState;
     }
+    case Constants.CLEAR_UI_ERRORS: {
+      return Object.assign(
+        {},
+        state,
+        ...Object.keys(state).map(host => ({
+          [host]: Object.assign(
+            {},
+            state[host],
+            ...Object.keys(state[host]).map(hostResource => ({
+              [hostResource]: Object.assign(
+                {},
+                state[host][hostResource],
+                ...Object.keys(state[host][hostResource]).map(resourceMethod => ({
+                  [resourceMethod]: Object.assign(
+                    {},
+                    state[host][hostResource][resourceMethod],
+                    { errors: [] },
+                  )
+                }))
+              )
+            }))
+          )
+        }))
+      );
+    }
     default:
       return state;
   }
