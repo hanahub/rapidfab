@@ -264,12 +264,12 @@ class NewOrder extends Component {
   handleDeleteLineItem(deletedLineItemIndex) {
     const { lineItems } = this.state;
 
-    const updatedLineItems = lineItems.filter( (lineItem, index) => {
-      return index !== deletedLineItemIndex;
-    });
+    const updatedLineItems = lineItems.filter(
+      (lineItem, index) => index !== deletedLineItemIndex
+    );
 
     this.setState({ lineItems: updatedLineItems });
-  };
+  }
 
   handleLineItemModelChange(lineItemChange) {
     const { lineItems } = this.state;
