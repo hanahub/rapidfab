@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import _ from 'lodash';
 import { FormattedMessage } from 'react-intl';
@@ -37,6 +38,10 @@ const BureauError = ({ bureaus }) => {
       </BS.Jumbotron>
     </BS.Grid>
   );
+};
+
+BureauError.propTypes = {
+  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BureauError;

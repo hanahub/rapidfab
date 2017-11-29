@@ -158,6 +158,8 @@ BlockMachineForm.propTypes = {
   initialValues: PropTypes.shape({
     description: PropTypes.string,
   }),
+  isFinishValid: PropTypes.func.isRequired,
+  isStartValid: PropTypes.func.isRequired,
   startDate: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
 };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import * as Selectors from 'rapidfab/selectors';
@@ -17,6 +18,13 @@ class Feature extends Component {
     return <div>{isFeatureEnabled ? <div>{children}</div> : null}</div>;
   }
 }
+
+Feature.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+  featureName: PropTypes.string.isRequired,
+  features: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 function mapStateToProps(state) {
   const feature = state.ui.wyatt.feature;

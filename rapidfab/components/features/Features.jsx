@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
@@ -45,7 +46,7 @@ class Features extends Component {
           <BS.Table responsive striped hover>
             <tbody>
               {features.map((feature, index) => (
-                <tr key={index}>
+                <tr key={feature.uri}>
                   <td>
                     <span className="glyphicon glyphicon-file" />
                     {feature.name} - {feature.description} - {feature.bureau}
@@ -69,5 +70,10 @@ class Features extends Component {
     );
   }
 }
+
+Features.propTypes = {
+  updateFeature: PropTypes.func.isRequired,
+  features: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default Features;

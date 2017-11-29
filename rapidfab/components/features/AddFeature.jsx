@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 
@@ -110,5 +111,12 @@ class NewFeature extends Component {
     );
   }
 }
+
+NewFeature.propTypes = {
+  user: PropTypes.shape({
+    uri: PropTypes.string,
+  }).isRequired,
+  onSaveFeature: PropTypes.func.isRequired,
+};
 
 export default NewFeature;
