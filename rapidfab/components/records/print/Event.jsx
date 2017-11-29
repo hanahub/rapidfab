@@ -74,7 +74,7 @@ const ResourceValue = connect((state, ownProps) => {
   return { resource };
 })(({ dispatch, resource, uri }) => {
   if (resource && resource.name) {
-    const { name, snapshot_content: snapshotContent, uri } = resource;
+    const { name, snapshot_content: snapshotContent } = resource;
     if (snapshotContent) {
       const handleDownload = () => {
         dispatch(Actions.DownloadModel.fetchModel(uri)).then(response => {
@@ -89,7 +89,7 @@ const ResourceValue = connect((state, ownProps) => {
             {name}
           </a>
           {` `}
-          <a onClick={handleDownload}>
+          <a onClick={handleDownload} role="button" tabIndex={0}>
             <FontAwesome name="cloud-download" />
           </a>
         </span>
