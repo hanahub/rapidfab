@@ -5,6 +5,7 @@ import PathToRegexp from 'path-to-regexp';
 import FontAwesome from 'react-fontawesome';
 import { Button, Col, ListGroupItem, Row } from 'react-bootstrap';
 
+import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import {
@@ -71,14 +72,27 @@ const EventUser = connect((state, ownProps) => {
 const ResourceValue = connect((state, ownProps) => {
   const resource = state.resources[extractUuid(ownProps.uri)];
   return { resource };
-})(({ resource, uri }) => {
+})(({ dispatch, resource, uri }) => {
   if (resource && resource.name) {
     const { name, snapshot_content: snapshotContent } = resource;
     if (snapshotContent) {
+      const handleDownload = () => {
+        dispatch(Actions.DownloadModel.fetchModel(uri)).then(response => {
+          dispatch(
+            Actions.DownloadModel.downloadContent(name, response.json.content)
+          );
+        });
+      };
       return (
-        <a href={snapshotContent} target="_blank">
-          {name}
-        </a>
+        <span>
+          <a href={snapshotContent} target="_blank">
+            {name}
+          </a>
+          {` `}
+          <a onClick={handleDownload} role="button" tabIndex={0}>
+            <FontAwesome name="cloud-download" />
+          </a>
+        </span>
       );
     }
     const resourceType = extractResourceType(resource.uri);
