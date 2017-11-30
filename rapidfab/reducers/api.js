@@ -2,16 +2,7 @@ import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 import { RESOURCES } from 'rapidfab/api';
 import PathToRegexp from 'path-to-regexp';
-
-function extractUuid(uri) {
-  const keys = [];
-  const pattern = PathToRegexp(':protocol//:domain/:resource/:uuid/', keys);
-  const match = pattern.exec(uri);
-  if (!match.length) {
-    throw new Error(`Could not extract uuid from uri: ${uri}`);
-  }
-  return match[match.length - 1];
-}
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 export const initialState = _.reduce(
   RESOURCES,
