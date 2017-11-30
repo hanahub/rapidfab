@@ -29,7 +29,7 @@ class PrinterFormContainer extends Component {
         name: '',
         printerType: printerTypes.length ? printerTypes[0].uri : '',
         loading: true,
-        tocation: locations.length ? locations[0].uri : '',
+        location: locations.length ? locations[0].uri : '',
         modeler: '',
       };
     }
@@ -147,7 +147,9 @@ PrinterFormContainer.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  const printer = Selectors.getRouteResource(state, props);
+  const printer = (props.route && props.route.uuid)
+    ? Selectors.getRouteResource(state, props)
+    : null;
   return Object.assign(
     {},
     {
