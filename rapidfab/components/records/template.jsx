@@ -466,14 +466,12 @@ class Template extends Component {
       steps.push(payload);
     } else {
       const step = steps[index];
-      if (step.uri) {
-        payload.uri = step.uri;
-      }
-      if (step.uuid) {
-        payload.uuid = step.uuid;
-      }
-
-      steps[index] = payload;
+      steps[index] = Object.assign(
+        {},
+        payload,
+        step.uri ? { uri: step.uri } : null,
+        step.uuid ? { uuid: step.uuid } : null
+      );
     }
 
     this.setState({ steps });
