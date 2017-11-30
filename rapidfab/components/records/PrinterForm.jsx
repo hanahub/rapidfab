@@ -87,7 +87,7 @@ const PrinterForm = ({
               <option
                 key={type.uri}
                 value={type.uri}
-              >{`${type.name} - ${type.id}`}</option>
+              >{type.name}</option>
             ))}
           </FormControl>
         </FormGroup>
@@ -107,7 +107,7 @@ const PrinterForm = ({
               <option
                 key={loc.uri}
                 value={loc.uri}
-              >{`${loc.name} - ${loc.id}`}</option>
+              >{loc.name}</option>
             ))}
           </FormControl>
         </FormGroup>
