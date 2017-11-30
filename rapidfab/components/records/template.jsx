@@ -402,6 +402,7 @@ class Template extends Component {
         ) {
           return step.uuid;
         }
+        return null;
       })
     );
 
