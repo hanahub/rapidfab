@@ -512,7 +512,9 @@ class Template extends Component {
           onClick={() => {
             this.moveRow(index, 'down');
           }}
+          role="button"
           style={_.assign({}, styles.centerIcons, styles.splitDivs)}
+          tabIndex={0}
         >
           <Fa name="angle-down" size="2x" />
         </div>
@@ -520,7 +522,9 @@ class Template extends Component {
           onClick={() => {
             this.moveRow(index, 'up');
           }}
+          role="button"
           style={_.assign({}, styles.centerIcons, styles.splitDivs)}
+          tabIndex={0}
         >
           <Fa name="angle-up" size="2x" />
         </div>
@@ -540,12 +544,20 @@ class Template extends Component {
             }
           </td>
           <td style={styles.centerIcons}>
-            <div onClick={() => this.openModal('showStepForm', index)}>
+            <div
+              role="button"
+              onClick={() => this.openModal('showStepForm', index)}
+              tabIndex={0}
+            >
               <Fa name="edit" />
             </div>
           </td>
           <td style={styles.centerIcons}>
-            <div onClick={() => this.deleteStep(index)}>
+            <div
+              role="button"
+              onClick={() => this.deleteStep(index)}
+              tabIndex={0}
+            >
               <Fa name="times" />
             </div>
           </td>
