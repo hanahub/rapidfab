@@ -412,10 +412,7 @@ class Template extends Component {
           this.props.submitStep(step).then(resp => resp.headers.location)
         );
       } else {
-        const oldStep = _.find(
-          this.props.steps,
-          oldStep => oldStep.uri === step.uri
-        );
+        const oldStep = _.find(this.props.steps, s => s.uri === step.uri);
 
         if (oldStep) {
           if (_.difference(_.values(step), _.values(oldStep)).length) {
@@ -426,11 +423,11 @@ class Template extends Component {
         }
       }
     });
-    Promise.all(uris).then(uris => {
+    Promise.all(uris).then(processSteps => {
       const payload = _.cloneDeep(this.state.template);
       payload.bureau = payload.bureau ? payload.bureau : this.props.bureau;
       payload.description = payload.description ? payload.description : '';
-      payload.process_steps = uris;
+      payload.process_steps = processSteps;
 
       this.props.onSave(payload, deletedSteps);
     });
