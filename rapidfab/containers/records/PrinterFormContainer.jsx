@@ -29,7 +29,7 @@ class PrinterFormContainer extends Component {
         name: '',
         printerType: printerTypes.length ? printerTypes[0].uri : '',
         loading: true,
-        tocation: locations.length ? locations[0].uri : '',
+        location: locations.length ? locations[0].uri : '',
         modeler: '',
       };
     }
