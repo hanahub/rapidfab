@@ -32,6 +32,7 @@ const UserForm = ({
         name="name"
         value={name}
         onChange={handleInputChange}
+        required
       />
     </FormGroup>
     <FormGroup>
@@ -43,6 +44,7 @@ const UserForm = ({
         name="email"
         value={email}
         onChange={handleInputChange}
+        required
       />
     </FormGroup>
     <FormGroup style={styles.paddingTop}>

@@ -20,7 +20,7 @@ const User = ({
     <h2>{user.name || user.username}</h2>
     {view === 'main' && (
       <div>
-        <span>{user.emails && user.emails[0]}</span>
+        <span>{Array.isArray(user.emails) && user.emails[0]}</span>
         <UserRolesContainer user={user} />
         <ButtonGroup vertical block>
           <Button
