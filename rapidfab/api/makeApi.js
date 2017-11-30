@@ -10,6 +10,12 @@ export const FETCH_CONFIG = {
   },
 };
 
+const GET_CONFIG = {
+  headers: {
+    Accept: 'application/json'
+  }
+}
+
 export function filtersToQuery(filters) {
   const formatted = [];
   for (const key in filters || {}) {
@@ -95,7 +101,7 @@ function makeGet(hostRoot, resource) {
         {
           credentials: 'include',
         },
-        FETCH_CONFIG,
+        GET_CONFIG,
         config
       )
     );
@@ -107,7 +113,7 @@ export function doGet(url) {
     url,
     _.assign({
       credentials: 'include',
-      FETCH_CONFIG,
+      GET_CONFIG,
     })
   );
 }
@@ -119,7 +125,7 @@ function makeList(hostRoot, resource) {
       {
         credentials: 'include',
       },
-      FETCH_CONFIG,
+      GET_CONFIG,
       config
     );
     return fetch(`${hostRoot}/${resource}/?${query}`, fetchConfig);
