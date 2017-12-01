@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-import Actions from 'rapidfab/actions';
-import { getShippings, getUsers } from 'rapidfab/selectors';
 import { Currencies } from 'rapidfab/constants';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import {
@@ -21,27 +18,6 @@ import {
 } from 'rapidfab/components/formTools';
 
 import Feature from 'rapidfab/components/Feature';
-
-const fields = [
-  'channel_representative',
-  'currency',
-  'due_date',
-  'customer_email',
-  'customer_name',
-  'name',
-  'notes',
-  'order_owner',
-  'order_type',
-  'region',
-  'sales_representative',
-  'sales_status',
-  'shipping.name',
-  'shipping.address',
-  'shipping.tracking',
-  'shipping.uri',
-  'status',
-  'uuid',
-];
 
 const statusOptionsMap = {
   pending: ['cancelled', 'confirmed'],
@@ -249,49 +225,4 @@ EditOrderForm.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  onSubmit: formValues => {
-    const payload = formValues;
-    Object.keys(payload).forEach(key => {
-      if (payload[key] === 'none') {
-        payload[key] = null;
-      }
-    });
-
-    if (payload.sales_status === null) {
-      delete payload.sales_status;
-    }
-
-    if (payload.due_date) {
-      const date = new Date(payload.due_date);
-      payload.due_date = date.toISOString();
-    }
-
-    dispatch(Actions.Api.wyatt.order.put(payload.uuid, payload));
-  },
-});
-
-const mapStateToProps = state => {
-  const initialValues = state.resources[state.routeUUID];
-
-  // convert ISO date to yyyy-mm-dd for html input
-  if (initialValues.due_date) {
-    const date = new Date(initialValues.due_date);
-    initialValues.due_date = date.toISOString().slice(0, 10);
-  }
-
-  const { created } = initialValues;
-  const shippings = getShippings(state);
-  const users = getUsers(state);
-
-  return { initialValues, created, shippings, users };
-};
-
-export default reduxForm(
-  {
-    form: 'record.editForm',
-    fields,
-  },
-  mapStateToProps,
-  mapDispatchToProps
-)(EditOrderForm);
+export default EditOrderForm;

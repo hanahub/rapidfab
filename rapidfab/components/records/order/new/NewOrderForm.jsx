@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
 import { FormControl, FormGroup, Col, ControlLabel } from 'react-bootstrap';
 
-import { getShippings, getUsers } from 'rapidfab/selectors';
 import { Currencies } from 'rapidfab/constants';
 import { FormattedMessage } from 'rapidfab/i18n';
 import {
@@ -17,25 +15,6 @@ import {
 } from 'rapidfab/mappings';
 
 import Feature from 'rapidfab/components/Feature';
-
-const fields = [
-  'channel_representative',
-  'currency',
-  'due_date',
-  'customer_email',
-  'customer_name',
-  'name',
-  'notes',
-  'order_owner',
-  'order_type',
-  'region',
-  'sales_representative',
-  'sales_status',
-  'shipping.name',
-  'shipping.address',
-  'shipping.tracking',
-  'shipping.uri',
-];
 
 const FormRow = ({ id, defaultMessage, children }) => (
   <FormGroup>
@@ -199,29 +178,4 @@ NewOrderForm.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapStateToProps = state => {
-  const shippings = getShippings(state);
-  const users = getUsers(state);
-
-  const initialCurrency = Currencies[0];
-  const initialSalesStatus = Object.keys(ORDER_SALES_MAPPING)[0];
-  const initialShipping = shippings[0] ? shippings[0].uri : null;
-
-  const initialValues = {
-    currency: initialCurrency,
-    sales_status: initialSalesStatus,
-    shipping: {
-      uri: initialShipping,
-    },
-  };
-
-  return { initialValues, shippings, users };
-};
-
-export default reduxForm(
-  {
-    form: 'record.order',
-    fields,
-  },
-  mapStateToProps
-)(NewOrderForm);
+export default NewOrderForm;

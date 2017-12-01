@@ -123,7 +123,9 @@ const LineItemEditForm = ({
           <FormRow id="field.model" defaultMessage="Model">
             <div>
               {currentModel ? (
-                <a onClick={handleModelDownload}>{currentModel.name}</a>
+                <a onClick={handleModelDownload} role="button" tabIndex={0}>
+                  {currentModel.name}
+                </a>
               ) : (
                 <Fa name="spinner" spin />
               )}

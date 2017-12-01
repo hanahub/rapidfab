@@ -10,9 +10,9 @@ import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import NewOrderFormContainer from 'rapidfab/containers/records/order/NewOrderFormContainer';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-import NewOrderForm from './NewOrderForm';
 import LineItem from './LineItem';
 
 const AddLineItemButton = ({ onAddLineItem }) => (
@@ -92,7 +92,7 @@ const NewOrderComponent = ({
         <hr />
 
         <Panel header="Order">
-          <NewOrderForm />
+          <NewOrderFormContainer />
         </Panel>
 
         <Panel header="Line Items">
