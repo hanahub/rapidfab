@@ -113,8 +113,8 @@ class StepFormModal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.show && !nextState.stepReset) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.show && !this.state.stepReset) {
       const data = nextProps.data || {};
       const stepInfo = {
         notes: data.notes || 'optional',
@@ -124,9 +124,14 @@ class StepFormModal extends Component {
         process_type_uri: data.process_type_uri || '',
       };
       this.setState({ step: stepInfo, stepReset: true });
-    } else if (!nextProps.show && nextState.stepReset) {
+    } else if (!nextProps.show && this.state.stepReset) {
       this.setState({ stepReset: false });
     }
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.submit(this.state.step);
   }
 
   handleChange(event) {
@@ -134,11 +139,6 @@ class StepFormModal extends Component {
     const { name, value } = event.target;
     step[name] = value;
     this.setState({ step });
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
-    this.props.submit(this.state.step);
   }
 
   render() {
@@ -309,7 +309,7 @@ class Template extends Component {
     this.state = {
       template: {},
       steps: [],
-      haveReceivedProps: false,
+      loading: true,
       showStepForm: false,
       showOverwriteWarning: false,
       showDeleteWarning: false,
@@ -328,13 +328,13 @@ class Template extends Component {
     this.addStep = this.addStep.bind(this);
   }
 
-  componentDidUpdate() {
-    if (!this.state.haveReceivedProps && !this.props.fetching) {
+  componentWillReceiveProps(nextProps) {
+    if (this.state.loading && !nextProps.fetching) {
       const template = this.props.template || {};
       this.setState({
         template,
         steps: this.props.steps,
-        haveReceivedProps: true,
+        loading: false,
       });
     }
   }
