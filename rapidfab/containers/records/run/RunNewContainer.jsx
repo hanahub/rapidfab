@@ -82,69 +82,52 @@ const getPager = (state, prints) => ({
 });
 
 function mapStateToProps(state) {
-  const printerType = state.ui.wyatt['printer-type'];
-  const processStep = state.ui.wyatt['process-step'];
-  const lineItem = state.ui.wyatt['line-item'];
-
-  const { material, print, printer, run, order } = state.ui.wyatt;
-
-  const { model } = state.ui.hoth;
-
-  const { modeler } = state.ui.nautilus;
-
-  const fetching =
-    lineItem.list.fetching ||
-    material.list.fetching ||
-    print.list.fetching ||
-    printer.list.fetching ||
-    model.list.fetching ||
-    modeler.list.fetching ||
-    run.post.fetching ||
-    printerType.list.fetching ||
-    processStep.list.fetching ||
-    order.list.fetching;
-
-  const apiErrors = _.concat(
-    order.list.errors,
-    material.list.errors,
-    lineItem.list.errors,
-    print.list.errors,
-    printer.list.errors,
-    run.post.errors,
-    model.list.errors,
-    modeler.list.errors,
-    printerType.list.errors,
-    processStep.list.errors
-  );
-
   const bureau = Selectors.getBureauUri(state);
+  const fetching =
+    state.ui.hoth.model.list.fetching ||
+    state.ui.nautilus.modeler.list.fetching ||
+    state.ui.wyatt['line-item'].list.fetching ||
+    state.ui.wyatt.material.list.fetching ||
+    state.ui.wyatt.order.list.fetching ||
+    state.ui.wyatt.print.list.fetching ||
+    state.ui.wyatt.printer.list.fetching ||
+    state.ui.wyatt['printer-type'].list.fetching ||
+    state.ui.wyatt['process-step'].list.fetching ||
+    state.ui.wyatt.run.post.fetching;
   const lineItems = Selectors.getLineItemsForRunNew(state);
-  const prints = _.flatMap(lineItems, 'prints');
+  const modelers = Selectors.getModelers(state);
+  const orderNamesMap = Selectors.getOrderNamesByURI(state);
   const processSteps = Selectors.getProcessSteps(state);
   const printerTypes = Selectors.getPrinterTypes(state);
-  const orderNamesMap = Selectors.getOrderNamesByURI(state);
+  const printers = Selectors.getPrintersForRunNew(state);
 
-  const printablePrints = prints.filter(p => {
-    if (!p.process_step) {
+  const lineItemPrints = lineItems.reduce(
+    (prints, lineItem) => [...prints, ...lineItem.prints],
+    []
+  );
+
+  const printablePrints = lineItemPrints.filter(print => {
+    if (!print.process_step) {
       return false;
     }
-    const step = processSteps.find(s => p.process_step === s.uri);
+    const processStep = processSteps.find(
+      step => print.process_step === step.uri
+    );
 
-    if (step && printerTypes.find(type => type.uri === step.process_type_uri)) {
+    if (
+      processStep &&
+      printerTypes.find(type => type.uri === processStep.process_type_uri)
+    ) {
       return true;
     }
     return false;
   });
 
   const pager = getPager(state, printablePrints);
-  const printers = Selectors.getPrintersForRunNew(state);
-  const modelers = Selectors.getModelers(state);
-
   const page = pager.activePage - 1;
 
   return {
     bureau,
-    apiErrors,
     fetching,
     loading: (!lineItems.length || !printers.length) && fetching,
     lineItems,
