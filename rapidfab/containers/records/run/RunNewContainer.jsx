@@ -108,17 +108,25 @@ function mapStateToProps(state) {
 
   const printablePrints = lineItemPrints.filter(print => {
     if (!print.process_step) {
+      console.warn(`No process step for ${print.uri}`);
       return false;
     }
     const processStep = processSteps.find(
       step => print.process_step === step.uri
     );
+    if(!processStep) {
+      console.warn(`Could not find process step ${print.process_step} in `, processSteps);
+      return false;
+    }
 
     if (
       processStep &&
       printerTypes.find(type => type.uri === processStep.process_type_uri)
     ) {
       return true;
+    } else {
+      console.warn(`Could not find a printer type ${processStep.process_type_uri} for process step ${processStep.uri}`);
+      return false;
     }
     return false;
   });
