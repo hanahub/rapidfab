@@ -5,9 +5,8 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
-import Error from 'rapidfab/components/error';
-
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import PrintersList from './printersList';
 import PrintsList from './printsList';
 import ActivePrints from './activePrints';
@@ -114,14 +113,7 @@ class Runs extends Component {
   }
 
   render() {
-    const {
-      printers,
-      apiErrors,
-      fetching,
-      prints,
-      pager,
-      orderNamesMap,
-    } = this.props;
+    const { printers, fetching, prints, pager, orderNamesMap } = this.props;
 
     const {
       selectedPrinter,
@@ -152,11 +144,7 @@ class Runs extends Component {
 
         <hr />
 
-        <BS.Row>
-          <BS.Col xs={12}>
-            <Error errors={apiErrors} />
-          </BS.Col>
-        </BS.Row>
+        <FlashMessages />
 
         {(() => {
           if (fetching) {
@@ -217,7 +205,6 @@ class Runs extends Component {
 Runs.propTypes = {
   printers: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSave: PropTypes.func.isRequired,
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   pager: PropTypes.shape({}).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,

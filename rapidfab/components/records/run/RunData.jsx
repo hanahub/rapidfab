@@ -138,10 +138,12 @@ const RunData = ({ actuals, estimates, operation }) => (
               </strong>
             </td>
             <td>
-              {estimates.base && <FormattedVolume value={estimates.base} />}
+              {estimates &&
+                estimates.base && <FormattedVolume value={estimates.base} />}
             </td>
             <td>
-              {actuals.base && <FormattedVolume value={estimates.base} />}
+              {actuals &&
+                actuals.base && <FormattedVolume value={estimates.base} />}
             </td>
           </tr>
         )}
