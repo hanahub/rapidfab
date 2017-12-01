@@ -131,42 +131,25 @@ class Template extends Component {
     }
   }
 
-  handleChange(event) {
-    const { template } = this.state;
-    const { name, value } = event.target;
-    template[name] = value;
-    this.setState({ template });
+  onDelete() {
+    this.closeModal('showDeleteWarning');
+    this.props.onDelete(this.props.route.uuid);
   }
 
-  openModal(modalState, stepIndex) {
-    if (typeof stepIndex === 'number') {
-      this.setState({
-        [modalState]: true,
-        alteredStepIndex: stepIndex,
-      });
-    } else {
-      this.setState({ [modalState]: true });
+  onDuplicate() {
+    if (this.state.showOverwriteWarning) {
+      this.closeModal('showOverwriteWarning');
     }
-  }
 
-  closeModal(modalState) {
-    if (this.state.alteredStepIndex !== null) {
-      this.setState({
-        [modalState]: false,
-        alteredStepIndex: null,
-      });
-    } else {
-      this.setState({ [modalState]: false });
-    }
-  }
+    const { value: name, initialValue: initialName } = this.props.fields.name;
+    const duplicateName = name === initialName ? `${name} copy` : name;
 
-  shouldOpenOverwriteWarning() {
-    const { name: initialName, uuid: isExistingTemplate } = this.props.values;
-    const { steps } = this.state;
-    const { name: currentName } = this.state.template;
-    const hasNewName = initialName !== currentName;
-    const hasNewSteps = !_.isEqual(steps, this.props.steps);
-    return (hasNewName || hasNewSteps) && isExistingTemplate;
+    const templateCopy = {
+      bureau: this.props.bureau,
+      name: duplicateName,
+      steps: this.state.steps,
+    };
+    this.props.onDuplicate(templateCopy);
   }
 
   onSave(event) {
@@ -226,25 +209,42 @@ class Template extends Component {
     });
   }
 
-  onDuplicate() {
-    if (this.state.showOverwriteWarning) {
-      this.closeModal('showOverwriteWarning');
+  openModal(modalState, stepIndex) {
+    if (typeof stepIndex === 'number') {
+      this.setState({
+        [modalState]: true,
+        alteredStepIndex: stepIndex,
+      });
+    } else {
+      this.setState({ [modalState]: true });
     }
-
-    const { value: name, initialValue: initialName } = this.props.fields.name;
-    const duplicateName = name === initialName ? `${name} copy` : name;
-
-    const templateCopy = {
-      bureau: this.props.bureau,
-      name: duplicateName,
-      steps: this.state.steps,
-    };
-    this.props.onDuplicate(templateCopy);
   }
 
-  onDelete() {
-    this.closeModal('showDeleteWarning');
-    this.props.onDelete(this.props.route.uuid);
+  closeModal(modalState) {
+    if (this.state.alteredStepIndex !== null) {
+      this.setState({
+        [modalState]: false,
+        alteredStepIndex: null,
+      });
+    } else {
+      this.setState({ [modalState]: false });
+    }
+  }
+
+  shouldOpenOverwriteWarning() {
+    const { name: initialName, uuid: isExistingTemplate } = this.props.values;
+    const { steps } = this.state;
+    const { name: currentName } = this.state.template;
+    const hasNewName = initialName !== currentName;
+    const hasNewSteps = !_.isEqual(steps, this.props.steps);
+    return (hasNewName || hasNewSteps) && isExistingTemplate;
+  }
+
+  handleChange(event) {
+    const { template } = this.state;
+    const { name, value } = event.target;
+    template[name] = value;
+    this.setState({ template });
   }
 
   addStep(payload) {
