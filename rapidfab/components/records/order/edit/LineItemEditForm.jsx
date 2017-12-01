@@ -215,7 +215,7 @@ const LineItemEditForm = ({
               }}
             />
           </InputGroup.Addon>
-          <InputGroup.Addon>
+          <InputGroup.Addon style={{ minWidth: '62px' }}>
             {supportMaterial && (
               <ResourceLink
                 href={`/#/records/material/${extractUuid(supportMaterial)}`}
@@ -269,7 +269,7 @@ const LineItemEditForm = ({
               </option>
             ))}
           </FormControl>
-          <InputGroup.Addon>
+          <InputGroup.Addon style={{ minWidth: '62px' }}>
             {thirdPartyProvider && (
               <ResourceLink
                 href={`/#/records/third-party-providers/${extractUuid(
