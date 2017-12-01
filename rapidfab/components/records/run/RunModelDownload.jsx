@@ -17,7 +17,9 @@ const RunModelDownload = ({
     {isDownloading ? (
       <FormattedMessage id="downloading" defaultMessage="Downloading..." />
     ) : (
-      <a onClick={() => handleDownload(run, model)}>{name || model} </a>
+      <a onClick={() => handleDownload(run, model)} role="button" tabIndex={0}>
+        {name || model}
+      </a>
     )}
   </span>
 );
