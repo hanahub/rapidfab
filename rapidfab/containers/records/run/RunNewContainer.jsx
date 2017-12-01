@@ -47,13 +47,13 @@ function mapDispatchToProps(dispatch) {
           dispatch(
             Actions.Api.wyatt.print.list({
               line_item: lineItemURIs,
-            })
+            }, true)
           );
 
           dispatch(
             Actions.Api.hoth.model.list({
               uri: filteredModels,
-            })
+            }, true)
           );
         });
       });
