@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Actions from 'rapidfab/actions';
-import Template from 'rapidfab/components/records/template/template';
+import Template from 'rapidfab/components/records/template/Template';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 
