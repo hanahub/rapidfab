@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import Actions from 'rapidfab/actions';
-import TemplateComponent from 'rapidfab/components/records/template';
+import Template from 'rapidfab/components/records/template/template';
 import { reduxForm } from 'redux-form';
 import * as Selectors from 'rapidfab/selectors';
 
@@ -27,7 +27,7 @@ class TemplateContainer extends Component {
   }
 
   render() {
-    return <TemplateComponent {...this.props} />;
+    return <Template {...this.props} />;
   }
 }
 
