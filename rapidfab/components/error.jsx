@@ -12,7 +12,7 @@ const Errors = ({ errors }) => (
   </div>
 );
 
-Errors.defaultProps = { errors: null };
+Errors.defaultProps = { errors: [] };
 
 Errors.propTypes = {
   errors: PropTypes.arrayOf(PropTypes.object),

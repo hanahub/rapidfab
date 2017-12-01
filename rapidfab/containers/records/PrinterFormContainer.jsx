@@ -147,9 +147,10 @@ PrinterFormContainer.propTypes = {
 };
 
 const mapStateToProps = (state, props) => {
-  const printer = (props.route && props.route.uuid)
-    ? Selectors.getRouteResource(state, props)
-    : null;
+  const printer =
+    props.route && props.route.uuid
+      ? Selectors.getRouteResource(state, props)
+      : null;
   return Object.assign(
     {},
     {

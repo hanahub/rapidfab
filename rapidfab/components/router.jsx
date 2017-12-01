@@ -23,7 +23,7 @@ class Router extends Component {
     }
     let toRender = null;
 
-    for (const path in routes) {
+    Object.keys(routes).forEach(path => {
       const element = routes[path];
       const keys = [];
       const pattern = PathToRegexp(path, keys);
@@ -40,10 +40,9 @@ class Router extends Component {
           /* eslint-enable no-console */
         }
         const route = {};
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i];
-          route[key.name] = match[i + 1];
-        }
+        keys.forEach((key, index) => {
+          route[key.name] = match[index + 1];
+        });
         const props = {
           route,
         };
@@ -52,7 +51,7 @@ class Router extends Component {
           path,
         };
       }
-    }
+    });
     if (!toRender) {
       return (
         <div className="router">

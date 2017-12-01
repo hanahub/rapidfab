@@ -84,10 +84,9 @@ const PrinterForm = ({
             value={printerType}
           >
             {printerTypes.map(type => (
-              <option
-                key={type.uri}
-                value={type.uri}
-              >{type.name}</option>
+              <option key={type.uri} value={type.uri}>
+                {type.name}
+              </option>
             ))}
           </FormControl>
         </FormGroup>
@@ -104,10 +103,9 @@ const PrinterForm = ({
             value={location}
           >
             {locations.map(loc => (
-              <option
-                key={loc.uri}
-                value={loc.uri}
-              >{loc.name}</option>
+              <option key={loc.uri} value={loc.uri}>
+                {loc.name}
+              </option>
             ))}
           </FormControl>
         </FormGroup>

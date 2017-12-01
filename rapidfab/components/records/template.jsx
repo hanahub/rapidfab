@@ -113,8 +113,8 @@ class StepFormModal extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.show && !nextState.stepReset) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.show && !this.state.stepReset) {
       const data = nextProps.data || {};
       const stepInfo = {
         notes: data.notes || 'optional',
@@ -124,9 +124,14 @@ class StepFormModal extends Component {
         process_type_uri: data.process_type_uri || '',
       };
       this.setState({ step: stepInfo, stepReset: true });
-    } else if (!nextProps.show && nextState.stepReset) {
+    } else if (!nextProps.show && this.state.stepReset) {
       this.setState({ stepReset: false });
     }
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.submit(this.state.step);
   }
 
   handleChange(event) {
@@ -134,11 +139,6 @@ class StepFormModal extends Component {
     const { name, value } = event.target;
     step[name] = value;
     this.setState({ step });
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
-    this.props.submit(this.state.step);
   }
 
   render() {
@@ -309,7 +309,7 @@ class Template extends Component {
     this.state = {
       template: {},
       steps: [],
-      haveReceivedProps: false,
+      loading: true,
       showStepForm: false,
       showOverwriteWarning: false,
       showDeleteWarning: false,
@@ -328,13 +328,13 @@ class Template extends Component {
     this.addStep = this.addStep.bind(this);
   }
 
-  componentDidUpdate() {
-    if (!this.state.haveReceivedProps && !this.props.fetching) {
+  componentWillReceiveProps(nextProps) {
+    if (this.state.loading && !nextProps.fetching) {
       const template = this.props.template || {};
       this.setState({
         template,
         steps: this.props.steps,
-        haveReceivedProps: true,
+        loading: false,
       });
     }
   }
@@ -402,6 +402,7 @@ class Template extends Component {
         ) {
           return step.uuid;
         }
+        return null;
       })
     );
 
@@ -412,10 +413,7 @@ class Template extends Component {
           this.props.submitStep(step).then(resp => resp.headers.location)
         );
       } else {
-        const oldStep = _.find(
-          this.props.steps,
-          oldStep => oldStep.uri === step.uri
-        );
+        const oldStep = _.find(this.props.steps, s => s.uri === step.uri);
 
         if (oldStep) {
           if (_.difference(_.values(step), _.values(oldStep)).length) {
@@ -426,11 +424,11 @@ class Template extends Component {
         }
       }
     });
-    Promise.all(uris).then(uris => {
+    Promise.all(uris).then(processSteps => {
       const payload = _.cloneDeep(this.state.template);
       payload.bureau = payload.bureau ? payload.bureau : this.props.bureau;
       payload.description = payload.description ? payload.description : '';
-      payload.process_steps = uris;
+      payload.process_steps = processSteps;
 
       this.props.onSave(payload, deletedSteps);
     });
@@ -466,14 +464,12 @@ class Template extends Component {
       steps.push(payload);
     } else {
       const step = steps[index];
-      if (step.uri) {
-        payload.uri = step.uri;
-      }
-      if (step.uuid) {
-        payload.uuid = step.uuid;
-      }
-
-      steps[index] = payload;
+      steps[index] = Object.assign(
+        {},
+        payload,
+        step.uri ? { uri: step.uri } : null,
+        step.uuid ? { uuid: step.uuid } : null
+      );
     }
 
     this.setState({ steps });
@@ -512,7 +508,9 @@ class Template extends Component {
           onClick={() => {
             this.moveRow(index, 'down');
           }}
+          role="button"
           style={_.assign({}, styles.centerIcons, styles.splitDivs)}
+          tabIndex={0}
         >
           <Fa name="angle-down" size="2x" />
         </div>
@@ -520,7 +518,9 @@ class Template extends Component {
           onClick={() => {
             this.moveRow(index, 'up');
           }}
+          role="button"
           style={_.assign({}, styles.centerIcons, styles.splitDivs)}
+          tabIndex={0}
         >
           <Fa name="angle-up" size="2x" />
         </div>
@@ -540,12 +540,20 @@ class Template extends Component {
             }
           </td>
           <td style={styles.centerIcons}>
-            <div onClick={() => this.openModal('showStepForm', index)}>
+            <div
+              role="button"
+              onClick={() => this.openModal('showStepForm', index)}
+              tabIndex={0}
+            >
               <Fa name="edit" />
             </div>
           </td>
           <td style={styles.centerIcons}>
-            <div onClick={() => this.deleteStep(index)}>
+            <div
+              role="button"
+              onClick={() => this.deleteStep(index)}
+              tabIndex={0}
+            >
               <Fa name="times" />
             </div>
           </td>
