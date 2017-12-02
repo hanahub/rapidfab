@@ -16,7 +16,7 @@ class FlashMessages extends Component {
       <div>
         {errors.map((error, index) => (
           <Alert bsStyle="danger" className="error-alert" key={index}>
-            <p>{error.title}</p>
+            <p>{error.title || error.code}</p>
           </Alert>
         ))}
       </div>
