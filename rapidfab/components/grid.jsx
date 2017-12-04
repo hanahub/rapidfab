@@ -16,7 +16,7 @@ import StatusDot from 'rapidfab/components/statusDot';
 
 export const IdColumn = (resource, field, records, property = 'id') => {
   const recordsByUri = _.keyBy(records, 'uri');
-  return ({ rowData }) => {
+  const Column = ({ rowData }) => {
     let record = rowData;
     if (field) {
       const uri = rowData[field];
@@ -27,6 +27,10 @@ export const IdColumn = (resource, field, records, property = 'id') => {
       <a href={`#/records/${resource}/${record.uuid}`}>{record[property]}</a>
     );
   };
+  Column.propTypes = {
+    rowData: PropTypes.shape({}).isRequired,
+  };
+  return Column;
 };
 
 export const StatusColumn = (field, records, mapping) => {
@@ -35,7 +39,7 @@ export const StatusColumn = (field, records, mapping) => {
   // mapping: records should have a status, and the mapping maps a status string
   //   to a class string defined in main.less. can optionally provide message for a popover
   const recordsByUri = _.keyBy(records, 'uri');
-  return ({ rowData }) => {
+  const Column = ({ rowData }) => {
     const uri = rowData[field];
     const record = recordsByUri[uri];
 
@@ -47,14 +51,18 @@ export const StatusColumn = (field, records, mapping) => {
     }
     return <StatusDot status="unknown" message="Modeler not found" />;
   };
+  Column.propTypes = {
+    rowData: PropTypes.shape({}).isRequired,
+  };
+  return Column;
 };
 
-export const MappedColumn = (field, mapping) =>
+export const MappedColumn = (field, mapping) => {
   // field: field to search for on rowdata e.g. "status"
   // mapping: an object mapping with keys matching records,
   // and values being i18n formatted messages.
   //     if no match is found in the mapping, throws an error.
-  ({ rowData }) => {
+  const Column = ({ rowData }) => {
     const message = mapping[rowData[field]];
 
     if (!message) {
@@ -62,6 +70,11 @@ export const MappedColumn = (field, mapping) =>
     }
     return message;
   };
+  Column.propTypes = {
+    rowData: PropTypes.shape({}).isRequired,
+  };
+  return Column;
+};
 
 export const DateTimeColumn = ({ data }) =>
   data ? <FormattedDateTime value={data} /> : null;
