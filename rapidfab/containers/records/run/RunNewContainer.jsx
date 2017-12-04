@@ -45,15 +45,21 @@ function mapDispatchToProps(dispatch) {
           const filteredModels = lineItemModels.filter(model => model);
 
           dispatch(
-            Actions.Api.wyatt.print.list({
-              line_item: lineItemURIs,
-            }, true)
+            Actions.Api.wyatt.print.list(
+              {
+                line_item: lineItemURIs,
+              },
+              true
+            )
           );
 
           dispatch(
-            Actions.Api.hoth.model.list({
-              uri: filteredModels,
-            }, true)
+            Actions.Api.hoth.model.list(
+              {
+                uri: filteredModels,
+              },
+              true
+            )
           );
         });
       });
@@ -114,8 +120,11 @@ function mapStateToProps(state) {
     const processStep = processSteps.find(
       step => print.process_step === step.uri
     );
-    if(!processStep) {
-      console.warn(`Could not find process step ${print.process_step} in `, processSteps);
+    if (!processStep) {
+      console.warn(
+        `Could not find process step ${print.process_step} in `,
+        processSteps
+      );
       return false;
     }
 
@@ -124,10 +133,12 @@ function mapStateToProps(state) {
       printerTypes.find(type => type.uri === processStep.process_type_uri)
     ) {
       return true;
-    } else {
-      console.warn(`Could not find a printer type ${processStep.process_type_uri} for process step ${processStep.uri}`);
-      return false;
     }
+    console.warn(
+      `Could not find a printer type ${processStep.process_type_uri} for process step ${processStep.uri}`
+    );
+    return false;
+
     return false;
   });
 

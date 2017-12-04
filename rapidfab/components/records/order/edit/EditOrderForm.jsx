@@ -20,7 +20,7 @@ import {
 import Feature from 'rapidfab/components/Feature';
 
 const statusOptionsMap = {
-  pending: ['cancelled', 'confirmed'],
+  pending: ['cancelled'],
   confirmed: ['cancelled'],
   printing: ['cancelled'],
   printed: ['cancelled', 'shipping', 'complete'],
@@ -44,25 +44,31 @@ FormRow.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const EditOrderForm = ({ created, fields, shippings, users }) => (
+const EditOrderForm = ({ created, fields, isRestricted, shippings, users }) => (
   <div>
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name} />
     </FormRow>
 
     <FormRow id="field.status" defaultMessage="Status">
-      <FormControl componentClass="select" required {...fields.status}>
-        <option value={fields.status.initialValue}>
+      {isRestricted ? (
+        <FormControl.Static>
           {ORDER_STATUS_MAP[fields.status.initialValue]}
-        </option>
-        {statusOptionsMap[fields.status.initialValue]
-          ? statusOptionsMap[fields.status.initialValue].map(status => (
-              <option key={status} value={status}>
-                {ORDER_STATUS_MAP[status]}
-              </option>
-            ))
-          : null}
-      </FormControl>
+        </FormControl.Static>
+      ) : (
+        <FormControl componentClass="select" required {...fields.status}>
+          <option value={fields.status.initialValue}>
+            {ORDER_STATUS_MAP[fields.status.initialValue]}
+          </option>
+          {statusOptionsMap[fields.status.initialValue]
+            ? statusOptionsMap[fields.status.initialValue].map(status => (
+                <option key={status} value={status}>
+                  {ORDER_STATUS_MAP[status]}
+                </option>
+              ))
+            : null}
+        </FormControl>
+      )}
     </FormRow>
 
     <FormRow id="field.shippingName" defaultMessage="Shipping Name">
@@ -221,6 +227,7 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
 EditOrderForm.propTypes = {
   created: PropTypes.string.isRequired,
   fields: PropTypes.shape({}).isRequired,
+  isRestricted: PropTypes.bool.isRequired,
   shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

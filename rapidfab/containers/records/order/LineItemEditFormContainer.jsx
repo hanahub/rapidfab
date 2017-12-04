@@ -154,6 +154,7 @@ const mapStateToProps = state => {
   const supportMaterials = materials.filter(
     material => material.type === 'support'
   );
+  const isRestricted = Selectors.isCurrentUserRestricted(state);
   const models = Selectors.getModels(state);
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
@@ -161,6 +162,7 @@ const mapStateToProps = state => {
 
   return {
     baseMaterials,
+    isRestricted,
     models,
     orderUuid,
     providers,

@@ -179,6 +179,11 @@ export const getRolesCurrentUser = createSelector(
   }
 );
 
+export const isCurrentUserRestricted = createSelector(
+  [getRolesCurrentUser],
+  roles => roles.every(role => role.role === 'restricted')
+);
+
 export const getBureausCurrentUserRoles = createSelector(
   [getRolesCurrentUser, getBureaus],
   (roles, bureaus) =>
