@@ -7,7 +7,7 @@ import { Col, Form, Panel } from 'react-bootstrap';
 import Actions from 'rapidfab/actions';
 import Feature from 'rapidfab/components/Feature';
 
-import EditOrderForm from './EditOrderForm';
+import EditOrderFormContainer from 'rapidfab/containers/records/order/EditOrderFormContainer';
 import OrderDocuments from './OrderDocuments';
 import OrderEstimates from './OrderEstimates';
 import OrderRuns from './OrderRuns';
@@ -49,7 +49,7 @@ class OrderSummary extends Component {
           <hr />
 
           <Col xs={12} md={7}>
-            <EditOrderForm ref="orderForm" />
+            <EditOrderFormContainer ref="orderForm" />
           </Col>
 
           <Col xs={12} md={5}>
