@@ -20,7 +20,7 @@ import {
 import Feature from 'rapidfab/components/Feature';
 
 const statusOptionsMap = {
-  pending: ['cancelled', 'confirmed'],
+  pending: ['cancelled'],
   confirmed: ['cancelled'],
   printing: ['cancelled'],
   printed: ['cancelled', 'shipping', 'complete'],
