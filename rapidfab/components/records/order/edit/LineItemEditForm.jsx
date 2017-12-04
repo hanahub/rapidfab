@@ -66,6 +66,7 @@ const LineItemEditForm = ({
   handleFileChange,
   handleInputChange,
   handleModelDownload,
+  isRestricted,
   lineItem,
   notes,
   baseMaterial,
@@ -100,22 +101,26 @@ const LineItemEditForm = ({
       </FormRow>
 
       <FormRow id="field.status" defaultMessage="Status">
-        <FormControl
-          name="status"
-          componentClass="select"
-          onChange={handleInputChange}
-          value={status}
-          required
-        >
-          <option value={status}>{ORDER_STATUS_MAP[status]}</option>
-          {statusOptions
-            ? statusOptions.map(statusOption => (
-                <option key={statusOption} value={statusOption}>
-                  {ORDER_STATUS_MAP[statusOption]}
-                </option>
-              ))
-            : null}
-        </FormControl>
+        {isRestricted ? (
+          <FormControl.Static>{ORDER_STATUS_MAP[status]}</FormControl.Static>
+        ) : (
+          <FormControl
+            name="status"
+            componentClass="select"
+            onChange={handleInputChange}
+            value={status}
+            required
+          >
+            <option value={status}>{ORDER_STATUS_MAP[status]}</option>
+            {statusOptions
+              ? statusOptions.map(statusOption => (
+                  <option key={statusOption} value={statusOption}>
+                    {ORDER_STATUS_MAP[statusOption]}
+                  </option>
+                ))
+              : null}
+          </FormControl>
+        )}
       </FormRow>
 
       {lineItem.itar ? null : (
@@ -306,6 +311,7 @@ LineItemEditForm.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleModelDownload: PropTypes.func.isRequired,
+  isRestricted: PropTypes.bool.isRequired,
   lineItem: PropTypes.shape({}).isRequired,
   baseMaterial: PropTypes.string.isRequired,
   baseMaterialColor: PropTypes.string.isRequired,

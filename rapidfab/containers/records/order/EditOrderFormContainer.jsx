@@ -1,7 +1,11 @@
 import { reduxForm } from 'redux-form';
 
 import Actions from 'rapidfab/actions';
-import { getShippings, getUsers } from 'rapidfab/selectors';
+import {
+  getShippings,
+  getUsers,
+  isCurrentUserRestricted,
+} from 'rapidfab/selectors';
 
 import EditOrderForm from 'rapidfab/components/records/order/edit/EditOrderForm';
 
@@ -60,8 +64,9 @@ const mapStateToProps = state => {
   const { created } = initialValues;
   const shippings = getShippings(state);
   const users = getUsers(state);
+  const isRestricted = isCurrentUserRestricted(state);
 
-  return { initialValues, created, shippings, users };
+  return { initialValues, created, isRestricted, shippings, users };
 };
 
 export default reduxForm(
