@@ -51,10 +51,10 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['post-processor-type'].list());
       dispatch(Actions.Api.wyatt.shipping.list());
       dispatch(Actions.Api.pao.users.list());
-      const print = dispatch(Actions.Api.wyatt.print.get(props.uuid));
+      const printRequest = dispatch(Actions.Api.wyatt.print.get(props.uuid));
 
       // GET model
-      print
+      printRequest
         .then(response =>
           dispatch(
             Actions.Api.wyatt['line-item'].get(
@@ -69,25 +69,35 @@ function mapDispatchToProps(dispatch) {
         });
 
       // GET order
-      print.then(response => {
+      printRequest.then(response => {
         dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)));
       });
 
       // GET all related prints
-      const prints = print.then(response =>
+      const printsRequest = printRequest.then(response =>
         dispatch(
           Actions.Api.wyatt.print.list({ line_item: response.json.line_item })
         )
       );
 
       // LIST events based on collected uris
-      Promise.all([print, prints]).then(promises => {
+      Promise.all([printRequest, printsRequest]).then(([print, prints]) => {
+        const {
+          line_item: lineItemUri,
+          order: orderUri,
+          uri: printUri,
+        } = print.json;
+        const printsUris = prints.json.resources.map(resource => resource.uri);
+        const runUris = prints.json.resources.reduce(
+          (uris, resource) => (resource.run ? [...uris, resource.run] : uris),
+          []
+        );
         const uris = [
-          promises[0].json.line_item,
-          promises[0].json.order,
-          ..._.compact(
-            promises[1].json.resources.map(resource => resource.run)
-          ),
+          lineItemUri,
+          orderUri,
+          printUri,
+          ...printsUris,
+          ...runUris,
         ];
 
         _.chunk(uris, 10).map(chunk =>
