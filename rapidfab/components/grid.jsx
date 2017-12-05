@@ -16,7 +16,7 @@ import StatusDot from 'rapidfab/components/statusDot';
 
 export const IdColumn = (resource, field, records, property = 'id') => {
   const recordsByUri = _.keyBy(records, 'uri');
-  return ({ rowData }) => {
+  const Column = ({ rowData }) => {
     let record = rowData;
     if (field) {
       const uri = rowData[field];
@@ -27,6 +27,10 @@ export const IdColumn = (resource, field, records, property = 'id') => {
       <a href={`#/records/${resource}/${record.uuid}`}>{record[property]}</a>
     );
   };
+  Column.propTypes = {
+    rowData: PropTypes.shape({}).isRequired,
+  };
+  return Column;
 };
 
 export const StatusColumn = (field, records, mapping) => {
@@ -35,7 +39,7 @@ export const StatusColumn = (field, records, mapping) => {
   // mapping: records should have a status, and the mapping maps a status string
   //   to a class string defined in main.less. can optionally provide message for a popover
   const recordsByUri = _.keyBy(records, 'uri');
-  return ({ rowData }) => {
+  const Column = ({ rowData }) => {
     const uri = rowData[field];
     const record = recordsByUri[uri];
 
@@ -47,14 +51,18 @@ export const StatusColumn = (field, records, mapping) => {
     }
     return <StatusDot status="unknown" message="Modeler not found" />;
   };
+  Column.propTypes = {
+    rowData: PropTypes.shape({}).isRequired,
+  };
+  return Column;
 };
 
-export const MappedColumn = (field, mapping) =>
+export const MappedColumn = (field, mapping) => {
   // field: field to search for on rowdata e.g. "status"
   // mapping: an object mapping with keys matching records,
   // and values being i18n formatted messages.
   //     if no match is found in the mapping, throws an error.
-  ({ rowData }) => {
+  const Column = ({ rowData }) => {
     const message = mapping[rowData[field]];
 
     if (!message) {
@@ -62,13 +70,24 @@ export const MappedColumn = (field, mapping) =>
     }
     return message;
   };
+  Column.propTypes = {
+    rowData: PropTypes.shape({}).isRequired,
+  };
+  return Column;
+};
 
 export const DateTimeColumn = ({ data }) =>
   data ? <FormattedDateTime value={data} /> : null;
 
+DateTimeColumn.propTypes = { data: PropTypes.string.isRequired };
+
 export const TimeColumn = ({ data }) => <FormattedTime value={data} />;
 
+TimeColumn.propTypes = { data: PropTypes.string.isRequired };
+
 export const DateColumn = ({ data }) => <FormattedDate value={data} />;
+
+DateColumn.propTypes = { data: PropTypes.string.isRequired };
 
 export const ImageColumn = ({ data }) => (
   <div style={{ textAlign: 'center' }}>
@@ -76,9 +95,13 @@ export const ImageColumn = ({ data }) => (
   </div>
 );
 
+ImageColumn.propTypes = { data: PropTypes.string.isRequired };
+
 export const CapitalizeColumn = ({ data }) => (
   <span style={{ textTransform: 'capitalize' }}>{data}</span>
 );
+
+CapitalizeColumn.propTypes = { data: PropTypes.string.isRequired };
 
 export const BooleanColumn = ({ data }) => (
   <div style={{ textAlign: 'center' }}>
@@ -86,15 +109,23 @@ export const BooleanColumn = ({ data }) => (
   </div>
 );
 
+BooleanColumn.propTypes = { data: PropTypes.string.isRequired };
+
 export const NumberColumn = ({ data }) => <FormattedNumber value={data} />;
 
+NumberColumn.propTypes = { data: PropTypes.string.isRequired };
+
 export const VolumeColumn = ({ data }) => <FormattedVolume value={data} />;
+
+VolumeColumn.propTypes = { data: PropTypes.string.isRequired };
 
 export const ColorColumn = ({ data }) => (
   <div
     style={{ margin: '0 auto', width: 24, height: 24, backgroundColor: data }}
   />
 );
+
+ColorColumn.propTypes = { data: PropTypes.string.isRequired };
 
 const Grid = ({
   data,
@@ -104,8 +135,8 @@ const Grid = ({
   useFixedHeader,
   bodyHeight,
   showTableHeading,
-  initialSort = null,
-  initialSortAscending = true,
+  initialSort,
+  initialSortAscending,
 }) => (
   <Griddle
     bodyHeight={bodyHeight}
@@ -127,16 +158,26 @@ const Grid = ({
 );
 
 Grid.propTypes = {
+  bodyHeight: PropTypes.number,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
     PropTypes.object,
   ]),
-  columnMeta: PropTypes.arrayOf(PropTypes.object),
-  columns: PropTypes.arrayOf(PropTypes.string),
+  columnMeta: PropTypes.arrayOf(PropTypes.object).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rowMeta: PropTypes.shape({}),
+  showTableHeading: PropTypes.bool,
+  useFixedHeader: PropTypes.bool,
 };
 
 Grid.defaultProps = {
+  bodyHeight: null,
   data: [],
+  initialSort: null,
+  initialAscending: false,
+  useFixedHeader: false,
+  rowMeta: null,
+  showTableHeading: false,
 };
 
 export default Grid;

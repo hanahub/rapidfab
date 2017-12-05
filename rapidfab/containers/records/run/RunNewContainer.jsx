@@ -113,6 +113,7 @@ function mapStateToProps(state) {
   );
 
   const printablePrints = lineItemPrints.filter(print => {
+    /* eslint-disable no-console */
     if (!print.process_step) {
       console.warn(`No process step for ${print.uri}`);
       return false;
@@ -137,8 +138,6 @@ function mapStateToProps(state) {
     console.warn(
       `Could not find a printer type ${processStep.process_type_uri} for process step ${processStep.uri}`
     );
-    return false;
-
     return false;
   });
 
