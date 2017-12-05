@@ -12,15 +12,23 @@ class FlashMessages extends Component {
 
   render() {
     const { errors } = this.props;
+    // errors do not have unique identifiers,
+    // so we must use the index
+    /* eslint-disable */
     return (
       <div>
         {errors.map((error, index) => (
-          <Alert bsStyle="danger" className="error-alert" key={index}>
+          <Alert
+            bsStyle="danger"
+            className="error-alert"
+            key={`${index}-${error.code}`}
+          >
             <p>{error.title || error.code}</p>
           </Alert>
         ))}
       </div>
     );
+    /* eslint-enable */
   }
 }
 
