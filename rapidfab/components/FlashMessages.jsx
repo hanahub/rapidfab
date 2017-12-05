@@ -33,7 +33,10 @@ class FlashMessages extends Component {
 }
 
 FlashMessages.defaultProps = { errors: [] };
-FlashMessages.propTypes = { errors: PropTypes.array };
+FlashMessages.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  errors: PropTypes.arrayOf(PropTypes.object),
+};
 
 const mapStateToProps = state => ({
   errors: Object.keys(state.ui).reduce(
