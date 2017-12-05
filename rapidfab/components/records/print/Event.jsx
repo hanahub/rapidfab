@@ -85,12 +85,12 @@ const ResourceValue = connect((state, ownProps) => {
       };
       return (
         <span>
-          <a href={snapshotContent} target="_blank">
+          <a onClick={handleDownload} role="button" tabIndex={0}>
             {name}
           </a>
           {` `}
-          <a onClick={handleDownload} role="button" tabIndex={0}>
-            <FontAwesome name="cloud-download" />
+          <a href={snapshotContent} target="_blank">
+            <FontAwesome name="picture-o" />
           </a>
         </span>
       );
