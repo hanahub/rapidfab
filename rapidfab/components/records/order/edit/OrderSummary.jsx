@@ -29,7 +29,9 @@ class OrderSummary extends Component {
     event.preventDefault();
     // redux-form v5 requires refs for remote form submission
     // this should be refactored out, either with redux-form v6 or with no redux-form
+    /* eslint-disable react/no-string-refs */
     this.refs.orderForm.submit();
+    /* eslint-enable react/no-string-refs */
   }
 
   onDelete() {
@@ -49,7 +51,9 @@ class OrderSummary extends Component {
           <hr />
 
           <Col xs={12} md={7}>
+            {/* eslint-disable react/no-string-refs */}
             <EditOrderFormContainer ref="orderForm" />
+            {/* eslint-enable react/no-string-refs */}
           </Col>
 
           <Col xs={12} md={5}>
