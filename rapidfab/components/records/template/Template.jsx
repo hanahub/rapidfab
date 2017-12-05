@@ -122,10 +122,10 @@ class Template extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.loading && !nextProps.fetching) {
-      const template = this.props.template || {};
+      const template = nextProps.template || {};
       this.setState({
         template,
-        steps: this.props.steps,
+        steps: nextProps.steps,
         loading: false,
       });
     }
