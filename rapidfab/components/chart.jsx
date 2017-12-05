@@ -80,7 +80,7 @@ class Chart extends Component {
     for (
       let index = 0;
       index < data.datasets.length && index < chart.data.datasets.length;
-      ++index
+      index += 1
     ) {
       chart.data.datasets[index].data = data.datasets[index].data;
     }
