@@ -27,16 +27,26 @@ class FlashMessages extends Component {
 FlashMessages.defaultProps = { errors: [] };
 FlashMessages.propTypes = { errors: PropTypes.array };
 
-const mapStateToProps = state => {
-  let errors = [];
-  for (const service in state.ui) {
-    for (const resource in state.ui[service]) {
-      for (const method in state.ui[service][resource]) {
-        errors = errors.concat(state.ui[service][resource][method].errors);
-      }
-    }
-  }
-  return { errors };
-};
+const mapStateToProps = state => ({
+  errors: Object.keys(state.ui).reduce(
+    (errors, service) => [
+      ...errors,
+      ...Object.keys(state.ui[service]).reduce(
+        (serviceErrors, resource) => [
+          ...serviceErrors,
+          ...Object.keys(state.ui[service][resource]).reduce(
+            (resourceErrors, method) => [
+              ...resourceErrors,
+              ...state.ui[service][resource][method].errors,
+            ],
+            []
+          ),
+        ],
+        []
+      ),
+    ],
+    []
+  ),
+});
 
 export default connect(mapStateToProps)(FlashMessages);
