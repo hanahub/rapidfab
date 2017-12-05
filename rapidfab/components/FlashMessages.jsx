@@ -14,7 +14,7 @@ class FlashMessages extends Component {
     const { errors } = this.props;
     // errors do not have unique identifiers,
     // so we must use the index
-    /* eslint-disable */
+    /* eslint-disable react/no-array-index-key */
     return (
       <div>
         {errors.map((error, index) => (
@@ -28,7 +28,7 @@ class FlashMessages extends Component {
         ))}
       </div>
     );
-    /* eslint-enable */
+    /* eslint-enable react/no-array-index-key */
   }
 }
 

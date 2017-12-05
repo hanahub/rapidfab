@@ -46,6 +46,7 @@ class Chart extends Component {
         dataset
       );
     });
+    /* eslint-disable react/no-string-refs */
     const chart = new ChartJS(this.refs.chart, {
       type: this.props.type,
       data: _.assign({}, this.props.data, {
@@ -67,7 +68,10 @@ class Chart extends Component {
         this.props.options
       ),
     });
+    /* eslint-enable react/no-string-refs */
+    /* eslint-disable react/no-did-mount-set-state */
     this.setState({ chart });
+    /* eslint-enable react/no-did-mount-set-state */
   }
 
   componentDidUpdate() {
@@ -76,7 +80,7 @@ class Chart extends Component {
     for (
       let index = 0;
       index < data.datasets.length && index < chart.data.datasets.length;
-      ++index
+      index += 1
     ) {
       chart.data.datasets[index].data = data.datasets[index].data;
     }
@@ -85,7 +89,9 @@ class Chart extends Component {
   }
 
   render() {
+    /* eslint-disable react/no-string-refs */
     return <canvas ref="chart" height="300" width="600" />;
+    /* eslint-disable react/no-string-refs */
   }
 }
 
