@@ -69,7 +69,9 @@ class Chart extends Component {
       ),
     });
     /* eslint-enable react/no-string-refs */
+    /* eslint-disable react/no-did-mount-set-state */
     this.setState({ chart });
+    /* eslint-enable react/no-did-mount-set-state */
   }
 
   componentDidUpdate() {
