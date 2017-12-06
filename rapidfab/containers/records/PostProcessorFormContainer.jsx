@@ -22,7 +22,9 @@ class PostProcessorFormContainer extends React.Component {
         loading: false,
         location: postProcessor.location,
         postProcessorType: postProcessor.post_processor_type,
-        duration: postProcessor.duration.toString(),
+        duration: postProcessor.duration
+          ? postProcessor.duration.toString()
+          : '',
       };
     } else {
       this.state = {
