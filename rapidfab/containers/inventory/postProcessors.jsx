@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
@@ -30,23 +29,21 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const postProcessor = state.ui.wyatt['post-processor'];
-  const postProcessorType = state.ui.wyatt['post-processor-type'];
-  const { location } = state.ui.wyatt;
+  const locationApi = state.ui.wyatt.location.list;
+  const postProcessorApi = state.ui.wyatt['post-processor'].list;
+  const postProcessorTypeApi = state.ui.wyatt['post-processor-type'].list;
 
   return {
     postProcessors: Selectors.getPostProcessors(state),
     postProcessorTypes: Selectors.getPostProcessorTypes(state),
     locations: Selectors.getLocations(state),
     fetching:
-      location.list.fetching ||
-      postProcessorType.list.fetching ||
-      postProcessor.list.fetching,
-    apiErrors: _.concat(
-      location.list.errors,
-      postProcessorType.list.errors,
-      postProcessor.list.errors
-    ),
+      locationApi.count === 0 ||
+      (locationApi.count === 1 && locationApi.fetching) ||
+      (postProcessorApi.count === 0 ||
+        (postProcessorApi.count === 1 && postProcessorApi.fetching)) ||
+      (postProcessorTypeApi.count === 0 ||
+        (postProcessorTypeApi.count === 1 && postProcessorTypeApi.fetching)),
   };
 }
 

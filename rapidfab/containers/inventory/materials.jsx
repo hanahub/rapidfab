@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
@@ -24,14 +23,19 @@ MaterialsContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { material, manufacturer } = state.ui.wyatt;
+  const manufacturerApi = state.ui.wyatt.manufacturer.list;
+  const materialApi = state.ui.wyatt.material.list;
+  const fetching =
+    manufacturerApi.count === 0 ||
+    (manufacturerApi.count === 1 && manufacturerApi.fetching) ||
+    (materialApi.count === 0 ||
+      (materialApi.count === 1 && materialApi.fetching));
 
   return {
     bureau: Selectors.getBureauUri(state),
+    fetching,
     materials: Selectors.getMaterials(state),
     manufacturers: Selectors.getManufacturers(state),
-    fetching: material.list.fetching || manufacturer.list.fetching,
-    apiErrors: _.concat(material.list.errors, manufacturer.list.errors),
   };
 }
 

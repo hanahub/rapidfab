@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
+
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
 import Grid, {
   IdColumn,
@@ -11,8 +13,6 @@ import Grid, {
   CapitalizeColumn,
   ColorColumn,
 } from 'rapidfab/components/grid';
-
-import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const MaterialsGrid = ({ materials, manufacturers }) => (
   <Grid
@@ -82,7 +82,7 @@ MaterialsGrid.propTypes = {
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
+const Materials = ({ materials, manufacturers, fetching }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['materials']} />
 
@@ -105,11 +105,7 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col xs={12}>
@@ -124,7 +120,6 @@ const Materials = ({ materials, manufacturers, fetching, apiErrors }) => (
 );
 
 Materials.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
