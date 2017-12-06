@@ -17,10 +17,8 @@ const filterEvents = events => {
   return events.filter(event => {
     const isVisibleEvent = !hiddenEvents.includes(event.key);
     const isUpdateEvent = event.creation !== eventCreationTime;
-    const isFullEvent =
-      event.current_value !== null && event.previous_value !== null;
     const isRealEvent = event.current_value !== event.previous_value;
-    return isVisibleEvent && isUpdateEvent && isFullEvent && isRealEvent;
+    return isVisibleEvent && isUpdateEvent && isRealEvent;
   });
 };
 

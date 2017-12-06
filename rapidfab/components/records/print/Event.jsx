@@ -30,6 +30,8 @@ const VALUE_MAPPING = Object.assign(
 const REFERENCE_MAPPING = {
   'line-item': 'Line Item',
   order: 'Order',
+  print: 'Print',
+  run: 'Run',
 };
 
 const extractResourceType = uri => {
