@@ -67,9 +67,11 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
+  const manufacturer = Selectors.getRouteResource(state, props);
+  const bureau = Selectors.getBureau(state);
   return {
     uuid: Selectors.getRoute(state, props).uuid,
-    initialValues: Selectors.getRouteResource(state, props),
+    initialValues: manufacturer || { bureau: bureau.uri },
     submitting: Selectors.getResourceFetching(state, 'wyatt.manufacturer'),
     apiErrors: Selectors.getResourceErrors(state, 'wyatt.manufacturer'),
   };
