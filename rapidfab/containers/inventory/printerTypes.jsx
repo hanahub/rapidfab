@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Actions from 'rapidfab/actions';
@@ -30,14 +29,18 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const printerType = state.ui.wyatt['printer-type'];
-  const { manufacturer } = state.ui.wyatt;
+  const manufacturerApi = state.ui.wyatt.manufacturer.list;
+  const printerTypeApi = state.ui.wyatt['printer-type'].list;
+  const fetching =
+    manufacturerApi.count === 0 ||
+    (manufacturerApi.count === 1 && manufacturerApi.fetching) ||
+    (printerTypeApi.count === 0 ||
+      (printerTypeApi.count === 1 && printerTypeApi.fetching));
 
   return {
     manufacturers: Selectors.getManufacturers(state),
     printerTypes: Selectors.getPrinterTypes(state),
-    fetching: manufacturer.list.fetching || printerType.list.fetching,
-    apiErrors: _.concat(manufacturer.list.errors, printerType.list.errors),
+    fetching,
   };
 }
 
