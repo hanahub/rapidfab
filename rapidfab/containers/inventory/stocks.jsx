@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import StocksComponent from 'rapidfab/components/inventory/stocks';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
+
+import StocksComponent from 'rapidfab/components/inventory/stocks';
 
 class StocksContainer extends Component {
   componentWillMount() {
@@ -20,34 +23,24 @@ StocksContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: bureau => {
-      dispatch(Actions.Api.wyatt.material.list({ bureau }));
-      dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt.stock.list());
-    },
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onInitialize: bureau => {
+    dispatch(Actions.Api.wyatt.material.list({ bureau }));
+    dispatch(Actions.Api.wyatt.location.list());
+    dispatch(Actions.Api.wyatt.stock.list());
+  },
+});
 
-function mapStateToProps(state) {
-  const materialApi = state.ui.wyatt.material.list;
-  const locationApi = state.ui.wyatt.location.list;
-  const stockApi = state.ui.wyatt.stock.list;
-  const fetching =
-    materialApi.count === 0 ||
-    (materialApi.count === 1 && materialApi.fetching) ||
-    (locationApi.count === 0 ||
-      (locationApi.count === 1 && locationApi.fetching)) ||
-    (stockApi.count === 0 || (stockApi.count === 1 && stockApi.fetching));
-
-  return {
-    bureau: Selectors.getBureauUri(state),
-    fetching,
-    materials: Selectors.getMaterials(state),
-    locations: Selectors.getLocations(state),
-    stocks: Selectors.getStocks(state),
-  };
-}
+const mapStateToProps = state => ({
+  bureau: Selectors.getBureauUri(state),
+  fetching: isFetchingInitial(
+    state.ui.wyatt.material.list,
+    state.ui.wyatt.location.list,
+    state.ui.wyatt.stock.list
+  ),
+  locations: Selectors.getLocations(state),
+  materials: Selectors.getMaterials(state),
+  stocks: Selectors.getStocks(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(StocksContainer);

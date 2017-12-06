@@ -1,10 +1,12 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import PrintersComponent from 'rapidfab/components/inventory/printers';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
+
+import PrintersComponent from 'rapidfab/components/inventory/printers';
 
 class PrintersContainer extends Component {
   componentWillMount() {
@@ -20,29 +22,26 @@ PrintersContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: () => {
-      dispatch(Actions.Api.wyatt['printer-type'].list());
-      dispatch(Actions.Api.wyatt.printer.list());
-      dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.nautilus.modeler.list());
-    },
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onInitialize: () => {
+    dispatch(Actions.Api.nautilus.modeler.list());
+    dispatch(Actions.Api.wyatt.location.list());
+    dispatch(Actions.Api.wyatt.printer.list());
+    dispatch(Actions.Api.wyatt['printer-type'].list());
+  },
+});
 
-function mapStateToProps(state) {
-  const printerType = state.ui.wyatt['printer-type'];
-  const { printer } = state.ui.wyatt;
-
-  return {
-    printers: Selectors.getPrinters(state),
-    locations: Selectors.getLocations(state),
-    printerTypes: Selectors.getPrinterTypes(state),
-    modelers: Selectors.getModelers(state),
-    fetching: printer.list.fetching || printerType.list.fetching,
-    apiErrors: _.concat(printer.list.errors, printerType.list.errors),
-  };
-}
+const mapStateToProps = state => ({
+  fetching: isFetchingInitial(
+    state.ui.nautilus.modeler.list,
+    state.ui.wyatt.location.list,
+    state.ui.wyatt.printer.list,
+    state.ui.wyatt['printer-type'].list
+  ),
+  locations: Selectors.getLocations(state),
+  modelers: Selectors.getModelers(state),
+  printers: Selectors.getPrinters(state),
+  printerTypes: Selectors.getPrinterTypes(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintersContainer);
