@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
 import Grid, {
   IdColumn,
@@ -69,7 +69,7 @@ StocksGrid.propTypes = {
   stocks: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
+const Stocks = ({ stocks, materials, locations, fetching }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['materialStocks']} />
 
@@ -92,11 +92,7 @@ const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col xs={12}>
@@ -115,7 +111,6 @@ const Stocks = ({ stocks, materials, locations, fetching, apiErrors }) => (
 );
 
 Stocks.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,

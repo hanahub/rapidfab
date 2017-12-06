@@ -31,20 +31,22 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { material, location, stock } = state.ui.wyatt;
+  const materialApi = state.ui.wyatt.material.list;
+  const locationApi = state.ui.wyatt.location.list;
+  const stockApi = state.ui.wyatt.stock.list;
+  const fetching =
+    materialApi.count === 0 ||
+    (materialApi.count === 1 && materialApi.fetching) ||
+    (locationApi.count === 0 ||
+      (locationApi.count === 1 && locationApi.fetching)) ||
+    (stockApi.count === 0 || (stockApi.count === 1 && stockApi.fetching));
 
   return {
     bureau: Selectors.getBureauUri(state),
+    fetching,
     materials: Selectors.getMaterials(state),
     locations: Selectors.getLocations(state),
     stocks: Selectors.getStocks(state),
-    fetching:
-      material.list.fetching || location.list.fetching || stock.list.fetching,
-    apiErrors: [
-      ...material.list.errors,
-      ...location.list.errors,
-      ...stock.list.errors,
-    ],
   };
 }
 
