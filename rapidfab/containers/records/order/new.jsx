@@ -126,13 +126,17 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { material, order } = state.ui.wyatt;
+  const materialApi = state.ui.wyatt.material.list;
+  const templateApi = state.ui.wyatt.template.list;
+  const thirdPartyApi = state.ui.wyatt['third-party'].list;
 
   const fetching =
-    material.list.fetching ||
-    order.post.fetching ||
-    state.ui.wyatt['third-party'].list.fetching ||
-    state.ui.wyatt.template.list.fetching;
+    materialApi.count === 0 ||
+    (materialApi.count === 1 && materialApi.fetching) ||
+    (templateApi.count === 0 ||
+      (templateApi.count === 1 && templateApi.fetching)) ||
+    (thirdPartyApi.count === 0 ||
+      (thirdPartyApi.count === 1 && thirdPartyApi.fetching));
 
   const uploadModel = state.uploadModel;
   const processingModel = state.resources[uploadModel.modelUuid];
