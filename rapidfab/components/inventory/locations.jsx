@@ -6,8 +6,8 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
-import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
 export const ContactColumn = ({ rowData, metadata }) => {
@@ -97,7 +97,7 @@ LocationsGrid.propTypes = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Locations = ({ locations, users, fetching, apiErrors }) => (
+const Locations = ({ locations, users, fetching }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['locations']} />
 
@@ -118,11 +118,7 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col xs={12}>
@@ -137,7 +133,6 @@ const Locations = ({ locations, users, fetching, apiErrors }) => (
 );
 
 Locations.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,

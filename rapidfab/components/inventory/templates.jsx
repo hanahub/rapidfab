@@ -5,8 +5,8 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
-import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 
 const TemplateGrid = ({ records }) => (
@@ -32,7 +32,7 @@ TemplateGrid.propTypes = {
   records: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Templates = ({ templates, fetching, apiErrors }) => (
+const Templates = ({ templates, fetching }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['templates']} />
 
@@ -55,11 +55,7 @@ const Templates = ({ templates, fetching, apiErrors }) => (
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col
@@ -78,7 +74,6 @@ const Templates = ({ templates, fetching, apiErrors }) => (
 );
 
 Templates.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   templates: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

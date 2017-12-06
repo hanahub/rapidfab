@@ -1,10 +1,12 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import PostProcessorsComponent from 'rapidfab/components/inventory/postProcessors';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
+
+import PostProcessorsComponent from 'rapidfab/components/inventory/postProcessors';
 
 class PostProcessorsContainer extends Component {
   componentDidMount() {
@@ -19,36 +21,24 @@ PostProcessorsContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: () => {
-      dispatch(Actions.Api.wyatt['post-processor-type'].list());
-      dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt['post-processor'].list());
-    },
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onInitialize: () => {
+    dispatch(Actions.Api.wyatt['post-processor-type'].list());
+    dispatch(Actions.Api.wyatt.location.list());
+    dispatch(Actions.Api.wyatt['post-processor'].list());
+  },
+});
 
-function mapStateToProps(state) {
-  const postProcessor = state.ui.wyatt['post-processor'];
-  const postProcessorType = state.ui.wyatt['post-processor-type'];
-  const { location } = state.ui.wyatt;
-
-  return {
-    postProcessors: Selectors.getPostProcessors(state),
-    postProcessorTypes: Selectors.getPostProcessorTypes(state),
-    locations: Selectors.getLocations(state),
-    fetching:
-      location.list.fetching ||
-      postProcessorType.list.fetching ||
-      postProcessor.list.fetching,
-    apiErrors: _.concat(
-      location.list.errors,
-      postProcessorType.list.errors,
-      postProcessor.list.errors
-    ),
-  };
-}
+const mapStateToProps = state => ({
+  postProcessors: Selectors.getPostProcessors(state),
+  postProcessorTypes: Selectors.getPostProcessorTypes(state),
+  locations: Selectors.getLocations(state),
+  fetching: isFetchingInitial(
+    state.ui.wyatt.location.list,
+    state.ui.wyatt['post-processor'].list,
+    state.ui.wyatt['post-processor-type'].list
+  ),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   PostProcessorsContainer

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import StocksComponent from 'rapidfab/components/inventory/stocks';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
+
+import StocksComponent from 'rapidfab/components/inventory/stocks';
 
 class StocksContainer extends Component {
   componentWillMount() {
@@ -20,32 +23,24 @@ StocksContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: bureau => {
-      dispatch(Actions.Api.wyatt.material.list({ bureau }));
-      dispatch(Actions.Api.wyatt.location.list());
-      dispatch(Actions.Api.wyatt.stock.list());
-    },
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onInitialize: bureau => {
+    dispatch(Actions.Api.wyatt.material.list({ bureau }));
+    dispatch(Actions.Api.wyatt.location.list());
+    dispatch(Actions.Api.wyatt.stock.list());
+  },
+});
 
-function mapStateToProps(state) {
-  const { material, location, stock } = state.ui.wyatt;
-
-  return {
-    bureau: Selectors.getBureauUri(state),
-    materials: Selectors.getMaterials(state),
-    locations: Selectors.getLocations(state),
-    stocks: Selectors.getStocks(state),
-    fetching:
-      material.list.fetching || location.list.fetching || stock.list.fetching,
-    apiErrors: [
-      ...material.list.errors,
-      ...location.list.errors,
-      ...stock.list.errors,
-    ],
-  };
-}
+const mapStateToProps = state => ({
+  bureau: Selectors.getBureauUri(state),
+  fetching: isFetchingInitial(
+    state.ui.wyatt.material.list,
+    state.ui.wyatt.location.list,
+    state.ui.wyatt.stock.list
+  ),
+  locations: Selectors.getLocations(state),
+  materials: Selectors.getMaterials(state),
+  stocks: Selectors.getStocks(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(StocksContainer);

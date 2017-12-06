@@ -1,13 +1,15 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import MaterialsComponent from 'rapidfab/components/inventory/materials';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
 
+import MaterialsComponent from 'rapidfab/components/inventory/materials';
+
 class MaterialsContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { bureau, dispatch } = this.props;
     dispatch(Actions.Api.wyatt.manufacturer.list());
     dispatch(Actions.Api.wyatt.material.list({ bureau }));
@@ -23,16 +25,14 @@ MaterialsContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-  const { material, manufacturer } = state.ui.wyatt;
-
-  return {
-    bureau: Selectors.getBureauUri(state),
-    materials: Selectors.getMaterials(state),
-    manufacturers: Selectors.getManufacturers(state),
-    fetching: material.list.fetching || manufacturer.list.fetching,
-    apiErrors: _.concat(material.list.errors, manufacturer.list.errors),
-  };
-}
+const mapStateToProps = state => ({
+  bureau: Selectors.getBureauUri(state),
+  fetching: isFetchingInitial(
+    state.ui.wyatt.manufacturer.list,
+    state.ui.wyatt.material.list
+  ),
+  materials: Selectors.getMaterials(state),
+  manufacturers: Selectors.getManufacturers(state),
+});
 
 export default connect(mapStateToProps)(MaterialsContainer);

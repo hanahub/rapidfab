@@ -5,9 +5,9 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Grid, { IdColumn } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
-import Error from 'rapidfab/components/error';
 
 const PostProcessorsGrid = ({
   postProcessors,
@@ -67,11 +67,10 @@ PostProcessorsGrid.propTypes = {
 };
 
 const PostProcessors = ({
-  postProcessors,
-  locations,
-  postProcessorTypes,
   fetching,
-  apiErrors,
+  locations,
+  postProcessors,
+  postProcessorTypes,
 }) => (
   <BS.Grid fluid>
     <BreadcrumbNav breadcrumbs={['postProcessors']} />
@@ -95,11 +94,7 @@ const PostProcessors = ({
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
     <BS.Row>
       <BS.Col xs={12}>
@@ -118,7 +113,6 @@ const PostProcessors = ({
 );
 
 PostProcessors.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -1,10 +1,11 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
 import PostProcessorTypesComponent from 'rapidfab/components/inventory/postProcessorTypes';
 import * as Selectors from 'rapidfab/selectors';
+
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 
 class PostProcessorTypesContainer extends Component {
   componentWillMount() {
@@ -31,23 +32,16 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const postProcessorType = state.ui.wyatt['post-processor-type'];
-  const { manufacturer, material } = state.ui.wyatt;
-
   return {
     bureau: Selectors.getBureauUri(state),
+    fetching: isFetchingInitial(
+      state.ui.wyatt['post-processor-type'].list,
+      state.ui.wyatt.manufacturer.list,
+      state.ui.wyatt.material.list
+    ),
     manufacturers: Selectors.getManufacturers(state),
     materials: Selectors.getMaterials(state),
     postProcessorTypes: Selectors.getPostProcessorTypes(state),
-    fetching:
-      manufacturer.list.fetching ||
-      postProcessorType.list.fetching ||
-      material.list.fetching,
-    apiErrors: _.concat(
-      manufacturer.list.errors,
-      postProcessorType.list.errors,
-      material.list.errors
-    ),
   };
 }
 

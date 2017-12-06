@@ -1,10 +1,12 @@
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import PrinterTypesComponent from 'rapidfab/components/inventory/printerTypes';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
+
+import PrinterTypesComponent from 'rapidfab/components/inventory/printerTypes';
 
 class PrinterTypesContainer extends Component {
   componentWillMount() {
@@ -20,26 +22,21 @@ PrinterTypesContainer.propTypes = {
   onInitialize: PropTypes.func.isRequired,
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    onInitialize: () => {
-      dispatch(Actions.Api.wyatt.manufacturer.list());
-      dispatch(Actions.Api.wyatt['printer-type'].list());
-    },
-  };
-}
+const mapDispatchToProps = dispatch => ({
+  onInitialize: () => {
+    dispatch(Actions.Api.wyatt.manufacturer.list());
+    dispatch(Actions.Api.wyatt['printer-type'].list());
+  },
+});
 
-function mapStateToProps(state) {
-  const printerType = state.ui.wyatt['printer-type'];
-  const { manufacturer } = state.ui.wyatt;
-
-  return {
-    manufacturers: Selectors.getManufacturers(state),
-    printerTypes: Selectors.getPrinterTypes(state),
-    fetching: manufacturer.list.fetching || printerType.list.fetching,
-    apiErrors: _.concat(manufacturer.list.errors, printerType.list.errors),
-  };
-}
+const mapStateToProps = state => ({
+  fetching: isFetchingInitial(
+    state.ui.wyatt.manufacturer.list,
+    state.ui.wyatt['printer-type'].list
+  ),
+  manufacturers: Selectors.getManufacturers(state),
+  printerTypes: Selectors.getPrinterTypes(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   PrinterTypesContainer
