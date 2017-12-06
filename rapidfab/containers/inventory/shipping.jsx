@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import ShippingsComponent from 'rapidfab/components/inventory/shipping';
+
+import Actions from 'rapidfab/actions';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
+
+import ShippingsComponent from 'rapidfab/components/inventory/shipping';
 
 class ShippingsContainer extends Component {
   componentWillMount() {
@@ -21,17 +24,12 @@ ShippingsContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-  const { shipping } = state.ui.wyatt;
-
-  return {
-    bureau: Selectors.getBureauUri(state),
-    locations: Selectors.getLocations(state),
-    shippings: Selectors.getShippings(state),
-    users: Selectors.getUsers(state),
-    fetching: shipping.list.fetching,
-    apiErrors: shipping.list.errors,
-  };
-}
+const mapStateToProps = state => ({
+  bureau: Selectors.getBureauUri(state),
+  locations: Selectors.getLocations(state),
+  shippings: Selectors.getShippings(state),
+  users: Selectors.getUsers(state),
+  fetching: isFetchingInitial(state.ui.wyatt.shipping.list),
+});
 
 export default connect(mapStateToProps)(ShippingsContainer);
