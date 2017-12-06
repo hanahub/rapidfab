@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import isFetchingInitial from 'rapidfab/utils/isFetchingInitial';
 import * as Selectors from 'rapidfab/selectors';
 
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
 import NewOrder from 'rapidfab/components/records/order/new/NewOrder';
-import FlashMessages from 'rapidfab/components/FlashMessages';
 
 class NewOrderContainer extends Component {
   componentDidMount() {
@@ -125,32 +126,19 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-function mapStateToProps(state) {
-  const materialApi = state.ui.wyatt.material.list;
-  const templateApi = state.ui.wyatt.template.list;
-  const thirdPartyApi = state.ui.wyatt['third-party'].list;
-
-  const fetching =
-    materialApi.count === 0 ||
-    (materialApi.count === 1 && materialApi.fetching) ||
-    (templateApi.count === 0 ||
-      (templateApi.count === 1 && templateApi.fetching)) ||
-    (thirdPartyApi.count === 0 ||
-      (thirdPartyApi.count === 1 && thirdPartyApi.fetching));
-
-  const uploadModel = state.uploadModel;
-  const processingModel = state.resources[uploadModel.modelUuid];
-
-  return {
-    bureau: Selectors.getBureau(state),
-    materials: Selectors.getMaterials(state),
-    model: processingModel,
-    providers: Selectors.getThirdPartyProviders(state),
-    shippings: Selectors.getShippings(state),
-    templates: Selectors.getTemplates(state),
-    fetching,
-    uploadModel,
-  };
-}
+const mapStateToProps = state => ({
+  bureau: Selectors.getBureau(state),
+  fetching: isFetchingInitial(
+    state.ui.wyatt.material.list,
+    state.ui.wyatt.template.list,
+    state.ui.wyatt['third-party'].list
+  ),
+  materials: Selectors.getMaterials(state),
+  model: state.resources[state.uploadModel.modelUuid],
+  providers: Selectors.getThirdPartyProviders(state),
+  shippings: Selectors.getShippings(state),
+  templates: Selectors.getTemplates(state),
+  uploadModel: state.uploadModel,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewOrderContainer);
