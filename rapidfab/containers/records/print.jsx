@@ -101,7 +101,7 @@ function mapDispatchToProps(dispatch) {
         ];
 
         _.chunk(uris, 10).map(chunk =>
-          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }))
+          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
         );
       });
     },
