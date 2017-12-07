@@ -1,5 +1,7 @@
 import Constants from 'rapidfab/constants';
 
+/* eslint-disable no-console */
+
 class EventStream {
   constructor(url, onEvent) {
     this.url = url;
@@ -31,6 +33,7 @@ class EventStream {
     }
     this.retry = 0;
     this.retryTimeout = null;
+    /* eslint-disable no-constant-condition */
     while (true) {
       try {
         const chunkDelimiterIndex = event.target.responseText.indexOf(
@@ -48,10 +51,10 @@ class EventStream {
         this.onEvent(data);
         this.index = this.index + chunk.length + 1;
       } catch (e) {
-        console.error('Failed to handle eventbus progress', e);
         this.index = event.target.responseText.length;
       }
     }
+    /* eslint-enable no-constant-condition */
   }
 
   onError(event) {
@@ -78,10 +81,13 @@ class EventStream {
 }
 
 function createAction(event) {
-  return _.assign({}, event, {
+  return Object.assign({}, event, {
     type: Constants.EVENT_STREAM_MESSAGE,
   });
 }
+
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-new */
 
 export function subscribe(dispatch, host) {
   new EventStream(host, event => dispatch(createAction(event)));
