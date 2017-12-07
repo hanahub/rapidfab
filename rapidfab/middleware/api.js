@@ -20,6 +20,10 @@ function apiMiddleware({ dispatch, getState }) {
       types,
       uuid,
     } = action;
+    if (!types) {
+      return next(action);
+    }
+
     const [requestType, successType, failureType] = types;
     const createAPIAction = updates =>
       Object.assign(
@@ -32,9 +36,6 @@ function apiMiddleware({ dispatch, getState }) {
         },
         updates
       );
-    if (!types) {
-      return next(action);
-    }
 
     if (
       !Array.isArray(types) ||
