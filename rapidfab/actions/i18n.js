@@ -1,7 +1,8 @@
 import ActionType from 'rapidfab/constants';
 
-export function change(currentLocale, newLocale) {
-  currentLocale = currentLocale || navigator.language;
+/* eslint-disable import/prefer-default-export */
+
+export function change(currentLocale = navigator.language, newLocale) {
   return {
     type: ActionType.LOCALE_CHANGE,
     data: {
