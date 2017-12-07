@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 import { RESOURCES } from 'rapidfab/api';
-import PathToRegexp from 'path-to-regexp';
 import extractUuid from 'rapidfab/utils/extractUuid';
 
 export const initialState = _.reduce(
@@ -15,12 +14,6 @@ export const initialState = _.reduce(
   },
   {}
 );
-
-function reduceResource(state, action) {
-  return _.assign({}, state, {
-    [action.api.resource]: reduceMethod(state[action.api.resource], action),
-  });
-}
 
 function reduceMethod(state, action) {
   const { type, uuid, json, headers } = action;
@@ -41,6 +34,12 @@ function reduceMethod(state, action) {
     default:
       return state;
   }
+}
+
+function reduceResource(state, action) {
+  return _.assign({}, state, {
+    [action.api.resource]: reduceMethod(state[action.api.resource], action),
+  });
 }
 
 function reducer(state = initialState, action) {
