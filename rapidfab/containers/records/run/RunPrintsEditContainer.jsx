@@ -24,7 +24,7 @@ class RunPrintsEditContainer extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
   return {
     onInitialize: bureau => {
       dispatch(Actions.Api.wyatt.order.list({}));
@@ -61,7 +61,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.printer.list());
       dispatch(Actions.Api.wyatt.material.list({ bureau }));
     },
-    onSave: (uri, payload) => dispatch(Actions.Api.wyatt.run.put(uri, payload)),
+    onSave: (uri, payload) => {
+      dispatch(Actions.Api.wyatt.run.put(uri, payload)).then(() =>
+        ownProps.handleSelectTab(1)
+      );
+    },
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
     onUnmount: () => {
       dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
@@ -141,6 +145,7 @@ RunPrintsEditContainer.defaultProps = {
 
 RunPrintsEditContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
+  handleSelectTab: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,

@@ -54,7 +54,9 @@ const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
               </Col>
             </div>
           )}
-          {tab === 2 && <RunPrintsEditContainer />}
+          {tab === 2 && (
+            <RunPrintsEditContainer handleSelectTab={handleSelectTab} />
+          )}
         </Row>
       )}
     </Col>
