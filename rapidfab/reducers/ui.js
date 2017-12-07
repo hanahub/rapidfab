@@ -145,16 +145,18 @@ function reducer(state = initialState, action) {
               [hostResource]: Object.assign(
                 {},
                 state[host][hostResource],
-                ...Object.keys(state[host][hostResource]).map(resourceMethod => ({
+                ...Object.keys(
+                  state[host][hostResource]
+                ).map(resourceMethod => ({
                   [resourceMethod]: Object.assign(
                     {},
                     state[host][hostResource][resourceMethod],
-                    { errors: [] },
-                  )
+                    { errors: [] }
+                  ),
                 }))
-              )
+              ),
             }))
-          )
+          ),
         }))
       );
     }

@@ -13,7 +13,7 @@
     "build": "BUILD_VERSION=$(git describe) COMMIT_HASH=$(git rev-parse HEAD) ./node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "publish": "BUILD_VERSION=$(git describe) ./node_modules/gulp/bin/gulp.js publish",
     "clean": "rm npm-debug.log",
-    "lint:js": "node node_modules/.bin/eslint . --ext .jsx -c .eslintrc.js"
+    "lint:js": "node node_modules/.bin/eslint rapidfab/ --ext .jsx --ext .js"
   },
   "author": "Authentise, Inc.",
   "devDependencies": {
@@ -32,6 +32,7 @@
     "eslint-config-airbnb": "^15.1.0",
     "eslint-config-prettier": "^2.3.0",
     "eslint-import-resolver-webpack": "^0.8.3",
+    "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-prettier": "^2.2.0",

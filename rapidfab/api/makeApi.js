@@ -12,9 +12,9 @@ export const FETCH_CONFIG = {
 
 const GET_CONFIG = {
   headers: {
-    Accept: 'application/json'
-  }
-}
+    Accept: 'application/json',
+  },
+};
 
 export function filtersToQuery(filters) {
   const formatted = [];
@@ -91,7 +91,7 @@ function makePost(hostRoot, resource) {
 function makeGet(hostRoot, resource) {
   return (uuid, config) => {
     let url = uuid;
-    if(!uuid.startsWith('http')) {
+    if (!uuid.startsWith('http')) {
       url = `${hostRoot}/${resource}/`;
       if (uuid) url += `${uuid}/`;
     }
