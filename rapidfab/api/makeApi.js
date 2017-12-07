@@ -137,7 +137,7 @@ function makeList(hostRoot, resource) {
   };
 }
 
-export const postForm = function(
+export function postForm(
   url,
   payload,
   files,
@@ -191,7 +191,7 @@ export const postForm = function(
     }
   });
   return promise;
-};
+}
 
 const makeApi = api =>
   Object.keys(api).reduce((hosts, host) => {
