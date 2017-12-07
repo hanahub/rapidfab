@@ -5,7 +5,6 @@ function jsonTryParse(text) {
   try {
     return JSON.parse(text || null);
   } catch (error) {
-    console.error('Could not parse response as JSON', error);
     return null;
   }
 }
@@ -21,6 +20,7 @@ function apiMiddleware({ dispatch, getState }) {
       types,
       uuid,
     } = action;
+    const [requestType, successType, failureType] = types;
     const createAPIAction = updates =>
       Object.assign(
         {
@@ -50,7 +50,7 @@ function apiMiddleware({ dispatch, getState }) {
 
     const state = getState();
     if (!shouldCallAPI(state)) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         resolve(
           next(
             createAPIAction({
@@ -60,8 +60,6 @@ function apiMiddleware({ dispatch, getState }) {
         );
       });
     }
-
-    const [requestType, successType, failureType] = types;
 
     dispatch(
       createAPIAction({
