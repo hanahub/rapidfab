@@ -155,7 +155,7 @@ export function postForm(
       data.append(key, files[key], files[key].name);
     });
     const http = new XMLHttpRequest();
-    if (http.hasOwnProperty('withCredentials')) {
+    if (Object.prototype.hasOwnProperty.call(http, 'withCredentials')) {
       http.withCredentials = !!withCredentials;
     }
 
