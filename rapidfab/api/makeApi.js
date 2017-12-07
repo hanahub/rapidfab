@@ -141,13 +141,11 @@ export function postForm(
   url,
   payload,
   files,
-  method,
+  method = 'POST',
   withCredentials,
   contentType,
   progressCallback
 ) {
-  method = method || 'POST';
-
   const promise = new Promise((resolve, reject) => {
     const data = new FormData();
     for (var key in payload) {
