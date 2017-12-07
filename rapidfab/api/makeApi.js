@@ -148,16 +148,12 @@ export function postForm(
 ) {
   const promise = new Promise((resolve, reject) => {
     const data = new FormData();
-    for (var key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        data.append(key, payload[key]);
-      }
-    }
-    for (var key in files) {
-      if (files.hasOwnProperty(key)) {
-        data.append(key, files[key], files[key].name);
-      }
-    }
+    Object.keys(payload).forEach(key => {
+      data.append(key, payload[key]);
+    });
+    Object.keys(files).forEach(key => {
+      data.append(key, files[key], files[key].name);
+    });
     const http = new XMLHttpRequest();
     if (http.hasOwnProperty('withCredentials')) {
       http.withCredentials = !!withCredentials;
