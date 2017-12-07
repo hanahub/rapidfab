@@ -39,7 +39,6 @@ function reducer(state = {}, action) {
       try {
         record = hydrateRecord(action.payload);
       } catch (e) {
-        console.warn('Could not handle stream event', e);
         return state;
       }
       return _.assign({}, state, {
