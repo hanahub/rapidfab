@@ -16,17 +16,18 @@ const GET_CONFIG = {
   },
 };
 
-export function filtersToQuery(filters) {
-  const formatted = [];
-  for (const key in filters || {}) {
-    let values = filters[key];
-    if (!values) continue;
-    if (typeof values === 'Array') values = values.join(',');
-    formatted.push(`filter[${key}]=${encodeURIComponent(values)}`);
-  }
-  if (!formatted.length) return;
-  return formatted.join('&');
-}
+export const filtersToQuery = filters =>
+  filters
+    ? Object.keys(filters).reduce(
+        (formattedFilters, filterKey) =>
+          `${formattedFilters}${formattedFilters.length
+            ? '&'
+            : ''}filter[${filterKey}]=${encodeURIComponent(
+            filters[filterKey]
+          )}`,
+        ''
+      )
+    : null;
 
 function makePut(hostRoot, resource) {
   return (uuid, payload, config) => {
