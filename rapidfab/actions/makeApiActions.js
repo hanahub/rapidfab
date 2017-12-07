@@ -109,24 +109,27 @@ function makeRemove(api, host, resource) {
     type: Constants.RESOURCE_MANUAL_REMOVE,
   });
 }
-export function makeApiActions(api, resources) {
-  return _.reduce(
-    resources,
-    (result, resources, host) => {
-      const hostActions = {};
-      for (const resource of resources) {
-        hostActions[resource] = {
-          post: makePost(api, host, resource),
-          list: makeList(api, host, resource),
-          delete: makeDelete(api, host, resource),
-          put: makePut(api, host, resource),
-          get: makeGet(api, host, resource),
-          remove: makeRemove(api, host, resource),
-        };
-      }
-      result[host] = hostActions;
-      return result;
-    },
+
+/* eslint-disable import/prefer-default-export */
+
+export const makeApiActions = (api, endpoints) =>
+  Object.keys(endpoints).reduce(
+    (hosts, host) =>
+      Object.assign({}, hosts, {
+        [host]: endpoints[host].reduce(
+          (resources, resource) =>
+            Object.assign({}, resources, {
+              [resource]: {
+                post: makePost(api, host, resource),
+                list: makeList(api, host, resource),
+                delete: makeDelete(api, host, resource),
+                put: makePut(api, host, resource),
+                get: makeGet(api, host, resource),
+                remove: makeRemove(api, host, resource),
+              },
+            }),
+          {}
+        ),
+      }),
     {}
   );
-}
