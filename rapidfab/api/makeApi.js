@@ -190,9 +190,10 @@ export function postForm(
 const makeApi = api =>
   Object.keys(api).reduce((hosts, host) => {
     const hostRoot = Config.HOST[host.toUpperCase()];
-    return {
+    return Object.assign(
+      {},
       hosts,
-      [host]: api[host].reduce(
+      {[host]: api[host].reduce(
         (resources, resource) =>
           Object.assign({}, resources, {
             [resource]: {
@@ -204,8 +205,8 @@ const makeApi = api =>
             },
           }),
         {}
-      ),
-    };
+      )}
+    );
   }, {});
 
 export default makeApi;
