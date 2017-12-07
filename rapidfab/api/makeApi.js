@@ -29,11 +29,17 @@ export const filtersToQuery = filters =>
       )
     : null;
 
+function sanitizePayload(payload) {
+  const sanitizedPayload = Object.assign({}, payload);
+  if (sanitizedPayload.id) delete sanitizedPayload.id;
+  if (sanitizedPayload.uri) delete sanitizedPayload.uri;
+  if (sanitizedPayload.uuid) delete sanitizedPayload.uuid;
+  return sanitizedPayload;
+}
+
 function makePut(hostRoot, resource) {
   return (uuid, payload, config) => {
-    if (payload.id) delete payload.id;
-    if (payload.uri) delete payload.uri;
-    if (payload.uuid) delete payload.uuid;
+    const sanitizedPayload = sanitizePayload(payload);
 
     return fetch(
       `${hostRoot}/${resource}/${uuid}/`,
@@ -43,7 +49,7 @@ function makePut(hostRoot, resource) {
         {
           credentials: 'include',
           method: 'put',
-          body: JSON.stringify(payload),
+          body: JSON.stringify(sanitizedPayload),
         },
         config
       )
@@ -69,9 +75,7 @@ function makeDelete(hostRoot, resource) {
 
 function makePost(hostRoot, resource) {
   return (payload, config) => {
-    if (payload.id) delete payload.id;
-    if (payload.uri) delete payload.uri;
-    if (payload.uuid) delete payload.uuid;
+    const sanitizedPayload = sanitizePayload(payload);
 
     return fetch(
       `${hostRoot}/${resource}/`,
@@ -81,7 +85,7 @@ function makePost(hostRoot, resource) {
         {
           credentials: 'include',
           method: 'post',
-          body: JSON.stringify(payload),
+          body: JSON.stringify(sanitizedPayload),
         },
         config
       )
