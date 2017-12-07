@@ -137,28 +137,6 @@ function makeList(hostRoot, resource) {
   };
 }
 
-function makeApi(hostResources) {
-  return _.reduce(
-    hostResources,
-    (result, resources, host) => {
-      const hostRoot = Config.HOST[host.toUpperCase()];
-      const hostResources = {};
-      for (const resource of resources) {
-        hostResources[resource] = {
-          post: makePost(hostRoot, resource),
-          list: makeList(hostRoot, resource),
-          delete: makeDelete(hostRoot, resource),
-          put: makePut(hostRoot, resource),
-          get: makeGet(hostRoot, resource),
-        };
-      }
-      result[host] = hostResources;
-      return result;
-    },
-    {}
-  );
-}
-
 export const postForm = function(
   url,
   payload,
@@ -214,5 +192,26 @@ export const postForm = function(
   });
   return promise;
 };
+
+const makeApi = api =>
+  Object.keys(api).reduce((hosts, host) => {
+    const hostRoot = Config.HOST[host.toUpperCase()];
+    return {
+      hosts,
+      [host]: api[host].reduce(
+        (resources, resource) =>
+          Object.assign({}, resources, {
+            [resource]: {
+              post: makePost(hostRoot, resource),
+              list: makeList(hostRoot, resource),
+              delete: makeDelete(hostRoot, resource),
+              put: makePut(hostRoot, resource),
+              get: makeGet(hostRoot, resource),
+            },
+          }),
+        {}
+      ),
+    };
+  }, {});
 
 export default makeApi;
