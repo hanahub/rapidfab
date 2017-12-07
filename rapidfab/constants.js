@@ -1,6 +1,6 @@
-function make_constants(constants) {
+function makeConstants(constants) {
   const result = {};
-  for (let i = 0; i < constants.length; i++) {
+  for (let i = 0; i < constants.length; i += 1) {
     const constant = constants[i];
     result[constant] = constant;
   }
@@ -74,4 +74,4 @@ export const MODELER_STATUS_MAP = {
   },
 };
 
-export default make_constants(Constants);
+export default makeConstants(Constants);
