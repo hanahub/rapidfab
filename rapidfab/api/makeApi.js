@@ -159,7 +159,7 @@ export function postForm(
       http.withCredentials = !!withCredentials;
     }
 
-    const handleProgress = function(e) {
+    const handleProgress = e => {
       const percent = Math.floor(e.loaded / e.total * 1000) / 10;
       progressCallback(percent);
     };
@@ -169,7 +169,7 @@ export function postForm(
       http.upload.onprogress = handleProgress;
     }
 
-    http.onload = function() {
+    http.onload = () => {
       resolve(http.responseText);
     };
 
@@ -190,10 +190,8 @@ export function postForm(
 const makeApi = api =>
   Object.keys(api).reduce((hosts, host) => {
     const hostRoot = Config.HOST[host.toUpperCase()];
-    return Object.assign(
-      {},
-      hosts,
-      {[host]: api[host].reduce(
+    return Object.assign({}, hosts, {
+      [host]: api[host].reduce(
         (resources, resource) =>
           Object.assign({}, resources, {
             [resource]: {
@@ -205,8 +203,8 @@ const makeApi = api =>
             },
           }),
         {}
-      )}
-    );
+      ),
+    });
   }, {});
 
 export default makeApi;
