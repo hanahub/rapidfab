@@ -3,15 +3,15 @@ import Constants from 'rapidfab/constants';
 import { RESOURCES } from 'rapidfab/api';
 import extractUuid from 'rapidfab/utils/extractUuid';
 
-export const initialState = _.reduce(
-  RESOURCES,
-  (result, hostResources, host) => {
-    result[host] = {};
-    for (const hostResource of hostResources) {
-      result[host][hostResource] = [];
-    }
-    return result;
-  },
+export const initialState = Object.keys(RESOURCES).reduce(
+  (hosts, host) =>
+    Object.assign({}, hosts, {
+      [host]: RESOURCES[host].reduce(
+        (resources, resource) =>
+          Object.assign({}, resources, { [resource]: [] }),
+        {}
+      ),
+    }),
   {}
 );
 
