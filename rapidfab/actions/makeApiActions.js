@@ -36,7 +36,7 @@ function makePut(api, host, resource) {
 }
 
 function makeList(api, host, resource) {
-  return (filters, forced=false) => ({
+  return (filters, forced = false) => ({
     api: {
       resource,
       host,
@@ -45,10 +45,10 @@ function makeList(api, host, resource) {
     callApi: () => api[host][resource].list(filters),
     filters,
     shouldCallAPI: state => {
-      if(forced) return true;
+      if (forced) return true;
       const request = state.ui[host][resource].list;
-      const timeSinceLastRequest = (new Date() - request.finished);
-      return !(request.fetching || (timeSinceLastRequest < 3000));
+      const timeSinceLastRequest = new Date() - request.finished;
+      return !(request.fetching || timeSinceLastRequest < 3000);
     },
     types: [
       Constants.RESOURCE_LIST_REQUEST,
@@ -59,7 +59,7 @@ function makeList(api, host, resource) {
 }
 
 function makeGet(api, host, resource) {
-  return (uuid, forced=false) => ({
+  return (uuid, forced = false) => ({
     api: {
       resource,
       host,
@@ -67,7 +67,7 @@ function makeGet(api, host, resource) {
     },
     callApi: () => api[host][resource].get(uuid),
     shouldCallAPI: state => {
-      if(forced) return true;
+      if (forced) return true;
       const request = state.ui[host][resource].get;
       const timeSinceLastRequest = new Date() - request.finished;
       return !(request.fetching || timeSinceLastRequest < 3000);

@@ -21,18 +21,17 @@ function apiMiddleware({ dispatch, getState }) {
       types,
       uuid,
     } = action;
-    const createAPIAction = (updates) => (
-        Object.assign(
-          {
-            api,
-            filters,
-            uuid,
-            payload,
-            type: successType,
-          },
-          updates,
-        )
-    );
+    const createAPIAction = updates =>
+      Object.assign(
+        {
+          api,
+          filters,
+          uuid,
+          payload,
+          type: successType,
+        },
+        updates
+      );
     if (!types) {
       return next(action);
     }
@@ -49,20 +48,26 @@ function apiMiddleware({ dispatch, getState }) {
       throw new Error('Expected fetch to be a function.');
     }
 
-    const state = getState()
-    if(!shouldCallAPI(state)) {
+    const state = getState();
+    if (!shouldCallAPI(state)) {
       return new Promise((resolve, reject) => {
-        resolve(next(createAPIAction({
-          type: Constants.RESOURCE_REQUEST_SUPPRESSED,
-        })));
+        resolve(
+          next(
+            createAPIAction({
+              type: Constants.RESOURCE_REQUEST_SUPPRESSED,
+            })
+          )
+        );
       });
     }
 
     const [requestType, successType, failureType] = types;
 
-    dispatch(createAPIAction({
-      type: requestType,
-    }));
+    dispatch(
+      createAPIAction({
+        type: requestType,
+      })
+    );
 
     const handleError = errors => {
       const failedToFetch = errors.message === 'Failed to fetch';
@@ -72,10 +77,12 @@ function apiMiddleware({ dispatch, getState }) {
           : errors.message;
         errors = [{ code: 'api-error', title: errorMessage }];
       }
-      dispatch(createAPIAction({
-        errors,
-        type: failureType,
-      }));
+      dispatch(
+        createAPIAction({
+          errors,
+          type: failureType,
+        })
+      );
       if (failedToFetch) {
         Raven.captureException(new Error('Failed to fetch'), {
           extra: { api, uuid, filters, errors, payload },
@@ -89,7 +96,7 @@ function apiMiddleware({ dispatch, getState }) {
         if (response.status >= 400) {
           const error = new Error(
             `Error calling API on ${failureType} response status ${response.status}`,
-            createAPIAction({}),
+            createAPIAction({})
           );
           if (json && json.errors && json.errors.length) {
             handleError(json.errors);
@@ -103,14 +110,16 @@ function apiMiddleware({ dispatch, getState }) {
           handleError(error);
           throw error;
         }
-        return dispatch(createAPIAction({
-          json,
-          headers: {
-            location: response.headers.get('Location'),
-            uploadLocation: response.headers.get('X-Upload-Location'),
-          },
-          type: successType,
-        }));
+        return dispatch(
+          createAPIAction({
+            json,
+            headers: {
+              location: response.headers.get('Location'),
+              uploadLocation: response.headers.get('X-Upload-Location'),
+            },
+            type: successType,
+          })
+        );
       });
 
     return callApi().then(handleResponse, handleError);

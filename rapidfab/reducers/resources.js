@@ -7,7 +7,9 @@ export function extractUuid(uri) {
   const pattern = PathToRegexp(':protocol//:domain/:resource/:uuid/', keys);
   const match = pattern.exec(uri);
   if (!match) {
-    throw new Error(`The uri ${uri} does not match our expected event pattern, not sure what to do with it`);
+    throw new Error(
+      `The uri ${uri} does not match our expected event pattern, not sure what to do with it`
+    );
   }
   if (!match.length) {
     throw new Error(`Could not extract uuid from uri: ${uri}`);
@@ -37,7 +39,7 @@ function reducer(state = {}, action) {
       try {
         record = hydrateRecord(action.payload);
       } catch (e) {
-        console.warn("Could not handle stream event", e);
+        console.warn('Could not handle stream event', e);
         return state;
       }
       return _.assign({}, state, {
