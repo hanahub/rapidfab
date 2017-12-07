@@ -2,6 +2,8 @@ import Config from 'rapidfab/config';
 import Constants from 'rapidfab/constants';
 import { doGet } from 'rapidfab/api/makeApi';
 
+/* eslint-disable import/prefer-default-export */
+
 function orderLocationRequest() {
   return {
     type: Constants.ORDER_LOCATION_REQUEST,
@@ -12,6 +14,13 @@ function orderLocationSuccess(payload) {
   return {
     type: Constants.ORDER_LOCATION_SUCCESS,
     payload,
+  };
+}
+
+function addError(errors) {
+  return {
+    type: Constants.ORDER_LOCATION_FAILURE,
+    errors,
   };
 }
 
@@ -32,12 +41,5 @@ export function getOrderLocations() {
       .catch(error => {
         dispatch(addError(error));
       });
-  };
-}
-
-function addError(errors) {
-  return {
-    type: Constants.ORDER_LOCATION_FAILURE,
-    errors,
   };
 }
