@@ -5,7 +5,6 @@ function jsonTryParse(text) {
   try {
     return JSON.parse(text || null);
   } catch (error) {
-    console.error('Could not parse response as JSON', error);
     return null;
   }
 }
@@ -21,6 +20,11 @@ function apiMiddleware({ dispatch, getState }) {
       types,
       uuid,
     } = action;
+    if (!types) {
+      return next(action);
+    }
+
+    const [requestType, successType, failureType] = types;
     const createAPIAction = updates =>
       Object.assign(
         {
@@ -32,9 +36,6 @@ function apiMiddleware({ dispatch, getState }) {
         },
         updates
       );
-    if (!types) {
-      return next(action);
-    }
 
     if (
       !Array.isArray(types) ||
@@ -50,7 +51,7 @@ function apiMiddleware({ dispatch, getState }) {
 
     const state = getState();
     if (!shouldCallAPI(state)) {
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         resolve(
           next(
             createAPIAction({
@@ -61,8 +62,6 @@ function apiMiddleware({ dispatch, getState }) {
       });
     }
 
-    const [requestType, successType, failureType] = types;
-
     dispatch(
       createAPIAction({
         type: requestType,
@@ -70,16 +69,17 @@ function apiMiddleware({ dispatch, getState }) {
     );
 
     const handleError = errors => {
-      const failedToFetch = errors.message === 'Failed to fetch';
-      if (typeof errors === 'object' && errors.message) {
+      let sanitizedErrors = Object.assign({}, errors);
+      const failedToFetch = sanitizedErrors.message === 'Failed to fetch';
+      if (typeof sanitizedErrors === 'object' && sanitizedErrors.message) {
         const errorMessage = failedToFetch
           ? 'An unknown error has occurred'
-          : errors.message;
-        errors = [{ code: 'api-error', title: errorMessage }];
+          : sanitizedErrors.message;
+        sanitizedErrors = [{ code: 'api-error', title: errorMessage }];
       }
       dispatch(
         createAPIAction({
-          errors,
+          sanitizedErrors,
           type: failureType,
         })
       );

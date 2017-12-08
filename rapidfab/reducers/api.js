@@ -1,26 +1,19 @@
 import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 import { RESOURCES } from 'rapidfab/api';
-import PathToRegexp from 'path-to-regexp';
 import extractUuid from 'rapidfab/utils/extractUuid';
 
-export const initialState = _.reduce(
-  RESOURCES,
-  (result, hostResources, host) => {
-    result[host] = {};
-    for (const hostResource of hostResources) {
-      result[host][hostResource] = [];
-    }
-    return result;
-  },
+export const initialState = Object.keys(RESOURCES).reduce(
+  (hosts, host) =>
+    Object.assign({}, hosts, {
+      [host]: RESOURCES[host].reduce(
+        (resources, resource) =>
+          Object.assign({}, resources, { [resource]: [] }),
+        {}
+      ),
+    }),
   {}
 );
-
-function reduceResource(state, action) {
-  return _.assign({}, state, {
-    [action.api.resource]: reduceMethod(state[action.api.resource], action),
-  });
-}
 
 function reduceMethod(state, action) {
   const { type, uuid, json, headers } = action;
@@ -41,6 +34,12 @@ function reduceMethod(state, action) {
     default:
       return state;
   }
+}
+
+function reduceResource(state, action) {
+  return _.assign({}, state, {
+    [action.api.resource]: reduceMethod(state[action.api.resource], action),
+  });
 }
 
 function reducer(state = initialState, action) {

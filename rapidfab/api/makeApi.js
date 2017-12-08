@@ -16,23 +16,30 @@ const GET_CONFIG = {
   },
 };
 
-export function filtersToQuery(filters) {
-  const formatted = [];
-  for (const key in filters || {}) {
-    let values = filters[key];
-    if (!values) continue;
-    if (typeof values === 'Array') values = values.join(',');
-    formatted.push(`filter[${key}]=${encodeURIComponent(values)}`);
-  }
-  if (!formatted.length) return;
-  return formatted.join('&');
+export const filtersToQuery = filters =>
+  filters
+    ? Object.keys(filters).reduce(
+        (formattedFilters, filterKey) =>
+          `${formattedFilters}${formattedFilters.length
+            ? '&'
+            : ''}filter[${filterKey}]=${encodeURIComponent(
+            filters[filterKey]
+          )}`,
+        ''
+      )
+    : null;
+
+function sanitizePayload(payload) {
+  const sanitizedPayload = Object.assign({}, payload);
+  if (sanitizedPayload.id) delete sanitizedPayload.id;
+  if (sanitizedPayload.uri) delete sanitizedPayload.uri;
+  if (sanitizedPayload.uuid) delete sanitizedPayload.uuid;
+  return sanitizedPayload;
 }
 
 function makePut(hostRoot, resource) {
   return (uuid, payload, config) => {
-    if (payload.id) delete payload.id;
-    if (payload.uri) delete payload.uri;
-    if (payload.uuid) delete payload.uuid;
+    const sanitizedPayload = sanitizePayload(payload);
 
     return fetch(
       `${hostRoot}/${resource}/${uuid}/`,
@@ -42,7 +49,7 @@ function makePut(hostRoot, resource) {
         {
           credentials: 'include',
           method: 'put',
-          body: JSON.stringify(payload),
+          body: JSON.stringify(sanitizedPayload),
         },
         config
       )
@@ -68,9 +75,7 @@ function makeDelete(hostRoot, resource) {
 
 function makePost(hostRoot, resource) {
   return (payload, config) => {
-    if (payload.id) delete payload.id;
-    if (payload.uri) delete payload.uri;
-    if (payload.uuid) delete payload.uuid;
+    const sanitizedPayload = sanitizePayload(payload);
 
     return fetch(
       `${hostRoot}/${resource}/`,
@@ -80,7 +85,7 @@ function makePost(hostRoot, resource) {
         {
           credentials: 'include',
           method: 'post',
-          body: JSON.stringify(payload),
+          body: JSON.stringify(sanitizedPayload),
         },
         config
       )
@@ -132,57 +137,29 @@ function makeList(hostRoot, resource) {
   };
 }
 
-function makeApi(hostResources) {
-  return _.reduce(
-    hostResources,
-    (result, resources, host) => {
-      const hostRoot = Config.HOST[host.toUpperCase()];
-      const hostResources = {};
-      for (const resource of resources) {
-        hostResources[resource] = {
-          post: makePost(hostRoot, resource),
-          list: makeList(hostRoot, resource),
-          delete: makeDelete(hostRoot, resource),
-          put: makePut(hostRoot, resource),
-          get: makeGet(hostRoot, resource),
-        };
-      }
-      result[host] = hostResources;
-      return result;
-    },
-    {}
-  );
-}
-
-export const postForm = function(
+export function postForm(
   url,
   payload,
   files,
-  method,
+  method = 'POST',
   withCredentials,
   contentType,
   progressCallback
 ) {
-  method = method || 'POST';
-
   const promise = new Promise((resolve, reject) => {
     const data = new FormData();
-    for (var key in payload) {
-      if (payload.hasOwnProperty(key)) {
-        data.append(key, payload[key]);
-      }
-    }
-    for (var key in files) {
-      if (files.hasOwnProperty(key)) {
-        data.append(key, files[key], files[key].name);
-      }
-    }
+    Object.keys(payload).forEach(key => {
+      data.append(key, payload[key]);
+    });
+    Object.keys(files).forEach(key => {
+      data.append(key, files[key], files[key].name);
+    });
     const http = new XMLHttpRequest();
-    if (http.hasOwnProperty('withCredentials')) {
+    if (Object.prototype.hasOwnProperty.call(http, 'withCredentials')) {
       http.withCredentials = !!withCredentials;
     }
 
-    const handleProgress = function(e) {
+    const handleProgress = e => {
       const percent = Math.floor(e.loaded / e.total * 1000) / 10;
       progressCallback(percent);
     };
@@ -192,7 +169,7 @@ export const postForm = function(
       http.upload.onprogress = handleProgress;
     }
 
-    http.onload = function() {
+    http.onload = () => {
       resolve(http.responseText);
     };
 
@@ -208,6 +185,26 @@ export const postForm = function(
     }
   });
   return promise;
-};
+}
+
+const makeApi = api =>
+  Object.keys(api).reduce((hosts, host) => {
+    const hostRoot = Config.HOST[host.toUpperCase()];
+    return Object.assign({}, hosts, {
+      [host]: api[host].reduce(
+        (resources, resource) =>
+          Object.assign({}, resources, {
+            [resource]: {
+              post: makePost(hostRoot, resource),
+              list: makeList(hostRoot, resource),
+              delete: makeDelete(hostRoot, resource),
+              put: makePut(hostRoot, resource),
+              get: makeGet(hostRoot, resource),
+            },
+          }),
+        {}
+      ),
+    });
+  }, {});
 
 export default makeApi;

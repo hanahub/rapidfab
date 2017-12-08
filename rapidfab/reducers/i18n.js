@@ -1,8 +1,7 @@
-import _ from 'lodash';
 import Constants from 'rapidfab/constants';
 import i18n from 'rapidfab/i18n';
 
-function initialState(i18n, navigator) {
+function initialState(navigator) {
   if (i18n[navigator.language]) {
     return {
       locale: navigator.language,
@@ -16,10 +15,10 @@ function initialState(i18n, navigator) {
   };
 }
 
-function reducer(state = initialState(i18n, navigator), action) {
+function reducer(state = initialState(navigator), action) {
   switch (action.type) {
     case Constants.LOCALE_CHANGE:
-      return _.assign({}, state, {
+      return Object.assign({}, state, {
         locale: action.data.newLocale,
         messages: i18n[action.data.newLocale].messages,
       });
