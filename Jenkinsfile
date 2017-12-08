@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh 'docker exec rapidfab cp -R /node_modules /src/'
                 sh 'docker exec rapidfab npm run test:junit'
-                sh 'docker exec rapidfab sh -c "npm run lint:js -- --format checkstyle --output-file /src/eslintoutput.xml || true"'
+                sh 'docker exec rapidfab sh -c "npm run lint:js -- --fix --format checkstyle --output-file /src/eslintoutput.xml"'
                 sh 'docker cp rapidfab:/src/eslintoutput.xml eslintoutput.xml'
                 step([
                     $class            : 'CheckStylePublisher',

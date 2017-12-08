@@ -64,6 +64,7 @@ module.exports = {
         loaders: [
           'react-hot',
           'babel?presets[]=env&plugins[]=transform-runtime',
+          'eslint-loader',
         ],
         exclude: /(node_modules|bower_components)/,
       },
