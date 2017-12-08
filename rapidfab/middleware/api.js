@@ -69,17 +69,17 @@ function apiMiddleware({ dispatch, getState }) {
     );
 
     const handleError = errors => {
-      let sanitizedErrors = Object.assign({}, errors);
-      const failedToFetch = sanitizedErrors.message === 'Failed to fetch';
-      if (typeof sanitizedErrors === 'object' && sanitizedErrors.message) {
+      let sanitizedErrors = null;
+      const failedToFetch = errors.message === 'Failed to fetch';
+      if (typeof errors === 'object' && errors.message) {
         const errorMessage = failedToFetch
           ? 'An unknown error has occurred'
-          : sanitizedErrors.message;
+          : errors.message;
         sanitizedErrors = [{ code: 'api-error', title: errorMessage }];
       }
       dispatch(
         createAPIAction({
-          sanitizedErrors,
+          errors: sanitizedErrors || errors,
           type: failureType,
         })
       );
