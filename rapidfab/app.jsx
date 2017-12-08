@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import 'babel-polyfill';
 import 'font-awesome-webpack';
 import 'fullcalendar';
