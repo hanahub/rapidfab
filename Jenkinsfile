@@ -68,6 +68,7 @@ pipeline {
         always {
             sh 'docker stop rapidfab'
             sh 'docker rm rapidfab'
+            sh 'rm -Rf $WORKSPACE'
         }
     }
 }
