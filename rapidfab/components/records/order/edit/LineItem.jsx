@@ -110,7 +110,7 @@ Prints.propTypes = {
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Estimates = ({ estimates, currency }) => (
+const Estimates = ({ currency, estimates, model }) => (
   <Panel bsStyle="info">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -151,15 +151,15 @@ const Estimates = ({ estimates, currency }) => (
                 />
               </Col>
               <Col xs={4}>
-                {estimates.materials && (
+                {model && (
                   <div>
-                    {estimates.materials.base === null ? (
+                    {model.volume_mm === null ? (
                       <FormattedMessage
                         id="notAvailable"
                         defaultMessage="N/A"
                       />
                     ) : (
-                      <FormattedVolume value={estimates.materials.base} />
+                      <FormattedVolume value={model.volume_mm / 1000.0} />
                     )}
                   </div>
                 )}
@@ -249,9 +249,12 @@ Estimates.propTypes = {
       base: PropTypes.number,
     }),
   }).isRequired,
+  model: PropTypes.shape({
+    volume_mm: PropTypes.number,
+  }).isRequired,
 };
 
-const LineItem = ({ currency, lineItem, prints, snapshot }) => {
+const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
   // Check if lineItem is stale data from order
   if (!lineItem) {
     return null;
@@ -270,7 +273,11 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
         {itar ? null : (
           <Row>
             <Col xs={12} lg={10} lgOffset={1}>
-              <Estimates estimates={estimates} currency={currency} />
+              <Estimates
+                currency={currency}
+                estimates={estimates}
+                model={model}
+              />
             </Col>
           </Row>
         )}
@@ -296,21 +303,19 @@ const LineItem = ({ currency, lineItem, prints, snapshot }) => {
   );
 };
 
-const getSnapshotFromLineItem = (lineItem, models) => {
-  if (!lineItem || models.length === 0) {
+const getSnapshotFromLineItem = (lineItem, model) => {
+  if (!lineItem || model === null) {
     return 'LOADING';
   }
   if (lineItem.itar) {
     return 'ITAR';
   }
 
-  const lineItemModel = models.find(model => model.uri === lineItem.model);
-
-  if (!lineItemModel) {
+  if (!model) {
     return 'ERROR';
   }
 
-  const snapshotContent = lineItemModel.snapshot_content;
+  const snapshotContent = model.snapshot_content;
 
   // the default must return 'loading' due to imperfect information from the
   // event stream. E.g: The UI can receive a model that is 'processed' but
@@ -338,9 +343,11 @@ const mapStateToProps = (state, ownProps) => {
     printProcessSteps.some(step => step.uri === print.process_step)
   );
   const models = getModels(state);
-  const snapshot = getSnapshotFromLineItem(lineItem, models);
+  const model = models.find(m => m.uri === lineItem.model);
 
-  return { currency, lineItem, prints, snapshot };
+  const snapshot = getSnapshotFromLineItem(lineItem, model);
+
+  return { currency, lineItem, model, prints, snapshot };
 };
 
 LineItem.defaultProps = {
@@ -350,6 +357,7 @@ LineItem.defaultProps = {
 LineItem.propTypes = {
   currency: PropTypes.string.isRequired,
   lineItem: PropTypes.shape({}),
+  model: PropTypes.shape({}).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
   snapshot: PropTypes.string.isRequired,
 };
