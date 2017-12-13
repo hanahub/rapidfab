@@ -66,9 +66,10 @@ pipeline {
     }
     post {
         always {
-            sh 'docker stop rapidfab'
-            sh 'docker rm rapidfab'
-            sh 'rm -Rf $WORKSPACE'
+            sh(returnStdout: true, script: 'docker exec rapidfab sh -c "rm -Rf node_modules test_results"')
+            sh(returnStdout: true, script: 'docker stop rapidfab')
+            sh(returnStdout: true, script: 'docker rm rapidfab')
+            sh(returnStdout: true, script: 'rm -Rf $WORKSPACE')
         }
     }
 }
