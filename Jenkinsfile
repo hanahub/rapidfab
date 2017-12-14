@@ -68,7 +68,6 @@ pipeline {
         always {
             sh 'docker stop rapidfab'
             sh 'docker rm rapidfab'
-            step([$class: 'WsCleanup'])
         }
     }
 }
