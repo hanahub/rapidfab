@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { getRouteUUIDResource } from 'rapidfab/selectors';
 import extractUuid from 'rapidfab/utils/extractUuid';
@@ -13,12 +14,18 @@ class RunRecordScheduleContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: null,
-      startTime: null,
+      startDate: moment()
+        .add(1, 'd')
+        .format('YYYY-MM-DD'),
+      startTime: moment()
+        .minutes(0)
+        .add(1, 'h')
+        .format('HH:mm'),
       runQueue: null,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -46,13 +53,28 @@ class RunRecordScheduleContainer extends Component {
     });
   }
 
+  getStart() {
+    const { startDate, startTime } = this.state;
+    return moment(`${startDate} ${startTime}`);
+  }
+
   handleInputChange(event) {
     const { value, name } = event.target;
     this.setState({ [name]: value });
   }
 
-  handleSubmit() {
-    console.log('submit');
+  async handleSubmit(event) {
+    event.preventDefault();
+    const { dispatch, uri } = this.props;
+    const payload = { actuals: { start: this.getStart().toISOString() } };
+    const response = await dispatch(
+      Actions.Api.wyatt.run.put(extractUuid(uri), payload)
+    );
+    console.log(response);
+  }
+
+  isStartValid() {
+    return this.getStart().isAfter(moment());
   }
 
   render() {
@@ -64,6 +86,7 @@ class RunRecordScheduleContainer extends Component {
         {...this.state}
         handleSubmit={this.handleSubmit}
         handleInputChange={this.handleInputChange}
+        isStartValid={this.isStartValid()}
       />
     );
   }
@@ -84,6 +107,7 @@ const mapStateToProps = state => {
       ? {
           id: run.id,
           operation: run.operation,
+          uri: run.uri,
         }
       : null
   );
