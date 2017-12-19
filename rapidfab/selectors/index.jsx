@@ -851,7 +851,10 @@ export const getRunRescheduleQueue = createSelector(
   ({ printer: printerUri }, printers, runs) => {
     const runPrinter = printers.find(printer => printer.uri === printerUri);
     return runPrinter
-      ? runPrinter.queue.map(runUri => runs.find(run => run.uri === runUri))
+      ? runPrinter.queue.reduce((queue, runUri) => {
+          const queueRun = runs.find(run => run.uri === runUri);
+          return queueRun ? [...queue, queueRun] : queue;
+        }, [])
       : [];
   }
 );
