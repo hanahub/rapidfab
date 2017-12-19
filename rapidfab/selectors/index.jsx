@@ -845,3 +845,13 @@ export const getProcessStepsForPrint = createSelector(
     }, []);
   }
 );
+
+export const getRunRescheduleQueue = createSelector(
+  [getRouteUUIDResource, getPrinters, getRuns],
+  ({ printer: printerUri }, printers, runs) => {
+    const runPrinter = printers.find(printer => printer.uri === printerUri);
+    return runPrinter
+      ? runPrinter.queue.map(runUri => runs.find(run => run.uri === runUri))
+      : [];
+  }
+);

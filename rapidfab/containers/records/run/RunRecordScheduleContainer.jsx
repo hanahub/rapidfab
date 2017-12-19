@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { getRouteUUIDResource } from 'rapidfab/selectors';
+import {
+  getRouteUUIDResource,
+  getRunRescheduleQueue,
+} from 'rapidfab/selectors';
 import extractUuid from 'rapidfab/utils/extractUuid';
 import Actions from 'rapidfab/actions';
 
@@ -32,28 +35,13 @@ class RunRecordScheduleContainer extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { dispatch, route: { uuid } } = this.props;
     dispatch(Actions.RouteUUID.setRouteUUID(uuid));
-    dispatch(Actions.Api.wyatt.run.get(uuid)).then(runResponse => {
-      const printer = runResponse.json.printer;
-      const printerUUID = extractUuid(printer);
-      const onPrinterResponse = dispatch(
-        Actions.Api.wyatt.printer.get(printerUUID)
-      );
-      const onRunsResponse = dispatch(
-        Actions.Api.wyatt.run.list({
-          printer,
-        })
-      );
-      Promise.all([onPrinterResponse, onRunsResponse]).then(responses => {
-        const printerResponse = responses[0];
-        const runsResponse = responses[1];
-        const runQueue = printerResponse.json.queue.map(runURI =>
-          runsResponse.json.resources.find(run => run.uri === runURI)
-        );
-        this.setState({ runQueue });
-      });
+    dispatch(Actions.Api.wyatt.run.get(uuid)).then(({ json: { printer } }) => {
+      const printerUuid = extractUuid(printer);
+      dispatch(Actions.Api.wyatt.printer.get(printerUuid));
+      dispatch(Actions.Api.wyatt.run.list({ printer }));
     });
   }
 
@@ -112,10 +100,11 @@ const mapStateToProps = state => {
     {},
     run
       ? {
+          currentStart: run.actuals.start,
           id: run.id,
           operation: run.operation,
+          printerQueue: getRunRescheduleQueue(state),
           uri: run.uri,
-          currentStart: run.actuals.start,
         }
       : null
   );
