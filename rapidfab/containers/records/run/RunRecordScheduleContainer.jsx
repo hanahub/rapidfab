@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { getRouteUUIDResource } from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
 
+import RunRecordSchedule from 'rapidfab/components/records/run/RunRecordSchedule';
+
 class RunRecordScheduleContainer extends Component {
   componentWillMount() {
     const { dispatch, route: { uuid } } = this.props;
@@ -13,7 +15,7 @@ class RunRecordScheduleContainer extends Component {
   }
 
   render() {
-    return <p>yo</p>;
+    return <RunRecordSchedule />;
   }
 }
 
@@ -35,4 +37,5 @@ const mapStateToProps = state => {
       : null
   );
 };
+
 export default connect(mapStateToProps)(RunRecordScheduleContainer);
