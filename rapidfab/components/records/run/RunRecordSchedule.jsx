@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import FontAwesome from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import {
   Button,
@@ -19,6 +20,7 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 
 const RunRecordSchedule = ({
+  handleBack,
   handleInputChange,
   handleSubmit,
   id,
@@ -26,6 +28,7 @@ const RunRecordSchedule = ({
   operation,
   startDate,
   startTime,
+  uri,
 }) => (
   <Grid fluid>
     <BreadcrumbNav breadcrumbs={['runs', id]} />
@@ -37,6 +40,11 @@ const RunRecordSchedule = ({
       Run
     </PageHeader>
     <FlashMessages />
+    <Button onClick={() => handleBack(uri)}>
+      <FontAwesome name="arrow-left" />
+      {` `}
+      Back to Run
+    </Button>
     <Form onSubmit={handleSubmit}>
       <FormGroup
         controlId="uxName"
@@ -79,20 +87,16 @@ const RunRecordSchedule = ({
   </Grid>
 );
 
-RunRecordSchedule.defaultProps = {
-  isStartValid: true,
-  startDate: null,
-  startTime: null,
-};
-
 RunRecordSchedule.propTypes = {
+  handleBack: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  isStartValid: PropTypes.bool,
+  isStartValid: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   operation: PropTypes.string.isRequired,
-  startDate: PropTypes.string,
-  startTime: PropTypes.string,
+  startDate: PropTypes.string.isRequired,
+  startTime: PropTypes.string.isRequired,
+  uri: PropTypes.string.isRequired,
 };
 
 export default RunRecordSchedule;

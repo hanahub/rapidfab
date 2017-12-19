@@ -10,6 +10,10 @@ import Actions from 'rapidfab/actions';
 import Loading from 'rapidfab/components/Loading';
 import RunRecordSchedule from 'rapidfab/components/records/run/RunRecordSchedule';
 
+function handleBack(uri) {
+  window.location.hash = `#/records/run/${extractUuid(uri)}`;
+}
+
 class RunRecordScheduleContainer extends Component {
   constructor(props) {
     super(props);
@@ -84,6 +88,7 @@ class RunRecordScheduleContainer extends Component {
       <RunRecordSchedule
         {...this.props}
         {...this.state}
+        handleBack={handleBack}
         handleSubmit={this.handleSubmit}
         handleInputChange={this.handleInputChange}
         isStartValid={this.isStartValid()}
