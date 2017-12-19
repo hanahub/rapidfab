@@ -8,8 +8,8 @@ import { FormattedMessage } from 'rapidfab/i18n';
 
 const styles = { spacingBelow: { marginBottom: '2rem' } };
 
-const RunScheduleButton = ({ id }) => {
-  const link = `#/records/run/${id}/schedule`;
+const RunScheduleButton = ({ uuid }) => {
+  const link = `#/records/run/${uuid}/schedule`;
   return (
     <ButtonGroup style={styles.spacingBelow} vertical block>
       <Button href={link}>
@@ -23,9 +23,9 @@ const RunScheduleButton = ({ id }) => {
   );
 };
 RunScheduleButton.defaultProps = {
-  id: null,
+  uuid: null,
 };
 RunScheduleButton.propTypes = {
-  id: PropTypes.string,
+  uuid: PropTypes.string,
 };
 export default RunScheduleButton;

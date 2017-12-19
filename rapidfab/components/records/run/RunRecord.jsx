@@ -20,7 +20,14 @@ const styles = {
   spacingTop: { marginTop: '1rem' },
 };
 
-const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
+const RunRecord = ({
+  handleSelectTab,
+  id,
+  isRunFetching,
+  operation,
+  tab,
+  uuid,
+}) => (
   <Grid fluid>
     <BreadcrumbNav breadcrumbs={['runs', id || '']} />
 
@@ -44,7 +51,7 @@ const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
             <div>
               <Col xs={12} sm={6} md={4}>
                 <RunRequeueButton />
-                <RunScheduleButton id={id} />
+                <RunScheduleButton uuid={uuid} />
                 <RunData />
               </Col>
 
@@ -68,6 +75,7 @@ const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
 RunRecord.defaultProps = {
   id: null,
   operation: null,
+  uuid: null,
 };
 
 RunRecord.propTypes = {
@@ -76,6 +84,7 @@ RunRecord.propTypes = {
   isRunFetching: PropTypes.bool.isRequired,
   operation: PropTypes.string,
   tab: PropTypes.number.isRequired,
+  uuid: PropTypes.string,
 };
 
 export default RunRecord;

@@ -51,6 +51,7 @@ const mapStateToProps = state => {
       ? {
           id: run.id,
           operation: run.operation,
+          uuid: run.uuid,
         }
       : null
   );
