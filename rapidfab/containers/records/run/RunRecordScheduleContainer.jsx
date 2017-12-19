@@ -28,7 +28,7 @@ class RunRecordScheduleContainer extends Component {
         .minutes(0)
         .add(1, 'h')
         .format('HH:mm'),
-      runQueue: null,
+      submitting: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -57,12 +57,17 @@ class RunRecordScheduleContainer extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    this.setState({ submitting: true });
     const { dispatch, uri } = this.props;
     const payload = { actuals: { start: this.getStart().toISOString() } };
     const response = await dispatch(
       Actions.Api.wyatt.run.put(extractUuid(uri), payload)
     );
-    console.log(response);
+    if (response.type === 'RESOURCE_PUT_SUCCESS') {
+      await dispatch(Actions.Api.wyatt.run.get(extractUuid(uri)));
+      window.location.hash = `#/records/run/${response.uuid}`;
+    }
+    this.setState({ submitting: false });
   }
 
   isStartValid() {

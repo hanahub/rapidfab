@@ -23,6 +23,7 @@ import { RUN_OPERATION_MAP } from 'rapidfab/mappings';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 
 const RunRecordSchedule = ({
   currentStart,
@@ -35,6 +36,7 @@ const RunRecordSchedule = ({
   printerQueue,
   startDate,
   startTime,
+  submitting,
   uri,
 }) => (
   <Grid>
@@ -125,7 +127,7 @@ const RunRecordSchedule = ({
               )}
             </FormGroup>
             <Button block disabled={!isStartValid} type="submit">
-              Reschedule Run
+              {submitting ? <Loading /> : 'Reschedule Run'}
             </Button>
           </Form>
         </Panel>
@@ -145,6 +147,7 @@ RunRecordSchedule.propTypes = {
   printerQueue: PropTypes.arrayOf(PropTypes.object).isRequired,
   startDate: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
+  submitting: PropTypes.bool.isRequired,
   uri: PropTypes.string.isRequired,
 };
 
