@@ -82,7 +82,7 @@ class RunRecordScheduleContainer extends Component {
   }
 
   render() {
-    return this.props.isRunFetching ? (
+    return !this.props.uri ? (
       <Loading />
     ) : (
       <RunRecordSchedule
@@ -97,22 +97,25 @@ class RunRecordScheduleContainer extends Component {
   }
 }
 
+RunRecordScheduleContainer.defaultProps = { uri: null };
+
 RunRecordScheduleContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isRunFetching: PropTypes.bool.isRequired,
   route: PropTypes.shape({ uuid: PropTypes.string }).isRequired,
+  uri: PropTypes.string,
 };
 
 const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
   return Object.assign(
     {},
-    { isRunFetching: !run && state.ui.wyatt.run.get.fetching },
     run
       ? {
           id: run.id,
           operation: run.operation,
           uri: run.uri,
+          currentStart: run.actuals.start,
         }
       : null
   );
