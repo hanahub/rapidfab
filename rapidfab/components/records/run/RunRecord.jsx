@@ -14,6 +14,7 @@ import RunRecordFormContainer from 'rapidfab/containers/records/run/RunRecordFor
 
 import RunData from './RunData';
 import RunRequeueButton from './RunRequeueButton';
+import RunScheduleButton from './RunScheduleButton';
 
 const styles = {
   spacingTop: { marginTop: '1rem' },
@@ -43,6 +44,7 @@ const RunRecord = ({ handleSelectTab, id, isRunFetching, operation, tab }) => (
             <div>
               <Col xs={12} sm={6} md={4}>
                 <RunRequeueButton />
+                <RunScheduleButton id={id} />
                 <RunData />
               </Col>
 
