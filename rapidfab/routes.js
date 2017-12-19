@@ -39,6 +39,7 @@ import PostProcessorType from 'rapidfab/containers/records/postProcessorType';
 import StockContainer from 'rapidfab/containers/records/StockContainer';
 import TemplateContainer from 'rapidfab/containers/records/TemplateContainer';
 import RunRecordContainer from 'rapidfab/containers/records/run/RunRecordContainer';
+import RunRecordScheduleContainer from 'rapidfab/containers/records/run/RunRecordScheduleContainer';
 import RunNewContainer from 'rapidfab/containers/records/run/RunNewContainer';
 
 const Routes = {
@@ -93,6 +94,7 @@ const Routes = {
   '/records/stock/:uuid': StockContainer,
   '/records/run': RunNewContainer,
   '/records/run/:uuid': RunRecordContainer,
+  '/records/run/:uuid/schedule': RunRecordScheduleContainer,
   '/records/template/': TemplateContainer,
   '/records/template/:uuid': TemplateContainer,
 };
