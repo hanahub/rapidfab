@@ -2,7 +2,11 @@ import { reduxForm } from 'redux-form';
 
 import { Currencies } from 'rapidfab/constants';
 import { ORDER_SALES_MAPPING } from 'rapidfab/mappings';
-import { getShippings, getUsers } from 'rapidfab/selectors';
+import {
+  getShippings,
+  getUsers,
+  isCurrentUserRestricted,
+} from 'rapidfab/selectors';
 
 import NewOrderForm from 'rapidfab/components/records/order/new/NewOrderForm';
 
@@ -26,6 +30,7 @@ const fields = [
 ];
 
 const mapStateToProps = state => {
+  const isUserRestricted = isCurrentUserRestricted(state);
   const shippings = getShippings(state);
   const users = getUsers(state);
 
@@ -41,7 +46,7 @@ const mapStateToProps = state => {
     },
   };
 
-  return { initialValues, shippings, users };
+  return { isUserRestricted, initialValues, shippings, users };
 };
 
 export default reduxForm(

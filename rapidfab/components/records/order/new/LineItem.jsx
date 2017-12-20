@@ -39,6 +39,7 @@ FileInput.propTypes = {
 
 const LineItemComponent = ({
   baseMaterials,
+  isUserRestricted,
   lineItem,
   onDelete,
   onFileInputChange,
@@ -91,29 +92,31 @@ const LineItemComponent = ({
           ))}
         </FormControl>
       </Col>
-      <Col md={2}>
-        <ControlLabel>
-          <FormattedMessage
-            id="field.supportMaterial"
-            defaultMessage="Support Material"
-          />:
-        </ControlLabel>
-        <FormControl
-          name="supportMaterial"
-          componentClass="select"
-          value={lineItem.supportMaterial}
-          onChange={onInputChange}
-        >
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {supportMaterials.map(material => (
-            <option key={material.uri} value={material.uri}>
-              {material.name}
+      {!isUserRestricted && (
+        <Col md={2}>
+          <ControlLabel>
+            <FormattedMessage
+              id="field.supportMaterial"
+              defaultMessage="Support Material"
+            />:
+          </ControlLabel>
+          <FormControl
+            name="supportMaterial"
+            componentClass="select"
+            value={lineItem.supportMaterial}
+            onChange={onInputChange}
+          >
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </Col>
+            {supportMaterials.map(material => (
+              <option key={material.uri} value={material.uri}>
+                {material.name}
+              </option>
+            ))}
+          </FormControl>
+        </Col>
+      )}
       <Col md={1}>
         <ControlLabel>
           <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
@@ -145,30 +148,32 @@ const LineItemComponent = ({
           ))}
         </FormControl>
       </Col>
-      <Col md={2}>
-        <ControlLabel>
-          <FormattedMessage
-            id="field.thirdPartyProvider"
-            defaultMessage="Third-Party Provider"
-          />
-        </ControlLabel>
-        <FormControl
-          name="thirdPartyProvider"
-          componentClass="select"
-          required
-          value={lineItem.thirdPartyProvider}
-          onChange={onInputChange}
-        >
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {providers.map(provider => (
-            <option key={provider.uri} value={provider.uri}>
-              {provider.name}
+      {!isUserRestricted && (
+        <Col md={2}>
+          <ControlLabel>
+            <FormattedMessage
+              id="field.thirdPartyProvider"
+              defaultMessage="Third-Party Provider"
+            />
+          </ControlLabel>
+          <FormControl
+            name="thirdPartyProvider"
+            componentClass="select"
+            required
+            value={lineItem.thirdPartyProvider}
+            onChange={onInputChange}
+          >
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </Col>
+            {providers.map(provider => (
+              <option key={provider.uri} value={provider.uri}>
+                {provider.name}
+              </option>
+            ))}
+          </FormControl>
+        </Col>
+      )}
       {/* <Col md={2}>
         <ControlLabel>
           <FormattedMessage id="field.notes" defaultMessage='Notes'/>:
@@ -195,6 +200,7 @@ const LineItemComponent = ({
 
 LineItemComponent.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   lineItem: PropTypes.shape({}).isRequired,
   onDelete: PropTypes.func.isRequired,
   onFileInputChange: PropTypes.func.isRequired,
@@ -249,6 +255,7 @@ class LineItem extends Component {
     const { onDelete, onFileInputChange, onInputChange } = this;
     const {
       baseMaterials,
+      isUserRestricted,
       lineItem,
       providers,
       supportMaterials,
@@ -258,6 +265,7 @@ class LineItem extends Component {
     return (
       <LineItemComponent
         baseMaterials={baseMaterials}
+        isUserRestricted={isUserRestricted}
         lineItem={lineItem}
         onDelete={onDelete}
         onFileInputChange={onFileInputChange}
@@ -276,6 +284,7 @@ LineItem.propTypes = {
   handleLineItemModelChange: PropTypes.func.isRequired,
   handleLineItemChange: PropTypes.func.isRequired,
   index: PropTypes.string.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   lineItem: PropTypes.shape({}).isRequired,
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -283,6 +292,7 @@ LineItem.propTypes = {
 };
 
 const mapStateToProps = state => {
+  const isUserRestricted = Selectors.isCurrentUserRestricted(state);
   const materials = Selectors.getMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
   const baseMaterials = materials.filter(material => material.type === 'base');
@@ -292,7 +302,13 @@ const mapStateToProps = state => {
 
   const templates = Selectors.getTemplates(state);
 
-  return { baseMaterials, providers, supportMaterials, templates };
+  return {
+    baseMaterials,
+    isUserRestricted,
+    providers,
+    supportMaterials,
+    templates,
+  };
 };
 
 export default connect(mapStateToProps)(LineItem);

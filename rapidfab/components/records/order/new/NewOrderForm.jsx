@@ -33,56 +33,66 @@ FormRow.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const NewOrderForm = ({ fields, shippings, users }) => (
+const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
   <div>
     <FormRow id="field.name" defaultMessage="Name">
       <FormControl type="text" required {...fields.name} />
     </FormRow>
 
-    <FormRow id="field.order_owner" defaultMessage="Owner">
-      <FormControl componentClass="select" {...fields.order_owner}>
-        <option value="none">
-          <FormattedMessage id="field.none" defaultMessage="None" />
-        </option>
-        {users.map(user => (
-          <option key={user.uuid} value={user.uri}>
-            {user.name}
+    {!isUserRestricted && (
+      <FormRow id="field.order_owner" defaultMessage="Owner">
+        <FormControl componentClass="select" {...fields.order_owner}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-        ))}
-      </FormControl>
-    </FormRow>
+          {users.map(user => (
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    )}
 
-    <FormRow id="field.shippingName" defaultMessage="Shipping Name">
-      <FormControlTextCareful {...fields.shipping.name} />
-    </FormRow>
+    {!isUserRestricted && (
+      <FormRow id="field.shippingName" defaultMessage="Shipping Name">
+        <FormControlTextCareful {...fields.shipping.name} />
+      </FormRow>
+    )}
 
     <FormRow id="field.shippingAddress" defaultMessage="Shipping Address">
       <FormControlTextArea {...fields.shipping.address} />
     </FormRow>
 
-    <FormRow id="field.trackingNumber" defaultMessage="Tracking Number">
-      <FormControlTextCareful {...fields.shipping.tracking} />
-    </FormRow>
+    {!isUserRestricted && (
+      <FormRow id="field.trackingNumber" defaultMessage="Tracking Number">
+        <FormControlTextCareful {...fields.shipping.tracking} />
+      </FormRow>
+    )}
 
-    <FormRow id="field.shippingType" defaultMessage="Shipping Type">
-      <FormControl componentClass="select" {...fields.shipping.uri}>
-        {shippings.map(shipping => (
-          <option key={shipping.uri} value={shipping.uri}>
-            {shipping.name}
-          </option>
-        ))}
-      </FormControl>
-    </FormRow>
+    {!isUserRestricted && (
+      <FormRow id="field.shippingType" defaultMessage="Shipping Type">
+        <FormControl componentClass="select" {...fields.shipping.uri}>
+          {shippings.map(shipping => (
+            <option key={shipping.uri} value={shipping.uri}>
+              {shipping.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    )}
 
-    <FormRow id="field.currency" defaultMessage="Currency">
-      <FormControl componentClass="select" {...fields.currency}>
-        {Currencies.map(currency => (
-          <option key={currency} value={currency}>
-            {currency}
-          </option>
-        ))}
-      </FormControl>
-    </FormRow>
+    {!isUserRestricted && (
+      <FormRow id="field.currency" defaultMessage="Currency">
+        <FormControl componentClass="select" {...fields.currency}>
+          {Currencies.map(currency => (
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    )}
 
     <FormRow id="field.customer_email" defaultMessage="Customer Email">
       <FormControlTextCareful {...fields.customer_email} />
@@ -174,6 +184,7 @@ const NewOrderForm = ({ fields, shippings, users }) => (
 
 NewOrderForm.propTypes = {
   fields: PropTypes.shape({}).isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   shippings: PropTypes.arrayOf(PropTypes.object).isRequired,
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
