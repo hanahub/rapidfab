@@ -30,14 +30,6 @@ class Runs extends Component {
     this.handleSave = this.handleSave.bind(this);
   }
 
-  componentWillReceiveProps() {
-    let selectedPrinter = this.state.selectedPrinter;
-    if (selectedPrinter && !this.props.printers[selectedPrinter.uuid]) {
-      selectedPrinter = _.head(_.values(this.props.printers));
-      this.setState({ selectedPrinter });
-    }
-  }
-
   handleSelectPrinter(printer) {
     this.setState({
       selectedPrinter: printer,
