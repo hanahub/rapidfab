@@ -24,8 +24,8 @@ const SessionProvider = ({
 }) => {
   if (!currentUser && errors.length) {
     const next = window.location.hash.substr(1);
-    window.location = `${Config.HOST
-      .SCYLLA}?nextPath=${next}&subdomain=rapidfab#/login`;
+    window.location = `${Config.HOST.SCYLLA}
+      ?nextPath=${next}&subdomain=rapidfab#/`;
   }
 
   if (currentUser && !fetching) {
