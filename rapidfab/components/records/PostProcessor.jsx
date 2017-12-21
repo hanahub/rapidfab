@@ -6,7 +6,7 @@ import { Grid, Nav, NavItem, PageHeader } from 'react-bootstrap';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 
-import BlockMachineContainer from 'rapidfab/containers/blockMachine/BlockMachineContainer';
+import DowntimeContainer from 'rapidfab/containers/downtime/DowntimeContainer';
 import PostProcessorFormContainer from 'rapidfab/containers/records/PostProcessorFormContainer';
 
 const PostProcessor = ({ handleSelectTab, name, route, tab, uri }) => (
@@ -28,7 +28,7 @@ const PostProcessor = ({ handleSelectTab, name, route, tab, uri }) => (
 
     {tab === 1 && <PostProcessorFormContainer route={route} />}
     {tab === 2 && (
-      <BlockMachineContainer machineType="post_processor" machineUri={uri} />
+      <DowntimeContainer machineType="post_processor" machineUri={uri} />
     )}
   </Grid>
 );

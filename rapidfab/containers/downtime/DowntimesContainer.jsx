@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import { getDowntimesForMachine } from 'rapidfab/selectors';
 
-import Downtimes from 'rapidfab/components/blockMachine/Downtimes';
+import Downtimes from 'rapidfab/components/downtime/Downtimes';
 
 class DowntimesContainer extends Component {
   constructor(props) {
