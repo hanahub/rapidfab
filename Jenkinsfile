@@ -4,19 +4,18 @@ pipeline {
     }
     stages {
         stage('Docker Image') {
-            when {
-                expression {
-                    sh(returnStdout: true, script: 'docker images -q authentise/mes').trim() == ''
-                }
-            }
             steps {
-                sh 'docker build -t authentise/mes .'
+                withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
+                    sh 'docker build -t authentise/rapidfab:$GITDESCRIBE .'
+                }
             }
         }
         stage('Docker container start') {
             steps {
-                sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $(pwd):/src -v $HOME/.aws:/root/.aws -d authentise/mes sleep infinity'
-                sh 'docker start rapidfab'
+                withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
+                    sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $(pwd)/rapidfab:/src/rapidfab -v $(pwd)/tests:/src/tests -v $HOME/.aws:/root/.aws -d authentise/rapidfab:$GITDESCRIBE sleep infinity'
+                    sh 'docker start rapidfab'
+                }
             }
         }
         stage('Test') {
