@@ -25,31 +25,32 @@ const styles = {
   },
 };
 
-const BlockMachines = ({ blockMachines, handleSelectionChange, loading }) => (
+const BlockMachines = ({ downtimes, handleSelectionChange, loading }) => (
   <Panel
     header={
       loading ? (
         <Loading />
       ) : (
-        `${blockMachines.length === 0 ? 'No' : ''} Scheduled Downtime`
+        `${downtimes.length === 0 ? 'No' : ''} Scheduled Downtime`
       )
     }
   >
     <ListGroup fill>
-      {blockMachines.map(block => (
+      {downtimes.map(downtime => (
         <ListGroupItem
-          onClick={() => handleSelectionChange(extractUuid(block.uri))}
-          key={block.uri}
+          onClick={() => handleSelectionChange(extractUuid(downtime.uri))}
+          key={downtime.uri}
         >
           <div style={styles.listRow}>
             <Fa style={styles.spacingRight} name="clock-o" />
             <div style={{ width: '100%' }}>
-              <span>{block.description}</span>
+              <span>{downtime.description}</span>
               <span style={styles.timeRow}>
-                <span>Start:</span> <FormattedDateTime value={block.start} />
+                <span>Start:</span> <FormattedDateTime value={downtime.start} />
               </span>
               <span style={styles.timeRow}>
-                <span>Finish:</span> <FormattedDateTime value={block.finish} />
+                <span>Finish:</span>{' '}
+                <FormattedDateTime value={downtime.finish} />
               </span>
             </div>
           </div>
@@ -60,7 +61,7 @@ const BlockMachines = ({ blockMachines, handleSelectionChange, loading }) => (
 );
 
 BlockMachines.propTypes = {
-  blockMachines: PropTypes.arrayOf(
+  downtimes: PropTypes.arrayOf(
     PropTypes.shape({
       description: PropTypes.string,
       finish: PropTypes.string,

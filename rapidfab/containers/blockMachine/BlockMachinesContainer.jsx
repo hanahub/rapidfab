@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import { getBlockMachinesForMachine } from 'rapidfab/selectors';
+import { getDowntimesForMachine } from 'rapidfab/selectors';
 
 import BlockMachines from 'rapidfab/components/blockMachine/BlockMachines';
 
@@ -15,7 +15,7 @@ class BlockMachinesContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(Actions.Api.wyatt['block-machine'].list());
+    this.props.dispatch(Actions.Api.wyatt.downtime.list());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,8 +36,8 @@ BlockMachinesContainer.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  blockMachines: getBlockMachinesForMachine(state, ownProps.machineUri),
-  fetching: state.ui.wyatt['block-machine'].list.fetching,
+  downtimes: getDowntimesForMachine(state, ownProps.machineUri),
+  fetching: state.ui.wyatt.downtime.list.fetching,
 });
 
 export default connect(mapStateToProps)(BlockMachinesContainer);

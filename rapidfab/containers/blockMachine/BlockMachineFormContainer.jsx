@@ -93,8 +93,8 @@ class BlockMachineFormContainer extends Component {
       start: moment(`${startDate} ${startTime}`).toISOString(),
     };
     const response = await (initialValues
-      ? dispatch(Actions.Api.wyatt['block-machine'].put(downtime, payload))
-      : dispatch(Actions.Api.wyatt['block-machine'].post(payload)));
+      ? dispatch(Actions.Api.wyatt.downtime.put(downtime, payload))
+      : dispatch(Actions.Api.wyatt.downtime.post(payload)));
     if (
       response.type === 'RESOURCE_POST_SUCCESS' ||
       response.type === 'RESOURCE_PUT_SUCCESS'

@@ -20,9 +20,7 @@ class BlockMachineDeleteContainer extends React.Component {
 
   async handleDelete() {
     const { dispatch, handleSelectionChange, uuid } = this.props;
-    const response = await dispatch(
-      Actions.Api.wyatt['block-machine'].delete(uuid)
-    );
+    const response = await dispatch(Actions.Api.wyatt.downtime.delete(uuid));
     if (response.type === 'RESOURCE_DELETE_SUCCESS') {
       handleSelectionChange('none');
     }
