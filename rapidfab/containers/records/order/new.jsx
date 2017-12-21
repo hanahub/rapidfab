@@ -136,7 +136,7 @@ const mapStateToProps = state => ({
   materials: Selectors.getMaterials(state),
   model: state.resources[state.uploadModel.modelUuid],
   providers: Selectors.getThirdPartyProviders(state),
-  shippings: Selectors.getShippings(state),
+  shippings: Selectors.getShippingsAlphabetized(state),
   templates: Selectors.getTemplates(state),
   uploadModel: state.uploadModel,
 });
