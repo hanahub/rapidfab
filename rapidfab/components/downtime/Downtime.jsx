@@ -7,9 +7,9 @@ import { Button, Col, Grid } from 'react-bootstrap';
 import isUuid from 'rapidfab/utils/isUuid';
 
 import { FormattedMessage } from 'rapidfab/i18n';
-import BlockMachineDeleteContainer from 'rapidfab/containers/blockMachine/BlockMachineDeleteContainer';
-import BlockMachineFormContainer from 'rapidfab/containers/blockMachine/BlockMachineFormContainer';
-import BlockMachinesContainer from 'rapidfab/containers/blockMachine/BlockMachinesContainer';
+import DowntimeDeleteContainer from 'rapidfab/containers/blockMachine/DowntimeDeleteContainer';
+import DowntimeFormContainer from 'rapidfab/containers/blockMachine/DowntimeFormContainer';
+import DowntimesContainer from 'rapidfab/containers/blockMachine/DowntimesContainer';
 
 const styles = {
   border: {
@@ -27,7 +27,7 @@ const styles = {
   },
 };
 
-const BlockMachine = ({
+const Downtime = ({
   handleSelectionChange,
   machineType,
   machineUri,
@@ -44,7 +44,7 @@ const BlockMachine = ({
     </div>
 
     <Col xs={12} sm={6}>
-      <BlockMachinesContainer
+      <DowntimesContainer
         handleSelectionChange={handleSelectionChange}
         machineUri={machineUri}
       />
@@ -57,7 +57,7 @@ const BlockMachine = ({
           </Button>
         )}
         {selection === 'add' && (
-          <BlockMachineFormContainer
+          <DowntimeFormContainer
             handleSelectionChange={handleSelectionChange}
             machineType={machineType}
             machineUri={machineUri}
@@ -65,7 +65,7 @@ const BlockMachine = ({
         )}
         {isUuid(selection) && (
           <div>
-            <BlockMachineFormContainer
+            <DowntimeFormContainer
               downtime={selection}
               handleSelectionChange={handleSelectionChange}
               machineType={machineType}
@@ -81,7 +81,7 @@ const BlockMachine = ({
           </div>
         )}
         {selection.split('/')[0] === 'DELETE' && (
-          <BlockMachineDeleteContainer
+          <DowntimeDeleteContainer
             handleSelectionChange={handleSelectionChange}
             uuid={selection.split('/')[1]}
           />
@@ -91,11 +91,11 @@ const BlockMachine = ({
   </Grid>
 );
 
-BlockMachine.propTypes = {
+Downtime.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
   machineType: PropTypes.oneOf(['post-processor', 'printer']).isRequired,
   machineUri: PropTypes.string.isRequired,
   selection: PropTypes.string.isRequired,
 };
 
-export default BlockMachine;
+export default Downtime;

@@ -25,7 +25,7 @@ const styles = {
   },
 };
 
-const BlockMachines = ({ downtimes, handleSelectionChange, loading }) => (
+const Downtimes = ({ downtimes, handleSelectionChange, loading }) => (
   <Panel
     header={
       loading ? (
@@ -60,7 +60,7 @@ const BlockMachines = ({ downtimes, handleSelectionChange, loading }) => (
   </Panel>
 );
 
-BlockMachines.propTypes = {
+Downtimes.propTypes = {
   downtimes: PropTypes.arrayOf(
     PropTypes.shape({
       description: PropTypes.string,
@@ -72,4 +72,4 @@ BlockMachines.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
-export default BlockMachines;
+export default Downtimes;

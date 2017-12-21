@@ -7,7 +7,7 @@ const styles = {
   spacingDown: { marginBottom: '2rem' },
 };
 
-const BlockMachineDelete = ({ description, handleBack, handleDelete }) => (
+const DowntimeDelete = ({ description, handleBack, handleDelete }) => (
   <div>
     <h2 style={styles.spacingDown}>Really delete {description}?</h2>
     <Button bsStyle="danger" block onClick={handleDelete}>
@@ -19,10 +19,10 @@ const BlockMachineDelete = ({ description, handleBack, handleDelete }) => (
   </div>
 );
 
-BlockMachineDelete.propTypes = {
+DowntimeDelete.propTypes = {
   description: PropTypes.string.isRequired,
   handleBack: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
 };
 
-export default BlockMachineDelete;
+export default DowntimeDelete;

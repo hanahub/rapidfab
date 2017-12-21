@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 
-import BlockMachineDelete from 'rapidfab/components/blockMachine/BlockMachineDelete';
+import DowntimeDelete from 'rapidfab/components/downtime/DowntimeDelete';
 
-class BlockMachineDeleteContainer extends React.Component {
+class DowntimeDeleteContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,7 +28,7 @@ class BlockMachineDeleteContainer extends React.Component {
 
   render() {
     return (
-      <BlockMachineDelete
+      <DowntimeDelete
         {...this.props}
         handleBack={this.handleBack}
         handleDelete={this.handleDelete}
@@ -37,7 +37,7 @@ class BlockMachineDeleteContainer extends React.Component {
   }
 }
 
-BlockMachineDeleteContainer.propTypes = {
+DowntimeDeleteContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   handleSelectionChange: PropTypes.func.isRequired,
   uuid: PropTypes.string.isRequired,
@@ -47,4 +47,4 @@ const mapStateToProps = (state, ownProps) => ({
   description: state.resources[ownProps.uuid].description,
 });
 
-export default connect(mapStateToProps)(BlockMachineDeleteContainer);
+export default connect(mapStateToProps)(DowntimeDeleteContainer);

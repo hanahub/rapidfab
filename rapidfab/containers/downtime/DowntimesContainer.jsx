@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import Actions from 'rapidfab/actions';
 import { getDowntimesForMachine } from 'rapidfab/selectors';
 
-import BlockMachines from 'rapidfab/components/blockMachine/BlockMachines';
+import Downtimes from 'rapidfab/components/blockMachine/Downtimes';
 
-class BlockMachinesContainer extends Component {
+class DowntimesContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -25,11 +25,11 @@ class BlockMachinesContainer extends Component {
   }
 
   render() {
-    return <BlockMachines {...this.props} {...this.state} />;
+    return <Downtimes {...this.props} {...this.state} />;
   }
 }
 
-BlockMachinesContainer.propTypes = {
+DowntimesContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fetching: PropTypes.bool.isRequired,
   machineUri: PropTypes.string.isRequired,
@@ -40,4 +40,4 @@ const mapStateToProps = (state, ownProps) => ({
   fetching: state.ui.wyatt.downtime.list.fetching,
 });
 
-export default connect(mapStateToProps)(BlockMachinesContainer);
+export default connect(mapStateToProps)(DowntimesContainer);
