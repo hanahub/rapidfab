@@ -21,7 +21,6 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker exec rapidfab cp -R /node_modules /src/'
                 sh 'docker exec rapidfab npm run test:junit'
                 sh 'docker exec rapidfab sh -c "npm run lint:js -- --fix --format checkstyle --output-file /src/eslintoutput.xml"'
                 sh 'docker cp rapidfab:/src/eslintoutput.xml eslintoutput.xml'
@@ -40,11 +39,8 @@ pipeline {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\' | cat')}"]) {
-                        sh 'rm -Rf dist/*'
-                        sh 'mkdir -p dist'
                         sh 'rm -Rf rapidfab-*.tgz'
                         sh 'if [ -z $DEV_COMMIT ]; then docker exec -e NODE_ENV=production rapidfab npm run build; else docker exec -e NODE_ENV=development rapidfab npm run build; fi'
-                        sh 'docker exec rapidfab chmod -f a+rw -R /src/dist'
                         sh 'tar -czvf rapidfab-$GITDESCRIBE.tgz dist'
                         archiveArtifacts artifacts: 'rapidfab-*.tgz', fingerprint: true
                     }
