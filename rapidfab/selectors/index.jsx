@@ -258,6 +258,22 @@ export const getShippings = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getShippingsAlphabetized = createSelector(
+  [getShippings],
+  shippings =>
+    shippings.sort((a, b) => {
+      const firstName = a.name.toLowerCase();
+      const secondName = b.name.toLowerCase();
+      if (firstName < secondName) {
+        return -1;
+      }
+      if (firstName > secondName) {
+        return 1;
+      }
+      return 0;
+    })
+);
+
 export const getTemplates = createSelector(
   [getStateTemplates, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
