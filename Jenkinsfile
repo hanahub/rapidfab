@@ -13,7 +13,7 @@ pipeline {
         stage('Docker container start') {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
-                    sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $(pwd)/rapidfab:/src/rapidfab -v $(pwd)/tests:/src/tests -v $HOME/.aws:/root/.aws -d authentise/rapidfab:$GITDESCRIBE sleep infinity'
+                    sh 'docker run -d --name rapidfab --env BROWSER=PhantomJS2 -v $HOME/.aws:/root/.aws -d authentise/rapidfab:$GITDESCRIBE sleep infinity'
                     sh 'docker start rapidfab'
                 }
             }
