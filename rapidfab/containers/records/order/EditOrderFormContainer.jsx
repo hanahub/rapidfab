@@ -2,7 +2,7 @@ import { reduxForm } from 'redux-form';
 
 import Actions from 'rapidfab/actions';
 import {
-  getShippings,
+  getShippingsAlphabetized,
   getUsers,
   isCurrentUserRestricted,
 } from 'rapidfab/selectors';
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
   }
 
   const { created } = initialValues;
-  const shippings = getShippings(state);
+  const shippings = getShippingsAlphabetized(state);
   const users = getUsers(state);
   const isRestricted = isCurrentUserRestricted(state);
 
