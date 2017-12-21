@@ -5,9 +5,9 @@ import moment from 'moment';
 
 import Actions from 'rapidfab/actions';
 
-import BlockMachineForm from 'rapidfab/components/blockMachine/BlockMachineForm';
+import DowntimeForm from 'rapidfab/components/downtime/DowntimeForm';
 
-class BlockMachineFormContainer extends Component {
+class DowntimeFormContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -93,8 +93,8 @@ class BlockMachineFormContainer extends Component {
       start: moment(`${startDate} ${startTime}`).toISOString(),
     };
     const response = await (initialValues
-      ? dispatch(Actions.Api.wyatt['block-machine'].put(downtime, payload))
-      : dispatch(Actions.Api.wyatt['block-machine'].post(payload)));
+      ? dispatch(Actions.Api.wyatt.downtime.put(downtime, payload))
+      : dispatch(Actions.Api.wyatt.downtime.post(payload)));
     if (
       response.type === 'RESOURCE_POST_SUCCESS' ||
       response.type === 'RESOURCE_PUT_SUCCESS'
@@ -106,7 +106,7 @@ class BlockMachineFormContainer extends Component {
   render() {
     const { handleInputChange, handleSubmit } = this;
     return (
-      <BlockMachineForm
+      <DowntimeForm
         {...this.state}
         {...this.props}
         isFinishValid={this.isFinishValid()}
@@ -118,12 +118,12 @@ class BlockMachineFormContainer extends Component {
   }
 }
 
-BlockMachineFormContainer.defaultProps = {
+DowntimeFormContainer.defaultProps = {
   downtime: null,
   initialValues: null,
 };
 
-BlockMachineFormContainer.propTypes = {
+DowntimeFormContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   downtime: PropTypes.string,
   handleSelectionChange: PropTypes.func.isRequired,
@@ -159,4 +159,4 @@ const mapStateToProps = (state, ownProps) => ({
       : null,
 });
 
-export default connect(mapStateToProps)(BlockMachineFormContainer);
+export default connect(mapStateToProps)(DowntimeFormContainer);

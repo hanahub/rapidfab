@@ -48,7 +48,7 @@ export const getStateThirdPartyProviders = state =>
 export const getStateModelers = state => state.api.nautilus.modeler;
 export const getStateUploadModel = state => state.uploadModel;
 export const getStateLocationFilter = state => state.locationFilter.location;
-export const getStateBlockMachines = state => state.api.wyatt['block-machine'];
+export const getStateDowntimes = state => state.api.wyatt.downtime;
 
 export const getResourceByUuid = createSelector(
   [getPredicate, getStateResources],
@@ -542,19 +542,19 @@ export const getRuns = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
-export const getBlockMachines = createSelector(
-  [getStateBlockMachines, getStateResources],
+export const getDowntimes = createSelector(
+  [getStateDowntimes, getStateResources],
   (uuids, resources) => uuids.map(uuid => resources[uuid])
 );
 
-export const getBlockMachinesForMachine = createSelector(
-  [getPredicate, getBlockMachines],
-  (uri, blockMachines) =>
-    blockMachines.filter(
-      machine =>
-        machine.printer === uri ||
-        machine.post_processor === uri ||
-        machine.shipping === uri
+export const getDowntimesForMachine = createSelector(
+  [getPredicate, getDowntimes],
+  (uri, downtimes) =>
+    downtimes.filter(
+      downtime =>
+        downtime.printer === uri ||
+        downtime.post_processor === uri ||
+        downtime.shipping === uri
     )
 );
 
@@ -780,8 +780,8 @@ const QUEUE_EVENT_COLOR_MAP = {
 };
 
 export const getQueueEvents = createSelector(
-  [getRuns, getBlockMachines, getLocationFilter],
-  (runs, blocks, locationFilter) => [
+  [getRuns, getDowntimes, getLocationFilter],
+  (runs, downtimes, locationFilter) => [
     ...runs.reduce(
       (events, run) =>
         (locationFilter ? locationFilter === run.location : true) &&
@@ -803,12 +803,13 @@ export const getQueueEvents = createSelector(
           : events,
       []
     ),
-    ...blocks.map(block => ({
-      id: block.uri,
-      resourceId: block.printer || block.post_processor || block.shipping,
-      title: block.description,
-      start: block.start,
-      end: block.finish,
+    ...downtimes.map(downtime => ({
+      id: downtime.uri,
+      resourceId:
+        downtime.printer || downtime.post_processor || downtime.shipping,
+      title: downtime.description,
+      start: downtime.start,
+      end: downtime.finish,
       backgroundColor: '#FFA500',
       borderColor: '#FFA500',
     })),

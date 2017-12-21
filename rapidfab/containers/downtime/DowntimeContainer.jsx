@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import BlockMachine from 'rapidfab/components/blockMachine/BlockMachine';
+import Downtime from 'rapidfab/components/downtime/Downtime';
 
-class BlockMachineContainer extends Component {
+class DowntimeContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { selection: 'none' };
@@ -16,7 +16,7 @@ class BlockMachineContainer extends Component {
 
   render() {
     return (
-      <BlockMachine
+      <Downtime
         {...this.props}
         handleSelectionChange={this.handleSelectionChange}
         selection={this.state.selection}
@@ -25,4 +25,4 @@ class BlockMachineContainer extends Component {
   }
 }
 
-export default BlockMachineContainer;
+export default DowntimeContainer;

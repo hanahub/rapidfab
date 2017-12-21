@@ -14,7 +14,7 @@ import {
   Row,
 } from 'react-bootstrap';
 
-const BlockMachineForm = ({
+const DowntimeForm = ({
   description,
   downtime,
   finishDate,
@@ -143,12 +143,12 @@ const BlockMachineForm = ({
   </div>
 );
 
-BlockMachineForm.defaultProps = {
+DowntimeForm.defaultProps = {
   downtime: null,
   initialValues: null,
 };
 
-BlockMachineForm.propTypes = {
+DowntimeForm.propTypes = {
   description: PropTypes.string.isRequired,
   downtime: PropTypes.string,
   finishDate: PropTypes.string.isRequired,
@@ -164,4 +164,4 @@ BlockMachineForm.propTypes = {
   startTime: PropTypes.string.isRequired,
 };
 
-export default BlockMachineForm;
+export default DowntimeForm;
