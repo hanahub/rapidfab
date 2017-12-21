@@ -7,9 +7,9 @@ import { Button, Col, Grid } from 'react-bootstrap';
 import isUuid from 'rapidfab/utils/isUuid';
 
 import { FormattedMessage } from 'rapidfab/i18n';
-import DowntimeDeleteContainer from 'rapidfab/containers/blockMachine/DowntimeDeleteContainer';
-import DowntimeFormContainer from 'rapidfab/containers/blockMachine/DowntimeFormContainer';
-import DowntimesContainer from 'rapidfab/containers/blockMachine/DowntimesContainer';
+import DowntimeDeleteContainer from 'rapidfab/containers/downtime/DowntimeDeleteContainer';
+import DowntimeFormContainer from 'rapidfab/containers/downtime/DowntimeFormContainer';
+import DowntimesContainer from 'rapidfab/containers/downtime/DowntimesContainer';
 
 const styles = {
   border: {
