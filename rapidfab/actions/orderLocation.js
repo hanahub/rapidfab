@@ -1,4 +1,4 @@
-import Config from 'rapidfab/config';
+import Config from 'config';
 import Constants from 'rapidfab/constants';
 import { doGet } from 'rapidfab/api/makeApi';
 

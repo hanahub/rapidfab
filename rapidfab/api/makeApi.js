@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import Config from 'rapidfab/config';
+import Config from 'config';
 
 import 'isomorphic-fetch';
 

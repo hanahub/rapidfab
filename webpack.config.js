@@ -32,7 +32,7 @@ module.exports = {
     ],
   },
   externals: {
-    'rapidfab/config': 'Config',
+    'config': 'Config',
   },
   output: {
     filename: '[name].bundle.js',

@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import 'font-awesome-webpack';
 import 'fullcalendar';
 import 'fullcalendar-scheduler';
-import Config from 'rapidfab/config';
+import Config from 'config';
 import Raven from 'raven-js';
 import React from 'react';
 import PropTypes from 'prop-types';
