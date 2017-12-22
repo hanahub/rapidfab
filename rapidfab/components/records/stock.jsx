@@ -55,10 +55,7 @@ const StockForm = ({
         <BS.Col xs={12}>
           <BS.FormGroup controlId="uxMaterial">
             <BS.ControlLabel>
-              <FormattedMessage
-                id="field.material"
-                defaultMessage="Material"
-              />:
+              <FormattedMessage id="field.material" defaultMessage="Material" />:
             </BS.ControlLabel>
             <BS.FormControl
               componentClass="select"
@@ -69,19 +66,15 @@ const StockForm = ({
                 Select a Material
               </option>
               {materials.map(material => (
-                <option
-                  key={material.uri}
-                  value={material.uri}
-                >{`${material.id} - ${material.name}`}</option>
+                <option key={material.uri} value={material.uri}>{`${
+                  material.id
+                } - ${material.name}`}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxLocation">
             <BS.ControlLabel>
-              <FormattedMessage
-                id="field.location"
-                defaultMessage="Location"
-              />:
+              <FormattedMessage id="field.location" defaultMessage="Location" />:
             </BS.ControlLabel>
             <BS.FormControl
               componentClass="select"
@@ -92,10 +85,9 @@ const StockForm = ({
                 Select a Location
               </option>
               {locations.map(location => (
-                <option
-                  key={location.uri}
-                  value={location.uri}
-                >{`${location.id} - ${location.name}`}</option>
+                <option key={location.uri} value={location.uri}>{`${
+                  location.id
+                } - ${location.name}`}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>
@@ -123,10 +115,7 @@ const StockForm = ({
           </BS.FormGroup>
           <BS.FormGroup controlId="uxQuantity">
             <BS.ControlLabel>
-              <FormattedMessage
-                id="field.quantity"
-                defaultMessage="Quantity"
-              />:
+              <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.quantity} />
           </BS.FormGroup>

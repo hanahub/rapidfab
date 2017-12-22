@@ -29,40 +29,42 @@ function mapDispatchToProps(dispatch) {
   return {
     onInitialize: bureau => {
       dispatch(Actions.Api.wyatt.order.list({}));
-      dispatch(
-        Actions.Api.wyatt['line-item'].list({ bureau })
-      ).then(response => {
-        const lineItems = response.json.resources;
-        const printableLineItems = lineItems.filter(lineItem => {
-          const { status } = lineItem;
-          return status === 'confirmed' || status === 'printing';
-        });
+      dispatch(Actions.Api.wyatt['line-item'].list({ bureau })).then(
+        response => {
+          const lineItems = response.json.resources;
+          const printableLineItems = lineItems.filter(lineItem => {
+            const { status } = lineItem;
+            return status === 'confirmed' || status === 'printing';
+          });
 
-        _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
-          const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
-          const lineItemModels = lineItemChunk.map(lineItem => lineItem.model);
-          // remove null values
-          const filteredModels = lineItemModels.filter(model => model);
+          _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
+            const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
+            const lineItemModels = lineItemChunk.map(
+              lineItem => lineItem.model
+            );
+            // remove null values
+            const filteredModels = lineItemModels.filter(model => model);
 
-          dispatch(
-            Actions.Api.wyatt.print.list(
-              {
-                line_item: lineItemURIs,
-              },
-              true
-            )
-          );
+            dispatch(
+              Actions.Api.wyatt.print.list(
+                {
+                  line_item: lineItemURIs,
+                },
+                true
+              )
+            );
 
-          dispatch(
-            Actions.Api.hoth.model.list(
-              {
-                uri: filteredModels,
-              },
-              true
-            )
-          );
-        });
-      });
+            dispatch(
+              Actions.Api.hoth.model.list(
+                {
+                  uri: filteredModels,
+                },
+                true
+              )
+            );
+          });
+        }
+      );
       dispatch(Actions.Api.wyatt['process-step'].list());
       dispatch(Actions.Api.wyatt['printer-type'].list());
       dispatch(Actions.Api.wyatt.printer.list());
@@ -136,7 +138,9 @@ function mapStateToProps(state) {
       return true;
     }
     console.warn(
-      `Could not find a printer type ${processStep.process_type_uri} for process step ${processStep.uri}`
+      `Could not find a printer type ${
+        processStep.process_type_uri
+      } for process step ${processStep.uri}`
     );
     return false;
   });

@@ -20,11 +20,9 @@ export const filtersToQuery = filters =>
   filters
     ? Object.keys(filters).reduce(
         (formattedFilters, filterKey) =>
-          `${formattedFilters}${formattedFilters.length
-            ? '&'
-            : ''}filter[${filterKey}]=${encodeURIComponent(
-            filters[filterKey]
-          )}`,
+          `${formattedFilters}${
+            formattedFilters.length ? '&' : ''
+          }filter[${filterKey}]=${encodeURIComponent(filters[filterKey])}`,
         ''
       )
     : null;

@@ -28,34 +28,36 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onInitialize: bureau => {
       dispatch(Actions.Api.wyatt.order.list({}));
-      dispatch(
-        Actions.Api.wyatt['line-item'].list({ bureau })
-      ).then(response => {
-        const lineItems = response.json.resources;
-        const printableLineItems = lineItems.filter(lineItem => {
-          const { status } = lineItem;
-          return status === 'confirmed' || status === 'printing';
-        });
+      dispatch(Actions.Api.wyatt['line-item'].list({ bureau })).then(
+        response => {
+          const lineItems = response.json.resources;
+          const printableLineItems = lineItems.filter(lineItem => {
+            const { status } = lineItem;
+            return status === 'confirmed' || status === 'printing';
+          });
 
-        _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
-          const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
-          const lineItemModels = lineItemChunk.map(lineItem => lineItem.model);
-          // remove null values
-          const filteredModels = lineItemModels.filter(model => model);
+          _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
+            const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
+            const lineItemModels = lineItemChunk.map(
+              lineItem => lineItem.model
+            );
+            // remove null values
+            const filteredModels = lineItemModels.filter(model => model);
 
-          dispatch(
-            Actions.Api.wyatt.print.list({
-              line_item: lineItemURIs,
-            })
-          );
+            dispatch(
+              Actions.Api.wyatt.print.list({
+                line_item: lineItemURIs,
+              })
+            );
 
-          dispatch(
-            Actions.Api.hoth.model.list({
-              uri: filteredModels,
-            })
-          );
-        });
-      });
+            dispatch(
+              Actions.Api.hoth.model.list({
+                uri: filteredModels,
+              })
+            );
+          });
+        }
+      );
       dispatch(Actions.Api.wyatt['process-step'].list());
       dispatch(Actions.Api.wyatt['printer-type'].list());
       dispatch(Actions.Api.wyatt.printer.list());

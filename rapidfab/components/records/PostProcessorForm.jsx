@@ -136,7 +136,9 @@ const PostProcessorForm = ({
           <Col xs={12} sm={6}>
             {selectedPostProcessorType && (
               <Panel
-                header={`Post Processor Type: ${selectedPostProcessorType.name}`}
+                header={`Post Processor Type: ${
+                  selectedPostProcessorType.name
+                }`}
               >
                 <ListGroup fill>
                   <ListGroupItem style={styles.flexRow}>

@@ -62,10 +62,7 @@ class Tos extends Component {
                 style={{ marginTop: '20px' }}
                 disabled={fetching}
               >
-                <Fa
-                  name={fetching ? 'spinner' : 'thumbs-up'}
-                  spin={fetching}
-                />{' '}
+                <Fa name={fetching ? 'spinner' : 'thumbs-up'} spin={fetching} />{' '}
                 <FormattedMessage id="button.agree" defaultMessage="Agree" />
               </BS.Button>
             </BS.Jumbotron>

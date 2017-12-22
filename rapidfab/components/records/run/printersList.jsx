@@ -28,8 +28,9 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
           </a>
         </BS.Col>
         <BS.Col xs={2}>
-          {`${printer.printer_type.build_volume.x}mm x ${printer.printer_type
-            .build_volume.y}mm`}
+          {`${printer.printer_type.build_volume.x}mm x ${
+            printer.printer_type.build_volume.y
+          }mm`}
         </BS.Col>
         <BS.Col xs={2}>
           <span style={{ textTransform: 'capitalize' }}>

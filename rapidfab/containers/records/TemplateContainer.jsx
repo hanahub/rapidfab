@@ -83,9 +83,9 @@ function mapDispatchToProps(dispatch) {
       const stepCopies = steps.map(step => {
         const stepData = _.omit(step, ['step_position', 'template']);
         return new Promise(resolve => {
-          dispatch(
-            Actions.Api.wyatt['process-step'].post(stepData)
-          ).then(response => resolve(response.payload.uri));
+          dispatch(Actions.Api.wyatt['process-step'].post(stepData)).then(
+            response => resolve(response.payload.uri)
+          );
         });
       });
 

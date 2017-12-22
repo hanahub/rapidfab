@@ -86,10 +86,9 @@ const MaterialForm = ({
                 Select a Manufacturer
               </option>
               {manufacturers.map(manufacturer => (
-                <option
-                  key={manufacturer.uri}
-                  value={manufacturer.uri}
-                >{`${manufacturer.id} - ${manufacturer.name}`}</option>
+                <option key={manufacturer.uri} value={manufacturer.uri}>{`${
+                  manufacturer.id
+                } - ${manufacturer.name}`}</option>
               ))}
             </BS.FormControl>
           </BS.FormGroup>

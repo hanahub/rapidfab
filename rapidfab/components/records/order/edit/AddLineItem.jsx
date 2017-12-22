@@ -270,17 +270,17 @@ class AddLineItem extends Component {
 
         // Post line-item to wyatt
         payload.model = location;
-        dispatch(
-          Actions.Api.wyatt['line-item'].post(payload)
-        ).then(response => {
-          const newLineItem = response.headers.location;
-          const orderPayload = {
-            line_items: [...order.line_items, newLineItem],
-          };
-          const uuid = extractUuid(order.uri);
+        dispatch(Actions.Api.wyatt['line-item'].post(payload)).then(
+          response => {
+            const newLineItem = response.headers.location;
+            const orderPayload = {
+              line_items: [...order.line_items, newLineItem],
+            };
+            const uuid = extractUuid(order.uri);
 
-          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
-        });
+            return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+          }
+        );
       });
     }
   }

@@ -103,10 +103,9 @@ const PrinterTypeForm = ({
             Select a Manufacturer
           </option>
           {manufacturers.map(manufacturer => (
-            <option
-              key={manufacturer.uri}
-              value={manufacturer.uri}
-            >{`${manufacturer.id} - ${manufacturer.name}`}</option>
+            <option key={manufacturer.uri} value={manufacturer.uri}>{`${
+              manufacturer.id
+            } - ${manufacturer.name}`}</option>
           ))}
         </BS.FormControl>
       </BS.FormGroup>
@@ -121,10 +120,9 @@ const PrinterTypeForm = ({
           {...fields.materials}
         >
           {materials.map(material => (
-            <option
-              key={material.uri}
-              value={material.uri}
-            >{`${material.id} - ${material.name}`}</option>
+            <option key={material.uri} value={material.uri}>{`${
+              material.id
+            } - ${material.name}`}</option>
           ))}
         </BS.FormControl>
       </BS.FormGroup>
