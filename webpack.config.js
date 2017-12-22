@@ -31,9 +31,6 @@ module.exports = {
       './rapidfab/app',
     ],
   },
-  externals: {
-    'rapidfab/config': 'Config',
-  },
   output: {
     filename: '[name].bundle.js',
     sourceMapFilename: "[name].js.map",
