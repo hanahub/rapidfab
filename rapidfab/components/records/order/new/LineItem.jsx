@@ -16,6 +16,10 @@ import * as Selectors from 'rapidfab/selectors';
 
 import Feature from 'rapidfab/components/Feature';
 
+const styles = {
+  hidden: { display: 'none' },
+};
+
 const FileInput = ({ itar, onFileInputChange, value }) => {
   if (itar) return <p>ITAR Model</p>;
   return (
@@ -74,7 +78,7 @@ const LineItemComponent = ({
           />
         </Col>
       )}
-      <Col md={2}>
+      <Col style={isUserRestricted && styles.hidden} md={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage="Material" />:
         </ControlLabel>
@@ -130,7 +134,7 @@ const LineItemComponent = ({
           onChange={onInputChange}
         />
       </Col>
-      <Col md={2}>
+      <Col style={isUserRestricted && styles.hidden} md={2}>
         <ControlLabel>
           <FormattedMessage id="field.template" defaultMessage="Template" />:
         </ControlLabel>
