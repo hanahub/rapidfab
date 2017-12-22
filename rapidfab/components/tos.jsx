@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Config from 'config';
+import Config from 'rapidfab/config';
 
 import Fa from 'react-fontawesome';
 import * as BS from 'react-bootstrap';

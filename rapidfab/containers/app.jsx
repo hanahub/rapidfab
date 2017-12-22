@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
-import Config from 'config';
+import Config from 'rapidfab/config';
 import { connect } from 'react-redux';
 import Raven from 'raven-js';
 
