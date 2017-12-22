@@ -6,3 +6,4 @@ COPY tests /src/tests
 WORKDIR /src
 RUN npm install && npm prune
 RUN npm run build
+COPY config.js /src/dist/config.js
