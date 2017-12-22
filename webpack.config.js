@@ -2,8 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
-const host = process.env.HOST || 'rapidfab.auth.dev';
-const hostname = process.env.HOSTNAME || 'https://rapidfab.auth.dev/';
+const host = process.env.HOST || 'rapidfab.authentise.test';
+const hostname = process.env.HOSTNAME || 'https://rapidfab.authentise.test/';
 const port = process.env.PORT || 443;
 
 const devServer = {
