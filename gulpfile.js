@@ -59,7 +59,7 @@ gulp.task('publish:assets', () => {
     bucket: options.bucket,
     region: options.region,
     distributionId: options.cloudfront,
-    patternIndex: new RegExp(`index.${process.env.BUILD_VERSION}.html`, 'gi'),
+    patternIndex: new RegExp(`index.html`, 'gi'),
   };
 
   return gulp
