@@ -53,7 +53,6 @@ pipeline {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\' | cat')}"]) {
-                        sh 'if [ -z $DEV_COMMIT ]; then docker exec rapidfab npm run publish -- --region us-west-2 --bucket rapidfab.authentise.com --cloudfront EOPZ6L10IQ06S; else docker exec rapidfab npm run publish -- --region us-west-2 --bucket rapidfab.dev-auth.com --cloudfront E204AX3Y5WR2B4; fi'
                         sh 'docker push authentise/rapidfab:$GITDESCRIBE'
                     }
                 }
