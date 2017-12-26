@@ -3,10 +3,12 @@ pipeline {
         label 'docker'
     }
     stages {
-        stage('Docker Image') {
+        stage('Build') {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
-                    sh 'docker build -t authentise/rapidfab:$GITDESCRIBE .'
+                    withEnv(["COMMIT_HASH=${sh(returnStdout: true, script: 'git rev-parse HEAD')}"]) {
+                        sh 'docker build --build-arg GITDESCRIBE=$GITDESCRIBE COMMIT_HASH=$COMMIT_HASH -t authentise/rapidfab:$GITDESCRIBE .'
+                    }
                 }
             }
         }
@@ -32,18 +34,6 @@ pipeline {
                     unHealthy         : '90',
                     useStableBuildAsReference: true
                 ])
-            }
-        }
-        stage('Build') {
-            steps {
-                withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
-                    withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\' | cat')}"]) {
-                        withEnv(["COMMIT_HASH=${sh(returnStdout: true, script: 'git rev-parse HEAD')}"]) {
-                            sh 'rm -Rf rapidfab-*.tgz'
-                            sh 'if [ -z $DEV_COMMIT ]; then docker exec -e NODE_ENV=production rapidfab npm run build; else docker exec -e NODE_ENV=development rapidfab npm run build; fi'
-                        }
-                    }
-                }
             }
         }
         stage('Upload') {
