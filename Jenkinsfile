@@ -7,7 +7,7 @@ pipeline {
             steps {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     withEnv(["COMMIT_HASH=${sh(returnStdout: true, script: 'git rev-parse HEAD')}"]) {
-                        sh 'docker build --build-arg GITDESCRIBE=$GITDESCRIBE COMMIT_HASH=$COMMIT_HASH -t authentise/rapidfab:$GITDESCRIBE .'
+                        sh 'docker build --build-arg GITDESCRIBE=$GITDESCRIBE --build-arg COMMIT_HASH=$COMMIT_HASH -t authentise/rapidfab:$GITDESCRIBE .'
                     }
                 }
             }
