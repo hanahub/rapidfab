@@ -46,7 +46,7 @@ pipeline {
                 }
             }
         }
-        stage('Publish') {
+        stage('Upload') {
             when {
                 branch 'master'
             }
@@ -55,6 +55,19 @@ pipeline {
                     withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\' | cat')}"]) {
                         sh 'docker push authentise/rapidfab:$GITDESCRIBE'
                     }
+                }
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'master'
+            }
+            agent {
+                label 'salted'
+            }
+            steps {
+                withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
+                    sh 'build-complete rapidfab authentise/rapidfab:$GITDESCRIBE'
                 }
             }
         }
