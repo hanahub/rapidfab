@@ -11,7 +11,7 @@ module.exports = Object.assign(webpackConfig, {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: `[name].${process.env.BUILD_VERSION}.bundle.js`,
+    filename: `[name].${process.env.GITDESCRIBE}.bundle.js`,
     sourceMapFilename: "[name].js.map",
   },
   plugins: [
@@ -20,15 +20,15 @@ module.exports = Object.assign(webpackConfig, {
       title: 'Rapidfab',
       cache: true,
       template: 'index.html',
-      filename: `index.${process.env.BUILD_VERSION}.html`,
+      filename: `index.html`,
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         BUILD_VERSION: JSON.stringify(
-          process.env.BUILD_VERSION || 'development'
+          process.env.GITDESCRIBE || 'development'
         ),
         COMMIT_HASH: JSON.stringify(process.env.COMMIT_HASH),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
     new SentryPlugin({

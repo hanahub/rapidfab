@@ -43,11 +43,11 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        BUILD_VERSION: JSON.stringify(
-          process.env.BUILD_VERSION || 'development'
-        ),
         COMMIT_HASH: JSON.stringify(process.env.COMMIT_HASH),
+        GITDESCRIBE: JSON.stringify(
+          process.env.GITDESCRIBE || 'development'
+        ),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
     new webpack.ProvidePlugin({

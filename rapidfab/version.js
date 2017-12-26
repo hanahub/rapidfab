@@ -1,1 +1,1 @@
-export default process.env.BUILD_VERSION;
+export default process.env.GITDESCRIBE;
