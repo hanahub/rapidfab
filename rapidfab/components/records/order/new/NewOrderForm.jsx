@@ -12,6 +12,7 @@ import {
   ORDER_REGION_MAPPING,
   ORDER_SALES_MAPPING,
   ORDER_TYPE_MAPPING,
+  IP_SENSITIVITY_MAPPING,
 } from 'rapidfab/mappings';
 
 import Feature from 'rapidfab/components/Feature';
@@ -101,6 +102,18 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
     <FormRow id="field.customer_name" defaultMessage="Customer Name">
       <FormControlTextCareful {...fields.customer_name} />
     </FormRow>
+
+    <Feature featureName="ip-sensitivity">
+      <FormRow id="field.ipSensitivity" defaultMessage="IP Sensitivity">
+        <FormControl componentClass="select" {...fields.ip_sensitivity}>
+          {Object.keys(IP_SENSITIVITY_MAPPING).map(ip => (
+            <option key={ip} value={ip}>
+              {IP_SENSITIVITY_MAPPING[ip]}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
 
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
