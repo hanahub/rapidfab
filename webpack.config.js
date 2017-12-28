@@ -6,6 +6,10 @@ const host = process.env.HOST || 'rapidfab.authentise.test';
 const hostname = process.env.HOSTNAME || 'https://rapidfab.authentise.test/';
 const port = process.env.PORT || 443;
 
+console.log("Running webpack build with NODE_ENV " + process.env.NODE_ENV);
+console.log("Running webpack build with GITDESCRIBE " + process.env.GITDESCRIBE);
+console.log("Running webpack build with COMMIT_HASH " + process.env.COMMIT_HASH);
+
 const devServer = {
   hot: true,
   progress: true,
