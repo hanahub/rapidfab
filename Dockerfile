@@ -6,5 +6,5 @@ COPY rapidfab /src/rapidfab
 COPY tests /src/tests
 WORKDIR /src
 RUN npm install && npm prune
-RUN npm run build
+RUN GITDESCRIBE=$GITDESCRIBE COMMIT_HASH=$COMMIT_HASH npm run build
 COPY config.js /src/dist/config.js
