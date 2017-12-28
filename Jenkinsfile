@@ -44,6 +44,7 @@ pipeline {
                 withEnv(["GITDESCRIBE=${sh(returnStdout: true, script: 'git describe | tr -d \'\n\'')}"]) {
                     withEnv(["DEV_COMMIT=${sh(returnStdout: true, script: 'echo $GITDESCRIBE | grep \'\\-g\' | cat')}"]) {
                         sh 'docker push authentise/rapidfab:$GITDESCRIBE'
+                        sh 'docker rmi authentise/rapidfab:$GITDESCRIBE'
                     }
                 }
             }
