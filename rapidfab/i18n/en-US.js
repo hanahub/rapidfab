@@ -21,6 +21,11 @@ export default {
   "start": "Start",
   "supportUsed": "Support Used",
 
+  "ipSensitivity": "IP Sensitivity",
+  "ip_sensitivity_high": "High (Business Unit)",
+  "ip_sensitivity_medium": "Medium (Internal)",
+  "ip_sensitivity_low": "High (External)",
+
   "validateStartTime": "Must begin in the future",
   "validateFinishTime": "Must begin in after the start time",
 

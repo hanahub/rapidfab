@@ -88,6 +88,24 @@ export const ORDER_TYPE_MAPPING = {
   ),
 };
 
+export const IP_SENSITIVITY_MAPPING = {
+  high: (
+    <FormattedMessage
+      id="ip_sensitivity_high"
+      defaultMessage="High (Business Unit)"
+    />
+  ),
+  medium: (
+    <FormattedMessage
+      id="ip_sensitivity_medium"
+      defaultMessage="Medium (Internal)"
+    />
+  ),
+  low: (
+    <FormattedMessage id="ip_sensitivity_low" defaultMessage="Low (External)" />
+  ),
+};
+
 export const EVENT_KEY_MAPPING = {
   base_material: (
     <FormattedMessage id="field.baseMaterial" defaultMessage="Base Material" />

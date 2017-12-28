@@ -16,6 +16,7 @@ const fields = [
   'due_date',
   'customer_email',
   'customer_name',
+  'ip_sensitivity',
   'name',
   'notes',
   'order_owner',

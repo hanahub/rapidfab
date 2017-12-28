@@ -210,6 +210,7 @@ class NewOrder extends Component {
             : null,
           customer_email: orderForm.customer_email.value,
           customer_name: orderForm.customer_name.value,
+          ip_sensitivity: orderForm.ip_sensitivity.value,
           line_items: lineItemUris,
           name: orderForm.name.value,
           notes: orderForm.notes.value,
