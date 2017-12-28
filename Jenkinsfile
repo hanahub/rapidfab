@@ -67,8 +67,8 @@ pipeline {
     }
     post {
         always {
-            sh(returnStdout: true, script: 'docker stop rapidfab')
-            sh(returnStdout: true, script: 'docker rm rapidfab')
+            sh(returnStdout: true, script: 'docker stop rapidfab || true')
+            sh(returnStdout: true, script: 'docker rm rapidfab || true')
             sh(returnStdout: true, script: 'rm -Rf $WORKSPACE/* $WORKSPACE/.git')
         }
     }
