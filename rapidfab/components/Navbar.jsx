@@ -425,7 +425,7 @@ Navbar.defaultProps = {
 Navbar.propTypes = {
   bureaus: PropTypes.shape({}).isRequired,
   currentUser: PropTypes.shape({}),
-  locale: PropTypes.shape({}).isRequired,
+  locale: PropTypes.string.isRequired,
   onChangeLocale: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   session: PropTypes.shape({}).isRequired,
