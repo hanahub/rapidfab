@@ -21,7 +21,7 @@ const Admin = ({ bureauName }) => (
 
     <PageHeader>
       <FormattedMessage
-        id="Bureau Administration"
+        id="bureauAdministration"
         defaultMessage="Bureau Administration"
       />
     </PageHeader>

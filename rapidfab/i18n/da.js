@@ -1,7 +1,9 @@
 export default {
   "actuals": "Actuals",
   "addNewUser": " ’Tilføj ny bruger",
+  "admin": "Administration",
   "back": "Tilbage",
+  "bureauAdministration": "Bureau Administration",
   "createNewUser": "Opret ny bruger",
   "createUser": "Opret bruger",
   "editUser": "Rediger bruger",
@@ -20,6 +22,8 @@ export default {
   "shippingTime": "Shipping Time",
   "start": "Start",
   "supportUsed": " ’Støtte brugt",
+  "userAdministration": "User Administration",
+  "users": "Users",
   "ipSensitivity": "IP Sensitivity",
   "ip_sensitivity_high": "High (Business Unit)",
   "ip_sensitivity_medium": "Medium (Internal)",

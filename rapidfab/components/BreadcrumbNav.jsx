@@ -134,6 +134,11 @@ const breadcrumbMap = {
       />
     ),
   },
+  users: {
+    href: '#/admin/users',
+    icon: 'users',
+    message: <FormattedMessage id="users" defaultMessage="Users" />,
+  },
 };
 
 const HomeLink = () => (

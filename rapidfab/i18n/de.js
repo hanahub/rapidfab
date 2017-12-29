@@ -1,7 +1,9 @@
 export default {
   "actuals": "Actuals",
   "addNewUser": "Neuen Benutzer hinzufügen",
+  "admin": "Administration",
   "back": "Zurück",
+  "bureauAdministration": "Bureau Administration",
   "createNewUser": "Neuen Benutzer erstellen",
   "createUser": "Benutzer erstellen",
   "editUser": "Benutzer bearbeiten",
@@ -20,6 +22,8 @@ export default {
   "shippingTime": "Shipping Time",
   "start": "Start",
   "supportUsed": "Unterstützung verwendet",
+  "userAdministration": "User Administration",
+  "users": "Users",
   "ipSensitivity": "IP Sensitivity",
   "ip_sensitivity_high": "High (Business Unit)",
   "ip_sensitivity_medium": "Medium (Internal)",

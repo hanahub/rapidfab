@@ -1,7 +1,9 @@
 export default {
   "actuals": "Actuals",
   "addNewUser": " 新しいユーザーの追加",
+  "admin": "Administration",
   "back": " 戻る",
+  "bureauAdministration": "Bureau Administration",
   "createNewUser": " 新しいユーザーの作成",
   "createUser": " ユーザーの作成",
   "editUser": " ユーザーの編集",
@@ -20,6 +22,8 @@ export default {
   "shippingTime": "Shipping Time",
   "start": "Start",
   "supportUsed": "使用されるサポート 、",
+  "userAdministration": "User Administration",
+  "users": "Users",
   "ipSensitivity": "IP Sensitivity",
   "ip_sensitivity_high": "High (Business Unit)",
   "ip_sensitivity_medium": "Medium (Internal)",
