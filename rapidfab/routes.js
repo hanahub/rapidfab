@@ -1,5 +1,6 @@
 import Home from 'rapidfab/containers/home';
 import AdminContainer from 'rapidfab/containers/admin/AdminContainer';
+import AdminUsersContainer from 'rapidfab/containers/admin/AdminUsersContainer';
 import About from 'rapidfab/components/about';
 import BureauError from 'rapidfab/components/bureauError';
 
@@ -46,6 +47,7 @@ const Routes = {
   '/': Home,
   '/about': About,
   '/admin': AdminContainer,
+  '/admin/users': AdminUsersContainer,
   '/bureau-error': BureauError,
 
   '/inventory/materials': InventoryMaterials,

@@ -7,6 +7,11 @@ import Fa from 'react-fontawesome';
 const spacing = { marginRight: '0.5rem' };
 
 const breadcrumbMap = {
+  admin: {
+    href: '#/admin',
+    icon: 'building',
+    message: <FormattedMessage id="admin" defaultMessage="Administration" />,
+  },
   currencies: {
     href: '#/inventory/conversions',
     icon: 'exchange',
