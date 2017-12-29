@@ -1,12 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Grid, PageHeader } from 'react-bootstrap';
+import {
+  Grid,
+  PageHeader,
+  ListGroup,
+  ListGroupItem,
+  Panel,
+} from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import { FormattedMessage } from 'rapidfab/i18n';
 
-const Admin = () => (
+const Admin = ({ bureauName }) => (
   <Grid>
     <BreadcrumbNav breadcrumbs={['admin']} />
     <FlashMessages />
@@ -18,8 +26,18 @@ const Admin = () => (
       />
     </PageHeader>
 
-    <a href="#/admin/users">Users</a>
+    <Panel header={bureauName}>
+      <ListGroup fill>
+        <ListGroupItem href="#/admin/users">
+          <FontAwesome name="users" />
+          {` `}
+          Users
+        </ListGroupItem>
+      </ListGroup>
+    </Panel>
   </Grid>
 );
+
+Admin.propTypes = { bureauName: PropTypes.string.isRequired };
 
 export default Admin;

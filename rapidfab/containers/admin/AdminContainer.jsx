@@ -1,5 +1,8 @@
-import React from 'react';
+import { connect } from 'react-redux';
+import { getBureau } from 'rapidfab/selectors';
 
 import Admin from 'rapidfab/components/admin/Admin';
 
-export default () => <Admin />;
+const mapStateToProps = state => ({ bureauName: getBureau(state).name });
+
+export default connect(mapStateToProps)(Admin);
