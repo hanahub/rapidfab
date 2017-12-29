@@ -42,7 +42,6 @@ function mapDispatchToProps(dispatch) {
     onInitialize: props => {
       const { bureau } = props;
       dispatch(Actions.RouteUUID.setRouteUUID(props.route.uuid));
-      dispatch(Actions.Api.hoth.model.list());
       dispatch(Actions.Api.wyatt.material.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.template.list({ bureau: bureau.uri }));
       dispatch(Actions.Api.wyatt.shipping.list({ bureau: bureau.uri }));
