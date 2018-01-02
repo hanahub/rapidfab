@@ -19,11 +19,12 @@ class OrderContainer extends Component {
 
     // Fetch order and related resources
     dispatch(Actions.Api.wyatt.order.get(uuid)).then(res => {
-      dispatch(Actions.Api.wyatt['line-item'].list({ order: res.json.uri })).then(lineItemsResponse => {
-        lineItemsResponse.json.resources.map(lineItem => {
-          if(lineItem.model) {
-            const uuid = extractUuid(lineItem.model);
-            dispatch(Actions.Api.hoth.model.get(uuid));
+      dispatch(
+        Actions.Api.wyatt['line-item'].list({ order: res.json.uri })
+      ).then(lineItemsResponse => {
+        lineItemsResponse.json.resources.forEach(lineItem => {
+          if (lineItem.model) {
+            dispatch(Actions.Api.hoth.model.get(extractUuid(lineItem.model)));
           }
         });
       });
