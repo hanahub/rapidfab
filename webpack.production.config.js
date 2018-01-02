@@ -23,13 +23,7 @@ module.exports = Object.assign(webpackConfig, {
       filename: `index.html`,
     }),
     new webpack.DefinePlugin({
-      'process.env': {
-        BUILD_VERSION: JSON.stringify(
-          process.env.GITDESCRIBE || 'development'
-        ),
-        COMMIT_HASH: JSON.stringify(process.env.COMMIT_HASH),
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
+      'process.env': webpackConfig.environment
     }),
     new SentryPlugin({
       baseSentryURL: 'https://sentry.authentise.com/api/0',

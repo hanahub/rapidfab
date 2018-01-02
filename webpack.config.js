@@ -34,9 +34,11 @@ if (port === 443) {
   };
 }
 
+
 module.exports = {
   devtool: 'inline-source-map',
   devServer,
+  environment,
   entry: {
     app: [
       `webpack-dev-server/client?${hostname}`,
