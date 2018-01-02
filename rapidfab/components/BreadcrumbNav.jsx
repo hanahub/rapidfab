@@ -12,6 +12,11 @@ const breadcrumbMap = {
     icon: 'building',
     message: <FormattedMessage id="admin" defaultMessage="Administration" />,
   },
+  banner: {
+    href: '#/admin/banner',
+    icon: 'commenting-o',
+    message: <FormattedMessage id="banner" defaultMessage="Banner" />,
+  },
   currencies: {
     href: '#/inventory/conversions',
     icon: 'exchange',
