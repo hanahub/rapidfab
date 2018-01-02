@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
 import * as Selectors from 'rapidfab/selectors';
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 import EditOrder from 'rapidfab/components/records/order/edit/EditOrder';
 import FlashMessages from 'rapidfab/components/FlashMessages';
@@ -18,7 +19,14 @@ class OrderContainer extends Component {
 
     // Fetch order and related resources
     dispatch(Actions.Api.wyatt.order.get(uuid)).then(res => {
-      dispatch(Actions.Api.wyatt['line-item'].list({ order: res.json.uri }));
+      dispatch(Actions.Api.wyatt['line-item'].list({ order: res.json.uri })).then(lineItemsResponse => {
+        lineItemsResponse.json.resources.map(lineItem => {
+          if(lineItem.model) {
+            const uuid = extractUuid(lineItem.model);
+            dispatch(Actions.Api.hoth.model.get(uuid));
+          }
+        });
+      });
       if (res.json.channel_representative) {
         dispatch(Actions.Api.pao.users.get(res.json.channel_representative));
       }
@@ -31,7 +39,6 @@ class OrderContainer extends Component {
     });
 
     // Fetch resource options for input selections
-    dispatch(Actions.Api.hoth.model.list());
     dispatch(Actions.Api.wyatt['process-step'].list());
     dispatch(Actions.Api.wyatt.material.list({ bureau }));
     dispatch(Actions.Api.wyatt['third-party'].list({ bureau }));
