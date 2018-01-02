@@ -33,6 +33,11 @@ const Admin = ({ bureauName }) => (
           {` `}
           Users
         </ListGroupItem>
+        <ListGroupItem href="#/admin/banner">
+          <FontAwesome name="commenting-o" />
+          {` `}
+          Banner
+        </ListGroupItem>
       </ListGroup>
     </Panel>
   </Grid>
