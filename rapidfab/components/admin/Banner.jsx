@@ -14,8 +14,16 @@ import {
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import { FormattedMessage } from 'rapidfab/i18n';
+import Loading from 'rapidfab/components/Loading';
 
-const Banner = ({ handleInputChange, handleSubmit, link, message }) => (
+const Banner = ({
+  handleInputChange,
+  handleSubmit,
+  link,
+  message,
+  submittable,
+  submitting,
+}) => (
   <Grid>
     <BreadcrumbNav breadcrumbs={['admin', 'banner']} />
     <FlashMessages />
@@ -49,11 +57,15 @@ const Banner = ({ handleInputChange, handleSubmit, link, message }) => (
       </FormGroup>
       <FormGroup>
         <ButtonGroup vertical block>
-          <Button type="submit">
-            <FormattedMessage
-              id="updateBureauBanner"
-              defaultMessage="Update Bureau Banner"
-            />
+          <Button disabled={!submittable} type="submit">
+            {submitting ? (
+              <Loading />
+            ) : (
+              <FormattedMessage
+                id="updateBureauBanner"
+                defaultMessage="Update Bureau Banner"
+              />
+            )}
           </Button>
         </ButtonGroup>
       </FormGroup>
@@ -71,6 +83,8 @@ Banner.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   link: PropTypes.string,
   message: PropTypes.string,
+  submittable: PropTypes.bool.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 export default Banner;

@@ -34,6 +34,7 @@ class BannerContainer extends React.Component {
         message,
       },
     };
+
     this.props.dispatch(Actions.Api.wyatt.bureau.put(this.props.uuid, payload));
   }
 
@@ -41,6 +42,11 @@ class BannerContainer extends React.Component {
     return (
       <Banner
         {...this.state}
+        submittable={
+          this.props.message !== this.state.message ||
+          this.props.link !== this.state.link
+        }
+        submitting={this.props.submitting}
         handleInputChange={this.handleInputChange}
         handleSubmit={this.handleSubmit}
       />
@@ -52,6 +58,7 @@ BannerContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   link: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
+  submitting: PropTypes.bool.isRequired,
   uuid: PropTypes.string.isRequired,
 };
 
@@ -59,6 +66,7 @@ const mapStateToProps = state => ({
   uuid: getBureau(state).uuid,
   link: getBureau(state).order_banner.link,
   message: getBureau(state).order_banner.message,
+  submitting: state.ui.wyatt.bureau.put.fetching,
 });
 
 export default connect(mapStateToProps)(BannerContainer);
