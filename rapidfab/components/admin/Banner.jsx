@@ -50,7 +50,10 @@ const Banner = ({ handleInputChange, handleSubmit, link, message }) => (
       <FormGroup>
         <ButtonGroup vertical block>
           <Button type="submit">
-            <FormattedMessage id="submit" defaultMessage="Submit" />
+            <FormattedMessage
+              id="updateBureauBanner"
+              defaultMessage="Update Bureau Banner"
+            />
           </Button>
         </ButtonGroup>
       </FormGroup>
