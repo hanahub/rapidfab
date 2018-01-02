@@ -78,7 +78,7 @@ const LineItemComponent = ({
           />
         </Col>
       )}
-      <Col style={isUserRestricted && styles.hidden} md={2}>
+      <Col style={isUserRestricted ? styles.hidden : null} md={2}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage="Material" />:
         </ControlLabel>
@@ -134,7 +134,7 @@ const LineItemComponent = ({
           onChange={onInputChange}
         />
       </Col>
-      <Col style={isUserRestricted && styles.hidden} md={2}>
+      <Col style={isUserRestricted ? styles.hidden : null} md={2}>
         <ControlLabel>
           <FormattedMessage id="field.template" defaultMessage="Template" />:
         </ControlLabel>
