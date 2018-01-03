@@ -17,29 +17,23 @@ import * as Selectors from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import Loading from 'rapidfab/components/Loading';
 import NewOrderFormContainer from 'rapidfab/containers/records/order/NewOrderFormContainer';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import LineItem from './LineItem';
 
-const HelpLink = () => (
-  <div className="pull-right">
-    <a href="https://authentise.com/orderuploadhelp">
-      <FormattedMessage id="help.link" defaultMessage="Help" />{' '}
-      <Fa name="question-circle" />
-    </a>
+const AddLineItemButton = ({ onAddLineItem }) => (
+  <div className="clearfix">
+    <Button bsSize="small" onClick={() => onAddLineItem()}>
+      Add Line Item
+    </Button>
   </div>
 );
 
-const SaveButton = () => (
-  <ButtonToolbar className="clearfix">
-    <div className="pull-right">
-      <Button type="submit" value="submit" bsStyle="success" bsSize="small">
-        <SaveButtonTitle />
-      </Button>
-    </div>
-  </ButtonToolbar>
-);
+AddLineItemButton.propTypes = {
+  onAddLineItem: PropTypes.func.isRequired,
+};
 
 const NewOrderComponent = ({
   bannerMessage,
@@ -51,6 +45,7 @@ const NewOrderComponent = ({
   lineItems,
   onAddLineItem,
   onSubmit,
+  submitting,
 }) => {
   const breadcrumbs = ['orders', 'New Order'];
   return (
@@ -58,8 +53,25 @@ const NewOrderComponent = ({
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
 
       <Form horizontal onSubmit={onSubmit}>
-        <SaveButton />
-        <HelpLink />
+        <ButtonToolbar className="clearfix">
+          <div className="pull-right">
+            <Button
+              disabled={submitting}
+              type="submit"
+              value="submit"
+              bsStyle="success"
+              bsSize="small"
+            >
+              {submitting ? <Loading /> : <SaveButtonTitle />}
+            </Button>
+          </div>
+        </ButtonToolbar>
+        <div className="pull-right">
+          <a href="https://authentise.com/orderuploadhelp">
+            <FormattedMessage id="help.link" defaultMessage="Help" />{' '}
+            <Fa name="question-circle" />
+          </a>
+        </div>
         <hr />
 
         {isUserRestricted &&
@@ -111,6 +123,7 @@ NewOrderComponent.propTypes = {
   lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddLineItem: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
 class NewOrder extends Component {
@@ -307,12 +320,10 @@ class NewOrder extends Component {
 
     return (
       <NewOrderComponent
-        bannerMessage={this.props.bureau.order_banner.message}
-        bannerLink={this.props.bureau.order_banner.link}
+        {...this.props}
         handleDeleteLineItem={handleDeleteLineItem}
         handleLineItemModelChange={handleLineItemModelChange}
         handleLineItemChange={handleLineItemChange}
-        isUserRestricted={this.props.isUserRestricted}
         lineItems={lineItems}
         onAddLineItem={onAddLineItem}
         onSubmit={onSubmit}
@@ -342,6 +353,10 @@ const mapStateToProps = state => {
   const orderForm = state.form['record.order'];
   const materials = Selectors.getMaterials(state);
   const baseMaterials = materials.filter(material => material.type === 'base');
+  const submitting =
+    state.ui.hoth.model.post.fetching ||
+    state.ui.wyatt['line-item'].post.fetching ||
+    state.ui.wyatt.order.post.fetching;
   const supportMaterials = materials.filter(
     material => material.type === 'success'
   );
@@ -352,6 +367,7 @@ const mapStateToProps = state => {
     bureau,
     isUserRestricted,
     orderForm,
+    submitting,
     supportMaterials,
     templates,
   };
