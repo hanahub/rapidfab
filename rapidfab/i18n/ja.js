@@ -15,6 +15,7 @@ export default {
   "link": "Link",
   "materialUsed": "使用される材料 、",
   "message": "Message",
+  "orderName": "Order Name",
   "postProcessingTime": " 後処理時間",
   "printTime": "Print Time",
   "roles": " 役割",

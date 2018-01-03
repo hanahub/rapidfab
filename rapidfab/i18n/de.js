@@ -15,6 +15,7 @@ export default {
   "link": "Link",
   "materialUsed": "Verwendetes Material",
   "message": "Message",
+  "orderName": "Order Name",
   "postProcessingTime": "Nachbearbeitungszeit",
   "printTime": "Druckzeit",
   "roles": "Rollen",

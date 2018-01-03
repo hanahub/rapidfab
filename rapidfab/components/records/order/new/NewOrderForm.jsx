@@ -36,7 +36,7 @@ FormRow.propTypes = {
 
 const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
   <div>
-    <FormRow id="field.name" defaultMessage="Name">
+    <FormRow id="orderName" defaultMessage="Order Name">
       <FormControl type="text" required {...fields.name} />
     </FormRow>
 
