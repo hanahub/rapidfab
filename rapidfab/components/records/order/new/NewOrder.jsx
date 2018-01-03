@@ -81,6 +81,8 @@ LineItems.propTypes = {
 };
 
 const NewOrderComponent = ({
+  bannerMessage,
+  bannerLink,
   handleDeleteLineItem,
   handleLineItemModelChange,
   handleLineItemChange,
@@ -99,7 +101,11 @@ const NewOrderComponent = ({
         <HelpLink />
         <hr />
 
-        {isUserRestricted && <Alert>Alert</Alert>}
+        {isUserRestricted && (
+          <a href={bannerLink} target="_blank">
+            <Alert>{bannerMessage}</Alert>
+          </a>
+        )}
 
         <Panel header="Order">
           <NewOrderFormContainer />
@@ -120,7 +126,14 @@ const NewOrderComponent = ({
   );
 };
 
+NewOrderComponent.defaultProps = {
+  bannerMessage: null,
+  bannerLink: null,
+};
+
 NewOrderComponent.propTypes = {
+  bannerMessage: PropTypes.string,
+  bannerLink: PropTypes.string,
   handleDeleteLineItem: PropTypes.func.isRequired,
   handleLineItemModelChange: PropTypes.func.isRequired,
   handleLineItemChange: PropTypes.func.isRequired,
@@ -324,6 +337,8 @@ class NewOrder extends Component {
 
     return (
       <NewOrderComponent
+        bannerMessage={this.props.bureau.order_banner.message}
+        bannerLink={this.props.bureau.order_banner.link}
         handleDeleteLineItem={handleDeleteLineItem}
         handleLineItemModelChange={handleLineItemModelChange}
         handleLineItemChange={handleLineItemChange}
@@ -338,7 +353,12 @@ class NewOrder extends Component {
 
 NewOrder.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  bureau: PropTypes.shape({}).isRequired,
+  bureau: PropTypes.shape({
+    order_banner: PropTypes.shape({
+      message: PropTypes.string,
+      link: PropTypes.string,
+    }),
+  }).isRequired,
   dispatch: PropTypes.func.isRequired,
   isUserRestricted: PropTypes.bool.isRequired,
   orderForm: PropTypes.shape({}).isRequired,
