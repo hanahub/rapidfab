@@ -101,11 +101,12 @@ const NewOrderComponent = ({
         <HelpLink />
         <hr />
 
-        {isUserRestricted && (
-          <a href={bannerLink} target="_blank">
-            <Alert>{bannerMessage}</Alert>
-          </a>
-        )}
+        {isUserRestricted &&
+          bannerMessage && (
+            <a href={bannerLink} target="_blank">
+              <Alert>{bannerMessage}</Alert>
+            </a>
+          )}
 
         <Panel header="Order">
           <NewOrderFormContainer />
