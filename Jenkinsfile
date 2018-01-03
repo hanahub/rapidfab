@@ -47,6 +47,8 @@ pipeline {
                         sh(returnStdout: true, script: 'docker stop rapidfab')
                         sh(returnStdout: true, script: 'docker rm rapidfab')
                         sh(returnStdout: true, script: 'docker rmi authentise/rapidfab:$GITDESCRIBE')
+                        sh 'touch $WORKSPACE/$GITDESCRIBE.release'
+                        archiveArtifacts artifacts: '$WORKSPACE/$GITDESCRIBE.release', fingerprint: true
                     }
                 }
             }
