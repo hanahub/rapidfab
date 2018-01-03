@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Button, ButtonToolbar, Form, Grid, Panel } from 'react-bootstrap';
+import {
+  Alert,
+  Button,
+  ButtonToolbar,
+  Form,
+  Grid,
+  Panel,
+} from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
 import Actions from 'rapidfab/actions';
@@ -74,9 +81,12 @@ LineItems.propTypes = {
 };
 
 const NewOrderComponent = ({
+  bannerMessage,
+  bannerLink,
   handleDeleteLineItem,
   handleLineItemModelChange,
   handleLineItemChange,
+  isUserRestricted,
   lineItems,
   onAddLineItem,
   onSubmit,
@@ -90,6 +100,13 @@ const NewOrderComponent = ({
         <SaveButton />
         <HelpLink />
         <hr />
+
+        {isUserRestricted &&
+          bannerMessage && (
+            <a href={bannerLink} target="_blank">
+              <Alert>{bannerMessage}</Alert>
+            </a>
+          )}
 
         <Panel header="Order">
           <NewOrderFormContainer />
@@ -110,10 +127,18 @@ const NewOrderComponent = ({
   );
 };
 
+NewOrderComponent.defaultProps = {
+  bannerMessage: null,
+  bannerLink: null,
+};
+
 NewOrderComponent.propTypes = {
+  bannerMessage: PropTypes.string,
+  bannerLink: PropTypes.string,
   handleDeleteLineItem: PropTypes.func.isRequired,
   handleLineItemModelChange: PropTypes.func.isRequired,
   handleLineItemChange: PropTypes.func.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddLineItem: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -313,9 +338,12 @@ class NewOrder extends Component {
 
     return (
       <NewOrderComponent
+        bannerMessage={this.props.bureau.order_banner.message}
+        bannerLink={this.props.bureau.order_banner.link}
         handleDeleteLineItem={handleDeleteLineItem}
         handleLineItemModelChange={handleLineItemModelChange}
         handleLineItemChange={handleLineItemChange}
+        isUserRestricted={this.props.isUserRestricted}
         lineItems={lineItems}
         onAddLineItem={onAddLineItem}
         onSubmit={onSubmit}
@@ -326,15 +354,22 @@ class NewOrder extends Component {
 
 NewOrder.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bureau: PropTypes.shape({
+    order_banner: PropTypes.shape({
+      message: PropTypes.string,
+      link: PropTypes.string,
+    }),
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
+  orderForm: PropTypes.shape({}).isRequired,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   templates: PropTypes.arrayOf(PropTypes.object).isRequired,
-  bureau: PropTypes.shape({}).isRequired,
-  dispatch: PropTypes.func.isRequired,
-  orderForm: PropTypes.shape({}).isRequired,
 };
 
 const mapStateToProps = state => {
   const bureau = Selectors.getBureau(state);
+  const isUserRestricted = Selectors.isCurrentUserRestricted(state);
   const orderForm = state.form['record.order'];
   const materials = Selectors.getMaterials(state);
   const baseMaterials = materials.filter(material => material.type === 'base');
@@ -346,6 +381,7 @@ const mapStateToProps = state => {
   return {
     baseMaterials,
     bureau,
+    isUserRestricted,
     orderForm,
     supportMaterials,
     templates,
