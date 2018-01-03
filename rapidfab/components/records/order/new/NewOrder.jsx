@@ -22,18 +22,6 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import LineItem from './LineItem';
 
-const AddLineItemButton = ({ onAddLineItem }) => (
-  <div className="clearfix">
-    <Button bsSize="small" onClick={() => onAddLineItem()}>
-      Add Line Item
-    </Button>
-  </div>
-);
-
-AddLineItemButton.propTypes = {
-  onAddLineItem: PropTypes.func.isRequired,
-};
-
 const HelpLink = () => (
   <div className="pull-right">
     <a href="https://authentise.com/orderuploadhelp">
@@ -52,33 +40,6 @@ const SaveButton = () => (
     </div>
   </ButtonToolbar>
 );
-
-const LineItems = ({
-  handleDeleteLineItem,
-  handleLineItemModelChange,
-  handleLineItemChange,
-  lineItems,
-}) => (
-  <div>
-    {lineItems.map((lineItem, index) => (
-      <LineItem
-        key={lineItem.uri}
-        handleDeleteLineItem={handleDeleteLineItem}
-        handleLineItemModelChange={handleLineItemModelChange}
-        handleLineItemChange={handleLineItemChange}
-        index={index}
-        lineItem={lineItem}
-      />
-    ))}
-  </div>
-);
-
-LineItems.propTypes = {
-  handleDeleteLineItem: PropTypes.func.isRequired,
-  handleLineItemModelChange: PropTypes.func.isRequired,
-  handleLineItemChange: PropTypes.func.isRequired,
-  lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 const NewOrderComponent = ({
   bannerMessage,
@@ -113,14 +74,22 @@ const NewOrderComponent = ({
         </Panel>
 
         <Panel header="Line Items">
-          <LineItems
-            handleDeleteLineItem={handleDeleteLineItem}
-            handleLineItemModelChange={handleLineItemModelChange}
-            handleLineItemChange={handleLineItemChange}
-            lineItems={lineItems}
-          />
+          {lineItems.map((lineItem, index) => (
+            <LineItem
+              key={lineItem.uri}
+              handleDeleteLineItem={handleDeleteLineItem}
+              handleLineItemModelChange={handleLineItemModelChange}
+              handleLineItemChange={handleLineItemChange}
+              index={index}
+              lineItem={lineItem}
+            />
+          ))}
+
           <hr />
-          <AddLineItemButton onAddLineItem={onAddLineItem} />
+
+          <Button bsSize="small" onClick={() => onAddLineItem()}>
+            Add Line Item
+          </Button>
         </Panel>
       </Form>
     </Grid>
