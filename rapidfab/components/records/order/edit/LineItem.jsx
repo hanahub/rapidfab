@@ -274,15 +274,11 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
 };
 
 const getSnapshotFromLineItem = (lineItem, model) => {
-  if (!lineItem || model === null) {
+  if (!lineItem || !model) {
     return 'LOADING';
   }
   if (lineItem.itar) {
     return 'ITAR';
-  }
-
-  if (!model) {
-    return 'ERROR';
   }
 
   const snapshotContent = model.snapshot_content;
@@ -313,7 +309,7 @@ const mapStateToProps = (state, ownProps) => {
     printProcessSteps.some(step => step.uri === print.process_step)
   );
   const models = getModels(state);
-  const model = models.find(m => m.uri === lineItem.model);
+  const model = lineItem ? models.find(m => m.uri === lineItem.model) : null;
 
   const snapshot = getSnapshotFromLineItem(lineItem, model);
 
