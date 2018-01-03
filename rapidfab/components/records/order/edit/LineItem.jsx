@@ -10,6 +10,9 @@ import {
   getModels,
 } from 'rapidfab/selectors';
 
+import hhmmss from 'rapidfab/utils/hhmmss';
+import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
+
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import Loading from 'rapidfab/components/Loading';
 import {
@@ -18,13 +21,7 @@ import {
   FormattedVolume,
 } from 'rapidfab/i18n';
 
-import hhmmss from 'rapidfab/utils/hhmmss';
-
 import LineItemEditFormContainer from 'rapidfab/containers/records/order/LineItemEditFormContainer';
-
-const LineItemHeader = () => (
-  <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
-);
 
 const PrintsHeader = prints => {
   const complete = prints
@@ -41,39 +38,6 @@ const PrintsHeader = prints => {
       values={{ complete, total }}
     />
   );
-};
-
-const statusMapping = {
-  created: <FormattedMessage id="status.created" defaultMessage="Created" />,
-  calculating: (
-    <FormattedMessage id="status.calculating" defaultMessage="Calculating" />
-  ),
-  calculated: (
-    <FormattedMessage id="status.calculated" defaultMessage="Calculated" />
-  ),
-  queued: <FormattedMessage id="status.queued" defaultMessage="Queued" />,
-  'in-progress': (
-    <FormattedMessage id="status.in_progress" defaultMessage="In Progress" />
-  ),
-  complete: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
-  error: <FormattedMessage id="status.error" defaultMessage="Error" />,
-};
-
-const PrintItem = ({ name, uuid, status }) => (
-  <ListGroupItem>
-    <Row>
-      <Col xs={9}>
-        <a href={`/#/records/print/${uuid}`}>{name}</a>
-      </Col>
-      <Col xs={3}>{statusMapping[status]}</Col>
-    </Row>
-  </ListGroupItem>
-);
-
-PrintItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  uuid: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
 };
 
 const Prints = ({ prints }) => (
@@ -95,12 +59,14 @@ const Prints = ({ prints }) => (
       </ListGroupItem>
 
       {prints.map(print => (
-        <PrintItem
-          name={print.name}
-          key={print.id}
-          status={print.status}
-          uuid={print.uuid}
-        />
+        <ListGroupItem>
+          <Row>
+            <Col xs={9}>
+              <a href={`/#/records/print/${print.uuid}`}>{print.name}</a>
+            </Col>
+            <Col xs={3}>{PRINT_STATUS_MAPPING[print.status]}</Col>
+          </Row>
+        </ListGroupItem>
       ))}
     </ListGroup>
   </Panel>
@@ -262,7 +228,11 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
   const { estimates, itar } = lineItem;
 
   return (
-    <Panel header={<LineItemHeader />}>
+    <Panel
+      header={
+        <FormattedMessage id="record.lineItem" defaultMessage="Line Item" />
+      }
+    >
       <Col xs={12} sm={4}>
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
