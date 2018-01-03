@@ -15,6 +15,7 @@ export default {
   "link": "Link",
   "materialUsed": " ’Anvendte materialer",
   "message": "Message",
+  "orderName": "Order Name",
   "postProcessingTime": "’Efterbehandling tid",
   "printTime": "Print tid",
   "roles": "Roller",
