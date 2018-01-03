@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Button, ButtonToolbar, Form, Grid, Panel } from 'react-bootstrap';
+import {
+  Alert,
+  Button,
+  ButtonToolbar,
+  Form,
+  Grid,
+  Panel,
+} from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
 import Actions from 'rapidfab/actions';
@@ -77,6 +84,7 @@ const NewOrderComponent = ({
   handleDeleteLineItem,
   handleLineItemModelChange,
   handleLineItemChange,
+  isUserRestricted,
   lineItems,
   onAddLineItem,
   onSubmit,
@@ -90,6 +98,8 @@ const NewOrderComponent = ({
         <SaveButton />
         <HelpLink />
         <hr />
+
+        {isUserRestricted && <Alert>Alert</Alert>}
 
         <Panel header="Order">
           <NewOrderFormContainer />
@@ -114,6 +124,7 @@ NewOrderComponent.propTypes = {
   handleDeleteLineItem: PropTypes.func.isRequired,
   handleLineItemModelChange: PropTypes.func.isRequired,
   handleLineItemChange: PropTypes.func.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   lineItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   onAddLineItem: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -316,6 +327,7 @@ class NewOrder extends Component {
         handleDeleteLineItem={handleDeleteLineItem}
         handleLineItemModelChange={handleLineItemModelChange}
         handleLineItemChange={handleLineItemChange}
+        isUserRestricted={this.props.isUserRestricted}
         lineItems={lineItems}
         onAddLineItem={onAddLineItem}
         onSubmit={onSubmit}
@@ -326,15 +338,17 @@ class NewOrder extends Component {
 
 NewOrder.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
   bureau: PropTypes.shape({}).isRequired,
   dispatch: PropTypes.func.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   orderForm: PropTypes.shape({}).isRequired,
+  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
+  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => {
   const bureau = Selectors.getBureau(state);
+  const isUserRestricted = Selectors.isCurrentUserRestricted(state);
   const orderForm = state.form['record.order'];
   const materials = Selectors.getMaterials(state);
   const baseMaterials = materials.filter(material => material.type === 'base');
@@ -346,6 +360,7 @@ const mapStateToProps = state => {
   return {
     baseMaterials,
     bureau,
+    isUserRestricted,
     orderForm,
     supportMaterials,
     templates,
