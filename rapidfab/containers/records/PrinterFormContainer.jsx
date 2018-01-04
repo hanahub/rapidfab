@@ -59,10 +59,17 @@ class PrinterFormContainer extends Component {
         location: nextProps.printer.location,
         modeler: nextProps.printer.modeler,
       });
-    } else if (!uuid && locations.length === 0 && nextProps.locations.length > 0) {
+    } else if (
+      !uuid &&
+      locations.length === 0 &&
+      nextProps.locations.length > 0
+    ) {
       this.setState({ location: nextProps.locations[0].uri });
-    }
-    else if (!uuid && printerTypes.length === 0 && nextProps.printerTypes.length > 0) {
+    } else if (
+      !uuid &&
+      printerTypes.length === 0 &&
+      nextProps.printerTypes.length > 0
+    ) {
       this.setState({ printerType: nextProps.printerTypes[0].uri });
     }
   }
