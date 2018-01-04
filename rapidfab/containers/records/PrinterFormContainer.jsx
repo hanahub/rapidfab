@@ -52,28 +52,18 @@ class PrinterFormContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { locations, printer, printerTypes, uuid } = this.props;
-    if (uuid) {
-      if (!printer && nextProps.printer) {
-        const {
-          name,
-          printer_type: printerType,
-          location,
-          modeler,
-        } = nextProps.printer;
-        this.setState({
-          name,
-          printerType,
-          location,
-          modeler,
-        });
-      }
-    } else {
-      if (locations.length === 0 && nextProps.locations.length > 0) {
-        this.setState({ location: nextProps.locations[0].uri });
-      }
-      if (printerTypes.length === 0 && nextProps.printerTypes.length > 0) {
-        this.setState({ printerType: nextProps.printerTypes[0].uri });
-      }
+    if (uuid && !printer && nextProps.printer) {
+      this.setState({
+        name: nextProps.printer.name,
+        printerType: nextProps.printer.printerType,
+        location: nextProps.printer.location,
+        modeler: nextProps.printer.modeler,
+      });
+    } else if (!uuid && locations.length === 0 && nextProps.locations.length > 0) {
+      this.setState({ location: nextProps.locations[0].uri });
+    }
+    else if (!uuid && printerTypes.length === 0 && nextProps.printerTypes.length > 0) {
+      this.setState({ printerType: nextProps.printerTypes[0].uri });
     }
   }
 
