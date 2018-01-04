@@ -56,9 +56,12 @@ function makePut(hostRoot, resource) {
 }
 
 function makeDelete(hostRoot, resource) {
-  return (uuid, config) =>
-    fetch(
-      `${hostRoot}/${resource}/${uuid}/`,
+  return (uuid, config) => {
+    const url = uuid
+      ? `${hostRoot}/${resource}/${uuid}/`
+      : `${hostRoot}/${resource}/`;
+    return fetch(
+      url,
       _.assign(
         {},
         FETCH_CONFIG,
@@ -69,6 +72,7 @@ function makeDelete(hostRoot, resource) {
         config
       )
     );
+  };
 }
 
 function makePost(hostRoot, resource) {
