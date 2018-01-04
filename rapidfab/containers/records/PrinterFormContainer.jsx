@@ -154,7 +154,7 @@ const mapStateToProps = (state, props) => {
             name: printer.name,
             location: printer.location,
             modeler: printer.modeler,
-            printerType: printer.printerType,
+            printerType: printer.printer_type,
           },
         }
       : {}
