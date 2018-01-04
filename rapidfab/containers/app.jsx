@@ -53,7 +53,7 @@ SessionProvider.propTypes = {
 };
 
 function redirect() {
-  window.location = '/?nextPath=/&subdomain=rapidfab#/';
+  window.location = `${Config.HOST.SCYLLA}?nextPath=/&subdomain=rapidfab#/`;
 }
 
 class App extends Component {
