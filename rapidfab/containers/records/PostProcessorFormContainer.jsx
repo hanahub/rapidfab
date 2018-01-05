@@ -26,11 +26,13 @@ class PostProcessorFormContainer extends React.Component {
           : '',
       };
     } else {
+      const { locations, postProcessorTypes } = this.props;
       this.state = {
         name: '',
-        loading: true,
-        location: '',
-        postProcessorType: '',
+        location: locations.length ? locations[0].uri : null,
+        postProcessorType: postProcessorTypes.length
+          ? postProcessorTypes[0].uri
+          : null,
         duration: '',
       };
     }
