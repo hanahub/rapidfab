@@ -15,11 +15,10 @@ class PostProcessorFormContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    const { postProcessor } = this.props;
-    if (postProcessor) {
+    const { postProcessor, uuid } = this.props;
+    if (uuid) {
       this.state = {
         name: postProcessor.name,
-        loading: false,
         location: postProcessor.location,
         postProcessorType: postProcessor.post_processor_type,
         duration: postProcessor.duration
@@ -27,11 +26,13 @@ class PostProcessorFormContainer extends React.Component {
           : '',
       };
     } else {
+      const { locations, postProcessorTypes } = this.props;
       this.state = {
         name: '',
-        loading: true,
-        location: '',
-        postProcessorType: '',
+        location: locations.length ? locations[0].uri : null,
+        postProcessorType: postProcessorTypes.length
+          ? postProcessorTypes[0].uri
+          : null,
         duration: '',
       };
     }
@@ -47,7 +48,7 @@ class PostProcessorFormContainer extends React.Component {
       dispatch(Actions.Api.wyatt.location.list()),
       dispatch(Actions.Api.wyatt['post-processor-type'].list()),
       uuid ? dispatch(Actions.Api.wyatt['post-processor'].get(uuid)) : null,
-    ]).then(() => this.setState({ loading: false }));
+    ]);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -141,6 +142,11 @@ PostProcessorFormContainer.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   uuid: Selectors.getRoute(state, props).uuid,
+  loading:
+    state.ui.wyatt.location.list.count === 0 ||
+    state.ui.wyatt.location.list.fetching ||
+    state.ui.wyatt['post-processor-type'].list.count === 0 ||
+    state.ui.wyatt['post-processor-type'].list.fetching,
   locations: Selectors.getLocations(state),
   postProcessor: Selectors.getRouteResource(state, props),
   postProcessorTypes: Selectors.getPostProcessorTypes(state),

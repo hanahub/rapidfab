@@ -179,6 +179,8 @@ const PostProcessorForm = ({
 );
 
 PostProcessorForm.defaultProps = {
+  location: '',
+  postProcessorType: '',
   selectedPostProcessorType: null,
   uuid: null,
 };
@@ -189,10 +191,10 @@ PostProcessorForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  location: PropTypes.string.isRequired,
+  location: PropTypes.string,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   name: PropTypes.string.isRequired,
-  postProcessorType: PropTypes.string.isRequired,
+  postProcessorType: PropTypes.string,
   postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedPostProcessorType: PropTypes.shape({
     description: PropTypes.string,
