@@ -19,7 +19,6 @@ class PostProcessorFormContainer extends React.Component {
     if (postProcessor) {
       this.state = {
         name: postProcessor.name,
-        loading: false,
         location: postProcessor.location,
         postProcessorType: postProcessor.post_processor_type,
         duration: postProcessor.duration
@@ -47,7 +46,7 @@ class PostProcessorFormContainer extends React.Component {
       dispatch(Actions.Api.wyatt.location.list()),
       dispatch(Actions.Api.wyatt['post-processor-type'].list()),
       uuid ? dispatch(Actions.Api.wyatt['post-processor'].get(uuid)) : null,
-    ]).then(() => this.setState({ loading: false }));
+    ]);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -141,6 +140,11 @@ PostProcessorFormContainer.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   uuid: Selectors.getRoute(state, props).uuid,
+  loading:
+    state.ui.wyatt.location.list.count === 0 ||
+    state.ui.wyatt.location.list.fetching ||
+    state.ui.wyatt['post-processor-type'].list.count === 0 ||
+    state.ui.wyatt['post-processor-type'].list.fetching,
   locations: Selectors.getLocations(state),
   postProcessor: Selectors.getRouteResource(state, props),
   postProcessorTypes: Selectors.getPostProcessorTypes(state),
