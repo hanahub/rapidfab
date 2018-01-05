@@ -43,6 +43,7 @@ export const getStatePrints = state => state.api.wyatt.print;
 export const getStatePrinters = state => state.api.wyatt.printer;
 export const getStatePrinterTypes = state => state.api.wyatt['printer-type'];
 export const getStateRuns = state => state.api.wyatt.run;
+export const getStateRunDocuments = state => state.api.wyatt['run-document'];
 export const getStateThirdPartyProviders = state =>
   state.api.wyatt['third-party'];
 export const getStateModelers = state => state.api.nautilus.modeler;
@@ -556,6 +557,11 @@ export const getPrintsCreated = createSelector(
 export const getRuns = createSelector(
   [getStateRuns, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getRunDocuments = createSelector(
+  [getStateOrderDocuments, getStateResources],
+  (uuids, resources) => uuids.map(uuid => resources[uuid])
 );
 
 export const getDowntimes = createSelector(
