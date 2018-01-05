@@ -21,7 +21,13 @@ const Users = ({ users, handleSelectionChange }) => (
 
 Users.propTypes = {
   handleSelectionChange: PropTypes.func.isRequired,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      username: PropTypes.string,
+      uuid: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Users;

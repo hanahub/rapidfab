@@ -25,7 +25,7 @@ const UserRoles = ({
       </Label>
     </div>
     {roles.map(role => (
-      <InputGroup key={role} style={styles.spacingBottom}>
+      <InputGroup key={role.uuid} style={styles.spacingBottom}>
         <InputGroup.Addon>
           <input
             checked={userRoles.includes(role)}
