@@ -15,8 +15,8 @@ class PostProcessorFormContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    const { postProcessor } = this.props;
-    if (postProcessor) {
+    const { postProcessor, uuid } = this.props;
+    if (uuid) {
       this.state = {
         name: postProcessor.name,
         location: postProcessor.location,
