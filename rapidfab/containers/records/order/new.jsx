@@ -15,29 +15,10 @@ class NewOrderContainer extends Component {
     this.props.onInitialize(this.props.bureau);
   }
 
-  componentDidUpdate(prevProps) {
-    const { model, uploadModel } = this.props;
-    const prevModel = prevProps.model;
-    if (
-      prevModel &&
-      prevModel.status !== 'processed' &&
-      model &&
-      model.status === 'processed'
-    ) {
-      this.props.onSaveOrder(uploadModel.orderPayload);
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.onUnmount();
-  }
-
   render() {
-    const { fetching } = this.props;
-
     return (
       <div>
-        {fetching ? (
+        {this.props.fetching ? (
           <Loading />
         ) : (
           <div>
@@ -53,10 +34,7 @@ class NewOrderContainer extends Component {
 NewOrderContainer.propTypes = {
   bureau: PropTypes.shape({}).isRequired,
   fetching: PropTypes.bool.isRequired,
-  model: PropTypes.shape({}).isRequired,
   onInitialize: PropTypes.func.isRequired,
-  onSaveOrder: PropTypes.func.isRequired,
-  onUnmount: PropTypes.func.isRequired,
   uploadModel: PropTypes.shape({}).isRequired,
 };
 
@@ -70,9 +48,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt.template.list({ bureau: uri }));
       dispatch(Actions.Api.pao.users.list());
     },
-    onUnmount: () => {
-      dispatch(Actions.UploadModel.clearState());
-    },
   };
 }
 
@@ -83,12 +58,6 @@ const mapStateToProps = state => ({
     state.ui.wyatt.template.list,
     state.ui.wyatt['third-party'].list
   ),
-  materials: Selectors.getMaterials(state),
-  model: state.resources[state.uploadModel.modelUuid],
-  providers: Selectors.getThirdPartyProviders(state),
-  shippings: Selectors.getShippingsAlphabetized(state),
-  templates: Selectors.getTemplates(state),
-  uploadModel: state.uploadModel,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewOrderContainer);

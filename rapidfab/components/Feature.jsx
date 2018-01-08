@@ -21,7 +21,10 @@ class Feature extends Component {
 
 Feature.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
   featureName: PropTypes.string.isRequired,
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
