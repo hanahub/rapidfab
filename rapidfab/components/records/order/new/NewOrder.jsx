@@ -321,6 +321,8 @@ class NewOrder extends Component {
     return (
       <NewOrderComponent
         {...this.props}
+        bannerLink={this.props.bureau.order_banner.link}
+        bannerMessage={this.props.bureau.order_banner.message}
         handleDeleteLineItem={handleDeleteLineItem}
         handleLineItemModelChange={handleLineItemModelChange}
         handleLineItemChange={handleLineItemChange}
