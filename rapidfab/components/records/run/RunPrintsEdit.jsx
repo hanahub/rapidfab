@@ -7,8 +7,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-import PrintsList from './printsList';
 import ActivePrints from './activePrints';
+import PrintsList from './printsList';
 
 class RunPrintsEdit extends Component {
   constructor(props) {

@@ -13,6 +13,7 @@ import RunPrintsEditContainer from 'rapidfab/containers/records/run/RunPrintsEdi
 import RunRecordFormContainer from 'rapidfab/containers/records/run/RunRecordFormContainer';
 
 import RunData from './RunData';
+import RunDocuments from './RunDocuments';
 import RunRequeueButton from './RunRequeueButton';
 import RunScheduleButton from './RunScheduleButton';
 
@@ -59,6 +60,7 @@ const RunRecord = ({
                 <RunRecordFormContainer />
                 <div style={styles.spacingTop}>
                   <RunPrintsContainer />
+                  <RunDocuments uuid={uuid} />
                 </div>
               </Col>
             </div>

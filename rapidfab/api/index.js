@@ -24,6 +24,7 @@ export const RESOURCES = {
     'printer-type',
     'role',
     'run',
+    'run-document',
     'run-queue',
     'shipping',
     'stock',
