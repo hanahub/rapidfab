@@ -560,7 +560,7 @@ export const getRuns = createSelector(
 );
 
 export const getRunDocuments = createSelector(
-  [getStateOrderDocuments, getStateResources],
+  [getStateRunDocuments, getStateResources],
   (uuids, resources) => uuids.map(uuid => resources[uuid])
 );
 
