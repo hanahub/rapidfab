@@ -468,16 +468,32 @@ export const getEvents = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getRuns = createSelector(
+  [getStateRuns, getStateResources],
+  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getRunDocuments = createSelector(
+  [getStateRunDocuments, getStateResources],
+  (uuids, resources) => uuids.map(uuid => resources[uuid])
+);
+
 export const getEventsForPrint = createSelector(
-  [getPredicate, getPrints, getEvents],
-  (print, prints, events) => {
+  [getPredicate, getPrints, getEvents, getRunDocuments],
+  (print, prints, events, runDocuments) => {
     if (!print) return null;
 
     const relevantPrints = prints.filter(p => print.line_item === p.line_item);
+    const printRuns = relevantPrints.map(p => p.run);
+    const printRunDocuments = runDocuments.reduce(
+      (docs, doc) => (printRuns.includes(doc.run) ? [...docs, doc.uri] : docs),
+      []
+    );
     const uris = _.compact([
       print.order,
       print.line_item,
-      ...relevantPrints.map(p => p.run),
+      ...printRuns,
+      ...printRunDocuments,
     ]);
 
     return events.filter(event => uris.includes(event.reference));
@@ -552,16 +568,6 @@ export const getPrintsCreated = createSelector(
     const prints = _.map(uuids, uuid => resources[uuid]);
     return _.filter(prints, ['status', 'created']);
   }
-);
-
-export const getRuns = createSelector(
-  [getStateRuns, getStateResources],
-  (uuids, resources) => _.map(uuids, uuid => resources[uuid])
-);
-
-export const getRunDocuments = createSelector(
-  [getStateRunDocuments, getStateResources],
-  (uuids, resources) => uuids.map(uuid => resources[uuid])
 );
 
 export const getDowntimes = createSelector(
