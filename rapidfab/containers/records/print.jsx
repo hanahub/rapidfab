@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
@@ -91,16 +91,23 @@ function mapDispatchToProps(dispatch) {
           (uris, resource) => (resource.run ? [...uris, resource.run] : uris),
           []
         );
-        const uris = [
-          lineItemUri,
-          orderUri,
-          printUri,
-          ...printsUris,
-          ...runUris,
-        ];
-
-        _.chunk(uris, 10).map(chunk =>
-          dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
+        dispatch(Actions.Api.wyatt['run-document'].list({ run: runUris })).then(
+          response => {
+            const runDocumentUris = response.json.resources.map(
+              resource => resource.uri
+            );
+            const uris = [
+              lineItemUri,
+              orderUri,
+              printUri,
+              ...printsUris,
+              ...runUris,
+              ...runDocumentUris,
+            ];
+            _.chunk(uris, 10).map(chunk =>
+              dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
+            );
+          }
         );
       });
     },
