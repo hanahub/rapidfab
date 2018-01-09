@@ -32,6 +32,7 @@ const REFERENCE_MAPPING = {
   order: 'Order',
   print: 'Print',
   run: 'Run',
+  'run-document': 'Run Document',
 };
 
 const extractResourceType = uri => {
@@ -126,12 +127,26 @@ EventReference.propTypes = {
   reference: PropTypes.string.isRequired,
 };
 
+const DocumentDownload = connect((state, { uri }) => ({
+  doc: state.resources[extractUuid(uri)],
+}))(({ doc }) => (
+  <a href={doc.content} download={doc.name}>
+    {` `}
+    <FontAwesome name="download" />
+  </a>
+));
+
+DocumentDownload.propTypes = { uri: PropTypes.string.isRequired };
+
 const ExpandedContent = ({ event }) => (
   <Row>
     <Col xs={1} />
     <Col xs={8}>
       <span>to </span>
       <EventValue value={event.current_value} />
+      {extractResourceType(event.reference) === 'run-document' && (
+        <DocumentDownload uri={event.reference} />
+      )}
       <span> from </span>
       <EventValue value={event.previous_value} />
     </Col>
