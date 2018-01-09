@@ -60,7 +60,7 @@ const RunRecord = ({
                 <RunRecordFormContainer />
                 <div style={styles.spacingTop}>
                   <RunPrintsContainer />
-                  <RunDocuments />
+                  <RunDocuments uuid={uuid} />
                 </div>
               </Col>
             </div>

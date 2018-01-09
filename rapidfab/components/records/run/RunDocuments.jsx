@@ -41,9 +41,8 @@ class RunDocuments extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, runDocumentUUIDs } = this.props;
-    runDocumentUUIDs.forEach(uuid =>
-      dispatch(Actions.Api.wyatt['run-document'].get(uuid))
+    this.props.dispatch(
+      Actions.Api.wyatt['run-document'].list({ run: this.props.runUri })
     );
   }
 
@@ -116,21 +115,18 @@ class RunDocuments extends React.Component {
 
 RunDocuments.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  runDocumentUUIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
   runDocuments: PropTypes.arrayOf(PropTypes.object).isRequired,
+  runUri: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => {
-  const runResource = state.resources[state.routeUUID];
-  const runUri = runResource.uri;
-  const runResourceDocuments = runResource.run_documents;
-  const runDocumentUUIDs = runResourceDocuments
-    ? runResourceDocuments.map(doc => extractUuid(doc))
-    : [];
-  const runDocuments = getRunDocuments(state).filter(
-    runDocument => runDocument.run === runUri
-  );
-  return { runDocuments, runDocumentUUIDs, runUri };
+const mapStateToProps = (state, ownProps) => {
+  const run = state.resources[ownProps.uuid];
+  return {
+    runUri: run.uri,
+    runDocuments: getRunDocuments(state).filter(
+      runDocument => runDocument.run === run.uri
+    ),
+  };
 };
 
 export default connect(mapStateToProps)(RunDocuments);

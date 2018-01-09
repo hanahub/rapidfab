@@ -46,7 +46,7 @@ const mapStateToProps = state => {
   const run = getRouteUUIDResource(state);
   return Object.assign(
     {},
-    { isRunFetching: !run && state.ui.wyatt.run.get.fetching },
+    { isRunFetching: !run || state.ui.wyatt.run.get.fetching },
     run
       ? {
           id: run.id,
