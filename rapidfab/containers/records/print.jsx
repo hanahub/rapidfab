@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import Loading from 'rapidfab/components/Loading';
