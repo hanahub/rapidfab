@@ -92,7 +92,7 @@ class PrinterFormContainer extends Component {
       name,
       printer_type: printerType,
       location,
-      modeler,
+      modeler: modeler.trim(),
     };
     if (uuid) {
       dispatch(Actions.Api.wyatt.printer.put(uuid, payload)).then(redirect);
