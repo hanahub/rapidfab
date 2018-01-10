@@ -11,7 +11,8 @@ import {
   ORDER_REGION_MAPPING,
   ORDER_SALES_MAPPING,
   ORDER_STATUS_MAP,
-  ORDER_TYPE_MAPPING,
+  ORDER_TYPE_EOS_MAPPING,
+  ORDER_TYPE_FR_MAPPING,
 } from 'rapidfab/mappings';
 import {
   FormControlTextArea,
@@ -157,15 +158,27 @@ const EditOrderForm = ({ created, fields, isRestricted, shippings, users }) => (
       </FormRow>
     </Feature>
 
+    <Feature featureName="fastradius-order-fields">
+      <FormRow id="field.orderType" defaultMessage="Order Type">
+        <FormControl componentClass="select" {...fields.order_type}>
+          {Object.keys(ORDER_TYPE_FR_MAPPING).map(type => (
+            <option key={type} value={type}>
+              {ORDER_TYPE_FR_MAPPING[type]}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
+
     <Feature featureName="eos-order-fields">
       <FormRow id="field.orderType" defaultMessage="Order Type">
         <FormControl componentClass="select" {...fields.order_type}>
           <option value="none">
             <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-          {Object.keys(ORDER_TYPE_MAPPING).map(type => (
+          {Object.keys(ORDER_TYPE_EOS_MAPPING).map(type => (
             <option key={type} value={type}>
-              {ORDER_TYPE_MAPPING[type]}
+              {ORDER_TYPE_EOS_MAPPING[type]}
             </option>
           ))}
         </FormControl>
