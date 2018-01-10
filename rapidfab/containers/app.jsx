@@ -5,6 +5,7 @@ import Config from 'rapidfab/config';
 import { connect } from 'react-redux';
 import Raven from 'raven-js';
 
+import Loading from 'rapidfab/components/Loading';
 import Navbar from 'rapidfab/components/Navbar';
 import Routes from 'rapidfab/routes';
 import Router from 'rapidfab/components/router';
@@ -40,7 +41,7 @@ const SessionProvider = ({
     return <div>{children}</div>;
   }
 
-  return <div />;
+  return <Loading />;
 };
 
 SessionProvider.defaultProps = { currentUser: null };
