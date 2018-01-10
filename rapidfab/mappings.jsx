@@ -95,13 +95,21 @@ export const ORDER_SALES_MAPPING = {
   dead: <FormattedMessage id="order.dead" defaultMessage="Dead" />,
 };
 
-export const ORDER_TYPE_MAPPING = {
+export const ORDER_TYPE_EOS_MAPPING = {
   benchmark: (
     <FormattedMessage id="order.benchmark" defaultMessage="Benchmark" />
   ),
   timestudy: (
     <FormattedMessage id="order.timestudy" defaultMessage="Timestudy" />
   ),
+};
+
+export const ORDER_TYPE_FR_MAPPING = {
+  commercial: <FormattedMessage id="commercial" defaultMessage="Commercial" />,
+  'sample-free': (
+    <FormattedMessage id="sample" defaultMessage="Sample (Free)" />
+  ),
+  'r-d': <FormattedMessage id="r-d" defaultMessage="R&D" />,
 };
 
 export const IP_SENSITIVITY_MAPPING = {
