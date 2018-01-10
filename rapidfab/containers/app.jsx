@@ -5,6 +5,7 @@ import Config from 'rapidfab/config';
 import { connect } from 'react-redux';
 import Raven from 'raven-js';
 
+import Loading from 'rapidfab/components/Loading';
 import Navbar from 'rapidfab/components/Navbar';
 import Routes from 'rapidfab/routes';
 import Router from 'rapidfab/components/router';
@@ -32,20 +33,20 @@ const SessionProvider = ({
   if (currentUser && !fetching) {
     if (!currentUser.tos && !currentUser.impersonating) {
       return <Tos user={currentUser} onAcceptTerms={onAcceptTerms} />;
+    } else if (errors.length || bureaus.size === 0) {
+      return <BureauError bureaus={bureaus} errors={errors} />;
     }
-    if (bureaus.size === 0) {
-      return <BureauError bureaus={bureaus} />;
-    }
-
     return <div>{children}</div>;
   }
 
-  return <div />;
+  return <Loading />;
 };
 
+SessionProvider.defaultProps = { currentUser: null };
+
 SessionProvider.propTypes = {
-  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currentUser: PropTypes.shape({}).isRequired,
+  bureaus: PropTypes.shape({ size: PropTypes.num }).isRequired,
+  currentUser: PropTypes.shape({}),
   children: PropTypes.element.isRequired,
   fetching: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.object).isRequired,
