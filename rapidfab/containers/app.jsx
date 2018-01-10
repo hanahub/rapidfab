@@ -43,9 +43,11 @@ const SessionProvider = ({
   return <div />;
 };
 
+SessionProvider.defaultProps = { currentUser: null };
+
 SessionProvider.propTypes = {
-  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currentUser: PropTypes.shape({}).isRequired,
+  bureaus: PropTypes.shape({ size: PropTypes.num }).isRequired,
+  currentUser: PropTypes.shape({}),
   children: PropTypes.element.isRequired,
   fetching: PropTypes.bool.isRequired,
   errors: PropTypes.arrayOf(PropTypes.object).isRequired,
