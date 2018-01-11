@@ -308,6 +308,22 @@ export const getMaterialsAlphabetized = createSelector(
     })
 );
 
+export const getBaseAndSupportMaterials = createSelector(
+  [getMaterialsAlphabetized],
+  materials =>
+    materials.reduce(
+      (organized, material) =>
+        Object.assign(
+          {},
+          organized,
+          material.type === 'base'
+            ? { base: [...organized.base, material] }
+            : { support: [...organized.support, material] }
+        ),
+      { base: [], support: [] }
+    )
+);
+
 export const getStocks = createSelector(
   [getStateStocks, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
