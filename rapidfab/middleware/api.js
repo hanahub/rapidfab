@@ -68,12 +68,15 @@ function apiMiddleware({ dispatch, getState }) {
       })
     );
 
-    const handleError = errors => {
+    const handleError = (errors, status) => {
       let sanitizedErrors = null;
+      const url = uuid
+        ? `${api.host}/${api.resource}/${uuid}/`
+        : `${api.host}/${api.resource}/`;
       const failedToFetch = errors.message === 'Failed to fetch';
       if (typeof errors === 'object' && errors.message) {
         const errorMessage = failedToFetch
-          ? 'An unknown error has occurred'
+          ? `Failed to ${api.method} ${url}. Got status ${status}`
           : errors.message;
         sanitizedErrors = [{ code: 'api-error', title: errorMessage }];
       }
@@ -84,9 +87,12 @@ function apiMiddleware({ dispatch, getState }) {
         })
       );
       if (failedToFetch) {
-        Raven.captureException(new Error('Failed to fetch'), {
-          extra: { api, uuid, filters, errors, payload },
-        });
+        Raven.captureException(
+          new Error(`Failed to ${api.method} ${url}. Got status ${status}`),
+          {
+            extra: { api, uuid, filters, errors, payload },
+          }
+        );
       }
     };
 
@@ -101,15 +107,15 @@ function apiMiddleware({ dispatch, getState }) {
             createAPIAction({})
           );
           if (json && json.errors && json.errors.length) {
-            handleError(json.errors);
+            handleError(json.errors, response.status);
           } else {
-            handleError(error);
+            handleError(error, response.status);
           }
           throw error;
         }
         if (text && !json) {
           const error = new Error('Could not parse response', text);
-          handleError(error);
+          handleError(error, response.status);
           throw error;
         }
         return dispatch(
