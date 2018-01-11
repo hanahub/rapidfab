@@ -149,11 +149,10 @@ LineItemEditFormContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const materials = Selectors.getMaterials(state);
-  const baseMaterials = materials.filter(material => material.type === 'base');
-  const supportMaterials = materials.filter(
-    material => material.type === 'support'
-  );
+  const {
+    base: baseMaterials,
+    support: supportMaterials,
+  } = Selectors.getBaseAndSupportMaterials(state);
   const isRestricted = Selectors.isCurrentUserRestricted(state);
   const models = Selectors.getModels(state);
   const providers = Selectors.getThirdPartyProviders(state);

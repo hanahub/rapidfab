@@ -338,15 +338,13 @@ AddLineItem.propTypes = {
 
 const mapStateToProps = state => {
   const bureau = Selectors.getBureau(state);
-  const materials = Selectors.getMaterials(state);
+  const {
+    base: baseMaterials,
+    support: supportMaterials,
+  } = Selectors.getBaseAndSupportMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
   const order = state.resources[state.routeUUID];
-
-  const baseMaterials = materials.filter(material => material.type === 'base');
-  const supportMaterials = materials.filter(
-    material => material.type === 'support'
-  );
 
   return {
     baseMaterials,
