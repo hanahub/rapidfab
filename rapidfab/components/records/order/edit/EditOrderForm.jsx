@@ -245,7 +245,13 @@ const EditOrderForm = ({ created, fields, isRestricted, shippings, users }) => (
     </FormRow>
 
     <FormRow id="field.due_date" defaultMessage="Due Date">
-      <input type="date" {...fields.due_date} style={{ color: 'black' }} />
+      <input
+        pattern="^\d{4}-\d{2}-\d{2}$"
+        placeholder="yyyy-mm-dd"
+        type="date"
+        {...fields.due_date}
+        style={{ color: 'black' }}
+      />
     </FormRow>
   </div>
 );
