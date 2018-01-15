@@ -24,7 +24,9 @@ class OrderContainer extends Component {
       ).then(lineItemsResponse => {
         lineItemsResponse.json.resources.forEach(lineItem => {
           if (lineItem.model) {
-            dispatch(Actions.Api.hoth.model.get(extractUuid(lineItem.model)));
+            dispatch(
+              Actions.Api.hoth.model.get(extractUuid(lineItem.model), true)
+            );
           }
         });
       });
