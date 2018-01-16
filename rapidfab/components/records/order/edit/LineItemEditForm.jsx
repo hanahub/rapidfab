@@ -178,8 +178,8 @@ const LineItemEditForm = ({
               <div
                 style={{
                   margin: '0 auto',
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                   backgroundColor: baseMaterialColor,
                 }}
               />
@@ -216,8 +216,8 @@ const LineItemEditForm = ({
             <div
               style={{
                 margin: '0 auto',
-                width: 24,
-                height: 24,
+                width: 20,
+                height: 20,
                 backgroundColor: supportMaterialColor || null,
               }}
             />
