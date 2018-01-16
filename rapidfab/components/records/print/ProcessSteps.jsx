@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'rapidfab/i18n';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
@@ -36,6 +37,17 @@ const statusMapping = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
+const RunTime = connect(({ resources }, { uuid }) => {
+  const time = resources[uuid] ? resources[uuid].actuals.time : null;
+  return time
+    ? { time: time.print || time.post_processing || time.shipping }
+    : null;
+})(({ time }) => (
+  <span>
+    {time || <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+  </span>
+));
+
 const ProcessStep = ({ step }) => {
   let name = '';
   if (step.process_step && step.process_step.name) {
@@ -46,8 +58,15 @@ const ProcessStep = ({ step }) => {
   return (
     <ListGroupItem>
       <Row>
-        <Col xs={6}>{name}</Col>
-        <Col xs={6}>{statusMapping[step.status]}</Col>
+        <Col xs={4}>{name}</Col>
+        <Col xs={4}>{statusMapping[step.status]}</Col>
+        <Col xs={4}>
+          {step.run ? (
+            <RunTime uuid={step.run} />
+          ) : (
+            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+          )}
+        </Col>
       </Row>
     </ListGroupItem>
   );
@@ -65,14 +84,19 @@ const ProcessSteps = ({ processSteps }) => (
     <ListGroup fill>
       <ListGroupItem key="header">
         <Row>
-          <Col xs={6}>
+          <Col xs={4}>
             <b>
               <FormattedMessage id="field.name" defaultMessage="Name" />
             </b>
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
             <b>
               <FormattedMessage id="field.status" defaultMessage="Status" />
+            </b>
+          </Col>
+          <Col xs={4}>
+            <b>
+              <FormattedMessage id="time" defaultMessage="Time" />
             </b>
           </Col>
         </Row>
