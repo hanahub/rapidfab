@@ -42,7 +42,11 @@ const RunTime = connect(({ resources }, { uuid }) => {
   return time
     ? { time: time.print || time.post_processing || time.shipping }
     : null;
-})(({ time }) => <span>{time || 'N/A'}</span>);
+})(({ time }) => (
+  <span>
+    {time || <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
+  </span>
+));
 
 const ProcessStep = ({ step }) => {
   let name = '';
@@ -56,7 +60,13 @@ const ProcessStep = ({ step }) => {
       <Row>
         <Col xs={4}>{name}</Col>
         <Col xs={4}>{statusMapping[step.status]}</Col>
-        <Col xs={4}>{step.run ? <RunTime uuid={step.run} /> : 'N/A'}</Col>
+        <Col xs={4}>
+          {step.run ? (
+            <RunTime uuid={step.run} />
+          ) : (
+            <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+          )}
+        </Col>
       </Row>
     </ListGroupItem>
   );
@@ -86,7 +96,7 @@ const ProcessSteps = ({ processSteps }) => (
           </Col>
           <Col xs={4}>
             <b>
-              <FormattedMessage id="field.time" defaultMessage="Time" />
+              <FormattedMessage id="time" defaultMessage="Time" />
             </b>
           </Col>
         </Row>

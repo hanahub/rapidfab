@@ -29,6 +29,7 @@ export default {
   "shippingTime": "Shipping Time",
   "start": "Start",
   "supportUsed": " ’Støtte brugt",
+  "time": "Time",
   "updateBureauBanner": "Update Bureau Banner",
   "userAdministration": "User Administration",
   "users": "Users",

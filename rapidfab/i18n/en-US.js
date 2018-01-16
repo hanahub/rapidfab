@@ -22,6 +22,7 @@ export default {
   "r-d": "R&D",
   "roles": "Roles",
   "sample": "Sample (Free)",
+  "time": "Time",
   "updateUser": "Update User",
   "updateBureauBanner": "Update Bureau Banner",
   "userAdministration": "User Administration",
