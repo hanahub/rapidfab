@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'rapidfab/i18n';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
@@ -35,6 +36,13 @@ const statusMapping = {
   complete: <FormattedMessage id="status.complete" defaultMessage="Complete" />,
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
+
+const RunTime = connect(({ resources }, { uuid }) => {
+  const time = resources[uuid] ? resources[uuid].actuals.time : null;
+  return time
+    ? { time: time.print || time.post_processing || time.shipping }
+    : null;
+})(({ time }) => <span>{time || 'N/A'}</span>);
 
 const ProcessStep = ({ step }) => {
   let name = '';
