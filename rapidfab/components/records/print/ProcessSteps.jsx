@@ -54,8 +54,9 @@ const ProcessStep = ({ step }) => {
   return (
     <ListGroupItem>
       <Row>
-        <Col xs={6}>{name}</Col>
-        <Col xs={6}>{statusMapping[step.status]}</Col>
+        <Col xs={4}>{name}</Col>
+        <Col xs={4}>{statusMapping[step.status]}</Col>
+        <Col xs={4}>{step.run ? <RunTime uuid={step.run} /> : 'N/A'}</Col>
       </Row>
     </ListGroupItem>
   );
@@ -73,14 +74,19 @@ const ProcessSteps = ({ processSteps }) => (
     <ListGroup fill>
       <ListGroupItem key="header">
         <Row>
-          <Col xs={6}>
+          <Col xs={4}>
             <b>
               <FormattedMessage id="field.name" defaultMessage="Name" />
             </b>
           </Col>
-          <Col xs={6}>
+          <Col xs={4}>
             <b>
               <FormattedMessage id="field.status" defaultMessage="Status" />
+            </b>
+          </Col>
+          <Col xs={4}>
+            <b>
+              <FormattedMessage id="field.time" defaultMessage="Time" />
             </b>
           </Col>
         </Row>
