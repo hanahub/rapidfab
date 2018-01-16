@@ -91,6 +91,7 @@ function mapDispatchToProps(dispatch) {
           (uris, resource) => (resource.run ? [...uris, resource.run] : uris),
           []
         );
+        dispatch(Actions.Api.wyatt.run.list({ uri: runUris }));
         dispatch(Actions.Api.wyatt['run-document'].list({ run: runUris })).then(
           response => {
             const runDocumentUris = response.json.resources.map(
