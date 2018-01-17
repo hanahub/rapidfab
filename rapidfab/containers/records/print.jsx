@@ -98,12 +98,12 @@ function mapDispatchToProps(dispatch) {
           : [];
         const runFetch = runUris.length
           ? _.chunk(runUris, 10).map(chunk =>
-              dispatch(Actions.Api.wyatt.run.list({ uri: chunk }))
+              dispatch(Actions.Api.wyatt.run.list({ uri: chunk }, true))
             )
           : Promise.resolve();
         const runDocumentFetch = runUris.length
           ? _.chunk(runUris, 10).map(chunk =>
-              dispatch(Actions.Api.wyatt['run-document'].list({ run: chunk }))
+              dispatch(Actions.Api.wyatt['run-document'].list({ run: chunk }, true))
             )
           : [Promise.resolve()];
         Promise.all([...runFetch, ...runDocumentFetch]).then(responses => {
@@ -113,7 +113,9 @@ function mapDispatchToProps(dispatch) {
                 .reduce(
                   (uris, response) => [
                     ...uris,
-                    ...response.json.resources.map(resource => resource.uri),
+                    ...(response.json
+                      ? response.json.resources.map(resource => resource.uri)
+                      : []),
                   ],
                   []
                 )
