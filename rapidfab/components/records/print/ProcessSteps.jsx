@@ -39,9 +39,10 @@ const statusMapping = {
 
 const RunTime = connect(({ resources }, { uuid }) => {
   const time = resources[uuid] ? resources[uuid].actuals.time : null;
-  return time
-    ? { time: time.print || time.post_processing || time.shipping }
-    : null;
+  return Object.assign(
+    {},
+    time ? { time: time.print || time.post_processing || time.shipping } : null
+  );
 })(({ time }) => (
   <span>
     {time || <FormattedMessage id="notAvailable" defaultMessage="N/A" />}
