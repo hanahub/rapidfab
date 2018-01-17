@@ -86,11 +86,16 @@ function mapDispatchToProps(dispatch) {
           order: orderUri,
           uri: printUri,
         } = print.json;
-        const printsUris = prints.json.resources.map(resource => resource.uri);
-        const runUris = prints.json.resources.reduce(
-          (uris, resource) => (resource.run ? [...uris, resource.run] : uris),
-          []
-        );
+        const printsUris = prints.json
+          ? prints.json.resources.map(resource => resource.uri)
+          : [];
+        const runUris = prints.json
+          ? prints.json.resources.reduce(
+              (uris, resource) =>
+                resource.run ? [...uris, resource.run] : uris,
+              []
+            )
+          : [];
         const runFetch = runUris.length
           ? _.chunk(runUris, 10).map(chunk =>
               dispatch(Actions.Api.wyatt.run.list({ uri: chunk }))
