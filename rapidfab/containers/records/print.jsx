@@ -103,7 +103,9 @@ function mapDispatchToProps(dispatch) {
           : Promise.resolve();
         const runDocumentFetch = runUris.length
           ? _.chunk(runUris, 10).map(chunk =>
-              dispatch(Actions.Api.wyatt['run-document'].list({ run: chunk }, true))
+              dispatch(
+                Actions.Api.wyatt['run-document'].list({ run: chunk }, true)
+              )
             )
           : [Promise.resolve()];
         Promise.all([...runFetch, ...runDocumentFetch]).then(responses => {
