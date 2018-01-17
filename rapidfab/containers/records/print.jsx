@@ -91,25 +91,30 @@ function mapDispatchToProps(dispatch) {
           (uris, resource) => (resource.run ? [...uris, resource.run] : uris),
           []
         );
-        dispatch(Actions.Api.wyatt.run.list({ uri: runUris }));
-        dispatch(Actions.Api.wyatt['run-document'].list({ run: runUris })).then(
-          response => {
-            const runDocumentUris = response.json.resources.map(
-              resource => resource.uri
-            );
-            const uris = [
-              lineItemUri,
-              orderUri,
-              printUri,
-              ...printsUris,
-              ...runUris,
-              ...runDocumentUris,
-            ];
-            _.chunk(uris, 10).map(chunk =>
-              dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
-            );
-          }
-        );
+        const runFetch = runUris.length
+          ? dispatch(Actions.Api.wyatt.run.list({ uri: runUris }))
+          : Promise.resolve();
+        const runDocumentFetch = runUris.length
+          ? dispatch(Actions.Api.wyatt['run-document'].list({ run: runUris }))
+          : Promise.resolve();
+        Promise.all([runFetch, runDocumentFetch]).then(responses => {
+          const runDocumentUris = responses[1]
+            ? responses[1].resources.json.resources.map(
+                resource => resource.uri
+              )
+            : [];
+          const uris = [
+            lineItemUri,
+            orderUri,
+            printUri,
+            ...printsUris,
+            ...runUris,
+            ...runDocumentUris,
+          ];
+          _.chunk(uris, 10).map(chunk =>
+            dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
+          );
+        });
       });
     },
   };
