@@ -168,7 +168,7 @@ const LineItemEditForm = ({
             target="_blank"
             type="download"
           >
-            Download
+            <FormattedMessage id="button.download" defaultMessage="Download" />
           </a>
         </FormRow>
       </Feature>
