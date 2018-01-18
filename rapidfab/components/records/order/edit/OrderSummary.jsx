@@ -21,8 +21,22 @@ class OrderSummary extends Component {
   constructor(props) {
     super(props);
 
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onCancel = this.onCancel.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onCancel() {
+    const payload = { status: 'cancelled' };
+    this.props.dispatch(Actions.Api.wyatt.order.put(this.props.uuid, payload));
+  }
+
+  onDelete() {
+    this.props
+      .dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
+      .then(() => {
+        window.location.hash = '#/plan/orders';
+      });
   }
 
   onSubmit(event) {
@@ -34,20 +48,12 @@ class OrderSummary extends Component {
     /* eslint-enable react/no-string-refs */
   }
 
-  onDelete() {
-    this.props
-      .dispatch(Actions.Api.wyatt.order.delete(this.props.uuid))
-      .then(() => {
-        window.location.hash = '#/plan/orders';
-      });
-  }
-
   render() {
-    const { onSubmit, onDelete } = this;
+    const { onCancel, onDelete, onSubmit } = this;
     return (
       <Panel header={<PanelHeader />}>
         <Form horizontal onSubmit={onSubmit}>
-          <SaveDropdownButton onDelete={onDelete} />
+          <SaveDropdownButton onCancel={onCancel} onDelete={onDelete} />
           <hr />
 
           <Col xs={12} md={7}>
