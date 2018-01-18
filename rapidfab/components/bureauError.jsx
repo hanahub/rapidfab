@@ -30,19 +30,22 @@ const BureauError = ({ bureaus, errors }) => (
       <BS.Row>
         <BS.Col xs={12}>
           <h1>Bureau Error!</h1>
-          {errors.length && <BureauFetchError />}
-          {bureaus.length > 1 && <BureauLengthError />}
-          {bureaus.length === 0 && <BureauMissingError />}
-          {bureaus.map(bureau => (
-            <p>
-              <strong>{bureau.name}</strong>
-            </p>
-          ))}
-          <FormattedMessage
-            id="bureauError.docsMessage"
-            defaultMessage="You can find the docs for this process"
-          />
-          <a href="http://docs.authentise.com/mes/index.html"> here.</a>
+          {errors.length > 0 && <BureauFetchError />}
+          {bureaus.size > 1 && <BureauLengthError />}
+          {bureaus.size === 0 && <BureauMissingError />}
+          {bureaus.size > 1 &&
+            [...bureaus].map(bureau => (
+              <p>
+                <strong>{bureau.name}</strong>
+              </p>
+            ))}
+          <p>
+            <FormattedMessage
+              id="bureauError.docsMessage"
+              defaultMessage="You can find the docs for this process"
+            />
+            <a href="http://docs.authentise.com/mes/index.html"> here.</a>
+          </p>
         </BS.Col>
       </BS.Row>
     </BS.Jumbotron>
@@ -50,7 +53,7 @@ const BureauError = ({ bureaus, errors }) => (
 );
 
 BureauError.propTypes = {
-  bureaus: PropTypes.arrayOf(PropTypes.object).isRequired,
+  bureaus: PropTypes.shape({}).isRequired,
   errors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
