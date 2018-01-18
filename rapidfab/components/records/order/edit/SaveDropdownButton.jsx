@@ -14,7 +14,7 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const SaveTooltip = <Tooltip id="saved">Saved</Tooltip>;
 
-const SaveDropdownButton = ({ onSubmit, onDelete }) => (
+const SaveDropdownButton = ({ onCancel, onDelete, onSubmit }) => (
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
       <OverlayTrigger
@@ -32,8 +32,16 @@ const SaveDropdownButton = ({ onSubmit, onDelete }) => (
           title={<SaveButtonTitle />}
           onClick={onSubmit}
         >
+          {onCancel && (
+            <MenuItem eventKey={0} onClick={onCancel}>
+              <Fa name="ban" />
+              {` `}
+              <FormattedMessage id="button.cancel" defaultMessage="Cancel" />
+            </MenuItem>
+          )}
           <MenuItem eventKey={1} onClick={onDelete}>
-            <Fa name="ban" />
+            <Fa name="times" />
+            {` `}
             <FormattedMessage id="button.delete" defaultMessage="Delete" />
           </MenuItem>
         </SplitButton>
@@ -42,9 +50,14 @@ const SaveDropdownButton = ({ onSubmit, onDelete }) => (
   </ButtonToolbar>
 );
 
+SaveDropdownButton.defaultProps = {
+  onCancel: null,
+};
+
 SaveDropdownButton.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default SaveDropdownButton;
