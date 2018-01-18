@@ -5,8 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import { Form, FormControl, InputGroup, Label } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
+import Config from 'rapidfab/config';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
+
+import Feature from 'rapidfab/components/Feature';
 import FormRow from 'rapidfab/components/FormRow';
 import SaveDropdownButton from './SaveDropdownButton';
 
@@ -157,6 +160,18 @@ const LineItemEditForm = ({
           required
         />
       </FormRow>
+
+      <Feature featureName="traveler">
+        <FormRow id="traveler" defaultMessage="Traveler">
+          <a
+            href={`${Config.HOST.WYATT}/traveler/?line_item=${lineItem.uri}`}
+            target="_blank"
+            type="download"
+          >
+            <FormattedMessage id="button.download" defaultMessage="Download" />
+          </a>
+        </FormRow>
+      </Feature>
 
       <FormRow id="field.baseMaterial" defaultMessage="Base Material">
         <InputGroup>
