@@ -10,12 +10,7 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 
-const SaveButtonTitle = () => (
-  <span>
-    <Fa name="floppy-o" />{' '}
-    <FormattedMessage id="button.save" defaultMessage="Save" />
-  </span>
-);
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const SaveTooltip = <Tooltip id="saved">Saved</Tooltip>;
 
