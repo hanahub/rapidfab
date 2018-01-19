@@ -304,6 +304,7 @@ export default {
   "message.overwriteWarning": "既存のテンプレートを保存すると、他の注文に影響する可能性があります。",
   "message.overwritePrompt": " 既存のテンプレートを置き換えますか、新しいものを複製しますか?",
   "message.deletePrompt": "を削除してよろしいですか 、",
+  "message.cancelPrompt": "Are you sure you want to cancel?",
   "bureauError.multiple": "You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ",
   "bureauError.empty": "You are not assigned to any Bureaus. A Bureau is required to use MES. ",
   "bureauError.docsMessage": "You can find the docs for this process ",

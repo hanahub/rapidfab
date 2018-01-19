@@ -308,6 +308,7 @@ export default {
   "message.overwriteWarning": "At gemme over en eksisterende skabelon kan påvirke andre ordrer.",
   "message.overwritePrompt": "Vil du erstatte den eksisterende skabelon eller kopiere en ny?",
   "message.deletePrompt": "Er du sikker på",
+  "message.cancelPrompt": "Are you sure you want to cancel?",
   "bureauError.multiple": "You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ",
   "bureauError.empty": "Du er ikke tildelt nogen bureauer. Et bureau skal bruge MES. ",
   "bureauError.docsMessage": " ’Du kan finde dokumenter til denne proces",

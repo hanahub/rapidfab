@@ -57,15 +57,28 @@ const SaveDropdownButton = ({
     </div>
     <Modal show={modal} onHide={() => handleOpen('')}>
       <Modal.Body>
-        <p>Are you really sure you want to {modal}?</p>
-        <p>This cannot be undone.</p>
+        {modal === 'cancel' ? (
+          <FormattedMessage
+            id="message.cancelPrompt"
+            defaultMessage="Are you sure you want to cancel?"
+          />
+        ) : (
+          <FormattedMessage
+            id="message.cancelPrompt"
+            defaultMessage="Are you sure you want to cancel?"
+          />
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button bsStyle="danger" onClick={handleConfirm}>
-          {modal}
+          {modal === 'cancel' ? (
+            <FormattedMessage id="button.cancel" defaultMessage="Cancel" />
+          ) : (
+            <FormattedMessage id="button.delete" defaultMessage="delete" />
+          )}
         </Button>
         <Button bsStyle="primary" onClick={() => handleOpen('')}>
-          Back
+          <FormattedMessage id="back" defaultMessage="Back" />
         </Button>
       </Modal.Footer>
     </Modal>
