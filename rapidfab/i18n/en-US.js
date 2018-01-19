@@ -329,7 +329,8 @@ export default {
     "Saving over an existing template could affect other orders.",
   "message.overwritePrompt":
     "Do you want to replace the existing template or duplicate a new one?",
-  "message.deletePrompt": "Are you sure you want to delete",
+  "message.deletePrompt": "Are you sure you want to delete?",
+  "message.cancelPrompt": "Are you sure you want to cancel?",
 
   "bureauError.multiple":
     "You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ",

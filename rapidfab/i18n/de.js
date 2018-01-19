@@ -308,6 +308,7 @@ export default {
   "message.overwriteWarning": "Das Speichern über eine vorhandene Vorlage könnte andere Aufträge beeinflussen.",
   "message.overwritePrompt": "Möchten Sie die vorhandene Vorlage ersetzen oder eine neue duplizieren?",
   "message.deletePrompt": "Sind Sie sicher",
+  "message.cancelPrompt": "Are you sure you want to cancel?",
   "bureauError.multiple": "You belong to multiple Bureaus. Only one Bureau is allowed when using MES. Please remove one of the Bureaus listed below. ",
   "bureauError.empty": "Sie sind keinem Büro zugeordnet. Ein Bureau muss MES verwenden.",
   "bureauError.docsMessage": "Sie können die Dokumente für diesen Prozess finden",
