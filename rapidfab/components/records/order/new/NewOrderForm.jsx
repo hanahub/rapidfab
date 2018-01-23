@@ -42,18 +42,20 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
     </FormRow>
 
     {!isUserRestricted && (
-      <FormRow id="field.order_owner" defaultMessage="Owner">
-        <FormControl componentClass="select" {...fields.order_owner}>
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {users.map(user => (
-            <option key={user.uuid} value={user.uri}>
-              {user.name}
+      <Feature featureName="order-order-owner">
+        <FormRow id="field.order_owner" defaultMessage="Owner">
+          <FormControl componentClass="select" {...fields.order_owner}>
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </FormRow>
+            {users.map(user => (
+              <option key={user.uuid} value={user.uri}>
+                {user.name}
+              </option>
+            ))}
+          </FormControl>
+        </FormRow>
+      </Feature>
     )}
 
     {!isUserRestricted && (
