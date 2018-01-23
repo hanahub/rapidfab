@@ -98,13 +98,13 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
       </FormRow>
     )}
 
-    <Feature featureName="order_customer_po">
+    <Feature featureName="order-customer-po">
       <FormRow id="field.customer_po" defaultMessage="Customer PO">
         <FormControlTextCareful {...fields.customer_po} />
       </FormRow>
     </Feature>
 
-    <Feature featureName="order_quote_number">
+    <Feature featureName="order-quote-number">
       <FormRow id="field.order_quote_number" defaultMessage="Quote Number">
         <FormControlTextCareful {...fields.quote_number} />
       </FormRow>
