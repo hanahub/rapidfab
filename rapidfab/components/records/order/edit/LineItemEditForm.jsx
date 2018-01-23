@@ -70,6 +70,7 @@ const LineItemEditForm = ({
   handleInputChange,
   handleModelDownload,
   isRestricted,
+  layerThickness,
   lineItem,
   notes,
   baseMaterial,
@@ -150,6 +151,19 @@ const LineItemEditForm = ({
           </FormRow>
         </div>
       )}
+
+      <FormRow id="field.layer_thickness" defaultMessage="Layer Thickness">
+        <FormControl
+          min="0.2"
+          max="1"
+          name="layerThickness"
+          onChange={handleInputChange}
+          require
+          step="0.05"
+          type="number"
+          value={layerThickness}
+        />
+      </FormRow>
 
       <FormRow id="field.quantity" defaultMessage="Quantity">
         <FormControl
@@ -327,6 +341,7 @@ LineItemEditForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   handleModelDownload: PropTypes.func.isRequired,
   isRestricted: PropTypes.bool.isRequired,
+  layerThickness: PropTypes.number.isRequired,
   lineItem: PropTypes.shape({}).isRequired,
   baseMaterial: PropTypes.string.isRequired,
   baseMaterialColor: PropTypes.string.isRequired,
