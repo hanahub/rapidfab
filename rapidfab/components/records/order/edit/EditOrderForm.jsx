@@ -54,18 +54,20 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
       <FormControlTextCareful {...fields.shipping.name} />
     </FormRow>
 
-    <FormRow id="field.order_owner" defaultMessage="Owner">
-      <FormControl componentClass="select" {...fields.order_owner}>
-        <option value="none">
-          <FormattedMessage id="field.none" defaultMessage="None" />
-        </option>
-        {users.map(user => (
-          <option key={user.uuid} value={user.uri}>
-            {user.name}
+    <Feature featureName="order-order-owner">
+      <FormRow id="field.order_owner" defaultMessage="Owner">
+        <FormControl componentClass="select" {...fields.order_owner}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
           </option>
-        ))}
-      </FormControl>
-    </FormRow>
+          {users.map(user => (
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
 
     <FormRow id="field.shippingAddress" defaultMessage="Shipping Address">
       <FormControl componentClass="textarea" {...fields.shipping.address} />
@@ -115,13 +117,13 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
       </FormControl.Static>
     </FormRow>
 
-    <Feature featureName="order_customer_po">
+    <Feature featureName="order-customer-po">
       <FormRow id="field.customer_po" defaultMessage="Customer PO">
         <FormControlTextCareful {...fields.customer_po} />
       </FormRow>
     </Feature>
 
-    <Feature featureName="order_quote_number">
+    <Feature featureName="order-quote-number">
       <FormRow id="field.order_quote_number" defaultMessage="Quote Number">
         <FormControlTextCareful {...fields.quote_number} />
       </FormRow>
