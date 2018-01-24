@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import { FormattedMessage, FormattedDateTime } from 'rapidfab/i18n';
 import ModelerStatus from 'rapidfab/components/modelerStatus';
 
 const listBodyStyle = {
@@ -27,24 +26,15 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
             {printer.printer_type.name}
           </a>
         </BS.Col>
-        <BS.Col xs={2}>
+        <BS.Col xs={3}>
           {`${printer.printer_type.build_volume.x}mm x ${
             printer.printer_type.build_volume.y
           }mm`}
         </BS.Col>
-        <BS.Col xs={2}>
+        <BS.Col xs={3}>
           <span style={{ textTransform: 'capitalize' }}>
             <ModelerStatus modeler={modeler} />
           </span>
-        </BS.Col>
-        <BS.Col xs={2}>
-          {printer.leadTime ? (
-            <FormattedDateTime value={printer.leadTime} />
-          ) : (
-            <em>
-              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-            </em>
-          )}
         </BS.Col>
       </BS.Row>
     </BS.ListGroupItem>
@@ -67,9 +57,8 @@ const PrintersList = ({ printers, modelers, selected, onSelect }) => (
         <BS.Row>
           <BS.Col xs={3}>Printer</BS.Col>
           <BS.Col xs={3}>Type</BS.Col>
-          <BS.Col xs={2}>Bed Volume</BS.Col>
-          <BS.Col xs={2}>Status</BS.Col>
-          <BS.Col xs={2}>Lead Time</BS.Col>
+          <BS.Col xs={3}>Bed Volume</BS.Col>
+          <BS.Col xs={3}>Status</BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
       <div style={listBodyStyle}>
