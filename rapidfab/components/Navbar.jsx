@@ -357,6 +357,9 @@ const NavLinksRegular = ({
             />
           </BS.MenuItem>
         </BS.NavDropdown>
+        <BS.NavItem eventKey={4} href="#/quoting">
+          Quoting
+        </BS.NavItem>
       </BS.Nav>
       <NavProfile
         currentUser={currentUser}
