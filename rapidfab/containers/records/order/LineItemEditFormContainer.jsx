@@ -14,6 +14,7 @@ class LineItemEditFormContainer extends Component {
 
     this.state = {
       baseMaterial: lineItem.materials.base,
+      layerThickness: lineItem.layer_thickness || '0.2',
       notes: lineItem.notes,
       supportMaterial: lineItem.materials.support,
       quantity: lineItem.quantity.toString(),
@@ -40,6 +41,7 @@ class LineItemEditFormContainer extends Component {
     const { dispatch, lineItem } = this.props;
     const {
       baseMaterial,
+      layerThickness,
       model,
       notes,
       quantity,
@@ -51,6 +53,7 @@ class LineItemEditFormContainer extends Component {
 
     const payload = {
       bureau: lineItem.bureau,
+      layer_thickness: parseFloat(layerThickness, 10),
       materials: {
         base: baseMaterial,
         support: supportMaterial,
