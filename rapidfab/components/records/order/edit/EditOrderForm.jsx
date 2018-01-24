@@ -162,73 +162,78 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
     </Feature>
 
     <Feature featureName="eos-order-fields">
-      <FormRow id="field.orderType" defaultMessage="Order Type">
-        <FormControl componentClass="select" {...fields.order_type}>
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {Object.keys(ORDER_TYPE_EOS_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_TYPE_EOS_MAPPING[type]}
+      <div>
+        <FormRow id="field.orderType" defaultMessage="Order Type">
+          <FormControl componentClass="select" {...fields.order_type}>
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </FormRow>
+            {Object.keys(ORDER_TYPE_EOS_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_TYPE_EOS_MAPPING[type]}
+              </option>
+            ))}
+          </FormControl>
+        </FormRow>
 
-      <FormRow id="field.sales_status" defaultMessage="Sales Status">
-        <FormControl componentClass="select" {...fields.sales_status}>
-          {Object.keys(ORDER_SALES_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_SALES_MAPPING[type]}
-            </option>
-          ))}
-        </FormControl>
-      </FormRow>
+        <FormRow id="field.sales_status" defaultMessage="Sales Status">
+          <FormControl componentClass="select" {...fields.sales_status}>
+            {Object.keys(ORDER_SALES_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_SALES_MAPPING[type]}
+              </option>
+            ))}
+          </FormControl>
+        </FormRow>
 
-      <FormRow
-        id="field.sales_representative"
-        defaultMessage="Sales Representative"
-      >
-        <FormControl componentClass="select" {...fields.sales_representative}>
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {users.map(user => (
-            <option key={user.uuid} value={user.uri}>
-              {user.name}
+        <FormRow
+          id="field.sales_representative"
+          defaultMessage="Sales Representative"
+        >
+          <FormControl componentClass="select" {...fields.sales_representative}>
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </FormRow>
+            {users.map(user => (
+              <option key={user.uuid} value={user.uri}>
+                {user.name}
+              </option>
+            ))}
+          </FormControl>
+        </FormRow>
 
-      <FormRow
-        id="field.channel_representative"
-        defaultMessage="Channel Representative"
-      >
-        <FormControl componentClass="select" {...fields.channel_representative}>
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {users.map(user => (
-            <option key={user.uuid} value={user.uri}>
-              {user.name}
+        <FormRow
+          id="field.channel_representative"
+          defaultMessage="Channel Representative"
+        >
+          <FormControl
+            componentClass="select"
+            {...fields.channel_representative}
+          >
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </FormRow>
+            {users.map(user => (
+              <option key={user.uuid} value={user.uri}>
+                {user.name}
+              </option>
+            ))}
+          </FormControl>
+        </FormRow>
 
-      <FormRow id="field.region" defaultMessage="Region">
-        <FormControl componentClass="select" {...fields.region}>
-          <option value="none">
-            <FormattedMessage id="field.none" defaultMessage="None" />
-          </option>
-          {Object.keys(ORDER_REGION_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_REGION_MAPPING[type]}
+        <FormRow id="field.region" defaultMessage="Region">
+          <FormControl componentClass="select" {...fields.region}>
+            <option value="none">
+              <FormattedMessage id="field.none" defaultMessage="None" />
             </option>
-          ))}
-        </FormControl>
-      </FormRow>
+            {Object.keys(ORDER_REGION_MAPPING).map(type => (
+              <option key={type} value={type}>
+                {ORDER_REGION_MAPPING[type]}
+              </option>
+            ))}
+          </FormControl>
+        </FormRow>
+      </div>
     </Feature>
 
     <FormRow id="field.notes" defaultMessage="Notes">

@@ -5,6 +5,7 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
+import Feature from 'rapidfab/components/Feature';
 import Flag from 'rapidfab/components/flag';
 import Permissions from 'rapidfab/permissions';
 
@@ -357,9 +358,11 @@ const NavLinksRegular = ({
             />
           </BS.MenuItem>
         </BS.NavDropdown>
-        <BS.NavItem eventKey={4} href="#/quoting">
-          <FormattedMessage id="quoting" defaultMessage="Quoting" />
-        </BS.NavItem>
+        <Feature featureName="quoting">
+          <BS.NavItem eventKey={4} href="#/quoting">
+            <FormattedMessage id="quoting" defaultMessage="Quoting" />
+          </BS.NavItem>
+        </Feature>
       </BS.Nav>
       <NavProfile
         currentUser={currentUser}
