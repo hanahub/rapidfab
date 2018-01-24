@@ -156,8 +156,11 @@ const LineItemEditForm = ({
         <FormControl
           min="0.2"
           max="1"
+          maxLength="4"
           name="layerThickness"
           onChange={handleInputChange}
+          onKeyDown={event => event.preventDefault()}
+          precision="2"
           require
           step="0.05"
           type="number"
