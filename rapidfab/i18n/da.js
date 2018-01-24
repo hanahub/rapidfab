@@ -19,6 +19,7 @@ export default {
   "orderName": "Order Name",
   "postProcessingTime": "’Efterbehandling tid",
   "printTime": "Print tid",
+  "quoting": "Quoting",
   "r-d": "R&D",
   "roles": "Roller",
   "sample": "Sample (Free)",

@@ -19,6 +19,7 @@ export default {
   "orderName": "Order Name",
   "postProcessingTime": " 後処理時間",
   "printTime": "Print Time",
+  "quoting": "Quoting",
   "roles": " 役割",
   "updateUser": " ユーザーの更新",
   "userAdministration": " ユーザー管理",

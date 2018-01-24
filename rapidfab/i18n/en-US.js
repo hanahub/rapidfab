@@ -19,6 +19,7 @@ export default {
   "orderName": "Order Name",
   "postProcessingTime": "Post-Processing Time",
   "printTime": "Print Time",
+  "quoting": "Quoting",
   "r-d": "R&D",
   "roles": "Roles",
   "sample": "Sample (Free)",
