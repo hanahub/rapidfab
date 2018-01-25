@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
@@ -15,16 +15,13 @@ class Feature extends Component {
     const isFeatureEnabled = features.find(
       feature => feature.name === featureName && feature.enabled
     );
-    return <div>{isFeatureEnabled ? <div>{children}</div> : null}</div>;
+    return isFeatureEnabled ? children : null;
   }
 }
 
 Feature.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.element.isRequired,
   featureName: PropTypes.string.isRequired,
   features: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

@@ -111,6 +111,10 @@ export const getFeatures = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const isQuotingFeatureEnabled = createSelector([getFeatures], features =>
+  features.find(feature => feature.name === 'quoting' && feature.enabled)
+);
+
 export const getSession = createSelector(
   [getStateSessions, getStateResources],
   (sessions, resources) => {

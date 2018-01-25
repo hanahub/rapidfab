@@ -19,6 +19,7 @@ export default {
   "orderName": "Order Name",
   "postProcessingTime": "Nachbearbeitungszeit",
   "printTime": "Druckzeit",
+  "quoting": "Quoting",
   "roles": "Rollen",
   "updateUser": "Benutzer aktualisieren",
   "userAdministration": "Benutzerverwaltung",

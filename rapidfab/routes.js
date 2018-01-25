@@ -38,6 +38,7 @@ import PrinterContainer from 'rapidfab/containers/records/PrinterContainer';
 import PrinterType from 'rapidfab/containers/records/printerType';
 import PostProcessorContainer from 'rapidfab/containers/records/PostProcessorContainer';
 import PostProcessorType from 'rapidfab/containers/records/postProcessorType';
+import QuotingContainer from 'rapidfab/containers/quoting/QuotingContainer';
 import StockContainer from 'rapidfab/containers/records/StockContainer';
 import TemplateContainer from 'rapidfab/containers/records/TemplateContainer';
 import RunRecordContainer from 'rapidfab/containers/records/run/RunRecordContainer';
@@ -70,6 +71,8 @@ const Routes = {
   '/plan/prints': Prints,
 
   '/work/queues': QueuesContainer,
+
+  '/quoting': QuotingContainer,
 
   '/records/order': OrderNew,
   '/records/order/:uuid': OrderEdit,
