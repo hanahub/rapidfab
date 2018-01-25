@@ -8,7 +8,9 @@ import Quoting from 'rapidfab/components/quoting/Quoting';
 
 class QuotingContainer extends Component {
   componentDidMount() {
-    this.props.dispatch(Actions.Api.wyatt.feature.list());
+    const { dispatch } = this.props;
+    dispatch(Actions.Api.wyatt.feature.list());
+    dispatch(Actions.Api.aculeta.quote.list());
   }
 
   componentWillReceiveProps(nextProps) {
