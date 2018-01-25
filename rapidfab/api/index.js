@@ -1,6 +1,7 @@
 import MakeApi from './makeApi';
 
 export const RESOURCES = {
+  aculeta: ['quote'],
   hoth: ['model'],
   pao: ['memberships', 'permissions', 'groups', 'sessions', 'users'],
   wyatt: [
