@@ -187,22 +187,6 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
         </FormRow>
 
         <FormRow
-          id="field.sales_representative"
-          defaultMessage="Sales Representative"
-        >
-          <FormControl componentClass="select" {...fields.sales_representative}>
-            <option value="none">
-              <FormattedMessage id="field.none" defaultMessage="None" />
-            </option>
-            {users.map(user => (
-              <option key={user.uuid} value={user.uri}>
-                {user.name}
-              </option>
-            ))}
-          </FormControl>
-        </FormRow>
-
-        <FormRow
           id="field.channel_representative"
           defaultMessage="Channel Representative"
         >
@@ -234,6 +218,24 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
           </FormControl>
         </FormRow>
       </div>
+    </Feature>
+
+    <Feature featureName="order-sales-representative">
+      <FormRow
+        id="field.sales_representative"
+        defaultMessage="Sales Representative"
+      >
+        <FormControl componentClass="select" {...fields.sales_representative}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {users.map(user => (
+            <option key={user.uuid} value={user.uri}>
+              {user.name}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
     </Feature>
 
     <FormRow id="field.notes" defaultMessage="Notes">
