@@ -359,9 +359,19 @@ const NavLinksRegular = ({
           </BS.MenuItem>
         </BS.NavDropdown>
         <Feature featureName="quoting">
-          <BS.NavItem eventKey={4} href="#/quoting">
-            <FormattedMessage id="quoting" defaultMessage="Quoting" />
-          </BS.NavItem>
+          <BS.NavDropdown
+            eventKey={4}
+            title={<FormattedMessage id="quoting" defaultMessage="Quoting" />}
+          >
+            <BS.MenuItem eventKey={4.1} href="#/quoting/quote">
+              <Fa name="usd" />{' '}
+              <FormattedMessage id="quotes" defaultMessage="Quotes" />
+            </BS.MenuItem>
+            <BS.MenuItem eventKey={4.2} href="#/quoting/cost-report">
+              <Fa name="line-chart" />{' '}
+              <FormattedMessage id="costReport" defaultMessage="Cost Reports" />
+            </BS.MenuItem>
+          </BS.NavDropdown>
         </Feature>
       </BS.Nav>
       <NavProfile
