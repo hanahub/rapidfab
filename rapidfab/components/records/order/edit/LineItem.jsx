@@ -251,7 +251,11 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
 
         {!itar && (
           <Row>
-            <Col xs={12} lg={10} lgOffset={1} style={{ display: 'flex' }}>
+            <Col xs={12} lg={10} lgOffset={1} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
               <ControlLabel>Model Units</ControlLabel>
               <FormGroup>
                 <Radio name="units" inline>
