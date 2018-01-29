@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
+import {
+  Col,
+  ControlLabel,
+  FormGroup,
+  ListGroup,
+  ListGroupItem,
+  Panel,
+  Radio,
+  Row,
+} from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import {
@@ -240,8 +249,19 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
           </Col>
         </Row>
 
-        {itar ? null : (
+        {!itar && (
           <Row>
+            <Col xs={12} lg={10} lgOffset={1} style={{ display: 'flex' }}>
+              <ControlLabel>Model Units</ControlLabel>
+              <FormGroup>
+                <Radio name="units" inline>
+                  mm
+                </Radio>
+                <Radio name="units" inline>
+                  inch
+                </Radio>
+              </FormGroup>
+            </Col>
             <Col xs={12} lg={10} lgOffset={1}>
               <Estimates
                 currency={currency}
