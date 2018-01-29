@@ -255,10 +255,13 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
               <ControlLabel>Model Units</ControlLabel>
               <FormGroup>
                 <Radio name="units" inline>
-                  mm
+                  <FormattedMessage
+                    id="millimeters"
+                    defaultMessage="Millimeters"
+                  />
                 </Radio>
                 <Radio name="units" inline>
-                  inch
+                  <FormattedMessage id="inches" defaultMessage="Inches" />
                 </Radio>
               </FormGroup>
             </Col>
