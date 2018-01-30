@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 import LineItemEditForm from 'rapidfab/components/records/order/edit/LineItemEditForm';
 
@@ -45,6 +46,7 @@ class LineItemEditFormContainer extends Component {
       baseMaterial,
       layerThickness,
       model,
+      modelUnits,
       notes,
       quantity,
       status,
@@ -70,6 +72,14 @@ class LineItemEditFormContainer extends Component {
     if (!payload.materials.support) delete payload.materials.support;
     if (!payload.third_party_provider) delete payload.third_party_provider;
     if (status === lineItem.status) delete payload.status;
+
+    if (modelUnits) {
+      dispatch(
+        Actions.Api.hoth.model.put(extractUuid(lineItem.model), {
+          unit: modelUnits === 'auto' ? null : modelUnits,
+        })
+      );
+    }
 
     if (!model) {
       dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
