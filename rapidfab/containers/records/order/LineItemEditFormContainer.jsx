@@ -17,7 +17,7 @@ class LineItemEditFormContainer extends Component {
       baseMaterial: lineItem.materials.base,
       layerThickness: lineItem.layer_thickness || '0.2',
       notes: lineItem.notes,
-      model: null,
+      modelUpload: null,
       modelUnits: 'auto',
       supportMaterial: lineItem.materials.support,
       quantity: lineItem.quantity.toString(),
@@ -27,6 +27,7 @@ class LineItemEditFormContainer extends Component {
     };
 
     this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleFileRemove = this.handleFileRemove.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleModelDownload = this.handleModelDownload.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -45,7 +46,7 @@ class LineItemEditFormContainer extends Component {
     const {
       baseMaterial,
       layerThickness,
-      model,
+      modelUpload,
       modelUnits,
       notes,
       quantity,
@@ -81,22 +82,26 @@ class LineItemEditFormContainer extends Component {
       );
     }
 
-    if (!model) {
+    if (!modelUpload) {
       dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
     } else {
       dispatch(
-        Actions.Api.hoth.model.post({ name: model.name, type: 'stl' })
+        Actions.Api.hoth.model.post({ name: modelUpload.name, type: 'stl' })
       ).then(args => {
         const { location, uploadLocation } = args.headers;
         payload.model = location;
         dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
-        dispatch(Actions.UploadModel.upload(uploadLocation, model));
+        dispatch(Actions.UploadModel.upload(uploadLocation, modelUpload));
       });
     }
   }
 
   handleFileChange(event) {
-    this.setState({ model: event.target.files[0] });
+    this.setState({ modelUpload: event.target.files[0], modelUnits: null });
+  }
+
+  handleFileRemove() {
+    this.setState({ modelUpload: null });
   }
 
   handleInputChange(event) {
@@ -123,6 +128,7 @@ class LineItemEditFormContainer extends Component {
   render() {
     const {
       handleFileChange,
+      handleFileRemove,
       handleInputChange,
       handleModelDownload,
       onDelete,
@@ -145,6 +151,7 @@ class LineItemEditFormContainer extends Component {
         {...state}
         baseMaterialColor={baseMaterialColor}
         handleFileChange={handleFileChange}
+        handleFileRemove={handleFileRemove}
         handleInputChange={handleInputChange}
         handleModelDownload={handleModelDownload}
         onDelete={onDelete}

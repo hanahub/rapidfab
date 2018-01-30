@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { FormattedMessage } from 'react-intl';
-import { Form, FormControl, InputGroup, Label } from 'react-bootstrap';
+import { Button, Form, FormControl, InputGroup, Label } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
 import Config from 'rapidfab/config';
@@ -67,17 +67,19 @@ Printable.propTypes = {
 
 const LineItemEditForm = ({
   handleFileChange,
+  handleFileRemove,
   handleInputChange,
   handleModelDownload,
   isRestricted,
   layerThickness,
   lineItem,
+  models,
   modelUnits,
+  modelUpload,
   notes,
   baseMaterial,
   baseMaterialColor,
   baseMaterials,
-  models,
   onSubmit,
   onDelete,
   providers,
@@ -143,6 +145,7 @@ const LineItemEditForm = ({
           </FormRow>
           <FormRow id="modelUnits" defaultMessage="Model Units">
             <FormControl
+              disabled={modelUpload}
               name="modelUnits"
               value={modelUnits}
               componentClass="select"
@@ -164,13 +167,27 @@ const LineItemEditForm = ({
             </FormControl>
           </FormRow>
           <FormRow id="field.replaceModel" defaultMessage="Replace Model">
-            <FormControl
-              name="model"
-              type="file"
-              accept=".stl"
-              required
-              onChange={handleFileChange}
-            />
+            {modelUpload ? (
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {modelUpload.name}
+                {` `}
+                <Button
+                  bsSize="xsmall"
+                  bsStyle="danger"
+                  onClick={handleFileRemove}
+                >
+                  <Fa name="times" />
+                </Button>
+              </div>
+            ) : (
+              <FormControl
+                name="model"
+                type="file"
+                accept=".stl"
+                required
+                onChange={handleFileChange}
+              />
+            )}
           </FormRow>
         </div>
       )}
@@ -355,6 +372,8 @@ const LineItemEditForm = ({
 };
 
 LineItemEditForm.defaultProps = {
+  modelUnits: 'auto',
+  modelUpload: null,
   notes: null,
   supportMaterial: null,
   supportMaterialColor: null,
@@ -364,6 +383,7 @@ LineItemEditForm.defaultProps = {
 
 LineItemEditForm.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
+  handleFileRemove: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   handleModelDownload: PropTypes.func.isRequired,
   isRestricted: PropTypes.bool.isRequired,
@@ -373,7 +393,8 @@ LineItemEditForm.propTypes = {
   baseMaterialColor: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
-  modelUnits: PropTypes.string.isRequired,
+  modelUnits: PropTypes.string,
+  modelUpload: PropTypes.shape({ name: PropTypes.string }),
   notes: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
