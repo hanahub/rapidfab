@@ -5,7 +5,7 @@ window.Config = {
     PAO: 'https://users.dev-auth.com',
     WYATT: 'https://erp.dev-auth.com',
     EVENT: 'https://events.dev-auth.com/',
-    HOTH: 'https://models.dev-auth.com/',
+    HOTH: 'https://models.dev-auth.com',
     SCYLLA: 'https://app.dev-auth.com',
     NAUTILUS: 'https://data.dev-auth.com',
   },
