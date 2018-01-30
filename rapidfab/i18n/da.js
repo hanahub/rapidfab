@@ -2,6 +2,7 @@ export default {
   "actuals": "Actuals",
   "addNewUser": " ’Tilføj ny bruger",
   "admin": "Administration",
+  "automatic": "Automatic",
   "back": "Tilbage",
   "banner": "Banner",
   "bureauAdministration": "Bureau Administration",

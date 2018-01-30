@@ -2,6 +2,7 @@ export default {
   "actuals": "Actuals",
   "addNewUser": " 新しいユーザーの追加",
   "admin": "Administration",
+  "automatic": "Automatic",
   "back": " 戻る",
   "banner": "Banner",
   "bureauAdministration": "Bureau Administration",

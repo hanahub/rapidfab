@@ -16,6 +16,8 @@ class LineItemEditFormContainer extends Component {
       baseMaterial: lineItem.materials.base,
       layerThickness: lineItem.layer_thickness || '0.2',
       notes: lineItem.notes,
+      model: null,
+      modelUnits: 'auto',
       supportMaterial: lineItem.materials.support,
       quantity: lineItem.quantity.toString(),
       status: lineItem.status,

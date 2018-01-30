@@ -72,6 +72,7 @@ const LineItemEditForm = ({
   isRestricted,
   layerThickness,
   lineItem,
+  modelUnits,
   notes,
   baseMaterial,
   baseMaterialColor,
@@ -139,6 +140,28 @@ const LineItemEditForm = ({
                 <Fa name="spinner" spin />
               )}
             </div>
+          </FormRow>
+          <FormRow id="modelUnits" defaultMessage="Model Units">
+            <FormControl
+              name="modelUnits"
+              value={modelUnits}
+              componentClass="select"
+              onChange={handleInputChange}
+              required
+            >
+              <option value="auto">
+                <FormattedMessage id="automatic" defaultMessage="Automatic" />
+              </option>
+              <option value="in">
+                <FormattedMessage id="inches" defaultMessage="Inches" />
+              </option>
+              <option value="mm">
+                <FormattedMessage
+                  id="millimeters"
+                  defaultMessage="Millimeters"
+                />
+              </option>
+            </FormControl>
           </FormRow>
           <FormRow id="field.replaceModel" defaultMessage="Replace Model">
             <FormControl
@@ -350,6 +373,7 @@ LineItemEditForm.propTypes = {
   baseMaterialColor: PropTypes.string.isRequired,
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
+  modelUnits: PropTypes.string.isRequired,
   notes: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
