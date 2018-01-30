@@ -19,6 +19,7 @@ import {
   getModels,
 } from 'rapidfab/selectors';
 
+import Actions from 'rapidfab/actions';
 import hhmmss from 'rapidfab/utils/hhmmss';
 import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
@@ -229,12 +230,22 @@ Estimates.propTypes = {
   }).isRequired,
 };
 
-const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
+const LineItem = ({
+  currency,
+  dispatch,
+  lineItem,
+  model,
+  prints,
+  snapshot,
+}) => {
   // Check if lineItem is stale data from order
   if (!lineItem) {
     return null;
   }
   const { estimates, itar } = lineItem;
+
+  const handleUnitChange = unit =>
+    dispatch(Actions.Api.hoth.model.put(model.uuid, { unit }));
 
   return (
     <Panel
@@ -251,24 +262,39 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
 
         {!itar && (
           <Row>
-            <Col xs={12} lg={10} lgOffset={1} style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}>
-              <ControlLabel>Model Units</ControlLabel>
-              <FormGroup>
-                <Radio name="units" inline>
-                  <FormattedMessage
-                    id="millimeters"
-                    defaultMessage="Millimeters"
-                  />
-                </Radio>
-                <Radio name="units" inline>
-                  <FormattedMessage id="inches" defaultMessage="Inches" />
-                </Radio>
-              </FormGroup>
-            </Col>
+            {model && (
+              <Col
+                xs={12}
+                lg={10}
+                lgOffset={1}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <ControlLabel>Model Units</ControlLabel>
+                <FormGroup>
+                  <Radio
+                    onChange={() => handleUnitChange('mm')}
+                    inline
+                    checked={model.unit === 'mm'}
+                  >
+                    <FormattedMessage
+                      id="millimeters"
+                      defaultMessage="Millimeters"
+                    />
+                  </Radio>
+                  <Radio
+                    onChange={() => handleUnitChange('in')}
+                    inline
+                    checked={model.unit === 'in'}
+                  >
+                    <FormattedMessage id="inches" defaultMessage="Inches" />
+                  </Radio>
+                </FormGroup>
+              </Col>
+            )}
             <Col xs={12} lg={10} lgOffset={1}>
               <Estimates
                 currency={currency}
@@ -345,10 +371,12 @@ const mapStateToProps = (state, ownProps) => {
 
 LineItem.defaultProps = {
   lineItem: null,
+  model: {},
 };
 
 LineItem.propTypes = {
   currency: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
   lineItem: PropTypes.shape({}),
   model: PropTypes.shape({}).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
