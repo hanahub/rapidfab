@@ -320,37 +320,45 @@ class Template extends Component {
     );
 
     const Rows = () => {
-      const rows = _.map(this.state.steps, (step, index) => (
-        <tr key={index}>
-          <td>
-            <Arrows index={index} />
-          </td>
-          <td>
-            {
-              _.find(this.props.processTypes, { uri: step.process_type_uri })
-                .name
-            }
-          </td>
-          <td style={styles.centerIcons}>
-            <div
-              role="button"
-              onClick={() => this.openModal('showStepForm', index)}
-              tabIndex={0}
-            >
-              <Fa name="edit" />
-            </div>
-          </td>
-          <td style={styles.centerIcons}>
-            <div
-              role="button"
-              onClick={() => this.deleteStep(index)}
-              tabIndex={0}
-            >
-              <Fa name="times" />
-            </div>
-          </td>
-        </tr>
-      ));
+      const rows = _.map(this.state.steps, (step, index) => {
+        const processType = this.props.processTypes.find(
+          type => type.uri === step.process_type_uri
+        );
+        return (
+          <tr key={index}>
+            <td>
+              <Arrows index={index} />
+            </td>
+            <td>
+              {processType ? (
+                processType.name
+              ) : (
+                <FormattedMessage id="status.error" defaultMessage="Error" />
+              )}
+            </td>
+            <td style={styles.centerIcons}>
+              {processType && (
+                <div
+                  role="button"
+                  onClick={() => this.openModal('showStepForm', index)}
+                  tabIndex={0}
+                >
+                  <Fa name="edit" />
+                </div>
+              )}
+            </td>
+            <td style={styles.centerIcons}>
+              <div
+                role="button"
+                onClick={() => this.deleteStep(index)}
+                tabIndex={0}
+              >
+                <Fa name="times" />
+              </div>
+            </td>
+          </tr>
+        );
+      });
 
       return <tbody>{rows}</tbody>;
     };
