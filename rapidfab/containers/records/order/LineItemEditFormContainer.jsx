@@ -18,7 +18,7 @@ class LineItemEditFormContainer extends Component {
       layerThickness: lineItem.layer_thickness || '0.2',
       notes: lineItem.notes,
       modelUpload: null,
-      modelUnits: 'auto',
+      modelUnits: lineItem.model_unit,
       supportMaterial: lineItem.materials.support,
       quantity: lineItem.quantity.toString(),
       status: lineItem.status,
@@ -97,11 +97,14 @@ class LineItemEditFormContainer extends Component {
   }
 
   handleFileChange(event) {
-    this.setState({ modelUpload: event.target.files[0], modelUnits: null });
+    this.setState({ modelUpload: event.target.files[0], modelUnits: 'auto' });
   }
 
   handleFileRemove() {
-    this.setState({ modelUpload: null });
+    this.setState({
+      modelUpload: null,
+      modelUnits: this.props.lineItem.model_unit,
+    });
   }
 
   handleInputChange(event) {
@@ -165,7 +168,7 @@ class LineItemEditFormContainer extends Component {
 LineItemEditFormContainer.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatch: PropTypes.func.isRequired,
-  lineItem: PropTypes.shape({}).isRequired,
+  lineItem: PropTypes.shape({ model_unit: PropTypes.string }).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
