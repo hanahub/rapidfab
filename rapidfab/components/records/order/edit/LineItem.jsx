@@ -1,16 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  Col,
-  ControlLabel,
-  FormGroup,
-  ListGroup,
-  ListGroupItem,
-  Panel,
-  Radio,
-  Row,
-} from 'react-bootstrap';
+import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 import {
@@ -19,7 +10,6 @@ import {
   getModels,
 } from 'rapidfab/selectors';
 
-import Actions from 'rapidfab/actions';
 import hhmmss from 'rapidfab/utils/hhmmss';
 import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
@@ -230,22 +220,12 @@ Estimates.propTypes = {
   }).isRequired,
 };
 
-const LineItem = ({
-  currency,
-  dispatch,
-  lineItem,
-  model,
-  prints,
-  snapshot,
-}) => {
+const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
   // Check if lineItem is stale data from order
   if (!lineItem) {
     return null;
   }
   const { estimates, itar } = lineItem;
-
-  const handleUnitChange = unit =>
-    dispatch(Actions.Api.hoth.model.put(model.uuid, { unit }));
 
   return (
     <Panel
@@ -262,39 +242,6 @@ const LineItem = ({
 
         {!itar && (
           <Row>
-            {model && (
-              <Col
-                xs={12}
-                lg={10}
-                lgOffset={1}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <ControlLabel>Model Units</ControlLabel>
-                <FormGroup>
-                  <Radio
-                    onChange={() => handleUnitChange('mm')}
-                    inline
-                    checked={model.unit === 'mm'}
-                  >
-                    <FormattedMessage
-                      id="millimeters"
-                      defaultMessage="Millimeters"
-                    />
-                  </Radio>
-                  <Radio
-                    onChange={() => handleUnitChange('in')}
-                    inline
-                    checked={model.unit === 'in'}
-                  >
-                    <FormattedMessage id="inches" defaultMessage="Inches" />
-                  </Radio>
-                </FormGroup>
-              </Col>
-            )}
             <Col xs={12} lg={10} lgOffset={1}>
               <Estimates
                 currency={currency}
@@ -376,7 +323,6 @@ LineItem.defaultProps = {
 
 LineItem.propTypes = {
   currency: PropTypes.string.isRequired,
-  dispatch: PropTypes.func.isRequired,
   lineItem: PropTypes.shape({}),
   model: PropTypes.shape({}).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -2,6 +2,7 @@ export default {
   "actuals": "Actuals",
   "admin": "Administration",
   "addNewUser": "Add New User",
+  "automatic": "Automatic",
   "back": "Back",
   "banner": "Banner",
   "bureauAdministration": "Bureau Administration",

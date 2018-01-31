@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as Selectors from 'rapidfab/selectors';
 import Actions from 'rapidfab/actions';
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 import LineItemEditForm from 'rapidfab/components/records/order/edit/LineItemEditForm';
 
@@ -16,6 +17,8 @@ class LineItemEditFormContainer extends Component {
       baseMaterial: lineItem.materials.base,
       layerThickness: lineItem.layer_thickness || '0.2',
       notes: lineItem.notes,
+      modelUpload: null,
+      modelUnits: lineItem.model_unit,
       supportMaterial: lineItem.materials.support,
       quantity: lineItem.quantity.toString(),
       status: lineItem.status,
@@ -24,6 +27,7 @@ class LineItemEditFormContainer extends Component {
     };
 
     this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleFileRemove = this.handleFileRemove.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleModelDownload = this.handleModelDownload.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -42,7 +46,8 @@ class LineItemEditFormContainer extends Component {
     const {
       baseMaterial,
       layerThickness,
-      model,
+      modelUpload,
+      modelUnits,
       notes,
       quantity,
       status,
@@ -69,22 +74,37 @@ class LineItemEditFormContainer extends Component {
     if (!payload.third_party_provider) delete payload.third_party_provider;
     if (status === lineItem.status) delete payload.status;
 
-    if (!model) {
+    if (modelUnits) {
+      dispatch(
+        Actions.Api.hoth.model.put(extractUuid(lineItem.model), {
+          unit: modelUnits === 'auto' ? null : modelUnits,
+        })
+      );
+    }
+
+    if (!modelUpload) {
       dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
     } else {
       dispatch(
-        Actions.Api.hoth.model.post({ name: model.name, type: 'stl' })
+        Actions.Api.hoth.model.post({ name: modelUpload.name, type: 'stl' })
       ).then(args => {
         const { location, uploadLocation } = args.headers;
         payload.model = location;
         dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
-        dispatch(Actions.UploadModel.upload(uploadLocation, model));
+        dispatch(Actions.UploadModel.upload(uploadLocation, modelUpload));
       });
     }
   }
 
   handleFileChange(event) {
-    this.setState({ model: event.target.files[0] });
+    this.setState({ modelUpload: event.target.files[0], modelUnits: 'auto' });
+  }
+
+  handleFileRemove() {
+    this.setState({
+      modelUpload: null,
+      modelUnits: this.props.lineItem.model_unit,
+    });
   }
 
   handleInputChange(event) {
@@ -111,6 +131,7 @@ class LineItemEditFormContainer extends Component {
   render() {
     const {
       handleFileChange,
+      handleFileRemove,
       handleInputChange,
       handleModelDownload,
       onDelete,
@@ -133,6 +154,7 @@ class LineItemEditFormContainer extends Component {
         {...state}
         baseMaterialColor={baseMaterialColor}
         handleFileChange={handleFileChange}
+        handleFileRemove={handleFileRemove}
         handleInputChange={handleInputChange}
         handleModelDownload={handleModelDownload}
         onDelete={onDelete}
@@ -146,7 +168,7 @@ class LineItemEditFormContainer extends Component {
 LineItemEditFormContainer.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatch: PropTypes.func.isRequired,
-  lineItem: PropTypes.shape({}).isRequired,
+  lineItem: PropTypes.shape({ model_unit: PropTypes.string }).isRequired,
   models: PropTypes.arrayOf(PropTypes.object).isRequired,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
