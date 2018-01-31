@@ -65,11 +65,12 @@ const NavProfile = ({
   const titles = getTitles(currentUser);
   const flag = LanguageFlagMap[locale];
   const shouldShowImpersonate = Permissions.has(
-    'pao',
+    'nautilus',
     'impersonation',
     session
   );
-  const shouldShowAdmin = Permissions.has('pao', 'administrate.group', session);
+  const shouldShowAdmin = Permissions.has('nautilus', 'administrate.group', session);
+  debugger
   return (
     <BS.Nav pullRight>
       <BS.NavDropdown eventKey={1} title={titles.myProfile} id="uxNavProfile">

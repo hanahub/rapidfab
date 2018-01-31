@@ -127,7 +127,7 @@ function mapDispatchToProps(dispatch) {
         dispatch(Actions.Api.wyatt.bureau.list());
         dispatch(Actions.Api.wyatt.role.list());
       });
-      dispatch(Actions.Api.pao.permissions.list({ namespace: 'pao' }));
+      dispatch(Actions.Api.pao.permissions.list({ namespace: 'nautilus' }));
       dispatch(Actions.Api.wyatt.bureau.list());
       dispatch(Actions.Api.wyatt.role.list());
     },
