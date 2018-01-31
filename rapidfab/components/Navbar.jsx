@@ -69,8 +69,12 @@ const NavProfile = ({
     'impersonation',
     session
   );
-  const shouldShowAdmin = Permissions.has('nautilus', 'administrate.group', session);
-  debugger
+  const shouldShowAdmin = Permissions.has(
+    'nautilus',
+    'administrate.group',
+    session
+  );
+
   return (
     <BS.Nav pullRight>
       <BS.NavDropdown eventKey={1} title={titles.myProfile} id="uxNavProfile">
