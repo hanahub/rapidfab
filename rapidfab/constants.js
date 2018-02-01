@@ -54,8 +54,8 @@ const Constants = [
 export const Currencies = ['USD', 'GBP', 'JPY', 'EUR', 'DKK'];
 
 export const VOLUME_UNITS = {
-  cm3: 'cm3',
-  in3: 'in3',
+  cm: 'cm',
+  in: 'in',
 };
 
 export const MODELER_STATUS_MAP = {

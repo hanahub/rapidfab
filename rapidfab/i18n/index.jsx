@@ -38,10 +38,10 @@ export const FormattedVolume = connect(({ volumeUnits }) => ({ volumeUnits }))(
   ({ value, volumeUnits }) => (
     <span>
       <FormattedNumber
-        value={volumeUnits === 'in3' ? convertVolumeCmToIn(value) : value}
+        value={volumeUnits === 'in' ? convertVolumeCmToIn(value) : value}
       />
       {` `}
-      {volumeUnits === 'cm3' ? 'cm' : 'in'}
+      {volumeUnits === 'cm' ? 'cm' : 'in'}
       <sup>3</sup>
     </span>
   )
