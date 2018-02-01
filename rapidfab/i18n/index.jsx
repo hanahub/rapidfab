@@ -11,6 +11,7 @@ import daMessages from 'rapidfab/i18n/da';
 import deMessages from 'rapidfab/i18n/de';
 import enUSMessages from 'rapidfab/i18n/en-US';
 import jaMessages from 'rapidfab/i18n/ja';
+import convertVolumeCmToIn from 'rapidfab/utils/convertVolumeCmToIn';
 
 ReactIntl.addLocaleData(daLocaleData);
 ReactIntl.addLocaleData(deLocaleData);
@@ -36,7 +37,9 @@ FormattedDateTime.propTypes = {
 export const FormattedVolume = connect(({ volumeUnits }) => ({ volumeUnits }))(
   ({ value, volumeUnits }) => (
     <span>
-      <FormattedNumber value={value} />
+      <FormattedNumber
+        value={volumeUnits === 'in3' ? convertVolumeCmToIn(value) : value}
+      />
       {` `}
       {volumeUnits === 'cm3' ? 'cm' : 'in'}
       <sup>3</sup>
