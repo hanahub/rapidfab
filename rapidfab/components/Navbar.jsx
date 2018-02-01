@@ -61,10 +61,18 @@ const UnitsMenu = connect(({ volumeUnits }) => ({ volumeUnits }))(
   ({ dispatch, volumeUnits }) => (
     <BS.NavDropdown title="Units">
       <BS.MenuItem onClick={() => dispatch(Actions.VolumeUnits.setCm)}>
-        Centimeters
+        <Fa
+          name="check"
+          style={{ visibility: volumeUnits === 'cm' ? null : 'hidden' }}
+        />{' '}
+        <FormattedMessage id="metric" defaultMessage="Metric" />
       </BS.MenuItem>
       <BS.MenuItem onClick={() => dispatch(Actions.VolumeUnits.setIn)}>
-        Inches
+        <Fa
+          name="check"
+          style={{ visibility: volumeUnits === 'in' ? null : 'hidden' }}
+        />{' '}
+        <FormattedMessage id="imperial" defaultMessage="Imperial" />
       </BS.MenuItem>
     </BS.NavDropdown>
   )
