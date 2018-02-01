@@ -47,9 +47,16 @@ const Constants = [
   'SET_ROUTE_UUID',
   'CLEAR_UI_STATE',
   'CLEAR_UI_ERRORS',
+  'VOLUME_UNITS_CHANGE_CM',
+  'VOLUME_UNITS_CHANGE_IN',
 ];
 
 export const Currencies = ['USD', 'GBP', 'JPY', 'EUR', 'DKK'];
+
+export const VOLUME_UNITS = {
+  cm3: 'cm3',
+  in3: 'in3',
+};
 
 export const MODELER_STATUS_MAP = {
   idle: {
