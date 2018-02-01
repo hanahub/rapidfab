@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
+import Actions from 'rapidfab/actions';
 import Feature from 'rapidfab/components/Feature';
 import Flag from 'rapidfab/components/flag';
 import Permissions from 'rapidfab/permissions';
@@ -54,6 +56,25 @@ const getTitles = currentUser => {
     myProfile,
   };
 };
+
+const UnitsMenu = connect(({ units }) => ({ units }))(({ dispatch, units }) => (
+  <BS.NavDropdown title="Units">
+    <BS.MenuItem onClick={() => dispatch(Actions.Units.setMetric)}>
+      <Fa
+        name="check"
+        style={{ visibility: units === 'metric' ? null : 'hidden' }}
+      />{' '}
+      <FormattedMessage id="metric" defaultMessage="Metric" />
+    </BS.MenuItem>
+    <BS.MenuItem onClick={() => dispatch(Actions.Units.setImperial)}>
+      <Fa
+        name="check"
+        style={{ visibility: units === 'imperial' ? null : 'hidden' }}
+      />{' '}
+      <FormattedMessage id="imperial" defaultMessage="Imperial" />
+    </BS.MenuItem>
+  </BS.NavDropdown>
+));
 
 const NavProfile = ({
   currentUser,
@@ -150,6 +171,7 @@ const NavProfile = ({
           <Flag type="jp" /> 日本語
         </BS.MenuItem>
       </BS.NavDropdown>
+      <UnitsMenu />
       <BS.NavItem
         style={styles.spacingRight}
         href="https://authentise.zendesk.com/hc/en-us"

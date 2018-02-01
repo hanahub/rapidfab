@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import * as ReactIntl from 'react-intl';
 
@@ -10,6 +11,7 @@ import daMessages from 'rapidfab/i18n/da';
 import deMessages from 'rapidfab/i18n/de';
 import enUSMessages from 'rapidfab/i18n/en-US';
 import jaMessages from 'rapidfab/i18n/ja';
+import convertVolumeCmToIn from 'rapidfab/utils/convertVolumeCmToIn';
 
 ReactIntl.addLocaleData(daLocaleData);
 ReactIntl.addLocaleData(deLocaleData);
@@ -32,14 +34,22 @@ FormattedDateTime.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
 
-export const FormattedVolume = ({ value }) => (
-  <span>
-    <FormattedNumber value={value} /> cm<sup>3</sup>
-  </span>
+export const FormattedVolume = connect(({ units }) => ({ units }))(
+  ({ value, units }) => (
+    <span>
+      <FormattedNumber
+        value={units === 'imperial' ? convertVolumeCmToIn(value) : value}
+      />
+      {` `}
+      {units === 'metric' ? 'cm' : 'in'}
+      <sup>3</sup>
+    </span>
+  )
 );
 
 FormattedVolume.propTypes = {
   value: PropTypes.number.isRequired,
+  // value needs to be a volume measured in cm3
 };
 
 export const FormattedDuration = ({ value }) => (

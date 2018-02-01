@@ -47,9 +47,16 @@ const Constants = [
   'SET_ROUTE_UUID',
   'CLEAR_UI_STATE',
   'CLEAR_UI_ERRORS',
+  'UNITS_CHANGE_METRIC',
+  'UNITS_CHANGE_IMPERIAL',
 ];
 
 export const Currencies = ['USD', 'GBP', 'JPY', 'EUR', 'DKK'];
+
+export const UNITS = {
+  metric: 'metric',
+  imperial: 'imperial',
+};
 
 export const MODELER_STATUS_MAP = {
   idle: {
