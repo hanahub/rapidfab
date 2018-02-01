@@ -57,26 +57,24 @@ const getTitles = currentUser => {
   };
 };
 
-const UnitsMenu = connect(({ volumeUnits }) => ({ volumeUnits }))(
-  ({ dispatch, volumeUnits }) => (
-    <BS.NavDropdown title="Units">
-      <BS.MenuItem onClick={() => dispatch(Actions.VolumeUnits.setCm)}>
-        <Fa
-          name="check"
-          style={{ visibility: volumeUnits === 'cm' ? null : 'hidden' }}
-        />{' '}
-        <FormattedMessage id="metric" defaultMessage="Metric" />
-      </BS.MenuItem>
-      <BS.MenuItem onClick={() => dispatch(Actions.VolumeUnits.setIn)}>
-        <Fa
-          name="check"
-          style={{ visibility: volumeUnits === 'in' ? null : 'hidden' }}
-        />{' '}
-        <FormattedMessage id="imperial" defaultMessage="Imperial" />
-      </BS.MenuItem>
-    </BS.NavDropdown>
-  )
-);
+const UnitsMenu = connect(({ units }) => ({ units }))(({ dispatch, units }) => (
+  <BS.NavDropdown title="Units">
+    <BS.MenuItem onClick={() => dispatch(Actions.Units.setMetric)}>
+      <Fa
+        name="check"
+        style={{ visibility: units === 'metric' ? null : 'hidden' }}
+      />{' '}
+      <FormattedMessage id="metric" defaultMessage="Metric" />
+    </BS.MenuItem>
+    <BS.MenuItem onClick={() => dispatch(Actions.Units.setImperial)}>
+      <Fa
+        name="check"
+        style={{ visibility: units === 'imperial' ? null : 'hidden' }}
+      />{' '}
+      <FormattedMessage id="imperial" defaultMessage="Imperial" />
+    </BS.MenuItem>
+  </BS.NavDropdown>
+));
 
 const NavProfile = ({
   currentUser,

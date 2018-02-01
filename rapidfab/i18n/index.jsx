@@ -34,14 +34,14 @@ FormattedDateTime.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
 
-export const FormattedVolume = connect(({ volumeUnits }) => ({ volumeUnits }))(
-  ({ value, volumeUnits }) => (
+export const FormattedVolume = connect(({ units }) => ({ units }))(
+  ({ value, units }) => (
     <span>
       <FormattedNumber
-        value={volumeUnits === 'in' ? convertVolumeCmToIn(value) : value}
+        value={units === 'imperial' ? convertVolumeCmToIn(value) : value}
       />
       {` `}
-      {volumeUnits === 'cm' ? 'cm' : 'in'}
+      {units === 'metric' ? 'cm' : 'in'}
       <sup>3</sup>
     </span>
   )

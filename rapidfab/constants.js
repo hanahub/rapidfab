@@ -47,15 +47,15 @@ const Constants = [
   'SET_ROUTE_UUID',
   'CLEAR_UI_STATE',
   'CLEAR_UI_ERRORS',
-  'VOLUME_UNITS_CHANGE_CM',
-  'VOLUME_UNITS_CHANGE_IN',
+  'UNITS_CHANGE_METRIC',
+  'UNITS_CHANGE_IMPERIAL',
 ];
 
 export const Currencies = ['USD', 'GBP', 'JPY', 'EUR', 'DKK'];
 
-export const VOLUME_UNITS = {
-  cm: 'cm',
-  in: 'in',
+export const UNITS = {
+  metric: 'metric',
+  imperial: 'imperial',
 };
 
 export const MODELER_STATUS_MAP = {

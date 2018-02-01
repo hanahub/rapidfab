@@ -11,7 +11,7 @@ import * as Url from './url';
 import * as UI from './ui';
 import * as Pager from './pager';
 import * as RouteUUID from './routeUUID';
-import * as VolumeUnits from './volumeUnits';
+import * as Units from './units';
 
 const Actions = {
   Api: makeApiActions(Api, RESOURCES),
@@ -25,7 +25,7 @@ const Actions = {
   Url,
   UI,
   RouteUUID,
-  VolumeUnits,
+  Units,
 };
 
 export default Actions;

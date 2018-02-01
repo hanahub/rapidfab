@@ -12,7 +12,7 @@ import resources from './resources';
 import uploadModel from './uploadModel';
 import url from './url';
 import ui from './ui';
-import volumeUnits from './volumeUnits';
+import units from './units';
 
 const Reducer = combineReducers({
   api,
@@ -27,7 +27,7 @@ const Reducer = combineReducers({
   ui,
   uploadModel,
   url,
-  volumeUnits,
+  units,
 });
 
 export default Reducer;
