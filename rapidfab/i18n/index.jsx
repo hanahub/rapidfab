@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import * as ReactIntl from 'react-intl';
 
@@ -32,10 +33,15 @@ FormattedDateTime.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
 
-export const FormattedVolume = ({ value }) => (
-  <span>
-    <FormattedNumber value={value} /> cm<sup>3</sup>
-  </span>
+export const FormattedVolume = connect(({ volumeUnits }) => ({ volumeUnits }))(
+  ({ value, volumeUnits }) => (
+    <span>
+      <FormattedNumber value={value} />
+      {` `}
+      {volumeUnits === 'cm3' ? 'cm' : 'in'}
+      <sup>3</sup>
+    </span>
+  )
 );
 
 FormattedVolume.propTypes = {
