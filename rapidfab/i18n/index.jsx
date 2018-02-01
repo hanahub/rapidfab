@@ -46,6 +46,7 @@ export const FormattedVolume = connect(({ volumeUnits }) => ({ volumeUnits }))(
 
 FormattedVolume.propTypes = {
   value: PropTypes.number.isRequired,
+  // value needs to be a volume measured in cm3
 };
 
 export const FormattedDuration = ({ value }) => (
