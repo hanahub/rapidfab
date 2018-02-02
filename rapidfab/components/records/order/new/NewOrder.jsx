@@ -150,8 +150,14 @@ class NewOrder extends Component {
 
     const modelPosts = lineItems.map(lineItem => {
       const modelName = lineItem.itar ? 'na' : lineItem.model.name;
+      const modelUnits =
+        lineItem.modelUnits === 'auto' ? null : lineItem.modelUnits;
       return dispatch(
-        Actions.Api.hoth.model.post({ name: modelName, type: 'stl' })
+        Actions.Api.hoth.model.post({
+          name: modelName,
+          unit: modelUnits,
+          type: 'stl',
+        })
       );
     });
     Promise.all(modelPosts).then(responses => {
@@ -261,6 +267,8 @@ class NewOrder extends Component {
     const initialLineItemState = {
       baseMaterial: initialBaseMaterial,
       itar: false,
+      modelUnits: 'auto',
+      quantity: '1',
       supportMaterial: initialSupportMaterial,
       template: initialTemplate,
     };

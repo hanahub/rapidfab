@@ -6,7 +6,6 @@ import {
   Button,
   ButtonToolbar,
   Checkbox,
-  Col,
   ControlLabel,
   Form,
   FormControl,
@@ -31,6 +30,7 @@ const AddLineItemPresentation = ({
   handleInputChange,
   itar,
   onSubmit,
+  modelUnits,
   providers,
   quantity,
   supportMaterial,
@@ -42,15 +42,39 @@ const AddLineItemPresentation = ({
   <Panel header={<PanelHeader />}>
     <Form onSubmit={onSubmit}>
       <Feature featureName={'itar'}>
-        <Col lg={1}>
+        <div>
           <ControlLabel>
             <FormattedMessage id="record.itar" defaultMessage="ITAR Model" />
           </ControlLabel>
           <Checkbox name="itar" checked={itar} onChange={handleInputChange} />
-        </Col>
+        </div>
       </Feature>
-      {itar ? null : <ModelInput handleFileChange={handleFileChange} />}
-      <Col lg={2}>
+      {!itar && (
+        <div>
+          <ModelInput handleFileChange={handleFileChange} />
+          <ControlLabel>
+            <FormattedMessage id="modelUnits" defaultMessage="Model Units" />
+          </ControlLabel>
+          <FormControl
+            name="modelUnits"
+            value={modelUnits}
+            componentClass="select"
+            onChange={handleInputChange}
+            required
+          >
+            <option value="auto">
+              <FormattedMessage id="automatic" defaultMessage="Automatic" />
+            </option>
+            <option value="in">
+              <FormattedMessage id="inches" defaultMessage="Inches" />
+            </option>
+            <option value="mm">
+              <FormattedMessage id="millimeters" defaultMessage="Millimeters" />
+            </option>
+          </FormControl>
+        </div>
+      )}
+      <div>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage="Material" />:
         </ControlLabel>
@@ -67,113 +91,87 @@ const AddLineItemPresentation = ({
             </option>
           ))}
         </FormControl>
-      </Col>
-      <Col lg={2}>
-        <ControlLabel>
-          <FormattedMessage
-            id="field.supportMaterial"
-            defaultMessage="Support Material"
-          />:
-        </ControlLabel>
-        <FormControl
-          name="supportMaterial"
-          componentClass="select"
-          onChange={handleInputChange}
-          value={supportMaterial}
-        >
-          <option value="">
-            <FormattedMessage id="field.none" defaultMessage="None" />
+      </div>
+      <ControlLabel>
+        <FormattedMessage
+          id="field.supportMaterial"
+          defaultMessage="Support Material"
+        />:
+      </ControlLabel>
+      <FormControl
+        name="supportMaterial"
+        componentClass="select"
+        onChange={handleInputChange}
+        value={supportMaterial}
+      >
+        <option value="">
+          <FormattedMessage id="field.none" defaultMessage="None" />
+        </option>
+        {supportMaterials.map(material => (
+          <option key={material.uri} value={material.uri}>
+            {material.name}
           </option>
-          {supportMaterials.map(material => (
-            <option key={material.uri} value={material.uri}>
-              {material.name}
-            </option>
-          ))}
-        </FormControl>
-      </Col>
-      <Col lg={1}>
-        <ControlLabel>
-          <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
-        </ControlLabel>
-        <FormControl
-          name="quantity"
-          type="number"
-          min="1"
-          required
-          onChange={handleInputChange}
-          value={quantity}
-        />
-      </Col>
-      <Col lg={2}>
-        <ControlLabel>
-          <FormattedMessage id="field.template" defaultMessage="Template" />:
-        </ControlLabel>
-        <FormControl
-          name="template"
-          componentClass="select"
-          required
-          onChange={handleInputChange}
-          value={template}
-        >
-          {templates.map(templateOption => (
-            <option key={templateOption.uri} value={templateOption.uri}>
-              {templateOption.name}
-            </option>
-          ))}
-        </FormControl>
-      </Col>
-      <Col lg={2}>
-        <ControlLabel>
-          <FormattedMessage
-            id="field.thirdPartyProvider"
-            defaultMessage="Third-Party Provider"
-          />
-        </ControlLabel>
-        <FormControl
-          name="thirdPartyProvider"
-          componentClass="select"
-          onChange={handleInputChange}
-          value={thirdPartyProvider}
-        >
-          <option value="">
-            <FormattedMessage id="field.none" defaultMessage="None" />
+        ))}
+      </FormControl>
+      <ControlLabel>
+        <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
+      </ControlLabel>
+      <FormControl
+        name="quantity"
+        type="number"
+        min="1"
+        required
+        onChange={handleInputChange}
+        value={quantity}
+      />
+      <ControlLabel>
+        <FormattedMessage id="field.template" defaultMessage="Template" />:
+      </ControlLabel>
+      <FormControl
+        name="template"
+        componentClass="select"
+        required
+        onChange={handleInputChange}
+        value={template}
+      >
+        {templates.map(templateOption => (
+          <option key={templateOption.uri} value={templateOption.uri}>
+            {templateOption.name}
           </option>
-          {providers.map(provider => (
-            <option key={provider.uri} value={provider.uri}>
-              {provider.name}
-            </option>
-          ))}
-        </FormControl>
-      </Col>
-      {/*
-      <Col lg={2}>
-        <ControlLabel>
-          <FormattedMessage
-            id="field.notes"
-            defaultMessage='Notes'
-          />:
-        </ControlLabel>
-        <FormControl
-          name="notes"
-          type="text"
-          maxLength="255"
-          onChange={handleInputChange}
+        ))}
+      </FormControl>
+      <ControlLabel>
+        <FormattedMessage
+          id="field.thirdPartyProvider"
+          defaultMessage="Third-Party Provider"
         />
-      </Col>
-      */}
-      <Col xs={12}>
-        <ButtonToolbar className="clearfix">
-          <Button
-            type="submit"
-            bsStyle="success"
-            className="pull-right"
-            style={{ marginTop: '2rem' }}
-          >
-            {' '}
-            Add
-          </Button>
-        </ButtonToolbar>
-      </Col>
+      </ControlLabel>
+      <FormControl
+        name="thirdPartyProvider"
+        componentClass="select"
+        onChange={handleInputChange}
+        value={thirdPartyProvider}
+      >
+        <option value="">
+          <FormattedMessage id="field.none" defaultMessage="None" />
+        </option>
+        {providers.map(provider => (
+          <option key={provider.uri} value={provider.uri}>
+            {provider.name}
+          </option>
+        ))}
+      </FormControl>
+      <ButtonToolbar className="clearfix">
+        <Button
+          type="submit"
+          bsStyle="success"
+          className="pull-right"
+          style={{ marginTop: '2rem' }}
+        >
+          {' '}
+          Add
+        </Button>
+      </ButtonToolbar>
     </Form>
   </Panel>
 );
@@ -184,6 +182,7 @@ AddLineItemPresentation.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
   itar: PropTypes.bool.isRequired,
+  modelUnits: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
   quantity: PropTypes.string.isRequired,
@@ -209,6 +208,8 @@ class AddLineItem extends Component {
     this.state = {
       baseMaterial,
       itar,
+      modelUnits: 'auto',
+      quantity: '1',
       supportMaterial,
       template,
       thirdPartyProvider,
@@ -226,6 +227,7 @@ class AddLineItem extends Component {
       baseMaterial,
       itar,
       model,
+      modelUnits,
       quantity,
       supportMaterial,
       template,
@@ -261,7 +263,11 @@ class AddLineItem extends Component {
       });
     } else {
       dispatch(
-        Actions.Api.hoth.model.post({ name: model.name, type: 'stl' })
+        Actions.Api.hoth.model.post({
+          name: model.name,
+          unit: modelUnits === 'auto' ? null : modelUnits,
+          type: 'stl',
+        })
       ).then(args => {
         const { location, uploadLocation } = args.headers;
 

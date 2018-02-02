@@ -3,14 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
-import {
-  Button,
-  Checkbox,
-  FormGroup,
-  FormControl,
-  Col,
-  ControlLabel,
-} from 'react-bootstrap';
+import { Button, Checkbox, FormControl, ControlLabel } from 'react-bootstrap';
 
 import * as Selectors from 'rapidfab/selectors';
 
@@ -52,154 +45,158 @@ const LineItemComponent = ({
   supportMaterials,
   templates,
 }) => (
-  <FormGroup controlId="uxModel">
-    <fieldset>
-      <Feature featureName={'itar'}>
-        <Col lg={2}>
-          <ControlLabel>
-            <span>ITAR Model</span>
-          </ControlLabel>
-          <Checkbox
-            name="itar"
-            checked={lineItem.itar}
-            onChange={onInputChange}
-          />
-        </Col>
-      </Feature>
-      {lineItem.itar ? null : (
-        <Col md={2}>
-          <ControlLabel>
-            <FormattedMessage id="field.file" defaultMessage="File" />:
-          </ControlLabel>
-          <FileInput
-            itar={false}
-            value={lineItem.value}
-            onFileInputChange={onFileInputChange}
-          />
-        </Col>
-      )}
-      <Col style={isUserRestricted ? styles.hidden : null} md={2}>
+  <form>
+    <Feature featureName={'itar'}>
+      <div>
         <ControlLabel>
-          <FormattedMessage id="field.material" defaultMessage="Material" />:
+          <span>ITAR Model</span>
+        </ControlLabel>
+        <Checkbox
+          name="itar"
+          checked={lineItem.itar}
+          onChange={onInputChange}
+        />
+      </div>
+    </Feature>
+    {lineItem.itar ? null : (
+      <div>
+        <ControlLabel>
+          <FormattedMessage id="field.file" defaultMessage="File" />:
+        </ControlLabel>
+        <FileInput
+          itar={false}
+          value={lineItem.value}
+          onFileInputChange={onFileInputChange}
+        />
+        <ControlLabel>
+          <FormattedMessage id="modelUnits" defaultMessage="Model Units" />
         </ControlLabel>
         <FormControl
-          name="baseMaterial"
+          name="modelUnits"
+          value={lineItem.modelUnits}
           componentClass="select"
+          onChange={onInputChange}
           required
-          value={lineItem.baseMaterial}
+        >
+          <option value="auto">
+            <FormattedMessage id="automatic" defaultMessage="Automatic" />
+          </option>
+          <option value="in">
+            <FormattedMessage id="inches" defaultMessage="Inches" />
+          </option>
+          <option value="mm">
+            <FormattedMessage id="millimeters" defaultMessage="Millimeters" />
+          </option>
+        </FormControl>
+      </div>
+    )}
+    <div style={isUserRestricted ? styles.hidden : null} md={2}>
+      <ControlLabel>
+        <FormattedMessage id="field.material" defaultMessage="Material" />:
+      </ControlLabel>
+      <FormControl
+        name="baseMaterial"
+        componentClass="select"
+        required
+        value={lineItem.baseMaterial}
+        onChange={onInputChange}
+      >
+        {baseMaterials.map(material => (
+          <option key={material.uri} value={material.uri}>
+            {material.name}
+          </option>
+        ))}
+      </FormControl>
+    </div>
+    {!isUserRestricted && (
+      <div>
+        <ControlLabel>
+          <FormattedMessage
+            id="field.supportMaterial"
+            defaultMessage="Support Material"
+          />:
+        </ControlLabel>
+        <FormControl
+          name="supportMaterial"
+          componentClass="select"
+          value={lineItem.supportMaterial}
           onChange={onInputChange}
         >
-          {baseMaterials.map(material => (
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {supportMaterials.map(material => (
             <option key={material.uri} value={material.uri}>
               {material.name}
             </option>
           ))}
         </FormControl>
-      </Col>
-      {!isUserRestricted && (
-        <Col md={2}>
-          <ControlLabel>
-            <FormattedMessage
-              id="field.supportMaterial"
-              defaultMessage="Support Material"
-            />:
-          </ControlLabel>
-          <FormControl
-            name="supportMaterial"
-            componentClass="select"
-            value={lineItem.supportMaterial}
-            onChange={onInputChange}
-          >
-            <option value="none">
-              <FormattedMessage id="field.none" defaultMessage="None" />
-            </option>
-            {supportMaterials.map(material => (
-              <option key={material.uri} value={material.uri}>
-                {material.name}
-              </option>
-            ))}
-          </FormControl>
-        </Col>
-      )}
-      <Col md={1}>
+      </div>
+    )}
+    <ControlLabel>
+      <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
+    </ControlLabel>
+    <FormControl
+      name="quantity"
+      type="number"
+      min="1"
+      required
+      value={lineItem.quantity}
+      onChange={onInputChange}
+    />
+    <div style={isUserRestricted ? styles.hidden : null} md={2}>
+      <ControlLabel>
+        <FormattedMessage id="field.template" defaultMessage="Template" />:
+      </ControlLabel>
+      <FormControl
+        name="template"
+        componentClass="select"
+        required
+        value={lineItem.template}
+        onChange={onInputChange}
+      >
+        {templates.map(template => (
+          <option key={template.uri} value={template.uri}>
+            {template.name}
+          </option>
+        ))}
+      </FormControl>
+    </div>
+    {!isUserRestricted && (
+      <div>
         <ControlLabel>
-          <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
+          <FormattedMessage
+            id="field.thirdPartyProvider"
+            defaultMessage="Third-Party Provider"
+          />
         </ControlLabel>
         <FormControl
-          name="quantity"
-          type="number"
-          min="1"
-          required
-          value={lineItem.quantity}
-          onChange={onInputChange}
-        />
-      </Col>
-      <Col style={isUserRestricted ? styles.hidden : null} md={2}>
-        <ControlLabel>
-          <FormattedMessage id="field.template" defaultMessage="Template" />:
-        </ControlLabel>
-        <FormControl
-          name="template"
+          name="thirdPartyProvider"
           componentClass="select"
           required
-          value={lineItem.template}
+          value={lineItem.thirdPartyProvider}
           onChange={onInputChange}
         >
-          {templates.map(template => (
-            <option key={template.uri} value={template.uri}>
-              {template.name}
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {providers.map(provider => (
+            <option key={provider.uri} value={provider.uri}>
+              {provider.name}
             </option>
           ))}
         </FormControl>
-      </Col>
-      {!isUserRestricted && (
-        <Col md={2}>
-          <ControlLabel>
-            <FormattedMessage
-              id="field.thirdPartyProvider"
-              defaultMessage="Third-Party Provider"
-            />
-          </ControlLabel>
-          <FormControl
-            name="thirdPartyProvider"
-            componentClass="select"
-            required
-            value={lineItem.thirdPartyProvider}
-            onChange={onInputChange}
-          >
-            <option value="none">
-              <FormattedMessage id="field.none" defaultMessage="None" />
-            </option>
-            {providers.map(provider => (
-              <option key={provider.uri} value={provider.uri}>
-                {provider.name}
-              </option>
-            ))}
-          </FormControl>
-        </Col>
-      )}
-      {/* <Col md={2}>
-        <ControlLabel>
-          <FormattedMessage id="field.notes" defaultMessage='Notes'/>:
-        </ControlLabel>
-        <FormControl
-          type="text"
-          required
-          maxLength="255"
-          onChange={onInputChange}
-          name="notes"
-        />
-      </Col> */}
-      <Col md={1}>
-        <br />
-        <Button onClick={onDelete}>
-          <span>
-            <Fa name="minus" />
-          </span>
-        </Button>
-      </Col>
-    </fieldset>
-  </FormGroup>
+      </div>
+    )}
+    <div>
+      <br />
+      <Button onClick={onDelete}>
+        <span>
+          <Fa name="minus" />
+        </span>
+      </Button>
+    </div>
+  </form>
 );
 
 LineItemComponent.propTypes = {
