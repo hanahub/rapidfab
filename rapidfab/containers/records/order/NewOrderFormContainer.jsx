@@ -3,7 +3,7 @@ import { reduxForm } from 'redux-form';
 import { Currencies } from 'rapidfab/constants';
 import { ORDER_SALES_MAPPING } from 'rapidfab/mappings';
 import {
-  getShippings,
+  getShippingsAlphabetized,
   getUsers,
   isCurrentUserRestricted,
 } from 'rapidfab/selectors';
@@ -34,7 +34,7 @@ const fields = [
 
 const mapStateToProps = state => {
   const isUserRestricted = isCurrentUserRestricted(state);
-  const shippings = getShippings(state);
+  const shippings = getShippingsAlphabetized(state);
   const users = getUsers(state);
 
   const initialCurrency = Currencies[0];

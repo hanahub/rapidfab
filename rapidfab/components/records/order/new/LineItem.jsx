@@ -297,13 +297,11 @@ LineItem.propTypes = {
 
 const mapStateToProps = state => {
   const isUserRestricted = Selectors.isCurrentUserRestricted(state);
-  const materials = Selectors.getMaterials(state);
+  const {
+    base: baseMaterials,
+    support: supportMaterials,
+  } = Selectors.getBaseAndSupportMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
-  const baseMaterials = materials.filter(material => material.type === 'base');
-  const supportMaterials = materials.filter(
-    material => material.type === 'support'
-  );
-
   const templates = Selectors.getTemplates(state);
 
   return {
