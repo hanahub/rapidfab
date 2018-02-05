@@ -11,6 +11,7 @@ import daMessages from 'rapidfab/i18n/da';
 import deMessages from 'rapidfab/i18n/de';
 import enUSMessages from 'rapidfab/i18n/en-US';
 import jaMessages from 'rapidfab/i18n/ja';
+import convertMmToIn from 'rapidfab/utils/convertMmToIn';
 import convertVolumeCmToIn from 'rapidfab/utils/convertVolumeCmToIn';
 
 ReactIntl.addLocaleData(daLocaleData);
@@ -32,6 +33,23 @@ export const FormattedDateTime = ({ value }) => (
 
 FormattedDateTime.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+};
+
+export const FormattedLength = connect(({ units }) => ({ units }))(
+  ({ length, units }) => (
+    <span>
+      <FormattedNumber
+        value={units === 'imperial' ? convertMmToIn(length) : length}
+      />
+      {` `}
+      {units === 'metric' ? 'mm' : 'in'}
+    </span>
+  )
+);
+
+FormattedLength.propTypes = {
+  length: PropTypes.number.isRequired,
+  // length needs to be a measured in mm
 };
 
 export const FormattedVolume = connect(({ units }) => ({ units }))(
