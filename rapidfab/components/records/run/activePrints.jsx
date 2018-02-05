@@ -5,7 +5,7 @@ import * as BS from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-import { FormattedMessage } from 'rapidfab/i18n';
+import { FormattedLength, FormattedMessage } from 'rapidfab/i18n';
 
 const listBodyStyle = {
   height: 243,
@@ -57,10 +57,9 @@ const Item = ({ print, printer, selected, onSelect, orderNamesMap }) => (
         </a>
       </BS.Col>
       <BS.Col xs={3}>
-        {`${_.round(print.lineItem.model.size.x, 2)} x ${_.round(
-          print.lineItem.model.size.y,
-          2
-        )}`}
+        <FormattedLength length={_.round(print.lineItem.model.size.x, 2)} />
+        {` x `}
+        <FormattedLength length={_.round(print.lineItem.model.size.y, 2)} />
       </BS.Col>
       <BS.Col xs={3}>{printBedFill(printer, print.lineItem.model)}</BS.Col>
     </BS.Row>
