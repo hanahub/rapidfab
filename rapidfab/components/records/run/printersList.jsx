@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import ModelerStatus from 'rapidfab/components/modelerStatus';
+import { FormattedLength } from 'rapidfab/i18n';
 
 const listBodyStyle = {
   height: 150,
@@ -27,9 +28,9 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
           </a>
         </BS.Col>
         <BS.Col xs={3}>
-          {`${printer.printer_type.build_volume.x}mm x ${
-            printer.printer_type.build_volume.y
-          }mm`}
+          <FormattedLength length={printer.printer_type.build_volume.x} />
+          {` x `}
+          <FormattedLength length={printer.printer_type.build_volume.y} />
         </BS.Col>
         <BS.Col xs={3}>
           <span style={{ textTransform: 'capitalize' }}>
