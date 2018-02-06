@@ -887,24 +887,35 @@ export const getProcessStepsForPrint = createSelector(
     const lineItemPrints = prints.filter(
       print => print.line_item === lineItem.uri
     );
-    return lineItemPrints.reduce((printProcessSteps, print) => {
-      if (print.copy !== routePrint.copy) {
-        return printProcessSteps;
-      }
-      const processStep = processSteps.find(
-        pstep => pstep.uri === print.process_step
-      );
-      return [
-        ...printProcessSteps,
-        Object.assign({}, print, {
-          process_step: Object.assign({}, processStep, {
-            process_type: processStep
-              ? stateResources[extractUuid(processStep.process_type_uri)]
-              : null,
+    const filteredProcessSteps = lineItemPrints.reduce(
+      (printProcessSteps, print) => {
+        if (print.copy !== routePrint.copy) {
+          return printProcessSteps;
+        }
+        const processStep = processSteps.find(
+          pstep => pstep.uri === print.process_step
+        );
+        return [
+          ...printProcessSteps,
+          Object.assign({}, print, {
+            process_step: Object.assign({}, processStep, {
+              process_type: processStep
+                ? stateResources[extractUuid(processStep.process_type_uri)]
+                : null,
+            }),
           }),
-        }),
-      ];
-    }, []);
+        ];
+      },
+      []
+    );
+    return filteredProcessSteps.sort((a, b) => {
+      if (a.process_step_position > b.process_step_position) {
+        return 1;
+      } else if (a.process_step_position < b.process_step_position) {
+        return -1;
+      }
+      return 0;
+    });
   }
 );
 
