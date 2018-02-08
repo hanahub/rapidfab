@@ -5,7 +5,6 @@ import 'fullcalendar-scheduler';
 import Config from 'rapidfab/config';
 import Raven from 'raven-js';
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
@@ -32,19 +31,14 @@ if (Config.SENTRY_DSN) {
   /* eslint-disable no-console */
 }
 
-const App = ({ store }) => (
+const store = initializeStore();
+
+const App = () => (
   <Provider store={store}>
     <AppContainer />
   </Provider>
 );
 
-App.propTypes = {
-  store: PropTypes.shape({}).isRequired,
-};
-
-ReactDOM.render(
-  <App store={initializeStore()} />,
-  document.getElementById('app')
-);
+ReactDOM.render(<App />, document.getElementById('app'));
 
 export default App;
