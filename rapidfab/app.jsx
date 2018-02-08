@@ -31,10 +31,8 @@ if (Config.SENTRY_DSN) {
   /* eslint-disable no-console */
 }
 
-const store = initializeStore();
-
 const App = () => (
-  <Provider store={store}>
+  <Provider store={initializeStore()}>
     <AppContainer />
   </Provider>
 );
