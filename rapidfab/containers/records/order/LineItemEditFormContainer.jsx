@@ -74,7 +74,7 @@ class LineItemEditFormContainer extends Component {
     if (!payload.third_party_provider) delete payload.third_party_provider;
     if (status === lineItem.status) delete payload.status;
 
-    if (modelUnits) {
+    if (modelUnits !== lineItem.model_unit) {
       dispatch(
         Actions.Api.hoth.model.put(extractUuid(lineItem.model), {
           unit: modelUnits === 'auto' ? null : modelUnits,
