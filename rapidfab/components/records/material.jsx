@@ -130,8 +130,8 @@ const MaterialForm = ({
           <BS.FormGroup controlId="uxCost">
             <BS.ControlLabel>
               <FormattedMessage
-                id="field.costPerCC"
-                defaultMessage="Cost Per CC"
+                id="field.costPerUnit"
+                defaultMessage="Cost Per Unit"
               />:
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.cost} />
