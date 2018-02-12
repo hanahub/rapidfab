@@ -13,7 +13,6 @@ const fields = [
   'location',
   'status',
   'quantity',
-  'units',
 ];
 
 class StockContainer extends Component {

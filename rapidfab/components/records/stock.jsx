@@ -114,22 +114,6 @@ const StockForm = ({
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.quantity} />
           </BS.FormGroup>
-          <BS.FormGroup controlId="uxUnits">
-            <BS.ControlLabel>
-              <FormattedMessage id="field.units" defaultMessage="Units" />:
-            </BS.ControlLabel>
-            <BS.FormControl componentClass="select" required {...fields.units}>
-              <option value="cm3">
-                <FormattedMessage id="field.units.cm3" defaultMessage="cm3" />
-              </option>
-              <option value="grams">
-                <FormattedMessage
-                  id="field.units.grams"
-                  defaultMessage="Grams"
-                />
-              </option>
-            </BS.FormControl>
-          </BS.FormGroup>
         </BS.Col>
       </BS.Row>
     </BS.Grid>
