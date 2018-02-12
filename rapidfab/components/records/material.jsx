@@ -3,18 +3,12 @@ import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
 
-import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const MaterialForm = ({
-  fields,
-  handleSubmit,
-  onDelete,
-  manufacturers,
-  apiErrors,
-}) => (
+const MaterialForm = ({ fields, handleSubmit, onDelete, manufacturers }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
       <BreadcrumbNav breadcrumbs={['materials', fields.id.value || 'New']} />
@@ -43,11 +37,7 @@ const MaterialForm = ({
 
       <hr />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
+      <FlashMessages />
 
       <BS.Row>
         <BS.Col xs={12}>
@@ -111,11 +101,27 @@ const MaterialForm = ({
               <option value="support">Support</option>
             </BS.FormControl>
           </BS.FormGroup>
+          <BS.FormGroup controlId="uxUnits">
+            <BS.ControlLabel>
+              <FormattedMessage id="field.units" defaultMessage="Units" />:
+            </BS.ControlLabel>
+            <BS.FormControl componentClass="select" required {...fields.units}>
+              <option value="cm3">
+                <FormattedMessage id="field.units.cm3" defaultMessage="cm3" />
+              </option>
+              <option value="grams">
+                <FormattedMessage
+                  id="field.units.grams"
+                  defaultMessage="Grams"
+                />
+              </option>
+            </BS.FormControl>
+          </BS.FormGroup>
           <BS.FormGroup controlId="uxCost">
             <BS.ControlLabel>
               <FormattedMessage
-                id="field.costPerCC"
-                defaultMessage="Cost Per CC"
+                id="field.costPerUnit"
+                defaultMessage="Cost Per Unit"
               />:
             </BS.ControlLabel>
             <BS.FormControl type="number" required {...fields.cost} />

@@ -8,6 +8,7 @@ export default {
   "bureauAdministration": "Bureau Administration",
   "centimeters": "Centimeters",
   "commercial": "Commercial",
+  "costPerUnit": "Cost Per Unit",
   "costReport": "Cost Report",
   "createNewUser": "Neuen Benutzer erstellen",
   "createUser": "Benutzer erstellen",
