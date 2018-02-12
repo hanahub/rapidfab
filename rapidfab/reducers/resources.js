@@ -41,7 +41,7 @@ function reducer(state = {}, action) {
       } catch (e) {
         return state;
       }
-      return _.assign({}, state, {
+      return _.merge({}, state, {
         [record.uuid]: _.assign({}, state[record.uuid], record),
       });
     case Constants.RESOURCE_GET_SUCCESS:

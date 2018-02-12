@@ -204,6 +204,21 @@ const Estimates = ({ currency, estimates, model }) => (
   </Panel>
 );
 
+Estimates.defaultProps = {
+  estimates: {
+    print_time: null,
+    amount: null,
+    post_processing_cost: null,
+    materials: {
+      base: null,
+      support: null,
+    },
+  },
+  model: {
+    volume_mm: null,
+  },
+};
+
 Estimates.propTypes = {
   currency: PropTypes.string.isRequired,
   estimates: PropTypes.shape({
@@ -214,10 +229,10 @@ Estimates.propTypes = {
       support: PropTypes.number,
       base: PropTypes.number,
     }),
-  }).isRequired,
+  }),
   model: PropTypes.shape({
     volume_mm: PropTypes.number,
-  }).isRequired,
+  }),
 };
 
 const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
