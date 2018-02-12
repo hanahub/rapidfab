@@ -71,7 +71,6 @@ function mapStateToProps(state, props) {
     uuid: Selectors.getRoute(state, props).uuid,
     initialValues: Selectors.getRouteResource(state, props),
     submitting: Selectors.getResourceFetching(state, 'wyatt.stock'),
-    apiErrors: Selectors.getResourceErrors(state, 'wyatt.stock'),
     materials: Selectors.getMaterials(state),
     locations: Selectors.getLocations(state),
   };
