@@ -82,7 +82,6 @@ function mapStateToProps(state, props) {
     uuid: Selectors.getRoute(state, props).uuid,
     initialValues: Selectors.getInitialValuesBureau(state, props),
     submitting: Selectors.getResourceFetching(state, 'wyatt.material'),
-    apiErrors: Selectors.getResourceErrors(state, 'wyatt.material'),
     manufacturers: Selectors.getManufacturers(state),
   };
 }
