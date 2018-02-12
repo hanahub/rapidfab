@@ -111,6 +111,22 @@ const MaterialForm = ({
               <option value="support">Support</option>
             </BS.FormControl>
           </BS.FormGroup>
+          <BS.FormGroup controlId="uxUnits">
+            <BS.ControlLabel>
+              <FormattedMessage id="field.units" defaultMessage="Units" />:
+            </BS.ControlLabel>
+            <BS.FormControl componentClass="select" required {...fields.units}>
+              <option value="cm3">
+                <FormattedMessage id="field.units.cm3" defaultMessage="cm3" />
+              </option>
+              <option value="grams">
+                <FormattedMessage
+                  id="field.units.grams"
+                  defaultMessage="Grams"
+                />
+              </option>
+            </BS.FormControl>
+          </BS.FormGroup>
           <BS.FormGroup controlId="uxCost">
             <BS.ControlLabel>
               <FormattedMessage
