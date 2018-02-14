@@ -216,6 +216,7 @@ class NewOrder extends Component {
 
         const orderPayload = {
           bureau: bureau.uri,
+          business_segment: orderForm.business_segment.value,
           channel_representative: orderForm.channel_representative.value,
           currency: orderForm.currency.value,
           due_date: orderForm.due_date.value
