@@ -11,7 +11,7 @@ import {
 import NewOrderForm from 'rapidfab/components/records/order/new/NewOrderForm';
 
 const fields = [
-  'bureau_segment',
+  'business_segment',
   'channel_representative',
   'currency',
   'due_date',

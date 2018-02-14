@@ -9,7 +9,7 @@ import {
   FormControlTextCareful,
 } from 'rapidfab/components/formTools';
 import {
-  ORDER_BUREAU_SEGMENT_MAPPING,
+  ORDER_BUSINESS_SEGMENT_MAPPING,
   ORDER_REGION_MAPPING,
   ORDER_SALES_MAPPING,
   ORDER_TYPE_EOS_MAPPING,
@@ -220,10 +220,10 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
 
     <Feature featureName="order-business-segment">
       <FormRow id="bureauSegment" defaultMessage="Bureau Segment">
-        <FormControl componentClass="select" {...fields.bureau_segment}>
-          {Object.keys(ORDER_BUREAU_SEGMENT_MAPPING).map(type => (
+        <FormControl componentClass="select" {...fields.business_segment}>
+          {Object.keys(ORDER_BUSINESS_SEGMENT_MAPPING).map(type => (
             <option key={type} value={type}>
-              {ORDER_BUREAU_SEGMENT_MAPPING[type]}
+              {ORDER_BUSINESS_SEGMENT_MAPPING[type]}
             </option>
           ))}
         </FormControl>
