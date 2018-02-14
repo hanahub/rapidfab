@@ -10,6 +10,7 @@ import {
 import EditOrderForm from 'rapidfab/components/records/order/edit/EditOrderForm';
 
 const fields = [
+  'business_segment',
   'channel_representative',
   'currency',
   'due_date',

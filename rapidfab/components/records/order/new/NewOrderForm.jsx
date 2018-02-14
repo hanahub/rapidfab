@@ -229,6 +229,7 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
         </FormControl>
       </FormRow>
     </Feature>
+
     <FormRow id="field.notes" defaultMessage="Notes">
       <FormControlTextArea {...fields.notes} />
     </FormRow>
