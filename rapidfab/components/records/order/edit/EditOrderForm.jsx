@@ -8,6 +8,7 @@ import { Currencies } from 'rapidfab/constants';
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 import {
   IP_SENSITIVITY_MAPPING,
+  ORDER_BUSINESS_SEGMENT_MAPPING,
   ORDER_REGION_MAPPING,
   ORDER_SALES_MAPPING,
   ORDER_STATUS_MAP,
@@ -218,6 +219,18 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
           </FormControl>
         </FormRow>
       </div>
+    </Feature>
+
+    <Feature featureName="order-business-segment">
+      <FormRow id="bureauSegment" defaultMessage="Bureau Segment">
+        <FormControl componentClass="select" {...fields.business_segment}>
+          {Object.keys(ORDER_BUSINESS_SEGMENT_MAPPING).map(type => (
+            <option key={type} value={type}>
+              {ORDER_BUSINESS_SEGMENT_MAPPING[type]}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
     </Feature>
 
     <Feature featureName="order-sales-representative">
