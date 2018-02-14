@@ -17,6 +17,16 @@ export const PRINT_STATUS_MAPPING = {
   error: <FormattedMessage id="status.error" defaultMessage="Error" />,
 };
 
+export const ORDER_BUREAU_SEGMENT_MAPPING = {
+  DCS: <FormattedMessage id="dcs" defaultMessage="DCS" />,
+  DPS: <FormattedMessage id="dps" defaultMessage="DPS" />,
+  DHS: <FormattedMessage id="dhs" defaultMessage="DHS" />,
+  DDS: <FormattedMessage id="dds" defaultMessage="DDS" />,
+  DANFOSS_GROUP: (
+    <FormattedMessage id="danfossGroup" defaultMessage="Danfoss Group" />
+  ),
+};
+
 export const ORDER_STATUS_MAP = {
   calculating_estimates: (
     <FormattedMessage
