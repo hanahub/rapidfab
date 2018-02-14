@@ -18,11 +18,11 @@ export const PRINT_STATUS_MAPPING = {
 };
 
 export const ORDER_BUSINESS_SEGMENT_MAPPING = {
-  DCS: <FormattedMessage id="dcs" defaultMessage="DCS" />,
-  DPS: <FormattedMessage id="dps" defaultMessage="DPS" />,
-  DHS: <FormattedMessage id="dhs" defaultMessage="DHS" />,
-  DDS: <FormattedMessage id="dds" defaultMessage="DDS" />,
-  DANFOSS_GROUP: (
+  dcs: <FormattedMessage id="dcs" defaultMessage="DCS" />,
+  dps: <FormattedMessage id="dps" defaultMessage="DPS" />,
+  dhs: <FormattedMessage id="dhs" defaultMessage="DHS" />,
+  dds: <FormattedMessage id="dds" defaultMessage="DDS" />,
+  'danfoss-group': (
     <FormattedMessage id="danfossGroup" defaultMessage="Danfoss Group" />
   ),
 };
