@@ -182,6 +182,7 @@ class Runs extends Component {
                       printers={printers}
                       selected={selectedPrinter}
                       onSelect={this.handleSelectPrinter}
+                      modelers={this.props.modelers}
                     />
                   </BS.Col>
                 </BS.Row>
@@ -197,6 +198,7 @@ class Runs extends Component {
 Runs.propTypes = {
   printers: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSave: PropTypes.func.isRequired,
+  modelers: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   pager: PropTypes.shape({}).isRequired,
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
