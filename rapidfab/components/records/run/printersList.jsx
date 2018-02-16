@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import * as BS from 'react-bootstrap';
-import ModelerStatus from 'rapidfab/components/modelerStatus';
+import StatusDot from 'rapidfab/components/statusDot';
 import { FormattedLength } from 'rapidfab/i18n';
 
 const listBodyStyle = {
@@ -34,7 +34,11 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
         </BS.Col>
         <BS.Col xs={3}>
           <span style={{ textTransform: 'capitalize' }}>
-            <ModelerStatus modeler={modeler} />
+            {modeler ? (
+              <StatusDot status={modeler.status} message={modeler.message} />
+            ) : (
+              <StatusDot status="unknown" message="Modeler not found" />
+            )}
           </span>
         </BS.Col>
       </BS.Row>
