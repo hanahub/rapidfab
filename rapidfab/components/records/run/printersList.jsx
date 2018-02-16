@@ -4,6 +4,7 @@ import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 import StatusDot from 'rapidfab/components/statusDot';
 import { FormattedLength } from 'rapidfab/i18n';
+import { MODELER_STATUS_MAP } from 'rapidfab/mappings';
 
 const listBodyStyle = {
   height: 150,
@@ -35,7 +36,10 @@ const PrinterItem = ({ printer, modelers, selected, onSelect }) => {
         <BS.Col xs={3}>
           <span style={{ textTransform: 'capitalize' }}>
             {modeler ? (
-              <StatusDot status={modeler.status} message={modeler.message} />
+              <StatusDot
+                status={MODELER_STATUS_MAP[modeler.status].status}
+                message={MODELER_STATUS_MAP[modeler.status].message}
+              />
             ) : (
               <StatusDot status="unknown" message="Modeler not found" />
             )}
