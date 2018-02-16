@@ -85,6 +85,29 @@ export const RUN_OPERATION_MAP = {
   shipping: <FormattedMessage id="status.shipping" defaultMessage="Shipping" />,
 };
 
+export const MODELER_STATUS_MAP = {
+  idle: {
+    status: 'info',
+    message: 'The modeler is idle',
+  },
+  offline: {
+    status: 'warning',
+    message: 'The modeler is offline',
+  },
+  error: {
+    status: 'danger',
+    message: 'The modeler is in error',
+  },
+  printing: {
+    status: 'success',
+    message: 'The modeler is printing',
+  },
+  unknown: {
+    status: 'unknown',
+    message: 'The modeler could not be found',
+  },
+};
+
 export const ORDER_REGION_MAPPING = {
   central: <FormattedMessage id="order.central" defaultMessage="Central" />,
   east: <FormattedMessage id="order.east" defaultMessage="East" />,

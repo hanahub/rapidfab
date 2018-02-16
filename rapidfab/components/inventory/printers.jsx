@@ -4,7 +4,7 @@ import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 import Error from 'rapidfab/components/error';
-import { MODELER_STATUS_MAP } from 'rapidfab/constants';
+import { MODELER_STATUS_MAP } from 'rapidfab/mappings';
 import Grid, { IdColumn, StatusColumn } from 'rapidfab/components/grid';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
