@@ -29,6 +29,7 @@ class LineItemEditFormContainer extends Component {
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleFileRemove = this.handleFileRemove.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleLayerThicknessBlur = this.handleLayerThicknessBlur.bind(this);
     this.handleModelDownload = this.handleModelDownload.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -115,6 +116,16 @@ class LineItemEditFormContainer extends Component {
     this.setState({ [name]: value });
   }
 
+  handleLayerThicknessBlur(event) {
+    const { value } = event.target;
+    const number = parseFloat(value, 10);
+    if (number > 1) {
+      this.setState({ layerThickness: '1' });
+    } else if (number < 0.02) {
+      this.setState({ layerThickness: '0.02' });
+    }
+  }
+
   handleModelDownload() {
     const { dispatch, lineItem: { model: modelUri }, models } = this.props;
     const currentModel = models.find(model => model.uri === modelUri);
@@ -133,6 +144,7 @@ class LineItemEditFormContainer extends Component {
       handleFileChange,
       handleFileRemove,
       handleInputChange,
+      handleLayerThicknessBlur,
       handleModelDownload,
       onDelete,
       onSubmit,
@@ -156,6 +168,7 @@ class LineItemEditFormContainer extends Component {
         handleFileChange={handleFileChange}
         handleFileRemove={handleFileRemove}
         handleInputChange={handleInputChange}
+        handleLayerThicknessBlur={handleLayerThicknessBlur}
         handleModelDownload={handleModelDownload}
         onDelete={onDelete}
         onSubmit={onSubmit}
