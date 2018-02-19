@@ -69,6 +69,7 @@ const LineItemEditForm = ({
   handleFileChange,
   handleFileRemove,
   handleInputChange,
+  handleLayerThicknessBlur,
   handleModelDownload,
   isRestricted,
   layerThickness,
@@ -198,8 +199,8 @@ const LineItemEditForm = ({
           max="1"
           maxLength="4"
           name="layerThickness"
+          onBlur={handleLayerThicknessBlur}
           onChange={handleInputChange}
-          onKeyDown={event => event.preventDefault()}
           precision="2"
           require
           step="0.05"
@@ -385,6 +386,7 @@ LineItemEditForm.propTypes = {
   handleFileChange: PropTypes.func.isRequired,
   handleFileRemove: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
+  handleLayerThicknessBlur: PropTypes.func.isRequired,
   handleModelDownload: PropTypes.func.isRequired,
   isRestricted: PropTypes.bool.isRequired,
   layerThickness: PropTypes.number.isRequired,
