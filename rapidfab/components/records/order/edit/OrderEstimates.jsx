@@ -11,6 +11,7 @@ import {
 } from 'rapidfab/i18n';
 
 import hhmmss from 'rapidfab/utils/hhmmss';
+import { getOrderMaterialUsedEstimate } from 'rapidfab/selectors';
 
 const OrderEstimates = ({
   amount,
@@ -144,10 +145,10 @@ const OrderEstimates = ({
 
 const mapStateToProps = state => {
   const { resources, routeUUID } = state;
-  const { currency, estimates } = resources[routeUUID];
+  const { currency, estimates, uri } = resources[routeUUID];
 
   const amount = _.get(estimates, 'cost.amount', null);
-  const base = _.get(estimates, 'materials.base', null);
+  const base = getOrderMaterialUsedEstimate(state, uri);
   const postProcessing = _.get(estimates, 'cost.post_processing', null);
   const printTime = _.get(estimates, 'print_time', null);
   const shippingAmount = _.get(estimates, 'cost.shipping_amount', null);
