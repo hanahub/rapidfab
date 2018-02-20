@@ -76,7 +76,7 @@ Prints.propTypes = {
   prints: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Estimates = ({ currency, estimates, model }) => (
+const Estimates = ({ currency, estimates, model, quantity }) => (
   <Panel bsStyle="info">
     <ListGroup fill>
       <ListGroupItem key="header">
@@ -125,7 +125,9 @@ const Estimates = ({ currency, estimates, model }) => (
                         defaultMessage="N/A"
                       />
                     ) : (
-                      <FormattedVolume value={model.volume_mm / 1000.0} />
+                      <FormattedVolume
+                        value={model.volume_mm / 1000.0 * quantity}
+                      />
                     )}
                   </div>
                 )}
@@ -217,6 +219,7 @@ Estimates.defaultProps = {
   model: {
     volume_mm: null,
   },
+  quantity: 0,
 };
 
 Estimates.propTypes = {
@@ -233,6 +236,7 @@ Estimates.propTypes = {
   model: PropTypes.shape({
     volume_mm: PropTypes.number,
   }),
+  quantity: PropTypes.number,
 };
 
 const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
@@ -240,7 +244,7 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
   if (!lineItem) {
     return null;
   }
-  const { estimates, itar } = lineItem;
+  const { estimates, itar, quantity } = lineItem;
 
   return (
     <Panel
@@ -262,6 +266,7 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
                 currency={currency}
                 estimates={estimates}
                 model={model}
+                quantity={quantity}
               />
             </Col>
           </Row>
