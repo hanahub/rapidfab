@@ -50,90 +50,85 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['post-processor-type'].list());
       dispatch(Actions.Api.wyatt.shipping.list());
       dispatch(Actions.Api.pao.users.list());
+
       const printRequest = dispatch(Actions.Api.wyatt.print.get(props.uuid));
 
-      // GET model
-      printRequest
-        .then(response =>
-          dispatch(
-            Actions.Api.wyatt['line-item'].get(
-              extractUuid(response.json.line_item)
-            )
-          )
-        )
-        .then(response => {
-          dispatch(
-            Actions.Api.hoth.model.get(extractUuid(response.json.model))
-          );
-        });
-
-      // GET order
-      printRequest.then(response => {
-        dispatch(Actions.Api.wyatt.order.get(extractUuid(response.json.order)));
-      });
-
-      // GET all related prints
-      const printsRequest = printRequest.then(response =>
-        dispatch(
-          Actions.Api.wyatt.print.list({ line_item: response.json.line_item })
-        )
-      );
-
-      // LIST events based on collected uris
-      Promise.all([printRequest, printsRequest]).then(([print, prints]) => {
+      printRequest.then(printResponse => {
         const {
+          copy,
           line_item: lineItemUri,
           order: orderUri,
+          run: runUri,
           uri: printUri,
-        } = print.json;
-        const printsUris = prints.json
-          ? prints.json.resources.map(resource => resource.uri)
-          : [];
-        const runUris = prints.json
-          ? prints.json.resources.reduce(
-              (uris, resource) =>
-                resource.run ? [...uris, resource.run] : uris,
-              []
-            )
-          : [];
-        const runFetch = runUris.length
-          ? _.chunk(runUris, 10).map(chunk =>
-              dispatch(Actions.Api.wyatt.run.list({ uri: chunk }, true))
-            )
-          : Promise.resolve();
-        const runDocumentFetch = runUris.length
-          ? _.chunk(runUris, 10).map(chunk =>
-              dispatch(
-                Actions.Api.wyatt['run-document'].list({ run: chunk }, true)
+        } = printResponse.json;
+
+        dispatch(Actions.Api.wyatt.order.get(extractUuid(orderUri)));
+        if (runUri) {
+          dispatch(Actions.Api.wyatt.run.get(extractUuid(runUri)));
+        }
+
+        const lineItemRequest = dispatch(
+          Actions.Api.wyatt['line-item'].get(extractUuid(lineItemUri))
+        );
+        const orderDocumentsRequest = dispatch(
+          Actions.Api.wyatt['order-document'].list({ order: orderUri })
+        );
+        const printsRequest = dispatch(
+          Actions.Api.wyatt.print.list({ line_item: lineItemUri, copy })
+        );
+        const runDocumentRequest = runUri
+          ? dispatch(Actions.Api.wyatt['run-document'].list({ run: runUri }))
+          : { json: { resources: [] } };
+        Promise.all([
+          lineItemRequest,
+          orderDocumentsRequest,
+          printsRequest,
+          runDocumentRequest,
+        ]).then(
+          ([
+            lineItemResponse,
+            orderDocumentsResponse,
+            printsResponse,
+            runDocumentsResponse,
+          ]) => {
+            dispatch(
+              Actions.Api.hoth.model.get(
+                extractUuid(lineItemResponse.json.model)
               )
-            )
-          : [Promise.resolve()];
-        Promise.all([...runFetch, ...runDocumentFetch]).then(responses => {
-          const runDocumentUris = responses[1]
-            ? responses
-                .slice(1, responses.length)
-                .reduce(
-                  (uris, response) => [
-                    ...uris,
-                    ...(response.json
-                      ? response.json.resources.map(resource => resource.uri)
-                      : []),
-                  ],
-                  []
-                )
-            : [];
-          const uris = [
-            lineItemUri,
-            orderUri,
-            printUri,
-            ...printsUris,
-            ...runUris,
-            ...runDocumentUris,
-          ];
-          _.chunk(uris, 10).map(chunk =>
-            dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
-          );
-        });
+            );
+
+            const orderDocumentUris = orderDocumentsResponse.json.resources.map(
+              doc => doc.uri
+            );
+            const printUris = printsResponse.json.resources.map(
+              print => print.uri
+            );
+            const runUris = printsResponse.json.resources.reduce(
+              (uris, print) => (print.run ? [...uris, print.run] : uris),
+              []
+            );
+            const runDocumentUris = runDocumentsResponse.json.resources.map(
+              doc => doc.uri
+            );
+
+            if (runUris.length) {
+              dispatch(Actions.Api.wyatt.run.list({ uri: runUris }));
+            }
+            const eventResourceUris = [
+              lineItemUri,
+              orderUri,
+              ...orderDocumentUris,
+              printUri,
+              ...printUris,
+              runUri,
+              ...runUris,
+              ...runDocumentUris,
+            ];
+            _.chunk(_.compact(eventResourceUris), 10).map(chunk =>
+              dispatch(Actions.Api.wyatt.event.list({ reference: chunk }, true))
+            );
+          }
+        );
       });
     },
   };
