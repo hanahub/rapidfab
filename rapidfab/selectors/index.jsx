@@ -512,12 +512,18 @@ export const getRunDocuments = createSelector(
 );
 
 export const getEventsForPrint = createSelector(
-  [getPredicate, getPrints, getEvents, getRunDocuments],
-  (print, prints, events, runDocuments) => {
+  [getPredicate, getPrints, getEvents, getOrderDocuments, getRunDocuments],
+  (print, prints, events, orderDocuments, runDocuments) => {
     if (!print) return null;
 
-    const relevantPrints = prints.filter(p => print.line_item === p.line_item);
+    const relevantPrints = prints.filter(
+      p => print.line_item === p.line_item && print.copy === p.copy
+    );
     const printRuns = relevantPrints.map(p => p.run);
+    const printOrderDocuments = orderDocuments.reduce(
+      (docs, doc) => (doc.order === print.order ? [...docs, doc.uri] : docs),
+      []
+    );
     const printRunDocuments = runDocuments.reduce(
       (docs, doc) => (printRuns.includes(doc.run) ? [...docs, doc.uri] : docs),
       []
@@ -525,6 +531,7 @@ export const getEventsForPrint = createSelector(
     const uris = _.compact([
       print.order,
       print.line_item,
+      ...printOrderDocuments,
       ...printRuns,
       ...printRunDocuments,
     ]);

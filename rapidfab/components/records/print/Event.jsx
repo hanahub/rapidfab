@@ -33,6 +33,7 @@ const REFERENCE_MAPPING = {
   print: 'Print',
   run: 'Run',
   'run-document': 'Run Document',
+  'order-document': 'Order Document',
 };
 
 const extractResourceType = uri => {
@@ -138,25 +139,29 @@ const DocumentDownload = connect((state, { uri }) => ({
 
 DocumentDownload.propTypes = { uri: PropTypes.string.isRequired };
 
-const ExpandedContent = ({ event }) => (
-  <Row>
-    <Col xs={1} />
-    <Col xs={8}>
-      <span>to </span>
-      <EventValue value={event.current_value} />
-      {extractResourceType(event.reference) === 'run-document' && (
-        <DocumentDownload uri={event.reference} />
-      )}
-      <span> from </span>
-      <EventValue value={event.previous_value} />
-    </Col>
-    <Col xs={3} className="text-right">
-      <FormattedTime value={event.created} />
-      <br />
-      {event.user ? <EventUser userURI={event.user} /> : null}
-    </Col>
-  </Row>
-);
+const ExpandedContent = ({ event }) => {
+  const resourceType = extractResourceType(event.reference);
+  return (
+    <Row>
+      <Col xs={1} />
+      <Col xs={8}>
+        <span>to </span>
+        <EventValue value={event.current_value} />
+        {(resourceType === 'run-document' ||
+          resourceType === 'order-document') && (
+          <DocumentDownload uri={event.reference} />
+        )}
+        <span> from </span>
+        <EventValue value={event.previous_value} />
+      </Col>
+      <Col xs={3} className="text-right">
+        <FormattedTime value={event.created} />
+        <br />
+        {event.user ? <EventUser userURI={event.user} /> : null}
+      </Col>
+    </Row>
+  );
+};
 
 ExpandedContent.propTypes = {
   event: PropTypes.shape({}).isRequired,
