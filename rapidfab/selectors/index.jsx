@@ -938,3 +938,25 @@ export const getRunRescheduleQueue = createSelector(
       : [];
   }
 );
+
+export const getOrderMaterialUsedEstimate = createSelector(
+  [getPredicate, getOrders, getLineItems, getModels],
+  (orderUri, orders, lineItems, models) => {
+    const order = orders.find(o => o.uri === orderUri);
+    const orderLineItems = lineItems.filter(lineItem =>
+      order.line_items.includes(lineItem.uri)
+    );
+    const lineItemModelUris = lineItems.map(lineItem => lineItem.model);
+    const orderModels = models.filter(model =>
+      lineItemModelUris.includes(model.uri)
+    );
+    return orderModels.reduce((totalEstimate, model) => {
+      const modelVolume = model.volume_mm / 1000.0;
+      const { quantity: lineItemQuantity } = orderLineItems.find(
+        lineItem => lineItem.model === model.uri
+      ) || { quantity: 0 };
+      const estimate = modelVolume * lineItemQuantity;
+      return totalEstimate + estimate;
+    }, 0);
+  }
+);
