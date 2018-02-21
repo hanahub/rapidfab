@@ -220,6 +220,12 @@ class AddLineItem extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.baseMaterial && nextProps.baseMaterials.length) {
+      this.setState({ baseMaterial: nextProps.baseMaterials[0].uri });
+    }
+  }
+
   onSubmit(event) {
     event.preventDefault();
 
