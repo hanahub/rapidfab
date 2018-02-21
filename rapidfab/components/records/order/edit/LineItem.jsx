@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 import { Col, ListGroup, ListGroupItem, Panel, Row } from 'react-bootstrap';
 
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
@@ -45,7 +46,7 @@ const Prints = ({ prints }) => (
     <ListGroup fill>
       <ListGroupItem key="header">
         <Row>
-          <Col xs={9}>
+          <Col xs={6}>
             <b>
               <FormattedMessage id="field.id" defaultMessage="ID" />
             </b>
@@ -55,16 +56,30 @@ const Prints = ({ prints }) => (
               <FormattedMessage id="field.status" defaultMessage="Status" />
             </b>
           </Col>
+          <Col xs={3}>
+            <b>
+              <FormattedMessage id="field.run" defaultMessage="Run" />
+            </b>
+          </Col>
         </Row>
       </ListGroupItem>
 
       {prints.map(print => (
         <ListGroupItem>
           <Row>
-            <Col xs={9}>
+            <Col xs={6}>
               <a href={`/#/records/print/${print.uuid}`}>{print.name}</a>
             </Col>
             <Col xs={3}>{PRINT_STATUS_MAPPING[print.status]}</Col>
+            <Col xs={3}>
+              {print.run ? (
+                <a href={`/#/records/run/${extractUuid(print.run)}`}>
+                  <FontAwesome name="external-link" />
+                </a>
+              ) : (
+                <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+              )}
+            </Col>
           </Row>
         </ListGroupItem>
       ))}
