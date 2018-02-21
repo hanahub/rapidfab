@@ -34,6 +34,7 @@ export default {
   "orderName": "Order Name",
   "postProcessingTime": "Post-Processing Time",
   "printTime": "Print Time",
+  "processStepMissing": "Process Step Missing",
   "quotes": "Quotes",
   "quoting": "Quoting",
   "r-d": "R&D",

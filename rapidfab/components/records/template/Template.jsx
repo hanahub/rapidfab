@@ -333,7 +333,14 @@ class Template extends Component {
               {processType ? (
                 processType.name
               ) : (
-                <FormattedMessage id="status.error" defaultMessage="Error" />
+                <span>
+                  <FormattedMessage id="status.error" defaultMessage="Error" />
+                  :{` `}
+                  <FormattedMessage
+                    id="processStepMissing"
+                    defaultMessage="Process Step Missing"
+                  />
+                </span>
               )}
             </td>
             <td style={styles.centerIcons}>
