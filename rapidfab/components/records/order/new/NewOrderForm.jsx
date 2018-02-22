@@ -119,6 +119,18 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
       <FormControlTextCareful {...fields.customer_name} />
     </FormRow>
 
+    <Feature featureName="order-business-segment">
+      <FormRow id="businessSegment" defaultMessage="Business Segment">
+        <FormControl componentClass="select" {...fields.business_segment}>
+          {Object.keys(ORDER_BUSINESS_SEGMENT_MAPPING).map(type => (
+            <option key={type} value={type}>
+              {ORDER_BUSINESS_SEGMENT_MAPPING[type]}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
+
     <Feature featureName="ip-sensitivity">
       <FormRow id="field.ipSensitivity" defaultMessage="IP Sensitivity">
         <FormControl componentClass="select" {...fields.ip_sensitivity}>
@@ -216,18 +228,6 @@ const NewOrderForm = ({ fields, isUserRestricted, shippings, users }) => (
           </FormControl>
         </FormRow>
       </div>
-    </Feature>
-
-    <Feature featureName="order-business-segment">
-      <FormRow id="bureauSegment" defaultMessage="Bureau Segment">
-        <FormControl componentClass="select" {...fields.business_segment}>
-          {Object.keys(ORDER_BUSINESS_SEGMENT_MAPPING).map(type => (
-            <option key={type} value={type}>
-              {ORDER_BUSINESS_SEGMENT_MAPPING[type]}
-            </option>
-          ))}
-        </FormControl>
-      </FormRow>
     </Feature>
 
     <FormRow id="field.notes" defaultMessage="Notes">
