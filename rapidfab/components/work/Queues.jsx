@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as BS from 'react-bootstrap';
-import { MODELER_STATUS_MAP } from 'rapidfab/constants';
+import { MODELER_STATUS_MAP } from 'rapidfab/mappings';
 import Locations from 'rapidfab/components/locations';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
