@@ -6,7 +6,7 @@ export default {
   "back": "Tilbage",
   "banner": "Banner",
   "bureauAdministration": "Bureau Administration",
-  "bureauSegment": "Bureau Segment",
+  "businessSegment": "Business Segment",
   "centimeters": "Centimeters",
   "commercial": "Commercial",
   "costPerUnit": "Cost Per Unit",
