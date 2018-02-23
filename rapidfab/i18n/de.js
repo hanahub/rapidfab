@@ -40,6 +40,8 @@ export default {
   "updateUser": "Benutzer aktualisieren",
   "userAdministration": "Benutzerverwaltung",
   "users": "Benutzer",
+  "workflow": "Workflow",
+  "workflows": "Workflows",
   "r-d": "R&D",
   "sample": "Sample (Free)",
   "scheduleAsNextPrint": "Als nächsten Druck einplanen",

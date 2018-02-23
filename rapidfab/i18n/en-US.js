@@ -50,6 +50,8 @@ export default {
   "start": "Start",
   "supportUsed": "Support Used",
   "users": "Users",
+  "workflow": "Workflow",
+  "workflows": "Workflows",
 
   "ipSensitivity": "IP Sensitivity",
   "ip_sensitivity_high": "High (Business Unit)",
