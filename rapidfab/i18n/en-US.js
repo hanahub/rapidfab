@@ -30,6 +30,7 @@ export default {
   "message": "Message",
   "metric": "Metric",
   "millimeters": "Millimeters",
+  "modelerDataSourceURL": "Modeler Data Source URL",
   "modelUnits": "Model Units",
   "orderName": "Order Name",
   "postProcessingTime": "Post-Processing Time",

@@ -112,7 +112,10 @@ const PrinterForm = ({
 
         <FormGroup controlId="uxModeler">
           <ControlLabel>
-            <FormattedMessage id="field.modeler" defaultMessage="Modeler" />
+            <FormattedMessage
+              id="modelerDataSourceURL"
+              defaultMessage="Modeler Data Source URL"
+            />
           </ControlLabel>
           <FormControl
             name="modeler"
