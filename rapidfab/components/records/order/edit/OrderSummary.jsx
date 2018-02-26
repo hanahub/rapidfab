@@ -53,7 +53,11 @@ class OrderSummary extends Component {
     return (
       <Panel header={<PanelHeader />}>
         <Form horizontal onSubmit={onSubmit}>
-          <SaveDropdownButton onCancel={onCancel} onDelete={onDelete} />
+          <SaveDropdownButton
+            onCancel={onCancel}
+            onDelete={onDelete}
+            resourceName="Order"
+          />
           <hr />
 
           <Col xs={12} md={7}>

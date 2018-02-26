@@ -97,7 +97,11 @@ const LineItemEditForm = ({
   const statusOptions = statusOptionsMap[lineItem.status];
   return (
     <Form horizontal>
-      <SaveDropdownButton onSubmit={onSubmit} onDelete={onDelete} />
+      <SaveDropdownButton
+        onSubmit={onSubmit}
+        onDelete={onDelete}
+        resourceName="Line Item"
+      />
       <FormRow id="field.printable" defaultMessage="Printable">
         <FormControl.Static>
           <Printable
