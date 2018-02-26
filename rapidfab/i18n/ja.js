@@ -42,6 +42,8 @@ export default {
   "updateUser": " ユーザーの更新",
   "userAdministration": " ユーザー管理",
   "users": "ユーザー 、",
+  "workflow": "Workflow",
+  "workflows": "Workflows",
   "r-d": "R&D",
   "sample": "Sample (Free)",
   "scheduleAsNextPrint": "Schedule As Next Print",

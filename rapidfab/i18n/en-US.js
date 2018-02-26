@@ -51,6 +51,8 @@ export default {
   "start": "Start",
   "supportUsed": "Support Used",
   "users": "Users",
+  "workflow": "Workflow",
+  "workflows": "Workflows",
 
   "ipSensitivity": "IP Sensitivity",
   "ip_sensitivity_high": "High (Business Unit)",
@@ -101,7 +103,7 @@ export default {
   "inventory.thirdPartyProviders": "Third Party Providers",
   "inventory.users": "Users",
   "inventory.currencies": "Currencies",
-  "inventory.templates": "Templates",
+  "inventory.templates": "Workflows",
 
   "myProfile": "My Profile",
   "logout": "Logout",
@@ -193,9 +195,9 @@ export default {
   "record.shipping.add": "Add Shipping",
   "record.shipping.new": "New Shipping",
   "record.snapshot.none": "No Snapshot",
-  "record.template": "Templates",
-  "record.template.add": "Add Template",
-  "record.template.new": "New Template",
+  "record.template": "Workflows",
+  "record.template.add": "Add Workflow",
+  "record.template.new": "New Workflow",
   "record.thirdPartyProvider": "Third Party Provider",
   "record.thirdPartyProvider.add": "Add Third Party Provider",
   "record.user.add": "Add New User",
@@ -330,8 +332,8 @@ export default {
   "field.supportMaterial": "Support Material",
   "field.supportMaterials": "Support Materials",
   "field.supportPhone": "Support Phone",
-  "field.template": "Template",
-  "field.templateName": "Template Name",
+  "field.template": "Workflow",
+  "field.templateName": "Workflow Name",
   "field.thirdParty": "Third Party",
   "field.thirdPartyProvider": "Third Party Provider",
   "field.trackingNumber": "Tracking Number",
@@ -347,9 +349,9 @@ export default {
   "field.volume": "Volume",
 
   "message.overwriteWarning":
-    "Saving over an existing template could affect other orders.",
+    "Saving over an existing workflow could affect other orders.",
   "message.overwritePrompt":
-    "Do you want to replace the existing template or duplicate a new one?",
+    "Do you want to replace the existing workflow or duplicate a new one?",
   "message.deletePrompt": "Are you sure you want to delete?",
   "message.cancelPrompt": "Are you sure you want to cancel?",
 

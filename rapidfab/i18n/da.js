@@ -51,6 +51,8 @@ export default {
   "updateBureauBanner": "Update Bureau Banner",
   "userAdministration": "User Administration",
   "users": "Users",
+  "workflow": "Workflow",
+  "workflows": "Workflows",
   "ipSensitivity": "IP Sensitivity",
   "ip_sensitivity_high": "High (Business Unit)",
   "ip_sensitivity_medium": "Medium (Internal)",
