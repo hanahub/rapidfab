@@ -23,18 +23,6 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import LineItem from './LineItem';
 
-const AddLineItemButton = ({ onAddLineItem }) => (
-  <div className="clearfix">
-    <Button bsSize="small" onClick={() => onAddLineItem()}>
-      Add Line Item
-    </Button>
-  </div>
-);
-
-AddLineItemButton.propTypes = {
-  onAddLineItem: PropTypes.func.isRequired,
-};
-
 const NewOrderComponent = ({
   bannerMessage,
   bannerLink,
