@@ -100,7 +100,9 @@ const NewOrderComponent = ({
           <hr />
 
           <Button bsSize="small" onClick={() => onAddLineItem()}>
-            Add Line Item
+            <Fa name="plus" />
+            {` `}
+            <FormattedMessage id="newLineItem" defaultMessage="New Line Item" />
           </Button>
         </Panel>
       </Form>

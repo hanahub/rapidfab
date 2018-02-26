@@ -1,7 +1,7 @@
 export default {
   "actuals": "Actuals",
-  "admin": "Administration",
   "addNewUser": "Add New User",
+  "admin": "Administration",
   "automatic": "Automatic",
   "back": "Back",
   "banner": "Banner",
@@ -23,6 +23,7 @@ export default {
   "end": "End",
   "estimates": "Estimates",
   "name": "Name",
+  "newLineItem": "New Line Item",
   "inches": "Inches",
   "imperial": "Imperial",
   "link": "Link",

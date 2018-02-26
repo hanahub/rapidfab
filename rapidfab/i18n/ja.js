@@ -23,6 +23,7 @@ export default {
   "end": "End",
   "estimates": "Estimates",
   "name": "名前 、",
+  "newLineItem": "New Line Item",
   "inches": "Inches",
   "imperial": "Imperial",
   "link": "Link",
