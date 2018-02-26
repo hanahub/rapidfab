@@ -23,6 +23,20 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import LineItem from './LineItem';
 
+const SaveOrderButton = ({ submitting }) => (
+  <Button
+    disabled={submitting}
+    type="submit"
+    value="submit"
+    bsStyle="success"
+    bsSize="small"
+  >
+    {submitting ? <Loading /> : <SaveButtonTitle resourceName="Order" />}
+  </Button>
+);
+
+SaveOrderButton.propTypes = { submitting: PropTypes.bool.isRequired };
+
 const NewOrderComponent = ({
   bannerMessage,
   bannerLink,
@@ -43,15 +57,7 @@ const NewOrderComponent = ({
       <Form horizontal onSubmit={onSubmit}>
         <ButtonToolbar className="clearfix">
           <div className="pull-right">
-            <Button
-              disabled={submitting}
-              type="submit"
-              value="submit"
-              bsStyle="success"
-              bsSize="small"
-            >
-              {submitting ? <Loading /> : <SaveButtonTitle />}
-            </Button>
+            <SaveOrderButton submitting={submitting} />
           </div>
         </ButtonToolbar>
         <div className="pull-right">
@@ -93,6 +99,9 @@ const NewOrderComponent = ({
             <FormattedMessage id="newLineItem" defaultMessage="New Line Item" />
           </Button>
         </Panel>
+        <div className="pull-right" style={{ marginBottom: '3rem' }}>
+          <SaveOrderButton submitting={submitting} />
+        </div>
       </Form>
     </Grid>
   );
