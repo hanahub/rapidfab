@@ -22,6 +22,7 @@ const SaveDropdownButton = ({
   handleOpen,
   onSubmit,
   modal,
+  resourceName,
 }) => (
   <ButtonToolbar className="clearfix">
     <div className="pull-right">
@@ -37,7 +38,7 @@ const SaveDropdownButton = ({
           type="submit"
           bsStyle="success"
           bsSize="small"
-          title={<SaveButtonTitle />}
+          title={<SaveButtonTitle resourceName={resourceName} />}
           onClick={onSubmit}
         >
           {cancellable && (
@@ -87,6 +88,7 @@ const SaveDropdownButton = ({
 
 SaveDropdownButton.defaultProps = {
   onSubmit: null,
+  resourceName: null,
 };
 
 SaveDropdownButton.propTypes = {
@@ -95,6 +97,7 @@ SaveDropdownButton.propTypes = {
   handleOpen: PropTypes.func.isRequired,
   onSubmit: PropTypes.func,
   modal: PropTypes.string.isRequired,
+  resourceName: PropTypes.string,
 };
 
 class SaveDropdownButtonContainer extends Component {
@@ -136,12 +139,14 @@ class SaveDropdownButtonContainer extends Component {
 SaveDropdownButtonContainer.defaultProps = {
   onCancel: null,
   onSubmit: null,
+  resourceName: null,
 };
 
 SaveDropdownButtonContainer.propTypes = {
   onCancel: PropTypes.func,
   onDelete: PropTypes.func.isRequired,
   onSubmit: PropTypes.func,
+  resourceName: PropTypes.string,
 };
 
 export default SaveDropdownButtonContainer;
