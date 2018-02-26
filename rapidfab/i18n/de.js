@@ -22,6 +22,7 @@ export default {
   "end": "End",
   "estimates": "Schätzungen",
   "name": "Name",
+  "newLineItem": "New Line Item",
   "inches": "Inches",
   "imperial": "Imperial",
   "link": "Link",

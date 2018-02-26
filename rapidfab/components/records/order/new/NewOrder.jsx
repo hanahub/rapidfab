@@ -23,17 +23,19 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 import LineItem from './LineItem';
 
-const AddLineItemButton = ({ onAddLineItem }) => (
-  <div className="clearfix">
-    <Button bsSize="small" onClick={() => onAddLineItem()}>
-      Add Line Item
-    </Button>
-  </div>
+const SaveOrderButton = ({ submitting }) => (
+  <Button
+    disabled={submitting}
+    type="submit"
+    value="submit"
+    bsStyle="success"
+    bsSize="small"
+  >
+    {submitting ? <Loading /> : <SaveButtonTitle resourceName="Order" />}
+  </Button>
 );
 
-AddLineItemButton.propTypes = {
-  onAddLineItem: PropTypes.func.isRequired,
-};
+SaveOrderButton.propTypes = { submitting: PropTypes.bool.isRequired };
 
 const NewOrderComponent = ({
   bannerMessage,
@@ -55,15 +57,7 @@ const NewOrderComponent = ({
       <Form horizontal onSubmit={onSubmit}>
         <ButtonToolbar className="clearfix">
           <div className="pull-right">
-            <Button
-              disabled={submitting}
-              type="submit"
-              value="submit"
-              bsStyle="success"
-              bsSize="small"
-            >
-              {submitting ? <Loading /> : <SaveButtonTitle />}
-            </Button>
+            <SaveOrderButton submitting={submitting} />
           </div>
         </ButtonToolbar>
         <div className="pull-right">
@@ -100,9 +94,14 @@ const NewOrderComponent = ({
           <hr />
 
           <Button bsSize="small" onClick={() => onAddLineItem()}>
-            Add Line Item
+            <Fa name="plus" />
+            {` `}
+            <FormattedMessage id="newLineItem" defaultMessage="New Line Item" />
           </Button>
         </Panel>
+        <div className="pull-right" style={{ marginBottom: '3rem' }}>
+          <SaveOrderButton submitting={submitting} />
+        </div>
       </Form>
     </Grid>
   );

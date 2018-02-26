@@ -22,6 +22,7 @@ export default {
   "end": "End",
   "estimates": " ’Skøn",
   "name": " ’Navn",
+  "newLineItem": "New Line Item",
   "inches": "Inches",
   "imperial": "Imperial",
   "link": "Link",
