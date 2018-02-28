@@ -72,9 +72,12 @@ class UserFormContainer extends React.Component {
           dispatch(Actions.Api.wyatt.role.post(rolePayload))
             .then(() => {
               dispatch(Actions.Api.pao.users.list());
-              this.props.handleSelectionChange('none');
+              handleSelectionChange('none');
             })
-            .catch(() => dispatch(Actions.UI.clearUIState()));
+            .catch(() => {
+              dispatch(Actions.UI.clearUIState());
+              handleSelectionChange('none');
+            });
         }
       });
   }
