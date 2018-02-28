@@ -22,22 +22,27 @@ const User = ({
       <div>
         <span>{Array.isArray(user.emails) && user.emails[0]}</span>
         <UserRolesContainer user={user} />
-        <ButtonGroup vertical block>
+        <ButtonGroup block vertical>
           <Button
             disabled={!isSessionManager && !isSessionUser}
             onClick={() => handleViewChange('edit')}
           >
             <FormattedMessage id="editUser" defaultMessage="Edit User" />
           </Button>
-          {/* <Button onClick={() => handleViewChange('delete')}>Delete User</Button> */}
+          <Button onClick={() => handleViewChange('delete')}>
+            Delete User
+          </Button>
         </ButtonGroup>
       </div>
     )}
     {view === 'delete' && (
       <div>
         <p>Really delete?</p>
-        <Button onClick={handleDeleteUser}>Yes</Button>
-        <Button onClick={() => handleViewChange('main')}>No</Button>
+        <ButtonGroup block vertical>
+          <Button bsStyle="danger" onClick={handleDeleteUser}>
+            Delete {user.name || user.username}
+          </Button>
+        </ButtonGroup>
       </div>
     )}
     {view === 'edit' && (
@@ -56,6 +61,8 @@ const User = ({
   </div>
 );
 
+User.defaultProps = { user: { name: null } };
+
 User.propTypes = {
   view: PropTypes.string.isRequired,
   handleDeleteUser: PropTypes.func.isRequired,
@@ -63,7 +70,9 @@ User.propTypes = {
   handleViewChange: PropTypes.func.isRequired,
   isSessionManager: PropTypes.bool.isRequired,
   isSessionUser: PropTypes.bool.isRequired,
-  user: PropTypes.shape({}).isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+  }).isRequired,
 };
 
 export default User;
