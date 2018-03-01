@@ -46,6 +46,7 @@ import RunNewContainer from 'rapidfab/containers/records/run/RunNewContainer';
 
 import CostReportContainer from 'rapidfab/containers/quoting/CostReportContainer';
 import QuotingContainer from 'rapidfab/containers/quoting/QuotingContainer';
+import SentryTest from 'rapidfab/components/SentryTest';
 
 const Routes = {
   '/': Home,
@@ -54,6 +55,7 @@ const Routes = {
   '/admin/users': AdminUsersContainer,
   '/admin/banner': BannerContainer,
   '/bureau-error': BureauError,
+  '/sentry-test': SentryTest,
 
   '/inventory/materials': InventoryMaterials,
   '/inventory/stocks': InventoryStocks,
