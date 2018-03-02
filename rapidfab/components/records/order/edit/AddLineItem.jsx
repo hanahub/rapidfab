@@ -274,26 +274,23 @@ class AddLineItem extends Component {
           unit: modelUnits === 'auto' ? null : modelUnits,
           type: 'stl',
         })
-      ).then(args => {
-        const { location, uploadLocation } = args.headers;
+      )
+        .then(args => {
+          const { location, uploadLocation } = args.headers;
+          payload.model = location;
+          // Post model to hoth
+          return dispatch(Actions.UploadModel.upload(uploadLocation, model));
+        })
+        .then(() => dispatch(Actions.Api.wyatt['line-item'].post(payload)))
+        .then(response => {
+          const newLineItem = response.headers.location;
+          const orderPayload = {
+            line_items: [...order.line_items, newLineItem],
+          };
+          const uuid = extractUuid(order.uri);
 
-        // Post model to hoth
-        dispatch(Actions.UploadModel.upload(uploadLocation, model));
-
-        // Post line-item to wyatt
-        payload.model = location;
-        dispatch(Actions.Api.wyatt['line-item'].post(payload)).then(
-          response => {
-            const newLineItem = response.headers.location;
-            const orderPayload = {
-              line_items: [...order.line_items, newLineItem],
-            };
-            const uuid = extractUuid(order.uri);
-
-            return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
-          }
-        );
-      });
+          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+        });
     }
   }
 
