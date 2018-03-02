@@ -88,12 +88,17 @@ class LineItemEditFormContainer extends Component {
     } else {
       dispatch(
         Actions.Api.hoth.model.post({ name: modelUpload.name, type: 'stl' })
-      ).then(args => {
-        const { location, uploadLocation } = args.headers;
-        payload.model = location;
-        dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload));
-        dispatch(Actions.UploadModel.upload(uploadLocation, modelUpload));
-      });
+      )
+        .then(args => {
+          const { location, uploadLocation } = args.headers;
+          payload.model = location;
+          return dispatch(
+            Actions.UploadModel.upload(uploadLocation, modelUpload)
+          );
+        })
+        .then(() =>
+          dispatch(Actions.Api.wyatt['line-item'].put(lineItem.uuid, payload))
+        );
     }
   }
 
