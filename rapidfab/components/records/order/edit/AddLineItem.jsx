@@ -23,11 +23,14 @@ const PanelHeader = () => (
   <FormattedMessage id="record.lineItem.add" defaultMessage="Add Line Item" />
 );
 
+const styles = { hidden: { display: 'none' } };
+
 const AddLineItemPresentation = ({
   baseMaterial,
   baseMaterials,
   handleFileChange,
   handleInputChange,
+  isUserRestricted,
   itar,
   onSubmit,
   modelUnits,
@@ -52,29 +55,34 @@ const AddLineItemPresentation = ({
       {!itar && (
         <div>
           <ModelInput handleFileChange={handleFileChange} />
-          <ControlLabel>
-            <FormattedMessage id="modelUnits" defaultMessage="Model Units" />
-          </ControlLabel>
-          <FormControl
-            name="modelUnits"
-            value={modelUnits}
-            componentClass="select"
-            onChange={handleInputChange}
-            required
-          >
-            <option value="auto">
-              <FormattedMessage id="automatic" defaultMessage="Automatic" />
-            </option>
-            <option value="in">
-              <FormattedMessage id="inches" defaultMessage="Inches" />
-            </option>
-            <option value="mm">
-              <FormattedMessage id="millimeters" defaultMessage="Millimeters" />
-            </option>
-          </FormControl>
+          <div style={isUserRestricted ? styles.hidden : null}>
+            <ControlLabel>
+              <FormattedMessage id="modelUnits" defaultMessage="Model Units" />
+            </ControlLabel>
+            <FormControl
+              name="modelUnits"
+              value={modelUnits}
+              componentClass="select"
+              onChange={handleInputChange}
+              required
+            >
+              <option value="auto">
+                <FormattedMessage id="automatic" defaultMessage="Automatic" />
+              </option>
+              <option value="in">
+                <FormattedMessage id="inches" defaultMessage="Inches" />
+              </option>
+              <option value="mm">
+                <FormattedMessage
+                  id="millimeters"
+                  defaultMessage="Millimeters"
+                />
+              </option>
+            </FormControl>
+          </div>
         </div>
       )}
-      <div>
+      <div style={isUserRestricted ? styles.hidden : null}>
         <ControlLabel>
           <FormattedMessage id="field.material" defaultMessage="Material" />:
         </ControlLabel>
@@ -92,27 +100,31 @@ const AddLineItemPresentation = ({
           ))}
         </FormControl>
       </div>
-      <ControlLabel>
-        <FormattedMessage
-          id="field.supportMaterial"
-          defaultMessage="Support Material"
-        />:
-      </ControlLabel>
-      <FormControl
-        name="supportMaterial"
-        componentClass="select"
-        onChange={handleInputChange}
-        value={supportMaterial}
-      >
-        <option value="">
-          <FormattedMessage id="field.none" defaultMessage="None" />
-        </option>
-        {supportMaterials.map(material => (
-          <option key={material.uri} value={material.uri}>
-            {material.name}
-          </option>
-        ))}
-      </FormControl>
+      {!isUserRestricted && (
+        <div>
+          <ControlLabel>
+            <FormattedMessage
+              id="field.supportMaterial"
+              defaultMessage="Support Material"
+            />:
+          </ControlLabel>
+          <FormControl
+            name="supportMaterial"
+            componentClass="select"
+            onChange={handleInputChange}
+            value={supportMaterial}
+          >
+            <option value="">
+              <FormattedMessage id="field.none" defaultMessage="None" />
+            </option>
+            {supportMaterials.map(material => (
+              <option key={material.uri} value={material.uri}>
+                {material.name}
+              </option>
+            ))}
+          </FormControl>
+        </div>
+      )}
       <ControlLabel>
         <FormattedMessage id="field.quantity" defaultMessage="Quantity" />:
       </ControlLabel>
@@ -124,43 +136,49 @@ const AddLineItemPresentation = ({
         onChange={handleInputChange}
         value={quantity}
       />
-      <ControlLabel>
-        <FormattedMessage id="field.template" defaultMessage="Template" />:
-      </ControlLabel>
-      <FormControl
-        name="template"
-        componentClass="select"
-        required
-        onChange={handleInputChange}
-        value={template}
-      >
-        {templates.map(templateOption => (
-          <option key={templateOption.uri} value={templateOption.uri}>
-            {templateOption.name}
-          </option>
-        ))}
-      </FormControl>
-      <ControlLabel>
-        <FormattedMessage
-          id="field.thirdPartyProvider"
-          defaultMessage="Third-Party Provider"
-        />
-      </ControlLabel>
-      <FormControl
-        name="thirdPartyProvider"
-        componentClass="select"
-        onChange={handleInputChange}
-        value={thirdPartyProvider}
-      >
-        <option value="">
-          <FormattedMessage id="field.none" defaultMessage="None" />
-        </option>
-        {providers.map(provider => (
-          <option key={provider.uri} value={provider.uri}>
-            {provider.name}
-          </option>
-        ))}
-      </FormControl>
+      <div style={isUserRestricted ? styles.hidden : null}>
+        <ControlLabel>
+          <FormattedMessage id="field.template" defaultMessage="Template" />:
+        </ControlLabel>
+        <FormControl
+          name="template"
+          componentClass="select"
+          required
+          onChange={handleInputChange}
+          value={template}
+        >
+          {templates.map(templateOption => (
+            <option key={templateOption.uri} value={templateOption.uri}>
+              {templateOption.name}
+            </option>
+          ))}
+        </FormControl>
+      </div>
+      {!isUserRestricted && (
+        <div>
+          <ControlLabel>
+            <FormattedMessage
+              id="field.thirdPartyProvider"
+              defaultMessage="Third-Party Provider"
+            />
+          </ControlLabel>
+          <FormControl
+            name="thirdPartyProvider"
+            componentClass="select"
+            onChange={handleInputChange}
+            value={thirdPartyProvider}
+          >
+            <option value="">
+              <FormattedMessage id="field.none" defaultMessage="None" />
+            </option>
+            {providers.map(provider => (
+              <option key={provider.uri} value={provider.uri}>
+                {provider.name}
+              </option>
+            ))}
+          </FormControl>
+        </div>
+      )}
       <ButtonToolbar className="clearfix">
         <Button
           type="submit"
@@ -181,6 +199,7 @@ AddLineItemPresentation.propTypes = {
   baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleFileChange: PropTypes.func.isRequired,
   handleInputChange: PropTypes.func.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   itar: PropTypes.bool.isRequired,
   modelUnits: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -353,11 +372,13 @@ const mapStateToProps = state => {
   } = Selectors.getBaseAndSupportMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
   const templates = Selectors.getTemplates(state);
+  const isUserRestricted = Selectors.isCurrentUserRestricted(state);
   const order = state.resources[state.routeUUID];
 
   return {
     baseMaterials,
     bureau,
+    isUserRestricted,
     order,
     providers,
     supportMaterials,
