@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Col, Form, Panel } from 'react-bootstrap';
+import { Button, Col, Form, Panel } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
 import Feature from 'rapidfab/components/Feature';
@@ -52,6 +52,17 @@ class OrderSummary extends Component {
     const { onCancel, onDelete, onSubmit } = this;
     return (
       <Panel header={<PanelHeader />}>
+        <Button
+          onClick={() =>
+            window.scrollTo(
+              0,
+              document.body.scrollHeight ||
+                document.documentElement.scrollHeight
+            )
+          }
+        >
+          Add Line Item
+        </Button>
         <Form horizontal onSubmit={onSubmit}>
           <SaveDropdownButton
             onCancel={onCancel}
