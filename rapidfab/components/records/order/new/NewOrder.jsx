@@ -73,7 +73,11 @@ const NewOrderComponent = ({
         </Panel>
         <ButtonToolbar className="clearfix" style={{ marginBottom: '3rem' }}>
           <div className="pull-right">
-            <Button type="submit" bsStyle="success">
+            <Button
+              type="submit"
+              bsStyle="success"
+              onClick={() => window.scrollTo(0, 0)}
+            >
               Add Line Items
             </Button>
           </div>
