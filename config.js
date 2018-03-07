@@ -1,5 +1,5 @@
 window.Config = {
-  SENTRY_DSN: null,
+  SENTRY_DSN:'https://00e30d053caf4779937c7553d5b05116@sentry.io/299880',
   HOST: {
     ACULETA: 'https://quoting.dev-auth.com',
     PAO: 'https://users.dev-auth.com',
