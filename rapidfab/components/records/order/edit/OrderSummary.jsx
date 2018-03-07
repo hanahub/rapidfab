@@ -17,6 +17,13 @@ const PanelHeader = () => (
   <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />
 );
 
+const scrollToBottom = () => {
+  window.scrollTo(
+    0,
+    document.body.scrollHeight || document.documentElement.scrollHeight
+  );
+};
+
 class OrderSummary extends Component {
   constructor(props) {
     super(props);
@@ -52,23 +59,30 @@ class OrderSummary extends Component {
     const { onCancel, onDelete, onSubmit } = this;
     return (
       <Panel header={<PanelHeader />}>
-        <Button
-          onClick={() =>
-            window.scrollTo(
-              0,
-              document.body.scrollHeight ||
-                document.documentElement.scrollHeight
-            )
-          }
-        >
-          Add Line Item
-        </Button>
         <Form horizontal onSubmit={onSubmit}>
-          <SaveDropdownButton
-            onCancel={onCancel}
-            onDelete={onDelete}
-            resourceName="Order"
-          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+            }}
+          >
+            <SaveDropdownButton
+              onCancel={onCancel}
+              onDelete={onDelete}
+              resourceName="Order"
+            />
+            <Button
+              bsStyle="success"
+              bsSize="small"
+              style={{ marginRight: '1rem' }}
+              onClick={scrollToBottom}
+            >
+              <FormattedMessage
+                id="record.lineItem.add"
+                defaultMessage="Add Line Item"
+              />
+            </Button>
+          </div>
           <hr />
 
           <Col xs={12} md={7}>
