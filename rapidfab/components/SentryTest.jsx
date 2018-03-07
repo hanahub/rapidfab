@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SentryTest extends Component {
-  componentWillMount() {
-    throw new Error('SENTRY INTEGRATION TEST');
-  }
-
-  render() {
-    return <p>Sentry Test</p>;
-  }
-}
+const SentryTest = () => (
+  <button
+    onClick={() => {
+      throw new Error('SENTRY INTEGRATION TEST');
+    }}
+  >
+    Sentry Alert
+  </button>
+);
 
 export default SentryTest;
