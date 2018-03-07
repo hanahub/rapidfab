@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Col, Form, Panel } from 'react-bootstrap';
+import { Button, Col, Form, Panel } from 'react-bootstrap';
 
 import Actions from 'rapidfab/actions';
 import Feature from 'rapidfab/components/Feature';
@@ -16,6 +16,13 @@ import SaveDropdownButton from './SaveDropdownButton';
 const PanelHeader = () => (
   <FormattedMessage id="record.order.summary" defaultMessage="Order Summary" />
 );
+
+const scrollToBottom = () => {
+  window.scrollTo(
+    0,
+    document.body.scrollHeight || document.documentElement.scrollHeight
+  );
+};
 
 class OrderSummary extends Component {
   constructor(props) {
@@ -53,11 +60,29 @@ class OrderSummary extends Component {
     return (
       <Panel header={<PanelHeader />}>
         <Form horizontal onSubmit={onSubmit}>
-          <SaveDropdownButton
-            onCancel={onCancel}
-            onDelete={onDelete}
-            resourceName="Order"
-          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+            }}
+          >
+            <SaveDropdownButton
+              onCancel={onCancel}
+              onDelete={onDelete}
+              resourceName="Order"
+            />
+            <Button
+              bsStyle="success"
+              bsSize="small"
+              style={{ marginRight: '1rem' }}
+              onClick={scrollToBottom}
+            >
+              <FormattedMessage
+                id="record.lineItem.add"
+                defaultMessage="Add Line Item"
+              />
+            </Button>
+          </div>
           <hr />
 
           <Col xs={12} md={7}>
