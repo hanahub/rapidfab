@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import FontAwesome from 'react-fontawesome';
 import {
   Button,
   ButtonToolbar,
@@ -36,6 +37,7 @@ const AddLineItemPresentation = ({
   modelUnits,
   providers,
   quantity,
+  submitting,
   supportMaterial,
   supportMaterials,
   template,
@@ -181,13 +183,21 @@ const AddLineItemPresentation = ({
       )}
       <ButtonToolbar className="clearfix">
         <Button
+          disabled={submitting}
           type="submit"
           bsStyle="success"
           className="pull-right"
           style={{ marginTop: '2rem' }}
         >
           {' '}
-          Add
+          {submitting ? (
+            <FontAwesome name="spinner" spin/>
+          ) : (
+            <FormattedMessage
+              id="record.lineItem.add"
+              defaultMessage="Add Line Item"
+            />
+          )}
         </Button>
       </ButtonToolbar>
     </Form>
@@ -205,6 +215,7 @@ AddLineItemPresentation.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
   quantity: PropTypes.string.isRequired,
+  submitting: PropTypes.bool.isRequired,
   supportMaterial: PropTypes.string.isRequired,
   supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   template: PropTypes.string.isRequired,
@@ -374,6 +385,7 @@ const mapStateToProps = state => {
   const templates = Selectors.getTemplates(state);
   const isUserRestricted = Selectors.isCurrentUserRestricted(state);
   const order = state.resources[state.routeUUID];
+  const submitting = state.ui.wyatt['line-item'].post.fetching;
 
   return {
     baseMaterials,
@@ -381,6 +393,7 @@ const mapStateToProps = state => {
     isUserRestricted,
     order,
     providers,
+    submitting,
     supportMaterials,
     templates,
   };
