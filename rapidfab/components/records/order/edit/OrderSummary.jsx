@@ -82,6 +82,17 @@ class OrderSummary extends Component {
                 defaultMessage="Add Line Item"
               />
             </Button>
+            <Button
+              bsStyle="success"
+              bsSize="small"
+              style={{ marginRight: '0.5rem' }}
+              onClick={() => {}}
+            >
+              <FormattedMessage
+                id="downloadOrderReport"
+                defaultMessage="Download Order Report"
+              />
+            </Button>
           </div>
           <hr />
 
