@@ -15,8 +15,14 @@ class OrderReportContainer extends Component {
       show: false,
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleHide = this.handleHide.bind(this);
     this.handleShow = this.handleShow.bind(this);
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
   handleHide() {
@@ -31,10 +37,13 @@ class OrderReportContainer extends Component {
     const { end, start, show } = this.state;
     return (
       <OrderReport
+        end={end}
+        handleChange={this.handleChange}
         handleHide={this.handleHide}
         handleShow={this.handleShow}
         reportUrl={generateUrl(start, end)}
         show={show}
+        start={start}
       />
     );
   }
