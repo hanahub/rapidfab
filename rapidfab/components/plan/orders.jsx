@@ -14,6 +14,8 @@ import Grid, {
 import Loading from 'rapidfab/components/Loading';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
+import OrderReportContainer from 'rapidfab/containers/OrderReportContainer';
+
 const Orders = ({
   orders,
   locations,
@@ -38,6 +40,7 @@ const Orders = ({
         )}
       </BS.Col>
       <BS.Col xs={4}>
+        <OrderReportContainer />
         <BS.Button
           bsStyle="primary"
           bsSize="small"
