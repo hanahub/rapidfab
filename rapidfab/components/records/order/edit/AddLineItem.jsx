@@ -191,7 +191,7 @@ const AddLineItemPresentation = ({
         >
           {' '}
           {submitting ? (
-            <FontAwesome name="spinner" spin/>
+            <FontAwesome name="spinner" spin />
           ) : (
             <FormattedMessage
               id="record.lineItem.add"
