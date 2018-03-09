@@ -26,12 +26,10 @@ const OrderReport = ({
       />
     </Button>
     <Modal show={show} onHide={handleHide}>
-      <Modal.Header closeButton>
-        Order Report
-      </Modal.Header>
+      <Modal.Header closeButton>Order Report</Modal.Header>
       <Modal.Body>
         <FormGroup>
-          <ControlLabel>Start Date</ControlLabel>
+          <ControlLabel>Start Date (optional)</ControlLabel>
           <FormControl
             name="start"
             onChange={handleChange}
@@ -41,7 +39,7 @@ const OrderReport = ({
           />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>End Date</ControlLabel>
+          <ControlLabel>End Date (optional)</ControlLabel>
           <FormControl
             name="end"
             onChange={handleChange}
