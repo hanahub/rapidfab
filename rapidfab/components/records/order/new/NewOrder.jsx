@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import {
-  Alert,
   Button,
   ButtonToolbar,
   Form,
   Grid,
   Panel,
+  Jumbotron,
 } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 
@@ -63,9 +63,10 @@ const NewOrderComponent = ({
 
         {isUserRestricted &&
           bannerMessage && (
-            <a href={bannerLink} target="_blank">
-              <Alert>{bannerMessage}</Alert>
-            </a>
+            <Jumbotron>
+              <p>{bannerMessage}</p>
+              <Button href={bannerLink}>More Information</Button>
+            </Jumbotron>
           )}
 
         <Panel header="Order">
