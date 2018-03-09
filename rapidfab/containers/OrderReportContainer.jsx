@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+
 import CONFIG from 'rapidfab/config';
 import OrderReport from '../components/OrderReport';
 
-const generateUrl = (start, end) =>
-  `${CONFIG.HOST.NAUTILUS}/order-report/?start=${start}&end=${end}`;
+const generateUrl = (start, end) => {
+  const startISO = start ? new Date(start).toISOString() : '';
+  const endISO = end ? new Date(end).toISOString() : '';
+  return `${
+    CONFIG.HOST.NAUTILUS
+  }/order-report/?start=${startISO}&end=${endISO}`;
+};
 
 class OrderReportContainer extends Component {
   constructor(props) {
