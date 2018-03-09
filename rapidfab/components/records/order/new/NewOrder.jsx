@@ -65,7 +65,12 @@ const NewOrderComponent = ({
           bannerMessage && (
             <Jumbotron>
               <p>{bannerMessage}</p>
-              <Button href={bannerLink}>More Information</Button>
+              <Button href={bannerLink}>
+                <FormattedMessage
+                  id="moreInformation"
+                  defaultMessage="More Information"
+                />
+              </Button>
             </Jumbotron>
           )}
 
