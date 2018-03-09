@@ -40,16 +40,18 @@ const Orders = ({
         )}
       </BS.Col>
       <BS.Col xs={4}>
-        <OrderReportContainer />
-        <BS.Button
-          bsStyle="primary"
-          bsSize="small"
-          href="#/records/order"
-          className="pull-right"
-        >
-          <Fa name="plus" />{' '}
-          <FormattedMessage id="record.order.add" defaultMessage="Add Order" />
-        </BS.Button>
+        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+          <BS.Button bsStyle="primary" bsSize="small" href="#/records/order">
+            <Fa name="plus" />{' '}
+            <FormattedMessage
+              id="record.order.add"
+              defaultMessage="Add Order"
+            />
+          </BS.Button>
+          <div style={{ marginRight: '1rem' }}>
+            <OrderReportContainer />
+          </div>
+        </div>
       </BS.Col>
     </BS.Row>
 
