@@ -36,6 +36,7 @@ export default {
   "millimeters": "Millimeters",
   "modelerDataSourceURL": "Modeler Data Source URL",
   "modelUnits": "Model Units",
+  "moreInformation": "More Information",
   "optional": "Optional",
   "orderName": "Order Name",
   "postProcessingTime": "Post-Processing Time",
