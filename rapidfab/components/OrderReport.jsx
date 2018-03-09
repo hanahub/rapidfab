@@ -33,7 +33,8 @@ const OrderReport = ({
           <FormControl
             name="start"
             onChange={handleChange}
-            placeholder="Start Date"
+            pattern="^\d{4}-\d{2}-\d{2}$"
+            placeholder="yyyy-mm-dd"
             type="date"
             value={start}
           />
@@ -43,7 +44,8 @@ const OrderReport = ({
           <FormControl
             name="end"
             onChange={handleChange}
-            placeholder="Start Date"
+            pattern="^\d{4}-\d{2}-\d{2}$"
+            placeholder="yyyy-mm-dd"
             type="date"
             value={end}
           />
