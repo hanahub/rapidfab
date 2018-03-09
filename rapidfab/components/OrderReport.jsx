@@ -21,15 +21,24 @@ const OrderReport = ({
   <div>
     <Button bsStyle="primary" bsSize="small" onClick={handleShow}>
       <FormattedMessage
-        id="downloadOrderReport"
-        defaultMessage="Download Order Report"
+        id="downloadCSVOrderReport"
+        defaultMessage="Download CSV Order Report "
       />
     </Button>
     <Modal show={show} onHide={handleHide}>
-      <Modal.Header closeButton>Order Report</Modal.Header>
+      <Modal.Header closeButton>
+        <FormattedMessage
+          id="CSVOrderReport"
+          defaultMessage="CSV Order Report"
+        />
+      </Modal.Header>
       <Modal.Body>
         <FormGroup>
-          <ControlLabel>Start Date (optional)</ControlLabel>
+          <ControlLabel>
+            <FormattedMessage id="startDate" defaultMessage="Start Date" />
+            {` `}
+            <FormattedMessage id="optional" defaultMessage="Optional" />
+          </ControlLabel>
           <FormControl
             name="start"
             onChange={handleChange}
@@ -40,7 +49,11 @@ const OrderReport = ({
           />
         </FormGroup>
         <FormGroup>
-          <ControlLabel>End Date (optional)</ControlLabel>
+          <ControlLabel>
+            <FormattedMessage id="startDate" defaultMessage="Start Date" />
+            {` `}
+            <FormattedMessage id="optional" defaultMessage="Optional" />
+          </ControlLabel>
           <FormControl
             name="end"
             onChange={handleChange}
@@ -53,7 +66,7 @@ const OrderReport = ({
       </Modal.Body>
       <Modal.Footer>
         <Button bsStyle="success" href={reportUrl} onClick={handleHide}>
-          Download
+          <FormattedMessage id="button.download" defaultMessage="Download" />
         </Button>
       </Modal.Footer>
     </Modal>
