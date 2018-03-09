@@ -26,7 +26,7 @@ class OrderReportContainer extends Component {
   }
 
   handleHide() {
-    this.setState({ show: false });
+    this.setState({ end: '', show: false, start: '' });
   }
 
   handleShow() {

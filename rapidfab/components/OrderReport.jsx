@@ -50,7 +50,7 @@ const OrderReport = ({
         </FormGroup>
       </Modal.Body>
       <Modal.Footer>
-        <Button bsStyle="success" href={reportUrl}>
+        <Button bsStyle="success" href={reportUrl} onClick={handleHide}>
           Download
         </Button>
       </Modal.Footer>
