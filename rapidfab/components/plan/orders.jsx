@@ -14,6 +14,8 @@ import Grid, {
 import Loading from 'rapidfab/components/Loading';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
+import OrderReportContainer from 'rapidfab/containers/OrderReportContainer';
+
 const Orders = ({
   orders,
   locations,
@@ -38,15 +40,18 @@ const Orders = ({
         )}
       </BS.Col>
       <BS.Col xs={4}>
-        <BS.Button
-          bsStyle="primary"
-          bsSize="small"
-          href="#/records/order"
-          className="pull-right"
-        >
-          <Fa name="plus" />{' '}
-          <FormattedMessage id="record.order.add" defaultMessage="Add Order" />
-        </BS.Button>
+        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+          <BS.Button bsStyle="primary" bsSize="small" href="#/records/order">
+            <Fa name="plus" />{' '}
+            <FormattedMessage
+              id="record.order.add"
+              defaultMessage="Add Order"
+            />
+          </BS.Button>
+          <div style={{ marginRight: '1rem' }}>
+            <OrderReportContainer />
+          </div>
+        </div>
       </BS.Col>
     </BS.Row>
 
