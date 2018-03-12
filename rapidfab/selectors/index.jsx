@@ -284,6 +284,19 @@ export const getTemplates = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getTemplatesAlphabetized = createSelector(
+  [getTemplates],
+  templates =>
+    templates.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1;
+      } else if (a.name.toLowerCase() > b.name.toLowerCase()) {
+        return 1;
+      }
+      return 0;
+    })
+);
+
 export const getTraceabilityReports = createSelector(
   [getStateTraceabilityReport, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
