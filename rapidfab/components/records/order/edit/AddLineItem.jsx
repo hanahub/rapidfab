@@ -318,8 +318,8 @@ class AddLineItem extends Component {
             line_items: [...order.line_items, newLineItem],
           };
           const uuid = extractUuid(order.uri);
-
-          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+          dispatch(Actions.Api.wyatt['line-item'].get(newLineItem));
+          dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
         });
     }
   }
