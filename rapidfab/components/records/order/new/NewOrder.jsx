@@ -170,7 +170,6 @@ class NewOrder extends Component {
 }
 
 NewOrder.propTypes = {
-  baseMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
   bureau: PropTypes.shape({
     order_banner: PropTypes.shape({
       message: PropTypes.string,
@@ -180,8 +179,6 @@ NewOrder.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isUserRestricted: PropTypes.bool.isRequired,
   orderForm: PropTypes.shape({}).isRequired,
-  supportMaterials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  templates: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => {
