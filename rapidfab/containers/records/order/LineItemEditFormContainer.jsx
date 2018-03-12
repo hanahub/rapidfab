@@ -199,7 +199,7 @@ const mapStateToProps = state => {
   const isRestricted = Selectors.isCurrentUserRestricted(state);
   const models = Selectors.getModels(state);
   const providers = Selectors.getThirdPartyProviders(state);
-  const templates = Selectors.getTemplates(state);
+  const templates = Selectors.getTemplatesAlphabetized(state);
   const orderUuid = state.routeUUID;
 
   return {
