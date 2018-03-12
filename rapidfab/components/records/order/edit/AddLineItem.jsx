@@ -397,7 +397,7 @@ const mapStateToProps = state => {
     support: supportMaterials,
   } = Selectors.getBaseAndSupportMaterials(state);
   const providers = Selectors.getThirdPartyProviders(state);
-  const templates = Selectors.getTemplates(state);
+  const templates = Selectors.getTemplatesAlphabetized(state);
   const isUserRestricted = Selectors.isCurrentUserRestricted(state);
   const order = state.resources[state.routeUUID];
   const submitting = state.ui.wyatt['line-item'].post.fetching;
