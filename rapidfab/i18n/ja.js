@@ -8,6 +8,7 @@ export default {
   "bureauAdministration": "Bureau Administration",
   "businessSegment": "Business Segment",
   "centimeters": "Centimeters",
+  "chooseModelFile": "Choose Model File",
   "commercial": "Commercial",
   "costPerUnit": "Cost Per Unit",
   "costReport": "Cost Report",

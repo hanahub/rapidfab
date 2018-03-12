@@ -34,6 +34,7 @@ const AddLineItemPresentation = ({
   isUserRestricted,
   itar,
   onSubmit,
+  modelName,
   modelUnits,
   providers,
   quantity,
@@ -56,7 +57,7 @@ const AddLineItemPresentation = ({
       </Feature>
       {!itar && (
         <div>
-          <ModelInput handleFileChange={handleFileChange} />
+          <ModelInput handleFileChange={handleFileChange} name={modelName} />
           <div style={isUserRestricted ? styles.hidden : null}>
             <ControlLabel>
               <FormattedMessage id="modelUnits" defaultMessage="Model Units" />
@@ -211,6 +212,7 @@ AddLineItemPresentation.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   isUserRestricted: PropTypes.bool.isRequired,
   itar: PropTypes.bool.isRequired,
+  modelName: PropTypes.string.isRequired,
   modelUnits: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
   providers: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -227,27 +229,24 @@ class AddLineItem extends Component {
   constructor(props) {
     super(props);
 
-    const { baseMaterials, templates } = props;
-
-    const baseMaterial = baseMaterials[0] ? baseMaterials[0].uri : null;
-    const itar = false;
-    const supportMaterial = '';
-    const template = templates[0] ? templates[0].uri : null;
-    const thirdPartyProvider = '';
-
     this.state = {
-      baseMaterial,
-      itar,
-      modelUnits: 'auto',
-      quantity: '1',
-      supportMaterial,
-      template,
-      thirdPartyProvider,
+      baseMaterial: '',
+      itar: false,
+      modelUnits: '',
+      model: null,
+      quantity: '',
+      supportMaterial: '',
+      template: '',
+      thirdPartyProvider: '',
     };
 
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.resetForm();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -313,15 +312,30 @@ class AddLineItem extends Component {
         })
         .then(() => dispatch(Actions.Api.wyatt['line-item'].post(payload)))
         .then(response => {
+          this.resetForm();
           const newLineItem = response.headers.location;
           const orderPayload = {
             line_items: [...order.line_items, newLineItem],
           };
           const uuid = extractUuid(order.uri);
-
-          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+          dispatch(Actions.Api.wyatt['line-item'].get(newLineItem));
+          dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
         });
     }
+  }
+
+  resetForm() {
+    const { baseMaterials, templates } = this.props;
+    this.setState({
+      baseMaterial: baseMaterials[0] ? baseMaterials.uri : null,
+      itar: false,
+      modelUnits: 'auto',
+      model: null,
+      quantity: '1',
+      supportMaterial: '',
+      template: templates[0] ? templates[0].uri : null,
+      thirdPartyProvider: '',
+    });
   }
 
   handleFileChange(event) {
@@ -350,6 +364,7 @@ class AddLineItem extends Component {
         {...state}
         handleFileChange={handleFileChange}
         handleInputChange={handleInputChange}
+        modelName={this.state.model ? this.state.model.name : null}
         onSubmit={onSubmit}
       />
     );
