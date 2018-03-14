@@ -194,6 +194,7 @@ export default {
   "record.user.add": " ’Tilføj ny bruger",
   "record.user.new": " ’Ny bruger",
   "estimates.estimates": " ’Skøn",
+  "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": " ’Omkostninger",
   "estimates.endTime": " ’Sluttid",
   "estimates.materialUsed": " ’Anvendte materialer",

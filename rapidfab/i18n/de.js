@@ -194,6 +194,7 @@ export default {
   "record.user.add": "Neuen Benutzer hinzufügen",
   "record.user.new": "Neuer Benutzer",
   "estimates.estimates": "Schätzungen",
+  "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": "Kosten",
   "estimates.endTime": "Endzeit",
   "estimates.materialUsed": "Verwendetes Material",

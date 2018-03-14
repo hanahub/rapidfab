@@ -213,6 +213,26 @@ const Estimates = ({ currency, estimates, model, quantity }) => (
               </Col>
             </Row>
           </ListGroupItem>
+          <ListGroupItem>
+            <Row>
+              <Col xs={8}>
+                <FormattedMessage
+                  id="estimates.bureauCost"
+                  defaultMessage="Bureau Cost"
+                />
+              </Col>
+              <Col xs={4}>
+                {estimates.bureau_custom_cost ? (
+                  <FormattedCost
+                    currency={currency}
+                    value={estimates.bureau_custom_cost}
+                  />
+                ) : (
+                  <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+                )}
+              </Col>
+            </Row>
+          </ListGroupItem>
         </div>
       ) : (
         <Loading />
