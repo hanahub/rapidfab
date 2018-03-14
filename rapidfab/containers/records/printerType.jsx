@@ -17,6 +17,10 @@ const fields = [
   'build_volume.z',
   'materials',
   'bureau',
+  'running_cost_per_hour',
+  'print_cost_scale_factor',
+  'material_cost_scale_factor',
+  'constant_overhead',
 ];
 
 class PrinterTypeContainer extends Component {
