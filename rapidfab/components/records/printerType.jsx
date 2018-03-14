@@ -135,25 +135,45 @@ const PrinterTypeForm = ({
         <BS.Col sm={6}>
           <BS.Panel header="Custom Bureau Cost">
             <BS.FormGroup>
-              <BS.ControlLabel>Printer Cost Per Hour</BS.ControlLabel>
+              <BS.ControlLabel>
+                <FormattedMessage
+                  id="printerCostPerHour"
+                  defaultMessage="Printer Cost Per Hour"
+                />
+              </BS.ControlLabel>
               <BS.FormControl type="number" {...fields.running_cost_per_hour} />
             </BS.FormGroup>
             <BS.FormGroup>
-              <BS.ControlLabel>Printer Cost Scale Factor</BS.ControlLabel>
+              <BS.ControlLabel>
+                <FormattedMessage
+                  id="printerCostScaleFactor"
+                  defaultMessage="Printer Cost Scale Factor"
+                />
+              </BS.ControlLabel>
               <BS.FormControl
                 type="number"
                 {...fields.print_cost_scale_factor}
               />
             </BS.FormGroup>
             <BS.FormGroup>
-              <BS.ControlLabel>Material Cost Scale Factor</BS.ControlLabel>
+              <BS.ControlLabel>
+                <FormattedMessage
+                  id="materialCostScaleFactor"
+                  defaultMessage="Material Cost Scale Factor"
+                />
+              </BS.ControlLabel>
               <BS.FormControl
                 type="number"
                 {...fields.material_cost_scale_factor}
               />
             </BS.FormGroup>
             <BS.FormGroup>
-              <BS.ControlLabel>Per Piece Overhead Cost</BS.ControlLabel>
+              <BS.ControlLabel>
+                <FormattedMessage
+                  id="overheadCostPerPiece"
+                  defaultMessage="Overhead Cost Per Piece"
+                />
+              </BS.ControlLabel>
               <BS.FormControl type="number" {...fields.constant_overhead} />
             </BS.FormGroup>
           </BS.Panel>
