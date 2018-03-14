@@ -192,6 +192,7 @@ export default {
   "record.user.add": "ユーザーの追加",
   "record.user.new": "新規ユーザー",
   "estimates.estimates": "Estimates",
+  "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": "コスト 、",
   "estimates.endTime": " 終了時刻",
   "estimates.materialUsed": "使用される材料 、",

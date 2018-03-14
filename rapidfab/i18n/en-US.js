@@ -212,6 +212,7 @@ export default {
   "record.user.new": "New User",
 
   "estimates.estimates": "Estimates",
+  "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": "Cost",
   "estimates.endTime": "End Time",
   "estimates.materialUsed": "Material Used",
