@@ -37,7 +37,7 @@ const OrderReport = ({
           <ControlLabel>
             <FormattedMessage id="startDate" defaultMessage="Start Date" />
             {` `}
-            <FormattedMessage id="optional" defaultMessage="Optional" />
+            (<FormattedMessage id="optional" defaultMessage="Optional" />)
           </ControlLabel>
           <FormControl
             name="start"
@@ -50,9 +50,9 @@ const OrderReport = ({
         </FormGroup>
         <FormGroup>
           <ControlLabel>
-            <FormattedMessage id="startDate" defaultMessage="Start Date" />
+            <FormattedMessage id="endDate" defaultMessage="End Date" />
             {` `}
-            <FormattedMessage id="optional" defaultMessage="Optional" />
+            (<FormattedMessage id="optional" defaultMessage="Optional" />)
           </ControlLabel>
           <FormControl
             name="end"
