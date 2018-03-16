@@ -5,6 +5,7 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import ExampleEstimates from 'rapidfab/components/ExampleEstimates';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
@@ -132,7 +133,9 @@ const PrinterTypeForm = ({
             </BS.FormControl>
           </BS.FormGroup>
         </BS.Col>
-        <BS.Col sm={6}>
+      </BS.Row>
+      <BS.Row>
+        <BS.Col xs={6}>
           <BS.Panel header="Custom Bureau Cost">
             <BS.FormGroup>
               <BS.ControlLabel>
@@ -177,6 +180,14 @@ const PrinterTypeForm = ({
               <BS.FormControl type="number" {...fields.constant_overhead} />
             </BS.FormGroup>
           </BS.Panel>
+        </BS.Col>
+        <BS.Col sm={6}>
+          <ExampleEstimates
+            runningCostPerHour={fields.running_cost_per_hour.value}
+            printCostScaleFactor={fields.print_cost_scale_factor.value}
+            materialCostScaleFactor={fields.material_cost_scale_factor.value}
+            constantOverhead={fields.constant_overhead.value}
+          />
         </BS.Col>
       </BS.Row>
     </BS.Grid>
