@@ -132,56 +132,91 @@ const PrinterTypeForm = ({
               ))}
             </BS.FormControl>
           </BS.FormGroup>
+          <BS.FormGroup>
+            <BS.ControlLabel>
+              <FormattedMessage
+                id="printerCostPerHour"
+                defaultMessage="Printer Cost Per Hour"
+              />
+            </BS.ControlLabel>
+            <BS.InputGroup>
+              <BS.FormControl type="number" {...fields.running_cost_per_hour} />
+              <BS.InputGroup.Addon>$</BS.InputGroup.Addon>
+            </BS.InputGroup>
+          </BS.FormGroup>
         </BS.Col>
       </BS.Row>
       <BS.Row>
-        <BS.Col xs={6}>
+        <BS.Col xs={12} sm={6}>
           <BS.Panel header="Custom Bureau Cost">
-            <BS.FormGroup>
-              <BS.ControlLabel>
-                <FormattedMessage
-                  id="printerCostPerHour"
-                  defaultMessage="Printer Cost Per Hour"
-                />
-              </BS.ControlLabel>
-              <BS.FormControl type="number" {...fields.running_cost_per_hour} />
-            </BS.FormGroup>
-            <BS.FormGroup>
-              <BS.ControlLabel>
-                <FormattedMessage
-                  id="printerCostScaleFactor"
-                  defaultMessage="Printer Cost Scale Factor"
-                />
-              </BS.ControlLabel>
-              <BS.FormControl
-                type="number"
-                {...fields.print_cost_scale_factor}
-              />
-            </BS.FormGroup>
-            <BS.FormGroup>
-              <BS.ControlLabel>
-                <FormattedMessage
-                  id="materialCostScaleFactor"
-                  defaultMessage="Material Cost Scale Factor"
-                />
-              </BS.ControlLabel>
-              <BS.FormControl
-                type="number"
-                {...fields.material_cost_scale_factor}
-              />
-            </BS.FormGroup>
-            <BS.FormGroup>
-              <BS.ControlLabel>
-                <FormattedMessage
-                  id="overheadCostPerPiece"
-                  defaultMessage="Overhead Cost Per Piece"
-                />
-              </BS.ControlLabel>
-              <BS.FormControl type="number" {...fields.constant_overhead} />
-            </BS.FormGroup>
+            <BS.Row>
+              <BS.Col xs={6}>
+                <BS.FormGroup>
+                  <BS.ControlLabel>
+                    <FormattedMessage
+                      id="printerCostScaleFactor"
+                      defaultMessage="Printer Cost Scale Factor"
+                    />
+                  </BS.ControlLabel>
+                  <BS.InputGroup>
+                    <BS.FormControl
+                      type="number"
+                      {...fields.print_cost_scale_factor}
+                    />
+                    <BS.InputGroup.Addon>%</BS.InputGroup.Addon>
+                  </BS.InputGroup>
+                </BS.FormGroup>
+              </BS.Col>
+              <BS.Col xs={6}>
+                <BS.Label>* (Print Time * Printer Running Cost)</BS.Label>
+              </BS.Col>
+            </BS.Row>
+            <BS.Row>
+              <BS.Col xs={6}>
+                <BS.FormGroup>
+                  <BS.ControlLabel>
+                    <FormattedMessage
+                      id="materialCostScaleFactor"
+                      defaultMessage="Material Cost Scale Factor"
+                    />
+                  </BS.ControlLabel>
+                  <BS.InputGroup>
+                    <BS.FormControl
+                      type="number"
+                      {...fields.material_cost_scale_factor}
+                    />
+                    <BS.InputGroup.Addon>%</BS.InputGroup.Addon>
+                  </BS.InputGroup>
+                </BS.FormGroup>
+              </BS.Col>
+              <BS.Col xs={6}>
+                <BS.Label>* (Material Used * Cost of Material)</BS.Label>
+              </BS.Col>
+            </BS.Row>
+            <BS.Row>
+              <BS.Col xs={6}>
+                <BS.FormGroup>
+                  <BS.ControlLabel>
+                    <FormattedMessage
+                      id="overheadCostPerPiece"
+                      defaultMessage="Overhead Cost Per Piece"
+                    />
+                  </BS.ControlLabel>
+                  <BS.InputGroup>
+                    <BS.FormControl
+                      type="number"
+                      {...fields.constant_overhead}
+                    />
+                    <BS.InputGroup.Addon>$</BS.InputGroup.Addon>
+                  </BS.InputGroup>
+                </BS.FormGroup>
+                <hr />
+                <BS.Label>{'= Custom Bureau Cost'}</BS.Label>
+              </BS.Col>
+            </BS.Row>
           </BS.Panel>
         </BS.Col>
-        <BS.Col sm={6}>
+        <BS.Col xs={12} sm={6}>
           <ExampleEstimates
             runningCostPerHour={fields.running_cost_per_hour.value}
             printCostScaleFactor={fields.print_cost_scale_factor.value}
