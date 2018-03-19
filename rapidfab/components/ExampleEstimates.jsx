@@ -26,10 +26,21 @@ const bureauCost = (
   runningCostPerHour
 ) => {
   // nautilus/platform/line_item.py _maybe_calculate_bureau_custom_cost
+  // we are using a quantity of 1
+
+  const materialCost = 0.05;
+
   const printTimeHours = printTime / 3600;
-  const cost1 = printCostScaleFactor * printTimeHours * runningCostPerHour;
-  const cost2 = materialCostScaleFactor * baseMaterialUsed * 0.1;
-  return cost1 + cost2 + constantOverhead;
+  const printingCost = printTimeHours * runningCostPerHour;
+  const printingCostScaled = printingCost * printCostScaleFactor / 100;
+
+  const baseMaterialCost = baseMaterialUsed * materialCost;
+  const baseMaterialCostScaled =
+    baseMaterialCost * materialCostScaleFactor / 100;
+
+  const perPieceCost = constantOverhead;
+
+  return printingCostScaled + baseMaterialCostScaled + perPieceCost;
 };
 
 const ExampleEstimates = ({
@@ -194,14 +205,14 @@ ExampleEstimates.defaultProps = {
   estimates: {
     print_time: 10000,
     amount: 10,
-    post_processing_cost: 10,
+    post_processing_cost: 0,
     materials: {
-      base: 1000,
-      support: 10,
+      base: 100,
+      support: 0,
     },
   },
   model: {
-    volume_mm: 100000,
+    volume_mm: 10000,
   },
   quantity: 1,
 };
