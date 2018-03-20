@@ -41,10 +41,8 @@ class OrderDocuments extends React.Component {
   }
 
   componentDidMount() {
-    const { dispatch, orderDocumentUUIDs } = this.props;
-    orderDocumentUUIDs.forEach(uuid =>
-      dispatch(Actions.Api.wyatt['order-document'].get(uuid))
-    );
+    const { dispatch, order } = this.props;
+    dispatch(Actions.Api.wyatt['order-document'].list({ order }));
   }
 
   onChange(event) {
@@ -120,21 +118,17 @@ class OrderDocuments extends React.Component {
 
 OrderDocuments.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  orderDocumentUUIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  order: PropTypes.string.isRequired,
   orderDocuments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => {
   const orderResource = state.resources[state.routeUUID];
   const order = orderResource.uri;
-  const orderResourceDocuments = orderResource.order_documents;
-  const orderDocumentUUIDs = orderResourceDocuments
-    ? orderResourceDocuments.map(doc => extractUuid(doc))
-    : [];
   const orderDocuments = getOrderDocuments(state).filter(
     orderDocument => orderDocument.order === order
   );
-  return { orderDocuments, orderDocumentUUIDs, order };
+  return { orderDocuments, order };
 };
 
 export default connect(mapStateToProps)(OrderDocuments);
