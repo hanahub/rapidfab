@@ -16,6 +16,7 @@ import { getOrderMaterialUsedEstimate } from 'rapidfab/selectors';
 const OrderEstimates = ({
   amount,
   base,
+  bureauCustom,
   currency,
   postProcessing,
   printTime,
@@ -139,6 +140,23 @@ const OrderEstimates = ({
           </Col>
         </Row>
       </ListGroupItem>
+      <ListGroupItem>
+        <Row>
+          <Col xs={8}>
+            <FormattedMessage
+              id="estimates.bureauCost"
+              defaultMessage="Bureau Cost"
+            />
+          </Col>
+          <Col xs={4}>
+            {bureauCustom ? (
+              <FormattedCost currency={currency} value={bureauCustom} />
+            ) : (
+              <FormattedMessage id="notAvailable" defaultMessage="N/A" />
+            )}
+          </Col>
+        </Row>
+      </ListGroupItem>
     </ListGroup>
   </Panel>
 );
@@ -149,6 +167,7 @@ const mapStateToProps = state => {
 
   const amount = _.get(estimates, 'cost.amount', null);
   const base = getOrderMaterialUsedEstimate(state, uri);
+  const bureauCustom = _.get(estimates, 'cost.bureau_custom', null);
   const postProcessing = _.get(estimates, 'cost.post_processing', null);
   const printTime = _.get(estimates, 'print_time', null);
   const shippingAmount = _.get(estimates, 'cost.shipping_amount', null);
@@ -157,6 +176,7 @@ const mapStateToProps = state => {
   return {
     amount,
     base,
+    bureauCustom,
     currency,
     postProcessing,
     printTime,
@@ -168,6 +188,7 @@ const mapStateToProps = state => {
 OrderEstimates.defaultProps = {
   amount: null,
   base: null,
+  bureauCustom: null,
   currency: 'USD',
   postProcessing: null,
   printTime: null,
@@ -178,6 +199,7 @@ OrderEstimates.defaultProps = {
 OrderEstimates.propTypes = {
   amount: PropTypes.number,
   base: PropTypes.number,
+  bureauCustom: PropTypes.number,
   currency: PropTypes.string,
   postProcessing: PropTypes.number,
   printTime: PropTypes.number,
