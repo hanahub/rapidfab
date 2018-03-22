@@ -8,27 +8,6 @@ import Actions from 'rapidfab/actions';
 import { getOrderDocuments } from 'rapidfab/selectors';
 import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
 
-const OrderDocument = ({ download, name, onDelete, uuid }) => (
-  <ListGroupItem>
-    <a href={download}>{name || uuid}</a>
-    <Button
-      className="pull-right"
-      bsStyle="danger"
-      bsSize="xsmall"
-      onClick={() => onDelete(uuid)}
-    >
-      <Fa name="times" />
-    </Button>
-  </ListGroupItem>
-);
-
-OrderDocument.propTypes = {
-  download: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  uuid: PropTypes.string.isRequired,
-};
-
 class OrderDocuments extends React.Component {
   constructor(props) {
     super(props);
@@ -37,14 +16,13 @@ class OrderDocuments extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onDownload = this.onDownload.bind(this);
     this.uploadDocument = this.uploadDocument.bind(this);
   }
 
   componentDidMount() {
-    const { dispatch, orderDocumentUUIDs } = this.props;
-    orderDocumentUUIDs.forEach(uuid =>
-      dispatch(Actions.Api.wyatt['order-document'].get(uuid))
-    );
+    const { dispatch, order } = this.props;
+    dispatch(Actions.Api.wyatt['order-document'].list({ order }));
   }
 
   onChange(event) {
@@ -56,6 +34,13 @@ class OrderDocuments extends React.Component {
     const { dispatch, order } = this.props;
     await dispatch(Actions.Api.wyatt['order-document'].delete(uuid));
     await dispatch(Actions.Api.wyatt.order.get(extractUuid(order)));
+  }
+
+  async onDownload(uri) {
+    await this.props.dispatch(
+      Actions.Api.wyatt['order-document'].get(extractUuid(uri))
+    );
+    this[uri].click();
   }
 
   async uploadDocument() {
@@ -82,10 +67,12 @@ class OrderDocuments extends React.Component {
   }
 
   render() {
-    const { onChange, onDelete, uploadDocument } = this;
+    const { onChange, onDelete, onDownload, uploadDocument } = this;
     const { upload } = this.state;
     const { orderDocuments } = this.props;
 
+    /* eslint-disable jsx-a11y/no-static-element-interactions */
+    /* eslint-disable jsx-a11y/anchor-has-content */
     return (
       <Panel bsStyle="primary">
         <ListGroup fill>
@@ -95,13 +82,27 @@ class OrderDocuments extends React.Component {
         </ListGroup>
 
         {orderDocuments.map(orderDocument => (
-          <OrderDocument
-            download={orderDocument.content ? orderDocument.content : null}
-            name={orderDocument.name}
-            onDelete={onDelete}
-            key={orderDocument.uri}
-            uuid={extractUuid(orderDocument.uri)}
-          />
+          <ListGroupItem key={orderDocument.uri}>
+            <a download="test" onClick={() => onDownload(orderDocument.uri)}>
+              {orderDocument.name || extractUuid(orderDocument.uri)}
+            </a>
+            <a
+              href={orderDocument.content}
+              download
+              style={{ display: 'none' }}
+              ref={node => {
+                this[orderDocument.uri] = node;
+              }}
+            />
+            <Button
+              className="pull-right"
+              bsStyle="danger"
+              bsSize="xsmall"
+              onClick={() => onDelete(extractUuid(orderDocument.uri))}
+            >
+              <Fa name="times" />
+            </Button>
+          </ListGroupItem>
         ))}
 
         <br />
@@ -120,21 +121,17 @@ class OrderDocuments extends React.Component {
 
 OrderDocuments.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  orderDocumentUUIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  order: PropTypes.string.isRequired,
   orderDocuments: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = state => {
   const orderResource = state.resources[state.routeUUID];
   const order = orderResource.uri;
-  const orderResourceDocuments = orderResource.order_documents;
-  const orderDocumentUUIDs = orderResourceDocuments
-    ? orderResourceDocuments.map(doc => extractUuid(doc))
-    : [];
   const orderDocuments = getOrderDocuments(state).filter(
     orderDocument => orderDocument.order === order
   );
-  return { orderDocuments, orderDocumentUUIDs, order };
+  return { orderDocuments, order };
 };
 
 export default connect(mapStateToProps)(OrderDocuments);
