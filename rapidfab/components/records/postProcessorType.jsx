@@ -10,8 +10,10 @@ import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const CostTooltip = (
   <BS.Tooltip>
-    Currency is chosen per order. Update your currency conversions in the
-    Inventory.
+    <FormattedMessage
+      id="costTooltip"
+      defaultMessage="Currency is chosen per order. Update your currency conversions in the Inventory."
+    />
   </BS.Tooltip>
 );
 
