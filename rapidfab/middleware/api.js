@@ -88,7 +88,11 @@ function apiMiddleware({ dispatch, getState }) {
       );
       if (failedToFetch) {
         Raven.captureException(
-          new Error(`Failed to ${api.method} ${url}. Got status ${status}`),
+          new Error(
+            `Failed to ${api.method} ${url}. ${
+              status ? `Got status ${status}` : null
+            }`
+          ),
           {
             extra: { api, uuid, filters, errors, payload },
           }
