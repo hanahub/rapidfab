@@ -8,6 +8,13 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
+const CostTooltip = (
+  <BS.Tooltip>
+    Currency is chosen per order. Update your currency conversions in the
+    Inventory.
+  </BS.Tooltip>
+);
+
 const PostProcessorTypeForm = ({
   fields,
   handleSubmit,
@@ -74,13 +81,20 @@ const PostProcessorTypeForm = ({
                 id="field.costPerMinute"
                 defaultMessage="Cost Per Minute"
               />:
+              {` `}
+              <BS.OverlayTrigger placement="top" overlay={CostTooltip}>
+                <Fa name="question-circle" />
+              </BS.OverlayTrigger>
             </BS.ControlLabel>
-            <BS.FormControl
-              name="cost"
-              type="number"
-              {...fields.cost}
-              required
-            />
+            <BS.InputGroup>
+              <BS.FormControl
+                name="cost"
+                type="number"
+                {...fields.cost}
+                required
+              />
+              <BS.InputGroup.Addon>$</BS.InputGroup.Addon>
+            </BS.InputGroup>
           </BS.FormGroup>
           <BS.FormGroup controlId="uxDuration">
             <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
