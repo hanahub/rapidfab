@@ -78,7 +78,6 @@ function mapStateToProps(state, props) {
       state,
       'wyatt.post-processor-type'
     ),
-    apiErrors: Selectors.getResourceErrors(state, 'wyatt.post-processor-type'),
     materials: Selectors.getMaterials(state),
     manufacturers: Selectors.getManufacturers(state),
   };

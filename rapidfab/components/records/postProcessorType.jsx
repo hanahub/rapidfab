@@ -5,8 +5,8 @@ import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
-import Error from 'rapidfab/components/error';
 
 const PostProcessorTypeForm = ({
   fields,
@@ -14,7 +14,6 @@ const PostProcessorTypeForm = ({
   onDelete,
   manufacturers,
   materials,
-  apiErrors,
 }) => (
   <form onSubmit={handleSubmit}>
     <BS.Grid fluid>
@@ -46,11 +45,7 @@ const PostProcessorTypeForm = ({
 
       <hr />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
+      <FlashMessages />
 
       <BS.Row>
         <BS.Col xs={12}>
@@ -151,7 +146,6 @@ PostProcessorTypeForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
   manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PostProcessorTypeForm;
