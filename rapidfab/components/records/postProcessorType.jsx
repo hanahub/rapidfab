@@ -9,26 +9,16 @@ import {
   Grid,
   InputGroup,
   MenuItem,
-  OverlayTrigger,
   Row,
   SplitButton,
-  Tooltip,
 } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CostTooltip from 'rapidfab/components/CostTooltip';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
-
-const CostTooltip = (
-  <Tooltip>
-    <FormattedMessage
-      id="costTooltip"
-      defaultMessage="Currency is chosen per order. Update your currency conversions in the Inventory."
-    />
-  </Tooltip>
-);
 
 const PostProcessorTypeForm = ({
   fields,
@@ -97,9 +87,7 @@ const PostProcessorTypeForm = ({
                 defaultMessage="Cost Per Minute"
               />:
               {` `}
-              <OverlayTrigger placement="top" overlay={CostTooltip}>
-                <Fa name="question-circle" />
-              </OverlayTrigger>
+              <CostTooltip />
             </ControlLabel>
             <InputGroup>
               <FormControl
