@@ -202,6 +202,7 @@ export default {
   "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": " ’Omkostninger",
   "estimates.endTime": " ’Sluttid",
+  "estimates.materialCost": "Material Cost",
   "estimates.materialUsed": " ’Anvendte materialer",
   "estimates.postProcessingCost": "’Efterbehandling omkostninger",
   "estimates.postProcessingTime": "’Efterbehandling tid",

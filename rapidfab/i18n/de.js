@@ -202,6 +202,7 @@ export default {
   "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": "Kosten",
   "estimates.endTime": "Endzeit",
+  "estimates.materialCost": "Materialkosten",
   "estimates.materialUsed": "Verwendetes Material",
   "estimates.postProcessingCost": "Nachbearbeitungskosten",
   "estimates.postProcessingTime": "Nachbearbeitungszeit",

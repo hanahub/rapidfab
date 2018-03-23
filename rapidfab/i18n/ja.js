@@ -200,6 +200,7 @@ export default {
   "estimates.bureauCost": "Bureau Cost",
   "estimates.cost": "コスト 、",
   "estimates.endTime": " 終了時刻",
+  "estimates.materialCost": "Material Cost",
   "estimates.materialUsed": "使用される材料 、",
   "estimates.postProcessingCost": " 後処理コスト",
   "estimates.postProcessingTime": " 後処理時間",
