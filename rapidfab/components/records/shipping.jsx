@@ -1,20 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import {
+  ButtonToolbar,
+  ControlLabel,
+  Col,
+  FormControl,
+  FormGroup,
+  Grid,
+  MenuItem,
+  Row,
+  SplitButton,
+} from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CostTooltip from 'rapidfab/components/CostTooltip';
 import Error from 'rapidfab/components/error';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
 const ShippingForm = ({ fields, handleSubmit, onDelete, apiErrors }) => (
   <form onSubmit={handleSubmit}>
-    <BS.Grid fluid>
+    <Grid fluid>
       <BreadcrumbNav breadcrumbs={['shipping', fields.id.value || 'New']} />
       <div className="clearfix">
-        <BS.ButtonToolbar className="pull-right">
-          <BS.SplitButton
+        <ButtonToolbar className="pull-right">
+          <SplitButton
             id="uxSaveDropdown"
             type="submit"
             bsStyle="success"
@@ -22,49 +33,46 @@ const ShippingForm = ({ fields, handleSubmit, onDelete, apiErrors }) => (
             title={<SaveButtonTitle />}
             pullRight
           >
-            <BS.MenuItem
+            <MenuItem
               eventKey={1}
               onClick={() => onDelete(fields.uuid.value)}
               disabled={!fields.id.value}
             >
               <Fa name="ban" />{' '}
               <FormattedMessage id="button.delete" defaultMessage="Delete" />
-            </BS.MenuItem>
-          </BS.SplitButton>
-        </BS.ButtonToolbar>
+            </MenuItem>
+          </SplitButton>
+        </ButtonToolbar>
       </div>
 
       <hr />
 
-      <BS.Row>
-        <BS.Col xs={12}>
+      <Row>
+        <Col xs={12}>
           <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
+        </Col>
+      </Row>
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.FormGroup controlId="uxRegion">
-            <BS.FormGroup controlId="uxName">
-              <BS.ControlLabel>
+      <Row>
+        <Col xs={12}>
+          <FormGroup controlId="uxRegion">
+            <FormGroup controlId="uxName">
+              <ControlLabel>
                 <FormattedMessage id="field.name" defaultMessage="Name" />:
-              </BS.ControlLabel>
-              <BS.FormControl type="text" required {...fields.name} />
-            </BS.FormGroup>
-            <BS.FormGroup controlId="uxDescription">
-              <BS.ControlLabel>
+              </ControlLabel>
+              <FormControl type="text" required {...fields.name} />
+            </FormGroup>
+            <FormGroup controlId="uxDescription">
+              <ControlLabel>
                 <FormattedMessage
                   id="field.description"
                   defaultMessage="Description"
                 />:
-              </BS.ControlLabel>
-              <BS.FormControl
-                componentClass="textarea"
-                {...fields.description}
-              />
-            </BS.FormGroup>
-            <BS.ControlLabel>Region:</BS.ControlLabel>
-            <BS.FormControl componentClass="select" required {...fields.region}>
+              </ControlLabel>
+              <FormControl componentClass="textarea" {...fields.description} />
+            </FormGroup>
+            <ControlLabel>Region:</ControlLabel>
+            <FormControl componentClass="select" required {...fields.region}>
               <option key="placeholder" value="" selected disabled>
                 Select a Region
               </option>
@@ -75,20 +83,17 @@ const ShippingForm = ({ fields, handleSubmit, onDelete, apiErrors }) => (
               <option value="europe">Europe</option>
               <option value="north-america">North America</option>
               <option value="south-america">South America</option>
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxCost">
-            <BS.ControlLabel>Cost:</BS.ControlLabel>
-            <BS.FormControl
-              name="cost"
-              type="number"
-              required
-              {...fields.cost}
-            />
-          </BS.FormGroup>
-        </BS.Col>
-      </BS.Row>
-    </BS.Grid>
+            </FormControl>
+          </FormGroup>
+          <FormGroup controlId="uxCost">
+            <ControlLabel>
+              Cost: <CostTooltip />
+            </ControlLabel>
+            <FormControl name="cost" type="number" required {...fields.cost} />
+          </FormGroup>
+        </Col>
+      </Row>
+    </Grid>
   </form>
 );
 
