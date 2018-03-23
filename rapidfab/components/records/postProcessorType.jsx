@@ -1,12 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+import {
+  ButtonToolbar,
+  Col,
+  ControlLabel,
+  FormControl,
+  FormGroup,
+  Grid,
+  InputGroup,
+  MenuItem,
+  OverlayTrigger,
+  Row,
+  SplitButton,
+  Tooltip,
+} from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
-import Error from 'rapidfab/components/error';
+
+const CostTooltip = (
+  <Tooltip>
+    <FormattedMessage
+      id="costTooltip"
+      defaultMessage="Currency is chosen per order. Update your currency conversions in the Inventory."
+    />
+  </Tooltip>
+);
 
 const PostProcessorTypeForm = ({
   fields,
@@ -14,17 +36,16 @@ const PostProcessorTypeForm = ({
   onDelete,
   manufacturers,
   materials,
-  apiErrors,
 }) => (
   <form onSubmit={handleSubmit}>
-    <BS.Grid fluid>
+    <Grid fluid>
       <BreadcrumbNav
         breadcrumbs={['postProcessorTypes', fields.id.value || 'New']}
       />
 
       <div className="clearfix">
-        <BS.ButtonToolbar className="pull-right">
-          <BS.SplitButton
+        <ButtonToolbar className="pull-right">
+          <SplitButton
             id="uxSaveDropdown"
             type="submit"
             bsStyle="success"
@@ -32,78 +53,81 @@ const PostProcessorTypeForm = ({
             title={<SaveButtonTitle />}
             pullRight
           >
-            <BS.MenuItem
+            <MenuItem
               eventKey={1}
               onClick={() => onDelete(fields.uuid.value)}
               disabled={!fields.id.value}
             >
               <Fa name="ban" />{' '}
               <FormattedMessage id="button.delete" defaultMessage="Delete" />
-            </BS.MenuItem>
-          </BS.SplitButton>
-        </BS.ButtonToolbar>
+            </MenuItem>
+          </SplitButton>
+        </ButtonToolbar>
       </div>
 
       <hr />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <Error errors={apiErrors} />
-        </BS.Col>
-      </BS.Row>
+      <FlashMessages />
 
-      <BS.Row>
-        <BS.Col xs={12}>
-          <BS.FormGroup controlId="uxName">
-            <BS.ControlLabel>
+      <Row>
+        <Col xs={12}>
+          <FormGroup controlId="uxName">
+            <ControlLabel>
               <FormattedMessage id="field.name" defaultMessage="Name" />:
-            </BS.ControlLabel>
-            <BS.FormControl name="name" type="text" required {...fields.name} />
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxDescription">
-            <BS.ControlLabel>
+            </ControlLabel>
+            <FormControl name="name" type="text" required {...fields.name} />
+          </FormGroup>
+          <FormGroup controlId="uxDescription">
+            <ControlLabel>
               <FormattedMessage
                 id="field.description"
                 defaultMessage="Description"
               />:
-            </BS.ControlLabel>
-            <BS.FormControl
+            </ControlLabel>
+            <FormControl
               name="description"
               type="text"
               {...fields.description}
             />
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxCost">
-            <BS.ControlLabel>
+          </FormGroup>
+          <FormGroup controlId="uxCost">
+            <ControlLabel>
               <FormattedMessage
                 id="field.costPerMinute"
                 defaultMessage="Cost Per Minute"
               />:
-            </BS.ControlLabel>
-            <BS.FormControl
-              name="cost"
-              type="number"
-              {...fields.cost}
-              required
-            />
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxDuration">
-            <BS.ControlLabel>Duration (seconds):</BS.ControlLabel>
-            <BS.FormControl
+              {` `}
+              <OverlayTrigger placement="top" overlay={CostTooltip}>
+                <Fa name="question-circle" />
+              </OverlayTrigger>
+            </ControlLabel>
+            <InputGroup>
+              <FormControl
+                name="cost"
+                type="number"
+                {...fields.cost}
+                required
+              />
+              <InputGroup.Addon>$</InputGroup.Addon>
+            </InputGroup>
+          </FormGroup>
+          <FormGroup controlId="uxDuration">
+            <ControlLabel>Duration (seconds):</ControlLabel>
+            <FormControl
               name="duration"
               type="number"
               required
               {...fields.duration}
             />
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxMaterials">
-            <BS.ControlLabel>
+          </FormGroup>
+          <FormGroup controlId="uxMaterials">
+            <ControlLabel>
               <FormattedMessage
                 id="field.materials"
                 defaultMessage="Materials"
               />:
-            </BS.ControlLabel>
-            <BS.FormControl
+            </ControlLabel>
+            <FormControl
               componentClass="select"
               multiple
               required
@@ -114,16 +138,16 @@ const PostProcessorTypeForm = ({
                   {material.name}
                 </option>
               ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="uxManufacturer">
-            <BS.ControlLabel>
+            </FormControl>
+          </FormGroup>
+          <FormGroup controlId="uxManufacturer">
+            <ControlLabel>
               <FormattedMessage
                 id="field.manufacturer"
                 defaultMessage="Manufacturer"
               />:
-            </BS.ControlLabel>
-            <BS.FormControl
+            </ControlLabel>
+            <FormControl
               componentClass="select"
               placeholder="manufacturer"
               required
@@ -137,11 +161,11 @@ const PostProcessorTypeForm = ({
                   {manufacturer.name}
                 </option>
               ))}
-            </BS.FormControl>
-          </BS.FormGroup>
-        </BS.Col>
-      </BS.Row>
-    </BS.Grid>
+            </FormControl>
+          </FormGroup>
+        </Col>
+      </Row>
+    </Grid>
   </form>
 );
 
@@ -151,7 +175,6 @@ PostProcessorTypeForm.propTypes = {
   onDelete: PropTypes.func.isRequired,
   manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PostProcessorTypeForm;

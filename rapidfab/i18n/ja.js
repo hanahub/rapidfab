@@ -12,6 +12,7 @@ export default {
   "commercial": "Commercial",
   "costPerUnit": "Cost Per Unit",
   "costReport": "Cost Report",
+  "costTooltip": "Currency is chosen per order. Update your currency conversions in the Inventory.",
   "createNewUser": " 新しいユーザーの作成",
   "createUser": " ユーザーの作成",
   "CSV": "CSV Order Report",
