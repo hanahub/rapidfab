@@ -159,8 +159,8 @@ const ExampleEstimates = ({
           <Row>
             <Col xs={8}>
               <FormattedMessage
-                id="estimates.printingCost"
-                defaultMessage="Printing Cost"
+                id="estimates.materialCost"
+                defaultMessage="Material Cost"
               />
             </Col>
             <Col xs={4}>
