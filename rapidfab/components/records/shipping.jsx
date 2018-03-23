@@ -9,6 +9,7 @@ import {
   FormControl,
   FormGroup,
   Grid,
+  InputGroup,
   MenuItem,
   Row,
   SplitButton,
@@ -85,7 +86,15 @@ const ShippingForm = ({ fields, handleSubmit, onDelete }) => (
             <ControlLabel>
               Cost: <CostTooltip />
             </ControlLabel>
-            <FormControl name="cost" type="number" required {...fields.cost} />
+            <InputGroup>
+              <FormControl
+                name="cost"
+                type="number"
+                required
+                {...fields.cost}
+              />
+              <InputGroup.Addon>$</InputGroup.Addon>
+            </InputGroup>
           </FormGroup>
         </Col>
       </Row>
