@@ -16,10 +16,10 @@ import {
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import CostTooltip from 'rapidfab/components/CostTooltip';
-import Error from 'rapidfab/components/error';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 
-const ShippingForm = ({ fields, handleSubmit, onDelete, apiErrors }) => (
+const ShippingForm = ({ fields, handleSubmit, onDelete }) => (
   <form onSubmit={handleSubmit}>
     <Grid fluid>
       <BreadcrumbNav breadcrumbs={['shipping', fields.id.value || 'New']} />
@@ -47,11 +47,7 @@ const ShippingForm = ({ fields, handleSubmit, onDelete, apiErrors }) => (
 
       <hr />
 
-      <Row>
-        <Col xs={12}>
-          <Error errors={apiErrors} />
-        </Col>
-      </Row>
+      <FlashMessages />
 
       <Row>
         <Col xs={12}>
@@ -101,7 +97,6 @@ ShippingForm.propTypes = {
   fields: PropTypes.shape({}).isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ShippingForm;
