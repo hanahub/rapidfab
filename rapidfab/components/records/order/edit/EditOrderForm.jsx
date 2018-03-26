@@ -174,21 +174,23 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
       </FormRow>
     </Feature>
 
+    <Feature featureName="order-order-type">
+      <FormRow id="field.orderType" defaultMessage="Order Type">
+        <FormControl componentClass="select" {...fields.order_type}>
+          <option value="none">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
+          {Object.keys(ORDER_TYPE_EOS_MAPPING).map(type => (
+            <option key={type} value={type}>
+              {ORDER_TYPE_EOS_MAPPING[type]}
+            </option>
+          ))}
+        </FormControl>
+      </FormRow>
+    </Feature>
+
     <Feature featureName="eos-order-fields">
       <div>
-        <FormRow id="field.orderType" defaultMessage="Order Type">
-          <FormControl componentClass="select" {...fields.order_type}>
-            <option value="none">
-              <FormattedMessage id="field.none" defaultMessage="None" />
-            </option>
-            {Object.keys(ORDER_TYPE_EOS_MAPPING).map(type => (
-              <option key={type} value={type}>
-                {ORDER_TYPE_EOS_MAPPING[type]}
-              </option>
-            ))}
-          </FormControl>
-        </FormRow>
-
         <FormRow id="field.sales_status" defaultMessage="Sales Status">
           <FormControl componentClass="select" {...fields.sales_status}>
             {Object.keys(ORDER_SALES_MAPPING).map(type => (
