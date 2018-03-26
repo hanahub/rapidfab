@@ -16,7 +16,7 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 const StocksGrid = ({ stocks, materials, locations }) => (
   <Grid
     data={stocks}
-    columns={['id', 'material', 'location', 'status', 'quantity', 'units']}
+    columns={['id', 'material', 'location', 'status', 'quantity']}
     columnMeta={[
       {
         displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
