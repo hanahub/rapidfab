@@ -141,6 +141,9 @@ const EditOrderForm = ({ created, fields, shippings, users }) => (
     <Feature featureName="order-business-segment">
       <FormRow id="businessSegment" defaultMessage="Business Segment">
         <FormControl componentClass="select" {...fields.business_segment}>
+          <option value="">
+            <FormattedMessage id="field.none" defaultMessage="None" />
+          </option>
           {Object.keys(ORDER_BUSINESS_SEGMENT_MAPPING).map(type => (
             <option key={type} value={type}>
               {ORDER_BUSINESS_SEGMENT_MAPPING[type]}
