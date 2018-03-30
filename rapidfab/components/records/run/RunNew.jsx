@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import * as BS from 'react-bootstrap';
+import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
@@ -117,12 +117,12 @@ class RunNew extends Component {
     const inactivePrints = _.differenceBy(prints, activePrints, 'uri');
 
     return (
-      <BS.Grid fluid>
+      <Grid fluid>
         <BreadcrumbNav breadcrumbs={['runs', 'New']} />
 
         <div className="clearfix">
-          <BS.ButtonToolbar className="pull-right">
-            <BS.Button
+          <ButtonToolbar className="pull-right">
+            <Button
               bsSize="small"
               onClick={this.handleSave}
               disabled={!activePrints.length}
@@ -130,8 +130,8 @@ class RunNew extends Component {
             >
               <Fa name="floppy-o" />{' '}
               <FormattedMessage id="button.save" defaultMessage="Save" />
-            </BS.Button>
-          </BS.ButtonToolbar>
+            </Button>
+          </ButtonToolbar>
         </div>
 
         <hr />
@@ -141,18 +141,18 @@ class RunNew extends Component {
         {(() => {
           if (fetching) {
             return (
-              <BS.Row>
-                <BS.Col xs={12}>
+              <Row>
+                <Col xs={12}>
                   <div style={{ textAlign: 'center' }}>
                     <Fa name="spinner" spin size="2x" />
                   </div>
-                </BS.Col>
-              </BS.Row>
+                </Col>
+              </Row>
             );
           }
           return (
-            <BS.Row>
-              <BS.Col xs={12} lg={4}>
+            <Row>
+              <Col xs={12} lg={4}>
                 <PrintsList
                   prints={inactivePrints}
                   selected={selectedPrints}
@@ -162,10 +162,10 @@ class RunNew extends Component {
                   onPageChange={this.props.onPageChange}
                   orderNamesMap={orderNamesMap}
                 />
-              </BS.Col>
-              <BS.Col xs={12} lg={8}>
-                <BS.Row>
-                  <BS.Col xs={12}>
+              </Col>
+              <Col xs={12} lg={8}>
+                <Row>
+                  <Col xs={12}>
                     <ActivePrints
                       printer={selectedPrinter}
                       prints={activePrints}
@@ -174,23 +174,23 @@ class RunNew extends Component {
                       onDeactivate={this.handleDeactivatePrints}
                       orderNamesMap={orderNamesMap}
                     />
-                  </BS.Col>
-                </BS.Row>
-                <BS.Row>
-                  <BS.Col xs={12}>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
                     <PrintersList
                       printers={printers}
                       selected={selectedPrinter}
                       onSelect={this.handleSelectPrinter}
                       modelers={this.props.modelers}
                     />
-                  </BS.Col>
-                </BS.Row>
-              </BS.Col>
-            </BS.Row>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
           );
         })()}
-      </BS.Grid>
+      </Grid>
     );
   }
 }
