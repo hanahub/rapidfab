@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { differenceBy, find, filter, head, map, unionBy } from 'lodash';
+import { differenceBy, head, map, unionBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
@@ -37,10 +37,9 @@ class RunNew extends Component {
 
   handleSelectPrint(print) {
     const { selectedPrints } = this.state;
-    if (find(selectedPrints, ['uri', print.uri])) {
+    if (selectedPrints.find(selectedPrint => selectedPrint.uri === print.uri)) {
       this.setState({
-        selectedPrints: filter(
-          selectedPrints,
+        selectedPrints: selectedPrints.filter(
           selectedPrint => selectedPrint.uri !== print.uri
         ),
       });
@@ -53,11 +52,12 @@ class RunNew extends Component {
 
   handleSelectActivePrint(print) {
     const { activePrintsSelected } = this.state;
-    if (find(activePrintsSelected, ['uri', print.uri])) {
+    if (
+      activePrintsSelected.find(activePrint => activePrint.uri === print.uri)
+    ) {
       this.setState({
-        activePrintsSelected: filter(
-          activePrintsSelected,
-          activePrintSelected => activePrintSelected.uri !== print.uri
+        activePrintsSelected: activePrintsSelected.filter(
+          activePrint => activePrint.uri === print.uri
         ),
       });
     } else {
@@ -135,58 +135,53 @@ class RunNew extends Component {
 
         <FlashMessages />
 
-        {(() => {
-          if (fetching) {
-            return (
+        {fetching ? (
+          <Row>
+            <Col xs={12}>
+              <div style={{ textAlign: 'center' }}>
+                <Fa name="spinner" spin size="2x" />
+              </div>
+            </Col>
+          </Row>
+        ) : (
+          <Row>
+            <Col xs={12} lg={4}>
+              <PrintsList
+                prints={inactivePrints}
+                selected={selectedPrints}
+                onSelect={this.handleSelectPrint}
+                onActivate={this.handleActivatePrints}
+                pager={pager}
+                onPageChange={this.props.onPageChange}
+                orderNamesMap={orderNamesMap}
+              />
+            </Col>
+            <Col xs={12} lg={8}>
               <Row>
                 <Col xs={12}>
-                  <div style={{ textAlign: 'center' }}>
-                    <Fa name="spinner" spin size="2x" />
-                  </div>
+                  <ActivePrints
+                    printer={selectedPrinter}
+                    prints={activePrints}
+                    selected={activePrintsSelected}
+                    onSelect={this.handleSelectActivePrint}
+                    onDeactivate={this.handleDeactivatePrints}
+                    orderNamesMap={orderNamesMap}
+                  />
                 </Col>
               </Row>
-            );
-          }
-          return (
-            <Row>
-              <Col xs={12} lg={4}>
-                <PrintsList
-                  prints={inactivePrints}
-                  selected={selectedPrints}
-                  onSelect={this.handleSelectPrint}
-                  onActivate={this.handleActivatePrints}
-                  pager={pager}
-                  onPageChange={this.props.onPageChange}
-                  orderNamesMap={orderNamesMap}
-                />
-              </Col>
-              <Col xs={12} lg={8}>
-                <Row>
-                  <Col xs={12}>
-                    <ActivePrints
-                      printer={selectedPrinter}
-                      prints={activePrints}
-                      selected={activePrintsSelected}
-                      onSelect={this.handleSelectActivePrint}
-                      onDeactivate={this.handleDeactivatePrints}
-                      orderNamesMap={orderNamesMap}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={12}>
-                    <PrintersList
-                      printers={printers}
-                      selected={selectedPrinter}
-                      onSelect={this.handleSelectPrinter}
-                      modelers={this.props.modelers}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          );
-        })()}
+              <Row>
+                <Col xs={12}>
+                  <PrintersList
+                    printers={printers}
+                    selected={selectedPrinter}
+                    onSelect={this.handleSelectPrinter}
+                    modelers={this.props.modelers}
+                  />
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        )}
       </Grid>
     );
   }
