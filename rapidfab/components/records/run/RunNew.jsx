@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+import { differenceBy, find, filter, head, map, unionBy } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
-import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
@@ -16,7 +17,7 @@ class RunNew extends Component {
     super(props);
 
     this.state = {
-      selectedPrinter: _.head(props.printers),
+      selectedPrinter: head(props.printers),
       selectedPrints: [],
       activePrintsSelected: [],
       activePrints: [],
@@ -37,31 +38,31 @@ class RunNew extends Component {
   }
 
   handleSelectPrint(print) {
-    if (_.find(this.state.selectedPrints, ['uri', print.uri])) {
+    if (find(this.state.selectedPrints, ['uri', print.uri])) {
       this.setState({
-        selectedPrints: _.filter(
+        selectedPrints: filter(
           this.state.selectedPrints,
           selectedPrint => selectedPrint.uri !== print.uri
         ),
       });
     } else {
       this.setState({
-        selectedPrints: _.unionBy(this.state.selectedPrints, [print], 'uri'),
+        selectedPrints: unionBy(this.state.selectedPrints, [print], 'uri'),
       });
     }
   }
 
   handleSelectActivePrint(print) {
-    if (_.find(this.state.activePrintsSelected, ['uri', print.uri])) {
+    if (find(this.state.activePrintsSelected, ['uri', print.uri])) {
       this.setState({
-        activePrintsSelected: _.filter(
+        activePrintsSelected: filter(
           this.state.activePrintsSelected,
           activePrintSelected => activePrintSelected.uri !== print.uri
         ),
       });
     } else {
       this.setState({
-        activePrintsSelected: _.unionBy(
+        activePrintsSelected: unionBy(
           this.state.activePrintsSelected,
           [print],
           'uri'
@@ -72,7 +73,7 @@ class RunNew extends Component {
 
   handleActivatePrints() {
     this.setState({
-      activePrints: _.unionBy(
+      activePrints: unionBy(
         this.state.activePrints,
         this.state.selectedPrints,
         'uri'
@@ -83,7 +84,7 @@ class RunNew extends Component {
 
   handleDeactivatePrints() {
     this.setState({
-      activePrints: _.differenceBy(
+      activePrints: differenceBy(
         this.state.activePrints,
         this.state.activePrintsSelected,
         'uri'
@@ -99,7 +100,7 @@ class RunNew extends Component {
       this.props.onSave({
         printer: selectedPrinter.uri,
         printer_type: selectedPrinter.printer_type.uri,
-        prints: _.map(activePrints, 'uri'),
+        prints: map(activePrints, 'uri'),
       });
     }
   }
@@ -114,7 +115,7 @@ class RunNew extends Component {
       activePrintsSelected,
     } = this.state;
 
-    const inactivePrints = _.differenceBy(prints, activePrints, 'uri');
+    const inactivePrints = differenceBy(prints, activePrints, 'uri');
 
     return (
       <Grid fluid>
