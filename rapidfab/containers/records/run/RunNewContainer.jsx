@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { chunk } from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
             return status === 'confirmed' || status === 'printing';
           });
 
-          _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
+          chunk(printableLineItems, 15).forEach(lineItemChunk => {
             const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
             const lineItemModels = lineItemChunk.map(
               lineItem => lineItem.model
