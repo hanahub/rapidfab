@@ -11,7 +11,7 @@ import PrintersList from './printersList';
 import PrintsList from './printsList';
 import ActivePrints from './activePrints';
 
-class Runs extends Component {
+class RunNew extends Component {
   constructor(props) {
     super(props);
 
@@ -195,7 +195,7 @@ class Runs extends Component {
   }
 }
 
-Runs.propTypes = {
+RunNew.propTypes = {
   printers: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSave: PropTypes.func.isRequired,
   modelers: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -206,4 +206,4 @@ Runs.propTypes = {
   onPageChange: PropTypes.func.isRequired,
 };
 
-export default Runs;
+export default RunNew;

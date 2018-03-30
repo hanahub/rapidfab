@@ -15,7 +15,7 @@ import {
   getProcessSteps,
 } from 'rapidfab/selectors';
 
-import RunComponent from 'rapidfab/components/records/run/new';
+import RunNew from 'rapidfab/components/records/run/RunNew';
 import Loading from 'rapidfab/components/Loading';
 
 const printsPerPage = 10;
@@ -30,7 +30,7 @@ class RunNewContainer extends Component {
   }
 
   render() {
-    return this.props.loading ? <Loading /> : <RunComponent {...this.props} />;
+    return this.props.loading ? <Loading /> : <RunNew {...this.props} />;
   }
 }
 
