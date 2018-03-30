@@ -1,12 +1,21 @@
-import { chunk } from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import RunComponent from 'rapidfab/components/records/run/new';
-import * as Selectors from 'rapidfab/selectors';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import { chunk } from 'lodash';
 
+import Actions from 'rapidfab/actions';
+import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import {
+  getBureauUri,
+  getLineItemsForRunNew,
+  getModelers,
+  getOrderNamesByURI,
+  getPrinterTypes,
+  getPrintersForRunNew,
+  getProcessSteps,
+} from 'rapidfab/selectors';
+
+import RunComponent from 'rapidfab/components/records/run/new';
 import Loading from 'rapidfab/components/Loading';
 
 const printsPerPage = 10;
@@ -90,7 +99,14 @@ const getPager = (state, prints) => ({
 });
 
 function mapStateToProps(state) {
-  const bureau = Selectors.getBureauUri(state);
+  const bureau = getBureauUri(state);
+  const lineItems = getLineItemsForRunNew(state);
+  const modelers = getModelers(state);
+  const orderNamesMap = getOrderNamesByURI(state);
+  const processSteps = getProcessSteps(state);
+  const printerTypes = getPrinterTypes(state);
+  const printers = getPrintersForRunNew(state);
+
   const fetching =
     state.ui.hoth.model.list.fetching ||
     state.ui.nautilus.modeler.list.fetching ||
@@ -102,12 +118,6 @@ function mapStateToProps(state) {
     state.ui.wyatt['printer-type'].list.fetching ||
     state.ui.wyatt['process-step'].list.fetching ||
     state.ui.wyatt.run.post.fetching;
-  const lineItems = Selectors.getLineItemsForRunNew(state);
-  const modelers = Selectors.getModelers(state);
-  const orderNamesMap = Selectors.getOrderNamesByURI(state);
-  const processSteps = Selectors.getProcessSteps(state);
-  const printerTypes = Selectors.getPrinterTypes(state);
-  const printers = Selectors.getPrintersForRunNew(state);
 
   const lineItemPrints = lineItems.reduce(
     (prints, lineItem) => [...prints, ...lineItem.prints],
