@@ -32,41 +32,37 @@ class RunNew extends Component {
   }
 
   handleSelectPrinter(printer) {
-    this.setState({
-      selectedPrinter: printer,
-    });
+    this.setState({ selectedPrinter: printer });
   }
 
   handleSelectPrint(print) {
-    if (find(this.state.selectedPrints, ['uri', print.uri])) {
+    const { selectedPrints } = this.state;
+    if (find(selectedPrints, ['uri', print.uri])) {
       this.setState({
         selectedPrints: filter(
-          this.state.selectedPrints,
+          selectedPrints,
           selectedPrint => selectedPrint.uri !== print.uri
         ),
       });
     } else {
       this.setState({
-        selectedPrints: unionBy(this.state.selectedPrints, [print], 'uri'),
+        selectedPrints: unionBy(selectedPrints, [print], 'uri'),
       });
     }
   }
 
   handleSelectActivePrint(print) {
-    if (find(this.state.activePrintsSelected, ['uri', print.uri])) {
+    const { activePrintsSelected } = this.state;
+    if (find(activePrintsSelected, ['uri', print.uri])) {
       this.setState({
         activePrintsSelected: filter(
-          this.state.activePrintsSelected,
+          activePrintsSelected,
           activePrintSelected => activePrintSelected.uri !== print.uri
         ),
       });
     } else {
       this.setState({
-        activePrintsSelected: unionBy(
-          this.state.activePrintsSelected,
-          [print],
-          'uri'
-        ),
+        activePrintsSelected: unionBy(activePrintsSelected, [print], 'uri'),
       });
     }
   }
