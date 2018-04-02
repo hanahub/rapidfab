@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { differenceBy, head, map, unionBy } from 'lodash';
+import { differenceBy, head, unionBy } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
@@ -96,7 +96,7 @@ class RunNew extends Component {
       this.props.onSave({
         printer: selectedPrinter.uri,
         printer_type: selectedPrinter.printer_type.uri,
-        prints: map(activePrints, 'uri'),
+        prints: activePrints.map(activePrint => activePrint.uri),
       });
     }
   }
