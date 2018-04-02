@@ -8,6 +8,7 @@ import Fa from 'react-fontawesome';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import Loading from 'rapidfab/components/Loading';
 import PrintersList from './printersList';
 import PrintsList from './printsList';
 import ActivePrints from './activePrints';
@@ -136,13 +137,7 @@ class RunNew extends Component {
         <FlashMessages />
 
         {fetching ? (
-          <Row>
-            <Col xs={12}>
-              <div style={{ textAlign: 'center' }}>
-                <Fa name="spinner" spin size="2x" />
-              </div>
-            </Col>
-          </Row>
+          <Loading />
         ) : (
           <Row>
             <Col xs={12} lg={4}>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { chunk } from 'lodash';
 
 import Actions from 'rapidfab/actions';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import extractUuid from 'rapidfab/utils/extractUuid';
 import {
   getBureauUri,
   getLineItemsForRunNew,
@@ -16,7 +16,6 @@ import {
 } from 'rapidfab/selectors';
 
 import RunNew from 'rapidfab/components/records/run/RunNew';
-import Loading from 'rapidfab/components/Loading';
 
 const printsPerPage = 10;
 
@@ -25,12 +24,9 @@ class RunNewContainer extends Component {
     const { bureau, uuid } = this.props;
     this.props.onInitialize(bureau, uuid);
   }
-  componentWillUnmount() {
-    this.props.onUnmount();
-  }
 
   render() {
-    return this.props.loading ? <Loading /> : <RunNew {...this.props} />;
+    return <RunNew {...this.props} />;
   }
 }
 
@@ -41,10 +37,9 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['line-item'].list({ bureau })).then(
         response => {
           const lineItems = response.json.resources;
-          const printableLineItems = lineItems.filter(lineItem => {
-            const { status } = lineItem;
-            return status === 'confirmed' || status === 'printing';
-          });
+          const printableLineItems = lineItems.filter(
+            ({ status }) => status === 'confirmed' || status === 'printing'
+          );
 
           chunk(printableLineItems, 15).forEach(lineItemChunk => {
             const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
@@ -87,9 +82,6 @@ function mapDispatchToProps(dispatch) {
         )}`;
       }),
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
-    onUnmount: () => {
-      dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
-    },
   };
 }
 
@@ -161,7 +153,6 @@ function mapStateToProps(state) {
   return {
     bureau,
     fetching,
-    loading: (!lineItems.length || !printers.length) && fetching,
     lineItems,
     orderNamesMap,
     pager,
@@ -177,7 +168,6 @@ RunNewContainer.defaultProps = {
 
 RunNewContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,
   uuid: PropTypes.string,
