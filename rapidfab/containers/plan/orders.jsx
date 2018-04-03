@@ -1,10 +1,17 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import OrdersComponent from 'rapidfab/components/plan/orders';
-import * as Selectors from 'rapidfab/selectors';
+import { filter } from 'lodash';
+
+import {
+  getOrderLocations,
+  getOrders,
+  getLocationFilter,
+  getLocations,
+} from 'rapidfab/selectors';
+
+import Orders from 'rapidfab/components/plan/orders';
 
 class OrdersContainer extends Component {
   componentWillMount() {
@@ -12,7 +19,7 @@ class OrdersContainer extends Component {
   }
 
   render() {
-    return <OrdersComponent {...this.props} />;
+    return <Orders {...this.props} />;
   }
 }
 
@@ -35,36 +42,33 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const { list: orderApi } = state.ui.wyatt.order;
-  const orderLocation = Selectors.getOrderLocations(state);
-  const stateOrders = Selectors.getOrders(state);
-  let locationFilter = Selectors.getLocationFilter(state);
+  const orderLocation = getOrderLocations(state);
+  const stateOrders = getOrders(state);
+  let locationFilter = getLocationFilter(state);
   let filteredOrders = null;
   if (locationFilter) {
     if (locationFilter === 'unassigned') {
       locationFilter = null;
     }
-    let ordersForMyLocation = _.filter(orderLocation.ordersByLocation, [
-      'location',
-      locationFilter,
-    ]);
+    let ordersForMyLocation = orderLocation.ordersByLocation.filter;
+    filter(orderLocation.ordersByLocation, ['location', locationFilter]);
     if (ordersForMyLocation.length > 0) {
       ordersForMyLocation = ordersForMyLocation[0].orders;
-      filteredOrders = _.filter(
+      filteredOrders = filter(
         stateOrders,
-        order => _.indexOf(ordersForMyLocation, order.uri) >= 0
+        order => ordersForMyLocation.indexOf(order.uri) >= 0
       );
     } else {
       filteredOrders = [];
     }
   }
-  const orders = filteredOrders || Selectors.getOrders(state);
+  const orders = filteredOrders || getOrders(state);
   return {
     fetching:
       orderApi.count === 0 || (orderApi.count === 1 && orderApi.fetching),
     orders,
     locationFilter,
-    locations: Selectors.getLocations(state),
-    apiErrors: _.concat(orderApi.errors),
+    locations: getLocations(state),
   };
 }
 
