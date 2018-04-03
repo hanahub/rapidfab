@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { differenceBy, head, unionBy } from 'lodash';
-import { FormattedMessage } from 'react-intl';
-
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
-import Fa from 'react-fontawesome';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import SaveButtonTitle from 'rapidfab/components/SaveButtonTitle';
 import Loading from 'rapidfab/components/Loading';
+
+import ActivePrints from './activePrints';
 import PrintersList from './printersList';
 import PrintsList from './printsList';
-import ActivePrints from './activePrints';
 
 class RunNew extends Component {
   constructor(props) {
@@ -126,8 +125,7 @@ class RunNew extends Component {
               disabled={!activePrints.length}
               bsStyle="primary"
             >
-              <Fa name="floppy-o" />{' '}
-              <FormattedMessage id="button.save" defaultMessage="Save" />
+              <SaveButtonTitle resourceName="Run" />
             </Button>
           </ButtonToolbar>
         </div>
