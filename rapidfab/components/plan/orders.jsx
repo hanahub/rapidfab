@@ -116,6 +116,7 @@ const Orders = ({
         ]}
         initialSort="created"
         initialSortAscending={false}
+        showFilter
       />
     )}
   </Grid>
