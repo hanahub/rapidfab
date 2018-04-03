@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import * as BS from 'react-bootstrap';
 
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import extractUuid from 'rapidfab/utils/extractUuid';
 
 import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 
@@ -78,10 +77,10 @@ const PrintsList = ({
           <BS.Col xs={3}>Created</BS.Col>
         </BS.Row>
       </BS.ListGroupItem>
-      {_.map(prints, print => (
+      {prints.map(print => (
         <PrintItem
           key={print.uuid}
-          selected={!!_.find(selected, ['uri', print.uri])}
+          selected={!!selected.find(select => select.uri === print.uri)}
           print={print}
           onSelect={onSelect}
           orderNamesMap={orderNamesMap}

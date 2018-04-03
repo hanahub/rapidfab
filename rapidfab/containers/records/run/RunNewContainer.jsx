@@ -1,13 +1,21 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import RunComponent from 'rapidfab/components/records/run/new';
-import * as Selectors from 'rapidfab/selectors';
-import { extractUuid } from 'rapidfab/reducers/makeApiReducers';
+import { chunk } from 'lodash';
 
-import Loading from 'rapidfab/components/Loading';
+import Actions from 'rapidfab/actions';
+import extractUuid from 'rapidfab/utils/extractUuid';
+import {
+  getBureauUri,
+  getLineItemsForRunNew,
+  getModelers,
+  getOrderNamesByURI,
+  getPrinterTypes,
+  getPrintersForRunNew,
+  getProcessSteps,
+} from 'rapidfab/selectors';
+
+import RunNew from 'rapidfab/components/records/run/RunNew';
 
 const printsPerPage = 10;
 
@@ -16,12 +24,9 @@ class RunNewContainer extends Component {
     const { bureau, uuid } = this.props;
     this.props.onInitialize(bureau, uuid);
   }
-  componentWillUnmount() {
-    this.props.onUnmount();
-  }
 
   render() {
-    return this.props.loading ? <Loading /> : <RunComponent {...this.props} />;
+    return <RunNew {...this.props} />;
   }
 }
 
@@ -32,12 +37,11 @@ function mapDispatchToProps(dispatch) {
       dispatch(Actions.Api.wyatt['line-item'].list({ bureau })).then(
         response => {
           const lineItems = response.json.resources;
-          const printableLineItems = lineItems.filter(lineItem => {
-            const { status } = lineItem;
-            return status === 'confirmed' || status === 'printing';
-          });
+          const printableLineItems = lineItems.filter(
+            ({ status }) => status === 'confirmed' || status === 'printing'
+          );
 
-          _.chunk(printableLineItems, 15).forEach(lineItemChunk => {
+          chunk(printableLineItems, 15).forEach(lineItemChunk => {
             const lineItemURIs = lineItemChunk.map(lineItem => lineItem.uri);
             const lineItemModels = lineItemChunk.map(
               lineItem => lineItem.model
@@ -78,9 +82,6 @@ function mapDispatchToProps(dispatch) {
         )}`;
       }),
     onPageChange: value => dispatch(Actions.Pager.setPage(value)),
-    onUnmount: () => {
-      dispatch(Actions.UI.clearUIState(['wyatt.run.post', 'wyatt.run.put']));
-    },
   };
 }
 
@@ -90,7 +91,14 @@ const getPager = (state, prints) => ({
 });
 
 function mapStateToProps(state) {
-  const bureau = Selectors.getBureauUri(state);
+  const bureau = getBureauUri(state);
+  const lineItems = getLineItemsForRunNew(state);
+  const modelers = getModelers(state);
+  const orderNamesMap = getOrderNamesByURI(state);
+  const processSteps = getProcessSteps(state);
+  const printerTypes = getPrinterTypes(state);
+  const printers = getPrintersForRunNew(state);
+
   const fetching =
     state.ui.hoth.model.list.fetching ||
     state.ui.nautilus.modeler.list.fetching ||
@@ -102,12 +110,6 @@ function mapStateToProps(state) {
     state.ui.wyatt['printer-type'].list.fetching ||
     state.ui.wyatt['process-step'].list.fetching ||
     state.ui.wyatt.run.post.fetching;
-  const lineItems = Selectors.getLineItemsForRunNew(state);
-  const modelers = Selectors.getModelers(state);
-  const orderNamesMap = Selectors.getOrderNamesByURI(state);
-  const processSteps = Selectors.getProcessSteps(state);
-  const printerTypes = Selectors.getPrinterTypes(state);
-  const printers = Selectors.getPrintersForRunNew(state);
 
   const lineItemPrints = lineItems.reduce(
     (prints, lineItem) => [...prints, ...lineItem.prints],
@@ -151,7 +153,6 @@ function mapStateToProps(state) {
   return {
     bureau,
     fetching,
-    loading: (!lineItems.length || !printers.length) && fetching,
     lineItems,
     orderNamesMap,
     pager,
@@ -167,7 +168,6 @@ RunNewContainer.defaultProps = {
 
 RunNewContainer.propTypes = {
   bureau: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
   onInitialize: PropTypes.func.isRequired,
   onUnmount: PropTypes.func.isRequired,
   uuid: PropTypes.string,
