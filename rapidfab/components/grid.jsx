@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
-import { Image } from 'react-bootstrap';
 import Griddle from 'griddle-react';
 import {
   FormattedDate,
@@ -89,14 +88,6 @@ export const DateColumn = ({ data }) => <FormattedDate value={data} />;
 
 DateColumn.propTypes = { data: PropTypes.string.isRequired };
 
-export const ImageColumn = ({ data }) => (
-  <div style={{ textAlign: 'center' }}>
-    <Image src={data} width={24} rouned />
-  </div>
-);
-
-ImageColumn.propTypes = { data: PropTypes.string.isRequired };
-
 export const CapitalizeColumn = ({ data }) => (
   <span style={{ textTransform: 'capitalize' }}>{data}</span>
 );
@@ -130,35 +121,26 @@ ColorColumn.propTypes = { data: PropTypes.string.isRequired };
 const Grid = ({
   data,
   columnMeta,
-  rowMeta,
   columns,
-  useFixedHeader,
-  bodyHeight,
-  showTableHeading,
   initialSort,
   initialSortAscending,
+  showFilter,
 }) => (
   <Griddle
-    bodyHeight={bodyHeight}
     columns={columns}
     columnMetadata={columnMeta}
     initialSort={initialSort}
     initialSortAscending={initialSortAscending}
-    results={_.values(data)}
+    results={data}
     resultsPerPage={9999}
-    rowMetadata={rowMeta}
+    showFilter={showFilter}
     showPager={false}
-    showTableHeading={!showTableHeading}
-    sortAscendingComponent={<Fa name="sort-asc" className="pull-right" />}
-    sortDescendingComponent={<Fa name="sort-desc" className="pull-right" />}
     tableClassName="table table-bordered table-hover"
     useGriddleStyles={false}
-    useFixedHeader={!!useFixedHeader}
   />
 );
 
 Grid.propTypes = {
-  bodyHeight: PropTypes.number,
   data: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
     PropTypes.object,
@@ -167,19 +149,14 @@ Grid.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   initialSort: PropTypes.bool,
   initialSortAscending: PropTypes.bool,
-  rowMeta: PropTypes.shape({}),
-  showTableHeading: PropTypes.bool,
-  useFixedHeader: PropTypes.bool,
+  showFilter: PropTypes.bool.isRequired,
 };
 
 Grid.defaultProps = {
-  bodyHeight: null,
   data: [],
   initialSort: null,
   initialSortAscending: false,
-  useFixedHeader: false,
-  rowMeta: null,
-  showTableHeading: false,
+  showFilter: false,
 };
 
 export default Grid;
