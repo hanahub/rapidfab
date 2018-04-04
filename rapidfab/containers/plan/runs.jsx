@@ -1,10 +1,11 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Actions from 'rapidfab/actions';
 import { connect } from 'react-redux';
-import RunsComponent from 'rapidfab/components/plan/runs';
-import * as Selectors from 'rapidfab/selectors';
+
+import Actions from 'rapidfab/actions';
+import { getLocationFilter, getLocations, getRuns } from 'rapidfab/selectors';
+
+import Runs from 'rapidfab/components/plan/runs';
 
 class RunsContainer extends Component {
   componentDidMount() {
@@ -12,7 +13,7 @@ class RunsContainer extends Component {
   }
 
   render() {
-    return <RunsComponent {...this.props} />;
+    return <Runs {...this.props} />;
   }
 }
 
@@ -34,15 +35,17 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const { run, location } = state.ui.wyatt;
-  const runs = Selectors.getRuns(state);
-  const locationFilter = Selectors.getLocationFilter(state);
+  const runs = getRuns(state);
+  const locationFilter = getLocationFilter(state);
   let filteredRuns = null;
   if (locationFilter) {
-    filteredRuns = _.filter(runs, ['location', state.locationFilter.location]);
+    filteredRuns = runs.filter(
+      r => r.location === state.locationFilter.location
+    );
   }
   return {
     runs: filteredRuns || runs,
-    locations: Selectors.getLocations(state),
+    locations: getLocations(state),
     locationFilter,
     fetching:
       run.list.count === 0 || (run.list.count === 1 && run.list.fetching),
