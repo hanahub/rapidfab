@@ -17,19 +17,19 @@ import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 const PrintsGrid = ({ gridData }) => (
   <Griddle
     data={gridData}
-    columns={['id', 'name', 'customerName', 'status', 'dueDate']}
+    columns={['name', 'id', 'customerName', 'status', 'dueDate']}
     columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('print'),
-        locked: true,
-      },
       {
         displayName: (
           <FormattedMessage id="field.print" defaultMessage="Print" />
         ),
         columnName: 'name',
+      },
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('print'),
+        locked: true,
       },
       {
         displayName: (
