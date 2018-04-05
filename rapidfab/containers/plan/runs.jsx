@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  const { run, location } = state.ui.wyatt;
+  const { run } = state.ui.wyatt;
   const runs = getRuns(state);
   const locationFilter = getLocationFilter(state);
   let filteredRuns = null;
@@ -49,7 +49,6 @@ function mapStateToProps(state) {
     locationFilter,
     fetching:
       run.list.count === 0 || (run.list.count === 1 && run.list.fetching),
-    apiErrors: run.list.errors || location.list.errors,
   };
 }
 

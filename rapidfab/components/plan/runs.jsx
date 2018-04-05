@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
-import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
+import Fa from 'react-fontawesome';
+import { Button, Col, Grid, Row } from 'react-bootstrap';
+
 import { RUN_OPERATION_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
-import Grid, {
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import Griddle, {
   IdColumn,
   DateTimeColumn,
   MappedColumn,
 } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
-import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 
 const RunsGrid = ({ runs }) => (
-  <Grid
+  <Griddle
     data={runs}
     columns={['id', 'operation', 'status', 'created']}
     columnMeta={[
@@ -49,6 +50,7 @@ const RunsGrid = ({ runs }) => (
     ]}
     initialSort="created"
     initialSortAscending={false}
+    showFilter
   />
 );
 
@@ -61,13 +63,12 @@ const Runs = ({
   locations,
   runs,
   fetching,
-  apiErrors,
   handleOnChange,
 }) => (
-  <BS.Grid fluid>
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['runs']} />
-    <BS.Row>
-      <BS.Col xs={8}>
+    <Row>
+      <Col xs={8}>
         {locations.length > 1 ? (
           <Locations
             locations={locations}
@@ -77,9 +78,9 @@ const Runs = ({
         ) : (
           <div />
         )}
-      </BS.Col>
-      <BS.Col xs={4}>
-        <BS.Button
+      </Col>
+      <Col xs={4}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/run"
@@ -87,28 +88,21 @@ const Runs = ({
         >
           <Fa name="plus" />{' '}
           <FormattedMessage id="record.run.add" defaultMessage="Add Run" />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        {fetching ? <Loading /> : <RunsGrid runs={runs} />}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+    <Row>
+      <Col xs={12}>{fetching ? <Loading /> : <RunsGrid runs={runs} />}</Col>
+    </Row>
+  </Grid>
 );
 
 Runs.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   handleOnChange: PropTypes.func.isRequired,
   locationFilter: PropTypes.string.isRequired,
