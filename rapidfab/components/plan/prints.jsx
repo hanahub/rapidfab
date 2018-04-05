@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Grid } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Griddle, {
   IdColumn,
   MappedColumn,
@@ -16,19 +17,19 @@ import { RUN_STATUS_MAP } from 'rapidfab/mappings';
 const PrintsGrid = ({ gridData }) => (
   <Griddle
     data={gridData}
-    columns={['id', 'name', 'customerName', 'status', 'dueDate']}
+    columns={['name', 'id', 'customerName', 'status', 'dueDate']}
     columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('print'),
-        locked: true,
-      },
       {
         displayName: (
           <FormattedMessage id="field.print" defaultMessage="Print" />
         ),
         columnName: 'name',
+      },
+      {
+        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+        columnName: 'id',
+        customComponent: IdColumn('print'),
+        locked: true,
       },
       {
         displayName: (
@@ -56,6 +57,7 @@ const PrintsGrid = ({ gridData }) => (
     ]}
     initialSort="id"
     initialSortAscending={false}
+    showFilter
   />
 );
 
@@ -76,6 +78,7 @@ const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
   return (
     <Grid fluid className="container">
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
+      <FlashMessages />
       <Locations locations={locations} handleOnChange={handleOnChange} />
       <hr />
       {fetching ? <Loading /> : <PrintsGrid gridData={gridData} />}

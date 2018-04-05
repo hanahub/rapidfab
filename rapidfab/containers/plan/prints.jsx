@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Actions from 'rapidfab/actions';
-import * as Selectors from 'rapidfab/selectors';
+import {
+  getLocationFilter,
+  getLocations,
+  getOrders,
+  getPrints,
+  getProcessSteps,
+} from 'rapidfab/selectors';
 
-import FlashMessages from 'rapidfab/components/FlashMessages';
-import PrintsComponent from 'rapidfab/components/plan/prints';
+import Prints from 'rapidfab/components/plan/prints';
 
 class PrintsContainer extends Component {
   componentDidMount() {
@@ -16,15 +21,12 @@ class PrintsContainer extends Component {
   render() {
     const { fetching, gridData, locations, handleOnChange } = this.props;
     return (
-      <div>
-        <FlashMessages />
-        <PrintsComponent
-          fetching={fetching}
-          gridData={gridData}
-          locations={locations}
-          handleOnChange={handleOnChange}
-        />
-      </div>
+      <Prints
+        fetching={fetching}
+        gridData={gridData}
+        locations={locations}
+        handleOnChange={handleOnChange}
+      />
     );
   }
 }
@@ -45,15 +47,15 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   const printApi = state.ui.wyatt.print.list;
-  const orders = Selectors.getOrders(state);
-  const allPrints = Selectors.getPrints(state);
-  const printProcessSteps = Selectors.getProcessSteps(state).filter(step =>
+  const orders = getOrders(state);
+  const allPrints = getPrints(state);
+  const printProcessSteps = getProcessSteps(state).filter(step =>
     step.process_type_uri.includes('printer-type')
   );
   const prints = allPrints.filter(print =>
     printProcessSteps.some(step => step.uri === print.process_step)
   );
-  const locationFilter = Selectors.getLocationFilter(state);
+  const locationFilter = getLocationFilter(state);
   const filteredPrints = prints.filter(print => {
     if (locationFilter) {
       return print.location === locationFilter.location;
@@ -77,7 +79,7 @@ function mapStateToProps(state) {
     fetching:
       printApi.count === 0 || (printApi.count === 1 && printApi.fetching),
     gridData,
-    locations: Selectors.getLocations(state),
+    locations: getLocations(state),
   };
 }
 PrintsContainer.propTypes = {
