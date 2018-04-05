@@ -63,8 +63,8 @@ const Orders = ({
       <Griddle
         data={orders}
         columns={[
-          'id',
           'name',
+          'id',
           'status',
           'created',
           'customer_name',
@@ -72,16 +72,16 @@ const Orders = ({
         ]}
         columnMeta={[
           {
-            displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-            columnName: 'id',
-            customComponent: IdColumn('order'),
-            locked: true,
-          },
-          {
             columnName: 'name',
             displayName: (
               <FormattedMessage id="field.name" defaultMessage="Name" />
             ),
+          },
+          {
+            displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
+            columnName: 'id',
+            customComponent: IdColumn('order'),
+            locked: true,
           },
           {
             customComponent: MappedColumn('status', ORDER_STATUS_MAP),
