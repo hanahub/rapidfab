@@ -57,6 +57,7 @@ const PrintsGrid = ({ gridData }) => (
     ]}
     initialSort="id"
     initialSortAscending={false}
+    showFilter
   />
 );
 
