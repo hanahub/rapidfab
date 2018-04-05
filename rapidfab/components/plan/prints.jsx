@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Grid } from 'react-bootstrap';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
 import Griddle, {
   IdColumn,
   MappedColumn,
@@ -76,6 +77,7 @@ const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
   return (
     <Grid fluid className="container">
       <BreadcrumbNav breadcrumbs={breadcrumbs} />
+      <FlashMessages />
       <Locations locations={locations} handleOnChange={handleOnChange} />
       <hr />
       {fetching ? <Loading /> : <PrintsGrid gridData={gridData} />}
