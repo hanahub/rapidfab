@@ -1,59 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Fa from 'react-fontawesome';
 import { Button, ButtonToolbar, Col, Panel, Grid, Row } from 'react-bootstrap';
+import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, { ColumnDefinition, RowDefinition } from 'griddle-react';
 
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 
+import {
+  DateTimeColumn,
+  IdColumn,
+  MappedColumn,
+} from 'rapidfab/components/grid';
 import Chart, { SeriesStyle } from 'rapidfab/components/chart';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import Error from 'rapidfab/components/error';
 
-const panelBodyStyle = {
-  height: 359,
-  overflow: 'scroll',
-};
-
 const LastTenOrders = ({ data }) => (
-  <div style={panelBodyStyle} fill>
-    {/*
-    <Grid
-      data={data}
-      columns={['id', 'name', 'status', 'created']}
-      columnMeta={[
-        {
-          displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-          columnName: 'id',
-          customComponent: IdColumn('order'),
-          locked: true,
-        },
-        {
-          columnName: 'name',
-          displayName: (
-            <FormattedMessage id="field.name" defaultMessage="Name" />
-          ),
-        },
-        {
-          customComponent: MappedColumn('status', ORDER_STATUS_MAP),
-          columnName: 'status',
-          displayName: (
-            <FormattedMessage id="field.status" defaultMessage="Status" />
-          ),
-        },
-        {
-          customComponent: DateTimeColumn,
-          columnName: 'created',
-          displayName: (
-            <FormattedMessage id="field.created" defaultMessage="Created" />
-          ),
-        },
-      ]}
-    />
-    */}
-  </div>
+  <Griddle data={data}>
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={IdColumn('order')}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+      <ColumnDefinition
+        id="status"
+        customComponent={({ value }) => (
+          <MappedColumn mapping={ORDER_STATUS_MAP} value={value} />
+        )}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.status" defaultMessage="Status" />
+        )}
+      />
+      <ColumnDefinition
+        id="created"
+        customComponent={DateTimeColumn}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.created" defaultMessage="Created" />
+        )}
+      />
+    </RowDefinition>
+  </Griddle>
 );
 
 LastTenOrders.propTypes = {
