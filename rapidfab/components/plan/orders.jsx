@@ -5,6 +5,7 @@ import { Button, Col, Grid, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import Griddle, {
   ColumnDefinition,
@@ -94,16 +95,7 @@ const Orders = ({
         data={orders}
         plugins={[plugins.LocalPlugin]}
         sortProperties={[{ id: 'created', sortAscending: true }]}
-        styleConfig={{
-          classNames: {
-            Filter: 'form-control',
-            Pagination: 'form-inline pull-right',
-            PageDropdown: 'form-control inline',
-            PreviousButton: 'btn btn-primary',
-            Table: 'table table-bordered table-hover',
-            NextButton: 'btn btn-primary',
-          },
-        }}
+        styleConfig={griddleStyleConfig}
       >
         <RowDefinition>
           <ColumnDefinition id="name" title="Name" />
