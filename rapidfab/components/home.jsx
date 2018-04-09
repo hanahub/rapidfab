@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Chart, { SeriesStyle } from 'rapidfab/components/chart';
-import Locations from 'rapidfab/components/locations';
-import * as BS from 'react-bootstrap';
-import Error from 'rapidfab/components/error';
-import Fa from 'react-fontawesome';
-import { FormattedMessage } from 'react-intl';
-import Grid, {
-  IdColumn,
-  MappedColumn,
-  DateTimeColumn,
-} from 'rapidfab/components/grid';
 
-import Loading from 'rapidfab/components/Loading';
+import Fa from 'react-fontawesome';
+import { Button, ButtonToolbar, Col, Panel, Grid, Row } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
+
+import Chart, { SeriesStyle } from 'rapidfab/components/chart';
+import Loading from 'rapidfab/components/Loading';
+import Locations from 'rapidfab/components/locations';
+import Error from 'rapidfab/components/error';
 
 const panelBodyStyle = {
   height: 359,
@@ -22,6 +19,7 @@ const panelBodyStyle = {
 
 const LastTenOrders = ({ data }) => (
   <div style={panelBodyStyle} fill>
+    {/*
     <Grid
       data={data}
       columns={['id', 'name', 'status', 'created']}
@@ -54,6 +52,7 @@ const LastTenOrders = ({ data }) => (
         },
       ]}
     />
+    */}
   </div>
 );
 
@@ -118,9 +117,9 @@ const Home = ({
   locations,
   handleOnChange,
 }) => (
-  <BS.Grid fluid>
-    <BS.Row>
-      <BS.Col xs={8}>
+  <Grid fluid>
+    <Row>
+      <Col xs={8}>
         {locations.length > 1 ? (
           <Locations
             locations={locations}
@@ -130,53 +129,53 @@ const Home = ({
         ) : (
           <div />
         )}
-      </BS.Col>
-      <BS.Col xs={4}>
-        <BS.ButtonToolbar className="pull-right">
-          <BS.Button bsStyle="primary" bsSize="small" href="#/records/order">
+      </Col>
+      <Col xs={4}>
+        <ButtonToolbar className="pull-right">
+          <Button bsStyle="primary" bsSize="small" href="#/records/order">
             <Fa name="list" />{' '}
             <FormattedMessage
               id="record.order.add"
               defaultMessage="Add Order"
             />
-          </BS.Button>
-          <BS.Button bsStyle="primary" bsSize="small" href="#/records/run">
+          </Button>
+          <Button bsStyle="primary" bsSize="small" href="#/records/run">
             <Fa name="files-o" />{' '}
             <FormattedMessage id="record.run.add" defaultMessage="Add Run" />
-          </BS.Button>
-        </BS.ButtonToolbar>
-      </BS.Col>
-    </BS.Row>
+          </Button>
+        </ButtonToolbar>
+      </Col>
+    </Row>
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
+    <Row>
+      <Col xs={12}>
         <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+      </Col>
+    </Row>
 
-    <BS.Row>
-      <BS.Col md={6}>
-        <BS.Panel header="Orders">
+    <Row>
+      <Col md={6}>
+        <Panel header="Orders">
           {fetchingOrders ? (
             <Loading />
           ) : (
             <LastTenOrders data={data.lastTenOrders} />
           )}
-        </BS.Panel>
-      </BS.Col>
-      <BS.Col md={6}>
-        <BS.Panel header="Run Status">
+        </Panel>
+      </Col>
+      <Col md={6}>
+        <Panel header="Run Status">
           {fetchingRuns ? (
             <Loading />
           ) : (
             <RunsByStatusChart data={data.runStatus} />
           )}
-        </BS.Panel>
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+        </Panel>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Home.defaultProps = {
