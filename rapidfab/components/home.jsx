@@ -7,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import Griddle, { ColumnDefinition, RowDefinition } from 'griddle-react';
 
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import {
   DateTimeColumn,
@@ -18,8 +19,11 @@ import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import Error from 'rapidfab/components/error';
 
+const Layout = ({ Table }) => <Table />;
+Layout.propTypes = { Table: PropTypes.element.isRequired };
+
 const LastTenOrders = ({ data }) => (
-  <Griddle data={data}>
+  <Griddle components={{ Layout }} data={data} styleConfig={griddleStyleConfig}>
     <RowDefinition>
       <ColumnDefinition
         id="id"
@@ -159,7 +163,9 @@ const Home = ({
           {fetchingOrders ? (
             <Loading />
           ) : (
-            <LastTenOrders data={data.lastTenOrders} />
+            <div fill>
+              <LastTenOrders data={data.lastTenOrders} />
+            </div>
           )}
         </Panel>
       </Col>
