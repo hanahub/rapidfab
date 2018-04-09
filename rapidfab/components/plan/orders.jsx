@@ -6,9 +6,14 @@ import { FormattedMessage } from 'react-intl';
 
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Griddle, {
+import {
   DateTimeColumn,
   IdColumn,
   MappedColumn,
@@ -62,62 +67,41 @@ const Orders = ({
     ) : (
       <Griddle
         data={orders}
-        columns={[
-          'name',
-          'id',
-          'status',
-          'created',
-          'customer_name',
-          'due_date',
-        ]}
-        columnMeta={[
-          {
-            columnName: 'name',
-            displayName: (
-              <FormattedMessage id="field.name" defaultMessage="Name" />
-            ),
-          },
-          {
-            displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-            columnName: 'id',
-            customComponent: IdColumn('order'),
-            locked: true,
-          },
-          {
-            customComponent: MappedColumn('status', ORDER_STATUS_MAP),
-            columnName: 'status',
-            displayName: (
-              <FormattedMessage id="field.status" defaultMessage="Status" />
-            ),
-          },
-          {
-            customComponent: DateTimeColumn,
-            columnName: 'created',
-            displayName: (
-              <FormattedMessage id="field.created" defaultMessage="Created" />
-            ),
-          },
-          {
-            columnName: 'customer_name',
-            displayName: (
-              <FormattedMessage
-                id="field.customer_name"
-                defaultMessage="Customer Name"
-              />
-            ),
-          },
-          {
-            customComponent: DateTimeColumn,
-            columnName: 'due_date',
-            displayName: (
-              <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
-            ),
-          },
-        ]}
-        initialSort="created"
-        initialSortAscending={false}
-        showFilter
-      />
+        plugins={[plugins.LocalPlugin]}
+        sortProperties={[{ id: 'created', sortAscending: true }]}
+      >
+        <RowDefinition>
+          <ColumnDefinition id="name" title="Name" />
+          <ColumnDefinition
+            id="id"
+            title="Id"
+            customComponent={IdColumn('order')}
+          />
+          <ColumnDefinition
+            id="status"
+            title="Status"
+            customComponent={({ value }) => (
+              <MappedColumn mapping={ORDER_STATUS_MAP} value={value} />
+            )}
+          />
+          <ColumnDefinition
+            id="created"
+            title="Created"
+            customComponent={DateTimeColumn}
+          />
+          <ColumnDefinition id="customer_name" title="Customer Name" />
+          <ColumnDefinition
+            id="due_date"
+            title="Due Date"
+            customComponent={DateTimeColumn}
+          />
+        </RowDefinition>
+      </Griddle>
+      // <Griddle
+      //   initialSort="created"
+      //   initialSortAscending={false}
+      //   showFilter
+      // />
     )}
   </Grid>
 );
