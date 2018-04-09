@@ -22,6 +22,28 @@ import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import OrderReportContainer from 'rapidfab/containers/OrderReportContainer';
 
+const NewLayout = ({ Table, Pagination, Filter }) => (
+  <Grid>
+    <Row style={{ marginBottom: '1rem' }}>
+      <Col xs={6}>
+        <Filter />
+      </Col>
+      <Col xs={6}>
+        <Pagination />
+      </Col>
+    </Row>
+    <Row>
+      <Table />
+    </Row>
+  </Grid>
+);
+
+NewLayout.propTypes = {
+  Table: PropTypes.element.isRequired,
+  Pagination: PropTypes.element.isRequired,
+  Filter: PropTypes.element.isRequired,
+};
+
 const Orders = ({
   orders,
   locations,
@@ -29,7 +51,7 @@ const Orders = ({
   handleOnChange,
   fetching,
 }) => (
-  <Grid fluid>
+  <Grid>
     <BreadcrumbNav breadcrumbs={['orders']} />
 
     <Row>
@@ -66,9 +88,22 @@ const Orders = ({
       <Loading />
     ) : (
       <Griddle
+        components={{
+          Layout: NewLayout,
+        }}
         data={orders}
         plugins={[plugins.LocalPlugin]}
         sortProperties={[{ id: 'created', sortAscending: true }]}
+        styleConfig={{
+          classNames: {
+            Filter: 'form-control',
+            Pagination: 'form-inline pull-right',
+            PageDropdown: 'form-control inline',
+            PreviousButton: 'btn btn-primary',
+            Table: 'table table-bordered table-hover',
+            NextButton: 'btn btn-primary',
+          },
+        }}
       >
         <RowDefinition>
           <ColumnDefinition id="name" title="Name" />
