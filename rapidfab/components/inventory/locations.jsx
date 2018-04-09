@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import * as BS from 'react-bootstrap';
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
+import { IdColumn } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 
 export const ContactColumn = ({ rowData, metadata }) => {
@@ -98,38 +98,39 @@ LocationsGrid.propTypes = {
 };
 
 const Locations = ({ locations, users, fetching }) => (
-  <BS.Grid fluid>
-    <BreadcrumbNav breadcrumbs={['locations']} />
+  <Grid>
+    <Row>
+      <Col xs={12}>
+        <BreadcrumbNav breadcrumbs={['locations']} />
 
-    <div className="clearfix">
-      <BS.Button
-        bsStyle="primary"
-        bsSize="small"
-        href="#/records/location"
-        className="pull-right"
-      >
-        <Fa name="plus" />{' '}
-        <FormattedMessage
-          id="record.location.add"
-          defaultMessage="Add Location"
-        />
-      </BS.Button>
-    </div>
+        <div className="clearfix">
+          <Button
+            bsStyle="primary"
+            bsSize="small"
+            href="#/records/location"
+            className="pull-right"
+          >
+            <Fa name="plus" />{' '}
+            <FormattedMessage
+              id="record.location.add"
+              defaultMessage="Add Location"
+            />
+          </Button>
+        </div>
 
-    <hr />
+        <hr />
 
-    <FlashMessages />
+        <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
-          <LocationsGrid locations={locations} users={users} />
+          <span>grid</span>
+          // <LocationsGrid locations={locations} users={users} />
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Locations.propTypes = {
