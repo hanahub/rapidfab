@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
+
+import extractUuid from 'rapidfab/utils/extractUuid';
+
 import Griddle from 'griddle-react';
 import {
   FormattedDate,
@@ -13,24 +17,26 @@ import {
 } from 'rapidfab/i18n';
 import StatusDot from 'rapidfab/components/statusDot';
 
-export const IdColumn = (resource, field, records, property = 'id') => {
-  const recordsByUri = _.keyBy(records, 'uri');
-  const Column = ({ rowData }) => {
-    let record = rowData;
-    if (field) {
-      const uri = rowData[field];
-      record = recordsByUri[uri];
-      if (!record) return <Fa name="spinner" spin />;
-    }
-    return (
-      <a href={`#/records/${resource}/${record.uuid}`}>{record[property]}</a>
-    );
-  };
-  Column.propTypes = {
-    rowData: PropTypes.shape({}).isRequired,
-  };
-  return Column;
-};
+const NotAvailable = () => (
+  <FormattedMessage id="notAvailable" defualtMessage="Not Available" />
+);
+
+const rowDataSelector = (state, { griddleKey }) =>
+  state
+    .get('data')
+    .find(rowMap => rowMap.get('griddleKey') === griddleKey)
+    .toJSON();
+
+const enhancedWithRowData = connect((state, props) => ({
+  rowData: rowDataSelector(state, props),
+}));
+
+export const IdColumn = resource =>
+  enhancedWithRowData(({ value, rowData }) => (
+    <span>
+      <a href={`#/records/${resource}/${extractUuid(rowData.uri)}`}>{value}</a>
+    </span>
+  ));
 
 export const StatusColumn = (field, records, mapping) => {
   // field: field to search for on rowdata e.g. "modeler"
@@ -56,29 +62,19 @@ export const StatusColumn = (field, records, mapping) => {
   return Column;
 };
 
-export const MappedColumn = (field, mapping) => {
-  // field: field to search for on rowdata e.g. "status"
-  // mapping: an object mapping with keys matching records,
-  // and values being i18n formatted messages.
-  //     if no match is found in the mapping, throws an error.
-  const Column = ({ rowData }) => {
-    const message = mapping[rowData[field]];
+export const MappedColumn = ({ mapping, value }) => (
+  <span>{mapping[value] ? mapping[value] : <NotAvailable />}</span>
+);
 
-    if (!message) {
-      return <FormattedMessage id="notAvailable" defaultMessage="N/A" />;
-    }
-    return message;
-  };
-  Column.propTypes = {
-    rowData: PropTypes.shape({}).isRequired,
-  };
-  return Column;
+MappedColumn.propTypes = {
+  mapping: PropTypes.shape({}).isRequired,
+  value: PropTypes.string.isRequired,
 };
 
-export const DateTimeColumn = ({ data }) =>
-  data ? <FormattedDateTime value={data} /> : null;
+export const DateTimeColumn = ({ value }) =>
+  value ? <FormattedDateTime value={value} /> : <NotAvailable />;
 
-DateTimeColumn.propTypes = { data: PropTypes.string.isRequired };
+DateTimeColumn.propTypes = { value: PropTypes.string.isRequired };
 
 export const TimeColumn = ({ data }) => <FormattedTime value={data} />;
 
