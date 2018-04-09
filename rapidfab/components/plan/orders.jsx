@@ -14,9 +14,9 @@ import Griddle, {
 } from 'griddle-react';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import {
   DateTimeColumn,
-  IdColumn,
   MappedColumn,
 } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
@@ -102,7 +102,7 @@ const Orders = ({
           <ColumnDefinition
             id="id"
             title="Id"
-            customComponent={IdColumn('order')}
+            customComponent={props => <IdColumn {...props} resource={'order'} />}
           />
           <ColumnDefinition
             id="status"

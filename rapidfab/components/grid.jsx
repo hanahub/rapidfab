@@ -1,10 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
-
-import extractUuid from 'rapidfab/utils/extractUuid';
 
 import Griddle from 'griddle-react';
 import {
@@ -20,23 +17,6 @@ import StatusDot from 'rapidfab/components/statusDot';
 const NotAvailable = () => (
   <FormattedMessage id="notAvailable" defualtMessage="Not Available" />
 );
-
-const rowDataSelector = (state, { griddleKey }) =>
-  state
-    .get('data')
-    .find(rowMap => rowMap.get('griddleKey') === griddleKey)
-    .toJSON();
-
-const enhancedWithRowData = connect((state, props) => ({
-  rowData: rowDataSelector(state, props),
-}));
-
-export const IdColumn = resource =>
-  enhancedWithRowData(({ value, rowData }) => (
-    <span>
-      <a href={`#/records/${resource}/${extractUuid(rowData.uri)}`}>{value}</a>
-    </span>
-  ));
 
 export const StatusColumn = (field, records, mapping) => {
   // field: field to search for on rowdata e.g. "modeler"

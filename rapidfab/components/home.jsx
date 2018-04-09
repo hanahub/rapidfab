@@ -9,9 +9,9 @@ import Griddle, { ColumnDefinition, RowDefinition } from 'griddle-react';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import {
   DateTimeColumn,
-  IdColumn,
   MappedColumn,
 } from 'rapidfab/components/grid';
 import Chart, { SeriesStyle } from 'rapidfab/components/chart';
@@ -27,7 +27,7 @@ const LastTenOrders = ({ data }) => (
     <RowDefinition>
       <ColumnDefinition
         id="id"
-        customComponent={IdColumn('order')}
+        customComponent={props => <IdColumn {...props} resource={'order'} />}
         customHeadingComponent={() => (
           <FormattedMessage id="field.id" defaultMessage="Id" />
         )}

@@ -53,43 +53,31 @@ PhoneColumn.propTypes = {
 };
 
 const LocationsGrid = ({ locations, users }) => (
-  <Grid
-    data={locations}
-    columns={['id', 'name', 'address', 'contact', 'phone']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('location'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'address',
-        displayName: (
-          <FormattedMessage id="field.address" defaultMessage="Address" />
-        ),
-      },
-      {
-        columnName: 'phone',
-        displayName: (
-          <FormattedMessage id="field.phone" defaultMessage="Phone" />
-        ),
-        customComponent: PhoneColumn,
-      },
-      {
-        columnName: 'contact',
-        displayName: (
-          <FormattedMessage id="field.contact" defaultMessage="contact" />
-        ),
-        customComponent: ContactColumn,
-        records: users,
-      },
-    ]}
-  />
+  <Griddle data={locations} styleConfig={griddleStyleConfig}>
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={props => <IdColumn {...props} resource={'order'} />}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+      <ColumnDefinition
+        id="address"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.adress" defaultMessage="Address" />
+        )}
+      />
+      <ColumnDefinition id="contact" />
+      <ColumnDefinition id="phone" />
+    </RowDefinition>
+  </Griddle>
 );
 
 LocationsGrid.propTypes = {
@@ -125,8 +113,7 @@ const Locations = ({ locations, users, fetching }) => (
         {fetching ? (
           <Loading />
         ) : (
-          <span>grid</span>
-          // <LocationsGrid locations={locations} users={users} />
+          <LocationsGrid locations={locations} users={users} />
         )}
       </Col>
     </Row>
