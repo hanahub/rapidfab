@@ -44,7 +44,7 @@ const Orders = ({
       </Col>
       <Col xs={4}>
         <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-          <Button bsStyle="primary" bsSize="small" href="#/records/order">
+          <Button bsStyle="success" bsSize="small" href="#/records/order">
             <Fa name="plus" />{' '}
             <FormattedMessage
               id="record.order.add"
@@ -97,11 +97,6 @@ const Orders = ({
           />
         </RowDefinition>
       </Griddle>
-      // <Griddle
-      //   initialSort="created"
-      //   initialSortAscending={false}
-      //   showFilter
-      // />
     )}
   </Grid>
 );
