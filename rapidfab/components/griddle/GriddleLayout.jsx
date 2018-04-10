@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, Grid, Row } from 'react-bootstrap';
 
-const NewLayout = ({ Table, Pagination, Filter }) => (
+const GriddleLayout = ({ Table, Pagination, Filter }) => (
   <Grid>
     <Row style={{ marginBottom: '1rem' }}>
       <Col xs={6}>
@@ -18,10 +18,10 @@ const NewLayout = ({ Table, Pagination, Filter }) => (
   </Grid>
 );
 
-NewLayout.propTypes = {
-  Table: PropTypes.element.isRequired,
-  Pagination: PropTypes.element.isRequired,
-  Filter: PropTypes.element.isRequired,
+GriddleLayout.propTypes = {
+  Table: PropTypes.func.isRequired,
+  Pagination: PropTypes.func.isRequired,
+  Filter: PropTypes.func.isRequired,
 };
 
-export default NewLayout;
+export default GriddleLayout;

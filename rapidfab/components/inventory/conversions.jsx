@@ -1,22 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as BS from 'react-bootstrap';
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Grid, { IdColumn, CapitalizeColumn } from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 
 const Conversions = ({ conversions, fetching }) => (
-  <BS.Grid fluid>
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['currencies']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/conversion"
@@ -27,59 +35,56 @@ const Conversions = ({ conversions, fetching }) => (
             id="record.currency.add"
             defaultMessage="Add Currency"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
     <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
+    <Row>
+      <Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
-          <Grid
+          <Griddle
+            components={{ Layout: GriddleLayout }}
             data={conversions}
-            columns={['id', 'currency', 'value']}
-            columnMeta={[
-              {
-                displayName: (
+            plugins={[plugins.LocalPlugin]}
+            styleConfig={griddleStyleConfig}
+          >
+            <RowDefinition>
+              <ColumnDefinition
+                id="id"
+                customComponent={props => (
+                  <IdColumn {...props} resource={'conversion'} />
+                )}
+                customHeadingComponent={() => (
                   <FormattedMessage id="field.id" defaultMessage="Id" />
-                ),
-                columnName: 'id',
-                customComponent: IdColumn('conversion'),
-                locked: true,
-              },
-              {
-                columnName: 'name',
-                displayName: (
+                )}
+              />
+              <ColumnDefinition
+                id="currency"
+                customHeadingComponent={() => (
                   <FormattedMessage id="field.name" defaultMessage="Name" />
-                ),
-              },
-              {
-                columnName: 'region',
-                customComponent: CapitalizeColumn,
-                displayName: (
-                  <FormattedMessage id="field.region" defaultMessage="Region" />
-                ),
-              },
-              {
-                columnName: 'value',
-                displayName: (
+                )}
+              />
+              <ColumnDefinition
+                id="value"
+                customHeadingComponent={() => (
                   <FormattedMessage
                     id="field.multiplier"
                     defaultMessage="Multiplier"
                   />
-                ),
-              },
-            ]}
-          />
+                )}
+              />
+            </RowDefinition>
+          </Griddle>
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Conversions.propTypes = {
