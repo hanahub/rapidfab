@@ -14,36 +14,12 @@ import Griddle, {
 } from 'griddle-react';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
-import {
-  DateTimeColumn,
-  MappedColumn,
-} from 'rapidfab/components/grid';
+import { DateTimeColumn, MappedColumn } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import OrderReportContainer from 'rapidfab/containers/OrderReportContainer';
-
-const NewLayout = ({ Table, Pagination, Filter }) => (
-  <Grid>
-    <Row style={{ marginBottom: '1rem' }}>
-      <Col xs={6}>
-        <Filter />
-      </Col>
-      <Col xs={6}>
-        <Pagination />
-      </Col>
-    </Row>
-    <Row>
-      <Table />
-    </Row>
-  </Grid>
-);
-
-NewLayout.propTypes = {
-  Table: PropTypes.element.isRequired,
-  Pagination: PropTypes.element.isRequired,
-  Filter: PropTypes.element.isRequired,
-};
 
 const Orders = ({
   orders,
@@ -89,9 +65,7 @@ const Orders = ({
       <Loading />
     ) : (
       <Griddle
-        components={{
-          Layout: NewLayout,
-        }}
+        components={{ Layout: GriddleLayout }}
         data={orders}
         plugins={[plugins.LocalPlugin]}
         sortProperties={[{ id: 'created', sortAscending: true }]}
@@ -102,7 +76,9 @@ const Orders = ({
           <ColumnDefinition
             id="id"
             title="Id"
-            customComponent={props => <IdColumn {...props} resource={'order'} />}
+            customComponent={props => (
+              <IdColumn {...props} resource={'order'} />
+            )}
           />
           <ColumnDefinition
             id="status"
