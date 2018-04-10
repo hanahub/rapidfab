@@ -29,7 +29,7 @@ const ManufacturersGrid = ({ records }) => (
       <ColumnDefinition
         id="id"
         customComponent={props => (
-          <IdColumn {...props} resource={'third-party-provider'} />
+          <IdColumn {...props} resource={'manufacturer'} />
         )}
         customHeadingComponent={() => (
           <FormattedMessage id="field.id" defaultMessage="Id" />
