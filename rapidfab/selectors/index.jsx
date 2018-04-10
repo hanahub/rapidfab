@@ -231,6 +231,10 @@ export const getUsers = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getUsersByUri = createSelector([getUsers], users =>
+  _.keyBy(users, 'uri')
+);
+
 export const getLocations = createSelector(
   [getStateLocations, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])

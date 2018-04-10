@@ -10,10 +10,7 @@ import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
-import {
-  DateTimeColumn,
-  MappedColumn,
-} from 'rapidfab/components/grid';
+import { DateTimeColumn, MappedColumn } from 'rapidfab/components/grid';
 import Chart, { SeriesStyle } from 'rapidfab/components/chart';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';

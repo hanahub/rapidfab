@@ -1,59 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
+
 import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import { IdColumn } from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import ContactColumn from 'rapidfab/components/griddle/ContactColumn';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 
-export const ContactColumn = ({ rowData, metadata }) => {
-  if (!rowData.contact) {
-    return (
-      <span>
-        <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-      </span>
-    );
-  }
-
-  const recordsByUri = _.keyBy(metadata.records, 'uri');
-  const record = recordsByUri[rowData.contact];
-
-  if (!record) {
-    return <Fa name="spinner" spin />;
-  }
-  return <span>{record.username}</span>;
-};
-
-ContactColumn.propTypes = {
-  rowData: PropTypes.shape({
-    phone: PropTypes.string,
-  }).isRequired,
-  metadata: PropTypes.shape({}).isRequired,
-};
-
-export const PhoneColumn = ({ rowData }) => {
-  if (!rowData.phone) {
-    return (
-      <span>
-        <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-      </span>
-    );
-  }
-  return <span>{rowData.phone}</span>;
-};
-
-PhoneColumn.propTypes = {
-  rowData: PropTypes.shape({
-    phone: PropTypes.string,
-  }).isRequired,
-};
-
 const LocationsGrid = ({ locations, users }) => (
-  <Griddle data={locations} styleConfig={griddleStyleConfig}>
+  <Griddle
+    components={{ Layout: GriddleLayout }}
+    data={locations}
+    plugins={[plugins.LocalPlugin]}
+    styleConfig={griddleStyleConfig}
+  >
     <RowDefinition>
       <ColumnDefinition
         id="id"
@@ -74,8 +46,19 @@ const LocationsGrid = ({ locations, users }) => (
           <FormattedMessage id="field.adress" defaultMessage="Address" />
         )}
       />
-      <ColumnDefinition id="contact" />
-      <ColumnDefinition id="phone" />
+      <ColumnDefinition
+        id="contact"
+        customComponent={props => <ContactColumn {...props} users={users} />}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.contact" defaultMessage="Contact" />
+        )}
+      />
+      <ColumnDefinition
+        id="phone"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.phone" defaultMessage="Phone" />
+        )}
+      />
     </RowDefinition>
   </Griddle>
 );
@@ -123,7 +106,7 @@ const Locations = ({ locations, users, fetching }) => (
 Locations.propTypes = {
   fetching: PropTypes.bool.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.shape({}).isRequired,
 };
 
 export default Locations;
