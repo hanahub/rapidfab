@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Fa from 'react-fontawesome';
 
 import Griddle from 'griddle-react';
 import {
@@ -69,14 +68,6 @@ export const CapitalizeColumn = ({ data }) => (
 );
 
 CapitalizeColumn.propTypes = { data: PropTypes.string.isRequired };
-
-export const BooleanColumn = ({ data }) => (
-  <div style={{ textAlign: 'center' }}>
-    <Fa name={data ? 'check-square-o' : 'square-o'} />
-  </div>
-);
-
-BooleanColumn.propTypes = { data: PropTypes.string.isRequired };
 
 export const NumberColumn = ({ data }) => <FormattedNumber value={data} />;
 

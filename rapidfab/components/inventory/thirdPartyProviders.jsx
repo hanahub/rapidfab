@@ -50,6 +50,15 @@ const ThirdPartyProvidersGrid = ({ providers }) => (
           />
         )}
       />
+      <ColumnDefinition
+        id="description"
+        customHeadingComponent={() => (
+          <FormattedMessage
+            id="field.description"
+            defaultMessage="Description"
+          />
+        )}
+      />
     </RowDefinition>
   </Griddle>
 );

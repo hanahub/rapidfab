@@ -1,94 +1,88 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import BooleanColumn from 'rapidfab/components/griddle/BooleanColumn';
+import CapitalizeColumn from 'rapidfab/components/griddle/CapitalizeColumn';
+import ColorColumn from 'rapidfab/components/griddle/ColorColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
-import Grid, {
-  IdColumn,
-  BooleanColumn,
-  CapitalizeColumn,
-  ColorColumn,
-} from 'rapidfab/components/grid';
 
-const MaterialsGrid = ({ materials, manufacturers }) => (
-  <Grid
+const MaterialsGrid = ({ materials }) => (
+  <Griddle
+    components={{ Layout: GriddleLayout }}
     data={materials}
-    columns={[
-      'id',
-      'name',
-      'type',
-      'color',
-      'manufacturer',
-      'third_party_fulfillment',
-    ]}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('material'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'type',
-        customComponent: CapitalizeColumn,
-        displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
-      },
-      {
-        columnName: 'manufacturer',
-        customComponent: IdColumn(
-          'manufacturer',
-          'manufacturer',
-          manufacturers,
-          'name'
-        ),
-        displayName: (
-          <FormattedMessage
-            id="field.manufacturer"
-            defaultMessage="Manufacturer"
-          />
-        ),
-      },
-      {
-        columnName: 'color',
-        customComponent: ColorColumn,
-        displayName: (
+    plugins={[plugins.LocalPlugin]}
+    styleConfig={griddleStyleConfig}
+  >
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={props => (
+          <IdColumn {...props} resource={'third-party-provider'} />
+        )}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+      <ColumnDefinition
+        id="type"
+        customComponent={CapitalizeColumn}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.type" defaultMessage="Type" />
+        )}
+      />
+      <ColumnDefinition
+        id="color"
+        customComponent={ColorColumn}
+        customHeadingComponent={() => (
           <FormattedMessage id="field.color" defaultMessage="Color" />
-        ),
-      },
-      {
-        columnName: 'third_party_fulfillment',
-        customComponent: BooleanColumn,
-        displayName: (
+        )}
+      />
+      <ColumnDefinition
+        id="third_party_fulfillment"
+        customComponent={BooleanColumn}
+        customHeadingComponent={() => (
           <FormattedMessage
             id="field.thirdParty"
             defaultMessage="Third Party"
           />
-        ),
-      },
-    ]}
-  />
+        )}
+      />
+    </RowDefinition>
+  </Griddle>
 );
 
 MaterialsGrid.propTypes = {
-  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const Materials = ({ materials, manufacturers, fetching }) => (
-  <BS.Grid fluid>
+const Materials = ({ materials, fetching }) => (
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['materials']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/material"
@@ -99,29 +93,24 @@ const Materials = ({ materials, manufacturers, fetching }) => (
             id="record.material.add"
             defaultMessage="Add Material"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
     <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        {fetching ? (
-          <Loading />
-        ) : (
-          <MaterialsGrid materials={materials} manufacturers={manufacturers} />
-        )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+    <Row>
+      <Col xs={12}>
+        {fetching ? <Loading /> : <MaterialsGrid materials={materials} />}
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Materials.propTypes = {
   fetching: PropTypes.bool.isRequired,
-  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
