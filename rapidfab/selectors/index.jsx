@@ -396,6 +396,10 @@ export const getModelers = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getModelersByUri = createSelector([getModelers], modelers =>
+  _.keyBy(modelers, 'uri')
+);
+
 export const getUploadModel = createSelector(
   [getStateUploadModel],
   uploadModel => uploadModel
@@ -409,6 +413,11 @@ export const getLocationFilter = createSelector(
 export const getPrinterTypes = createSelector(
   [getStatePrinterTypes, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getPrinterTypesByUri = createSelector(
+  [getPrinterTypes],
+  printerTypes => _.keyBy(printerTypes, 'uri')
 );
 
 export const getPrinterTypeOptions = createSelector(
