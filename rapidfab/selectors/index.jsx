@@ -325,6 +325,10 @@ export const getMaterials = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getMaterialsByUri = createSelector([getMaterials], materials =>
+  _.keyBy(materials, 'uri')
+);
+
 export const getMaterialsAlphabetized = createSelector(
   [getMaterials],
   materials =>

@@ -38,8 +38,8 @@ const mapStateToProps = state => ({
     state.ui.wyatt.location.list,
     state.ui.wyatt.stock.list
   ),
-  locations: Selectors.getLocations(state),
-  materials: Selectors.getMaterials(state),
+  locations: Selectors.getLocationsByUri(state),
+  materials: Selectors.getMaterialsByUri(state),
   stocks: Selectors.getStocks(state),
 });
 
