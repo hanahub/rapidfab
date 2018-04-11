@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { Button, Col, Grid, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-
-import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
-import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
-
 import Griddle, {
   ColumnDefinition,
   RowDefinition,
   plugins,
 } from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
+import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
-import { DateTimeColumn, MappedColumn } from 'rapidfab/components/grid';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
+import MappedColumn from 'rapidfab/components/griddle/MappedColumn';
 import OrderReportContainer from 'rapidfab/containers/OrderReportContainer';
 
 const Orders = ({
