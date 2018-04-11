@@ -20,50 +20,6 @@ import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
 import MappedColumn from 'rapidfab/components/griddle/MappedColumn';
 
-// <Griddle
-//   data={gridData}
-//   columns={['name', 'id', 'customerName', 'status', 'dueDate']}
-//   columnMeta={[
-//     {
-//       displayName: (
-//         <FormattedMessage id="field.print" defaultMessage="Print" />
-//       ),
-//       columnName: 'name',
-//     },
-//     {
-//       displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-//       columnName: 'id',
-//       customComponent: IdColumn('print'),
-//       locked: true,
-//     },
-//     {
-//       displayName: (
-//         <FormattedMessage
-//           id="field.customer_name"
-//           defaultMessage="Customer Name"
-//         />
-//       ),
-//       columnName: 'customerName',
-//     },
-//     {
-//       columnName: 'status',
-//       displayName: (
-//         <FormattedMessage id="field.status" defaultMessage="Status" />
-//       ),
-//       customComponent: MappedColumn('status', RUN_STATUS_MAP),
-//     },
-//     {
-//       displayName: (
-//         <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
-//       ),
-//       columnName: 'dueDate',
-//       customComponent: DateColumn,
-//     },
-//   ]}
-//   initialSort="id"
-//   initialSortAscending={false}
-//   showFilter
-// />
 const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
   const breadcrumbs = ['prints'];
   return (
@@ -94,7 +50,7 @@ const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
                 <FormattedMessage id="field.id" defaultMessage="Id" />
               )}
               customComponent={props => (
-                <IdColumn {...props} resource={'order'} />
+                <IdColumn {...props} resource={'print'} />
               )}
             />
             <ColumnDefinition

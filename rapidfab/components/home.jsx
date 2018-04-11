@@ -9,12 +9,13 @@ import Griddle, { ColumnDefinition, RowDefinition } from 'griddle-react';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
-import IdColumn from 'rapidfab/components/griddle/IdColumn';
-import { DateTimeColumn, MappedColumn } from 'rapidfab/components/grid';
 import Chart, { SeriesStyle } from 'rapidfab/components/chart';
+import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
+import Error from 'rapidfab/components/error';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
-import Error from 'rapidfab/components/error';
+import MappedColumn from 'rapidfab/components/griddle/MappedColumn';
 
 const Layout = ({ Table }) => <Table />;
 Layout.propTypes = { Table: PropTypes.element.isRequired };
