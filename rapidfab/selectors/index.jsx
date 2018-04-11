@@ -240,6 +240,10 @@ export const getLocations = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getLocationsByUri = createSelector([getLocations], locations =>
+  _.keyBy(locations, 'uri')
+);
+
 export const getLocationOptions = createSelector([getLocations], locations =>
   locations.map(location => ({
     name: location.name,
@@ -250,6 +254,11 @@ export const getLocationOptions = createSelector([getLocations], locations =>
 export const getPostProcessorTypes = createSelector(
   [getStatePostProcessorTypes, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getPostProcessorTypesByUri = createSelector(
+  [getPostProcessorTypes],
+  postProcessorTypes => _.keyBy(postProcessorTypes, 'uri')
 );
 
 export const getPostProcessors = createSelector(
