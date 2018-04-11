@@ -72,10 +72,17 @@ const Orders = ({
         styleConfig={griddleStyleConfig}
       >
         <RowDefinition>
-          <ColumnDefinition id="name" title="Name" />
+          <ColumnDefinition
+            id="name"
+            customHeadingComponent={() => (
+              <FormattedMessage id="field.name" defaultMessage="Name" />
+            )}
+          />
           <ColumnDefinition
             id="id"
-            title="Id"
+            customHeadingComponent={() => (
+              <FormattedMessage id="field.id" defaultMessage="Id" />
+            )}
             customComponent={props => (
               <IdColumn {...props} resource={'order'} />
             )}
