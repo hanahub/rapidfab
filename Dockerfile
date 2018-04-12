@@ -1,4 +1,4 @@
-FROM authentise/rapidfab-base:2
+FROM authentise/container-rapidfab-base:latest
 MAINTAINER Eli Ribble <eli@authentise.com>
 ARG GITDESCRIBE=development
 ARG COMMIT_HASH=abc123
