@@ -40,7 +40,7 @@ const mapStateToProps = state => ({
     state.ui.pao.users.list
   ),
   locations: Selectors.getLocations(state),
-  users: Selectors.getUsers(state),
+  users: Selectors.getUsersByUri(state),
   bureauGroup: Selectors.getBureau(state).group,
 });
 

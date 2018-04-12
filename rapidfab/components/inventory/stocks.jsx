@@ -1,81 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import FlashMessages from 'rapidfab/components/FlashMessages';
-import Loading from 'rapidfab/components/Loading';
-import Grid, {
-  IdColumn,
-  CapitalizeColumn,
-  NumberColumn,
-} from 'rapidfab/components/grid';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-
-const StocksGrid = ({ stocks, materials, locations }) => (
-  <Grid
-    data={stocks}
-    columns={['id', 'material', 'location', 'status', 'quantity']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('stock'),
-        locked: true,
-      },
-      {
-        columnName: 'material',
-        customComponent: IdColumn('material', 'material', materials, 'name'),
-        displayName: (
-          <FormattedMessage id="field.material" defaultMessage="Material" />
-        ),
-      },
-      {
-        columnName: 'location',
-        customComponent: IdColumn('location', 'location', locations, 'name'),
-        displayName: (
-          <FormattedMessage id="field.location" defaultMessage="Location" />
-        ),
-      },
-      {
-        columnName: 'status',
-        customComponent: CapitalizeColumn,
-        displayName: (
-          <FormattedMessage id="field.status" defaultMessage="Status" />
-        ),
-      },
-      {
-        columnName: 'quantity',
-        customComponent: NumberColumn,
-        displayName: (
-          <FormattedMessage id="field.quantity" defaultMessage="Quantity" />
-        ),
-      },
-      {
-        columnName: 'units',
-        customComponent: CapitalizeColumn,
-        displayName: (
-          <FormattedMessage id="field.units" defaultMessage="Units" />
-        ),
-      },
-    ]}
-  />
-);
-
-StocksGrid.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  materials: PropTypes.arrayOf(PropTypes.object).isRequired,
-  stocks: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+import CapitalizeColumn from 'rapidfab/components/griddle/CapitalizeColumn';
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
+import Loading from 'rapidfab/components/Loading';
+import ResourceColumn from 'rapidfab/components/griddle/ResourceColumn';
 
 const Stocks = ({ stocks, materials, locations, fetching }) => (
-  <BS.Grid fluid>
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['materialStocks']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/stock"
@@ -86,28 +37,86 @@ const Stocks = ({ stocks, materials, locations, fetching }) => (
             id="record.materialStock.add"
             defaultMessage="Add Material Stock"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
     <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
+    <Row>
+      <Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
-          <StocksGrid
-            stocks={stocks}
-            materials={materials}
-            locations={locations}
-          />
+          <Griddle
+            components={{ Layout: GriddleLayout }}
+            data={stocks}
+            plugins={[plugins.LocalPlugin]}
+            styleConfig={griddleStyleConfig}
+          >
+            <RowDefinition>
+              <ColumnDefinition
+                id="id"
+                customComponent={props => (
+                  <IdColumn {...props} resource="stock" />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                )}
+              />
+              <ColumnDefinition
+                id="material"
+                customComponent={props => (
+                  <ResourceColumn
+                    {...props}
+                    resource="material"
+                    resources={materials}
+                  />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.material"
+                    defaultMessage="Material"
+                  />
+                )}
+              />
+              <ColumnDefinition
+                id="location"
+                customComponent={props => (
+                  <ResourceColumn
+                    {...props}
+                    resource="location"
+                    resources={locations}
+                  />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.location"
+                    defaultMessage="Location"
+                  />
+                )}
+              />
+              <ColumnDefinition
+                id="status"
+                customComponent={CapitalizeColumn}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                )}
+              />
+              <ColumnDefinition
+                id="quantity"
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                )}
+              />
+            </RowDefinition>
+          </Griddle>
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Stocks.propTypes = {

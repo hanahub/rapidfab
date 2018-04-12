@@ -1,31 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 
 const TemplateGrid = ({ records }) => (
-  <Grid
+  <Griddle
+    components={{ Layout: GriddleLayout }}
     data={records}
-    columns={['id', 'name']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('template'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-    ]}
-  />
+    plugins={[plugins.LocalPlugin]}
+    styleConfig={griddleStyleConfig}
+  >
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={props => (
+          <IdColumn {...props} resource={'third-party-provider'} />
+        )}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+    </RowDefinition>
+  </Griddle>
 );
 
 TemplateGrid.propTypes = {
@@ -33,12 +50,12 @@ TemplateGrid.propTypes = {
 };
 
 const Templates = ({ templates, fetching }) => (
-  <BS.Grid fluid>
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['templates']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/template"
@@ -49,28 +66,20 @@ const Templates = ({ templates, fetching }) => (
             id="record.template.add"
             defaultMessage="Add Template"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
     <FlashMessages />
 
-    <BS.Row>
-      <BS.Col
-        xs={12}
-        sm={10}
-        smOffset={1}
-        md={8}
-        mdOffset={2}
-        lg={6}
-        lgOffset={3}
-      >
+    <Row>
+      <Col xs={12}>
         {fetching ? <Loading /> : <TemplateGrid records={templates} />}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Templates.propTypes = {

@@ -1,30 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { MODELER_STATUS_MAP } from 'rapidfab/mappings';
 
-const StatusDot = ({ status, message = null }) => {
-  // status:  any one of bootstraps color enums. E.G. "success".
-  // message: the string to display on hover
+const StatusDot = ({ status }) => (
+  <OverlayTrigger
+    placement="right"
+    overlay={
+      <Tooltip id="tooltip">{MODELER_STATUS_MAP[status].message}</Tooltip>
+    }
+  >
+    <div className={`dot ${MODELER_STATUS_MAP[status].status}`} />
+  </OverlayTrigger>
+);
 
-  if (message) {
-    const tooltip = <BS.Tooltip id="tooltip">{message}</BS.Tooltip>;
-    return (
-      <BS.OverlayTrigger placement="right" overlay={tooltip}>
-        <div className={`dot ${status}`} />
-      </BS.OverlayTrigger>
-    );
-  }
-  return <div className={`dot ${status}`} />;
-};
+StatusDot.defaultProps = { status: 'unknown' };
 
-StatusDot.defaultProps = {
-  message: null,
-  status: null,
-};
-
-StatusDot.propTypes = {
-  message: PropTypes.string,
-  status: PropTypes.string,
-};
+StatusDot.propTypes = { status: PropTypes.string };
 
 export default StatusDot;

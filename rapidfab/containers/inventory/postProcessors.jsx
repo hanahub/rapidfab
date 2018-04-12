@@ -31,8 +31,8 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   postProcessors: Selectors.getPostProcessors(state),
-  postProcessorTypes: Selectors.getPostProcessorTypes(state),
-  locations: Selectors.getLocations(state),
+  postProcessorTypes: Selectors.getPostProcessorTypesByUri(state),
+  locations: Selectors.getLocationsByUri(state),
   fetching: isFetchingInitial(
     state.ui.wyatt.location.list,
     state.ui.wyatt['post-processor'].list,

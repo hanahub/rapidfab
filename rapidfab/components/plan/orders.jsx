@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { Button, Col, Grid, Row } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-
-import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
-
-import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-import FlashMessages from 'rapidfab/components/FlashMessages';
 import Griddle, {
-  DateTimeColumn,
-  IdColumn,
-  MappedColumn,
-} from 'rapidfab/components/grid';
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
+import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
+import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
+import MappedColumn from 'rapidfab/components/griddle/MappedColumn';
 import OrderReportContainer from 'rapidfab/containers/OrderReportContainer';
 
 const Orders = ({
@@ -24,7 +28,7 @@ const Orders = ({
   handleOnChange,
   fetching,
 }) => (
-  <Grid fluid>
+  <Grid>
     <BreadcrumbNav breadcrumbs={['orders']} />
 
     <Row>
@@ -39,7 +43,7 @@ const Orders = ({
       </Col>
       <Col xs={4}>
         <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-          <Button bsStyle="primary" bsSize="small" href="#/records/order">
+          <Button bsStyle="success" bsSize="small" href="#/records/order">
             <Fa name="plus" />{' '}
             <FormattedMessage
               id="record.order.add"
@@ -61,63 +65,48 @@ const Orders = ({
       <Loading />
     ) : (
       <Griddle
+        components={{ Layout: GriddleLayout }}
         data={orders}
-        columns={[
-          'name',
-          'id',
-          'status',
-          'created',
-          'customer_name',
-          'due_date',
-        ]}
-        columnMeta={[
-          {
-            columnName: 'name',
-            displayName: (
+        plugins={[plugins.LocalPlugin]}
+        sortProperties={[{ id: 'created', sortAscending: true }]}
+        styleConfig={griddleStyleConfig}
+      >
+        <RowDefinition>
+          <ColumnDefinition
+            id="name"
+            customHeadingComponent={() => (
               <FormattedMessage id="field.name" defaultMessage="Name" />
-            ),
-          },
-          {
-            displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-            columnName: 'id',
-            customComponent: IdColumn('order'),
-            locked: true,
-          },
-          {
-            customComponent: MappedColumn('status', ORDER_STATUS_MAP),
-            columnName: 'status',
-            displayName: (
-              <FormattedMessage id="field.status" defaultMessage="Status" />
-            ),
-          },
-          {
-            customComponent: DateTimeColumn,
-            columnName: 'created',
-            displayName: (
-              <FormattedMessage id="field.created" defaultMessage="Created" />
-            ),
-          },
-          {
-            columnName: 'customer_name',
-            displayName: (
-              <FormattedMessage
-                id="field.customer_name"
-                defaultMessage="Customer Name"
-              />
-            ),
-          },
-          {
-            customComponent: DateTimeColumn,
-            columnName: 'due_date',
-            displayName: (
-              <FormattedMessage id="field.due_date" defaultMessage="Due Date" />
-            ),
-          },
-        ]}
-        initialSort="created"
-        initialSortAscending={false}
-        showFilter
-      />
+            )}
+          />
+          <ColumnDefinition
+            id="id"
+            customHeadingComponent={() => (
+              <FormattedMessage id="field.id" defaultMessage="Id" />
+            )}
+            customComponent={props => (
+              <IdColumn {...props} resource={'order'} />
+            )}
+          />
+          <ColumnDefinition
+            id="status"
+            title="Status"
+            customComponent={({ value }) => (
+              <MappedColumn mapping={ORDER_STATUS_MAP} value={value} />
+            )}
+          />
+          <ColumnDefinition
+            id="created"
+            title="Created"
+            customComponent={DateTimeColumn}
+          />
+          <ColumnDefinition id="customer_name" title="Customer Name" />
+          <ColumnDefinition
+            id="due_date"
+            title="Due Date"
+            customComponent={DateTimeColumn}
+          />
+        </RowDefinition>
+      </Griddle>
     )}
   </Grid>
 );

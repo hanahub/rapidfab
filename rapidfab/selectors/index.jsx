@@ -231,9 +231,17 @@ export const getUsers = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getUsersByUri = createSelector([getUsers], users =>
+  _.keyBy(users, 'uri')
+);
+
 export const getLocations = createSelector(
   [getStateLocations, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getLocationsByUri = createSelector([getLocations], locations =>
+  _.keyBy(locations, 'uri')
 );
 
 export const getLocationOptions = createSelector([getLocations], locations =>
@@ -246,6 +254,11 @@ export const getLocationOptions = createSelector([getLocations], locations =>
 export const getPostProcessorTypes = createSelector(
   [getStatePostProcessorTypes, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getPostProcessorTypesByUri = createSelector(
+  [getPostProcessorTypes],
+  postProcessorTypes => _.keyBy(postProcessorTypes, 'uri')
 );
 
 export const getPostProcessors = createSelector(
@@ -310,6 +323,10 @@ export const getConversions = createSelector(
 export const getMaterials = createSelector(
   [getStateMaterials, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getMaterialsByUri = createSelector([getMaterials], materials =>
+  _.keyBy(materials, 'uri')
 );
 
 export const getMaterialsAlphabetized = createSelector(
@@ -383,6 +400,10 @@ export const getModelers = createSelector(
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
 );
 
+export const getModelersByUri = createSelector([getModelers], modelers =>
+  _.keyBy(modelers, 'uri')
+);
+
 export const getUploadModel = createSelector(
   [getStateUploadModel],
   uploadModel => uploadModel
@@ -396,6 +417,11 @@ export const getLocationFilter = createSelector(
 export const getPrinterTypes = createSelector(
   [getStatePrinterTypes, getStateResources],
   (uuids, resources) => _.map(uuids, uuid => resources[uuid])
+);
+
+export const getPrinterTypesByUri = createSelector(
+  [getPrinterTypes],
+  printerTypes => _.keyBy(printerTypes, 'uri')
 );
 
 export const getPrinterTypeOptions = createSelector(

@@ -1,64 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
-import Error from 'rapidfab/components/error';
-import { MODELER_STATUS_MAP } from 'rapidfab/mappings';
-import Grid, { IdColumn, StatusColumn } from 'rapidfab/components/grid';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
-
-const PrintersGrid = ({ printers, locations, printerTypes, modelers }) => (
-  <Grid
-    data={printers}
-    columns={['id', 'modeler', 'name', 'location', 'printer_type']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('printer'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        displayName: <FormattedMessage id="field.type" defaultMessage="Type" />,
-        columnName: 'printer_type',
-        customComponent: IdColumn(
-          'printer-type',
-          'printer_type',
-          printerTypes,
-          'name'
-        ),
-      },
-      {
-        displayName: (
-          <FormattedMessage id="field.location" defaultMessage="Location" />
-        ),
-        columnName: 'location',
-        customComponent: IdColumn('location', 'location', locations, 'name'),
-      },
-      {
-        displayName: (
-          <FormattedMessage id="field.status" defaultMessage="Status" />
-        ),
-        columnName: 'modeler',
-        customComponent: StatusColumn('modeler', modelers, MODELER_STATUS_MAP),
-      },
-    ]}
-  />
-);
-
-PrintersGrid.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  modelers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  printers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  printerTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+import ResourceColumn from 'rapidfab/components/griddle/ResourceColumn';
+import StatusColumn from 'rapidfab/components/griddle/StatusColumn';
 
 const Printers = ({
   printers,
@@ -66,14 +26,13 @@ const Printers = ({
   printerTypes,
   modelers,
   fetching,
-  apiErrors,
 }) => (
-  <BS.Grid fluid>
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['printers']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/printer"
@@ -84,37 +43,92 @@ const Printers = ({
             id="record.printer.add"
             defaultMessage="Add Printer"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
+    <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
+    <Row>
+      <Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
-          <PrintersGrid
-            printers={printers}
-            locations={locations}
-            printerTypes={printerTypes}
-            modelers={modelers}
-          />
+          <Griddle
+            components={{ Layout: GriddleLayout }}
+            data={printers}
+            plugins={[plugins.LocalPlugin]}
+            styleConfig={griddleStyleConfig}
+          >
+            <RowDefinition>
+              <ColumnDefinition
+                id="id"
+                customComponent={props => (
+                  <IdColumn {...props} resource="printer" />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                )}
+              />
+              <ColumnDefinition
+                id="modeler"
+                customComponent={props => (
+                  <StatusColumn {...props} modelers={modelers} />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                )}
+              />
+              <ColumnDefinition
+                id="name"
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                )}
+              />
+              <ColumnDefinition
+                id="location"
+                customComponent={props => (
+                  <ResourceColumn
+                    {...props}
+                    resource="location"
+                    resources={locations}
+                  />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.location"
+                    defaultMessage="Location"
+                  />
+                )}
+              />
+              <ColumnDefinition
+                id="printer_type"
+                customComponent={props => (
+                  <ResourceColumn
+                    {...props}
+                    slug="printer-type"
+                    resource="printer_type"
+                    resources={printerTypes}
+                  />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.printerType"
+                    defaultMessage="Printer Type"
+                  />
+                )}
+              />
+            </RowDefinition>
+          </Griddle>
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Printers.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
   modelers: PropTypes.arrayOf(PropTypes.object).isRequired,

@@ -38,10 +38,10 @@ const mapStateToProps = state => ({
     state.ui.wyatt.printer.list,
     state.ui.wyatt['printer-type'].list
   ),
-  locations: Selectors.getLocations(state),
-  modelers: Selectors.getModelers(state),
+  locations: Selectors.getLocationsByUri(state),
+  modelers: Selectors.getModelersByUri(state),
   printers: Selectors.getPrinters(state),
-  printerTypes: Selectors.getPrinterTypes(state),
+  printerTypes: Selectors.getPrinterTypesByUri(state),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrintersContainer);

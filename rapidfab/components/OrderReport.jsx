@@ -19,7 +19,7 @@ const OrderReport = ({
   start,
 }) => (
   <div>
-    <Button bsStyle="primary" bsSize="small" onClick={handleShow}>
+    <Button bsStyle="success" bsSize="small" onClick={handleShow}>
       <FormattedMessage
         id="downloadCSVOrderReport"
         defaultMessage="Download CSV Order Report "

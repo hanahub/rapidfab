@@ -1,95 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import ContactColumn from 'rapidfab/components/griddle/ContactColumn';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 
-export const ContactColumn = ({ rowData, metadata }) => {
-  if (!rowData.contact) {
-    return (
-      <span>
-        <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-      </span>
-    );
-  }
-
-  const recordsByUri = _.keyBy(metadata.records, 'uri');
-  const record = recordsByUri[rowData.contact];
-
-  if (!record) {
-    return <Fa name="spinner" spin />;
-  }
-  return <span>{record.username}</span>;
-};
-
-ContactColumn.propTypes = {
-  rowData: PropTypes.shape({
-    phone: PropTypes.string,
-  }).isRequired,
-  metadata: PropTypes.shape({}).isRequired,
-};
-
-export const PhoneColumn = ({ rowData }) => {
-  if (!rowData.phone) {
-    return (
-      <span>
-        <FormattedMessage id="notAvailable" defaultMessage="N/A" />
-      </span>
-    );
-  }
-  return <span>{rowData.phone}</span>;
-};
-
-PhoneColumn.propTypes = {
-  rowData: PropTypes.shape({
-    phone: PropTypes.string,
-  }).isRequired,
-};
-
 const LocationsGrid = ({ locations, users }) => (
-  <Grid
+  <Griddle
+    components={{ Layout: GriddleLayout }}
     data={locations}
-    columns={['id', 'name', 'address', 'contact', 'phone']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('location'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'address',
-        displayName: (
-          <FormattedMessage id="field.address" defaultMessage="Address" />
-        ),
-      },
-      {
-        columnName: 'phone',
-        displayName: (
+    plugins={[plugins.LocalPlugin]}
+    styleConfig={griddleStyleConfig}
+  >
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={props => <IdColumn {...props} resource={'order'} />}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+      <ColumnDefinition
+        id="address"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.adress" defaultMessage="Address" />
+        )}
+      />
+      <ColumnDefinition
+        id="contact"
+        customComponent={props => <ContactColumn {...props} users={users} />}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.contact" defaultMessage="Contact" />
+        )}
+      />
+      <ColumnDefinition
+        id="phone"
+        customHeadingComponent={() => (
           <FormattedMessage id="field.phone" defaultMessage="Phone" />
-        ),
-        customComponent: PhoneColumn,
-      },
-      {
-        columnName: 'contact',
-        displayName: (
-          <FormattedMessage id="field.contact" defaultMessage="contact" />
-        ),
-        customComponent: ContactColumn,
-        records: users,
-      },
-    ]}
-  />
+        )}
+      />
+    </RowDefinition>
+  </Griddle>
 );
 
 LocationsGrid.propTypes = {
@@ -98,44 +69,44 @@ LocationsGrid.propTypes = {
 };
 
 const Locations = ({ locations, users, fetching }) => (
-  <BS.Grid fluid>
-    <BreadcrumbNav breadcrumbs={['locations']} />
+  <Grid>
+    <Row>
+      <Col xs={12}>
+        <BreadcrumbNav breadcrumbs={['locations']} />
 
-    <div className="clearfix">
-      <BS.Button
-        bsStyle="primary"
-        bsSize="small"
-        href="#/records/location"
-        className="pull-right"
-      >
-        <Fa name="plus" />{' '}
-        <FormattedMessage
-          id="record.location.add"
-          defaultMessage="Add Location"
-        />
-      </BS.Button>
-    </div>
+        <div className="clearfix">
+          <Button
+            bsStyle="primary"
+            bsSize="small"
+            href="#/records/location"
+            className="pull-right"
+          >
+            <Fa name="plus" />{' '}
+            <FormattedMessage
+              id="record.location.add"
+              defaultMessage="Add Location"
+            />
+          </Button>
+        </div>
 
-    <hr />
+        <hr />
 
-    <FlashMessages />
+        <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
           <LocationsGrid locations={locations} users={users} />
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Locations.propTypes = {
   fetching: PropTypes.bool.isRequired,
   locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  users: PropTypes.shape({}).isRequired,
 };
 
 export default Locations;

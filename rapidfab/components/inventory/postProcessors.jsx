@@ -1,70 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
-
-const PostProcessorsGrid = ({
-  postProcessors,
-  postProcessorTypes,
-  locations,
-}) => (
-  <Grid
-    data={postProcessors}
-    columns={['id', 'name', 'duration', 'location', 'post_processor_type']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('post-processor'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'duration',
-        displayName: (
-          <FormattedMessage id="field.duration" defaultMessage="Duration" />
-        ),
-      },
-      {
-        columnName: 'post_processor_type',
-        customComponent: IdColumn(
-          'post-processor-type',
-          'post_processor_type',
-          postProcessorTypes,
-          'name'
-        ),
-        displayName: (
-          <FormattedMessage
-            id="field.postProcessorType"
-            defaultMessage="Post Processor Type"
-          />
-        ),
-      },
-      {
-        columnName: 'location',
-        customComponent: IdColumn('location', 'location', locations, 'name'),
-        displayName: (
-          <FormattedMessage id="field.location" defaultMessage="Location" />
-        ),
-      },
-    ]}
-  />
-);
-
-PostProcessorsGrid.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.object).isRequired,
-  postProcessors: PropTypes.arrayOf(PropTypes.object).isRequired,
-  postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+import ResourceColumn from 'rapidfab/components/griddle/ResourceColumn';
 
 const PostProcessors = ({
   fetching,
@@ -72,12 +25,12 @@ const PostProcessors = ({
   postProcessors,
   postProcessorTypes,
 }) => (
-  <BS.Grid fluid>
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['postProcessors']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/post-processor"
@@ -88,28 +41,89 @@ const PostProcessors = ({
             id="record.postProcessor.add"
             defaultMessage="Add Post Processor"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
     <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
+    <Row>
+      <Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
-          <PostProcessorsGrid
-            postProcessors={postProcessors}
-            locations={locations}
-            postProcessorTypes={postProcessorTypes}
-          />
+          <Griddle
+            components={{ Layout: GriddleLayout }}
+            data={postProcessors}
+            plugins={[plugins.LocalPlugin]}
+            styleConfig={griddleStyleConfig}
+          >
+            <RowDefinition>
+              <ColumnDefinition
+                id="id"
+                customComponent={props => (
+                  <IdColumn {...props} resource={'post-processor'} />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                )}
+              />
+              <ColumnDefinition
+                id="name"
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                )}
+              />
+              <ColumnDefinition
+                id="duration"
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.duration"
+                    defaultMessage="Duration"
+                  />
+                )}
+              />
+              <ColumnDefinition
+                id="location"
+                customComponent={props => (
+                  <ResourceColumn
+                    {...props}
+                    resource="location"
+                    resources={locations}
+                  />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.location"
+                    defaultMessage="Location"
+                  />
+                )}
+              />
+              <ColumnDefinition
+                id="post_processor_type"
+                customComponent={props => (
+                  <ResourceColumn
+                    {...props}
+                    slug="post-processor-type"
+                    resource="post_processor_type"
+                    resources={postProcessorTypes}
+                  />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.postProcessorType"
+                    defaultMessage="Post Processor Type"
+                  />
+                )}
+              />
+            </RowDefinition>
+          </Griddle>
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 PostProcessors.propTypes = {

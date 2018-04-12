@@ -3,60 +3,23 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Fa from 'react-fontawesome';
 import { Button, Col, Grid, Row } from 'react-bootstrap';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import { RUN_OPERATION_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Griddle, {
-  IdColumn,
-  DateTimeColumn,
-  MappedColumn,
-} from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
+import MappedColumn from 'rapidfab/components/griddle/MappedColumn';
 import Loading from 'rapidfab/components/Loading';
 import Locations from 'rapidfab/components/locations';
-
-const RunsGrid = ({ runs }) => (
-  <Griddle
-    data={runs}
-    columns={['id', 'operation', 'status', 'created']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('run'),
-        locked: true,
-      },
-      {
-        columnName: 'operation',
-        displayName: (
-          <FormattedMessage id="field.operation" defaultMessage="Operation" />
-        ),
-        customComponent: MappedColumn('operation', RUN_OPERATION_MAP),
-      },
-      {
-        columnName: 'status',
-        displayName: (
-          <FormattedMessage id="field.status" defaultMessage="Status" />
-        ),
-        customComponent: MappedColumn('status', RUN_STATUS_MAP),
-      },
-      {
-        customComponent: DateTimeColumn,
-        columnName: 'created',
-        displayName: (
-          <FormattedMessage id="field.created" defaultMessage="Created" />
-        ),
-      },
-    ]}
-    initialSort="created"
-    initialSortAscending={false}
-    showFilter
-  />
-);
-
-RunsGrid.propTypes = {
-  runs: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
 
 const Runs = ({
   locationFilter,
@@ -97,7 +60,61 @@ const Runs = ({
     <FlashMessages />
 
     <Row>
-      <Col xs={12}>{fetching ? <Loading /> : <RunsGrid runs={runs} />}</Col>
+      <Col xs={12}>
+        {fetching ? (
+          <Loading />
+        ) : (
+          <Griddle
+            components={{ Layout: GriddleLayout }}
+            data={runs}
+            plugins={[plugins.LocalPlugin]}
+            styleConfig={griddleStyleConfig}
+          >
+            <RowDefinition>
+              <ColumnDefinition
+                id="id"
+                customComponent={props => (
+                  <IdColumn {...props} resource="run" />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                )}
+              />
+              <ColumnDefinition
+                id="operation"
+                customComponent={props => (
+                  <MappedColumn {...props} mapping={RUN_OPERATION_MAP} />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.operation"
+                    defaultMessage="Operation"
+                  />
+                )}
+              />
+              <ColumnDefinition
+                id="status"
+                customComponent={props => (
+                  <MappedColumn {...props} mapping={RUN_STATUS_MAP} />
+                )}
+                customHeadingComponent={() => (
+                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                )}
+              />
+              <ColumnDefinition
+                id="created"
+                customComponent={DateTimeColumn}
+                customHeadingComponent={() => (
+                  <FormattedMessage
+                    id="field.created"
+                    defaultMessage="Created"
+                  />
+                )}
+              />
+            </RowDefinition>
+          </Griddle>
+        )}
+      </Col>
     </Row>
   </Grid>
 );

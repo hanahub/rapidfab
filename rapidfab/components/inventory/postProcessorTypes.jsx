@@ -1,75 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+
+import { Button, Col, Grid, Row } from 'react-bootstrap';
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
-import Grid, { IdColumn } from 'rapidfab/components/grid';
-import Error from 'rapidfab/components/error';
+import FlashMessages from 'rapidfab/components/FlashMessages';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 
-const PostProcessorTypesGrid = ({ postProcessorTypes, manufacturers }) => (
-  <Grid
+const PostProcessorTypesGrid = ({ postProcessorTypes }) => (
+  <Griddle
+    components={{ Layout: GriddleLayout }}
     data={postProcessorTypes}
-    columns={['id', 'name', 'manufacturer']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('post-processor-type'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'description',
-        displayName: (
-          <FormattedMessage
-            id="field.description"
-            defaultMessage="Description"
-          />
-        ),
-      },
-      {
-        columnName: 'manufacturer',
-        customComponent: IdColumn(
-          'manufacturer',
-          'manufacturer',
-          manufacturers,
-          'name'
-        ),
-        displayName: (
-          <FormattedMessage
-            id="field.manufacturer"
-            defaultMessage="Manufacturer"
-          />
-        ),
-      },
-    ]}
-  />
+    plugins={[plugins.LocalPlugin]}
+    styleConfig={griddleStyleConfig}
+  >
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={props => (
+          <IdColumn {...props} resource={'post-processor-type'} />
+        )}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+    </RowDefinition>
+  </Griddle>
 );
 
 PostProcessorTypesGrid.propTypes = {
-  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const PostProcessorTypes = ({
-  postProcessorTypes,
-  fetching,
-  apiErrors,
-  manufacturers,
-  materials,
-}) => (
-  <BS.Grid fluid>
+const PostProcessorTypes = ({ postProcessorTypes, fetching, materials }) => (
+  <Grid fluid>
     <BreadcrumbNav breadcrumbs={['postProcessorTypes']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/post-processor-type"
@@ -80,38 +66,30 @@ const PostProcessorTypes = ({
             id="record.postProcessorType.add"
             defaultMessage="Add Post Processor Type"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <Error errors={apiErrors} />
-      </BS.Col>
-    </BS.Row>
-
-    <BS.Row>
-      <BS.Col xs={12}>
+    <FlashMessages />
+    <Row>
+      <Col xs={12}>
         {fetching ? (
           <Loading />
         ) : (
           <PostProcessorTypesGrid
             postProcessorTypes={postProcessorTypes}
-            manufacturers={manufacturers}
             materials={materials}
           />
         )}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 PostProcessorTypes.propTypes = {
-  apiErrors: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetching: PropTypes.bool.isRequired,
-  manufacturers: PropTypes.arrayOf(PropTypes.object).isRequired,
   materials: PropTypes.arrayOf(PropTypes.object).isRequired,
   postProcessorTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

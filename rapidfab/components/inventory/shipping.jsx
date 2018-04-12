@@ -1,42 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as BS from 'react-bootstrap';
+import { Button, Col, Grid, Row } from 'react-bootstrap';
+
 import Fa from 'react-fontawesome';
 import { FormattedMessage } from 'react-intl';
+import Griddle, {
+  ColumnDefinition,
+  RowDefinition,
+  plugins,
+} from 'griddle-react';
+
+import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CapitalizeColumn from 'rapidfab/components/griddle/CapitalizeColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
-import Grid, { IdColumn, CapitalizeColumn } from 'rapidfab/components/grid';
+import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
+import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
 
 const ShippingsGrid = ({ records }) => (
-  <Grid
+  <Griddle
+    components={{ Layout: GriddleLayout }}
     data={records}
-    columns={['id', 'name', 'region', 'cost']}
-    columnMeta={[
-      {
-        displayName: <FormattedMessage id="field.id" defaultMessage="Id" />,
-        columnName: 'id',
-        customComponent: IdColumn('shipping'),
-        locked: true,
-      },
-      {
-        columnName: 'name',
-        displayName: <FormattedMessage id="field.name" defaultMessage="Name" />,
-      },
-      {
-        columnName: 'region',
-        customComponent: CapitalizeColumn,
-        displayName: (
+    plugins={[plugins.LocalPlugin]}
+    styleConfig={griddleStyleConfig}
+  >
+    <RowDefinition>
+      <ColumnDefinition
+        id="id"
+        customComponent={props => <IdColumn {...props} resource={'shipping'} />}
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.id" defaultMessage="Id" />
+        )}
+      />
+      <ColumnDefinition
+        id="name"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.name" defaultMessage="Name" />
+        )}
+      />
+      <ColumnDefinition
+        id="region"
+        customComponent={CapitalizeColumn}
+        customHeadingComponent={() => (
           <FormattedMessage id="field.region" defaultMessage="Region" />
-        ),
-      },
-      {
-        columnName: 'cost',
-        displayName: <FormattedMessage id="field.cost" defaultMessage="Cost" />,
-      },
-    ]}
-  />
+        )}
+      />
+      <ColumnDefinition
+        id="cost"
+        customHeadingComponent={() => (
+          <FormattedMessage id="field.cost" defaultMessage="Cost" />
+        )}
+      />
+    </RowDefinition>
+  </Griddle>
 );
 
 ShippingsGrid.propTypes = {
@@ -44,12 +62,12 @@ ShippingsGrid.propTypes = {
 };
 
 const Shippings = ({ shippings, fetching }) => (
-  <BS.Grid fluid>
+  <Grid>
     <BreadcrumbNav breadcrumbs={['shipping']} />
 
-    <BS.Row>
-      <BS.Col xs={12}>
-        <BS.Button
+    <Row>
+      <Col xs={12}>
+        <Button
           bsStyle="primary"
           bsSize="small"
           href="#/records/shipping"
@@ -60,20 +78,20 @@ const Shippings = ({ shippings, fetching }) => (
             id="record.shipping.add"
             defaultMessage="Add Shipping"
           />
-        </BS.Button>
-      </BS.Col>
-    </BS.Row>
+        </Button>
+      </Col>
+    </Row>
 
     <hr />
 
     <FlashMessages />
 
-    <BS.Row>
-      <BS.Col xs={12}>
+    <Row>
+      <Col xs={12}>
         {fetching ? <Loading /> : <ShippingsGrid records={shippings} />}
-      </BS.Col>
-    </BS.Row>
-  </BS.Grid>
+      </Col>
+    </Row>
+  </Grid>
 );
 
 Shippings.propTypes = {
