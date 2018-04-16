@@ -14,11 +14,12 @@ const OrderReport = ({
   handleChange,
   handleHide,
   handleShow,
+  isUserRestricted,
   reportUrl,
   show,
   start,
 }) => (
-  <div>
+  <div style={{ display: isUserRestricted ? 'none' : null }}>
     <Button bsStyle="success" bsSize="small" onClick={handleShow}>
       <FormattedMessage
         id="downloadCSVOrderReport"
@@ -78,6 +79,7 @@ OrderReport.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleHide: PropTypes.func.isRequired,
   handleShow: PropTypes.func.isRequired,
+  isUserRestricted: PropTypes.bool.isRequired,
   reportUrl: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   start: PropTypes.string.isRequired,

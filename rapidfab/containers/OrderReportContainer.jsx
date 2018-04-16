@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+import { isCurrentUserRestricted } from 'rapidfab/selectors';
 import CONFIG from 'rapidfab/config';
 import OrderReport from '../components/OrderReport';
 
@@ -43,6 +45,7 @@ class OrderReportContainer extends Component {
     const { end, start, show } = this.state;
     return (
       <OrderReport
+        {...this.props}
         end={end}
         handleChange={this.handleChange}
         handleHide={this.handleHide}
@@ -55,4 +58,6 @@ class OrderReportContainer extends Component {
   }
 }
 
-export default OrderReportContainer;
+export default connect(state => ({
+  isUserRestricted: isCurrentUserRestricted(state),
+}))(OrderReportContainer);
