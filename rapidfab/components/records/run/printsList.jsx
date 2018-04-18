@@ -8,7 +8,7 @@ import { FormattedDateTime, FormattedMessage } from 'rapidfab/i18n';
 
 const Header = ({ onActivate }) => (
   <BS.Row>
-    <BS.Col xs={6}>Select Prints for Run</BS.Col>
+    <BS.Col xs={6}>Select Prints</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="success" onClick={onActivate}>
@@ -67,7 +67,7 @@ const PrintsList = ({
   onPageChange,
   orderNamesMap,
 }) => (
-  <BS.Panel bsStyle="primary" header={<Header onActivate={onActivate} />}>
+  <BS.Panel header={<Header onActivate={onActivate} />}>
     <BS.ListGroup fill>
       <BS.ListGroupItem style={{ borderBottomWidth: 2 }} key="header">
         <BS.Row>

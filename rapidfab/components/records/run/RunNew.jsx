@@ -138,7 +138,13 @@ class RunNew extends Component {
           <Loading />
         ) : (
           <Row>
-            <Col xs={12} lg={4}>
+            <Col xs={12} lg={7}>
+              <PrintersList
+                printers={printers}
+                selected={selectedPrinter}
+                onSelect={this.handleSelectPrinter}
+                modelers={this.props.modelers}
+              />
               <PrintsList
                 prints={inactivePrints}
                 selected={selectedPrints}
@@ -149,29 +155,15 @@ class RunNew extends Component {
                 orderNamesMap={orderNamesMap}
               />
             </Col>
-            <Col xs={12} lg={8}>
-              <Row>
-                <Col xs={12}>
-                  <ActivePrints
-                    printer={selectedPrinter}
-                    prints={activePrints}
-                    selected={activePrintsSelected}
-                    onSelect={this.handleSelectActivePrint}
-                    onDeactivate={this.handleDeactivatePrints}
-                    orderNamesMap={orderNamesMap}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <PrintersList
-                    printers={printers}
-                    selected={selectedPrinter}
-                    onSelect={this.handleSelectPrinter}
-                    modelers={this.props.modelers}
-                  />
-                </Col>
-              </Row>
+            <Col xs={12} lg={5}>
+              <ActivePrints
+                printer={selectedPrinter}
+                prints={activePrints}
+                selected={activePrintsSelected}
+                onSelect={this.handleSelectActivePrint}
+                onDeactivate={this.handleDeactivatePrints}
+                orderNamesMap={orderNamesMap}
+              />
             </Col>
           </Row>
         )}
