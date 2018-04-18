@@ -23,9 +23,7 @@ function printBedFill(printer, model) {
 
 const Header = ({ onDeactivate }) => (
   <BS.Row>
-    <BS.Col xs={6}>
-      <FormattedMessage id="record.run.prints" defaultMessage="Run Prints" />
-    </BS.Col>
+    <BS.Col xs={6}>New Run</BS.Col>
     <BS.Col xs={6}>
       <BS.ButtonToolbar className="pull-right">
         <BS.Button bsSize="small" bsStyle="info" onClick={onDeactivate}>
