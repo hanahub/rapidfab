@@ -868,10 +868,8 @@ export const getRunPrintsGridData = createSelector(
       )
       .map(print => {
         const printOrder = orders.find(order => order.uri === print.order);
-        if (!printOrder) return {};
-        const { id, order, uuid } = print;
-        const { customer_name: customerName, due_date: dueDate } = printOrder;
-        return { id, order, dueDate, customerName, uuid };
+        if (!printOrder) return print;
+        return Object.assign({}, print, { due_date: printOrder.due_date });
       });
   }
 );
