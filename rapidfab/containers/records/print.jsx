@@ -68,16 +68,19 @@ function mapDispatchToProps(dispatch) {
         }
 
         const lineItemRequest = dispatch(
-          Actions.Api.wyatt['line-item'].get(extractUuid(lineItemUri))
+          Actions.Api.wyatt['line-item'].get(extractUuid(lineItemUri), true)
         );
         const orderDocumentsRequest = dispatch(
-          Actions.Api.wyatt['order-document'].list({ order: orderUri })
+          Actions.Api.wyatt['order-document'].list({ order: orderUri }, true)
         );
         const printsRequest = dispatch(
-          Actions.Api.wyatt.print.list({ line_item: lineItemUri, copy })
+          Actions.Api.wyatt.print.list({ line_item: lineItemUri, copy }, true)
         );
         const runDocumentRequest = runUri
-          ? dispatch(Actions.Api.wyatt['run-document'].list({ run: runUri }))
+          ? dispatch(
+              Actions.Api.wyatt['run-document'].list({ run: runUri }),
+              true
+            )
           : { json: { resources: [] } };
         Promise.all([
           lineItemRequest,

@@ -66,11 +66,9 @@ function mapStateToProps(state) {
   const gridData = filteredPrints.map(print => {
     const printOrder = orders.find(order => order.uri === print.order);
     if (printOrder) {
-      const { id, name, order, status, uuid } = print;
-
       const dueDate = printOrder.due_date;
       const customerName = printOrder.customer_name;
-      return { id, order, dueDate, name, customerName, status, uuid };
+      return Object.assign({}, print, { dueDate, customerName });
     }
     return {};
   });
