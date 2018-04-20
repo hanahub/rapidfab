@@ -29,7 +29,7 @@ const LocationsGrid = ({ locations, users }) => (
     <RowDefinition>
       <ColumnDefinition
         id="id"
-        customComponent={props => <IdColumn {...props} resource={'order'} />}
+        customComponent={props => <IdColumn {...props} resource={'location'} />}
         customHeadingComponent={() => (
           <FormattedMessage id="field.id" defaultMessage="Id" />
         )}
