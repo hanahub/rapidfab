@@ -58,7 +58,7 @@ const PrinterTypes = ({ printerTypes, fetching }) => (
               <ColumnDefinition
                 id="id"
                 customComponent={props => (
-                  <IdColumn {...props} resource={'post-processor-type'} />
+                  <IdColumn {...props} resource={'printer-type'} />
                 )}
                 customHeadingComponent={() => (
                   <FormattedMessage id="field.id" defaultMessage="Id" />
