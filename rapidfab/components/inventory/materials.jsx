@@ -31,9 +31,7 @@ const MaterialsGrid = ({ materials }) => (
     <RowDefinition>
       <ColumnDefinition
         id="id"
-        customComponent={props => (
-          <IdColumn {...props} resource={'third-party-provider'} />
-        )}
+        customComponent={props => <IdColumn {...props} resource={'material'} />}
         customHeadingComponent={() => (
           <FormattedMessage id="field.id" defaultMessage="Id" />
         )}
