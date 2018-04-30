@@ -13,6 +13,7 @@ import Griddle, {
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import ContactColumn from 'rapidfab/components/griddle/ContactColumn';
@@ -30,27 +31,43 @@ const LocationsGrid = ({ locations, users }) => (
       <ColumnDefinition
         id="id"
         customComponent={props => <IdColumn {...props} resource={'location'} />}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.id" defaultMessage="Id" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.id"
+            defaultMessage="ID"
+          />
         )}
       />
       <ColumnDefinition
         id="name"
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.name" defaultMessage="Name" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.name"
+            defaultMessage="Name"
+          />
         )}
       />
       <ColumnDefinition
         id="address"
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.adress" defaultMessage="Address" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.address"
+            defaultMessage="Address"
+          />
         )}
       />
       <ColumnDefinition
         id="contact"
         customComponent={props => <ContactColumn {...props} users={users} />}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.contact" defaultMessage="Contact" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.contact"
+            defaultMessage="Contact"
+          />
         )}
       />
       <ColumnDefinition

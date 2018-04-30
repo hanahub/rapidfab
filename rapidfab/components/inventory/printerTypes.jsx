@@ -13,6 +13,7 @@ import Griddle, {
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -60,14 +61,22 @@ const PrinterTypes = ({ printerTypes, fetching }) => (
                 customComponent={props => (
                   <IdColumn {...props} resource={'printer-type'} />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.id"
+                    defaultMessage="ID"
+                  />
                 )}
               />
               <ColumnDefinition
                 id="name"
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.name"
+                    defaultMessage="Name"
+                  />
                 )}
               />
             </RowDefinition>

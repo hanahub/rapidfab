@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Fa from 'react-fontawesome';
 import { Button, Col, Grid, Row } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
 import Griddle, {
   ColumnDefinition,
   RowDefinition,
@@ -12,8 +11,10 @@ import Griddle, {
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 import { ORDER_STATUS_MAP } from 'rapidfab/mappings';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
+import { FormattedMessage } from 'react-intl';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
 import Loading from 'rapidfab/components/Loading';
@@ -74,36 +75,71 @@ const Orders = ({
         <RowDefinition>
           <ColumnDefinition
             id="name"
-            customHeadingComponent={() => (
-              <FormattedMessage id="field.name" defaultMessage="Name" />
+            customHeadingComponent={props => (
+              <CustomHeadingComponent
+                {...props}
+                id="field.name"
+                defaultMessage="Name"
+              />
             )}
           />
           <ColumnDefinition
             id="id"
-            customHeadingComponent={() => (
-              <FormattedMessage id="field.id" defaultMessage="Id" />
-            )}
             customComponent={props => (
               <IdColumn {...props} resource={'order'} />
+            )}
+            customHeadingComponent={props => (
+              <CustomHeadingComponent
+                {...props}
+                id="field.id"
+                defaultMessage="ID"
+              />
             )}
           />
           <ColumnDefinition
             id="status"
-            title="Status"
             customComponent={({ value }) => (
               <MappedColumn mapping={ORDER_STATUS_MAP} value={value} />
+            )}
+            customHeadingComponent={props => (
+              <CustomHeadingComponent
+                {...props}
+                id="field.status"
+                defaultMessage="Status"
+              />
             )}
           />
           <ColumnDefinition
             id="created"
-            title="Created"
             customComponent={DateTimeColumn}
+            customHeadingComponent={props => (
+              <CustomHeadingComponent
+                {...props}
+                id="field.created"
+                defaultMessage="Created"
+              />
+            )}
           />
-          <ColumnDefinition id="customer_name" title="Customer Name" />
+          <ColumnDefinition
+            id="customer_name"
+            customHeadingComponent={props => (
+              <CustomHeadingComponent
+                {...props}
+                id="field.customer_name"
+                defaultMessage="Customer Name"
+              />
+            )}
+          />
           <ColumnDefinition
             id="due_date"
-            title="Due Date"
             customComponent={DateTimeColumn}
+            customHeadingComponent={props => (
+              <CustomHeadingComponent
+                {...props}
+                id="field.due_date"
+                defaultMessage="Due Date"
+              />
+            )}
           />
         </RowDefinition>
       </Griddle>
