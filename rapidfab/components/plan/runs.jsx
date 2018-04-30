@@ -13,6 +13,7 @@ import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import { RUN_OPERATION_MAP, RUN_STATUS_MAP } from 'rapidfab/mappings';
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
@@ -76,8 +77,12 @@ const Runs = ({
                 customComponent={props => (
                   <IdColumn {...props} resource="run" />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.id"
+                    defaultMessage="Id"
+                  />
                 )}
               />
               <ColumnDefinition
@@ -85,8 +90,9 @@ const Runs = ({
                 customComponent={props => (
                   <MappedColumn {...props} mapping={RUN_OPERATION_MAP} />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.operation"
                     defaultMessage="Operation"
                   />
@@ -97,15 +103,20 @@ const Runs = ({
                 customComponent={props => (
                   <MappedColumn {...props} mapping={RUN_STATUS_MAP} />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.status"
+                    defaultMessage="Status"
+                  />
                 )}
               />
               <ColumnDefinition
                 id="created"
                 customComponent={DateTimeColumn}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.created"
                     defaultMessage="Created"
                   />

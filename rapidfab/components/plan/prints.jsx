@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Grid } from 'react-bootstrap';
 import Griddle, {
   ColumnDefinition,
@@ -12,6 +11,7 @@ import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import DateTimeColumn from 'rapidfab/components/griddle/DateTimeColumn';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
@@ -40,23 +40,32 @@ const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
           <RowDefinition>
             <ColumnDefinition
               id="name"
-              customHeadingComponent={() => (
-                <FormattedMessage id="field.name" defaultMessage="Name" />
+              customHeadingComponent={props => (
+                <CustomHeadingComponent
+                  {...props}
+                  id="field.name"
+                  defaultMessage="Name"
+                />
               )}
             />
             <ColumnDefinition
               id="id"
-              customHeadingComponent={() => (
-                <FormattedMessage id="field.id" defaultMessage="Id" />
-              )}
               customComponent={props => (
                 <IdColumn {...props} resource={'print'} />
+              )}
+              customHeadingComponent={props => (
+                <CustomHeadingComponent
+                  {...props}
+                  id="field.id"
+                  defaultMessage="ID"
+                />
               )}
             />
             <ColumnDefinition
               id="customerName"
-              customHeadingComponent={() => (
-                <FormattedMessage
+              customHeadingComponent={props => (
+                <CustomHeadingComponent
+                  {...props}
                   id="field.customerName"
                   defaultMessage="Customer Name"
                 />
@@ -64,20 +73,27 @@ const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
             />
             <ColumnDefinition
               id="status"
-              title="Status"
               customComponent={({ value }) => (
                 <MappedColumn mapping={PRINT_STATUS_MAPPING} value={value} />
+              )}
+              customHeadingComponent={props => (
+                <CustomHeadingComponent
+                  {...props}
+                  id="field.status"
+                  defaultMessage="Status"
+                />
               )}
             />
             <ColumnDefinition
               id="dueDate"
-              customHeadingComponent={() => (
-                <FormattedMessage
+              customComponent={DateTimeColumn}
+              customHeadingComponent={props => (
+                <CustomHeadingComponent
+                  {...props}
                   id="field.dueDate"
                   defaultMessage="Due Date"
                 />
               )}
-              customComponent={DateTimeColumn}
             />
           </RowDefinition>
         </Griddle>

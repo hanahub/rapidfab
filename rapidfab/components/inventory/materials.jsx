@@ -16,6 +16,7 @@ import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import BooleanColumn from 'rapidfab/components/griddle/BooleanColumn';
 import CapitalizeColumn from 'rapidfab/components/griddle/CapitalizeColumn';
 import ColorColumn from 'rapidfab/components/griddle/ColorColumn';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -32,35 +33,52 @@ const MaterialsGrid = ({ materials }) => (
       <ColumnDefinition
         id="id"
         customComponent={props => <IdColumn {...props} resource={'material'} />}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.id" defaultMessage="Id" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.id"
+            defaultMessage="ID"
+          />
         )}
       />
       <ColumnDefinition
         id="name"
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.name" defaultMessage="Name" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.name"
+            defaultMessage="Name"
+          />
         )}
       />
       <ColumnDefinition
         id="type"
         customComponent={CapitalizeColumn}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.type" defaultMessage="Type" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.type"
+            defaultMessage="Type"
+          />
         )}
       />
       <ColumnDefinition
         id="color"
         customComponent={ColorColumn}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.color" defaultMessage="Color" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.color"
+            defaultMessage="Color"
+          />
         )}
       />
       <ColumnDefinition
         id="third_party_fulfillment"
         customComponent={BooleanColumn}
-        customHeadingComponent={() => (
-          <FormattedMessage
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
             id="field.thirdParty"
             defaultMessage="Third Party"
           />

@@ -13,6 +13,7 @@ import Griddle, {
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -68,8 +69,12 @@ const Printers = ({
                 customComponent={props => (
                   <IdColumn {...props} resource="printer" />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.id"
+                    defaultMessage="ID"
+                  />
                 )}
               />
               <ColumnDefinition
@@ -77,14 +82,22 @@ const Printers = ({
                 customComponent={props => (
                   <StatusColumn {...props} modelers={modelers} />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.modeler"
+                    defaultMessage="Modeler"
+                  />
                 )}
               />
               <ColumnDefinition
                 id="name"
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.name"
+                    defaultMessage="Name"
+                  />
                 )}
               />
               <ColumnDefinition
@@ -96,8 +109,9 @@ const Printers = ({
                     resources={locations}
                   />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.location"
                     defaultMessage="Location"
                   />
@@ -113,8 +127,9 @@ const Printers = ({
                     resources={printerTypes}
                   />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.printerType"
                     defaultMessage="Printer Type"
                   />

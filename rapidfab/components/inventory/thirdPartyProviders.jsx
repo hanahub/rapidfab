@@ -13,6 +13,7 @@ import Griddle, {
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -31,29 +32,29 @@ const ThirdPartyProvidersGrid = ({ providers }) => (
         customComponent={props => (
           <IdColumn {...props} resource={'third-party-provider'} />
         )}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.id" defaultMessage="Id" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.id"
+            defaultMessage="ID"
+          />
         )}
       />
       <ColumnDefinition
         id="name"
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.name" defaultMessage="Name" />
-        )}
-      />
-      <ColumnDefinition
-        id="description"
-        customHeadingComponent={() => (
-          <FormattedMessage
-            id="field.description"
-            defaultMessage="Description"
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.name"
+            defaultMessage="Name"
           />
         )}
       />
       <ColumnDefinition
         id="description"
-        customHeadingComponent={() => (
-          <FormattedMessage
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
             id="field.description"
             defaultMessage="Description"
           />

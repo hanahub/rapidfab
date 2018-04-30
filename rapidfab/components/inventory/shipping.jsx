@@ -14,6 +14,7 @@ import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import CapitalizeColumn from 'rapidfab/components/griddle/CapitalizeColumn';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -30,27 +31,43 @@ const ShippingsGrid = ({ records }) => (
       <ColumnDefinition
         id="id"
         customComponent={props => <IdColumn {...props} resource={'shipping'} />}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.id" defaultMessage="Id" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.id"
+            defaultMessage="ID"
+          />
         )}
       />
       <ColumnDefinition
         id="name"
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.name" defaultMessage="Name" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.name"
+            defaultMessage="Name"
+          />
         )}
       />
       <ColumnDefinition
         id="region"
         customComponent={CapitalizeColumn}
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.region" defaultMessage="Region" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.region"
+            defaultMessage="Region"
+          />
         )}
       />
       <ColumnDefinition
         id="cost"
-        customHeadingComponent={() => (
-          <FormattedMessage id="field.cost" defaultMessage="Cost" />
+        customHeadingComponent={props => (
+          <CustomHeadingComponent
+            {...props}
+            id="field.cost"
+            defaultMessage="Cost"
+          />
         )}
       />
     </RowDefinition>

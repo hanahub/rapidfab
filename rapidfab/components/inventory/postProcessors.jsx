@@ -13,6 +13,7 @@ import Griddle, {
 import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -66,20 +67,29 @@ const PostProcessors = ({
                 customComponent={props => (
                   <IdColumn {...props} resource={'post-processor'} />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.id"
+                    defaultMessage="ID"
+                  />
                 )}
               />
               <ColumnDefinition
                 id="name"
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.name" defaultMessage="Name" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.name"
+                    defaultMessage="Name"
+                  />
                 )}
               />
               <ColumnDefinition
                 id="duration"
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.duration"
                     defaultMessage="Duration"
                   />
@@ -94,10 +104,11 @@ const PostProcessors = ({
                     resources={locations}
                   />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.location"
-                    defaultMessage="Location"
+                    defaultMessage="Duration"
                   />
                 )}
               />
@@ -111,8 +122,9 @@ const PostProcessors = ({
                     resources={postProcessorTypes}
                   />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.postProcessorType"
                     defaultMessage="Post Processor Type"
                   />

@@ -14,6 +14,7 @@ import griddleStyleConfig from 'rapidfab/components/griddle/griddleStyleConfig';
 
 import BreadcrumbNav from 'rapidfab/components/BreadcrumbNav';
 import CapitalizeColumn from 'rapidfab/components/griddle/CapitalizeColumn';
+import CustomHeadingComponent from 'rapidfab/components/griddle/CustomHeadingComponent';
 import FlashMessages from 'rapidfab/components/FlashMessages';
 import GriddleLayout from 'rapidfab/components/griddle/GriddleLayout';
 import IdColumn from 'rapidfab/components/griddle/IdColumn';
@@ -62,8 +63,12 @@ const Stocks = ({ stocks, materials, locations, fetching }) => (
                 customComponent={props => (
                   <IdColumn {...props} resource="stock" />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.id" defaultMessage="Id" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.id"
+                    defaultMessage="ID"
+                  />
                 )}
               />
               <ColumnDefinition
@@ -75,8 +80,9 @@ const Stocks = ({ stocks, materials, locations, fetching }) => (
                     resources={materials}
                   />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.material"
                     defaultMessage="Material"
                   />
@@ -91,8 +97,9 @@ const Stocks = ({ stocks, materials, locations, fetching }) => (
                     resources={locations}
                   />
                 )}
-                customHeadingComponent={() => (
-                  <FormattedMessage
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
                     id="field.location"
                     defaultMessage="Location"
                   />
@@ -101,14 +108,22 @@ const Stocks = ({ stocks, materials, locations, fetching }) => (
               <ColumnDefinition
                 id="status"
                 customComponent={CapitalizeColumn}
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.status"
+                    defaultMessage="Status"
+                  />
                 )}
               />
               <ColumnDefinition
                 id="quantity"
-                customHeadingComponent={() => (
-                  <FormattedMessage id="field.status" defaultMessage="Status" />
+                customHeadingComponent={props => (
+                  <CustomHeadingComponent
+                    {...props}
+                    id="field.quantity"
+                    defaultMessage="Quantity"
+                  />
                 )}
               />
             </RowDefinition>
