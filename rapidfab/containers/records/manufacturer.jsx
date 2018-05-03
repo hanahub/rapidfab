@@ -67,7 +67,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state, props) {
-  const manufacturer = Selectors.getRouteResource(state, props);
+  const manufacturer = props.route.uuid
+    ? Selectors.getRouteResource(state, props)
+    : null;
   const bureau = Selectors.getBureau(state);
   return {
     uuid: Selectors.getRoute(state, props).uuid,
