@@ -235,6 +235,7 @@ class AddLineItem extends Component {
       modelUnits: '',
       model: null,
       quantity: '',
+      submitting: false,
       supportMaterial: '',
       template: '',
       thirdPartyProvider: '',
@@ -286,16 +287,25 @@ class AddLineItem extends Component {
     if (!payload.materials.support) delete payload.materials.support;
     if (!payload.third_party_provider) delete payload.third_party_provider;
 
-    if (itar) {
-      dispatch(Actions.Api.wyatt['line-item'].post(payload)).then(response => {
-        const newLineItem = response.headers.location;
-        const orderPayload = {
-          line_items: [...order.line_items, newLineItem],
-        };
-        const uuid = extractUuid(order.uri);
+    this.setState({ submitting: true });
 
-        return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
-      });
+    if (itar) {
+      dispatch(Actions.Api.wyatt['line-item'].post(payload))
+        .then(response => {
+          const newLineItem = response.headers.location;
+          const orderPayload = {
+            line_items: [...order.line_items, newLineItem],
+          };
+          const uuid = extractUuid(order.uri);
+
+          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+        })
+        .then(() => {
+          this.setState({ submitting: false });
+        })
+        .catch(() => {
+          this.setState({ submitting: false });
+        });
     } else {
       dispatch(
         Actions.Api.hoth.model.post({
@@ -319,7 +329,13 @@ class AddLineItem extends Component {
           };
           const uuid = extractUuid(order.uri);
           dispatch(Actions.Api.wyatt['line-item'].get(newLineItem));
-          dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+          return dispatch(Actions.Api.wyatt.order.put(uuid, orderPayload));
+        })
+        .then(() => {
+          this.setState({ submitting: false });
+        })
+        .catch(() => {
+          this.setState({ submitting: false });
         });
     }
   }
