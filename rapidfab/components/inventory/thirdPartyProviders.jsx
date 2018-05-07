@@ -23,6 +23,7 @@ const ThirdPartyProvidersGrid = ({ providers }) => (
   <Griddle
     components={{ Layout: GriddleLayout }}
     data={providers}
+    pageProperties={{ pageSize: 50 }}
     plugins={[plugins.LocalPlugin]}
     styleConfig={griddleStyleConfig}
   >

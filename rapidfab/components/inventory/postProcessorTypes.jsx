@@ -23,6 +23,7 @@ const PostProcessorTypesGrid = ({ postProcessorTypes }) => (
   <Griddle
     components={{ Layout: GriddleLayout }}
     data={postProcessorTypes}
+    pageProperties={{ pageSize: 50 }}
     plugins={[plugins.LocalPlugin]}
     styleConfig={griddleStyleConfig}
   >

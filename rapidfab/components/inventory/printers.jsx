@@ -60,6 +60,7 @@ const Printers = ({
           <Griddle
             components={{ Layout: GriddleLayout }}
             data={printers}
+            pageProperties={{ pageSize: 50 }}
             plugins={[plugins.LocalPlugin]}
             styleConfig={griddleStyleConfig}
           >

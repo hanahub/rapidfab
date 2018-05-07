@@ -68,6 +68,7 @@ const Orders = ({
       <Griddle
         components={{ Layout: GriddleLayout }}
         data={orders}
+        pageProperties={{ pageSize: 50 }}
         plugins={[plugins.LocalPlugin]}
         sortProperties={[{ id: 'created', sortAscending: true }]}
         styleConfig={griddleStyleConfig}
