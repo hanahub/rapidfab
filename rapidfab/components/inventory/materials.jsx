@@ -28,6 +28,7 @@ const MaterialsGrid = ({ materials }) => (
     data={materials}
     pageProperties={{ pageSize: 50 }}
     plugins={[plugins.LocalPlugin]}
+    sortProperties={[{ id: 'name', sortAscending: true }]}
     styleConfig={griddleStyleConfig}
   >
     <RowDefinition>
