@@ -16,7 +16,6 @@ class OrderDocuments extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.onDownload = this.onDownload.bind(this);
     this.uploadDocument = this.uploadDocument.bind(this);
   }
 
@@ -34,13 +33,6 @@ class OrderDocuments extends React.Component {
     const { dispatch, order } = this.props;
     await dispatch(Actions.Api.wyatt['order-document'].delete(uuid));
     await dispatch(Actions.Api.wyatt.order.get(extractUuid(order)));
-  }
-
-  async onDownload(uri) {
-    await this.props.dispatch(
-      Actions.Api.wyatt['order-document'].get(extractUuid(uri))
-    );
-    this[uri].click();
   }
 
   async uploadDocument() {
@@ -67,12 +59,10 @@ class OrderDocuments extends React.Component {
   }
 
   render() {
-    const { onChange, onDelete, onDownload, uploadDocument } = this;
+    const { onChange, onDelete, uploadDocument } = this;
     const { upload } = this.state;
     const { orderDocuments } = this.props;
 
-    /* eslint-disable jsx-a11y/no-static-element-interactions */
-    /* eslint-disable jsx-a11y/anchor-has-content */
     return (
       <Panel bsStyle="primary">
         <ListGroup fill>
@@ -83,17 +73,9 @@ class OrderDocuments extends React.Component {
 
         {orderDocuments.map(orderDocument => (
           <ListGroupItem key={orderDocument.uri}>
-            <a download="test" onClick={() => onDownload(orderDocument.uri)}>
+            <a download={orderDocument.name} href={orderDocument.uri}>
               {orderDocument.name || extractUuid(orderDocument.uri)}
             </a>
-            <a
-              href={orderDocument.content}
-              download
-              style={{ display: 'none' }}
-              ref={node => {
-                this[orderDocument.uri] = node;
-              }}
-            />
             <Button
               className="pull-right"
               bsStyle="danger"
