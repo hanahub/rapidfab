@@ -26,7 +26,9 @@ const MaterialsGrid = ({ materials }) => (
   <Griddle
     components={{ Layout: GriddleLayout }}
     data={materials}
+    pageProperties={{ pageSize: 50 }}
     plugins={[plugins.LocalPlugin]}
+    sortProperties={[{ id: 'name', sortAscending: true }]}
     styleConfig={griddleStyleConfig}
   >
     <RowDefinition>

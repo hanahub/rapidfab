@@ -58,6 +58,7 @@ const PostProcessors = ({
           <Griddle
             components={{ Layout: GriddleLayout }}
             data={postProcessors}
+            pageProperties={{ pageSize: 50 }}
             plugins={[plugins.LocalPlugin]}
             styleConfig={griddleStyleConfig}
           >

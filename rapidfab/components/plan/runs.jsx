@@ -68,6 +68,7 @@ const Runs = ({
           <Griddle
             components={{ Layout: GriddleLayout }}
             data={runs}
+            pageProperties={{ pageSize: 50 }}
             plugins={[plugins.LocalPlugin]}
             styleConfig={griddleStyleConfig}
           >

@@ -52,6 +52,7 @@ const Conversions = ({ conversions, fetching }) => (
           <Griddle
             components={{ Layout: GriddleLayout }}
             data={conversions}
+            pageProperties={{ pageSize: 50 }}
             plugins={[plugins.LocalPlugin]}
             styleConfig={griddleStyleConfig}
           >

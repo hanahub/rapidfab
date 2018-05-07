@@ -24,6 +24,7 @@ const LocationsGrid = ({ locations, users }) => (
   <Griddle
     components={{ Layout: GriddleLayout }}
     data={locations}
+    pageProperties={{ pageSize: 50 }}
     plugins={[plugins.LocalPlugin]}
     styleConfig={griddleStyleConfig}
   >

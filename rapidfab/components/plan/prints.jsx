@@ -34,6 +34,7 @@ const Prints = ({ fetching, gridData, locations, handleOnChange }) => {
         <Griddle
           components={{ Layout: GriddleLayout }}
           data={gridData}
+          pageProperties={{ pageSize: 50 }}
           plugins={[plugins.LocalPlugin]}
           styleConfig={griddleStyleConfig}
         >

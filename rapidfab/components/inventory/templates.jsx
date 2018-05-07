@@ -23,6 +23,7 @@ const TemplateGrid = ({ records }) => (
   <Griddle
     components={{ Layout: GriddleLayout }}
     data={records}
+    pageProperties={{ pageSize: 50 }}
     plugins={[plugins.LocalPlugin]}
     styleConfig={griddleStyleConfig}
   >

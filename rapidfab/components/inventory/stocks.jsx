@@ -54,6 +54,7 @@ const Stocks = ({ stocks, materials, locations, fetching }) => (
           <Griddle
             components={{ Layout: GriddleLayout }}
             data={stocks}
+            pageProperties={{ pageSize: 50 }}
             plugins={[plugins.LocalPlugin]}
             styleConfig={griddleStyleConfig}
           >
