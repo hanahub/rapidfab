@@ -8,7 +8,7 @@ const NetfabbImportButton = ({ dispatch, lineItemUri }) => (
   <Button
     block
     onClick={() => {
-      dispatch(Actions.Api.wyatt.netfabb.get({ line_item: lineItemUri }));
+      dispatch(Actions.Api.wyatt.netfab.get({ line_item: lineItemUri }));
     }}
   >
     Import to Netfabb

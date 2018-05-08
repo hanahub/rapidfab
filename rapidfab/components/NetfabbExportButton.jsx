@@ -8,7 +8,7 @@ const NetfabbExportButton = ({ dispatch, lineItemUri }) => (
   <Button
     block
     onClick={() => {
-      dispatch(Actions.Api.wyatt.netfabb.post({ line_item: lineItemUri }));
+      dispatch(Actions.Api.wyatt.netfab.post({ line_item: lineItemUri }));
     }}
   >
     Export to Netfabb
