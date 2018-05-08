@@ -16,6 +16,7 @@ import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import NetfabbExportButton from 'rapidfab/components/NetfabbExportButton';
+import NetfabbImportButton from 'rapidfab/components/NetfabbImportButton';
 import Loading from 'rapidfab/components/Loading';
 import {
   FormattedCost,
@@ -279,7 +280,7 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
   if (!lineItem) {
     return null;
   }
-  const { estimates, itar, quantity } = lineItem;
+  const { estimates, itar, quantity, uri } = lineItem;
 
   return (
     <Panel
@@ -291,6 +292,13 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
             <ModelThumbnail snapshot={snapshot} itar={itar} />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs={12} lg={10} lgOffset={1}>
+            <NetfabbExportButton lineItemUri={uri} />
+            <NetfabbImportButton lineItemUri={uri} />
           </Col>
         </Row>
 
