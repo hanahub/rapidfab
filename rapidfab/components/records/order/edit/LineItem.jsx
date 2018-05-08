@@ -15,13 +15,13 @@ import hhmmss from 'rapidfab/utils/hhmmss';
 import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
+import NetfabbExportButton from 'rapidfab/components/NetfabbExportButton';
 import Loading from 'rapidfab/components/Loading';
 import {
   FormattedCost,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
-
 import LineItemEditFormContainer from 'rapidfab/containers/records/order/LineItemEditFormContainer';
 
 const PrintsHeader = prints => {

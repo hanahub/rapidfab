@@ -15,6 +15,7 @@ export const RESOURCES = {
     'manufacturer',
     'material',
     'membership-bureau',
+    'netfabb',
     'order',
     'order-document',
     'post-processor-type',
