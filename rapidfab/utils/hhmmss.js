@@ -1,6 +1,6 @@
 // convert secs (integer) into HH:MM:SS format (string)
 //
-const pad = num => `0${num}`.slice(-2);
+const pad = num => (num.length < 2 ? `0${num}` : num);
 
 export default function hhmmss(secs) {
   const hours = Math.floor(secs / 3600);
