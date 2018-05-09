@@ -3,21 +3,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import Actions from 'rapidfab/actions';
+import Loading from 'rapidfab/components/Loading';
 
-const NetfabbImportButton = ({ dispatch, lineItemUri }) => (
+const NetfabbImportButton = ({ dispatch, lineItemUri, submitting }) => (
   <Button
     block
+    disabled={submitting}
     onClick={() => {
-      dispatch(Actions.Api.wyatt.netfab.get({ line_item: lineItemUri }));
+      dispatch(Actions.Api.wyatt.netfab.list({ line_item: lineItemUri }, true));
     }}
   >
-    Import to Netfabb
+    {submitting ? <Loading /> : <span>Import to Netfabb</span>}
   </Button>
 );
 
 NetfabbImportButton.propTypes = {
   dispatch: PropTypes.func.isRequired,
   lineItemUri: PropTypes.string.isRequired,
+  submitting: PropTypes.bool.isRequired,
 };
 
-export default connect()(NetfabbImportButton);
+export default connect(state => ({
+  submitting: state.ui.wyatt.netfab.list.fetching,
+}))(NetfabbImportButton);
