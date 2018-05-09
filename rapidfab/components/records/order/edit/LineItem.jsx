@@ -296,11 +296,13 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
           </Col>
         </Row>
 
-        <Row>
+        <Row style={{ marginBottom: '1rem' }}>
           <Col xs={12} lg={10} lgOffset={1}>
             <Feature featureName="netfabb">
-              <NetfabbExportButton lineItemUri={uri} />
-              <NetfabbImportButton lineItemUri={uri} />
+              <div>
+                <NetfabbExportButton lineItemUri={uri} />
+                <NetfabbImportButton lineItemUri={uri} />
+              </div>
             </Feature>
           </Col>
         </Row>
