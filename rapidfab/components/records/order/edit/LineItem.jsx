@@ -14,6 +14,7 @@ import {
 import hhmmss from 'rapidfab/utils/hhmmss';
 import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
+import Feature from 'rapidfab/components/Feature';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
 import NetfabbExportButton from 'rapidfab/components/NetfabbExportButton';
 import NetfabbImportButton from 'rapidfab/components/NetfabbImportButton';
@@ -297,8 +298,10 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
 
         <Row>
           <Col xs={12} lg={10} lgOffset={1}>
-            <NetfabbExportButton lineItemUri={uri} />
-            <NetfabbImportButton lineItemUri={uri} />
+            <Feature featureName="netfabb">
+              <NetfabbExportButton lineItemUri={uri} />
+              <NetfabbImportButton lineItemUri={uri} />
+            </Feature>
           </Col>
         </Row>
 
