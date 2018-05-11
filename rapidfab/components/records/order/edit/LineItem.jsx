@@ -14,14 +14,16 @@ import {
 import hhmmss from 'rapidfab/utils/hhmmss';
 import { PRINT_STATUS_MAPPING } from 'rapidfab/mappings';
 
+import Feature from 'rapidfab/components/Feature';
 import ModelThumbnail from 'rapidfab/components/ModelThumbnail';
+import NetfabbExportButton from 'rapidfab/components/NetfabbExportButton';
+import NetfabbImportButton from 'rapidfab/components/NetfabbImportButton';
 import Loading from 'rapidfab/components/Loading';
 import {
   FormattedCost,
   FormattedMessage,
   FormattedVolume,
 } from 'rapidfab/i18n';
-
 import LineItemEditFormContainer from 'rapidfab/containers/records/order/LineItemEditFormContainer';
 
 const PrintsHeader = prints => {
@@ -279,7 +281,7 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
   if (!lineItem) {
     return null;
   }
-  const { estimates, itar, quantity } = lineItem;
+  const { estimates, itar, quantity, uri } = lineItem;
 
   return (
     <Panel
@@ -291,6 +293,17 @@ const LineItem = ({ currency, lineItem, model, prints, snapshot }) => {
         <Row>
           <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
             <ModelThumbnail snapshot={snapshot} itar={itar} />
+          </Col>
+        </Row>
+
+        <Row style={{ marginBottom: '1rem' }}>
+          <Col xs={12} lg={10} lgOffset={1}>
+            <Feature featureName="netfabb">
+              <div>
+                <NetfabbExportButton lineItemUri={uri} />
+                <NetfabbImportButton lineItemUri={uri} />
+              </div>
+            </Feature>
           </Col>
         </Row>
 
